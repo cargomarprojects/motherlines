@@ -381,7 +381,7 @@ export class AirExpMasterEditComponent implements OnInit {
     switch (field) {
       case 'mbl_no': {
 
-        this.IsBLDupliation('MAWB', this.record.mbl_no);
+        this.IsBLDupliation('MBL', this.record.mbl_no);
         break;
       }
       //   case 'mbl_liner_bookingno': {
