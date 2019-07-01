@@ -43,7 +43,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">Job Type</label>
                   <div class="col-9">
                     <select class="form-control form-control-sm" [(ngModel)]="record.mbl_jobtype_id">
-                      <option *ngFor="let rec of gs.JOB_TYPE_OE" [value]="rec.code">{{rec.name}}</option>
+                      <option *ngFor="let rec of gs.JOB_TYPE_AE" [value]="rec.code">{{rec.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -51,7 +51,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">Stage</label>
                   <div class="col-9">
                     <select class="form-control form-control-sm" [(ngModel)]="record.mbl_shipment_stage">
-                      <option *ngFor="let rec of gs.SHIPMENT_STAGE_OE" [value]="rec.code">{{rec.name}}</option>
+                      <option *ngFor="let rec of gs.SHIPMENT_STAGE_AE" [value]="rec.code">{{rec.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -62,7 +62,7 @@
           <hr>
   
           <!-- Second row -->
-          <!-- <div class="col-md-12 px-0 mx-0">
+          <div class="col-md-12 px-0 mx-0">
             <div class="row">
               <div class="col-md-6 testbox  px-0 mx-0">
   
@@ -303,7 +303,7 @@
               </div>
             </div>
           </div>
-   -->
+  
         </div>
   
         <!-- <div class="row">

@@ -11,7 +11,7 @@
     {{errorMessage}}
   </div>
   
-  <app-seaexp-master-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)" ></app-seaexp-master-header>
+  <app-airexp-master-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)" ></app-airexp-master-header>
   
   <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
   

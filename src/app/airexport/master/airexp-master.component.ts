@@ -69,7 +69,7 @@ export class AirExpMasterComponent implements OnInit {
       origin: 'airexp-master-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.AirExport.Trans/AirExpMasterPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.AirExport.Trans/AirExpMasterEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_cargo_exp_masterm) {
@@ -85,7 +85,7 @@ export class AirExpMasterComponent implements OnInit {
       origin: 'airexp-master-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.AirExport.Trans/AirExpMasterPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.AirExport.Trans/AirExpMasterEditPage', JSON.stringify(parameter));
   }
 
   Close() {
