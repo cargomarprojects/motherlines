@@ -41,7 +41,7 @@ export class HeaderComponent {
     }
 
     getTEST(){
-        return 'TEST';
+        return 'TEST1';
     }
 
 }
