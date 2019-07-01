@@ -40,4 +40,8 @@ export class HeaderComponent {
         this.id = this.gs.getGuid();
     }
 
+    getTEST(){
+        return 'TEST';
+    }
+
 }
