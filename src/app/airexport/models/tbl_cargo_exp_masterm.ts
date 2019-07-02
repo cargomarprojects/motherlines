@@ -97,6 +97,8 @@ export interface vm_tbl_cargo_exp_masterm {
 
 export interface SearchQuery {
     searchString : string ;
+    fromdate : string ;
+    todate : string ;
 }
 
 export interface AirExpMasterModel {
