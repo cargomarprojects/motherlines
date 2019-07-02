@@ -19,9 +19,9 @@ export class AirExpMasterService {
     }
     private record: AirExpMasterModel;
 
-    public id : string;
-    public menuid : string;
-    public param_type : string ;
+    public id: string;
+    public menuid: string;
+    public param_type: string;
 
     public title: string;
     public isAdmin: boolean;
@@ -35,7 +35,7 @@ export class AirExpMasterService {
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
-    ) {}
+    ) { }
 
     public init(params: any) {
         if (this.initlialized)
@@ -46,10 +46,10 @@ export class AirExpMasterService {
         this.param_type = params.param_type;
 
         this.record = <AirExpMasterModel>{
-            errormessage : '',
-            records : [],
-            searchQuery : <SearchQuery>{searchString : '',fromdate : this.gs.defaultValues.today,todate : this.gs.defaultValues.today},
-            pageQuery : <PageQuery>{action :'NEW',page_count :0,page_current :-1,page_rowcount:0,page_rows:0}
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.defaultValues.today, todate: this.gs.defaultValues.today, searchtype: 'REFNO' },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
         this.mdata$.next(this.record);
@@ -59,12 +59,12 @@ export class AirExpMasterService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
-        
+
         this.initlialized = true;
 
     }
 
-    Search( _searchdata : any, type: string = '') {
+    Search(_searchdata: any, type: string = '') {
 
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
@@ -80,6 +80,11 @@ export class AirExpMasterService {
         SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
+        if (this.record.searchQuery.fromdate.length > 0 && this.record.searchQuery.todate.length > 0) {
+            SearchData.SDATE = this.record.searchQuery.fromdate;
+            SearchData.EDATE = this.record.searchQuery.todate;
+        }
+        SearchData.SEARCH_TYPE = this.record.searchQuery.searchtype;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -92,7 +97,7 @@ export class AirExpMasterService {
         }
 
         this.List(SearchData).subscribe(response => {
-            this.record.pageQuery = <PageQuery>{ action :'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
+            this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {

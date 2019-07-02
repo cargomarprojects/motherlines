@@ -7,6 +7,8 @@ import { AirExpMasterService } from '../../services/airexp-master.service';
 import { User_Menu } from '../../../core/models/menum';
 import { Tbl_cargo_exp_masterm, vm_tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
 import { SearchTable } from '../../../shared/models/searchtable';
+import { isNumber } from 'util';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-airexp-master-edit',
@@ -82,21 +84,60 @@ export class AirExpMasterEditComponent implements OnInit {
 
   init() {
     this.record.mbl_pkid = this.pkid;
-    this.record.mbl_shipment_stage = 'NIL';
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
-    this.record.mbl_ref_date = this.gs.defaultValues.today;
-    this.record.mbl_direct = "N";
-    this.record.mbl_3rdparty = "N";
-    this.record.mbl_shipment_stage = "NIL";
     this.record.mbl_prefix = this.gs.AIR_EXPORT_REFNO_PREFIX;
     this.record.mbl_startingno = this.gs.AIR_EXPORT_REFNO_STARTING_NO;
-    this.record.mbl_no = '';
     if (this.gs.BRANCH_REGION == "USA")
       this.record.mbl_currency = "USD";
     else
       this.record.mbl_currency = "AED";
-
+    this.record.mbl_no = '';
+    this.record.mbl_refno = '';
+    this.record.mbl_ref_date = this.gs.defaultValues.today;
+    this.record.mbl_date = '';
+    this.record.mbl_frt_status = '';
+    this.record.mbl_liner_id = '';
+    this.record.mbl_liner_name = '';
+    this.record.mbl_liner_code = '';
+    this.record.mbl_agent_id = '';
+    this.record.mbl_agent_name = '';
+    this.record.mbl_agent_code = '';
+    this.record.mbl_pod_id = '';
+    this.record.mbl_pod_code = '';
+    this.record.mbl_pod_name = '';
+    this.record.mbl_pod_cntry_code = '';
+    this.record.mbl_pol_id = '';
+    this.record.mbl_pol_code = '';
+    this.record.mbl_pol_name = '';
+    this.record.mbl_pol_cntry_code = '';
+    this.record.mbl_liner_bookingno = '';
+    this.record.mbl_direct = 'N';
+    this.record.mbl_direct_bool = false;
+    this.record.mbl_pol_etd = '';
+    this.record.mbl_pod_eta = '';
+    this.record.mbl_vessel = '';
+    this.record.mbl_voyage = '';
+    this.record.mbl_currency = '';
+    this.record.mbl_to_port1 = '';
+    this.record.mbl_to_port2 = '';
+    this.record.mbl_to_port3 = '';
+    this.record.mbl_by_carrier1 = '';
+    this.record.mbl_by_carrier2 = '';
+    this.record.mbl_by_carrier3 = '';
+    this.record.mbl_country_id = '';
+    this.record.mbl_country_name = '';
+    this.record.mbl_handled_id = '';
+    this.record.mbl_handled_name = '';
+    this.record.mbl_mawb_weight = 0;
+    this.record.mbl_mawb_chwt = 0;
+    this.record.mbl_jobtype_id = '';
+    this.record.mbl_jobtype_name = '';
+    this.record.mbl_shipment_stage = 'NIL';
+    this.record.mbl_salesman_id = '';
+    this.record.mbl_salesman_name = '';
+    this.record.mbl_3rdparty = 'N';
+    this.record.mbl_3rdparty_bool = false;
     if (this.gs.JOB_TYPE_AE.length > 0) {
       // if (JobList.Count > 0)
       //     Cmb_JobType.SelectedIndex = 0;
@@ -207,7 +248,7 @@ export class AirExpMasterEditComponent implements OnInit {
       this.errorMessage = "Ref Date cannot be blank";
       return bRet;
     }
-     
+
     if (this.gs.JOB_TYPE_AE.length > 0 && this.record.mbl_jobtype_id == "") {
       bRet = false;
       this.errorMessage = "Job Type cannot be blank";
@@ -289,23 +330,36 @@ export class AirExpMasterEditComponent implements OnInit {
       this.errorMessage = "Invalid Weight"
       return bRet;
     }
+
     if (this.record.mbl_mawb_chwt <= 0) {
       bRet = false;
       this.errorMessage = "Invalid Ch.Weight"
       return bRet;
     }
 
-    // if (!Lib.IsValidAWB(Txt_MblNo.Text))
-    // {
-    //     bRet = false;
-    //     MessageBox.Show("Invalid Master BL#", "Save", MessageBoxButton.OK);
-    //     Txt_MblNo.Focus();
-    //     return bRet;
-    // }
+    if (!this.IsValidAWB(this.record.mbl_no)) {
+      bRet = false;
+      this.errorMessage = "Invalid Master BL#"
+      return bRet;
+    }
 
     return bRet;
+
   }
 
+  IsValidAWB(Awb: string) {
+    let i: number = 0;//"0123456789".indexOf(snum)<0
+    let snum: string = '';
+    Awb = Awb.trim();
+    if (Awb.length != 11)
+      return false;
+    for (i = 0; i < Awb.length; i++) {
+      snum = Awb.substr(i, 1);
+      if (!isNumber(+snum))
+        return false;
+    }
+    return true;
+  }
 
   Close() {
     this.location.back();

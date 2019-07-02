@@ -13,8 +13,13 @@
                 <app-date [inputdate]="searchQuery.todate" (ValueChanged)="searchQuery.todate=$event">
                 </app-date>
               </div>
-            <label class="col-1 col-form-label col-form-label-sm">Search</label>
-            <div class="col-5">
+              <div class="col-2">
+                <select class="form-control form-control-sm" [(ngModel)]="searchQuery.searchtype">
+                  <option [value]="'REFNO'">Ref No:</option>
+                  <option [value]="'CONSIGNEE'">Consignee:</option>
+                </select>
+              </div>
+            <div class="col-4">
               <input class="form-control form-control-sm" type="text" [(ngModel)]="searchQuery.searchString" />
             </div>
           </div>
@@ -23,7 +28,7 @@
           <div class="form-group row">
             <label class="col-2 col-form-label col-form-label-sm"></label>
             <div class="col-10">
-              <button [disabled]="loading" (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Process</button>
+              <button [disabled]="loading" (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Search</button>
               <button [disabled]="loading" (click)="List('EXCEL')" class="btn btn-primary btn-sm">Excel</button>
             </div>
           </div>

@@ -99,6 +99,7 @@ export interface SearchQuery {
     searchString : string ;
     fromdate : string ;
     todate : string ;
+    searchtype : string ;
 }
 
 export interface AirExpMasterModel {
