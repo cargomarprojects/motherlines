@@ -84,6 +84,7 @@ export interface Tbl_cargo_exp_masterm {
     rec_files_attached: string;
     mbl_ismemo_attached: string;
     mbl_3rdparty: string;
+    mbl_3rdparty_bool: boolean;
 }
 
 

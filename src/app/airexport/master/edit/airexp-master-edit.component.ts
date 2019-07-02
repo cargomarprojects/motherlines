@@ -97,9 +97,10 @@ export class AirExpMasterEditComponent implements OnInit {
     else
       this.record.mbl_currency = "AED";
 
-      // if (JobList != null)
-      //               if (JobList.Count > 0)
-      //                   Cmb_JobType.SelectedIndex = 0;
+    if (this.gs.JOB_TYPE_AE.length > 0) {
+      // if (JobList.Count > 0)
+      //     Cmb_JobType.SelectedIndex = 0;
+    }
   }
 
   GetRecord() {
@@ -163,15 +164,13 @@ export class AirExpMasterEditComponent implements OnInit {
 
   }
 
-
-
-
   Save() {
 
     if (!this.Allvalid())
       return;
 
     this.record.mbl_direct = this.record.mbl_direct_bool ? 'Y' : 'N';
+    this.record.mbl_3rdparty = this.record.mbl_3rdparty_bool ? 'Y' : 'N';
 
     const saveRecord = <vm_tbl_cargo_exp_masterm>{};
     saveRecord.record = this.record;
@@ -208,13 +207,13 @@ export class AirExpMasterEditComponent implements OnInit {
       this.errorMessage = "Ref Date cannot be blank";
       return bRet;
     }
-    
-    if (this.record.mbl_jobtype_id == "") {
+     
+    if (this.gs.JOB_TYPE_AE.length > 0 && this.record.mbl_jobtype_id == "") {
       bRet = false;
       this.errorMessage = "Job Type cannot be blank";
       return bRet;
     }
-    
+
     if (this.record.mbl_shipment_stage == "") {
       bRet = false;
       this.errorMessage = "Shipment Stage cannot be blank";
@@ -225,7 +224,7 @@ export class AirExpMasterEditComponent implements OnInit {
       this.errorMessage = "Master BL# can't be blank"
       return bRet;
     }
-    
+
     if (this.record.mbl_agent_id == "") {
       bRet = false;
       this.errorMessage = "Master Agent cannot be blank"
@@ -247,7 +246,7 @@ export class AirExpMasterEditComponent implements OnInit {
       this.errorMessage = "Freight status cannot be blank"
       return bRet;
     }
-     
+
     if (this.record.mbl_pol_id == "") {
       bRet = false;
       this.errorMessage = "Port of Loading cannot be blank"
@@ -285,17 +284,17 @@ export class AirExpMasterEditComponent implements OnInit {
       return bRet;
     }
 
-    if (this.record.mbl_mawb_weight <=0) {
+    if (this.record.mbl_mawb_weight <= 0) {
       bRet = false;
       this.errorMessage = "Invalid Weight"
       return bRet;
     }
-    if (this.record.mbl_mawb_chwt <=0) {
+    if (this.record.mbl_mawb_chwt <= 0) {
       bRet = false;
       this.errorMessage = "Invalid Ch.Weight"
       return bRet;
     }
-    
+
     // if (!Lib.IsValidAWB(Txt_MblNo.Text))
     // {
     //     bRet = false;
@@ -303,7 +302,7 @@ export class AirExpMasterEditComponent implements OnInit {
     //     Txt_MblNo.Focus();
     //     return bRet;
     // }
-    
+
     return bRet;
   }
 
@@ -311,22 +310,6 @@ export class AirExpMasterEditComponent implements OnInit {
   Close() {
     this.location.back();
   }
-
-
-  AddRow() {
-
-    // var rec = <Tbl_cargo_exp_container>{};
-    // rec.cntr_pkid = this.gs.getGuid();
-    //   rec.cntr_no = "",
-    //   rec.cntr_type = "",
-    //   rec.cntr_sealno ='';
-    //   rec.cntr_movement = "",
-    //   rec.cntr_weight = 0;
-    // rec.cntr_pieces = 0;
-    // rec.cntr_cbm = 0;
-    // this.records.push(rec);
-  }
-
 
   LovSelected(_Record: SearchTable) {
 
@@ -356,39 +339,20 @@ export class AirExpMasterEditComponent implements OnInit {
       this.record.mbl_pod_name = _Record.name;
     }
 
-    // if (_Record.controlname == "POFD") {
-    //   this.record.mbl_pofd_id = _Record.id;
-    //   this.record.mbl_pofd_name = _Record.name;
-    // }
-
     if (_Record.controlname == "COUNTRY") {
       this.record.mbl_country_id = _Record.id;
       this.record.mbl_country_name = _Record.name;
     }
 
-    // Container
-    // if (_Record.controlname == "CONTAINER TYPE") {
-    //   this.records.forEach(rec => {
-    //     if (rec.cntr_pkid == _Record.uid) {
-
-    //     }
-    //   });
-    // }
   }
 
   onFocusout(field: string) {
 
     switch (field) {
       case 'mbl_no': {
-
         this.IsBLDupliation('MBL', this.record.mbl_no);
         break;
       }
-      //   case 'mbl_liner_bookingno': {
-
-      //     this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
-      //     break;
-      //   }
     }
   }
 
@@ -403,19 +367,10 @@ export class AirExpMasterEditComponent implements OnInit {
         this.record.mbl_no = this.record.mbl_no.toUpperCase();
         break;
       }
-
-      //   case 'mbl_sub_houseno': {
-      //     this.record.mbl_sub_houseno = this.record.mbl_sub_houseno.toUpperCase();
-      //     break;
-      //   }
       case 'mbl_liner_bookingno': {
         this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
         break;
       }
-      //   case 'mbl_por': {
-      //     this.record.mbl_por = this.record.mbl_por.toUpperCase();
-      //     break;
-      //   }
       case 'mbl_vessel': {
         this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
         break;
@@ -424,38 +379,40 @@ export class AirExpMasterEditComponent implements OnInit {
         this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
         break;
       }
+      case 'mbl_to_port1': {
+        this.record.mbl_to_port1 = this.record.mbl_to_port1.toUpperCase();
+        break;
+      }
+      case 'mbl_by_carrier1': {
+        this.record.mbl_by_carrier1 = this.record.mbl_by_carrier1.toUpperCase();
+        break;
+      }
 
-      //   case 'cntr_no': {
-      //     rec.cntr_no = rec.cntr_no.toUpperCase();
-      //     break;
-      //   }
-      //   case 'cntr_type': {
-      //     rec.cntr_type = rec.cntr_type.toUpperCase();
-      //     break;
-      //   }
-      //   case 'cntr_sealno': {
-      //     rec.cntr_sealno = rec.cntr_sealno.toUpperCase();
-      //     break;
-      //   }
-      //   case 'cntr_pieces': {
-      //     rec.cntr_pieces = this.gs.roundNumber(rec.cntr_pieces, 0);
-      //     break;
-      //   }
-      //   case 'cntr_packages_uom': {
-      //     break;
-      //   }
-      //   case 'cntr_weight': {
-      //     rec.cntr_weight = this.gs.roundNumber(rec.cntr_weight, 3);
-      //     break;
-      //   }
-      //   case 'cntr_cbm': {
-      //     rec.cntr_cbm = this.gs.roundNumber(rec.cntr_cbm, 3);
-      //     break;
-      //   }
-      //   case 'cntr_tare_weight': {
-      //     rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
-      //     break;
-      //   }
+      case 'mbl_to_port2': {
+        this.record.mbl_to_port2 = this.record.mbl_to_port2.toUpperCase();
+        break;
+      }
+      case 'mbl_by_carrier2': {
+        this.record.mbl_by_carrier2 = this.record.mbl_by_carrier2.toUpperCase();
+        break;
+      }
+      case 'mbl_to_port3': {
+        this.record.mbl_to_port3 = this.record.mbl_to_port3.toUpperCase();
+        break;
+      }
+      case 'mbl_by_carrier3': {
+        this.record.mbl_by_carrier3 = this.record.mbl_by_carrier3.toUpperCase();
+        break;
+      }
+      case 'mbl_mawb_weight': {
+        this.record.mbl_mawb_weight = this.gs.roundNumber(this.record.mbl_mawb_weight, 3);
+        break;
+      }
+      case 'mbl_mawb_chwt': {
+        this.record.mbl_mawb_chwt = this.gs.roundNumber(this.record.mbl_mawb_chwt, 3);
+        break;
+      }
+
     }
   }
 
