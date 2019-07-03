@@ -1053,18 +1053,18 @@ export class GlobalService {
 
   Save2LocalStorage(){
     
-    localStorage.setItem('access_token', this.Access_Token);
-    localStorage.setItem('company_name', this.Company_Name);
-    localStorage.setItem('isloginsuccess', JSON.stringify(this.IsLoginSuccess));
-    localStorage.setItem('isauthenticated', JSON.stringify(this.IsAuthenticated));
-    localStorage.setItem('globaldata', JSON.stringify(this.globalData));
-    localStorage.setItem('globalvariables', JSON.stringify(this.globalVariables));
-    localStorage.setItem('defaultvalues', JSON.stringify(this.defaultValues));
-    localStorage.setItem('userinfo', JSON.stringify(this.UserInfo));
-    localStorage.setItem('modules', JSON.stringify(this.Modules));
-    localStorage.setItem('menulist', JSON.stringify(this.MenuList));
-    localStorage.setItem('companylist', JSON.stringify(this.CompanyList));
-    localStorage.setItem('yearlist', JSON.stringify(this.YearList));
+    sessionStorage.setItem('access_token', this.Access_Token);
+    sessionStorage.setItem('company_name', this.company_name);
+    sessionStorage.setItem('isloginsuccess', JSON.stringify(this.IsLoginSuccess));
+    sessionStorage.setItem('isauthenticated', JSON.stringify(this.IsAuthenticated));
+    sessionStorage.setItem('globaldata', JSON.stringify(this.globalData));
+    sessionStorage.setItem('globalvariables', JSON.stringify(this.globalVariables));
+    sessionStorage.setItem('defaultvalues', JSON.stringify(this.defaultValues));
+    sessionStorage.setItem('userinfo', JSON.stringify(this.UserInfo));
+    sessionStorage.setItem('modules', JSON.stringify(this.Modules));
+    sessionStorage.setItem('menulist', JSON.stringify(this.MenuList));
+    sessionStorage.setItem('companylist', JSON.stringify(this.CompanyList));
+    sessionStorage.setItem('yearlist', JSON.stringify(this.YearList));
   }
 
 
