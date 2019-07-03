@@ -5,6 +5,7 @@ import { GlobalService } from '../services/global.service';
 import { LoginService } from '../services/login.service';
 
 import { User_Menu } from '../models/menum';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
     selector: 'app-header',
@@ -42,6 +43,10 @@ export class HeaderComponent {
 
     getTEST(){
         return 'FROM AJITH COMPUTER';
+    }
+
+    ngOnDestroy(){
+
     }
 
 }

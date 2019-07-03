@@ -134,6 +134,8 @@ export class Login2Component implements OnInit {
 
         this.GLOBALCONTANTS.IsAuthenticated = true;
 
+        this.GLOBALCONTANTS.Save2LocalStorage();
+
         this.router.navigate(['home'], { replaceUrl: true });
     }
 
@@ -170,6 +172,8 @@ export class Login2Component implements OnInit {
                 this.GLOBALCONTANTS.InitUserInfo();
                 //this.GLOBALCONTANTS.InitMonths();
 
+                this.GLOBALCONTANTS.Save2LocalStorage();
+
             }, error => {
                 this.loading = false;
                 this.errorMessage = error.error.error_description;
@@ -205,6 +209,8 @@ export class Login2Component implements OnInit {
                     }
                 });
 
+                this.GLOBALCONTANTS.Save2LocalStorage();
+                
                 this.loading = false;
             }, error => {
                 this.loading = false;
