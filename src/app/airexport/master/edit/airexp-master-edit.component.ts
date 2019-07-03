@@ -75,6 +75,7 @@ export class AirExpMasterEditComponent implements OnInit {
     this.errorMessage = '';
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_exp_masterm>{};
+      this.hrecords = <Tbl_cargo_exp_housem[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
