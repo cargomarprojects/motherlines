@@ -132,6 +132,8 @@ export interface vm_tbl_cargo_imp_masterm {
 
 export interface SearchQuery {
     searchString: string;
+    fromdate: string;
+    todate: string;
 }
 
 export interface SeaImpMasterModel {

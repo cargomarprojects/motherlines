@@ -6,7 +6,7 @@ import { SeaImpMasterEditComponent } from './master/edit/seaimp-master-edit.comp
 
 const routes: Routes = [
   { path : 'SeaImpMasterPage', component : SeaImpMasterComponent },
-  { path : 'SeaIMpMasterEditPage', component : SeaImpMasterEditComponent }
+  { path : 'SeaImpMasterEditPage', component : SeaImpMasterEditComponent }
 ];
 
 

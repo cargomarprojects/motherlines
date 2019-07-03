@@ -13,12 +13,7 @@
                 <app-date [inputdate]="searchQuery.todate" (ValueChanged)="searchQuery.todate=$event">
                 </app-date>
               </div>
-              <div class="col-2">
-                <select class="form-control form-control-sm" [(ngModel)]="searchQuery.searchtype">
-                  <option [value]="'REFNO'">Ref No:</option>
-                  <option [value]="'CONSIGNEE'">Consignee:</option>
-                </select>
-              </div>
+              <label class="col-1 col-form-label col-form-label-sm">Ref No:</label>
             <div class="col-4">
               <input class="form-control form-control-sm" type="text" [(ngModel)]="searchQuery.searchString" />
             </div>

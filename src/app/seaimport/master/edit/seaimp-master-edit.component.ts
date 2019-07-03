@@ -37,6 +37,7 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   private cmbList = {};
 
+  MblStatusList: any[] = [];
 
   IsLocked: boolean = false;
 
@@ -62,8 +63,21 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = '';
+    this.LoadCombo();
   }
 
+  LoadCombo() {
+
+    if (this.gs.company_name == "MOTHERLINES INC USA") {
+      this.MblStatusList = [{ "name": "NIL" }
+        , { "name": "OMBL WITH ACCOUNTING" }, { "name": "OMBL SENT TO CARRIER" }
+        , { "name": "OMBL WITH LAX OFFICE" }, { "name": "OMBL SENT BY LAX OFFICE" }, { "name": "OMBL WITH NYC OFFICE" }
+        , { "name": "OMBL SENT BY NYC OFFICE" }];
+    } else {
+      this.MblStatusList = [{ "name": "NIL" }, { "name": "OMBL WITH OPERATION" },
+      { "name": "OMBL WITH ACCOUNTING" }, { "name": "OMBL SENT TO CARRIER" }];
+    }
+  }
 
   NewRecord() {
     this.mode = 'ADD'
@@ -90,19 +104,19 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
     this.record.mbl_ref_date = this.gs.defaultValues.today;
-   // this.record.mbl_direct = "N";
+    // this.record.mbl_direct = "N";
     this.record.mbl_shipment_stage = "NIL";
     this.record.mbl_prefix = this.gs.SEA_EXPORT_REFNO_PREFIX;
     this.record.mbl_startingno = this.gs.SEA_EXPORT_REFNO_STARTING_NO;
 
-    this.record.mbl_no ='';
+    this.record.mbl_no = '';
     //this.record.mbl_liner_bookingno ='';
     //this.record.mbl_sub_houseno ='';
 
     //this.record.mbl_por ='';
 
-    this.record.mbl_vessel ='';
-    this.record.mbl_voyage ='';
+    this.record.mbl_vessel = '';
+    this.record.mbl_voyage = '';
 
   }
 
@@ -176,7 +190,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
-   // this.record.mbl_direct = this.record.mbl_direct_bool ? 'Y' : 'N';
+    // this.record.mbl_direct = this.record.mbl_direct_bool ? 'Y' : 'N';
 
     const saveRecord = <vm_tbl_cargo_imp_masterm>{};
     saveRecord.record = this.record;
@@ -334,10 +348,10 @@ export class SeaImpMasterEditComponent implements OnInit {
 
     var rec = <Tbl_cargo_imp_container>{};
     rec.cntr_pkid = this.gs.getGuid();
-      rec.cntr_no = "",
+    rec.cntr_no = "",
       rec.cntr_type = "",
-      rec.cntr_sealno ='';
-      rec.cntr_movement = "",
+      rec.cntr_sealno = '';
+    rec.cntr_movement = "",
       rec.cntr_weight = 0;
     rec.cntr_pieces = 0;
     rec.cntr_cbm = 0;
@@ -403,8 +417,8 @@ export class SeaImpMasterEditComponent implements OnInit {
       }
       case 'mbl_liner_bookingno': {
 
-       // this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
-       // break;
+        // this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
+        // break;
       }
     }
   }
@@ -421,18 +435,18 @@ export class SeaImpMasterEditComponent implements OnInit {
         break;
       }
 
-    //   case 'mbl_sub_houseno': {
-    //     this.record.mbl_sub_houseno = this.record.mbl_sub_houseno.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_liner_bookingno': {
-    //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_por': {
-    //     this.record.mbl_por = this.record.mbl_por.toUpperCase();
-    //     break;
-    //   }
+      //   case 'mbl_sub_houseno': {
+      //     this.record.mbl_sub_houseno = this.record.mbl_sub_houseno.toUpperCase();
+      //     break;
+      //   }
+      //   case 'mbl_liner_bookingno': {
+      //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
+      //     break;
+      //   }
+      case 'mbl_place_delivery': {
+        this.record.mbl_place_delivery = this.record.mbl_place_delivery.toUpperCase();
+        break;
+      }
       case 'mbl_vessel': {
         this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
         break;

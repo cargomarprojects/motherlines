@@ -80,14 +80,13 @@ export class AirExpMasterService {
         SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
-        if (this.record.searchQuery.fromdate.length > 0 && this.record.searchQuery.todate.length > 0) {
-            SearchData.SDATE = this.record.searchQuery.fromdate;
-            SearchData.EDATE = this.record.searchQuery.todate;
-        }
+        SearchData.SDATE = this.record.searchQuery.fromdate;
+        SearchData.EDATE = this.record.searchQuery.todate;
         SearchData.SEARCH_TYPE = this.record.searchQuery.searchtype;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
+
 
         if (type == 'PAGE') {
             SearchData.action = this.record.pageQuery.action;
