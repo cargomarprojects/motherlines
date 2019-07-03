@@ -41,356 +41,7 @@ export class GlobalService {
 
   public branch_codes: string = '';
 
-
   public history: Array<{ id: string, url: string }> = [];
-
-
-  constructor(
-    private http2: HttpClient,
-    private location: Location,
-    private router: Router) {
-
-    this.Company_Name = "BlueTree Systems";
-    this.globalVariables = new GlobalVariables;
-    this.globalData = new GlobalData;
-    this.InitdefaultValues();
-
-  }
-
-  public getGuid(): string {
-    let uuid = UUID.UUID();
-    return uuid.toUpperCase();
-  }
-
-  public getPagetitle(menucode: string): string {
-    return this.MenuList.find(f => f.menu_name == menucode).menu_name;
-  }
-
-  public getMenu(menucode: string): User_Menu {
-    return this.MenuList.find(f => f.menu_name == menucode);
-  }
-
-  public getMenuById(menuid: string): User_Menu {
-    return this.MenuList.find(f => f.menu_pkid == menuid);
-  }
-
-
-  public getTitle(menuid: string): string {
-    var itm =this.MenuList.find(f => f.menu_pkid == menuid);
-    if ( itm)
-      return itm.menu_name;
-    else
-      return '';
-  }
-
-
-
-
-
-
-  public canSave(menuid: string, mode: string): boolean {
-    var bret: boolean = false;
-    var itm = this.MenuList.find(f => f.menu_pkid == menuid);
-    if (itm) {
-      if (mode == "ADD" && itm.rights_add == "Y")
-        bret = true;
-      if (mode == "EDIT" && itm.rights_edit == "Y")
-        bret = true;
-    }
-    return bret;
-  }
-
-  public canAdd(menuid: string): boolean {
-    var bret: boolean = false;
-    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_add == "Y");
-    if (itm)
-        bret = true;
-    return bret;
-  }
-  public canEdit(menuid: string): boolean {
-    var bret: boolean = false;
-    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_edit == "Y");
-    if (itm)
-        bret = true;
-    return bret;
-  }
-  public canView(menuid: string): boolean {
-    var bret: boolean = false;
-    var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_edit == "Y" || f.rights_view == "Y" ));
-    if (itm)
-        bret = true;
-    return bret;
-  }
-
-  public canDelete(menuid: string): boolean {
-    var bret: boolean = false;
-    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_delete == "Y");
-    if (itm)
-        bret = true;
-    return bret;
-  }
-
-
-
-  public IsAdmin(menuid: string): boolean {
-    var bret1: boolean;
-    var bret2: boolean;
-    bret1 = this.user_isadmin == 'Y';
-    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_admin == 'Y');
-    if (itm)
-      bret2 = true;
-
-    return bret1 || bret2;
-  }
-
-
-  public getError(error: any) {
-    if (this.isolderror)
-      return JSON.parse(error.error).Message;
-    else
-      return error.error.Message;
-  }
-
-
-  public headerparam2(type: string, company_code: string = '') {
-    let headers = new HttpHeaders();
-
-    if (type == 'login')
-      headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    if (type == 'authorized') {
-      headers = headers.append('Authorization', 'Bearer ' + this.Access_Token);
-      headers = headers.append('Content-Type', 'application/json');
-    }
-
-    if (type == 'authorized-fileupload') {
-      headers = headers.append('Authorization', 'Bearer ' + this.Access_Token);
-      headers = headers.delete('Content-Type');
-    }
-
-    if (type == 'anonymous') {
-      headers = headers.append('Content-Type', 'application/json');
-
-    }
-    if (type == 'excel') {
-      headers = headers.append('Authorization', 'Bearer ' + this.Access_Token);
-      headers = headers.append('Content-Type', 'application/json');
-      headers = headers.append('Accept', 'application/x-msexcel');
-      //options.responseType = ResponseContentType.Blob;
-    }
-    if (company_code != '')
-      headers = headers.append('company-code', company_code);
-
-    const options = {
-      headers: headers,
-    };
-
-    return options;
-  }
-
-
-  public ClosePage(sPage: string, IsCloseButton = true) {
-    if (IsCloseButton)
-      this.router.navigate([sPage], { replaceUrl: true });
-    else
-      this.location.back();
-  }
-
-
-  public SendEmail(SearchData: any) {
-    return this.http2.post<any>(this.baseUrl + "/api/Email/Common", SearchData, this.headerparam2('authorized'));
-  }
-
-  public SearchRecord(SearchData: any) {
-    return this.http2.post<any>(this.baseUrl + "/api/Admin/Lov/SearchRecord", SearchData, this.headerparam2('authorized'));
-  }
-
-  public DownloadFile(report_folder: string, filename: string, filetype: string, filedisplayname: string = 'N') {
-    let body = 'report_folder=' + report_folder + '&filename=' + filename + '&filetype=' + filetype + '&filedisplayname=' + filedisplayname;
-    window.open(this.baseUrl + '/api/Admin/User/DownloadFile?' + body, "_blank");
-  }
-
-
-  public roundNumber(_number: number, _precision: number) {
-    var factor = Math.pow(10, _precision);
-    var tempNumber = _number * factor;
-    var roundedTempNumber = Math.round(tempNumber);
-    return roundedTempNumber / factor;
-  };
-
-
-  public SetupCompanyList(_companylist: Companym[]) {
-
-    this.CompanyList = new Array<Companym>();
-    var mRec: Companym = new Companym;
-
-    this.branch_codes = '';
-
-    if (_companylist.length > 1) {
-      mRec.comp_pkid = "ALL";
-      mRec.comp_code = "ALL";
-      mRec.comp_name = "ALL";
-      this.CompanyList.push(mRec);
-
-    }
-    _companylist.forEach(rec => {
-      mRec = new Companym;
-      mRec.comp_pkid = rec.comp_pkid;
-      mRec.comp_code = rec.comp_code;
-      mRec.comp_name = rec.comp_name;
-
-      if (this.branch_codes != '')
-        this.branch_codes += ',';
-      this.branch_codes += "'" + rec.comp_code + "'";
-
-      this.CompanyList.push(mRec);
-    });
-  }
-
-  public InitdefaultValues() {
-
-    this.defaultValues = new DefaultValues;
-    this.defaultValues.today = new Date().toISOString().slice(0, 10);
-    this.defaultValues.monthbegindate = this.getNewdate(0);
-    this.defaultValues.lastmonthdate = this.getNewdate(30);//get today -30 days
-    this.defaultValues.print_cheque_only_after_ho_approved = 'N';
-    this.globalData.cost_sea_fromdate = this.defaultValues.monthbegindate;
-    this.globalData.cost_sea_todate = this.defaultValues.today;
-    this.globalData.cost_air_fromdate = this.defaultValues.monthbegindate;
-    this.globalData.cost_air_todate = this.defaultValues.today;
-    this.globalData.cost_drcr_fromdate = this.defaultValues.monthbegindate;
-    this.globalData.cost_drcr_todate = this.defaultValues.today;
-    this.globalData.cost_agentinvoice_fromdate = this.defaultValues.monthbegindate;
-    this.globalData.cost_agentinvoice_todate = this.defaultValues.today;
-
-    this.globalData.job_fromdate = this.defaultValues.lastmonthdate;
-    this.globalData.job_todate = this.defaultValues.today;
-    this.globalData.hbl_fromdate = this.defaultValues.lastmonthdate;
-    this.globalData.hbl_todate = this.defaultValues.today;
-    this.globalData.mbl_fromdate = this.defaultValues.lastmonthdate;
-    this.globalData.mbl_todate = this.defaultValues.today;
-    this.globalData.ledger_fromdate = this.defaultValues.lastmonthdate;
-    this.globalData.ledger_todate = this.defaultValues.today;
-  }
-  public getNewdate(_days: number) {
-    var nDate = new Date();
-    if (_days <= 0)
-      nDate.setDate(1);
-    else
-      nDate.setDate(nDate.getDate() - _days);
-    return nDate.toISOString().slice(0, 10);
-  }
-
-
-  public roundWeight(_number: number, _category: string) {
-
-    let _precision: number;
-    _precision = 0;
-    if (_category == "CBM")
-      _precision = 3;
-    else if (_category == "NTWT")
-      _precision = 3;
-    else if (_category == "GRWT")
-      _precision = 3;
-    else if (_category == "CHWT")
-      _precision = 3;
-    else if (_category == "PCS")
-      _precision = 3;
-    else if (_category == "PKG")
-      _precision = 0;
-    else if (_category == "EXRATE")
-      _precision = 2;
-    else if (_category == "RATE")
-      _precision = 2;
-    else if (_category == "AMT")
-      _precision = 2
-
-    var factor = Math.pow(10, _precision);
-    var tempNumber = _number * factor;
-    var roundedTempNumber = Math.round(tempNumber);
-    return roundedTempNumber / factor;
-  };
-
-
-
-  Naviagete(menu_route: string, jsonstring: string, _replaceurl: boolean = false) {
-    this.router.navigate([menu_route], { queryParams: { parameter: jsonstring }, replaceUrl: _replaceurl });
-  }
-
-
-  
-
-
-  public  IsShipmentClosed(OPR_MODE : string, REF_DATE: string, LOCK_STATUS: string, UNLOCK_DATE : string = "")
-  {
-      var bRet = false;
-      var Dt_Now : string;
-      var Days = 0;
-
-      var IsNullVal = false;
-
-      try
-      {
-
-          if (LOCK_STATUS == null || LOCK_STATUS == "")
-          {
-              Dt_Now = this.defaultValues.today;
-              
-              //Days = Dt_Now.Subtract(REF_DATE).TotalDays;
-
-              if ((OPR_MODE == "SEA EXPORT" || OPR_MODE == "SEA IMPORT") && Days > this.LOCK_DAYS_SEA && this.LOCK_DAYS_SEA > 0)
-                  bRet = true;
-              if ((OPR_MODE == "AIR EXPORT" || OPR_MODE == "AIR IMPORT") && Days > this.LOCK_DAYS_AIR && this.LOCK_DAYS_AIR > 0)
-                  bRet = true;
-              if ((OPR_MODE == "OTHERS" || OPR_MODE == "EXTRA") && Days > this.LOCK_DAYS_OTHERS && this.LOCK_DAYS_OTHERS > 0)
-                  bRet = true;
-              if ((OPR_MODE == "ADMIN") && Days > this.LOCK_DAYS_ADMIN && this.LOCK_DAYS_ADMIN > 0)
-                  bRet = true;
-          }
-          else if (LOCK_STATUS == "L")
-              bRet = true;
-          else if (LOCK_STATUS == "U")
-          {
-              bRet = false;
-
-              //if (!UNLOCK_DATE.Equals(DBNull.Value))
-              //{
-
-              //    Dt_Now = DateTime.Now;
-              //    Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
-
-              //    if (Days >= 2)
-              //        bRet = true;
-              //}
-
-              IsNullVal = false;
-              if (UNLOCK_DATE == "")
-                  IsNullVal = true;
-              if (UNLOCK_DATE == null)
-                  IsNullVal = true;
-
-              if (!IsNullVal)
-              {
-                  Dt_Now = this.defaultValues.today;
-                  //Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
-                  if (Days >= 2)
-                      bRet = true;
-              }
-          }
-      }
-      catch (Exception)
-      {
-          bRet = true;
-      }
-
-      return bRet;
-  }
-
-
-
-
-
-
-  
 
 
 
@@ -845,6 +496,359 @@ export class GlobalService {
     }
 
   }
+
+
+  //START
+
+  constructor(
+    private http2: HttpClient,
+    private location: Location,
+    private router: Router) {
+
+    this.Company_Name = "BlueTree Systems";
+    this.globalVariables = new GlobalVariables;
+    this.globalData = new GlobalData;
+    this.InitdefaultValues();
+
+  }
+
+  public getGuid(): string {
+    let uuid = UUID.UUID();
+    return uuid.toUpperCase();
+  }
+
+  public getPagetitle(menucode: string): string {
+    return this.MenuList.find(f => f.menu_name == menucode).menu_name;
+  }
+
+  public getMenu(menucode: string): User_Menu {
+    return this.MenuList.find(f => f.menu_name == menucode);
+  }
+
+  public getMenuById(menuid: string): User_Menu {
+    return this.MenuList.find(f => f.menu_pkid == menuid);
+  }
+
+
+  public getTitle(menuid: string): string {
+    var itm =this.MenuList.find(f => f.menu_pkid == menuid);
+    if ( itm)
+      return itm.menu_name;
+    else
+      return '';
+  }
+
+
+
+
+
+
+  public canSave(menuid: string, mode: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid);
+    if (itm) {
+      if (mode == "ADD" && itm.rights_add == "Y")
+        bret = true;
+      if (mode == "EDIT" && itm.rights_edit == "Y")
+        bret = true;
+    }
+    return bret;
+  }
+
+  public canAdd(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_add == "Y");
+    if (itm)
+        bret = true;
+    return bret;
+  }
+  public canEdit(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_edit == "Y");
+    if (itm)
+        bret = true;
+    return bret;
+  }
+  public canView(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_edit == "Y" || f.rights_view == "Y" ));
+    if (itm)
+        bret = true;
+    return bret;
+  }
+
+  public canDelete(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_delete == "Y");
+    if (itm)
+        bret = true;
+    return bret;
+  }
+
+
+
+  public IsAdmin(menuid: string): boolean {
+    var bret1: boolean;
+    var bret2: boolean;
+    bret1 = this.user_isadmin == 'Y';
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_admin == 'Y');
+    if (itm)
+      bret2 = true;
+
+    return bret1 || bret2;
+  }
+
+
+  public getError(error: any) {
+    if (this.isolderror)
+      return JSON.parse(error.error).Message;
+    else
+      return error.error.Message;
+  }
+
+
+  public headerparam2(type: string, company_code: string = '') {
+    let headers = new HttpHeaders();
+
+    if (type == 'login')
+      headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    if (type == 'authorized') {
+      headers = headers.append('Authorization', 'Bearer ' + this.Access_Token);
+      headers = headers.append('Content-Type', 'application/json');
+    }
+
+    if (type == 'authorized-fileupload') {
+      headers = headers.append('Authorization', 'Bearer ' + this.Access_Token);
+      headers = headers.delete('Content-Type');
+    }
+
+    if (type == 'anonymous') {
+      headers = headers.append('Content-Type', 'application/json');
+
+    }
+    if (type == 'excel') {
+      headers = headers.append('Authorization', 'Bearer ' + this.Access_Token);
+      headers = headers.append('Content-Type', 'application/json');
+      headers = headers.append('Accept', 'application/x-msexcel');
+      //options.responseType = ResponseContentType.Blob;
+    }
+    if (company_code != '')
+      headers = headers.append('company-code', company_code);
+
+    const options = {
+      headers: headers,
+    };
+
+    return options;
+  }
+
+
+  public ClosePage(sPage: string, IsCloseButton = true) {
+    if (IsCloseButton)
+      this.router.navigate([sPage], { replaceUrl: true });
+    else
+      this.location.back();
+  }
+
+
+  public SendEmail(SearchData: any) {
+    return this.http2.post<any>(this.baseUrl + "/api/Email/Common", SearchData, this.headerparam2('authorized'));
+  }
+
+  public SearchRecord(SearchData: any) {
+    return this.http2.post<any>(this.baseUrl + "/api/Admin/Lov/SearchRecord", SearchData, this.headerparam2('authorized'));
+  }
+
+  public DownloadFile(report_folder: string, filename: string, filetype: string, filedisplayname: string = 'N') {
+    let body = 'report_folder=' + report_folder + '&filename=' + filename + '&filetype=' + filetype + '&filedisplayname=' + filedisplayname;
+    window.open(this.baseUrl + '/api/Admin/User/DownloadFile?' + body, "_blank");
+  }
+
+
+  public roundNumber(_number: number, _precision: number) {
+    var factor = Math.pow(10, _precision);
+    var tempNumber = _number * factor;
+    var roundedTempNumber = Math.round(tempNumber);
+    return roundedTempNumber / factor;
+  };
+
+
+  public SetupCompanyList(_companylist: Companym[]) {
+
+    this.CompanyList = new Array<Companym>();
+    var mRec: Companym = new Companym;
+
+    this.branch_codes = '';
+
+    if (_companylist.length > 1) {
+      mRec.comp_pkid = "ALL";
+      mRec.comp_code = "ALL";
+      mRec.comp_name = "ALL";
+      this.CompanyList.push(mRec);
+
+    }
+    _companylist.forEach(rec => {
+      mRec = new Companym;
+      mRec.comp_pkid = rec.comp_pkid;
+      mRec.comp_code = rec.comp_code;
+      mRec.comp_name = rec.comp_name;
+
+      if (this.branch_codes != '')
+        this.branch_codes += ',';
+      this.branch_codes += "'" + rec.comp_code + "'";
+
+      this.CompanyList.push(mRec);
+    });
+  }
+
+  public InitdefaultValues() {
+
+    this.defaultValues = new DefaultValues;
+    this.defaultValues.today = new Date().toISOString().slice(0, 10);
+    this.defaultValues.monthbegindate = this.getNewdate(0);
+    this.defaultValues.lastmonthdate = this.getNewdate(30);//get today -30 days
+    this.defaultValues.print_cheque_only_after_ho_approved = 'N';
+    this.globalData.cost_sea_fromdate = this.defaultValues.monthbegindate;
+    this.globalData.cost_sea_todate = this.defaultValues.today;
+    this.globalData.cost_air_fromdate = this.defaultValues.monthbegindate;
+    this.globalData.cost_air_todate = this.defaultValues.today;
+    this.globalData.cost_drcr_fromdate = this.defaultValues.monthbegindate;
+    this.globalData.cost_drcr_todate = this.defaultValues.today;
+    this.globalData.cost_agentinvoice_fromdate = this.defaultValues.monthbegindate;
+    this.globalData.cost_agentinvoice_todate = this.defaultValues.today;
+
+    this.globalData.job_fromdate = this.defaultValues.lastmonthdate;
+    this.globalData.job_todate = this.defaultValues.today;
+    this.globalData.hbl_fromdate = this.defaultValues.lastmonthdate;
+    this.globalData.hbl_todate = this.defaultValues.today;
+    this.globalData.mbl_fromdate = this.defaultValues.lastmonthdate;
+    this.globalData.mbl_todate = this.defaultValues.today;
+    this.globalData.ledger_fromdate = this.defaultValues.lastmonthdate;
+    this.globalData.ledger_todate = this.defaultValues.today;
+  }
+  public getNewdate(_days: number) {
+    var nDate = new Date();
+    if (_days <= 0)
+      nDate.setDate(1);
+    else
+      nDate.setDate(nDate.getDate() - _days);
+    return nDate.toISOString().slice(0, 10);
+  }
+
+
+  public roundWeight(_number: number, _category: string) {
+
+    let _precision: number;
+    _precision = 0;
+    if (_category == "CBM")
+      _precision = 3;
+    else if (_category == "NTWT")
+      _precision = 3;
+    else if (_category == "GRWT")
+      _precision = 3;
+    else if (_category == "CHWT")
+      _precision = 3;
+    else if (_category == "PCS")
+      _precision = 3;
+    else if (_category == "PKG")
+      _precision = 0;
+    else if (_category == "EXRATE")
+      _precision = 2;
+    else if (_category == "RATE")
+      _precision = 2;
+    else if (_category == "AMT")
+      _precision = 2
+
+    var factor = Math.pow(10, _precision);
+    var tempNumber = _number * factor;
+    var roundedTempNumber = Math.round(tempNumber);
+    return roundedTempNumber / factor;
+  };
+
+
+
+  Naviagete(menu_route: string, jsonstring: string, _replaceurl: boolean = false) {
+    this.router.navigate([menu_route], { queryParams: { parameter: jsonstring }, replaceUrl: _replaceurl });
+  }
+
+
+  
+
+
+  public  IsShipmentClosed(OPR_MODE : string, REF_DATE: string, LOCK_STATUS: string, UNLOCK_DATE : string = "")
+  {
+      var bRet = false;
+      var Dt_Now : string;
+      var Days = 0;
+
+      var IsNullVal = false;
+
+      try
+      {
+
+          if (LOCK_STATUS == null || LOCK_STATUS == "")
+          {
+              Dt_Now = this.defaultValues.today;
+              
+              //Days = Dt_Now.Subtract(REF_DATE).TotalDays;
+
+              if ((OPR_MODE == "SEA EXPORT" || OPR_MODE == "SEA IMPORT") && Days > this.LOCK_DAYS_SEA && this.LOCK_DAYS_SEA > 0)
+                  bRet = true;
+              if ((OPR_MODE == "AIR EXPORT" || OPR_MODE == "AIR IMPORT") && Days > this.LOCK_DAYS_AIR && this.LOCK_DAYS_AIR > 0)
+                  bRet = true;
+              if ((OPR_MODE == "OTHERS" || OPR_MODE == "EXTRA") && Days > this.LOCK_DAYS_OTHERS && this.LOCK_DAYS_OTHERS > 0)
+                  bRet = true;
+              if ((OPR_MODE == "ADMIN") && Days > this.LOCK_DAYS_ADMIN && this.LOCK_DAYS_ADMIN > 0)
+                  bRet = true;
+          }
+          else if (LOCK_STATUS == "L")
+              bRet = true;
+          else if (LOCK_STATUS == "U")
+          {
+              bRet = false;
+
+              //if (!UNLOCK_DATE.Equals(DBNull.Value))
+              //{
+
+              //    Dt_Now = DateTime.Now;
+              //    Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
+
+              //    if (Days >= 2)
+              //        bRet = true;
+              //}
+
+              IsNullVal = false;
+              if (UNLOCK_DATE == "")
+                  IsNullVal = true;
+              if (UNLOCK_DATE == null)
+                  IsNullVal = true;
+
+              if (!IsNullVal)
+              {
+                  Dt_Now = this.defaultValues.today;
+                  //Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
+                  if (Days >= 2)
+                      bRet = true;
+              }
+          }
+      }
+      catch (Exception)
+      {
+          bRet = true;
+      }
+
+      return bRet;
+  }
+
+
+
+
+
+
+  
+
+
+
 
 
 
