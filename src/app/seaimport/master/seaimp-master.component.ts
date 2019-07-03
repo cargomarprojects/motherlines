@@ -69,7 +69,7 @@ export class SeaImpMasterComponent implements OnInit {
       origin: 'seaimp-master-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.SeaImport.Trans/SeaImpMasterEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_cargo_imp_masterm) {
@@ -85,7 +85,7 @@ export class SeaImpMasterComponent implements OnInit {
       origin: 'seaimp-master-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.SeaImport.Trans/SeaImpMasterEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(parameter));
   }
 
   Close() {
