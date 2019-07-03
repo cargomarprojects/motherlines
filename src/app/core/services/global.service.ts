@@ -1051,6 +1051,21 @@ export class GlobalService {
   public MENU_FORMS_FILE_UPLOAD: string = "D068821C-B6AE-47BE-A91F-83BAA2C395F5";
 
 
+  Save2LocalStorage(){
+    
+    sessionStorage.setItem('access_token', this.Access_Token);
+    sessionStorage.setItem('company_name', this.company_name);
+    sessionStorage.setItem('isloginsuccess', JSON.stringify(this.IsLoginSuccess));
+    sessionStorage.setItem('isauthenticated', JSON.stringify(this.IsAuthenticated));
+    sessionStorage.setItem('globaldata', JSON.stringify(this.globalData));
+    sessionStorage.setItem('globalvariables', JSON.stringify(this.globalVariables));
+    sessionStorage.setItem('defaultvalues', JSON.stringify(this.defaultValues));
+    sessionStorage.setItem('userinfo', JSON.stringify(this.UserInfo));
+    sessionStorage.setItem('modules', JSON.stringify(this.Modules));
+    sessionStorage.setItem('menulist', JSON.stringify(this.MenuList));
+    sessionStorage.setItem('companylist', JSON.stringify(this.CompanyList));
+    sessionStorage.setItem('yearlist', JSON.stringify(this.YearList));
+  }
 
 
 }
