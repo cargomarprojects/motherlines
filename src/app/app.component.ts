@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { environment } from '../environments/environment';
 
-import {  LoadingScreenService } from './core/services/loadingscreen.service';
+import { LoadingScreenService } from './core/services/loadingscreen.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,18 @@ import {  LoadingScreenService } from './core/services/loadingscreen.service';
 export class AppComponent {
   title = 'myApp';
 
-  constructor(public loadingservice :LoadingScreenService ){
-    
+  constructor(public loadingservice: LoadingScreenService) {
+
   }
 
-  
+
   ngOnInit() {
     console.log('Application Started');
+    if (environment.production)
+      console.log('Production');
+    else
+      console.log('Development');
+
   }
 
 
