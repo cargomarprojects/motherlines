@@ -87,23 +87,40 @@ export interface Tbl_cargo_exp_masterm {
     mbl_3rdparty_bool: boolean;
 }
 
+export interface Tbl_cargo_exp_housem {
+     
+    hbl_pkid: string;
+    mbl_no: string;
+    mbl_refno: string;
+    hbl_mbl_id: string;
+    hbl_houseno: string;
+    hbl_date: string;
+    mbl_pol_etd: string;
+    mbl_pod_eta: string;
+    hbl_shipper_name: string;
+    hbl_consignee_name: string;
+    hbl_handled_name: string;
+    rec_created_by: string;
+    rec_created_date: string;
+    hbl_packages: number;
+}
 
 export interface vm_tbl_cargo_exp_masterm {
-    mode : string;
-    record : Tbl_cargo_exp_masterm;
-    userinfo : any,
-    filter : any;
+    mode: string;
+    record: Tbl_cargo_exp_masterm;
+    userinfo: any,
+    filter: any;
 }
 
 export interface SearchQuery {
-    searchString : string ;
-    fromdate : string ;
-    todate : string ;
-    searchtype : string ;
+    searchString: string;
+    fromdate: string;
+    todate: string;
+    searchtype: string;
 }
 
 export interface AirExpMasterModel {
-    errormessage : string;
+    errormessage: string;
     searchQuery: SearchQuery;
     pageQuery: PageQuery;
     records: Tbl_cargo_exp_masterm[]

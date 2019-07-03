@@ -5,7 +5,7 @@ import { GlobalService } from '../../../core/services/global.service';
 
 import { AirExpMasterService } from '../../services/airexp-master.service';
 import { User_Menu } from '../../../core/models/menum';
-import { Tbl_cargo_exp_masterm, vm_tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
+import { Tbl_cargo_exp_masterm,Tbl_cargo_exp_housem, vm_tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { isNumber } from 'util';
 import { flatMap } from 'rxjs/operators';
@@ -20,10 +20,11 @@ export class AirExpMasterEditComponent implements OnInit {
   //@ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
 
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
+  hrecords: Tbl_cargo_exp_housem[] = [];
   /*
     01-07-2019 Created By Ajith  
   */
-  private pkid: string;
+  private pkid: string="";
   private menuid: string;
 
   private mode: string;
@@ -153,6 +154,7 @@ export class AirExpMasterEditComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_cargo_exp_masterm>response.record;
+        this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;
         this.mode = 'EDIT';
         this.CheckData();
       }, error => {
@@ -348,14 +350,15 @@ export class AirExpMasterEditComponent implements OnInit {
   }
 
   IsValidAWB(Awb: string) {
-    let i: number = 0;//"0123456789".indexOf(snum)<0
-    let snum: string = '';
+    let strnum:string ="0123456789";
+    let i: number = 0;//"".indexOf(snum)<0
+    let strChar: string = '';
     Awb = Awb.trim();
     if (Awb.length != 11)
       return false;
     for (i = 0; i < Awb.length; i++) {
-      snum = Awb.substr(i, 1);
-      if (!isNumber(+snum))
+      strChar = Awb.substr(i, 1);
+      if (strnum.indexOf(strChar)<0)
         return false;
     }
     return true;
