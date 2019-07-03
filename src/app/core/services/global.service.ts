@@ -35,14 +35,17 @@ export class GlobalService {
   // change this is false in production and update
   public isolderror: boolean = false;
 
+  public UserInfo: any;
   public Modules: Modulem[] = [];
   public MenuList: User_Menu[] = [];
   public CompanyList: Companym[] = [];
+  public YearList: any[];
+
+  public software_start_year: number = 0;
 
   public branch_codes: string = '';
 
   public history: Array<{ id: string, url: string }> = [];
-
 
 
   public DB_BACKEND = "SQLSERVER";
@@ -190,7 +193,6 @@ export class GlobalService {
   public PARAM_UNIT : any = [];
   public PARAM_CUSTOMER_GROUP : any = [];
   public PARAM_FORM_CATEGORIES : any = [];
-
 
 
   public SHIPMENT_STAGE1 = "WAITING FOR CARRIER'S A/N";
@@ -390,10 +392,7 @@ export class GlobalService {
   public PRINT_FIRMCODE = "Y";
 
   public AC_REPORT_BASED_ON = "MASTER REF DATE";
-
-
-
-  public UserInfo: any;
+  
 
   public BACKEND_DATEFORMAT: string = "YYYY/MM/DD";
   public FRONTEND_DATEFORMAT: string = "MM/dd/yyyy";
@@ -461,9 +460,6 @@ export class GlobalService {
   public branch_add3 = "";
   public branch_add4 = "";
 
-  public YearList: any[];
-
-  public software_start_year: number = 0;
 
   public InitUserInfo() {
 
