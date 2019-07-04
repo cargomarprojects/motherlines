@@ -57,9 +57,8 @@
               </div>
             </div>
           </div>
-          <hr style="padding: 2px;">
+          <hr>
         </div>
-
 
 
         <!-- Second row -->
@@ -160,7 +159,6 @@
                     <span>Direct Shipment</span>
                   </div>
                 </div> -->
-
 
 
             </div>
@@ -288,9 +286,9 @@
               </div>
 
             </div>
-
+          
           </div>
-          <hr style="padding: 2px">
+          <hr>
           <div class="row">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
@@ -343,7 +341,7 @@
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Devanning Location</label>
                 <div class="col-9">
-                  <app-autocomplete2 [controlname]="'DEVAN-LOC'" [tabletype]="'LOCATION'" [displaycolumn]="'NAME'"
+                  <app-autocomplete2 [controlname]="'DEVAN-LOC'" [tabletype]="'MASTER'" [subtype]="'LOCATION'" [displaycolumn]="'NAME'"
                     [displaydata]="record.mbl_devan_loccode" (ValueChanged)="LovSelected($event)">
                   </app-autocomplete2>
                 </div>
@@ -386,7 +384,7 @@
             </div>
           </div>
 
-          <hr style="padding: 2px">
+          <hr >
 
           <div class="row">
 
@@ -415,7 +413,7 @@
                       <th>CBM</th>
                       <th>PICKUP</th>
                       <th>EMPTY RETURN</th>
-                      <th>CONTAINER MOVEMENT</th>
+                      <th>CNTR MOVEMENT</th>
                     </tr>
                   </thead>
                   <tbody class="page-body-tbody">
@@ -472,6 +470,50 @@
 
           </div>
 
+          <hr >
+          <div *ngIf="mode=='EDIT'" class="row">
+
+              <div class="col-md-12">
+                <div class="page-body table-responsive">
+      
+                  <div class="form-group row">
+                    <div class="col-12">
+                      <button class="btn btn-primary btn-sm mr-1" (click)="AddHouse()">Add House</button>
+                    </div>
+                  </div>
+      
+                  <table class="table  table-hover table-sm">
+                    <thead class="page-body-thead">
+                      <tr>
+                        <th>HOUSE</th>
+                        <th>SHIPPER</th>
+                        <th>CONSIGNEE</th>
+                        <th>PCS</th>
+                        <th>HANDLED-BY</th>
+                        <th>ETD</th>
+                        <th>ETA</th>
+                        <th>CREATED-BY</th>
+                        <th>DATE</th>
+                      </tr>
+                    </thead>
+                    <tbody class="page-body-tbody">
+                      <tr *ngFor="let rec of hrecords">
+                        <td>{{rec.hbl_houseno}}</td>
+                        <td>{{rec.hbl_shipper_name}}</td>
+                        <td>{{rec.hbl_consignee_name}}</td>
+                        <td>{{rec.hbl_packages}}</td>
+                        <td>{{rec.hbl_handled_name}}</td>              
+                        <td>{{rec.mbl_pol_etd | date : gs.FRONTEND_DATEFORMAT }}</td>
+                        <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT }}</td>
+                        <td>{{rec.rec_created_by}}</td>
+                        <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+      
+            </div>
 
         </div>
 

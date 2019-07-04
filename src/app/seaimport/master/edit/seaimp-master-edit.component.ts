@@ -5,8 +5,9 @@ import { GlobalService } from '../../../core/services/global.service';
 
 import { SeaImpMasterService } from '../../services/seaimp-master.service';
 import { User_Menu } from '../../../core/models/menum';
-import { Tbl_cargo_imp_masterm, Tbl_cargo_imp_container, vm_tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
+import { Tbl_cargo_imp_masterm, Tbl_cargo_imp_container,Tbl_cargo_imp_housem, vm_tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
 import { SearchTable } from '../../../shared/models/searchtable';
+import { strictEqual } from 'assert';
 
 @Component({
   selector: 'app-seaimp-master-edit',
@@ -18,7 +19,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
 
   record: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
-
+  hrecords: Tbl_cargo_imp_housem[] = [];
   records: Tbl_cargo_imp_container[] = [];
 
   // 24-05-2019 Created By Joy  
@@ -94,6 +95,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_imp_masterm>{};
       this.records = <Tbl_cargo_imp_container[]>[];
+      this.hrecords = <Tbl_cargo_imp_housem[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
@@ -103,27 +105,53 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
   init() {
+
     this.record.mbl_pkid = this.pkid;
-    this.record.mbl_shipment_stage = 'NIL';
-    this.record.mbl_cntr_type = 'FCL';
+    this.record.mbl_no = '';
+    this.record.mbl_ref_date = this.gs.defaultValues.today;
+    this.record.mbl_country_id = '';
+    this.record.mbl_country_name = '';
+    this.record.mbl_handled_id = '';
+    this.record.mbl_handled_name = '';
+    this.record.mbl_cargo_loc_id = '';
+    this.record.mbl_devan_loc_id = '';
+    this.record.mbl_cargo_loccode = '';
+    this.record.mbl_cargo_locname = '';
+    this.record.mbl_cargo_locaddr1 = '';
+    this.record.mbl_cargo_locaddr2 = '';
+    this.record.mbl_cargo_locaddr3 = '';
+    this.record.mbl_cargo_locaddr4 = '';
+    this.record.mbl_devan_loccode = '';
+    this.record.mbl_devan_locname = '';
+    this.record.mbl_devan_locaddr1 = '';
+    this.record.mbl_devan_locaddr2 = '';
+    this.record.mbl_devan_locaddr3 = '';
+    this.record.mbl_devan_locaddr4 = '';
+    this.record.mbl_is_held = false;
+    this.record.mbl_it_no = '';
+    this.record.mbl_it_port = '';
+    this.record.mbl_it_date = '';
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
-    this.record.mbl_ref_date = this.gs.defaultValues.today;
-    // this.record.mbl_direct = "N";
-    this.record.mbl_shipment_stage = "NIL";
-    this.record.mbl_prefix = this.gs.SEA_EXPORT_REFNO_PREFIX;
-    this.record.mbl_startingno = this.gs.SEA_EXPORT_REFNO_STARTING_NO;
-
-    this.record.mbl_no = '';
-    //this.record.mbl_liner_bookingno ='';
-    //this.record.mbl_sub_houseno ='';
-
-    //this.record.mbl_por ='';
-
+    this.record.mbl_cntr_type = 'FCL';
+    this.record.mbl_container_tot = 0;
+    this.record.mbl_lock = '';
+    this.record.mbl_unlock_date = '';
+    this.record.mbl_jobtype_id = '';
+    this.record.mbl_jobtype_name = '';
+    this.record.mbl_boeno = '';
+    this.record.mbl_shipment_stage = 'NIL';
+    this.record.mbl_salesman_id = '';
+    this.record.mbl_salesman_name = '';
+    this.record.mbl_status = '';
+    this.record.rec_files_attached = '';
+    this.record.mbl_is_sea_waybill = '';
+    this.record.mbl_ismemo_attached = 'N';
+    this.record.mbl_prefix = this.gs.SEA_IMPORT_REFNO_PREFIX;
+    this.record.mbl_startingno = this.gs.SEA_IMPORT_REFNO_STARTING_NO;
     this.record.mbl_vessel = '';
     this.record.mbl_voyage = '';
-
-    this.record.mbl_ombl_sent_on = this.gs.defaultValues.today;
+    this.record.mbl_ombl_sent_on = '';
     var curr_date = new Date();
     var curr_hh = curr_date.getHours();
     if (curr_hh >= 12)
@@ -142,6 +170,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       .subscribe(response => {
         this.record = <Tbl_cargo_imp_masterm>response.record;
         this.records = <Tbl_cargo_imp_container[]>response.records;
+        this.hrecords = <Tbl_cargo_imp_housem[]>response.hrecords;
         this.mode = 'EDIT';
         this.CheckData();
       }, error => {
@@ -195,21 +224,17 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
 
-
-
   Save() {
 
     if (!this.Allvalid())
       return;
-
-    // this.record.mbl_direct = this.record.mbl_direct_bool ? 'Y' : 'N';
-
+    this.SaveContainer();
+    this.FindTotTeus();
     const saveRecord = <vm_tbl_cargo_imp_masterm>{};
     saveRecord.record = this.record;
     saveRecord.cntrs = this.records;
     saveRecord.mode = this.mode;
     saveRecord.userinfo = this.gs.UserInfo;
-
 
     this.mainService.Save(saveRecord)
       .subscribe(response => {
@@ -230,25 +255,91 @@ export class SeaImpMasterEditComponent implements OnInit {
       });
   }
 
+  private FindTotTeus() {
+    var Tot_Teu = 0, Teu = 0, Tot_Cbm = 0;
+    var Tot_20 = 0, Tot_40 = 0, Tot_40HQ = 0, Tot_45 = 0;
+    var Cntr_Tot = 0;
+    let sCntrType: string = "";
+    this.records.forEach(Rec => {
+      Cntr_Tot++;
+      Teu = 0;
+      if (Rec.cntr_type.indexOf("20") >= 0)
+        Teu = 1;
+      else if (Rec.cntr_type.indexOf("40") >= 0) {
+        if (Rec.cntr_type.indexOf("HC") >= 0)
+          Teu = 2.25;
+        else
+          Teu = 2;
+      }
+      else if (Rec.cntr_type.indexOf("45") >= 0)
+        Teu = 2.50;
+
+      if (this.record.mbl_cntr_type.toString() == "LCL")
+        Teu = 0;
+      Tot_Teu += Teu;
+      Tot_Cbm += Rec.cntr_cbm;
+      Rec.cntr_teu = Teu;
+      if (Teu > 0) {
+        if (Rec.cntr_type.indexOf("20") >= 0)
+          Tot_20 += 1;
+        else if (Rec.cntr_type.indexOf("40HC") >= 0 || Rec.cntr_type.indexOf("40HQ") >= 0)
+          Tot_40HQ += 1;
+        else if (Rec.cntr_type.indexOf("40") >= 0)
+          Tot_40 += 1;
+        else if (Rec.cntr_type.indexOf("45") >= 0)
+          Tot_45 += 1;
+      }
+
+      if (sCntrType.indexOf(Rec.cntr_type) < 0) {
+        if (sCntrType != "")
+          sCntrType += ",";
+        sCntrType += Rec.cntr_type;
+      }
+
+    })
+    this.record.mbl_teu = Tot_Teu;
+    this.record.mbl_20 = Tot_20;
+    this.record.mbl_40 = Tot_40;
+    this.record.mbl_40HQ = Tot_40HQ;
+    this.record.mbl_45 = Tot_45;
+    this.record.mbl_cntr_cbm = Tot_Cbm;
+    this.record.mbl_container_tot = Cntr_Tot;
+    if (sCntrType.length > 100)
+      sCntrType = sCntrType.substring(0, 100);
+
+    this.record.mbl_cntr_desc = sCntrType;
+  }
+  private SaveContainer() {
+    let iCtr: number = 0;
+    this.records.forEach(Rec => {
+      iCtr++;
+      Rec.cntr_hblid = this.pkid.toString();
+      Rec.cntr_catg = "M";
+      Rec.cntr_order = iCtr;
+      Rec.cntr_weight_uom = "";
+      Rec.cntr_packages = 0;
+    })
+  }
 
   private Allvalid(): boolean {
 
     var bRet = true;
-
-
     this.errorMessage = "";
+    if (this.record.mbl_no == "") {
+      bRet = false;
+      this.errorMessage = "Master BL# cannot be blank";
+      return bRet;
+    }
     if (this.record.mbl_ref_date == "") {
       bRet = false;
       this.errorMessage = "Ref Date cannot be blank";
       return bRet;
     }
-    /*
-    if (this.record.mbl_jobtype_id == "") {
+    if (this.gs.JOB_TYPE_OI.length > 0 && this.record.mbl_jobtype_id == "") {
       bRet = false;
       this.errorMessage = "Job Type cannot be blank";
       return bRet;
     }
-    */
     if (this.record.mbl_shipment_stage == "") {
       bRet = false;
       this.errorMessage = "Shipment Stage cannot be blank";
@@ -307,18 +398,12 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.errorMessage = "ETA cannot be blank"
       return bRet;
     }
-    if (this.record.mbl_pofd_id == "") {
-      bRet = false;
-      this.errorMessage = "Final Destination cannot be blank"
-      return bRet;
-    }
 
     if (this.record.mbl_country_id == "") {
       bRet = false;
       this.errorMessage = "Country Cannot be blank"
       return bRet;
     }
-
 
     if (this.record.mbl_vessel == "") {
       bRet = false;
@@ -331,19 +416,34 @@ export class SeaImpMasterEditComponent implements OnInit {
       return bRet;
     }
 
+    if (this.record.mbl_status.toString().trim() == "OMBL SENT TO CARRIER") {
+      if (this.record.mbl_ombl_sent_on.toString().trim() == "") {
+        bRet = false;
+        this.errorMessage = "OMBL Sent Date cannot be blank"
+        return bRet;
+      }
+    }
+
     if (this.record.mbl_cntr_type != "OTHERS") {
 
       this.records.forEach(Rec => {
 
         if (Rec.cntr_no.length != 11) {
           bRet = false;
-          this.errorMessage = "cntr No cannot be Blank"
+          this.errorMessage = "Container( " + Rec.cntr_no + " ) Invalid"
           return bRet;
         }
         if (Rec.cntr_type.length <= 0) {
           bRet = false;
-          this.errorMessage = "Container( " + Rec.cntr_no + " ) Type Has to be selected"
+          this.errorMessage = "Container( " + Rec.cntr_no + " ) type has to be selected"
           return bRet;
+        }
+        if (Rec.cntr_type == "LCL") {
+          if (Rec.cntr_cbm <= 0) {
+            bRet = false;
+            this.errorMessage = "Container( " + Rec.cntr_no + " ) CBM cannot be zero"
+            return bRet;
+          }
         }
       })
     }
@@ -357,16 +457,23 @@ export class SeaImpMasterEditComponent implements OnInit {
 
 
   AddRow() {
-
     var rec = <Tbl_cargo_imp_container>{};
     rec.cntr_pkid = this.gs.getGuid();
+    rec.cntr_hblid = this.pkid.toString();
+    rec.cntr_catg = "M";
     rec.cntr_no = "",
       rec.cntr_type = "",
       rec.cntr_sealno = '';
-    rec.cntr_movement = "",
-      rec.cntr_weight = 0;
     rec.cntr_pieces = 0;
+    rec.cntr_packages_uom = '';
+    rec.cntr_packages = 0;
+    rec.cntr_weight = 0;
+    rec.cntr_tare_weight = 0;
     rec.cntr_cbm = 0;
+    rec.cntr_pick_date = '';
+    rec.cntr_return_date = '';
+    rec.cntr_weight_uom = '';
+    rec.cntr_order = 1;
     this.records.push(rec);
   }
 
@@ -411,10 +518,10 @@ export class SeaImpMasterEditComponent implements OnInit {
 
     if (_Record.controlname == "CARGO-LOC") {
       this.record.mbl_cargo_loc_id = _Record.id;
- 
+
       this.record.mbl_cargo_locname = _Record.name;
       if (_Record.col8 != "")
-      this.record.mbl_cargo_locname =  _Record.col8;
+        this.record.mbl_cargo_locname = _Record.col8;
 
       this.record.mbl_cargo_locaddr1 = _Record.col1;
       this.record.mbl_cargo_locaddr2 = _Record.col2;
@@ -428,7 +535,7 @@ export class SeaImpMasterEditComponent implements OnInit {
 
       this.record.mbl_devan_locname = _Record.name;
       if (_Record.col8 != "")
-      this.record.mbl_devan_locname =  _Record.col8;
+        this.record.mbl_devan_locname = _Record.col8;
 
       this.record.mbl_devan_locaddr1 = _Record.col1;
       this.record.mbl_devan_locaddr2 = _Record.col2;
@@ -442,7 +549,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     if (_Record.controlname == "CONTAINER TYPE") {
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
-
+          rec.cntr_type = _Record.code;
         }
       });
     }
@@ -530,5 +637,8 @@ export class SeaImpMasterEditComponent implements OnInit {
       }
     }
   }
+  AddHouse()
+  {
 
+  }
 }

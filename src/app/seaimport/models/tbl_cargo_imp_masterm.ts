@@ -120,7 +120,23 @@ export interface Tbl_cargo_imp_container {
     cntr_return_date: string;
 }
 
-
+export interface Tbl_cargo_imp_housem {
+     
+    hbl_pkid: string;
+    mbl_no: string;
+    mbl_refno: string;
+    hbl_mbl_id: string;
+    hbl_houseno: string;
+    hbl_date: string;
+    mbl_pol_etd: string;
+    mbl_pod_eta: string;
+    hbl_shipper_name: string;
+    hbl_consignee_name: string;
+    hbl_handled_name: string;
+    rec_created_by: string;
+    rec_created_date: string;
+    hbl_packages: number;
+}
 
 export interface vm_tbl_cargo_imp_masterm {
     mode: string;
