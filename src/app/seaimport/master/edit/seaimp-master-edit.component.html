@@ -57,9 +57,10 @@
               </div>
             </div>
           </div>
+          <hr style="padding: 2px;">
         </div>
 
-        <hr>
+
 
         <!-- Second row -->
         <div class="col-md-12 px-0 mx-0">
@@ -287,22 +288,23 @@
               </div>
 
             </div>
+
           </div>
-
-          <hr>
-
+          <hr style="padding: 2px">
           <div class="row">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Cargo Location</label>
                 <div class="col-9">
-                  <app-autocomplete2 [controlname]="'CARGO-LOC'" [tabletype]="'MASTER'" [subtype]="'LOCATION'" [displaycolumn]="'NAME'"
-                    [displaydata]="record.mbl_cargo_loccode" (ValueChanged)="LovSelected($event)">
+                  <app-autocomplete2 [controlname]="'CARGO-LOC'" [tabletype]="'MASTER'" [subtype]="'LOCATION'"
+                    [displaycolumn]="'NAME'" [displaydata]="record.mbl_cargo_loccode"
+                    (ValueChanged)="LovSelected($event)">
                   </app-autocomplete2>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <!-- <label class="col-3 col-form-label col-form-label-sm"></label> -->
+                <button class=" col-3 btn btn-primary btn-sm">Cpoy to All House</button>
                 <div class="col-9">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locname')"
                     [(ngModel)]="record.mbl_cargo_locname" maxlength="60" />
@@ -384,6 +386,8 @@
             </div>
           </div>
 
+          <hr style="padding: 2px">
+
           <div class="row">
 
             <div class="col-md-12">
@@ -394,6 +398,7 @@
                     <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
                     <button class="btn btn-primary btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
                     <button class="btn btn-primary btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
+                    <button class="btn btn-primary btn-sm mr-1" (click)="UpdatePuEr()">Update P/U & E/R</button>
                   </div>
                 </div>
 
@@ -404,10 +409,13 @@
                       <th>TYPE</th>
                       <th>SEAL NO</th>
                       <th>PCS</th>
-                      <th>PKGS</th>
+                      <th>UNIT</th>
                       <th>KGS</th>
-                      <th>CBM</th>
                       <th>TARE-WT</th>
+                      <th>CBM</th>
+                      <th>PICKUP</th>
+                      <th>EMPTY RETURN</th>
+                      <th>CONTAINER MOVEMENT</th>
                     </tr>
                   </thead>
                   <tbody class="page-body-tbody">
@@ -439,13 +447,23 @@
                           (blur)="onBlur('cntr_weight',rec)" />
                       </td>
                       <td>
+                        <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
+                          (blur)="onBlur('cntr_tare_weight',rec)" />
+                      </td>
+                      <td>
                         <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
                           (blur)="onBlur('cntr_cbm',rec)" />
                       </td>
                       <td>
-                        <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
-                          (blur)="onBlur('cntr_tare_weight',rec)" />
+                        <app-date [inputdate]="rec.cntr_pick_date" (ValueChanged)="rec.cntr_pick_date=$event"></app-date>
                       </td>
+                      <td>
+                        <app-date [inputdate]="rec.cntr_return_date" (ValueChanged)="rec.cntr_return_date=$event"></app-date>
+                      </td>
+                      <td>
+                        CLICK TO ENTER DETAILS
+                      </td>
+
                     </tr>
                   </tbody>
                 </table>
@@ -464,28 +482,16 @@
       <div class="col-md-12  px-0 mx-0 py-2">
 
         <div class="form-group row">
-          <button class="col-12 btn btn-primary btn-sm">Booking</button>
-        </div>
-
-        <div class="form-group row">
           <button class=" col-12 btn btn-primary btn-sm">House Maintenence</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">MBL Instruction</button>
+          <button class=" col-12 btn btn-primary btn-sm">POD</button>
         </div>
 
         <div class="form-group row">
 
-          <button class=" col-12 btn btn-primary btn-sm">Dock Receipt</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Manifest</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Container Dryage</button>
+          <button class=" col-12 btn btn-primary btn-sm">Devanning Instruction</button>
         </div>
 
         <div class="form-group row">
@@ -502,10 +508,6 @@
 
         <div class="form-group row">
           <button class=" col-12 btn btn-primary btn-sm">Messenger Slip</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Manifest EDI</button>
         </div>
 
         <div class="form-group row">
@@ -526,7 +528,7 @@
           <button class=" col-12 btn btn-primary btn-sm">Request For Approval</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Certificate Of Origin</button>
+          <button class=" col-12 btn btn-primary btn-sm">Delivery Order</button>
         </div>
 
       </div>
