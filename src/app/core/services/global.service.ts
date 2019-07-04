@@ -166,33 +166,33 @@ export class GlobalService {
   public RE_PRINT_CHECK = "N";
 
 
-  public SHIPMENT_STAGE_OI : any;
-  public SHIPMENT_STAGE_OE : any;
-  public SHIPMENT_STAGE_AI : any;
-  public SHIPMENT_STAGE_AE : any;
-  public SHIPMENT_STAGE_OT : any;  
-  public INVOICE_STAGE : any;
+  public SHIPMENT_STAGE_OI: any;
+  public SHIPMENT_STAGE_OE: any;
+  public SHIPMENT_STAGE_AI: any;
+  public SHIPMENT_STAGE_AE: any;
+  public SHIPMENT_STAGE_OT: any;
+  public INVOICE_STAGE: any;
 
 
-  public JOB_TYPE_OI : any = [];
-  public JOB_TYPE_OE : any = [];
-  public JOB_TYPE_AI : any = [];
-  public JOB_TYPE_AE : any = [];
-  public JOB_TYPE_OT : any = [];
+  public JOB_TYPE_OI: any = [];
+  public JOB_TYPE_OE: any = [];
+  public JOB_TYPE_AI: any = [];
+  public JOB_TYPE_AE: any = [];
+  public JOB_TYPE_OT: any = [];
 
 
-  public PARAM_FREIGHT_STATUS : any = [];
-  public PARAM_CARGO_MOVEMENT : any = [];
-  public PARAM_CONTAINER_TYPE : any = [];
-  public PARAM_NOMINATION : any = [];
-  public PARAM_COUNTRY : any = [];
-  public PARAM_CURRENCY : any = [];
-  public PARAM_HBL_FORMAT : any = [];
-  public PARAM_HBL_FORMAT_DRAFT : any = [];
-  public PARAM_HAWB_FORMAT : any = [];
-  public PARAM_UNIT : any = [];
-  public PARAM_CUSTOMER_GROUP : any = [];
-  public PARAM_FORM_CATEGORIES : any = [];
+  public PARAM_FREIGHT_STATUS: any = [];
+  public PARAM_CARGO_MOVEMENT: any = [];
+  public PARAM_CONTAINER_TYPE: any = [];
+  public PARAM_NOMINATION: any = [];
+  public PARAM_COUNTRY: any = [];
+  public PARAM_CURRENCY: any = [];
+  public PARAM_HBL_FORMAT: any = [];
+  public PARAM_HBL_FORMAT_DRAFT: any = [];
+  public PARAM_HAWB_FORMAT: any = [];
+  public PARAM_UNIT: any = [];
+  public PARAM_CUSTOMER_GROUP: any = [];
+  public PARAM_FORM_CATEGORIES: any = [];
 
 
   public SHIPMENT_STAGE1 = "WAITING FOR CARRIER'S A/N";
@@ -392,7 +392,7 @@ export class GlobalService {
   public PRINT_FIRMCODE = "Y";
 
   public AC_REPORT_BASED_ON = "MASTER REF DATE";
-  
+
 
   public BACKEND_DATEFORMAT: string = "YYYY/MM/DD";
   public FRONTEND_DATEFORMAT: string = "MM/dd/yyyy";
@@ -527,8 +527,8 @@ export class GlobalService {
 
 
   public getTitle(menuid: string): string {
-    var itm =this.MenuList.find(f => f.menu_pkid == menuid);
-    if ( itm)
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid);
+    if (itm)
       return itm.menu_name;
     else
       return '';
@@ -555,21 +555,21 @@ export class GlobalService {
     var bret: boolean = false;
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_add == "Y");
     if (itm)
-        bret = true;
+      bret = true;
     return bret;
   }
   public canEdit(menuid: string): boolean {
     var bret: boolean = false;
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_edit == "Y");
     if (itm)
-        bret = true;
+      bret = true;
     return bret;
   }
   public canView(menuid: string): boolean {
     var bret: boolean = false;
-    var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_edit == "Y" || f.rights_view == "Y" ));
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_edit == "Y" || f.rights_view == "Y"));
     if (itm)
-        bret = true;
+      bret = true;
     return bret;
   }
 
@@ -577,7 +577,7 @@ export class GlobalService {
     var bret: boolean = false;
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_delete == "Y");
     if (itm)
-        bret = true;
+      bret = true;
     return bret;
   }
 
@@ -768,72 +768,76 @@ export class GlobalService {
   }
 
 
-  
+  public GetTelFax(Tel: string, Fax: string) {
+    let str: string = "";
+    if (Tel.toString().trim().length > 0)
+      str = "TEL : " + Tel.toString();
+    if (Fax.toString().trim().length > 0) {
+      if (str != "")
+        str += " ";
+      str += "FAX : " + Fax.toString();
+    }
+    return str;
+  }
 
 
-  public  IsShipmentClosed(OPR_MODE : string, REF_DATE: string, LOCK_STATUS: string, UNLOCK_DATE : string = "")
-  {
-      var bRet = false;
-      var Dt_Now : string;
-      var Days = 0;
+  public IsShipmentClosed(OPR_MODE: string, REF_DATE: string, LOCK_STATUS: string, UNLOCK_DATE: string = "") {
+    var bRet = false;
+    var Dt_Now: string;
+    var Days = 0;
 
-      var IsNullVal = false;
+    var IsNullVal = false;
 
-      try
-      {
+    try {
 
-          if (LOCK_STATUS == null || LOCK_STATUS == "")
-          {
-              Dt_Now = this.defaultValues.today;
-              
-              //Days = Dt_Now.Subtract(REF_DATE).TotalDays;
+      if (LOCK_STATUS == null || LOCK_STATUS == "") {
+        Dt_Now = this.defaultValues.today;
 
-              if ((OPR_MODE == "SEA EXPORT" || OPR_MODE == "SEA IMPORT") && Days > this.LOCK_DAYS_SEA && this.LOCK_DAYS_SEA > 0)
-                  bRet = true;
-              if ((OPR_MODE == "AIR EXPORT" || OPR_MODE == "AIR IMPORT") && Days > this.LOCK_DAYS_AIR && this.LOCK_DAYS_AIR > 0)
-                  bRet = true;
-              if ((OPR_MODE == "OTHERS" || OPR_MODE == "EXTRA") && Days > this.LOCK_DAYS_OTHERS && this.LOCK_DAYS_OTHERS > 0)
-                  bRet = true;
-              if ((OPR_MODE == "ADMIN") && Days > this.LOCK_DAYS_ADMIN && this.LOCK_DAYS_ADMIN > 0)
-                  bRet = true;
-          }
-          else if (LOCK_STATUS == "L")
-              bRet = true;
-          else if (LOCK_STATUS == "U")
-          {
-              bRet = false;
+        //Days = Dt_Now.Subtract(REF_DATE).TotalDays;
 
-              //if (!UNLOCK_DATE.Equals(DBNull.Value))
-              //{
-
-              //    Dt_Now = DateTime.Now;
-              //    Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
-
-              //    if (Days >= 2)
-              //        bRet = true;
-              //}
-
-              IsNullVal = false;
-              if (UNLOCK_DATE == "")
-                  IsNullVal = true;
-              if (UNLOCK_DATE == null)
-                  IsNullVal = true;
-
-              if (!IsNullVal)
-              {
-                  Dt_Now = this.defaultValues.today;
-                  //Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
-                  if (Days >= 2)
-                      bRet = true;
-              }
-          }
-      }
-      catch (Exception)
-      {
+        if ((OPR_MODE == "SEA EXPORT" || OPR_MODE == "SEA IMPORT") && Days > this.LOCK_DAYS_SEA && this.LOCK_DAYS_SEA > 0)
+          bRet = true;
+        if ((OPR_MODE == "AIR EXPORT" || OPR_MODE == "AIR IMPORT") && Days > this.LOCK_DAYS_AIR && this.LOCK_DAYS_AIR > 0)
+          bRet = true;
+        if ((OPR_MODE == "OTHERS" || OPR_MODE == "EXTRA") && Days > this.LOCK_DAYS_OTHERS && this.LOCK_DAYS_OTHERS > 0)
+          bRet = true;
+        if ((OPR_MODE == "ADMIN") && Days > this.LOCK_DAYS_ADMIN && this.LOCK_DAYS_ADMIN > 0)
           bRet = true;
       }
+      else if (LOCK_STATUS == "L")
+        bRet = true;
+      else if (LOCK_STATUS == "U") {
+        bRet = false;
 
-      return bRet;
+        //if (!UNLOCK_DATE.Equals(DBNull.Value))
+        //{
+
+        //    Dt_Now = DateTime.Now;
+        //    Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
+
+        //    if (Days >= 2)
+        //        bRet = true;
+        //}
+
+        IsNullVal = false;
+        if (UNLOCK_DATE == "")
+          IsNullVal = true;
+        if (UNLOCK_DATE == null)
+          IsNullVal = true;
+
+        if (!IsNullVal) {
+          Dt_Now = this.defaultValues.today;
+          //Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
+          if (Days >= 2)
+            bRet = true;
+        }
+      }
+    }
+    catch (Exception) {
+      bRet = true;
+    }
+
+    return bRet;
   }
 
 
@@ -841,7 +845,6 @@ export class GlobalService {
 
 
 
-  
 
 
 
@@ -849,7 +852,8 @@ export class GlobalService {
 
 
 
-// MENU CONSTANTS
+
+  // MENU CONSTANTS
 
 
   public MENU_AR_DEPOSIT: string = "924E3CAF-FD14-41D9-8E75-9EA8A3FCA10E";
@@ -1051,8 +1055,8 @@ export class GlobalService {
   public MENU_FORMS_FILE_UPLOAD: string = "D068821C-B6AE-47BE-A91F-83BAA2C395F5";
 
 
-  Save2LocalStorage(){
-    
+  Save2LocalStorage() {
+
     sessionStorage.setItem('access_token', this.Access_Token);
     sessionStorage.setItem('company_name', this.company_name);
     sessionStorage.setItem('isloginsuccess', JSON.stringify(this.IsLoginSuccess));

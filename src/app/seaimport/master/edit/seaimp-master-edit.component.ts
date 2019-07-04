@@ -38,6 +38,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   private cmbList = {};
 
   MblStatusList: any[] = [];
+  BlStatusList: any[] = [];
 
   IsLocked: boolean = false;
 
@@ -77,6 +78,10 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.MblStatusList = [{ "name": "NIL" }, { "name": "OMBL WITH OPERATION" },
       { "name": "OMBL WITH ACCOUNTING" }, { "name": "OMBL SENT TO CARRIER" }];
     }
+
+    this.BlStatusList = [{ "name": "NIL" }
+      , { "name": "PENDING SEAWAY" }, { "name": "SEAWAY BILL" }
+      , { "name": "PENDING TELEX RELEASED" }, { "name": "TELEX RELEASED" }];
   }
 
   NewRecord() {
@@ -118,6 +123,13 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.record.mbl_vessel = '';
     this.record.mbl_voyage = '';
 
+    this.record.mbl_ombl_sent_on = this.gs.defaultValues.today;
+    var curr_date = new Date();
+    var curr_hh = curr_date.getHours();
+    if (curr_hh >= 12)
+      this.record.mbl_ombl_sent_ampm = "PM";
+    else
+      this.record.mbl_ombl_sent_ampm = "AM";
   }
 
   GetRecord() {
@@ -396,6 +408,26 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.record.mbl_country_id = _Record.id;
       this.record.mbl_country_name = _Record.name;
     }
+
+    if (_Record.controlname == "CARGO-LOC") {
+      this.record.mbl_cargo_loc_id = _Record.id;
+ 
+      this.record.mbl_cargo_locname = _Record.name;
+      if (_Record.col8 != "")
+      this.record.mbl_cargo_locname =  _Record.col8;
+
+      this.record.mbl_cargo_locaddr1 = _Record.col1;
+      this.record.mbl_cargo_locaddr2 = _Record.col2;
+      this.record.mbl_cargo_locaddr3 = _Record.col3;
+      this.record.mbl_cargo_locaddr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+
+    }
+
+    if (_Record.controlname == "DEVAN-LOC") {
+      this.record.mbl_country_id = _Record.id;
+      this.record.mbl_country_name = _Record.name;
+    }
+
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {

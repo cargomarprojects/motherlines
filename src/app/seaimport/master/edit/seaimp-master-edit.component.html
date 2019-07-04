@@ -192,8 +192,6 @@
                   <app-autocomplete2 [controlname]="'POD'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
                     [displaydata]="record.mbl_pod_name" (ValueChanged)="LovSelected($event)">
                   </app-autocomplete2>
-
-
                 </div>
               </div>
 
@@ -261,102 +259,203 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Mbl Status</label>
+                <label class="col-3 col-form-label col-form-label-sm">MBL Status</label>
                 <div class="col-4 pr-0">
                   <select class="form-control form-control-sm" [(ngModel)]="record.mbl_status">
                     <option *ngFor="let rec of MblStatusList" [value]="rec.name">{{rec.name}}</option>
                   </select>
                 </div>
-                <label class="col-2 col-form-label col-form-label-sm">Rotation#</label>
+                <label class="col-2 col-form-label col-form-label-sm">BL Status</label>
                 <div class="col-3 pl-0">
-                  <input class="form-control form-control-sm" type="number" (blur)="onBlur('mbl_rotation_no')"
-                    [(ngModel)]="record.mbl_rotation_no" maxlength="15" />
-
+                  <select class="form-control form-control-sm" [(ngModel)]="record.mbl_is_sea_waybill">
+                    <option *ngFor="let rec of BlStatusList" [value]="rec.name">{{rec.name}}</option>
+                  </select>
                 </div>
-
               </div>
-
-
-
-
-
-
-
-            </div>
-          </div>
-
-
-        <div class="row">
-
-          <div class="col-md-12">
-            <div class="page-body table-responsive">
 
               <div class="form-group row">
-                <div class="col-12">
-                  <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
-                  <button class="btn btn-primary btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
-                  <button class="btn btn-primary btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
+                <label class="col-3 col-form-label col-form-label-sm">OMBL.Sent.Date</label>
+                <div class="col-7 pr-0">
+                  <app-date [inputdate]="record.mbl_ombl_sent_on" (ValueChanged)="sdate=$event"></app-date>
+                </div>
+                <div class="col-2 ml-0 pl-0">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.mbl_ombl_sent_ampm">
+                    <option [value]="'AM'">AM</option>
+                    <option [value]="'PM'">PM</option>
+                  </select>
                 </div>
               </div>
 
-              <table class="table  table-hover table-sm">
-                <thead class="page-body-thead">
-                  <tr>
-                    <th>CNTR.NO</th>
-                    <th>TYPE</th>
-                    <th>SEAL NO</th>
-                    <th>PCS</th>
-                    <th>PKGS</th>
-                    <th>KGS</th>
-                    <th>CBM</th>
-                    <th>TARE-WT</th>
-                  </tr>
-                </thead>
-                <tbody class="page-body-tbody">
-                  <tr *ngFor="let rec of records">
-                    <td>
-                      <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_no" maxlength="11"
-                        (blur)="onBlur('cntr_no',rec)" />
-                    </td>
-                    <td>
-                      <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
-                        [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid" [displaydata]="rec.cntr_type"
-                        (ValueChanged)="LovSelected($event)">
-                      </app-autocomplete2>
-                    </td>
-                    <td>
-                      <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_sealno"
-                        maxlength="25" (blur)="onBlur('cntr_sealno',rec)" />
-                    </td>
-                    <td>
-                      <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_pieces"
-                        (blur)="onBlur('cntr_pieces',rec)" />
-                    </td>
-                    <td>
-                      <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_packages_uom"
-                        maxlength="4" (blur)="onBlur('cntr_packages_uom',rec)" />
-                    </td>
-                    <td>
-                      <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_weight"
-                        (blur)="onBlur('cntr_weight',rec)" />
-                    </td>
-                    <td>
-                      <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
-                        (blur)="onBlur('cntr_cbm',rec)" />
-                    </td>
-                    <td>
-                      <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
-                        (blur)="onBlur('cntr_tare_weight',rec)" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
 
+          <hr>
+
+          <div class="row">
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Cargo Location</label>
+                <div class="col-9">
+                  <app-autocomplete2 [controlname]="'CARGO-LOC'" [tabletype]="'LOCATION'" [displaycolumn]="'NAME'"
+                    [displaydata]="record.mbl_cargo_loccode" (ValueChanged)="LovSelected($event)">
+                  </app-autocomplete2>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locname')"
+                    [(ngModel)]="record.mbl_cargo_locname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locaddr1')"
+                    [(ngModel)]="record.mbl_cargo_locaddr1" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locaddr2')"
+                    [(ngModel)]="record.mbl_cargo_locaddr2" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locaddr3')"
+                    [(ngModel)]="record.mbl_cargo_locaddr3" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locaddr4')"
+                    [(ngModel)]="record.mbl_cargo_locaddr4" maxlength="60" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Devanning Location</label>
+                <div class="col-9">
+                  <app-autocomplete2 [controlname]="'DEVAN-LOC'" [tabletype]="'LOCATION'" [displaycolumn]="'NAME'"
+                    [displaydata]="record.mbl_devan_loccode" (ValueChanged)="LovSelected($event)">
+                  </app-autocomplete2>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_devan_locname')"
+                    [(ngModel)]="record.mbl_devan_locname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_devan_locaddr1')"
+                    [(ngModel)]="record.mbl_devan_locaddr1" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_devan_locaddr2')"
+                    [(ngModel)]="record.mbl_devan_locaddr2" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_devan_locaddr3')"
+                    [(ngModel)]="record.mbl_devan_locaddr3" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_devan_locaddr4')"
+                    [(ngModel)]="record.mbl_devan_locaddr4" maxlength="60" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="page-body table-responsive">
+
+                <div class="form-group row">
+                  <div class="col-12">
+                    <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
+                    <button class="btn btn-primary btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
+                    <button class="btn btn-primary btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
+                  </div>
+                </div>
+
+                <table class="table  table-hover table-sm">
+                  <thead class="page-body-thead">
+                    <tr>
+                      <th>CNTR.NO</th>
+                      <th>TYPE</th>
+                      <th>SEAL NO</th>
+                      <th>PCS</th>
+                      <th>PKGS</th>
+                      <th>KGS</th>
+                      <th>CBM</th>
+                      <th>TARE-WT</th>
+                    </tr>
+                  </thead>
+                  <tbody class="page-body-tbody">
+                    <tr *ngFor="let rec of records">
+                      <td>
+                        <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_no" maxlength="11"
+                          (blur)="onBlur('cntr_no',rec)" />
+                      </td>
+                      <td>
+                        <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'"
+                          [tabletype]="'PARAM'" [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid"
+                          [displaydata]="rec.cntr_type" (ValueChanged)="LovSelected($event)">
+                        </app-autocomplete2>
+                      </td>
+                      <td>
+                        <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_sealno"
+                          maxlength="25" (blur)="onBlur('cntr_sealno',rec)" />
+                      </td>
+                      <td>
+                        <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_pieces"
+                          (blur)="onBlur('cntr_pieces',rec)" />
+                      </td>
+                      <td>
+                        <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_packages_uom"
+                          maxlength="4" (blur)="onBlur('cntr_packages_uom',rec)" />
+                      </td>
+                      <td>
+                        <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_weight"
+                          (blur)="onBlur('cntr_weight',rec)" />
+                      </td>
+                      <td>
+                        <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
+                          (blur)="onBlur('cntr_cbm',rec)" />
+                      </td>
+                      <td>
+                        <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
+                          (blur)="onBlur('cntr_tare_weight',rec)" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+
         </div>
-      </div>
-       
 
       </div>
     </div>
