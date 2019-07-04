@@ -424,8 +424,17 @@ export class SeaImpMasterEditComponent implements OnInit {
     }
 
     if (_Record.controlname == "DEVAN-LOC") {
-      this.record.mbl_country_id = _Record.id;
-      this.record.mbl_country_name = _Record.name;
+      this.record.mbl_devan_loc_id = _Record.id;
+
+      this.record.mbl_devan_locname = _Record.name;
+      if (_Record.col8 != "")
+      this.record.mbl_devan_locname =  _Record.col8;
+
+      this.record.mbl_devan_locaddr1 = _Record.col1;
+      this.record.mbl_devan_locaddr2 = _Record.col2;
+      this.record.mbl_devan_locaddr3 = _Record.col3;
+      this.record.mbl_devan_locaddr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+
     }
 
 

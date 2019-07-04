@@ -233,6 +233,10 @@ export class AutoComplete2Component {
       this.inputdata.col5 = '';
       this.inputdata.col6 = '';
 
+      this.inputdata.col7 = '';
+      this.inputdata.col8 = '';
+      this.inputdata.col9 = '';
+
       this.displaydata = '';
       this.parentid = '';
 
