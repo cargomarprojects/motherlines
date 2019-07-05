@@ -16,6 +16,8 @@ const routes: Routes = [
   { path: 'Silver.SeaExport.Trans', loadChildren: './seaexport/seaexport.module#SeaExportModule' },  
   { path: 'Silver.AirExport.Trans', loadChildren: './airexport/airexport.module#AirExportModule' },  
   { path: 'Silver.SeaImport', loadChildren: './seaimport/seaimport.module#SeaImportModule' }, 
+  { path: 'Silver.AirImport.Trans', loadChildren: './airimport/airimport.module#AirImportModule' }, 
+
 
   { path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule' },
   { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },  
