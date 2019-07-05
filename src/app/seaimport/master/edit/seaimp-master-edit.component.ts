@@ -639,6 +639,8 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
   AddHouse()
   {
-
+  }
+  ShowCntrMovement()
+  {
   }
 }
