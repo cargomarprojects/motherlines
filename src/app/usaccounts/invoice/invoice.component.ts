@@ -73,6 +73,9 @@ export class InvoiceComponent implements OnInit {
     SearchData.action = 'NEW';
     SearchData.MBL_PKID = this.mbl_pkid;
     SearchData.INV_TYPE = this.mbl_type;
+    SearchData.ISADMIN= (this.isAdmin) ? 'Y' : 'NO';
+    SearchData.SHOWDELETED = this.showdeleted;
+    SearchData.BR_REGION = this.gs.BRANCH_REGION;
 
     SearchData.page_count = 0;
     SearchData.page_rows = 0;

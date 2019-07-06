@@ -3,7 +3,7 @@
         <label class="mr-1">{{title}}</label>
         <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
   
-        <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Close</button>
+        <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         <i *ngIf="loading" class="fa fa-spinner"></i>
     </div>
   </div>
@@ -28,7 +28,7 @@
           <div class="form-group row">
             <label class="col-2 col-form-label col-form-label-sm"></label>
             <div class="col-10">
-              <button [disabled]="loading" (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Process</button>
+              <button [disabled]="loading" (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Search</button>
             </div>
           </div>
         </div>
@@ -42,22 +42,47 @@
         <thead class="page-body-thead">
             <tr>
                 <th>INV.NO</th>
-                <th>DATE</th>
+                <th>INV.DATE</th>
+                <th>CUSTOMER</th>
+                <th>REF#</th>
+                <th>AR/AP</th>
+                <th>AN</th>
+                <th>DELETED</th>
+                <th>HOUSE</th>
+                <th align='right'>AR</th>                
+                <th align='right'>AP</th>
+                <th align='right'>PAID</th>
+                <th align='right'>BALANCE</th>
+                <th>REMARKS</th>
                 <th>CREATED-BY</th>
-                <th>DATE</th>              
+                <th>CREATED-DATE</th>              
             </tr>
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records">
-                <td (click)="edit(rec)" >{{rec.inv_fno}}</td>
+                <td (click)="edit(rec)" >{{rec.inv_no}}</td>
                 <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+                <td>{{rec.inv_cust_name}}</td>
+                <td>{{rec.inv_mbl_refno}}</td>
+                <td>{{rec.inv_arap}}</td>
+                <td>{{rec.inv_arrnotice}}</td>                
+                <td>{{rec.rec_deleted}}</td>
+                <td>{{rec.inv_hbl_no}}</td>
+                <td align='right'>{{rec.inv_ar_total | number : '1.2-2'}}</td>                
+                <td align='right'>{{rec.inv_ap_total | number : '1.2-2'}}</td>                
+                <td align='right'>{{rec.inv_paid | number : '1.2-2'}}</td>                                
+                <td align='right'>{{rec.inv_balance | number : '1.2-2'}}</td>                                
+                <td>{{rec.inv_remarks}}</td>                                                
                 <td>{{rec.rec_created_by}}</td>
                 <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
             </tr>
         </tbody>
     </table>
   </div>
-    
+
+
+
+  
   <br />
   
   
