@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_cargo_invoicem, InvoiceModel, vm_tbl_cargo_invoicem } from '../models/Tbl_cargo_Invoicem';
+
 
 @Injectable({
     providedIn: 'root'

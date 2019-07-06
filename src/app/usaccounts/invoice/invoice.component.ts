@@ -51,7 +51,7 @@ export class InvoiceComponent implements OnInit {
 
     this.id = options.mbl_pkid;
     this.menuid = options.menuid;
-    this.mbl_type = options.inv_type;
+    this.mbl_type = options.mbl_type;
     this.mbl_pkid = options.mbl_pkid;
     this.mbl_refno = options.mbl_refno;
     this.showdeleted = 'N';
@@ -72,6 +72,12 @@ export class InvoiceComponent implements OnInit {
     SearchData.action = 'NEW';
     SearchData.MBL_PKID = this.mbl_pkid;
     SearchData.INV_TYPE = this.mbl_type;
+
+    SearchData.page_count = 0;
+    SearchData.page_rows = 0;
+    SearchData.page_current = -1;
+
+
 
     this.mainservice.List(SearchData).subscribe(response => {
       this.records = response.list;
