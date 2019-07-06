@@ -11,6 +11,7 @@ import { Modulem } from '../models/modulem';
 import { Companym } from '../models/company';
 import { Yearm } from '../models/yearm';
 
+
 @Component({
     selector: 'app-login2',
     templateUrl: './login2.component.html',
@@ -78,7 +79,8 @@ export class Login2Component implements OnInit {
                 this.GLOBALCONTANTS.SetupCompanyList(response.companylist);
 
                 response.companylist.forEach(a => {
-                    this.Company_Id = a.comp_pkid;
+                    if ( this.Company_Id == '' )
+                        this.Company_Id = a.comp_pkid;
                 })
 
                 response.yearlist.forEach(a => {
