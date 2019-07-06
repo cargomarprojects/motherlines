@@ -5,7 +5,7 @@ import { GlobalService } from '../../../core/services/global.service';
 
 import { SeaImpMasterService } from '../../services/seaimp-master.service';
 import { User_Menu } from '../../../core/models/menum';
-import { Tbl_cargo_imp_masterm, Tbl_cargo_imp_container,Tbl_cargo_imp_housem, vm_tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
+import { Tbl_cargo_imp_masterm, Tbl_cargo_imp_container, Tbl_cargo_imp_housem, vm_tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 
@@ -637,10 +637,28 @@ export class SeaImpMasterEditComponent implements OnInit {
       }
     }
   }
-  AddHouse()
-  {
+
+
+  BtnNavigation(action: string) {
+
+    switch (action) {
+      case 'ARAP': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_ARAP,
+          pkid:  this.pkid,
+          refno : this.record.mbl_refno,
+          type: 'SI',
+          origin: 'seaimp-master-page',
+        };
+        this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
+        break;
+      }
+    }
   }
-  ShowCntrMovement()
-  {
+
+
+  AddHouse() {
+  }
+  ShowCntrMovement() {
   }
 }
