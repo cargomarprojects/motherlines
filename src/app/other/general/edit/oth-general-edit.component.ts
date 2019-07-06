@@ -661,6 +661,30 @@ export class OthGeneralEditComponent implements OnInit {
         break;
       }
 
+      case 'hbl_weight': {
+        this.record.hbl_weight = this.gs.roundNumber(this.record.hbl_weight,3);
+        break;
+      }
+      case 'hbl_lbs': {
+        this.record.hbl_lbs = this.gs.roundNumber(this.record.hbl_lbs,3);
+        break;
+      }
+      case 'hbl_cbm': {
+        this.record.hbl_cbm = this.gs.roundNumber(this.record.hbl_cbm,3);
+        break;
+      }
+      case 'hbl_cft': {
+        this.record.hbl_cft = this.gs.roundNumber(this.record.hbl_cft,3);
+        break;
+      }
+      case 'hbl_chwt': {
+        this.record.hbl_chwt = this.gs.roundNumber(this.record.hbl_chwt,3);
+        break;
+      }
+      case 'hbl_chwt_lbs': {
+        this.record.hbl_chwt_lbs = this.gs.roundNumber(this.record.hbl_chwt_lbs,3);
+        break;
+      }
 
       case 'mbl_place_delivery': {
         this.record.mbl_place_delivery = this.record.mbl_place_delivery.toUpperCase();
@@ -707,6 +731,11 @@ export class OthGeneralEditComponent implements OnInit {
       //     break;
       //   }
     }
+  }
+
+  FindWeight(_type:string){
+    
+
   }
   AddHouse() {
   }
