@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -18,12 +17,12 @@ export class InvoiceComponent implements OnInit {
   private errormessage: string;
   private mbl_pkid: string;
   private mbl_refno: string;
-  private inv_type: string;
+  private mbl_type: string;
   private showdeleted: string;
 
   private id: string;
   private menuid: string;
-  private param_type: string;
+
 
   private title: string;
   private isAdmin: boolean;
@@ -41,24 +40,22 @@ export class InvoiceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.init(this.route.snapshot.queryParams);
-    this.initPage();
-  }
-
-  initPage() {
-  }
-
-
-  List(action: string) {
-    this.Search(action);
+    this.init(this.route.snapshot.queryParams.parameter);
+    this.List('SCREEN');
   }
 
 
   public init(params: any) {
 
-    this.id = params.id;
-    this.menuid = params.id;
-    this.param_type = params.param_type;
+    const options = JSON.parse(params);
+
+    this.id = options.mbl_pkid;
+    this.menuid = options.menuid;
+    this.mbl_type = options.inv_type;
+    this.mbl_pkid = options.mbl_pkid;
+    this.mbl_refno = options.mbl_refno;
+    this.showdeleted = 'N';
+
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
@@ -68,18 +65,13 @@ export class InvoiceComponent implements OnInit {
 
   }
 
-  Search(action: string = '') {
+  List(action: string = '') {
 
     var SearchData = this.gs.UserInfo;
     SearchData.outputformat = 'SCREEN';
     SearchData.action = 'NEW';
-    SearchData.pkid = this.mbl_pkid;
-    SearchData.TYPE = this.inv_type;
-    SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-    SearchData.CODE = this.mbl_refno;
-    SearchData.page_count = 0;
-    SearchData.page_rows = 0;
-    SearchData.page_current = -1;
+    SearchData.MBL_PKID = this.mbl_pkid;
+    SearchData.INV_TYPE = this.mbl_type;
 
     this.mainservice.List(SearchData).subscribe(response => {
       this.records = response.list;
@@ -87,7 +79,6 @@ export class InvoiceComponent implements OnInit {
       this.errormessage = this.gs.getError(error)
     });
   }
-
 
 
   NewRecord() {
@@ -99,7 +90,7 @@ export class InvoiceComponent implements OnInit {
     let parameter = {
       menuid: this.menuid,
       pkid: '',
-      type: this.param_type,
+      type: this.mbl_type,
       origin: 'seaexp-master-page',
       mode: 'ADD'
     };

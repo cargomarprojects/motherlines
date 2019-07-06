@@ -14,7 +14,7 @@ import { GlobalService } from './core/services/global.service';
 export class AppComponent {
   title = 'myApp';
 
-  sub : any;
+  sub: any;
 
   constructor(
     public gs: GlobalService,
@@ -23,11 +23,14 @@ export class AppComponent {
   ) {
 
     this.sub = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.loadingservice.startLoading();
-      }
-      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-        this.loadingservice.stopLoading();
+
+      if (this.gs.IsAuthenticated) {
+        if (event instanceof NavigationStart) {
+          this.loadingservice.startLoading();
+        }
+        if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+          this.loadingservice.stopLoading();
+        }
       }
     });
 

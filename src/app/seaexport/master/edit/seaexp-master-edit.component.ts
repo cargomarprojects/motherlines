@@ -486,9 +486,9 @@ export class SeaexpMasterEditComponent implements OnInit {
       case 'ARAP': {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER_ARAP,
-          pkid:  this.pkid,
-          refno : this.record.mbl_refno,
-          type: 'SE',
+          mbl_pkid:  this.pkid,
+          mbl_refno : this.record.mbl_refno,
+          mbl_type: 'SE',
           origin: 'seaexp-master-page',
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
