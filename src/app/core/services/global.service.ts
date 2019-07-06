@@ -767,7 +767,14 @@ export class GlobalService {
     this.router.navigate([menu_route], { queryParams: { parameter: jsonstring }, replaceUrl: _replaceurl });
   }
 
-
+  public GetAttention(Attention:string)
+  {
+     let str:string = "";
+      if (Attention.toString().trim().length > 0)
+          str = "ATTN : " + Attention.toString();
+      return str;
+  }
+  
   public GetTelFax(Tel: string, Fax: string) {
     let str: string = "";
     if (Tel.toString().trim().length > 0)

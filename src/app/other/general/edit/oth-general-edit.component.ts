@@ -93,7 +93,7 @@ export class OthGeneralEditComponent implements OnInit {
     this.errorMessage = '';
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_general>{};
-      this.records = <Tbl_cargo_container[]>[];    
+      this.records = <Tbl_cargo_container[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
@@ -141,7 +141,7 @@ export class OthGeneralEditComponent implements OnInit {
     this.record.mbl_shipment_stage = 'NIL';
     this.record.mbl_salesman_id = '';
     this.record.mbl_salesman_name = '';
-   // this.record.mbl_status = '';
+    // this.record.mbl_status = '';
     this.record.rec_files_attached = '';
     this.record.mbl_is_sea_waybill = '';
     this.record.mbl_ismemo_attached = 'N';
@@ -304,7 +304,7 @@ export class OthGeneralEditComponent implements OnInit {
     if (sCntrType.length > 100)
       sCntrType = sCntrType.substring(0, 100);
 
-   // this.record.mbl_cntr_desc = sCntrType;
+    // this.record.mbl_cntr_desc = sCntrType;
   }
   private SaveContainer() {
     let iCtr: number = 0;
@@ -465,10 +465,10 @@ export class OthGeneralEditComponent implements OnInit {
     rec.cntr_packages_uom = '';
     rec.cntr_packages = 0;
     rec.cntr_weight = 0;
-  //  rec.cntr_tare_weight = 0;
+    //  rec.cntr_tare_weight = 0;
     rec.cntr_cbm = 0;
-   // rec.cntr_pick_date = '';
-   // rec.cntr_return_date = '';
+    // rec.cntr_pick_date = '';
+    // rec.cntr_return_date = '';
     rec.cntr_weight_uom = '';
     rec.cntr_order = 1;
     this.records.push(rec);
@@ -513,32 +513,52 @@ export class OthGeneralEditComponent implements OnInit {
       this.record.mbl_country_name = _Record.name;
     }
 
-    if (_Record.controlname == "CARGO-LOC") {
-      this.record.mbl_cargo_loc_id = _Record.id;
+    if (_Record.controlname == "SHIPPER") {
+      
+      this.record.hbl_shipper_id = _Record.id;
+      this.record.hbl_shipper_code = _Record.code;
+      this.record.hbl_shipper_name = _Record.name;
+      if (_Record.col8 != "")
+        this.record.hbl_shipper_name = _Record.col8;
 
-    //   this.record.mbl_cargo_locname = _Record.name;
-    //   if (_Record.col8 != "")
-    //     this.record.mbl_cargo_locname = _Record.col8;
+      this.record.hbl_shipper_add1 = _Record.col1;
+      this.record.hbl_shipper_add2 = _Record.col2;
+      this.record.hbl_shipper_add3 = _Record.col3;
+      this.record.hbl_shipper_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+      if (_Record.col9 == "Y") {
 
-    //   this.record.mbl_cargo_locaddr1 = _Record.col1;
-    //   this.record.mbl_cargo_locaddr2 = _Record.col2;
-    //   this.record.mbl_cargo_locaddr3 = _Record.col3;
-    //   this.record.mbl_cargo_locaddr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
-
+        // MsgAlertBox mPage = new MsgAlertBox();
+        // mPage.PKID = Txt_Shipper_Code.PKID;
+        // mPage.SOURCE = "ACCOUNTING-ALERT";
+        // mPage.parentpage += delegate(object sender2, string objectName2)
+        // {
+        //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
+        // };
+        // mPage.Show();
+      }
     }
 
-    if (_Record.controlname == "DEVAN-LOC") {
-      this.record.mbl_devan_loc_id = _Record.id;
+    if (_Record.controlname == "CONSIGNEE") {
+      this.record.hbl_consignee_id = _Record.id;
+      this.record.hbl_consignee_code = _Record.code;
+        this.record.hbl_consignee_name = _Record.name;
+        if (_Record.col8 != "")
+          this.record.hbl_consignee_name = _Record.col8;
 
-    //   this.record.mbl_devan_locname = _Record.name;
-    //   if (_Record.col8 != "")
-    //     this.record.mbl_devan_locname = _Record.col8;
-
-    //   this.record.mbl_devan_locaddr1 = _Record.col1;
-    //   this.record.mbl_devan_locaddr2 = _Record.col2;
-    //   this.record.mbl_devan_locaddr3 = _Record.col3;
-    //   this.record.mbl_devan_locaddr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
-
+        this.record.hbl_consignee_add1 = _Record.col1;
+        this.record.hbl_consignee_add2 = _Record.col2;
+        this.record.hbl_consignee_add3 = this.gs.GetAttention(_Record.col5);
+        this.record.hbl_consignee_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+        if (_Record.col9 == "Y") {
+          // MsgAlertBox mPage = new MsgAlertBox();
+          // mPage.PKID = Txt_Shipper_Code.PKID;
+          // mPage.SOURCE = "ACCOUNTING-ALERT";
+          // mPage.parentpage += delegate(object sender2, string objectName2)
+          // {
+          //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
+          // };
+          // mPage.Show();
+        }
     }
 
 
@@ -569,7 +589,7 @@ export class OthGeneralEditComponent implements OnInit {
   }
 
 
-  onBlur(field: string, rec: Tbl_cargo_container) {
+  onBlur(field: string, rec: Tbl_cargo_container = null) {
     switch (field) {
       case 'mbl_refno': {
         this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
@@ -580,14 +600,68 @@ export class OthGeneralEditComponent implements OnInit {
         break;
       }
 
-      //   case 'mbl_sub_houseno': {
-      //     this.record.mbl_sub_houseno = this.record.mbl_sub_houseno.toUpperCase();
-      //     break;
-      //   }
-      //   case 'mbl_liner_bookingno': {
-      //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
-      //     break;
-      //   }
+      case 'hbl_houseno': {
+        this.record.hbl_houseno = this.record.hbl_houseno.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_name': {
+        this.record.hbl_shipper_name = this.record.hbl_shipper_name.toUpperCase();
+        break;
+      }
+
+      case 'hbl_shipper_add1': {
+        this.record.hbl_shipper_add1 = this.record.hbl_shipper_add1.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_add2': {
+        this.record.hbl_shipper_add2 = this.record.hbl_shipper_add2.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_add3': {
+        this.record.hbl_shipper_add3 = this.record.hbl_shipper_add3.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_add4': {
+        this.record.hbl_shipper_add4 = this.record.hbl_shipper_add4.toUpperCase();
+        break;
+      }
+
+      case 'hbl_consignee_name': {
+        this.record.hbl_consignee_name = this.record.hbl_consignee_name.toUpperCase();
+        break;
+      }
+
+      case 'hbl_consignee_add1': {
+        this.record.hbl_consignee_add1 = this.record.hbl_consignee_add1.toUpperCase();
+        break;
+      }
+      case 'hbl_consignee_add2': {
+        this.record.hbl_consignee_add2 = this.record.hbl_consignee_add2.toUpperCase();
+        break;
+      }
+      case 'hbl_consignee_add3': {
+        this.record.hbl_consignee_add3 = this.record.hbl_consignee_add3.toUpperCase();
+        break;
+      }
+      case 'hbl_consignee_add4': {
+        this.record.hbl_consignee_add4 = this.record.hbl_consignee_add4.toUpperCase();
+        break;
+      }
+      case 'hbl_commodity': {
+        this.record.hbl_commodity = this.record.hbl_commodity.toUpperCase();
+        break;
+      }
+      case 'hbl_isf_no': {
+        this.record.hbl_isf_no = this.record.hbl_isf_no.toUpperCase();
+        break;
+      }
+
+      case 'hbl_packages': {
+        this.record.hbl_packages = this.gs.roundNumber(this.record.hbl_packages,0);
+        break;
+      }
+
+
       case 'mbl_place_delivery': {
         this.record.mbl_place_delivery = this.record.mbl_place_delivery.toUpperCase();
         break;
@@ -628,16 +702,14 @@ export class OthGeneralEditComponent implements OnInit {
         rec.cntr_cbm = this.gs.roundNumber(rec.cntr_cbm, 3);
         break;
       }
-    //   case 'cntr_tare_weight': {
-    //     rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
-    //     break;
-    //   }
+      //   case 'cntr_tare_weight': {
+      //     rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
+      //     break;
+      //   }
     }
   }
-  AddHouse()
-  {
+  AddHouse() {
   }
-  ShowCntrMovement()
-  {
+  ShowCntrMovement() {
   }
 }
