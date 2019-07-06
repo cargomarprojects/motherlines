@@ -222,7 +222,7 @@
                                 <label class="col-2 col-form-label col-form-label-sm pr-0">Voyage</label>
                                 <div class="col-3 pl-0">
                                     <input class="form-control form-control-sm " type="text"
-                                        (blur)="onBlur('mbl_voyage')" [(ngModel)]="record.mbl_voyage" maxlength="60" />
+                                        (blur)="onBlur('mbl_voyage')" [(ngModel)]="record.mbl_voyage" maxlength="15" />
                                 </div>
                             </div>
                         </div>
@@ -234,8 +234,8 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Hbl#</label>
                                 <div class="col-9">
-                                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_no')"
-                                        #mbl_no (focusout)="onFocusout('mbl_no')" [(ngModel)]="record.mbl_no"
+                                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_houseno')"
+                                        #mbl_no (focusout)="onFocusout('hbl_houseno')" [(ngModel)]="record.hbl_houseno"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -243,9 +243,9 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Shipper</label>
                                 <div class="col-9">
-                                    <app-autocomplete2 [controlname]="'CARGO-LOC'" [tabletype]="'MASTER'"
-                                        [subtype]="'LOCATION'" [displaycolumn]="'NAME'"
-                                        [displaydata]="record.mbl_cargo_loccode" (ValueChanged)="LovSelected($event)">
+                                    <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'"
+                                        [subtype]="'SHIPPER'" [displaycolumn]="'CODE'"
+                                        [displaydata]="record.hbl_shipper_code" (ValueChanged)="LovSelected($event)">
                                     </app-autocomplete2>
                                 </div>
                             </div>
@@ -253,7 +253,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Name</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_cargo_locname')" [(ngModel)]="record.mbl_cargo_locname"
+                                        (blur)="onBlur('hbl_shipper_name')" [(ngModel)]="record.hbl_shipper_name"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -261,7 +261,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Address</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_cargo_locaddr1')" [(ngModel)]="record.mbl_cargo_locaddr1"
+                                        (blur)="onBlur('hbl_shipper_add1')" [(ngModel)]="record.hbl_shipper_add1"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -269,7 +269,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_cargo_locaddr2')" [(ngModel)]="record.mbl_cargo_locaddr2"
+                                        (blur)="onBlur('hbl_shipper_add2')" [(ngModel)]="record.hbl_shipper_add2"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -277,7 +277,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_cargo_locaddr3')" [(ngModel)]="record.mbl_cargo_locaddr3"
+                                        (blur)="onBlur('hbl_shipper_add3')" [(ngModel)]="record.hbl_shipper_add3"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -285,7 +285,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_cargo_locaddr4')" [(ngModel)]="record.mbl_cargo_locaddr4"
+                                        (blur)="onBlur('hbl_shipper_add4')" [(ngModel)]="record.hbl_shipper_add4"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -293,9 +293,9 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Consignee</label>
                                 <div class="col-9">
-                                    <app-autocomplete2 [controlname]="'DEVAN-LOC'" [tabletype]="'MASTER'"
-                                        [subtype]="'LOCATION'" [displaycolumn]="'NAME'"
-                                        [displaydata]="record.mbl_devan_loccode" (ValueChanged)="LovSelected($event)">
+                                    <app-autocomplete2 [controlname]="'CONSIGNEE'" [tabletype]="'MASTER'"
+                                        [subtype]="'CONSIGNEE'" [displaycolumn]="'CODE'"
+                                        [displaydata]="record.hbl_consignee_code" (ValueChanged)="LovSelected($event)">
                                     </app-autocomplete2>
                                 </div>
                             </div>
@@ -303,7 +303,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Name</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locname')" [(ngModel)]="record.mbl_devan_locname"
+                                        (blur)="onBlur('hbl_consignee_name')" [(ngModel)]="record.hbl_consignee_name"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -311,7 +311,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Address</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locaddr1')" [(ngModel)]="record.mbl_devan_locaddr1"
+                                        (blur)="onBlur('hbl_consignee_add1')" [(ngModel)]="record.hbl_consignee_add1"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -319,7 +319,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locaddr2')" [(ngModel)]="record.mbl_devan_locaddr2"
+                                        (blur)="onBlur('hbl_consignee_add2')" [(ngModel)]="record.hbl_consignee_add2"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -327,7 +327,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locaddr3')" [(ngModel)]="record.mbl_devan_locaddr3"
+                                        (blur)="onBlur('hbl_consignee_add3')" [(ngModel)]="record.hbl_consignee_add3"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -335,7 +335,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
+                                        (blur)="onBlur('hbl_consignee_add4')" [(ngModel)]="record.hbl_consignee_add4"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -344,7 +344,7 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
                                 <div class="col-9">
-                                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
+                                    <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status">
                                         <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">
                                             {{rec.name}}</option>
                                     </select>
@@ -355,16 +355,16 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Description</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_commodity')" [(ngModel)]="record.hbl_commodity"
+                                        maxlength="100" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">ISF No.</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_isf_no')" [(ngModel)]="record.hbl_isf_no"
+                                        maxlength="20" />
                                 </div>
                             </div>
 
@@ -372,8 +372,8 @@
                                 <label class="col-3 col-form-label col-form-label-sm">PCS</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_packages')" [(ngModel)]="record.hbl_packages"
+                                        maxlength="15" />
                                 </div>
                             </div>
 
