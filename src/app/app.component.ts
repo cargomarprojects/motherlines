@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
 
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 
 import { LoadingScreenService } from './core/services/loadingscreen.service';
 import { GlobalService } from './core/services/global.service';
@@ -13,10 +14,22 @@ import { GlobalService } from './core/services/global.service';
 export class AppComponent {
   title = 'myApp';
 
+  sub : any;
+
   constructor(
     public gs: GlobalService,
-    public loadingservice: LoadingScreenService
+    public loadingservice: LoadingScreenService,
+    private router: Router,
   ) {
+
+    this.sub = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.loadingservice.startLoading();
+      }
+      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        this.loadingservice.stopLoading();
+      }
+    });
 
   }
 
@@ -28,7 +41,7 @@ export class AppComponent {
     else {
       console.log('Development');
 
-      
+
       if (sessionStorage.length > 0) {
 
         this.gs.Access_Token = sessionStorage.getItem('access_token');
@@ -50,8 +63,8 @@ export class AppComponent {
 
   }
 
-  ngOnDestroy(){
-    
+  ngOnDestroy() {
+    this.sub.unsusbscribe();
   }
 
 
