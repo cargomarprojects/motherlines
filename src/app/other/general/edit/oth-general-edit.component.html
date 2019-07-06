@@ -381,60 +381,60 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Weight</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_weight')" [(ngModel)]="record.hbl_weight"
+                                        maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"><span>&gt;</span></button>
+                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">LBS</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_lbs')" [(ngModel)]="record.hbl_lbs"
+                                        maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"><span>&lt;</span> </button> 
+                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button> 
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">CBM</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_cbm')" [(ngModel)]="record.hbl_cbm"
+                                        maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"><span>&gt;</span></button>
+                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">CFT</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_cft')" [(ngModel)]="record.hbl_cft"
+                                        maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"><span>&lt;</span> </button> 
+                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button> 
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">CH.Weight</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_chwt')" [(ngModel)]="record.hbl_chwt"
+                                        maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"><span>&gt;</span></button>
+                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Chwt2Lbs')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">LBS</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
-                                        maxlength="60" />
+                                        (blur)="onBlur('hbl_chwt_lbs')" [(ngModel)]="record.hbl_chwt_lbs"
+                                        maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"><span> &lt;</span> </button> 
+                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Lbs2ChWt')"><span> &lt;</span> </button> 
                                 </div>
                             </div>
                         </div>

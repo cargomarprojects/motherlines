@@ -787,6 +787,28 @@ export class GlobalService {
     return str;
   }
 
+  public Convert_Weight(sType:string, data:number, iDec:number)
+  {
+     let iData:number = 0;
+      try
+      {
+          if (sType == "KG2LBS")
+              iData = data * 2.2046;
+          if (sType == "CBM2CFT")
+              iData = data * 35.314;
+          if (sType == "LBS2KG")
+              iData = data / 2.2046;
+          if (sType == "CFT2CBM")
+              iData = data / 35.314;
+      }
+      catch (Exception)
+      {
+          iData = 0;
+      }
+      return this.roundNumber(iData, iDec);
+    }
+
+
 
   public IsShipmentClosed(OPR_MODE: string, REF_DATE: string, LOCK_STATUS: string, UNLOCK_DATE: string = "") {
     var bRet = false;
