@@ -10,13 +10,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { OthGeneralComponent } from './general/oth-general.component';
 import { OthGeneralHeaderComponent } from './general/oth-general-header.component';
 
-//import { SeaexpMasterEditComponent } from './master/edit/seaexp-master-edit.component';
+import { OthGeneralEditComponent } from './general/edit/oth-general-edit.component';
 
 @NgModule({
   declarations: [
     OthGeneralComponent,
     OthGeneralHeaderComponent,
-   // SeaexpMasterEditComponent,
+    OthGeneralEditComponent,
   ],
   imports: [
     SharedModule,    

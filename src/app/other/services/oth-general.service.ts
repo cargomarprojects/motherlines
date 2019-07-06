@@ -49,7 +49,7 @@ export class OthGeneralService {
         this.record = <OthGeneralModel>{
             errormessage : '',
             records : [],
-            searchQuery : <SearchQuery>{searchString : ''},
+            searchQuery : <SearchQuery>{searchString : '', fromdate: this.gs.defaultValues.lastmonthdate, todate: this.gs.defaultValues.today},
             pageQuery : <PageQuery>{action :'NEW',page_count :0,page_current :-1,page_rowcount:0,page_rows:0}
         };
 
@@ -81,6 +81,8 @@ export class OthGeneralService {
         SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
+        SearchData.SDATE = this.record.searchQuery.fromdate;
+        SearchData.EDATE = this.record.searchQuery.todate;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
