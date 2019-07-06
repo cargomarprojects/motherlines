@@ -49,10 +49,11 @@ export class InvoiceComponent implements OnInit {
 
     const options = JSON.parse(params);
 
-    this.id = options.mbl_pkid;
+    
     this.menuid = options.menuid;
     this.mbl_type = options.mbl_type;
     this.mbl_pkid = options.mbl_pkid;
+    this.id = this.mbl_pkid;
     this.mbl_refno = options.mbl_refno;
     this.showdeleted = 'N';
 
