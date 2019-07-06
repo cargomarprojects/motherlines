@@ -96,7 +96,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Carrier</label>
                                 <div class="col-9">
 
-                                    <app-autocomplete2 [controlname]="'CARRIER'" [tabletype]="'SEA CARRIER'"
+                                    <app-autocomplete2 [controlname]="'CARRIER'" [tabletype]="'CARRIER'"
                                         [displaycolumn]="'NAME'" [displaydata]="record.mbl_liner_name"
                                         (ValueChanged)="LovSelected($event)">
                                     </app-autocomplete2>
@@ -158,7 +158,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Pol</label>
                                 <div class="col-9">
 
-                                    <app-autocomplete2 [controlname]="'POL'" [tabletype]="'SEA PORT'"
+                                    <app-autocomplete2 [controlname]="'POL'" [tabletype]="'PORT'"
                                         [displaycolumn]="'NAME'" [displaydata]="record.mbl_pol_name"
                                         (ValueChanged)="LovSelected($event)">
                                     </app-autocomplete2>
@@ -169,7 +169,7 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
                                 <div class="col-9">
-                                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+                                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
                                 </div>
                             </div>
 
@@ -178,7 +178,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Port.Discharge</label>
                                 <div class="col-9">
 
-                                    <app-autocomplete2 [controlname]="'POD'" [tabletype]="'SEA PORT'"
+                                    <app-autocomplete2 [controlname]="'POD'" [tabletype]="'PORT'"
                                         [displaycolumn]="'NAME'" [displaydata]="record.mbl_pod_name"
                                         (ValueChanged)="LovSelected($event)">
                                     </app-autocomplete2>
@@ -188,7 +188,7 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
                                 <div class="col-9">
-                                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
+                                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
                                 </div>
                             </div>
 
