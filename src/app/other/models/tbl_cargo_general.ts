@@ -120,6 +120,9 @@ export interface Tbl_cargo_general {
     hbl_is_pl: string;
     hbl_is_ci: string;
     hbl_is_carr_an: string;
+    hbl_is_pl_bool: boolean;
+    hbl_is_ci_bool: boolean;
+    hbl_is_carr_an_bool: boolean;
     hbl_custom_reles_status: string;
     hbl_cargo_release_status: string;
     hbl_paid_status: string;

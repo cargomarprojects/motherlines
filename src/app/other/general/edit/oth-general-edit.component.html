@@ -169,7 +169,8 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
                                 <div class="col-9">
-                                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
+                                    <app-date [inputdate]="record.mbl_pol_etd"
+                                        (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
                                 </div>
                             </div>
 
@@ -188,7 +189,8 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
                                 <div class="col-9">
-                                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
+                                    <app-date [inputdate]="record.mbl_pod_eta"
+                                        (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
                                 </div>
                             </div>
 
@@ -234,9 +236,9 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Hbl#</label>
                                 <div class="col-9">
-                                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_houseno')"
-                                        #mbl_no (focusout)="onFocusout('hbl_houseno')" [(ngModel)]="record.hbl_houseno"
-                                        maxlength="60" />
+                                    <input class="form-control form-control-sm" type="text"
+                                        (blur)="onBlur('hbl_houseno')" #mbl_no (focusout)="onFocusout('hbl_houseno')"
+                                        [(ngModel)]="record.hbl_houseno" maxlength="60" />
                                 </div>
                             </div>
 
@@ -363,8 +365,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">ISF No.</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('hbl_isf_no')" [(ngModel)]="record.hbl_isf_no"
-                                        maxlength="20" />
+                                        (blur)="onBlur('hbl_isf_no')" [(ngModel)]="record.hbl_isf_no" maxlength="20" />
                                 </div>
                             </div>
 
@@ -381,51 +382,51 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Weight</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('hbl_weight')" [(ngModel)]="record.hbl_weight"
-                                        maxlength="15" />
+                                        (blur)="onBlur('hbl_weight')" [(ngModel)]="record.hbl_weight" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
+                                    <button class="btn btn-primary btn-sm"
+                                        (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">LBS</label>
                                 <div class="col-3 pr-0">
-                                    <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('hbl_lbs')" [(ngModel)]="record.hbl_lbs"
-                                        maxlength="15" />
+                                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_lbs')"
+                                        [(ngModel)]="record.hbl_lbs" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button> 
+                                    <button class="btn btn-primary btn-sm"
+                                        (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">CBM</label>
                                 <div class="col-3 pr-0">
-                                    <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('hbl_cbm')" [(ngModel)]="record.hbl_cbm"
-                                        maxlength="15" />
+                                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_cbm')"
+                                        [(ngModel)]="record.hbl_cbm" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
+                                    <button class="btn btn-primary btn-sm"
+                                        (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">CFT</label>
                                 <div class="col-3 pr-0">
-                                    <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('hbl_cft')" [(ngModel)]="record.hbl_cft"
-                                        maxlength="15" />
+                                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_cft')"
+                                        [(ngModel)]="record.hbl_cft" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button> 
+                                    <button class="btn btn-primary btn-sm"
+                                        (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">CH.Weight</label>
                                 <div class="col-3 pr-0">
                                     <input class="form-control form-control-sm" type="number"
-                                        (blur)="onBlur('hbl_chwt')" [(ngModel)]="record.hbl_chwt"
-                                        maxlength="15" />
+                                        (blur)="onBlur('hbl_chwt')" [(ngModel)]="record.hbl_chwt" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Chwt2Lbs')"><span>&gt;</span></button>
+                                    <button class="btn btn-primary btn-sm"
+                                        (click)="FindWeight('Chwt2Lbs')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">LBS</label>
                                 <div class="col-3 pr-0">
@@ -434,7 +435,8 @@
                                         maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Lbs2ChWt')"><span> &lt;</span> </button> 
+                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Lbs2Chwt')"><span>
+                                            &lt;</span> </button>
                                 </div>
                             </div>
                         </div>
@@ -445,21 +447,21 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
-                                    <input type="checkbox" [(ngModel)]="record.mbl_direct_bool" />
+                                    <input type="checkbox" [(ngModel)]="record.hbl_is_pl_bool" />
                                     <span>Packing List</span>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
-                                    <input type="checkbox" [(ngModel)]="record.mbl_direct_bool" />
+                                    <input type="checkbox" [(ngModel)]="record.hbl_is_ci_bool" />
                                     <span>Commercial Invoice</span>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
-                                    <input type="checkbox" [(ngModel)]="record.mbl_direct_bool" />
+                                    <input type="checkbox" [(ngModel)]="record.hbl_is_carr_an_bool" />
                                     <span>Carrier AN</span>
                                 </div>
                             </div>
@@ -467,10 +469,12 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Customs
                                     Release Status</label>
                                 <div class="col-9">
-                                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
-                                        <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">
-                                            {{rec.name}}
-                                        </option>
+                                    <select class="form-control form-control-sm"
+                                        [(ngModel)]="record.hbl_custom_reles_status">
+                                        <option [value]="'NA'">NA</option>
+                                        <option [value]="'PENDING'">PENDING</option>
+                                        <option [value]="'EXAM'">EXAM</option>
+                                        <option [value]="'COMPLETE'">COMPLETE</option>
                                     </select>
                                 </div>
                             </div>
@@ -478,10 +482,10 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Delivery
                                     Status</label>
                                 <div class="col-9">
-                                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
-                                        <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">
-                                            {{rec.name}}
-                                        </option>
+                                    <select class="form-control form-control-sm" [(ngModel)]="record.hbl_is_delivery">
+                                        <option [value]="'NA'">NA</option>
+                                        <option [value]="'YES'">YES</option>
+                                        <option [value]="'NO'">NO</option>
                                     </select>
                                 </div>
                             </div>
@@ -491,7 +495,8 @@
                                 <label class="col-3 col-form-label col-form-label-sm">Last
                                     Free Date</label>
                                 <div class="col-9">
-                                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event">
+                                    <app-date [inputdate]="record.hbl_lfd_date"
+                                        (ValueChanged)="record.hbl_lfd_date=$event">
                                     </app-date>
                                 </div>
                             </div>
@@ -500,7 +505,7 @@
                                     No.</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
+                                        (blur)="onBlur('hbl_it_no')" [(ngModel)]="record.hbl_it_no"
                                         maxlength="60" />
                                 </div>
                             </div>
@@ -508,7 +513,7 @@
                                 <label class="col-3 col-form-label col-form-label-sm">IT
                                     Date</label>
                                 <div class="col-9">
-                                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event">
+                                    <app-date [inputdate]="record.hbl_it_date" (ValueChanged)="hbl_it_date=$event">
                                     </app-date>
                                 </div>
                             </div>
@@ -517,7 +522,7 @@
                                     Port</label>
                                 <div class="col-9">
                                     <input class="form-control form-control-sm" type="text"
-                                        (blur)="onBlur('mbl_devan_locaddr4')" [(ngModel)]="record.mbl_devan_locaddr4"
+                                        (blur)="onBlur('hbl_it_port')" [(ngModel)]="record.hbl_it_port"
                                         maxlength="60" />
                                 </div>
                             </div>

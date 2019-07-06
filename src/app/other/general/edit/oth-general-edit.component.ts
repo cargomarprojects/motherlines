@@ -225,6 +225,11 @@ export class OthGeneralEditComponent implements OnInit {
 
     if (!this.Allvalid())
       return;
+
+    this.record.hbl_is_pl = this.record.hbl_is_pl_bool ? 'Y' : 'N';
+    this.record.hbl_is_ci = this.record.hbl_is_ci_bool ? 'Y' : 'N';
+    this.record.hbl_is_carr_an = this.record.hbl_is_carr_an_bool ? 'Y' : 'N';
+
     this.SaveContainer();
     this.FindTotTeus();
     const saveRecord = <vm_tbl_cargo_general>{};
@@ -514,7 +519,7 @@ export class OthGeneralEditComponent implements OnInit {
     }
 
     if (_Record.controlname == "SHIPPER") {
-      
+
       this.record.hbl_shipper_id = _Record.id;
       this.record.hbl_shipper_code = _Record.code;
       this.record.hbl_shipper_name = _Record.name;
@@ -541,24 +546,24 @@ export class OthGeneralEditComponent implements OnInit {
     if (_Record.controlname == "CONSIGNEE") {
       this.record.hbl_consignee_id = _Record.id;
       this.record.hbl_consignee_code = _Record.code;
-        this.record.hbl_consignee_name = _Record.name;
-        if (_Record.col8 != "")
-          this.record.hbl_consignee_name = _Record.col8;
+      this.record.hbl_consignee_name = _Record.name;
+      if (_Record.col8 != "")
+        this.record.hbl_consignee_name = _Record.col8;
 
-        this.record.hbl_consignee_add1 = _Record.col1;
-        this.record.hbl_consignee_add2 = _Record.col2;
-        this.record.hbl_consignee_add3 = this.gs.GetAttention(_Record.col5);
-        this.record.hbl_consignee_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
-        if (_Record.col9 == "Y") {
-          // MsgAlertBox mPage = new MsgAlertBox();
-          // mPage.PKID = Txt_Shipper_Code.PKID;
-          // mPage.SOURCE = "ACCOUNTING-ALERT";
-          // mPage.parentpage += delegate(object sender2, string objectName2)
-          // {
-          //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
-          // };
-          // mPage.Show();
-        }
+      this.record.hbl_consignee_add1 = _Record.col1;
+      this.record.hbl_consignee_add2 = _Record.col2;
+      this.record.hbl_consignee_add3 = this.gs.GetAttention(_Record.col5);
+      this.record.hbl_consignee_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+      if (_Record.col9 == "Y") {
+        // MsgAlertBox mPage = new MsgAlertBox();
+        // mPage.PKID = Txt_Shipper_Code.PKID;
+        // mPage.SOURCE = "ACCOUNTING-ALERT";
+        // mPage.parentpage += delegate(object sender2, string objectName2)
+        // {
+        //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
+        // };
+        // mPage.Show();
+      }
     }
 
 
@@ -657,32 +662,41 @@ export class OthGeneralEditComponent implements OnInit {
       }
 
       case 'hbl_packages': {
-        this.record.hbl_packages = this.gs.roundNumber(this.record.hbl_packages,0);
+        this.record.hbl_packages = this.gs.roundNumber(this.record.hbl_packages, 0);
         break;
       }
 
       case 'hbl_weight': {
-        this.record.hbl_weight = this.gs.roundNumber(this.record.hbl_weight,3);
+        this.record.hbl_weight = this.gs.roundNumber(this.record.hbl_weight, 3);
         break;
       }
       case 'hbl_lbs': {
-        this.record.hbl_lbs = this.gs.roundNumber(this.record.hbl_lbs,3);
+        this.record.hbl_lbs = this.gs.roundNumber(this.record.hbl_lbs, 3);
         break;
       }
       case 'hbl_cbm': {
-        this.record.hbl_cbm = this.gs.roundNumber(this.record.hbl_cbm,3);
+        this.record.hbl_cbm = this.gs.roundNumber(this.record.hbl_cbm, 3);
         break;
       }
       case 'hbl_cft': {
-        this.record.hbl_cft = this.gs.roundNumber(this.record.hbl_cft,3);
+        this.record.hbl_cft = this.gs.roundNumber(this.record.hbl_cft, 3);
         break;
       }
       case 'hbl_chwt': {
-        this.record.hbl_chwt = this.gs.roundNumber(this.record.hbl_chwt,3);
+        this.record.hbl_chwt = this.gs.roundNumber(this.record.hbl_chwt, 3);
         break;
       }
       case 'hbl_chwt_lbs': {
-        this.record.hbl_chwt_lbs = this.gs.roundNumber(this.record.hbl_chwt_lbs,3);
+        this.record.hbl_chwt_lbs = this.gs.roundNumber(this.record.hbl_chwt_lbs, 3);
+        break;
+      }
+
+      case 'hbl_it_no': {
+        this.record.hbl_it_no = this.record.hbl_it_no.toUpperCase();
+        break;
+      }
+      case 'hbl_it_port': {
+        this.record.hbl_it_port = this.record.hbl_it_port.toUpperCase();
         break;
       }
 
@@ -733,10 +747,21 @@ export class OthGeneralEditComponent implements OnInit {
     }
   }
 
-  FindWeight(_type:string){
-    
-
+  FindWeight(_type: string) {
+    if (_type == "Kgs2Lbs")
+      this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
+    else if (_type == "Lbs2Kgs")
+      this.record.hbl_weight = this.gs.Convert_Weight("LBS2KG", this.record.hbl_lbs, 3);
+    else if (_type == "Cbm2Cft")
+      this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
+    else if (_type == "Cft2Cbm")
+      this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
+    else if (_type == "Chwt2Lbs")
+      this.record.hbl_chwt_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_chwt, 3);
+    else if (_type == "Lbs2Chwt")
+      this.record.hbl_chwt = this.gs.Convert_Weight("LBS2KG", this.record.hbl_chwt_lbs, 3);
   }
+
   AddHouse() {
   }
   ShowCntrMovement() {
