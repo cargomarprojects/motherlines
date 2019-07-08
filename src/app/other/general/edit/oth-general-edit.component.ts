@@ -8,6 +8,8 @@ import { User_Menu } from '../../../core/models/menum';
 import { Tbl_cargo_general, Tbl_cargo_container, vm_tbl_cargo_general } from '../../models/tbl_cargo_general';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { forEach } from '@angular/router/src/utils/collection';
+import { TBL_MBL_REPORT } from 'src/app/reports/models/tbl_mbl_report';
 
 @Component({
   selector: 'app-oth-general-edit',
@@ -36,7 +38,7 @@ export class OthGeneralEditComponent implements OnInit {
   private isAdmin: boolean;
 
   private cmbList = {};
-
+  OPERATION_MODE: string = "";
   MblStatusList: any[] = [];
   BlStatusList: any[] = [];
 
@@ -103,59 +105,96 @@ export class OthGeneralEditComponent implements OnInit {
   }
 
   init() {
-
     this.record.mbl_pkid = this.pkid;
     this.record.mbl_no = '';
+    this.record.mbl_cfno = 0;
+    this.record.mbl_refno = '';
     this.record.mbl_ref_date = this.gs.defaultValues.today;
+    this.record.mbl_frt_status = '';
+    this.record.mbl_liner_id = '';
+    this.record.mbl_liner_name = '';
+    this.record.mbl_liner_code = '';
+    this.record.mbl_agent_id = '';
+    this.record.mbl_agent_name = '';
+    this.record.mbl_agent_code = '';
+    this.record.mbl_pod_id = '';
+    this.record.mbl_pod_code = '';
+    this.record.mbl_pod_name = '';
+    this.record.mbl_pol_id = '';
+    this.record.mbl_pol_code = '';
+    this.record.mbl_pol_name = '';
+    this.record.mbl_vessel = '';
+    this.record.mbl_voyage = '';
     this.record.mbl_country_id = '';
     this.record.mbl_country_name = '';
     this.record.mbl_handled_id = '';
     this.record.mbl_handled_name = '';
-    this.record.mbl_cargo_loc_id = '';
-    this.record.mbl_devan_loc_id = '';
-    // this.record.mbl_cargo_loccode = '';
-    // this.record.mbl_cargo_locname = '';
-    // this.record.mbl_cargo_locaddr1 = '';
-    // this.record.mbl_cargo_locaddr2 = '';
-    // this.record.mbl_cargo_locaddr3 = '';
-    // this.record.mbl_cargo_locaddr4 = '';
-    // this.record.mbl_devan_loccode = '';
-    // this.record.mbl_devan_locname = '';
-    // this.record.mbl_devan_locaddr1 = '';
-    // this.record.mbl_devan_locaddr2 = '';
-    // this.record.mbl_devan_locaddr3 = '';
-    // this.record.mbl_devan_locaddr4 = '';
-    // this.record.mbl_is_held = false;
-    // this.record.mbl_it_no = '';
-    // this.record.mbl_it_port = '';
-    // this.record.mbl_it_date = '';
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
-    this.record.mbl_cntr_type = 'FCL';
-    this.record.mbl_container_tot = 0;
+    this.record.mbl_type = '';
+    this.record.mbl_place_delivery = '';
+    this.record.hbl_pkid = '';
+    this.record.hbl_mbl_id = '';
+    this.record.hbl_houseno = '';
+    this.record.hbl_frt_status = '';
+    this.record.hbl_consignee_id = '';
+    this.record.hbl_consignee_code = '';
+    this.record.hbl_consignee_name = '';
+    this.record.hbl_consignee_add1 = '';
+    this.record.hbl_consignee_add2 = '';
+    this.record.hbl_consignee_add3 = '';
+    this.record.hbl_consignee_add4 = '';
+    this.record.hbl_consignee_add5 = '';
+    this.record.hbl_shipper_id = '';
+    this.record.hbl_shipper_code = '';
+    this.record.hbl_shipper_name = '';
+    this.record.hbl_shipper_add1 = '';
+    this.record.hbl_shipper_add2 = '';
+    this.record.hbl_shipper_add3 = '';
+    this.record.hbl_shipper_add4 = '';
+    this.record.hbl_shipper_add5 = '';
+    this.record.hbl_commodity = '';
+    this.record.hbl_uom = '';
+    this.record.hbl_pcs = 0;
+    this.record.hbl_packages = 0;
+    this.record.hbl_weight = 0;
+    this.record.hbl_lbs = 0;
+    this.record.hbl_cbm = 0;
+    this.record.hbl_cft = 0;
+    this.record.hbl_chwt = 0;
+    this.record.hbl_chwt_lbs = 0;
     this.record.mbl_lock = '';
-    this.record.mbl_unlock_date = '';
     this.record.mbl_jobtype_id = '';
     this.record.mbl_jobtype_name = '';
-    //this.record.mbl_boeno = '';
-    this.record.mbl_shipment_stage = 'NIL';
+    this.record.hbl_isf_no = '';
     this.record.mbl_salesman_id = '';
     this.record.mbl_salesman_name = '';
-    // this.record.mbl_status = '';
     this.record.rec_files_attached = '';
-    this.record.mbl_is_sea_waybill = '';
-    this.record.mbl_ismemo_attached = 'N';
-    this.record.mbl_prefix = this.gs.SEA_IMPORT_REFNO_PREFIX;
-    this.record.mbl_startingno = this.gs.SEA_IMPORT_REFNO_STARTING_NO;
-    this.record.mbl_vessel = '';
-    this.record.mbl_voyage = '';
-    //this.record.mbl_ombl_sent_on = '';
-    var curr_date = new Date();
-    var curr_hh = curr_date.getHours();
-    // if (curr_hh >= 12)
-    //   this.record.mbl_ombl_sent_ampm = "PM";
-    // else
-    //   this.record.mbl_ombl_sent_ampm = "AM";
+    this.record.mbl_shipment_stage = 'NIL';
+    this.record.hbl_it_no = '';
+    this.record.hbl_it_port = '';
+    this.record.mbl_ismemo_attached = '';
+    this.record.hbl_is_pl = 'N';
+    this.record.hbl_is_ci = 'N';
+    this.record.hbl_is_carr_an = 'N';
+    this.record.hbl_custom_reles_status = 'NA';
+    this.record.hbl_is_delivery = 'NA';
+
+    if (this.OPERATION_MODE.trim() == "EXTRA") {
+      this.record.mbl_prefix = this.gs.EXTRA_OPERATION_REFNO_PREFIX;
+      this.record.mbl_startingno = this.gs.EXTRA_OPERATION_REFNO_STARTING_NO;
+    }
+    else {
+      this.record.mbl_prefix = this.gs.OTHER_OPERATION_REFNO_PREFIX;
+      this.record.mbl_startingno = this.gs.OTHER_OPERATION_REFNO_STARTING_NO;
+    }
+
+    // CmdAttachments.Foreground = new SolidColorBrush(Colors.Black);
+    // CmdInternalMemo.Foreground = new SolidColorBrush(Colors.Black);
+
+    if (this.gs.JOB_TYPE_OT.length > 0) {
+      // this.record.mbl_jobtype_id = this.gs.JOB_TYPE_OT[0].
+    }
   }
 
   GetRecord() {
@@ -167,6 +206,9 @@ export class OthGeneralEditComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_cargo_general>response.record;
+        this.record.hbl_is_pl_bool = this.record.hbl_is_pl == "Y" ? true : false;
+        this.record.hbl_is_ci_bool = this.record.hbl_is_ci == "Y" ? true : false;
+        this.record.hbl_is_carr_an_bool = this.record.hbl_is_carr_an == "Y" ? true : false;
         this.records = <Tbl_cargo_container[]>response.records;
         this.mode = 'EDIT';
         this.CheckData();
@@ -229,7 +271,6 @@ export class OthGeneralEditComponent implements OnInit {
     this.record.hbl_is_pl = this.record.hbl_is_pl_bool ? 'Y' : 'N';
     this.record.hbl_is_ci = this.record.hbl_is_ci_bool ? 'Y' : 'N';
     this.record.hbl_is_carr_an = this.record.hbl_is_carr_an_bool ? 'Y' : 'N';
-
     this.SaveContainer();
     this.FindTotTeus();
     const saveRecord = <vm_tbl_cargo_general>{};
@@ -237,6 +278,7 @@ export class OthGeneralEditComponent implements OnInit {
     saveRecord.cntrs = this.records;
     saveRecord.mode = this.mode;
     saveRecord.userinfo = this.gs.UserInfo;
+    saveRecord.operationmode = this.OPERATION_MODE;
 
     this.mainService.Save(saveRecord)
       .subscribe(response => {
@@ -262,43 +304,45 @@ export class OthGeneralEditComponent implements OnInit {
     var Tot_20 = 0, Tot_40 = 0, Tot_40HQ = 0, Tot_45 = 0;
     var Cntr_Tot = 0;
     let sCntrType: string = "";
-    this.records.forEach(Rec => {
-      Cntr_Tot++;
-      Teu = 0;
-      if (Rec.cntr_type.indexOf("20") >= 0)
-        Teu = 1;
-      else if (Rec.cntr_type.indexOf("40") >= 0) {
-        if (Rec.cntr_type.indexOf("HC") >= 0)
-          Teu = 2.25;
-        else
-          Teu = 2;
-      }
-      else if (Rec.cntr_type.indexOf("45") >= 0)
-        Teu = 2.50;
-
-      if (this.record.mbl_cntr_type.toString() == "LCL")
+    if (this.records != null) {
+      this.records.forEach(Rec => {
+        Cntr_Tot++;
         Teu = 0;
-      Tot_Teu += Teu;
-      Tot_Cbm += Rec.cntr_cbm;
-      Rec.cntr_teu = Teu;
-      if (Teu > 0) {
         if (Rec.cntr_type.indexOf("20") >= 0)
-          Tot_20 += 1;
-        else if (Rec.cntr_type.indexOf("40HC") >= 0 || Rec.cntr_type.indexOf("40HQ") >= 0)
-          Tot_40HQ += 1;
-        else if (Rec.cntr_type.indexOf("40") >= 0)
-          Tot_40 += 1;
+          Teu = 1;
+        else if (Rec.cntr_type.indexOf("40") >= 0) {
+          if (Rec.cntr_type.indexOf("HC") >= 0)
+            Teu = 2.25;
+          else
+            Teu = 2;
+        }
         else if (Rec.cntr_type.indexOf("45") >= 0)
-          Tot_45 += 1;
-      }
+          Teu = 2.50;
 
-      if (sCntrType.indexOf(Rec.cntr_type) < 0) {
-        if (sCntrType != "")
-          sCntrType += ",";
-        sCntrType += Rec.cntr_type;
-      }
+        // if (this.record.mbl_cntr_type.toString() == "LCL")
+        //   Teu = 0;
+        Tot_Teu += Teu;
+        Tot_Cbm += Rec.cntr_cbm;
+        Rec.cntr_teu = Teu;
+        if (Teu > 0) {
+          if (Rec.cntr_type.indexOf("20") >= 0)
+            Tot_20 += 1;
+          else if (Rec.cntr_type.indexOf("40HC") >= 0 || Rec.cntr_type.indexOf("40HQ") >= 0)
+            Tot_40HQ += 1;
+          else if (Rec.cntr_type.indexOf("40") >= 0)
+            Tot_40 += 1;
+          else if (Rec.cntr_type.indexOf("45") >= 0)
+            Tot_45 += 1;
+        }
 
-    })
+        if (sCntrType.indexOf(Rec.cntr_type) < 0) {
+          if (sCntrType != "")
+            sCntrType += ",";
+          sCntrType += Rec.cntr_type;
+        }
+
+      })
+    }
     this.record.mbl_teu = Tot_Teu;
     this.record.mbl_20 = Tot_20;
     this.record.mbl_40 = Tot_40;
@@ -312,6 +356,8 @@ export class OthGeneralEditComponent implements OnInit {
     // this.record.mbl_cntr_desc = sCntrType;
   }
   private SaveContainer() {
+    if (this.records == null)
+      return;
     let iCtr: number = 0;
     this.records.forEach(Rec => {
       iCtr++;
@@ -327,17 +373,12 @@ export class OthGeneralEditComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
-    if (this.record.mbl_no == "") {
-      bRet = false;
-      this.errorMessage = "Master BL# cannot be blank";
-      return bRet;
-    }
     if (this.record.mbl_ref_date == "") {
       bRet = false;
       this.errorMessage = "Ref Date cannot be blank";
       return bRet;
     }
-    if (this.gs.JOB_TYPE_OI.length > 0 && this.record.mbl_jobtype_id == "") {
+    if (this.gs.JOB_TYPE_OT.length > 0 && this.record.mbl_jobtype_id == "") {
       bRet = false;
       this.errorMessage = "Job Type cannot be blank";
       return bRet;
@@ -347,16 +388,6 @@ export class OthGeneralEditComponent implements OnInit {
       this.errorMessage = "Shipment Stage cannot be blank";
       return bRet;
     }
-    if (this.record.mbl_agent_id == "") {
-      bRet = false;
-      this.errorMessage = "Master Agent cannot be blank"
-      return bRet;
-    }
-    if (this.record.mbl_liner_id == "") {
-      bRet = false;
-      this.errorMessage = "Carrier cannot be blank"
-      return bRet;
-    }
 
     if (this.record.mbl_handled_id == "") {
       bRet = false;
@@ -364,71 +395,16 @@ export class OthGeneralEditComponent implements OnInit {
       return bRet;
     }
 
-    if (this.record.mbl_frt_status == "") {
-      bRet = false;
-      this.errorMessage = "Freight status cannot be blank"
-      return bRet;
-    }
-
-    // if (this.record.mbl_ship_term_id == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Shipping Term cannot be blank"
-    //   return bRet;
-    // }
-    if (this.record.mbl_cntr_type == "") {
-      bRet = false;
-      this.errorMessage = "Container Type cannot be blank"
-      return bRet;
-    }
-    if (this.record.mbl_pol_id == "") {
-      bRet = false;
-      this.errorMessage = "Port of Loading cannot be blank"
-      return bRet;
-    }
-    if (this.record.mbl_pol_etd == "") {
-      bRet = false;
-      this.errorMessage = "ETD cannot be blank"
-      return bRet;
-    }
-    if (this.record.mbl_pod_id == "") {
-      bRet = false;
-      this.errorMessage = "Port of Discharge cannot be blank"
-      return bRet;
-    }
-    if (this.record.mbl_pod_eta == "") {
-      bRet = false;
-      this.errorMessage = "ETA cannot be blank"
-      return bRet;
-    }
-
-    if (this.record.mbl_country_id == "") {
-      bRet = false;
-      this.errorMessage = "Country Cannot be blank"
-      return bRet;
-    }
-
-    if (this.record.mbl_vessel == "") {
-      bRet = false;
-      this.errorMessage = "Vessel cannot be blank"
-      return bRet;
-    }
-    if (this.record.mbl_voyage == "") {
-      bRet = false;
-      this.errorMessage = "Voyage cannot be blank"
-      return bRet;
-    }
-
-    // if (this.record.mbl_status.toString().trim() == "OMBL SENT TO CARRIER") {
-    //   if (this.record.mbl_ombl_sent_on.toString().trim() == "") {
-    //     bRet = false;
-    //     this.errorMessage = "OMBL Sent Date cannot be blank"
-    //     return bRet;
-    //   }
-    // }
-
-    if (this.record.mbl_cntr_type != "OTHERS") {
-
+    let cntrList: string = "";
+    if (this.records != null) {
       this.records.forEach(Rec => {
+        if (cntrList.indexOf(Rec.cntr_no.trim()) < 0)
+          cntrList += Rec.cntr_no.trim() + ",";
+        else {
+          bRet = false;
+          this.errorMessage = "Container( " + Rec.cntr_no + " ) Duplication in Container List"
+          return bRet;
+        }
 
         if (Rec.cntr_no.length != 11) {
           bRet = false;
@@ -439,13 +415,6 @@ export class OthGeneralEditComponent implements OnInit {
           bRet = false;
           this.errorMessage = "Container( " + Rec.cntr_no + " ) type has to be selected"
           return bRet;
-        }
-        if (Rec.cntr_type == "LCL") {
-          if (Rec.cntr_cbm <= 0) {
-            bRet = false;
-            this.errorMessage = "Container( " + Rec.cntr_no + " ) CBM cannot be zero"
-            return bRet;
-          }
         }
       })
     }
