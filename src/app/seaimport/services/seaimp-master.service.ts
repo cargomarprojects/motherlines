@@ -82,6 +82,7 @@ export class SeaImpMasterService {
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
+        SearchData.OVERRIDE_POD_ETA = this.gs.SEA_IMP_OVERRIDE_POD_ETA;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -90,7 +91,7 @@ export class SeaImpMasterService {
             SearchData.action = this.record.pageQuery.action;
             SearchData.page_count = this.record.pageQuery.page_count;
             SearchData.page_rows = this.record.pageQuery.page_rows;
-            SearchData.page_current = this.record.pageQuery.page_current;;
+            SearchData.page_current = this.record.pageQuery.page_current;
         }
 
         this.List(SearchData).subscribe(response => {
