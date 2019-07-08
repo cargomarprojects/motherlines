@@ -28,4 +28,8 @@ export class invoiceService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/USAccounts/Invoice/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    MasterLoss_Status_Save(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/USAccounts/Invoice/MasterLoss_Status_Save', SearchData, this.gs.headerparam2('authorized'));
+    }
+
 }

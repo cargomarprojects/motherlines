@@ -107,6 +107,24 @@ export class InvoiceComponent implements OnInit {
     });
   }
 
+  UpdateStatus(){
+    
+    var SearchData = this.gs.UserInfo;
+    SearchData.MBL_PKID = this.mbl_pkid;
+
+    SearchData.MBL_LOSS_MEMO = this.MBL_LOSS_MEMO;
+    SearchData.MBL_PROFIT_REQ = ( this.MBL_PROFIT_REQ) ? 'Y' : 'N';
+    SearchData.MBL_LOSS_APPROVED =( this.MBL_LOSS_APPROVED) ? 'Y' : 'N';
+
+    this.errormessage = '';
+    this.mainservice.MasterLoss_Status_Save(SearchData).subscribe(response => {
+      this.errormessage = 'Update Complete';
+    }, error => {
+      this.errormessage = this.gs.getError(error)
+    });
+
+  }
+
 
   DisplayProfit() {
     var nInc = 0;
