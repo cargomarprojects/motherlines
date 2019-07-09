@@ -62,6 +62,7 @@ export class SeaImpHouseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: '',
+      parentid :'',
       type: this.mainservice.param_type,
       origin: 'seaimp-house-page',
       mode: 'ADD'
@@ -78,6 +79,7 @@ export class SeaImpHouseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.hbl_pkid,
+      parentid :'',
       type: '',
       origin: 'seaimp-house-page',
       mode: 'EDIT'

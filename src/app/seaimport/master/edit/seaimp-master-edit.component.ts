@@ -26,6 +26,8 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   private pkid: string;
   private menuid: string;
+  private hblid: string = '';
+  private hblmode: string = '';
 
   private mode: string;
 
@@ -638,6 +640,30 @@ export class SeaImpMasterEditComponent implements OnInit {
     }
   }
 
+  AddHouse() {
+
+    // if (!this.mainservice.canAdd) {
+    //   alert('Insufficient User Rights')
+    //   return;
+    // }
+
+    this.hblid = "";
+    this.hblmode = "ADD";
+    this.BtnNavigation('HOUSE')
+  }
+
+  EditHouse(_record: Tbl_cargo_imp_housem) {
+
+    // if (!this.mainservice.canEdit) {
+    //   alert('Insufficient User Rights')
+    //   return;
+    // }
+
+    this.hblid = _record.hbl_pkid;
+    this.hblmode = "EDIT";
+    this.BtnNavigation('HOUSE')
+  }
+
 
   BtnNavigation(action: string) {
 
@@ -645,34 +671,31 @@ export class SeaImpMasterEditComponent implements OnInit {
       case 'ARAP': {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER_ARAP,
-          pkid:  this.pkid,
-          refno : this.record.mbl_refno,
+          pkid: this.pkid,
+          refno: this.record.mbl_refno,
           type: 'SI',
           origin: 'seaimp-master-page',
         };
-        this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
         break;
       }
       case 'HOUSE': {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE,
-          pkid:  this.pkid,
-          refno : this.record.mbl_refno,
+          parentid: this.pkid,
+          pkid: this.hblid,
+          refno: this.record.mbl_refno,
           type: 'SI',
           origin: 'seaimp-master-page',
-          mode: 'ADD'
+          mode: this.hblmode
         };
-        this.gs.Naviagete('Silver.SeaImport/SeaImpHouseEditPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.SeaImport/SeaImpHouseEditPage', JSON.stringify(prm));
         break;
       }
     }
   }
 
 
-  AddHouse() {
-
-     this.BtnNavigation('HOUSE')
-  }
   ShowCntrMovement() {
   }
 

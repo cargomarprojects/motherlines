@@ -24,11 +24,13 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
 
+  private parentid: string;
   private pkid: string;
   private menuid: string;
 
   private mode: string;
 
+  
   private errorMessage: string;
 
   private closeCaption: string = 'Return';
@@ -56,6 +58,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.pkid = options.pkid;
     this.menuid = options.menuid;
     this.mode = options.mode;
+    this.parentid = options.parentid;
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
