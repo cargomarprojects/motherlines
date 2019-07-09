@@ -133,6 +133,8 @@ export interface Tbl_cargo_imp_housem {
     hbl_shipper_name: string;
     hbl_consignee_name: string;
     hbl_handled_name: string;
+    hbl_ship_term:string;
+    hbl_frt_status:string;
     rec_created_by: string;
     rec_created_date: string;
     hbl_packages: number;

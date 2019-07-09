@@ -5,24 +5,24 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_cargo_imp_masterm, SeaImpMasterModel, vm_tbl_cargo_imp_masterm } from '../models/tbl_cargo_imp_masterm';
-import { SearchQuery } from '../models/tbl_cargo_imp_masterm';
+import { Tbl_cargo_imp_housem, SeaImpHouseModel, vm_tbl_cargo_imp_housem } from '../models/tbl_cargo_imp_housem';
+import { SearchQuery } from '../models/tbl_cargo_imp_housem';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SeaImpMasterService {
+export class SeaImpHouseService {
 
-    private mdata$ = new BehaviorSubject<SeaImpMasterModel>(null);
-    get data$(): Observable<SeaImpMasterModel> {
+    private mdata$ = new BehaviorSubject<SeaImpHouseModel>(null);
+    get data$(): Observable<SeaImpHouseModel> {
         return this.mdata$.asObservable();
     }
-    private record: SeaImpMasterModel;
+    private record: SeaImpHouseModel;
 
-    public id : string;
-    public menuid : string;
-    public param_type : string ;
+    public id: string;
+    public menuid: string;
+    public param_type: string;
 
     public title: string;
     public isAdmin: boolean;
@@ -36,7 +36,7 @@ export class SeaImpMasterService {
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
-    ) {}
+    ) { }
 
     public init(params: any) {
         if (this.initlialized)
@@ -45,11 +45,11 @@ export class SeaImpMasterService {
         this.id = params.id;
         this.menuid = params.id;
         this.param_type = params.param_type;
-        this.record = <SeaImpMasterModel>{
-            errormessage : '',
-            records : [],
-            searchQuery : <SearchQuery>{searchString : '', fromdate: this.gs.defaultValues.lastmonthdate, todate: this.gs.defaultValues.today},
-            pageQuery : <PageQuery>{action :'NEW',page_count :0,page_current :-1,page_rowcount:0,page_rows:0}
+        this.record = <SeaImpHouseModel>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.defaultValues.lastmonthdate, todate: this.gs.defaultValues.today, mblid: '' },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
         this.mdata$.next(this.record);
@@ -59,12 +59,12 @@ export class SeaImpMasterService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
-        
+
         this.initlialized = true;
 
     }
 
-    Search( _searchdata : any, type: string = '') {
+    Search(_searchdata: any, type: string = '') {
 
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
@@ -83,6 +83,7 @@ export class SeaImpMasterService {
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
         SearchData.OVERRIDE_POD_ETA = this.gs.SEA_IMP_OVERRIDE_POD_ETA;
+        SearchData.PARENT_ID = this.record.searchQuery.mblid;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -95,11 +96,11 @@ export class SeaImpMasterService {
         }
 
         this.List(SearchData).subscribe(response => {
-            this.record.pageQuery = <PageQuery>{ action :'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
+            this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
-            this.record = <SeaImpMasterModel>{
+            this.record = <SeaImpHouseModel>{
                 records: [],
                 errormessage: this.gs.getError(error),
             }
@@ -108,19 +109,19 @@ export class SeaImpMasterService {
     }
 
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/Master/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/Master/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Isblnoduplication(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/Master/Isblnoduplication', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/Isblnoduplication', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/Master/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }

@@ -138,7 +138,6 @@ export interface Tbl_cargo_general {
     mbl_inv_stage_c: string;
     mbl_inv_stage_d: string;
     mbl_inv_stage_e: string;
-
 }
 
 export interface Tbl_cargo_container {
@@ -168,6 +167,7 @@ export interface vm_tbl_cargo_general {
     cntrs: Tbl_cargo_container[];
     userinfo: any,
     filter: any;
+    operationmode:string;
 }
 
 export interface SearchQuery {
