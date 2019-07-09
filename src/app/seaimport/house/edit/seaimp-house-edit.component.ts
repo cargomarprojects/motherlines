@@ -661,6 +661,17 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
 
+  FindWeight(_type: string) {
+    if (_type == "Kgs2Lbs")
+      this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
+    else if (_type == "Lbs2Kgs")
+      this.record.hbl_weight = this.gs.Convert_Weight("LBS2KG", this.record.hbl_lbs, 3);
+    else if (_type == "Cbm2Cft")
+      this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
+    else if (_type == "Cft2Cbm")
+      this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
+  }
+
   AddHouse() {
     
   }

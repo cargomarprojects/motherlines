@@ -641,11 +641,10 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
   AddHouse() {
-
-    // if (!this.mainservice.canAdd) {
-    //   alert('Insufficient User Rights')
-    //   return;
-    // }
+    if (!this.gs.canAdd(this.gs.MENU_SI_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
 
     this.hblid = "";
     this.hblmode = "ADD";
@@ -654,10 +653,10 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   EditHouse(_record: Tbl_cargo_imp_housem) {
 
-    // if (!this.mainservice.canEdit) {
-    //   alert('Insufficient User Rights')
-    //   return;
-    // }
+    if (!this.gs.canEdit(this.gs.MENU_SI_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
 
     this.hblid = _record.hbl_pkid;
     this.hblmode = "EDIT";

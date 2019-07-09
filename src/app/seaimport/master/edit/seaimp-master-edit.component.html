@@ -2,7 +2,7 @@
   <div class="col">
     <label>{{title}} ({{mode}})</label>
     <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
-    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button>
+    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
   </div>
 </div>
 
@@ -501,7 +501,7 @@
                   </thead>
                   <tbody class="page-body-tbody">
                     <tr *ngFor="let rec of hrecords">
-                      <td>{{rec.hbl_houseno}}</td>
+                      <td (click)="EditHouse(rec)">{{rec.hbl_houseno}}</td>
                       <td>{{rec.hbl_shipper_name}}</td>
                       <td>{{rec.hbl_consignee_name}}</td>
                       <td>{{rec.hbl_packages}}</td>
