@@ -24,6 +24,10 @@ export class InvoiceEditComponent implements OnInit {
   private showdeleted: boolean;
   private paid_amt: number;
 
+
+  private inv_type : string ;
+  private inv_arap : string ;
+
   private pkid: string;
   private menuid: string;
 
@@ -33,9 +37,9 @@ export class InvoiceEditComponent implements OnInit {
   private canEdit: boolean;
   private canSave: boolean;
 
-  record: Tbl_cargo_invoicem;
-  records: Tbl_Cargo_Invoiced[];
-  history: Tbl_PayHistory[];
+  record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
+  records: Tbl_Cargo_Invoiced[] = [];
+  history: Tbl_PayHistory[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +51,7 @@ export class InvoiceEditComponent implements OnInit {
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.menuid = options.menuid;
-    this.pkid = options.mbl_pkid;
+    this.pkid = options.pkid;
     this.mbl_type = options.mbl_type;
     this.mode = options.mode;
     this.mbl_refno = options.mbl_refno;
@@ -77,6 +81,7 @@ export class InvoiceEditComponent implements OnInit {
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_invoicem>{};
       this.records = <Tbl_Cargo_Invoiced[]>[];
+      this.history = <Tbl_PayHistory[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
@@ -100,19 +105,38 @@ export class InvoiceEditComponent implements OnInit {
     SearchData.ISADMIN = (this.isAdmin) ? 'Y' : 'N';
 
     this.mainservice.GetRecord(SearchData).subscribe(response => {
-      this.record = response.record;
-      this.records = response.records;
-      this.history = response.history;
+      this.record = <Tbl_cargo_invoicem>response.record;
+      this.records = <Tbl_Cargo_Invoiced[]>response.records;
+      this.history = <Tbl_PayHistory[]>response.history;
       this.paid_amt = response.paid;
+
+      this.inv_type = this.record.inv_type ;
+      this.inv_arap = this.record.inv_arap;
+      
+
     }, error => {
       this.errorMessage = this.gs.getError(error)
     });
+  }
+
+  onBlur(field: string) {
+    switch (field) {
+      case 'inv_no': {
+        break;
+      }
+      case 'mbl_refno': {
+        break;
+      }
+    }
   }
 
 
   Close() {
     this.location.back();
   }
+
+
+
 
 
 
