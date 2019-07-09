@@ -173,10 +173,20 @@ export interface Tbl_cargo_imp_container {
     cntr_return_date: string;
 }
 
+export interface Tbl_cargo_imp_desc {
+    parentid: string;
+    parent_type: string;
+    cargo_ctr: number;
+    marks: string;
+    cargo_packages: string;
+    cargo_description: string;
+}
+
 export interface vm_tbl_cargo_imp_housem {
     mode: string;
     record: Tbl_cargo_imp_housem;
     cntrs: Tbl_cargo_imp_container[];
+    desc: Tbl_cargo_imp_desc[];
     userinfo: any,
     filter: any;
 }
@@ -185,7 +195,7 @@ export interface SearchQuery {
     searchString: string;
     fromdate: string;
     todate: string;
-    mblid:string;
+    mblid: string;
 }
 
 export interface SeaImpHouseModel {

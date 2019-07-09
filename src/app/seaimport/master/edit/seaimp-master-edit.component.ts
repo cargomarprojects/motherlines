@@ -653,12 +653,27 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
         break;
       }
+      case 'HOUSE': {
+        let prm = {
+          menuid: this.gs.MENU_SI_HOUSE,
+          pkid:  this.pkid,
+          refno : this.record.mbl_refno,
+          type: 'SI',
+          origin: 'seaimp-master-page',
+          mode: 'ADD'
+        };
+        this.gs.Naviagete('Silver.SeaImport/SeaImpHouseEditPage', JSON.stringify(prm));        
+        break;
+      }
     }
   }
 
 
   AddHouse() {
+
+     this.BtnNavigation('HOUSE')
   }
   ShowCntrMovement() {
   }
+
 }
