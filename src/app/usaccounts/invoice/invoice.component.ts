@@ -18,7 +18,7 @@ export class InvoiceComponent implements OnInit {
   private mbl_pkid: string;
   private mbl_refno: string;
   private mbl_type: string;
-  private showdeleted: string;
+  private showdeleted: boolean;
 
   private id: string;
   private menuid: string;
@@ -65,7 +65,7 @@ export class InvoiceComponent implements OnInit {
     this.mbl_pkid = options.mbl_pkid;
     this.id = this.mbl_pkid;
     this.mbl_refno = options.mbl_refno;
-    this.showdeleted = 'N';
+    this.showdeleted = false;
 
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
@@ -83,8 +83,8 @@ export class InvoiceComponent implements OnInit {
     SearchData.action = 'NEW';
     SearchData.MBL_PKID = this.mbl_pkid;
     SearchData.INV_TYPE = this.mbl_type;
-    SearchData.ISADMIN = (this.isAdmin) ? 'Y' : 'NO';
-    SearchData.SHOWDELETED = this.showdeleted;
+    SearchData.ISADMIN = (this.isAdmin) ? 'Y' : 'N';
+    SearchData.SHOWDELETED = (this.showdeleted) ? 'Y' : 'N';
     SearchData.BR_REGION = this.gs.BRANCH_REGION;
 
     SearchData.page_count = 0;
@@ -150,8 +150,7 @@ export class InvoiceComponent implements OnInit {
       }
     })
     
-    
-    
+        
     nProfit = this.gs.roundNumber(nInc - nExp,2);
     this.income = this.gs.roundNumber(nInc,2);
     this.expense = this.gs.roundNumber(nExp,2);
@@ -159,12 +158,7 @@ export class InvoiceComponent implements OnInit {
     this.ar_bal = this.gs.roundNumber(nAr_Bal,2);
     this.ap_bal = this.gs.roundNumber(nAp_Bal,2);
     
-
   }
-
-
-
-
 
 
   NewRecord() {
