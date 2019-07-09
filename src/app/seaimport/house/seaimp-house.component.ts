@@ -39,12 +39,10 @@ export class SeaImpHouseComponent implements OnInit {
   }
 
   initPage() {
-    
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
     this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
-
   }
 
   searchEvents(actions: any) {
