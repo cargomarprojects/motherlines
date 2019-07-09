@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Observable } from 'rxjs';
-
-import { map } from 'rxjs/operators';
-
 import { GlobalService } from '../../../core/services/global.service';
 import { Tbl_cargo_invoicem } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
+import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
 import { invoiceService } from '../../services/invoice.service';
 
@@ -19,14 +16,15 @@ import { invoiceService } from '../../services/invoice.service';
 })
 export class InvoiceEditComponent implements OnInit {
 
-  private errormessage: string;
-  
-  private mbl_pkid: string;
+  private errorMessage: string;
+
+  private mode: string;
   private mbl_refno: string;
   private mbl_type: string;
   private showdeleted: boolean;
+  private paid_amt: number;
 
-  private id: string;
+  private pkid: string;
   private menuid: string;
 
   private title: string;
@@ -35,9 +33,9 @@ export class InvoiceEditComponent implements OnInit {
   private canEdit: boolean;
   private canSave: boolean;
 
-
-  record: Tbl_cargo_invoicem[]
-  records: Tbl_Cargo_Invoiced[]
+  record: Tbl_cargo_invoicem;
+  records: Tbl_Cargo_Invoiced[];
+  history: Tbl_PayHistory[];
 
   constructor(
     private route: ActivatedRoute,
@@ -47,61 +45,69 @@ export class InvoiceEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.init(this.route.snapshot.queryParams.parameter);
-    this.List('SCREEN');
+    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+    this.menuid = options.menuid;
+    this.pkid = options.mbl_pkid;
+    this.mbl_type = options.mbl_type;
+    this.mode = options.mode;
+    this.mbl_refno = options.mbl_refno;
+    this.initpage();
+    this.actionHandler();
   }
 
 
-  public init(params: any) {
-    const options = JSON.parse(params);
-
-    this.menuid = options.menuid;
-    this.mbl_type = options.mbl_type;
-    this.mbl_pkid = options.mbl_pkid;
-    this.id = this.mbl_pkid;
-    this.mbl_refno = options.mbl_refno;
+  public initpage() {
     this.showdeleted = false;
-
-
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
     this.canAdd = this.gs.canAdd(this.menuid);
     this.canEdit = this.gs.canEdit(this.menuid);
     this.canSave = this.canAdd || this.canEdit;
+  }
+
+
+
+  NewRecord() {
+    this.mode = 'ADD';
+    this.actionHandler();
+  }
+
+  actionHandler() {
+    this.errorMessage = '';
+    if (this.mode == 'ADD') {
+      this.record = <Tbl_cargo_invoicem>{};
+      this.records = <Tbl_Cargo_Invoiced[]>[];
+      this.pkid = this.gs.getGuid();
+      this.init();
+    }
+
+    if (this.mode == 'EDIT') {
+      this.GetRecord();
+    }
+
+  }
+
+  init() {
 
   }
 
 
-  ActionHandler(){
-      
-  }
-
-
-  List(action: string = '') {
+  GetRecord() {
 
     var SearchData = this.gs.UserInfo;
-    SearchData.outputformat = 'SCREEN';
-    SearchData.action = 'NEW';
-    SearchData.MBL_PKID = this.mbl_pkid;
+    SearchData.pkid = this.pkid;
     SearchData.INV_TYPE = this.mbl_type;
     SearchData.ISADMIN = (this.isAdmin) ? 'Y' : 'N';
-    SearchData.SHOWDELETED = (this.showdeleted) ? 'Y' : 'N';
-    SearchData.BR_REGION = this.gs.BRANCH_REGION;
 
-    SearchData.page_count = 0;
-    SearchData.page_rows = 0;
-    SearchData.page_current = -1;
-    SearchData.page_rowcount = 0;
-
-    this.mainservice.List(SearchData).subscribe(response => {
-      this.records = response.list;
-
+    this.mainservice.GetRecord(SearchData).subscribe(response => {
+      this.record = response.record;
+      this.records = response.records;
+      this.history = response.history;
+      this.paid_amt = response.paid;
     }, error => {
-      this.errormessage = this.gs.getError(error)
+      this.errorMessage = this.gs.getError(error)
     });
   }
-
-
 
 
   Close() {
