@@ -72,6 +72,7 @@ export class SeaImpMasterComponent implements OnInit {
     this.gs.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(parameter));
 
   }
+  
   edit(_record: Tbl_cargo_imp_masterm) {
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')

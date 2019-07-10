@@ -39,12 +39,10 @@ export class SeaImpHouseComponent implements OnInit {
   }
 
   initPage() {
-    
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
     this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
-
   }
 
   searchEvents(actions: any) {
@@ -64,6 +62,7 @@ export class SeaImpHouseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: '',
+      parentid :'',
       type: this.mainservice.param_type,
       origin: 'seaimp-house-page',
       mode: 'ADD'
@@ -80,6 +79,7 @@ export class SeaImpHouseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.hbl_pkid,
+      parentid :'',
       type: '',
       origin: 'seaimp-house-page',
       mode: 'EDIT'

@@ -13,6 +13,7 @@ import { SeaImpMasterHeaderComponent } from './master/seaimp-master-header.compo
 import { SeaImpMasterEditComponent } from './master/edit/seaimp-master-edit.component';
 import { SeaImpHouseComponent } from './house/seaimp-house.component';
 import { SeaImpHouseHeaderComponent } from './house/seaimp-house-header.component';
+import { SeaImpHouseEditComponent } from './house/edit/seaimp-house-edit.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SeaImpHouseHeaderComponent } from './house/seaimp-house-header.componen
     SeaImpMasterEditComponent,
     SeaImpHouseComponent,
     SeaImpHouseHeaderComponent,
+    SeaImpHouseEditComponent
   ],
   imports: [
     SharedModule,    

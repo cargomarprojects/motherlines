@@ -102,8 +102,8 @@ export class SeaImpHouseService {
         }, error => {
             this.record = <SeaImpHouseModel>{
                 records: [],
-                errormessage: this.gs.getError(error),
-            }
+              errormessage: this.gs.getError(error),
+            };
             this.mdata$.next(this.record);
         });
     }
