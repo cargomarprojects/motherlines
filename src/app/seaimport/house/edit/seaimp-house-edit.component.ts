@@ -677,4 +677,15 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
   ShowCntrMovement() {
   }
+
+  
+  ISFUpload()
+  {
+
+  }
+
+  OHBLUpload()
+  {
+
+  }
 }

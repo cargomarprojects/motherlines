@@ -262,9 +262,8 @@
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">C/O</label>
                 <div class="col-9">
-                  <app-autocomplete2 [controlname]="'CARGO-LOC'" [tabletype]="'MASTER'" 
-                    [displaycolumn]="'NAME'" [displaydata]="record.hbl_careof_name"
-                    (ValueChanged)="LovSelected($event)">
+                  <app-autocomplete2 [controlname]="'CARGO-LOC'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+                    [displaydata]="record.hbl_careof_name" (ValueChanged)="LovSelected($event)">
                   </app-autocomplete2>
                 </div>
               </div>
@@ -336,7 +335,7 @@
                     [(ngModel)]="record.hbl_place_delivery" maxlength="60" />
                 </div>
               </div>
-            
+
 
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Delivery.Date</label>
@@ -352,7 +351,7 @@
                     [(ngModel)]="record.hbl_place_final" maxlength="60" />
                 </div>
               </div>
-            
+
 
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Final.Date</label>
@@ -360,143 +359,94 @@
                   <app-date [inputdate]="record.hbl_plf_eta" (ValueChanged)="hbl_plf_eta=$event"></app-date>
                 </div>
               </div>
-
-
-
-
-<!-- 
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">A/N.Handled.By</label>
-                <div class="col-9">
-
-                  <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
-                    [displaycolumn]="'NAME'" [displaydata]="record.mbl_handled_name"
-                    (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-
-
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
-                <div class="col-9">
-
-                  <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
-                    [displaycolumn]="'NAME'" [displaydata]="record.mbl_salesman_name"
-                    (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-                </div>
-              </div>
-
-             -->
-
-             
+ 
 
 
             </div>
             <div class="col-md-6 testbox  px-0 mx-0">
-
-
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Pkgs#</label>
                 <div class="col-4">
-                    <input class="form-control form-control-sm" type="number"
-                        (blur)="onBlur('hbl_packages')" [(ngModel)]="record.hbl_packages"
-                        maxlength="15" />
+                  <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_packages')"
+                    [(ngModel)]="record.hbl_packages" maxlength="15" />
                 </div>
                 <label class="col-1 col-form-label col-form-label-sm">Unit</label>
                 <div class="col-4">
-                    <input class="form-control form-control-sm" type="number"
-                        (blur)="onBlur('hbl_packages')" [(ngModel)]="record.hbl_packages"
-                        maxlength="15" />
+                  <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_packages')"
+                    [(ngModel)]="record.hbl_packages" maxlength="15" />
                 </div>
-            </div>
+              </div>
 
-            <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">KG</label>
-                <div class="col-3 pr-0">
-                    <input class="form-control form-control-sm" type="number"
-                        (blur)="onBlur('hbl_weight')" [(ngModel)]="record.hbl_weight" maxlength="15" />
-                </div>
-                <div class="col-1 pl-0">
-                    <button class="btn btn-primary btn-sm"
-                        (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
+                <div class="col-4 input-group input-group-sm">
+                  <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_weight')"
+                    [(ngModel)]="record.hbl_weight" maxlength="15" />
+                  <button class="btn btn-primary btn-sm" (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
                 </div>
                 <label class="col-1 col-form-label col-form-label-sm">LBS</label>
-                <div class="col-3 pr-0">
-                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_lbs')"
-                        [(ngModel)]="record.hbl_lbs" maxlength="15" />
+                <div class="col-4 input-group input-group-sm">
+                  <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_lbs')"
+                    [(ngModel)]="record.hbl_lbs" maxlength="15" />
+                  <button class="btn btn-primary btn-sm" (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button>
                 </div>
-                <div class="col-1 pl-0">
-                    <button class="btn btn-primary btn-sm"
-                        (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button>
-                </div>
-            </div>
-            <div class="form-group row">
+              </div>
+              <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">CBM</label>
-                <div class="col-3 pr-0">
-                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_cbm')"
-                        [(ngModel)]="record.hbl_cbm" maxlength="15" />
-                </div>
-                <div class="col-1 pl-0">
-                    <button class="btn btn-primary btn-sm"
-                        (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
+                <div class="col-4 input-group input-group-sm">
+                  <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_cbm')"
+                    [(ngModel)]="record.hbl_cbm" maxlength="15" />
+                  <button class="btn btn-primary btn-sm" (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                 </div>
                 <label class="col-1 col-form-label col-form-label-sm">CFT</label>
-                <div class="col-3 pr-0">
-                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_cft')"
-                        [(ngModel)]="record.hbl_cft" maxlength="15" />
+                <div class="col-4 input-group input-group-sm">
+                  <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_cft')"
+                    [(ngModel)]="record.hbl_cft" maxlength="15" />
+                  <button class="btn btn-primary btn-sm" (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button>
                 </div>
-                <div class="col-1 pl-0">
-                    <button class="btn btn-primary btn-sm"
-                        (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button>
-                </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-3 col-form-label col-form-label-sm">Description</label>
-              <div class="col-9">
-                  <input class="form-control form-control-sm" type="text"
-                      (blur)="onBlur('hbl_commodity')" [(ngModel)]="record.hbl_commodity"
-                      maxlength="15" />
               </div>
-          </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Description</label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_commodity')"
+                    [(ngModel)]="record.hbl_commodity" maxlength="15" />
+                </div>
+              </div>
 
-          <div class="form-group row">
-            <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
-            <div class="col-9">
-              <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status">
-                <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="form-group row">
-            <label class="col-3 col-form-label col-form-label-sm">Terms</label>
-            <div class="col-9">
-              <select class="form-control form-control-sm" [(ngModel)]="record.hbl_ship_term_id">
-                <option *ngFor="let rec of gs.PARAM_CARGO_MOVEMENT" [value]="rec.code">{{rec.name}}</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="form-group row">
-            <label class="col-3 col-form-label col-form-label-sm">Type</label>
-            <div class="col-9">
-              <select class="form-control form-control-sm" [(ngModel)]="record.hbl_bltype">
-                <option *ngFor="let rec of gs.PARAM_NOMINATION" [value]="rec.code">{{rec.name}}</option>
-              </select>
-            </div>
-          </div> 
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status">
+                    <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
+                  </select>
+                </div>
+              </div>
 
-          <div class="form-group row">
-            <label class="col-3 col-form-label col-form-label-sm">PO#</label>
-            <div class="col-9">
-                <input class="form-control form-control-sm" type="text"
-                    (blur)="onBlur('hbl_pono')" [(ngModel)]="record.hbl_pono"
-                    maxlength="15" />
-            </div>
-        </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Terms</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_ship_term_id">
+                    <option *ngFor="let rec of gs.PARAM_CARGO_MOVEMENT" [value]="rec.code">{{rec.name}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Type</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_bltype">
+                    <option *ngFor="let rec of gs.PARAM_NOMINATION" [value]="rec.code">{{rec.name}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">PO#</label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_pono')"
+                    [(ngModel)]="record.hbl_pono" maxlength="15" />
+                </div>
+              </div>
 
               <!-- <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Pol</label>
@@ -614,17 +564,186 @@
 
           </div>
           <hr>
-          <!-- <div class="row">
-             
-              <div class="col-md-6 testbox  px-0 mx-0">
-               
+          <div class="row">
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">AMS.File#</label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_cha_name')"
+                    [(ngModel)]="record.hbl_cha_name" maxlength="60" />
+                </div>
               </div>
-            </div> -->
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">SubHouse</label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_cha_attn')"
+                    [(ngModel)]="record.hbl_cha_attn" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">IFS.No.</label>
+                <div class="col-9 input-group input-group-sm">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_cha_tel')"
+                    [(ngModel)]="record.hbl_cha_tel" maxlength="60" />
+                  <button class="btn btn-primary btn-sm" (click)="ISFUpload()"><span>Upload</span> </button>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">IT.No.</label>
+                <div class="col-4">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_cha_name')"
+                    [(ngModel)]="record.hbl_cha_name" maxlength="60" />
+                </div>
+                <div class="col-5">
+                  <input type="checkbox" [(ngModel)]="record.hbl_is_pl_bool" />
+                  <span>IT Shipment</span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">IT.Date</label>
+                <div class="col-9">
+                  <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">IT.Port</label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_cha_tel')"
+                    [(ngModel)]="record.hbl_cha_tel" maxlength="60" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 testbox  px-0 mx-0">
 
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Telex Released</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status">
+                    <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Moved By DAD</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status">
+                    <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">B/L Req.</label>
+                <div class="col-9">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_cha_tel')"
+                    [(ngModel)]="record.hbl_cha_tel" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Booking#</label>
+                <div class="col-9 input-group input-group-sm">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_cha_tel')"
+                    [(ngModel)]="record.hbl_cha_tel" maxlength="60" />
+                  <button class="btn btn-primary btn-sm" (click)="ISFUpload()"><span>Booking</span> </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
           <hr>
+          <div class="row">
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input type="checkbox" [(ngModel)]="record.hbl_is_pl_bool" />
+                  <span>Packing List</span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input type="checkbox" [(ngModel)]="record.hbl_is_ci_bool" />
+                  <span>Commercial Invoice</span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <input type="checkbox" [(ngModel)]="record.hbl_is_carr_an_bool" />
+                  <span>Carrier AN</span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Customs
+                  Release Status</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_custom_reles_status">
+                    <option [value]="'NA'">NA</option>
+                    <option [value]="'PENDING'">PENDING</option>
+                    <option [value]="'EXAM'">EXAM</option>
+                    <option [value]="'COMPLETE'">COMPLETE</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Delivery
+                  Status</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_is_delivery">
+                    <option [value]="'NA'">NA</option>
+                    <option [value]="'YES'">YES</option>
+                    <option [value]="'NO'">NO</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 testbox  px-0 mx-0">
 
-          <!-- <div class="row">
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9">
+                  <button class="btn btn-primary btn-sm" (click)="OHBLUpload()"><span>Upload OHBL Or Telex RLS
+                      Copy</span> </button>
+                </div>
+              </div>
 
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Paid.Status</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_custom_reles_status">
+                    <option [value]="'NA'">NA</option>
+                    <option [value]="'PENDING'">PENDING</option>
+                    <option [value]="'EXAM'">EXAM</option>
+                    <option [value]="'COMPLETE'">COMPLETE</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">B/L.Status</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_is_delivery">
+                    <option [value]="'NA'">NA</option>
+                    <option [value]="'YES'">YES</option>
+                    <option [value]="'NO'">NO</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Frt.Release.Status</label>
+                <div class="col-9">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_is_delivery">
+                    <option [value]="'NA'">NA</option>
+                    <option [value]="'YES'">YES</option>
+                    <option [value]="'NO'">NO</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
             <div class="col-md-12">
               <div class="page-body table-responsive">
 
@@ -648,7 +767,6 @@
                       <th>CBM</th>
                       <th>PICKUP</th>
                       <th>EMPTY RETURN</th>
-                      <th>CNTR MOVEMENT</th>
                     </tr>
                   </thead>
                   <tbody class="page-body-tbody">
@@ -695,16 +813,363 @@
                         <app-date [inputdate]="rec.cntr_return_date" (ValueChanged)="rec.cntr_return_date=$event">
                         </app-date>
                       </td>
-                      <td><i class="fa fa-truck  fa-lg pointer" aria-hidden="true" (click)="ShowCntrMovement()"></i>
-                      </td>
-
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
-          </div> -->
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6  testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="offset-3 col-9 col-form-label col-form-label-sm">Marks & Nos</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_marks')"
+                    [(ngModel)]="record.cargo_marks" maxlength="60" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-12 col-form-label col-form-label-sm">Description of Commodity</label>
+              </div>
+              <div class="form-group row">
+                <div class="col-6 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+                <label class="col-1 col-form-label col-form-label-sm">BOE#</label>
+                <div class="col-5">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                      [(ngModel)]="record.cargo_description" maxlength="60" />
+                  </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-12 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Remarks</label>
+                <div class="col-9  pr-0">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 testbox  px-0 mx-0">
+
+               <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">A/N.Handled.By</label>
+                <div class="col-9">
+
+                  <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                    [displaycolumn]="'NAME'" [displaydata]="record.mbl_handled_name"
+                    (ValueChanged)="LovSelected($event)">
+                  </app-autocomplete2>
+
+
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
+                <div class="col-9">
+
+                  <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                    [displaycolumn]="'NAME'" [displaydata]="record.mbl_salesman_name"
+                    (ValueChanged)="LovSelected($event)">
+                  </app-autocomplete2>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Devan.Instructns</label>
+                <div class="col-9 pr-0">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>
+                <div class="col-9 pr-0">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('cargo_description')"
+                    [(ngModel)]="record.cargo_description" maxlength="60" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 testbox  px-0 mx-0">
+               <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">Last.Free.Date</label>
+                <div class="col-3">
+                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+                </div>
+                <label class="col-3 col-form-label col-form-label-sm">G.O.Date</label>
+                <div class="col-3">
+                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">PickUp.Date</label>
+                <div class="col-3">
+                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+                </div>
+                <label class="col-3 col-form-label col-form-label-sm">Empty.Return.Date</label>
+                <div class="col-3">
+                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm"></label>
+                  <div class="col-9">
+                      <button class=" col-12 btn btn-primary btn-sm">Update E/R & P/U</button>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+
 
         </div>
 
@@ -714,7 +1179,7 @@
 
       <div class="col-md-12  px-0 mx-0 py-2">
 
-        <div class="form-group row">
+        <div  class="form-group row">
           <button class=" col-12 btn btn-primary btn-sm">Invoice</button>
         </div>
 
