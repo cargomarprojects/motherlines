@@ -287,6 +287,11 @@
   }
   
 
+  .hr {
+    margin-top :1px;
+    margin-bottom :1px;
+
+  }
   
   .page-header {
     margin-top: 2px;

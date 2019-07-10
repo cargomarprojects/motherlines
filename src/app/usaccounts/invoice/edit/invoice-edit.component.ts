@@ -4,6 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { GlobalService } from '../../../core/services/global.service';
+
+import { SearchTable } from '../../../shared/models/searchtable';
+
 import { Tbl_cargo_invoicem } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
@@ -23,10 +26,11 @@ export class InvoiceEditComponent implements OnInit {
   private mbl_type: string;
   private showdeleted: boolean;
   private paid_amt: number;
+  private bal_amt: number;
 
 
-  private inv_type : string ;
-  private inv_arap : string ;
+  private inv_type: string;
+  private inv_arap: string;
 
   private pkid: string;
   private menuid: string;
@@ -110,15 +114,32 @@ export class InvoiceEditComponent implements OnInit {
       this.history = <Tbl_PayHistory[]>response.history;
       this.paid_amt = response.paid;
 
-      this.inv_type = this.record.inv_type ;
+      this.inv_type = this.record.inv_type;
       this.inv_arap = this.record.inv_arap;
+
+      this.DisplayBalance();
 
 
     }, error => {
       this.errorMessage = this.gs.getError(error)
     });
   }
-  
+
+  DisplayBalance() {
+    this.bal_amt = this.record.inv_total - this.paid_amt;
+    this.bal_amt = this.gs.roundNumber(this.bal_amt, 2);
+    /*           if (this.paid_amt != 0)
+              {
+                  Txt_Customer.IsEnabled = false;
+                  Txt_Customer_Name.IsEnabled = false;
+                  TXT_ARAP_CODE.IsEnabled = false;
+                  Txt_Inv_Currency.IsEnabled = false;
+              } */
+
+  }
+
+
+
   FindWeight(_type: string) {
     if (_type == "Kgs2Lbs")
       this.record.inv_hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.inv_hbl_weight, 3);
@@ -130,7 +151,7 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.inv_hbl_cft, 3);
   }
 
-  onBlur(field: string) {
+  onBlur(field: string, rec : Tbl_Cargo_Invoiced ) {
     switch (field) {
       case 'inv_no': {
         break;
@@ -138,6 +159,21 @@ export class InvoiceEditComponent implements OnInit {
       case 'mbl_refno': {
         break;
       }
+
+      case 'invoice_code': {
+        break;
+      }
+    }
+  }
+
+  LovSelected(_Record: SearchTable) {
+
+    if (_Record.controlname == "INVOICE-CODE") {
+      this.records.forEach(rec => {
+        if (rec.invd_pkid == _Record.uid) {
+          rec.invd_desc_name = _Record.name;
+        }
+      });
     }
   }
 
