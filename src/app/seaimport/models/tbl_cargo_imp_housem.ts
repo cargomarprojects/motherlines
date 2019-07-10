@@ -148,6 +148,42 @@ export interface Tbl_cargo_imp_housem {
     hbl_custom_reles_status: string;
     hbl_is_delivery: string;
     hbl_paid_remarks: string;
+
+    hbl_cargo_marks1:string;
+    hbl_cargo_marks2:string;
+    hbl_cargo_marks3:string;
+    hbl_cargo_marks4:string;
+    hbl_cargo_marks5:string;
+    hbl_cargo_marks6:string;
+    hbl_cargo_marks7:string;
+    hbl_cargo_marks8:string;
+    hbl_cargo_marks9:string;
+    hbl_cargo_marks10:string;
+    hbl_cargo_marks11:string;
+    hbl_cargo_marks12:string;
+    hbl_cargo_marks13:string;
+    hbl_cargo_marks14:string;
+    hbl_cargo_marks15:string;
+    hbl_cargo_marks16:string;
+    hbl_cargo_marks17:string;
+    
+    hbl_cargo_description1:string;
+    hbl_cargo_description2:string;
+    hbl_cargo_description3:string;
+    hbl_cargo_description4:string;
+    hbl_cargo_description5:string;
+    hbl_cargo_description6:string;
+    hbl_cargo_description7:string;
+    hbl_cargo_description8:string;
+    hbl_cargo_description9:string;
+    hbl_cargo_description10:string;
+    hbl_cargo_description11:string;
+    hbl_cargo_description12:string;
+    hbl_cargo_description13:string;
+    hbl_cargo_description14:string;
+    hbl_cargo_description15:string;
+    hbl_cargo_description16:string;
+    hbl_cargo_description17:string;
 }
 
 export interface Tbl_cargo_imp_container {

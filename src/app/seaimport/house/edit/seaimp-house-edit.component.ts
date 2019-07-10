@@ -5,7 +5,7 @@ import { GlobalService } from '../../../core/services/global.service';
 
 import { SeaImpHouseService } from '../../services/seaimp-house.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container,Tbl_cargo_imp_desc, Tbl_cargo_imp_housem } from '../../models/tbl_cargo_imp_housem';
+import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem } from '../../models/tbl_cargo_imp_housem';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 
@@ -30,7 +30,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   private mode: string;
 
-  
+
   private errorMessage: string;
 
   private closeCaption: string = 'Return';
@@ -40,8 +40,8 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   private cmbList = {};
 
-  MblStatusList: any[] = [];
-  BlStatusList: any[] = [];
+  TelexRlsList: any[] = [];
+  PaidStatusList: any[] = [];
 
   IsLocked: boolean = false;
 
@@ -73,19 +73,33 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   LoadCombo() {
 
-    if (this.gs.company_name == "MOTHERLINES INC USA") {
-      this.MblStatusList = [{ "name": "NIL" }
-        , { "name": "OMBL WITH ACCOUNTING" }, { "name": "OMBL SENT TO CARRIER" }
-        , { "name": "OMBL WITH LAX OFFICE" }, { "name": "OMBL SENT BY LAX OFFICE" }, { "name": "OMBL WITH NYC OFFICE" }
-        , { "name": "OMBL SENT BY NYC OFFICE" }];
+    if (this.gs.BRANCH_REGION == "USA") {
+      this.TelexRlsList = [{ "name": "YES" }
+        , { "name": "NO - REQUIRED" }
+        , { "name": "NO - RECEIVED" }];
     } else {
-      this.MblStatusList = [{ "name": "NIL" }, { "name": "OMBL WITH OPERATION" },
-      { "name": "OMBL WITH ACCOUNTING" }, { "name": "OMBL SENT TO CARRIER" }];
+      this.TelexRlsList = [{ "name": "YES" }, { "name": "NO" }];
     }
 
-    this.BlStatusList = [{ "name": "NIL" }
-      , { "name": "PENDING SEAWAY" }, { "name": "SEAWAY BILL" }
-      , { "name": "PENDING TELEX RELEASED" }, { "name": "TELEX RELEASED" }];
+    if (this.gs.BRANCH_REGION == "USA") {
+      if (this.gs.globalVariables.comp_code == "MNYC") {
+        this.PaidStatusList = [{ "name": "NIL" }
+          , { "name": "CREDIT" }, { "name": "PAID" }, { "name": "PAID BY CHECK" }, { "name": "PAID BY WIRE" }
+          , { "name": "CHECK COPY ACCEPTED" }, { "name": "CHECK RECEIVED BY LAX OFFICE" }, { "name": "CHECK RECEIVED BY NYC OFFICE" }
+          , { "name": "PAID BY OTHERS" }, { "name": "NOT PAID" }];
+
+      } else {
+        this.PaidStatusList = [{ "name": "NIL" }
+          , { "name": "CREDIT" }, { "name": "PAID" }, { "name": "PAID BY CHECK" }, { "name": "PAID BY WIRE" }
+          , { "name": "NOT PAID" }];
+      }
+
+    } else {
+      this.PaidStatusList = [{ "name": "NIL" }
+        , { "name": "CREDIT" }, { "name": "PAID" }
+        , { "name": "NOT PAID" }];
+    }
+
   }
 
   NewRecord() {
@@ -108,59 +122,159 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
   init() {
+    this.record.hbl_pkid = this.pkid;
+    this.record.hbl_mbl_id = '';
+    this.record.mbl_no = '';
+    this.record.mbl_refno = '';
+    this.record.hbl_houseno = '';
+    this.record.hbl_bltype = '';
+    this.record.hbl_frt_status = '';
+    this.record.hbl_ship_term = '';
+    this.record.hbl_ship_term_id = '';
+    this.record.hbl_it_no = '';
+    this.record.hbl_it_port = '';
+    this.record.hbl_consignee_id = '';
+    this.record.hbl_consignee_code = '';
+    this.record.hbl_consignee_name = '';
+    this.record.hbl_consignee_add1 = '';
+    this.record.hbl_consignee_add2 = '';
+    this.record.hbl_consignee_add3 = '';
+    this.record.hbl_consignee_add4 = '';
+    this.record.hbl_consignee_add5 = '';
+    this.record.hbl_shipper_id = '';
+    this.record.hbl_shipper_code = '';
+    this.record.hbl_shipper_name = '';
+    this.record.hbl_shipper_add1 = '';
+    this.record.hbl_shipper_add2 = '';
+    this.record.hbl_shipper_add3 = '';
+    this.record.hbl_shipper_add4 = '';
+    this.record.hbl_shipper_add5 = '';
+    this.record.hbl_location_id = '';
+    this.record.hbl_location_name = '';
+    this.record.hbl_location_code = '';
+    this.record.hbl_location_add1 = '';
+    this.record.hbl_location_add2 = '';
+    this.record.hbl_location_add3 = '';
+    this.record.hbl_location_add4 = '';
+    this.record.hbl_location_add5 = '';
+    this.record.hbl_notify_id = '';
+    this.record.hbl_notify_name = '';
+    this.record.hbl_notify_code = '';
+    this.record.hbl_notify_add1 = '';
+    this.record.hbl_notify_add2 = '';
+    this.record.hbl_notify_add3 = '';
+    this.record.hbl_notify_add4 = '';
+    this.record.hbl_notify_add5 = '';
+    this.record.hbl_agent_id = '';
+    this.record.hbl_agent_name = '';
+    this.record.hbl_agent_code = '';
+    this.record.hbl_cha_id = '';
+    this.record.hbl_cha_code = '';
+    this.record.hbl_cha_name = '';
+    this.record.hbl_cha_attn = '';
+    this.record.hbl_cha_tel = '';
+    this.record.hbl_cha_fax = '';
+    this.record.hbl_commodity = '';
+    this.record.hbl_uom = '';
+    this.record.hbl_pcs = 0;
+    this.record.hbl_packages = 0;
+    this.record.hbl_weight = 0;
+    this.record.hbl_lbs = 0;
+    this.record.hbl_cbm = 0;
+    this.record.hbl_cft = 0;
+    this.record.hbl_pono = '';
+    this.record.hbl_place_delivery = '';
+    this.record.hbl_place_final = '';
+    this.record.rec_files_attached = '';
+    this.record.hbl_sub_house = '';
+    this.record.hbl_ams_fileno = '';
+    this.record.hbl_telex_released = '';
+    this.record.hbl_isf_no = '';
+    this.record.hbl_mov_dad = '';
+    this.record.hbl_bl_req = '';
+    this.record.hbl_remark1 = '';
+    this.record.hbl_remark2 = '';
+    this.record.hbl_remark3 = '';
+    this.record.hbl_devan_instr1 = '';
+    this.record.hbl_devan_instr2 = '';
+    this.record.hbl_devan_instr3 = '';
+    this.record.hbl_salesman_id = '';
+    this.record.hbl_salesman_code = '';
+    this.record.hbl_salesman_name = '';
+    this.record.hbl_handled_id = '';
+    this.record.hbl_handled_code = '';
+    this.record.hbl_handled_name = '';
+    this.record.hbl_handled_email = '';
+    this.record.rec_created_by = '';
+    this.record.rec_created_email = '';
+    this.record.hbl_liner_code = '';
+    this.record.hbl_liner_name = '';
+    this.record.hbl_vessel = '';
+    this.record.hbl_voyage = '';
+    this.record.hbl_pol_code = '';
+    this.record.hbl_pol_name = '';
+    this.record.hbl_pod_code = '';
+    this.record.hbl_pod_name = '';
+    this.record.hbl_devan_loccode = '';
+    this.record.hbl_devan_locname = '';
+    this.record.hbl_devan_locaddr1 = '';
+    this.record.hbl_devan_locaddr2 = '';
+    this.record.hbl_devan_locaddr3 = '';
+    this.record.hbl_devan_locaddr4 = '';
+    this.record.mbl_cntr_type = '';
+    this.record.hbl_careof_id = '';
+    this.record.hbl_careof_name = '';
+    this.record.mbl_lock = '';
+    this.record.hbl_boeno = '';
+    this.record.hbl_paid_status = '';
+    this.record.hbl_bl_status = '';
+    this.record.hbl_cargo_release_status = '';
+    this.record.hbl_shipment_stage = '';
+    this.record.hbl_is_itshipment = false;
+    this.record.hbl_book_slno = 0;
+    this.record.hbl_isf_attached = '';
+    this.record.hbl_is_pl = false;
+    this.record.hbl_is_ci = false;
+    this.record.hbl_is_carr_an = false;
+    this.record.hbl_custom_reles_status = '';
+    this.record.hbl_is_delivery = '';
+    this.record.hbl_paid_remarks = '';
 
-    // this.record.mbl_pkid = this.pkid;
-    // this.record.mbl_no = '';
-    // this.record.mbl_ref_date = this.gs.defaultValues.today;
-    // this.record.mbl_country_id = '';
-    // this.record.mbl_country_name = '';
-    // this.record.mbl_handled_id = '';
-    // this.record.mbl_handled_name = '';
-    // this.record.mbl_cargo_loc_id = '';
-    // this.record.mbl_devan_loc_id = '';
-    // this.record.mbl_cargo_loccode = '';
-    // this.record.mbl_cargo_locname = '';
-    // this.record.mbl_cargo_locaddr1 = '';
-    // this.record.mbl_cargo_locaddr2 = '';
-    // this.record.mbl_cargo_locaddr3 = '';
-    // this.record.mbl_cargo_locaddr4 = '';
-    // this.record.mbl_devan_loccode = '';
-    // this.record.mbl_devan_locname = '';
-    // this.record.mbl_devan_locaddr1 = '';
-    // this.record.mbl_devan_locaddr2 = '';
-    // this.record.mbl_devan_locaddr3 = '';
-    // this.record.mbl_devan_locaddr4 = '';
-    // this.record.mbl_is_held = false;
-    // this.record.mbl_it_no = '';
-    // this.record.mbl_it_port = '';
-    // this.record.mbl_it_date = '';
-    // this.record.rec_created_by = this.gs.user_code;
-    // this.record.rec_created_date = this.gs.defaultValues.today;
-    // this.record.mbl_cntr_type = 'FCL';
-    // this.record.mbl_container_tot = 0;
-    // this.record.mbl_lock = '';
-    // this.record.mbl_unlock_date = '';
-    // this.record.mbl_jobtype_id = '';
-    // this.record.mbl_jobtype_name = '';
-    // this.record.mbl_boeno = '';
-    // this.record.mbl_shipment_stage = 'NIL';
-    // this.record.mbl_salesman_id = '';
-    // this.record.mbl_salesman_name = '';
-    // this.record.mbl_status = '';
-    // this.record.rec_files_attached = '';
-    // this.record.mbl_is_sea_waybill = '';
-    // this.record.mbl_ismemo_attached = 'N';
-    // this.record.mbl_prefix = this.gs.SEA_IMPORT_REFNO_PREFIX;
-    // this.record.mbl_startingno = this.gs.SEA_IMPORT_REFNO_STARTING_NO;
-    // this.record.mbl_vessel = '';
-    // this.record.mbl_voyage = '';
-    // this.record.mbl_ombl_sent_on = '';
-    // var curr_date = new Date();
-    // var curr_hh = curr_date.getHours();
-    // if (curr_hh >= 12)
-    //   this.record.mbl_ombl_sent_ampm = "PM";
-    // else
-    //   this.record.mbl_ombl_sent_ampm = "AM";
+    this.record.hbl_cargo_marks1= '';
+    this.record.hbl_cargo_marks2= '';
+    this.record.hbl_cargo_marks3= '';
+    this.record.hbl_cargo_marks4= '';
+    this.record.hbl_cargo_marks5= '';
+    this.record.hbl_cargo_marks6= '';
+    this.record.hbl_cargo_marks7= '';
+    this.record.hbl_cargo_marks8= '';
+    this.record.hbl_cargo_marks9= '';
+    this.record.hbl_cargo_marks10= '';
+    this.record.hbl_cargo_marks11= '';
+    this.record.hbl_cargo_marks12= '';
+    this.record.hbl_cargo_marks13= '';
+    this.record.hbl_cargo_marks14= '';
+    this.record.hbl_cargo_marks15= '';
+    this.record.hbl_cargo_marks16= '';
+    this.record.hbl_cargo_marks17= '';
+    
+    this.record.hbl_cargo_description1= '';
+    this.record.hbl_cargo_description2= '';
+    this.record.hbl_cargo_description3= '';
+    this.record.hbl_cargo_description4= '';
+    this.record.hbl_cargo_description5= '';
+    this.record.hbl_cargo_description6= '';
+    this.record.hbl_cargo_description7= '';
+    this.record.hbl_cargo_description8= '';
+    this.record.hbl_cargo_description9= '';
+    this.record.hbl_cargo_description10= '';
+    this.record.hbl_cargo_description11= '';
+    this.record.hbl_cargo_description12= '';
+    this.record.hbl_cargo_description13= '';
+    this.record.hbl_cargo_description14= '';
+    this.record.hbl_cargo_description15= '';
+    this.record.hbl_cargo_description16= '';
+    this.record.hbl_cargo_description17= '';
   }
 
   GetRecord() {
@@ -595,18 +709,18 @@ export class SeaImpHouseEditComponent implements OnInit {
       //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
       //     break;
       //   }
-    //   case 'mbl_place_delivery': {
-    //     this.record.mbl_place_delivery = this.record.mbl_place_delivery.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_vessel': {
-    //     this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_voyage': {
-    //     this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
-    //     break;
-    //   }
+      //   case 'mbl_place_delivery': {
+      //     this.record.mbl_place_delivery = this.record.mbl_place_delivery.toUpperCase();
+      //     break;
+      //   }
+      //   case 'mbl_vessel': {
+      //     this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
+      //     break;
+      //   }
+      //   case 'mbl_voyage': {
+      //     this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
+      //     break;
+      //   }
 
       case 'cntr_no': {
         rec.cntr_no = rec.cntr_no.toUpperCase();
@@ -673,19 +787,17 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
   AddHouse() {
-    
+
   }
   ShowCntrMovement() {
   }
 
-  
-  ISFUpload()
-  {
+
+  ISFUpload() {
 
   }
 
-  OHBLUpload()
-  {
+  OHBLUpload() {
 
   }
 }
