@@ -17,6 +17,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
 
+
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
 
   records: Tbl_cargo_exp_container[] = [];

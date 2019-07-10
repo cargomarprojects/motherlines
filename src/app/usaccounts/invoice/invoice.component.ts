@@ -170,11 +170,12 @@ export class InvoiceComponent implements OnInit {
     let parameter = {
       menuid: this.menuid,
       pkid: '',
-      type: this.mbl_type,
-      origin: 'seaexp-master-page',
-      mode: 'ADD'
+      mode: 'ADD',
+      mbl_type: this.mbl_type,
+      mbl_refno : this.mbl_refno,      
+      origin: 'invoice-list-page',
     };
-    this.gs.Naviagete('Silver.SeaExport.Trans/SeaExpMasterEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_cargo_invoicem) {
@@ -185,12 +186,13 @@ export class InvoiceComponent implements OnInit {
 
     let parameter = {
       menuid: this.menuid,
-      pkid: '',
-      type: '',
-      origin: 'seaexp-master-page',
-      mode: 'EDIT'
+      pkid: _record.inv_pkid,
+      mode: 'EDIT',
+      mbl_type : this.mbl_type,
+      mbl_refno : this.mbl_refno,
+      origin: 'invoice-list-page',
     };
-    this.gs.Naviagete('Silver.SeaExport.Trans/SeaExpMasterEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(parameter));
   }
 
   Close() {
