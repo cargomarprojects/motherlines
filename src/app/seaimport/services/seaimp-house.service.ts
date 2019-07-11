@@ -26,6 +26,10 @@ export class SeaImpHouseService {
 
     public title: string;
     public isAdmin: boolean;
+    public canAdd: boolean;
+    public canEdit: boolean;
+    public canSave: boolean;
+    
     public initlialized: boolean;
 
     constructor(
@@ -51,6 +55,9 @@ export class SeaImpHouseService {
 
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
+        this.canAdd = this.gs.canAdd(this.menuid);
+        this.canEdit = this.gs.canEdit(this.menuid);
+        this.canSave = this.canAdd || this.canEdit;
         this.initlialized = true;
     }
 
