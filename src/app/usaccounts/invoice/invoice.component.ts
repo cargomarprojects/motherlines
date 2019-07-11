@@ -172,7 +172,8 @@ export class InvoiceComponent implements OnInit {
       pkid: '',
       mode: 'ADD',
       mbl_type: this.mbl_type,
-      mbl_refno : this.mbl_refno,      
+      mbl_refno : this.mbl_refno, 
+      inv_arap :'AR',     
       origin: 'invoice-list-page',
     };
     this.gs.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(parameter));
@@ -189,6 +190,7 @@ export class InvoiceComponent implements OnInit {
       pkid: _record.inv_pkid,
       mode: 'EDIT',
       mbl_type : this.mbl_type,
+      inv_arap :'',     
       mbl_refno : this.mbl_refno,
       origin: 'invoice-list-page',
     };
