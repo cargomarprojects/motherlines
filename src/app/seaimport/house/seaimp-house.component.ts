@@ -54,10 +54,7 @@ export class SeaImpHouseComponent implements OnInit {
   }
 
   NewRecord() {
-    if (!this.mainservice.canAdd) {
-      alert('Insufficient User Rights')
-      return;
-    }
+
 
     let parameter = {
       menuid: this.mainservice.menuid,
@@ -71,10 +68,7 @@ export class SeaImpHouseComponent implements OnInit {
 
   }
   edit(_record: Tbl_cargo_imp_housem) {
-    if (!this.mainservice.canEdit) {
-      alert('Insufficient User Rights')
-      return;
-    }
+
 
     let parameter = {
       menuid: this.mainservice.menuid,

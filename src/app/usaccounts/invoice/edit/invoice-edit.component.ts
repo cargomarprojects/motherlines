@@ -12,7 +12,7 @@ import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
 import { invoiceService } from '../../services/invoice.service';
-import { timingSafeEqual } from 'crypto';
+
 
 @Component({
   selector: 'app-invoice-edit',
@@ -64,6 +64,7 @@ export class InvoiceEditComponent implements OnInit {
     this.initpage();
     this.initControls();
     this.InitDefaultCodes();
+    //this.enableAll();
     this.actionHandler();
   }
 
@@ -81,17 +82,32 @@ export class InvoiceEditComponent implements OnInit {
   acc_code: string = '';
   acc_name: string = '';
 
-  show_acc_control: boolean = false;
+
+  show_customer_control: boolean = false;
   show_arap_control: boolean = false;
+  show_inv_currency: boolean = false;
+
+  show_acc_control: boolean = false;
   show_cc_control: boolean = false;
 
-  showVat: boolean = false;
-  showInvStage: boolean = false;
+  showvat: boolean = false;
+  showinvstage: boolean = false;
+  single_curr: boolean = true;
 
   initControls() {
-    this.showVat = (this.gs.VAT_PER > 0) ? true : false;
-    this.showInvStage = false;
+    this.showvat = (this.gs.VAT_PER > 0) ? true : false;
+    this.showinvstage = false;
+    this.single_curr = this.gs.IS_SINGLE_CURRENCY;
+    this.show_inv_currency = this.single_curr;
   }
+
+  enableAll() {
+    this.single_curr = false;
+    this.show_cc_control = true;
+    this.showvat = true;
+    this.show_inv_currency = this.single_curr;
+  }
+
 
   InitDefaultCodes() {
     if (this.inv_arap == "AR") {
@@ -152,11 +168,11 @@ export class InvoiceEditComponent implements OnInit {
       this.show_acc_control = true;
       this.show_cc_control = true;
       this.show_arap_control = true;
+
       if (this.gs.ALLOW_ARAP_CODE_SELECTION == "Y")
         this.show_arap_control = true;
       else
         this.show_arap_control = false;
-
 
       if (this.mbl_type == "PS") {
         if (this.inv_arap == "AR") {
@@ -199,8 +215,6 @@ export class InvoiceEditComponent implements OnInit {
     */
 
   }
-
-
 
 
   NewRecord() {
@@ -276,14 +290,11 @@ export class InvoiceEditComponent implements OnInit {
   DisplayBalance() {
     this.bal_amt = this.record.inv_total - this.paid_amt;
     this.bal_amt = this.gs.roundNumber(this.bal_amt, 2);
-    /*           if (this.paid_amt != 0)
-              {
-                  Txt_Customer.IsEnabled = false;
-                  Txt_Customer_Name.IsEnabled = false;
-                  TXT_ARAP_CODE.IsEnabled = false;
-                  Txt_Inv_Currency.IsEnabled = false;
-              } */
-
+    if (this.paid_amt != 0) {
+      this.show_customer_control = false;
+      this.show_arap_control = false;
+      this.show_inv_currency = false;
+    }
   }
 
 
@@ -315,13 +326,39 @@ export class InvoiceEditComponent implements OnInit {
 
   LovSelected(_Record: SearchTable) {
 
-    if (_Record.controlname == "INVOICE-CODE") {
+
+    if (_Record.controlname == "INVOICED-CODE" || _Record.controlname == "INVOICED-CURR" || _Record.controlname == "INVOICED-ACCTM" || _Record.controlname == "INVOICED-BRANCH") {
       this.records.forEach(rec => {
+
         if (rec.invd_pkid == _Record.uid) {
-          rec.invd_desc_name = _Record.name;
+
+          if (_Record.controlname == "INVOICED-CODE") {
+            rec.invd_desc_id = _Record.id;
+            rec.invd_desc_name = _Record.name;
+          }
+
+          if (_Record.controlname == "INVOICED-CURR") {
+            rec.invd_curr_id = _Record.id;
+            rec.invd_curr_code = _Record.code;
+          }
+
+          if (_Record.controlname == "INVOICED-ACCTM") {
+            rec.invd_acc_id = _Record.id;
+            rec.invd_acc_code = _Record.code;
+            rec.invd_acc_name = _Record.name;
+          }
+
+          if (_Record.controlname == "INVOICED-BRANCH") {
+            rec.invd_cc_id = _Record.id;
+            rec.invd_cc_code = _Record.code;
+          }
+
         }
       });
     }
+
+
+
   }
 
 

@@ -199,11 +199,13 @@
                             <th width='15%'>DESCRIPTION</th>
                             <th width='20%'>REMARKS</th>
                             <th width='10%'>A/C</th>
-                            <th width='8%'>F.AMT</th>
-                            <th width='8%'>CURRENCY</th>
-                            <th width='5%'>EX.RATE</th>
-                            <th width='8%'>TOTAL</th>
-                            <th width='5%'>VAT</th>
+                            <th width='8%'>AMOUNT</th>
+                            
+                            <th width='8%' *ngIf="!single_curr">CURRENCY</th>
+                            <th width='5%' *ngIf="!single_curr">EX.RATE</th>
+                            <th width='8%' *ngIf="!single_curr">TOTAL</th>
+                            <th width='5%' *ngIf="showvat">VAT</th>
+                            <th width='5%' *ngIf="show_cc_control">BRANCH</th>
 
                         </tr>
                     </thead>
@@ -211,7 +213,7 @@
                         <tr>
                             <td>
 
-                                <app-autocomplete2 [controlname]="'INVOICE-CODE'" [tabletype]="'PARAM'"
+                                <app-autocomplete2 [controlname]="'INVOICED-CODE'" [tabletype]="'PARAM'"
                                     [uid]="rec.invd_pkid" [subtype]="'INVOICE-DESCRIPTION'" [displaycolumn]="'CODE'"
                                     [uid]="rec.invd_pkid" [displaydata]="rec.invd_desc_code"
                                     (ValueChanged)="LovSelected($event)">
@@ -228,8 +230,9 @@
                                     (blur)="onBlur('invd_remarks',rec)" />
                             </td>
                             <td>
-                                <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'" [subtype]=""
+                                <app-autocomplete2 [controlname]="'INVOICED-ACCTM'" [tabletype]="'ACC_ACCTM'" [subtype]=""
                                     [displaycolumn]="'CODE'" [displaydata]="rec.invd_acc_code" [uid]="rec.invd_pkid"
+                                    [disabled]="!show_acc_control"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
 
@@ -238,25 +241,31 @@
                                 <input class="form-control form-control-sm" type="number" style="text-align:right;"
                                     [(ngModel)]="rec.invd_ftotal" (blur)="onBlur('invd_ftotal',rec)" />
                             </td>
-                            <td>
-                                <app-autocomplete2 [controlname]="'INVOICE-CURR'" [tabletype]="'PARAM'"
+                            <td  *ngIf="!single_curr">
+                                <app-autocomplete2 [controlname]="'INVOICED-CURR'" [tabletype]="'PARAM'"
                                     [subtype]="'CURRENCY'" [displaycolumn]="'CODE'" [uid]="rec.invd_pkid"
                                     [displaydata]="rec.invd_curr_code" (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </td>
-                            <td>
+                            <td  *ngIf="!single_curr">
                                 <input class="form-control form-control-sm" type="number" style="text-align:right;"
                                     [(ngModel)]="rec.invd_exrate" (blur)="onBlur('invd_exrate',rec)" />
                             </td>
-                            <td>
+                            <td *ngIf="!single_curr">
                                 <input class="form-control form-control-sm" type="number" [disabled]="true"
                                     style="text-align:right;" [(ngModel)]="rec.invd_total"
                                     (blur)="onBlur('invd_total',rec)" />
                             </td>
-                            <td>
+                            <td *ngIf="showvat">
                                 <input class="form-control form-control-sm" type="number" style="text-align:right;"
                                     [(ngModel)]="rec.invd_vat_amt" (blur)="onBlur('invd_vat_amt',rec)" />
                             </td>
+                            <td  *ngIf="show_cc_control">
+                                <app-autocomplete2 [controlname]="'INVOICED-BRANCH'" [tabletype]="'BRANCH'"
+                                    [displaycolumn]="'CODE'" [uid]="rec.invd_pkid"
+                                    [displaydata]="rec.invd_cc_code" (ValueChanged)="LovSelected($event)">
+                                </app-autocomplete2>
+                            </td>                            
 
 
                         </tr>
@@ -300,13 +309,15 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group row">
+            
+            <div class="form-group row" *ngIf="!single_curr">
                 <label class="col-6 col-form-label col-form-label-sm">Total(F.CURR)</label>
                 <div class="col-6">
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('inv_ftotal')"
                         [(ngModel)]="record.inv_ftotal" [disabled]="true" maxlength="60" />
                 </div>
             </div>
+
             <div class="form-group row">
                 <label class="col-6 col-form-label col-form-label-sm">Total</label>
                 <div class="col-6">
