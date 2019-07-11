@@ -513,9 +513,8 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
   private FindTotalWeight() {
-    this.errorMessage = '';
-    try {
-      let sUnit: string = "";
+   
+    let sUnit: string = "";
       let icntr_pieces: number = 0;
       let icntr_weight: number = 0;
       let icntr_cbm: number = 0;
@@ -539,11 +538,6 @@ export class SeaImpHouseEditComponent implements OnInit {
       this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
       this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
 
-    }
-    catch (e) {
-      this.errorMessage = e.error;
-      alert(this.errorMessage);
-    }
   }
 
   private SaveContainer() {
