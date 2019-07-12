@@ -49,6 +49,7 @@ export class AppComponent {
 
         this.gs.Access_Token = sessionStorage.getItem('access_token');
         this.gs.company_name = sessionStorage.getItem('company_name');
+        this.gs.company_code = sessionStorage.getItem('company_code');
         this.gs.IsLoginSuccess = JSON.parse(sessionStorage.getItem('isloginsuccess'));
         this.gs.IsAuthenticated = JSON.parse(sessionStorage.getItem('isauthenticated'));
         this.gs.globalData = JSON.parse(sessionStorage.getItem('globaldata'));
