@@ -12,10 +12,6 @@ import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
 import { invoiceService } from '../../services/invoice.service';
-<<<<<<< HEAD
-
-=======
->>>>>>> 154493a30a03e8d3606e791ca85899452d719263
 
 @Component({
   selector: 'app-invoice-edit',
