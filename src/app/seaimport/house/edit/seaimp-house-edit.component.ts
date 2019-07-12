@@ -330,7 +330,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       // }
 
       if (this.ShipmentType != "CONSOLE")
-          this.FindTotalWeight();
+        this.FindTotalWeight();
 
     }
   }
@@ -513,30 +513,30 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
   private FindTotalWeight() {
-   
+
     let sUnit: string = "";
-      let icntr_pieces: number = 0;
-      let icntr_weight: number = 0;
-      let icntr_cbm: number = 0;
+    let icntr_pieces: number = 0;
+    let icntr_weight: number = 0;
+    let icntr_cbm: number = 0;
 
-      this.cntrrecords.forEach(Rec => {
-        icntr_pieces += Rec.cntr_pieces;
-        icntr_weight += Rec.cntr_weight;
-        icntr_cbm += Rec.cntr_cbm;
-        if (Rec.cntr_packages_uom.toString().trim().length > 0) {
-          sUnit = Rec.cntr_packages_uom.toString().trim();
-        }
-      })
+    this.cntrrecords.forEach(Rec => {
+      icntr_pieces += Rec.cntr_pieces;
+      icntr_weight += Rec.cntr_weight;
+      icntr_cbm += Rec.cntr_cbm;
+      if (Rec.cntr_packages_uom.toString().trim().length > 0) {
+        sUnit = Rec.cntr_packages_uom.toString().trim();
+      }
+    })
 
-      if (sUnit != "")
-        this.record.hbl_uom = sUnit;
+    if (sUnit != "")
+      this.record.hbl_uom = sUnit;
 
-      this.record.hbl_packages = this.gs.roundNumber(icntr_pieces,0);
+    this.record.hbl_packages = this.gs.roundNumber(icntr_pieces, 0);
 
-      this.record.hbl_weight =  this.gs.roundNumber(icntr_weight,3);
-      this.record.hbl_cbm =  this.gs.roundNumber(icntr_cbm,3);
-      this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
-      this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
+    this.record.hbl_weight = this.gs.roundNumber(icntr_weight, 3);
+    this.record.hbl_cbm = this.gs.roundNumber(icntr_cbm, 3);
+    this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
+    this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
 
   }
 
@@ -843,6 +843,22 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
   }
 
+  OnChange(field: string) {
+    if (field == 'hbl_frt_status') {
+      if (this.gs.globalVariables.comp_code == "MNYC") {
+        let sWord: string = "";
+        sWord = "";
+        if (this.record.hbl_frt_status.toString() == "PREPAID" || this.record.hbl_frt_status.toString() == "COLLECT" || this.record.hbl_frt_status.toString() == "TBA")
+          sWord = "FREIGHT " + this.record.hbl_frt_status.toString();
+
+        if (sWord.length <= 0)
+          return;
+
+        this.record.hbl_cargo_description7 = sWord;
+      }
+    }
+  }
+  
   onFocusout(field: string) {
     switch (field) {
       case 'hbl_houseno': {
