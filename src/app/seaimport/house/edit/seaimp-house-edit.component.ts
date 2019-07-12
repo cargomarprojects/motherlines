@@ -9,7 +9,7 @@ import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, T
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
-import { stringify } from '@angular/core/src/render3/util';
+//import { stringify } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-seaimp-house-edit',
@@ -85,7 +85,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
 
     if (this.gs.BRANCH_REGION == "USA") {
-      if (this.gs.globalVariables.comp_code == "MNYC") {
+      if (this.gs.company_code == "MNYC") {
         this.PaidStatusList = [{ "name": "NIL" }
           , { "name": "CREDIT" }, { "name": "PAID" }, { "name": "PAID BY CHECK" }, { "name": "PAID BY WIRE" }
           , { "name": "CHECK COPY ACCEPTED" }, { "name": "CHECK RECEIVED BY LAX OFFICE" }, { "name": "CHECK RECEIVED BY NYC OFFICE" }
@@ -856,8 +856,22 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.record.hbl_cargo_description7 = sWord;
       }
     }
+    if (field == 'hbl_telex_released') {
+      if (this.record.hbl_telex_released.toString() == "YES")
+        this.record.hbl_bl_req = "* ORIGINAL B/L SURRENDERED";
+      else {
+        if (this.gs.BRANCH_REGION == "USA") {
+          if (this.record.hbl_telex_released.toString() == "NO - REQUIRED")
+            this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
+          else
+            this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L RECEIVED";
+        }
+        else
+          this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
+      }
+    }
   }
-  
+
   onFocusout(field: string) {
     switch (field) {
       case 'hbl_houseno': {

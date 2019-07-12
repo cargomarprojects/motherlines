@@ -503,7 +503,7 @@
             <div class="col-md-6 testbox  px-0 mx-0">
 
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Telex Released</label>
+                <label class="col-3 col-form-label col-form-label-sm" (change)="OnChange('hbl_telex_released')">Telex Released</label>
                 <div class="col-9">
                   <select class="form-control form-control-sm" [(ngModel)]="record.hbl_telex_released">
                     <option *ngFor="let rec of TelexRlsList" [value]="rec.name">{{rec.name}}</option>
@@ -637,6 +637,7 @@
                   <div class="col-12">
                     <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
                     <button class="btn btn-primary btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
+                    <button class="btn btn-primary btn-sm mr-1" (click)="FindTotalWeight()">Find Total</button>
                   </div>
                 </div>
 

@@ -1089,6 +1089,7 @@ export class GlobalService {
     sessionStorage.setItem('access_token', this.Access_Token);
     sessionStorage.setItem('company_name', this.company_name);
     sessionStorage.setItem('company_code', this.company_code);
+    sessionStorage.setItem('BRANCH_REGION', this.BRANCH_REGION);
     sessionStorage.setItem('isloginsuccess', JSON.stringify(this.IsLoginSuccess));
     sessionStorage.setItem('isauthenticated', JSON.stringify(this.IsAuthenticated));
     sessionStorage.setItem('globaldata', JSON.stringify(this.globalData));
