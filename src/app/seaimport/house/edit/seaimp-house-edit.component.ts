@@ -9,7 +9,7 @@ import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, T
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
-import { stringify } from '@angular/core/src/render3/util';
+//import { stringify } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-seaimp-house-edit',
@@ -85,7 +85,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
 
     if (this.gs.BRANCH_REGION == "USA") {
-      if (this.gs.globalVariables.comp_code == "MNYC") {
+      if (this.gs.company_code == "MNYC") {
         this.PaidStatusList = [{ "name": "NIL" }
           , { "name": "CREDIT" }, { "name": "PAID" }, { "name": "PAID BY CHECK" }, { "name": "PAID BY WIRE" }
           , { "name": "CHECK COPY ACCEPTED" }, { "name": "CHECK RECEIVED BY LAX OFFICE" }, { "name": "CHECK RECEIVED BY NYC OFFICE" }
@@ -330,7 +330,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       // }
 
       if (this.ShipmentType != "CONSOLE")
-          this.FindTotalWeight();
+        this.FindTotalWeight();
 
     }
   }
@@ -347,11 +347,22 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.cntrrecords = <Tbl_cargo_imp_container[]>response.cntrrecords;
         this.descrecords = <Tbl_cargo_imp_desc[]>response.descrecords;
         this.mode = 'EDIT';
+        if (this.gs.BRANCH_REGION == "USA")
+        {
+            if(this.record.hbl_telex_released=="NO")
+            {
+                if (this.record.hbl_bl_req.includes("RECEIVED"))
+                    this.record.hbl_telex_released = "NO - RECEIVED";
+                else
+                    this.record.hbl_telex_released = "NO - REQUIRED";
+            }
+        }
 
         this.ShipmentType = this.record.mbl_cntr_type;
-        if (this.ShipmentType.trim() == "FCL" || this.ShipmentType.trim() == "LCL") {
-          // Cmb_Shpmnt_Stage.IsEnabled = false;
-        }
+
+        // if (this.ShipmentType.trim() == "FCL" || this.ShipmentType.trim() == "LCL") {
+        //   Cmb_Shpmnt_Stage.IsEnabled = false;
+        // }
 
         this.CheckData();
       }, error => {
@@ -513,30 +524,30 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
   private FindTotalWeight() {
-   
+
     let sUnit: string = "";
-      let icntr_pieces: number = 0;
-      let icntr_weight: number = 0;
-      let icntr_cbm: number = 0;
+    let icntr_pieces: number = 0;
+    let icntr_weight: number = 0;
+    let icntr_cbm: number = 0;
 
-      this.cntrrecords.forEach(Rec => {
-        icntr_pieces += Rec.cntr_pieces;
-        icntr_weight += Rec.cntr_weight;
-        icntr_cbm += Rec.cntr_cbm;
-        if (Rec.cntr_packages_uom.toString().trim().length > 0) {
-          sUnit = Rec.cntr_packages_uom.toString().trim();
-        }
-      })
+    this.cntrrecords.forEach(Rec => {
+      icntr_pieces += Rec.cntr_pieces;
+      icntr_weight += Rec.cntr_weight;
+      icntr_cbm += Rec.cntr_cbm;
+      if (Rec.cntr_packages_uom.toString().trim().length > 0) {
+        sUnit = Rec.cntr_packages_uom.toString().trim();
+      }
+    })
 
-      if (sUnit != "")
-        this.record.hbl_uom = sUnit;
+    if (sUnit != "")
+      this.record.hbl_uom = sUnit;
 
-      this.record.hbl_packages = this.gs.roundNumber(icntr_pieces,0);
+    this.record.hbl_packages = this.gs.roundNumber(icntr_pieces, 0);
 
-      this.record.hbl_weight =  this.gs.roundNumber(icntr_weight,3);
-      this.record.hbl_cbm =  this.gs.roundNumber(icntr_cbm,3);
-      this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
-      this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
+    this.record.hbl_weight = this.gs.roundNumber(icntr_weight, 3);
+    this.record.hbl_cbm = this.gs.roundNumber(icntr_cbm, 3);
+    this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
+    this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
 
   }
 
@@ -840,6 +851,35 @@ export class SeaImpHouseEditComponent implements OnInit {
           rec.cntr_type = _Record.code;
         }
       });
+    }
+  }
+
+  OnChange(field: string) {
+    if (field == 'hbl_frt_status') {
+      if (this.gs.company_code == "MNYC") {
+        let sWord: string = "";
+        if (this.record.hbl_frt_status.toString() == "PREPAID" || this.record.hbl_frt_status.toString() == "COLLECT" || this.record.hbl_frt_status.toString() == "TBA")
+          sWord = "FREIGHT " + this.record.hbl_frt_status.toString();
+
+        if (sWord.length <= 0)
+          return;
+
+        this.record.hbl_cargo_description7 = sWord;
+      }
+    }
+    if (field == 'hbl_telex_released') {
+      if (this.record.hbl_telex_released.toString() == "YES")
+        this.record.hbl_bl_req = "* ORIGINAL B/L SURRENDERED";
+      else {
+        if (this.gs.BRANCH_REGION == "USA") {
+          if (this.record.hbl_telex_released.toString() == "NO - REQUIRED")
+            this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
+          else
+            this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L RECEIVED";
+        }
+        else
+          this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
+      }
     }
   }
 
