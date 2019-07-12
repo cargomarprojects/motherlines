@@ -347,11 +347,22 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.cntrrecords = <Tbl_cargo_imp_container[]>response.cntrrecords;
         this.descrecords = <Tbl_cargo_imp_desc[]>response.descrecords;
         this.mode = 'EDIT';
+        if (this.gs.BRANCH_REGION == "USA")
+        {
+            if(this.record.hbl_telex_released=="NO")
+            {
+                if (this.record.hbl_bl_req.includes("RECEIVED"))
+                    this.record.hbl_telex_released = "NO - RECEIVED";
+                else
+                    this.record.hbl_telex_released = "NO - REQUIRED";
+            }
+        }
 
         this.ShipmentType = this.record.mbl_cntr_type;
-        if (this.ShipmentType.trim() == "FCL" || this.ShipmentType.trim() == "LCL") {
-          // Cmb_Shpmnt_Stage.IsEnabled = false;
-        }
+
+        // if (this.ShipmentType.trim() == "FCL" || this.ShipmentType.trim() == "LCL") {
+        //   Cmb_Shpmnt_Stage.IsEnabled = false;
+        // }
 
         this.CheckData();
       }, error => {
