@@ -845,9 +845,8 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   OnChange(field: string) {
     if (field == 'hbl_frt_status') {
-      if (this.gs.globalVariables.comp_code == "MNYC") {
+      if (this.gs.company_code == "MNYC") {
         let sWord: string = "";
-        sWord = "";
         if (this.record.hbl_frt_status.toString() == "PREPAID" || this.record.hbl_frt_status.toString() == "COLLECT" || this.record.hbl_frt_status.toString() == "TBA")
           sWord = "FREIGHT " + this.record.hbl_frt_status.toString();
 
