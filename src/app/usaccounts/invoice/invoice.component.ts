@@ -174,6 +174,7 @@ export class InvoiceComponent implements OnInit {
       mbl_type: this.mbl_type,
       mbl_refno : this.mbl_refno, 
       inv_arap :'AR',     
+      arrival_notice : '',
       origin: 'invoice-list-page',
     };
     this.gs.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(parameter));
@@ -192,6 +193,7 @@ export class InvoiceComponent implements OnInit {
       mbl_type : this.mbl_type,
       inv_arap :'',     
       mbl_refno : this.mbl_refno,
+      arrival_notice : '',      
       origin: 'invoice-list-page',
     };
     this.gs.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(parameter));

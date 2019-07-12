@@ -12,6 +12,7 @@ import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
 import { invoiceService } from '../../services/invoice.service';
+import { ReportsRoutingModule } from 'src/app/reports/reports-routing.module';
 
 @Component({
   selector: 'app-invoice-edit',
@@ -31,6 +32,7 @@ export class InvoiceEditComponent implements OnInit {
   private bal_amt: number;
 
   private inv_arap: string; // AR OR AP
+  private arrival_notice : string = '';
 
   private pkid: string;
   private menuid: string;
@@ -60,6 +62,7 @@ export class InvoiceEditComponent implements OnInit {
     this.inv_arap = options.inv_arap;
     this.mode = options.mode;
     this.mbl_refno = options.mbl_refno;
+    this.arrival_notice = options.arrival_notice;
     this.initpage();
     this.initControls();
     this.InitDefaultCodes();
@@ -75,6 +78,11 @@ export class InvoiceEditComponent implements OnInit {
     this.canAdd = this.gs.canAdd(this.menuid);
     this.canEdit = this.gs.canEdit(this.menuid);
     this.canSave = this.canAdd || this.canEdit;
+    if ( this.inv_arap == 'AR')
+      this.title =  'A/R INVOICE'
+    if ( this.inv_arap == 'AP')
+      this.title =  'A/P INVOICE'
+    
   }
 
   acc_id: string = '';
@@ -166,7 +174,7 @@ export class InvoiceEditComponent implements OnInit {
     if (this.mbl_type == "GE" || this.mbl_type == "PR" || this.mbl_type == "CM" || this.mbl_type == "PS" || this.mbl_type == "FA") {
       this.show_acc_control = true;
       this.show_cc_control = true;
-      this.show_arap_control = true;
+      this.show_arap_control = false;
 
       if (this.gs.ALLOW_ARAP_CODE_SELECTION == "Y")
         this.show_arap_control = true;
@@ -212,6 +220,28 @@ export class InvoiceEditComponent implements OnInit {
     else
         TXT_ARAP_CODE.LOV_TABLE_WHERE = "ACC_IS_ARAP_CODE='P' ";      
     */
+
+  }
+
+
+  AddRow() {
+
+    var rec = <Tbl_Cargo_Invoiced>{};
+    this.records.push(rec);
+  }
+
+  removeRow(_rec: Tbl_Cargo_Invoiced) {
+
+    if (!confirm('Remove Invoice Line Item Y/N'))
+      return;
+
+    this.records.forEach((rec, index) => {
+      if (rec == _rec) {
+        this.records.splice(index, 1);
+      }
+    });
+
+
 
   }
 
@@ -278,6 +308,9 @@ export class InvoiceEditComponent implements OnInit {
       this.mbl_pkid = this.record.inv_mbl_id;
       this.hbl_pkid = this.record.inv_hbl_id;
 
+      if ( this.inv_arap )
+
+
       this.DisplayBalance();
 
 
@@ -324,6 +357,16 @@ export class InvoiceEditComponent implements OnInit {
   }
 
   LovSelected(_Record: SearchTable) {
+
+    if (_Record.controlname == "CUSTOMER") {
+      this.record.inv_cust_id = _Record.id;
+      this.record.inv_cust_name = _Record.name;
+    }
+
+    if (_Record.controlname == "ARAP") {
+      this.record.inv_acc_id = _Record.id;
+      this.record.inv_acc_name = _Record.name;
+    }
 
 
     if (_Record.controlname == "INVOICED-CODE" || _Record.controlname == "INVOICED-CURR" || _Record.controlname == "INVOICED-ACCTM" || _Record.controlname == "INVOICED-BRANCH") {
