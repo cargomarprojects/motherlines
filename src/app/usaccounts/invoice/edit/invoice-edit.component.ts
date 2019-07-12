@@ -12,7 +12,6 @@ import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
 import { invoiceService } from '../../services/invoice.service';
-import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-invoice-edit',
