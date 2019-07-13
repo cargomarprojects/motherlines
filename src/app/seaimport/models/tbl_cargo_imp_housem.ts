@@ -213,7 +213,7 @@ export interface Tbl_cargo_imp_desc {
     parentid: string;
     parent_type: string;
     cargo_ctr: number;
-    marks: string;
+    cargo_marks: string;
     cargo_packages: string;
     cargo_description: string;
 }

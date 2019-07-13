@@ -347,15 +347,13 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.cntrrecords = <Tbl_cargo_imp_container[]>response.cntrrecords;
         this.descrecords = <Tbl_cargo_imp_desc[]>response.descrecords;
         this.mode = 'EDIT';
-        if (this.gs.BRANCH_REGION == "USA")
-        {
-            if(this.record.hbl_telex_released=="NO")
-            {
-                if (this.record.hbl_bl_req.includes("RECEIVED"))
-                    this.record.hbl_telex_released = "NO - RECEIVED";
-                else
-                    this.record.hbl_telex_released = "NO - REQUIRED";
-            }
+        if (this.gs.BRANCH_REGION == "USA") {
+          if (this.record.hbl_telex_released == "NO") {
+            if (this.record.hbl_bl_req.includes("RECEIVED"))
+              this.record.hbl_telex_released = "NO - RECEIVED";
+            else
+              this.record.hbl_telex_released = "NO - REQUIRED";
+          }
         }
 
         this.ShipmentType = this.record.mbl_cntr_type;
@@ -364,12 +362,70 @@ export class SeaImpHouseEditComponent implements OnInit {
         //   Cmb_Shpmnt_Stage.IsEnabled = false;
         // }
 
+        this.descrecords.forEach(Rec => {
+          this.ShowDesc(Rec);
+        })
+        
         this.CheckData();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
 
+  private ShowDesc(_Record: Tbl_cargo_imp_desc) {
+    if (_Record.cargo_ctr == 1) {
+      this.record.hbl_cargo_marks1 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description1 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 2) {
+      this.record.hbl_cargo_marks2 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description2 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 3) {
+      this.record.hbl_cargo_marks3 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description3 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 4) {
+      this.record.hbl_cargo_marks4 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description4 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 5) {
+      this.record.hbl_cargo_marks5 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description5 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 6) {
+      this.record.hbl_cargo_marks6 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description6 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 7) {
+      this.record.hbl_cargo_marks7 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description7 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 8) {
+      this.record.hbl_cargo_marks8 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description8 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 9) {
+      this.record.hbl_cargo_marks9 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description9 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 10) {
+      this.record.hbl_cargo_marks10 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description10 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 11) {
+      this.record.hbl_cargo_marks11 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description11 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 12) {
+      this.record.hbl_cargo_marks12 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description12 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 13) {
+      this.record.hbl_cargo_marks13 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description13 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 14) {
+      this.record.hbl_cargo_marks14 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description14 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 15) {
+      this.record.hbl_cargo_marks15 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description15 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 16) {
+      this.record.hbl_cargo_marks16 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description16 = _Record.cargo_description.toString();
+    }
+    else if (_Record.cargo_ctr == 17) {
+      this.record.hbl_cargo_marks17 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description17 = _Record.cargo_description.toString();
+    }
+
+  }
   CheckData() {
     /*
         if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
