@@ -365,7 +365,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.descrecords.forEach(Rec => {
           this.ShowDesc(Rec);
         })
-        
+
         this.CheckData();
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -497,6 +497,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (!this.Allvalid())
       return;
     this.SaveContainer();
+    this.SaveDescList();
     this.FindTotTeus();
     const saveRecord = <vm_tbl_cargo_imp_housem>{};
     saveRecord.record = this.record;
@@ -523,62 +524,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         alert(this.errorMessage);
       });
   }
-
-  private FindTotTeus() {
-    var Tot_Teu = 0, Teu = 0, Tot_Cbm = 0;
-    var Tot_20 = 0, Tot_40 = 0, Tot_40HQ = 0, Tot_45 = 0;
-    var Cntr_Tot = 0;
-    let sCntrType: string = "";
-    this.cntrrecords.forEach(Rec => {
-      Cntr_Tot++;
-      Teu = 0;
-      if (Rec.cntr_type.indexOf("20") >= 0)
-        Teu = 1;
-      else if (Rec.cntr_type.indexOf("40") >= 0) {
-        if (Rec.cntr_type.indexOf("HC") >= 0)
-          Teu = 2.25;
-        else
-          Teu = 2;
-      }
-      else if (Rec.cntr_type.indexOf("45") >= 0)
-        Teu = 2.50;
-
-      if (this.record.mbl_cntr_type.toString() == "LCL")
-        Teu = 0;
-      Tot_Teu += Teu;
-      Tot_Cbm += Rec.cntr_cbm;
-      Rec.cntr_teu = Teu;
-      if (Teu > 0) {
-        if (Rec.cntr_type.indexOf("20") >= 0)
-          Tot_20 += 1;
-        else if (Rec.cntr_type.indexOf("40HC") >= 0 || Rec.cntr_type.indexOf("40HQ") >= 0)
-          Tot_40HQ += 1;
-        else if (Rec.cntr_type.indexOf("40") >= 0)
-          Tot_40 += 1;
-        else if (Rec.cntr_type.indexOf("45") >= 0)
-          Tot_45 += 1;
-      }
-
-      if (sCntrType.indexOf(Rec.cntr_type) < 0) {
-        if (sCntrType != "")
-          sCntrType += ",";
-        sCntrType += Rec.cntr_type;
-      }
-
-    })
-    // this.record.hbl_teu = Tot_Teu;
-    // this.record.hbl_20 = Tot_20;
-    // this.record.hbl_40 = Tot_40;
-    // this.record.hbl_40HQ = Tot_40HQ;
-    // this.record.hbl_45 = Tot_45;
-    // this.record.hbl_cntr_cbm = Tot_Cbm;
-    // this.record.hbl_container_tot = Cntr_Tot;
-    // if (sCntrType.length > 100)
-    //   sCntrType = sCntrType.substring(0, 100);
-
-    // this.record.hbl_cntr_desc = sCntrType;
-  }
-
+ 
   private FindTotalWeight() {
 
     let sUnit: string = "";
@@ -616,181 +562,186 @@ export class SeaImpHouseEditComponent implements OnInit {
       Rec.cntr_order = iCtr;
       Rec.cntr_weight_uom = "";
       Rec.cntr_packages = 0;
+      Rec.cntr_teu = 0;
     })
   }
-
+  private SaveDescList() {
+    this.descrecords = <Tbl_cargo_imp_desc[]>[];
+    this.SaveDesc(1, this.record.hbl_cargo_marks1, "", this.record.hbl_cargo_description1);
+    this.SaveDesc(2, this.record.hbl_cargo_marks2, "", this.record.hbl_cargo_description2);
+    this.SaveDesc(3, this.record.hbl_cargo_marks3, "", this.record.hbl_cargo_description3);
+    this.SaveDesc(4, this.record.hbl_cargo_marks4, "", this.record.hbl_cargo_description4);
+    this.SaveDesc(5, this.record.hbl_cargo_marks5, "", this.record.hbl_cargo_description5);
+    this.SaveDesc(6, this.record.hbl_cargo_marks6, "", this.record.hbl_cargo_description6);
+    this.SaveDesc(7, this.record.hbl_cargo_marks7, "", this.record.hbl_cargo_description7);
+    this.SaveDesc(8, this.record.hbl_cargo_marks8, "", this.record.hbl_cargo_description8);
+    this.SaveDesc(9, this.record.hbl_cargo_marks9, "", this.record.hbl_cargo_description9);
+    this.SaveDesc(10, this.record.hbl_cargo_marks10, "", this.record.hbl_cargo_description10);
+    this.SaveDesc(11, this.record.hbl_cargo_marks11, "", this.record.hbl_cargo_description11);
+    this.SaveDesc(12, this.record.hbl_cargo_marks12, "", this.record.hbl_cargo_description12);
+    this.SaveDesc(13, this.record.hbl_cargo_marks13, "", this.record.hbl_cargo_description13);
+    this.SaveDesc(14, this.record.hbl_cargo_marks14, "", this.record.hbl_cargo_description14);
+    this.SaveDesc(15, this.record.hbl_cargo_marks15, "", this.record.hbl_cargo_description15);
+    this.SaveDesc(16, this.record.hbl_cargo_marks16, "", this.record.hbl_cargo_description16);
+    this.SaveDesc(17, this.record.hbl_cargo_marks17, "", this.record.hbl_cargo_description17);
+  }
+  private SaveDesc(iCtr: number, M1: string, P1: string, D1: string) {
+    if (M1.length > 0 || P1.length > 0 || D1.length > 0) {
+      let Rec = <Tbl_cargo_imp_desc>{};
+      Rec.parentid = this.pkid;
+      Rec.parent_type = "SI-DESC";
+      Rec.cargo_ctr = iCtr;
+      Rec.cargo_marks = M1;
+      Rec.cargo_packages = P1;
+      Rec.cargo_description = D1;
+      this.descrecords.push(Rec);
+    }
+  }
   private Allvalid(): boolean {
 
     var bRet = true;
     this.errorMessage = "";
 
-    if (this.parentid.trim().length <= 0)
-    {
+    if (this.parentid.trim().length <= 0) {
       bRet = false;
       this.errorMessage = "Invalid MBL ID";
       return bRet;
     }
 
-    if (this.record.hbl_houseno=='') 
-    {
-        bRet = false;
-        this.errorMessage = "House BL# cannot be blank";        
-        return bRet;
-    }
-    
-    if ((this.record.mbl_cntr_type == 'FCL' || this.record.mbl_cntr_type == 'LCL')==false)
-    {
-        if (this.record.hbl_shipment_stage == null)
-        {
-            bRet = false;
-            this.errorMessage = "Shipment Stage cannot be blank";                 
-            return bRet;
-        }
-        if (this.record.hbl_shipment_stage.toString().trim().length <= 0)
-        {
-            bRet = false;
-            this.errorMessage = "Shipment Stage cannot be blank";        
-            return bRet;
-        }
+    if (this.record.hbl_houseno == '') {
+      bRet = false;
+      this.errorMessage = "House BL# cannot be blank";
+      return bRet;
     }
 
-    if (this.record.hbl_shipper_code=='') 
-    {
+    if ((this.record.mbl_cntr_type == 'FCL' || this.record.mbl_cntr_type == 'LCL') == false) {
+      if (this.record.hbl_shipment_stage == null) {
         bRet = false;
-        this.errorMessage = "Shipper Code can't be blank";
+        this.errorMessage = "Shipment Stage cannot be blank";
         return bRet;
-    }
-    if (this.record.hbl_shipper_add1=='') 
-    {
+      }
+      if (this.record.hbl_shipment_stage.toString().trim().length <= 0) {
         bRet = false;
-        this.errorMessage = "Shipper Address can't be blank";
+        this.errorMessage = "Shipment Stage cannot be blank";
         return bRet;
-    }
-    if (this.record.hbl_consignee_code=='') 
-    {
-        bRet = false;
-        this.errorMessage = "Consignee Code can't be blank";
-        return bRet;
-    }
-    if (this.record.hbl_consignee_add1=='') 
-    {
-        bRet = false; 
-        this.errorMessage = "Consignee Address can't be blank";
-        return bRet;
-    }
-   
-    if (this.record.hbl_agent_id=='') 
-    {
-        bRet = false;
-        this.errorMessage = "Agent can't be blank";
-        return bRet;
+      }
     }
 
-    if (this.record.hbl_cha_code.trim().length > 0)
-    {
-        if (this.record.hbl_cha_id=='')
-        {
-            bRet = false;
-            this.errorMessage = "Invalid CHB";
-            return bRet;
-        }
+    if (this.record.hbl_shipper_code == '') {
+      bRet = false;
+      this.errorMessage = "Shipper Code can't be blank";
+      return bRet;
+    }
+    if (this.record.hbl_shipper_add1 == '') {
+      bRet = false;
+      this.errorMessage = "Shipper Address can't be blank";
+      return bRet;
+    }
+    if (this.record.hbl_consignee_code == '') {
+      bRet = false;
+      this.errorMessage = "Consignee Code can't be blank";
+      return bRet;
+    }
+    if (this.record.hbl_consignee_add1 == '') {
+      bRet = false;
+      this.errorMessage = "Consignee Address can't be blank";
+      return bRet;
     }
 
-    
-    if ( this.record.hbl_packages <=0 )
-    {
-        bRet = false;
-        this.errorMessage = "No. of packages can't be blank";
-        return bRet;
-    }
-    if (this.record.hbl_uom=='') 
-    {
-        bRet = false;
-        this.errorMessage = "Unit of packages can't be blank";
-        return bRet;
-    }
-    if (this.record.hbl_weight <= 0)
-    {
-        bRet = false;
-        this.errorMessage = "Weight can't be blank";
-        return bRet;
+    if (this.record.hbl_agent_id == '') {
+      bRet = false;
+      this.errorMessage = "Agent can't be blank";
+      return bRet;
     }
 
-    if (this.record.hbl_cbm <= 0 && this.ShipmentType != "FCL")
-    {
+    if (this.record.hbl_cha_code.trim().length > 0) {
+      if (this.record.hbl_cha_id == '') {
         bRet = false;
-        this.errorMessage = "CBM can't be blank";
+        this.errorMessage = "Invalid CHB";
         return bRet;
-    }
-    if (this.gs.BRANCH_REGION == "USA")
-    {
-        if (this.record.hbl_lbs <= 0)
-        {
-            bRet = false;
-            this.errorMessage = "LBS can't be blank";
-            return bRet;
-        }
-        if (this.record.hbl_cft <= 0 && this.ShipmentType != "FCL")
-        {
-            bRet = false;
-            this.errorMessage = "CFT can't be blank";
-            return bRet;
-        }
+      }
     }
 
-    if (this.gs.OPTIONAL_DESCRIPTION == "N")
-    {
-        if (this.record.hbl_commodity=='')
-        {
-            bRet = false;
-            this.errorMessage = "Goods description can't be blank";
-            return bRet;
-        }
+
+    if (this.record.hbl_packages <= 0) {
+      bRet = false;
+      this.errorMessage = "No. of packages can't be blank";
+      return bRet;
+    }
+    if (this.record.hbl_uom == '') {
+      bRet = false;
+      this.errorMessage = "Unit of packages can't be blank";
+      return bRet;
+    }
+    if (this.record.hbl_weight <= 0) {
+      bRet = false;
+      this.errorMessage = "Weight can't be blank";
+      return bRet;
     }
 
-    if (this.record.hbl_frt_status=='')
-    {
-        bRet = false;
-        this.errorMessage = "Freight Status can't be blank";
-        return bRet;
+    if (this.record.hbl_cbm <= 0 && this.ShipmentType != "FCL") {
+      bRet = false;
+      this.errorMessage = "CBM can't be blank";
+      return bRet;
     }
-    if (this.record.hbl_ship_term_id == '')
-    {
+    if (this.gs.BRANCH_REGION == "USA") {
+      if (this.record.hbl_lbs <= 0) {
         bRet = false;
-        this.errorMessage = "Terms can't be blank";
+        this.errorMessage = "LBS can't be blank";
         return bRet;
-    }
-    if (this.record.hbl_bltype== '')
-    {
+      }
+      if (this.record.hbl_cft <= 0 && this.ShipmentType != "FCL") {
         bRet = false;
-        this.errorMessage = "Nomination Type can't be blank";
+        this.errorMessage = "CFT can't be blank";
         return bRet;
+      }
     }
 
-    
+    if (this.gs.OPTIONAL_DESCRIPTION == "N") {
+      if (this.record.hbl_commodity == '') {
+        bRet = false;
+        this.errorMessage = "Goods description can't be blank";
+        return bRet;
+      }
+    }
+
+    if (this.record.hbl_frt_status == '') {
+      bRet = false;
+      this.errorMessage = "Freight Status can't be blank";
+      return bRet;
+    }
+    if (this.record.hbl_ship_term_id == '') {
+      bRet = false;
+      this.errorMessage = "Terms can't be blank";
+      return bRet;
+    }
+    if (this.record.hbl_bltype == '') {
+      bRet = false;
+      this.errorMessage = "Nomination Type can't be blank";
+      return bRet;
+    }
+
+
     //decimal iWt = 0;
     this.cntrrecords.forEach(Rec => {
-    
-        if (Rec.cntr_no.toString().trim().length < 11)
-        {
-            bRet = false;
-            this.errorMessage = "Container( " + Rec.cntr_no.toString() + " ) Invalid ";
-            return bRet;
-        }
-        if (Rec.cntr_type.toString().trim().length <= 0)
-        {
-            bRet = false;
-            this.errorMessage = "Container( " + Rec.cntr_no.toString() + " ) container type has to be select";
-            return bRet;
-        }
-        
+
+      if (Rec.cntr_no.toString().trim().length < 11) {
+        bRet = false;
+        this.errorMessage = "Container( " + Rec.cntr_no.toString() + " ) Invalid ";
+        return bRet;
+      }
+      if (Rec.cntr_type.toString().trim().length <= 0) {
+        bRet = false;
+        this.errorMessage = "Container( " + Rec.cntr_no.toString() + " ) container type has to be select";
+        return bRet;
+      }
+
     })
 
-    if (this.record.hbl_handled_id=='') 
-    {
-        bRet = false;
-        this.errorMessage = "Handled By cannot be blank";
-        return bRet;
+    if (this.record.hbl_handled_id == '') {
+      bRet = false;
+      this.errorMessage = "Handled By cannot be blank";
+      return bRet;
     }
     /*
     if (Txt_Salesman.TxtLovBox.Text.Trim().Length <= 0)
@@ -800,7 +751,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         Txt_Salesman.Focus();
         return bRet;
     }
-    */ 
+    */
 
 
     // if (this.record.mbl_cntr_type != "OTHERS") {
