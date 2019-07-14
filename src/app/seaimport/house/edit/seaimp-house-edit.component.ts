@@ -498,7 +498,6 @@ export class SeaImpHouseEditComponent implements OnInit {
       return;
     this.SaveContainer();
     this.SaveDescList();
-    this.FindTotTeus();
     const saveRecord = <vm_tbl_cargo_imp_housem>{};
     saveRecord.record = this.record;
     saveRecord.cntrs = this.cntrrecords;
@@ -524,7 +523,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         alert(this.errorMessage);
       });
   }
- 
+
   private FindTotalWeight() {
 
     let sUnit: string = "";
@@ -753,30 +752,6 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
     */
 
-
-    // if (this.record.mbl_cntr_type != "OTHERS") {
-
-    //   this.cntrrecords.forEach(Rec => {
-
-    //     if (Rec.cntr_no.length != 11) {
-    //       bRet = false;
-    //       this.errorMessage = "Container( " + Rec.cntr_no + " ) Invalid"
-    //       return bRet;
-    //     }
-    //     if (Rec.cntr_type.length <= 0) {
-    //       bRet = false;
-    //       this.errorMessage = "Container( " + Rec.cntr_no + " ) type has to be selected"
-    //       return bRet;
-    //     }
-    //     if (Rec.cntr_type == "LCL") {
-    //       if (Rec.cntr_cbm <= 0) {
-    //         bRet = false;
-    //         this.errorMessage = "Container( " + Rec.cntr_no + " ) CBM cannot be zero"
-    //         return bRet;
-    //       }
-    //     }
-    //   })
-    // }
     return bRet;
   }
 
@@ -790,7 +765,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     var rec = <Tbl_cargo_imp_container>{};
     rec.cntr_pkid = this.gs.getGuid();
     rec.cntr_hblid = this.pkid.toString();
-    rec.cntr_catg = "M";
+    rec.cntr_catg = "H";
     rec.cntr_no = "",
       rec.cntr_type = "",
       rec.cntr_sealno = '';
@@ -986,7 +961,7 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
 
-  onBlur(field: string, rec: Tbl_cargo_imp_container) {
+  onBlur(field: string, rec: Tbl_cargo_imp_container = null) {
     switch (field) {
       case 'mbl_refno': {
         this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
@@ -997,26 +972,501 @@ export class SeaImpHouseEditComponent implements OnInit {
         break;
       }
 
-      //   case 'mbl_sub_houseno': {
-      //     this.record.mbl_sub_houseno = this.record.mbl_sub_houseno.toUpperCase();
-      //     break;
-      //   }
-      //   case 'mbl_liner_bookingno': {
-      //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
-      //     break;
-      //   }
-      //   case 'mbl_place_delivery': {
-      //     this.record.mbl_place_delivery = this.record.mbl_place_delivery.toUpperCase();
-      //     break;
-      //   }
-      //   case 'mbl_vessel': {
-      //     this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
-      //     break;
-      //   }
-      //   case 'mbl_voyage': {
-      //     this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
-      //     break;
-      //   }
+      case 'mbl_refno': {
+        this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
+        break;
+      }
+      case 'hbl_houseno': {
+        this.record.hbl_houseno = this.record.hbl_houseno.toUpperCase();
+        break;
+      }
+      case 'hbl_bltype': {
+        this.record.hbl_bltype = this.record.hbl_bltype.toUpperCase();
+        break;
+      }
+      case 'hbl_frt_status': {
+        this.record.hbl_frt_status = this.record.hbl_frt_status.toUpperCase();
+        break;
+      }
+      case 'hbl_ship_term': {
+        this.record.hbl_ship_term = this.record.hbl_ship_term.toUpperCase();
+        break;
+      }
+      case 'hbl_it_no': {
+        this.record.hbl_it_no = this.record.hbl_it_no.toUpperCase();
+        break;
+      }
+      case 'hbl_it_port': {
+        this.record.hbl_it_port = this.record.hbl_it_port.toUpperCase();
+        break;
+      }
+      case 'hbl_consignee_name': {
+        this.record.hbl_consignee_name = this.record.hbl_consignee_name.toUpperCase();
+        break;
+      }
+      case 'hbl_consignee_add1': {
+        this.record.hbl_consignee_add1 = this.record.hbl_consignee_add1.toUpperCase();
+        break;
+      }
+      case 'hbl_consignee_add2': {
+        this.record.hbl_consignee_add2 = this.record.hbl_consignee_add2.toUpperCase();
+        break;
+      }
+
+
+      case 'hbl_consignee_add3': {
+        this.record.hbl_consignee_add3 = this.record.hbl_consignee_add3.toUpperCase();
+        break;
+      }
+      case 'hbl_consignee_add4': {
+        this.record.hbl_consignee_add4 = this.record.hbl_consignee_add4.toUpperCase();
+        break;
+      }
+      case 'hbl_consignee_add5': {
+        this.record.hbl_consignee_add5 = this.record.hbl_consignee_add5.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_name': {
+        this.record.hbl_shipper_name = this.record.hbl_shipper_name.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_add1': {
+        this.record.hbl_shipper_add1 = this.record.hbl_shipper_add1.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_add2': {
+        this.record.hbl_shipper_add2 = this.record.hbl_shipper_add2.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_add3': {
+        this.record.hbl_shipper_add3 = this.record.hbl_shipper_add3.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_add4': {
+        this.record.hbl_shipper_add4 = this.record.hbl_shipper_add4.toUpperCase();
+        break;
+      }
+      case 'hbl_shipper_add5': {
+        this.record.hbl_shipper_add5 = this.record.hbl_shipper_add5.toUpperCase();
+        break;
+      }
+      case 'hbl_location_code': {
+        this.record.hbl_location_code = this.record.hbl_location_code.toUpperCase();
+        break;
+      }
+      case 'hbl_location_add1': {
+        this.record.hbl_location_add1 = this.record.hbl_location_add1.toUpperCase();
+        break;
+      }
+      case 'hbl_location_add2': {
+        this.record.hbl_location_add2 = this.record.hbl_location_add2.toUpperCase();
+        break;
+      }
+      case 'hbl_location_add3': {
+        this.record.hbl_location_add3 = this.record.hbl_location_add3.toUpperCase();
+        break;
+      }
+      case 'hbl_location_add4': {
+        this.record.hbl_location_add4 = this.record.hbl_location_add4.toUpperCase();
+        break;
+      }
+      case 'hbl_location_add5': {
+        this.record.hbl_location_add5 = this.record.hbl_location_add5.toUpperCase();
+        break;
+      }
+      case 'hbl_notify_name': {
+        this.record.hbl_notify_name = this.record.hbl_notify_name.toUpperCase();
+        break;
+      }
+      case 'hbl_notify_code': {
+        this.record.hbl_notify_code = this.record.hbl_notify_code.toUpperCase();
+        break;
+      }
+      case 'hbl_notify_add1': {
+        this.record.hbl_notify_add1 = this.record.hbl_notify_add1.toUpperCase();
+        break;
+      }
+      case 'hbl_notify_add2': {
+        this.record.hbl_notify_add2 = this.record.hbl_notify_add2.toUpperCase();
+        break;
+      }
+      case 'hbl_notify_add3': {
+        this.record.hbl_notify_add3 = this.record.hbl_notify_add3.toUpperCase();
+        break;
+      }
+      case 'hbl_notify_add4': {
+        this.record.hbl_notify_add4 = this.record.hbl_notify_add4.toUpperCase();
+        break;
+      }
+      case 'hbl_notify_add5': {
+        this.record.hbl_notify_add5 = this.record.hbl_notify_add5.toUpperCase();
+        break;
+      }
+      case 'hbl_agent_name': {
+        this.record.hbl_agent_name = this.record.hbl_agent_name.toUpperCase();
+        break;
+      }
+      case 'hbl_cha_code': {
+        this.record.hbl_cha_code = this.record.hbl_cha_code.toUpperCase();
+        break;
+      }
+      case 'hbl_cha_name': {
+        this.record.hbl_cha_name = this.record.hbl_cha_name.toUpperCase();
+        break;
+      }
+      case 'hbl_cha_attn': {
+        this.record.hbl_cha_attn = this.record.hbl_cha_attn.toUpperCase();
+        break;
+      }
+      case 'hbl_cha_tel': {
+        this.record.hbl_cha_tel = this.record.hbl_cha_tel.toUpperCase();
+        break;
+      }
+      case 'hbl_cha_fax': {
+        this.record.hbl_cha_fax = this.record.hbl_cha_fax.toUpperCase();
+        break;
+      }
+      case 'hbl_commodity': {
+        this.record.hbl_commodity = this.record.hbl_commodity.toUpperCase();
+        break;
+      }
+      case 'hbl_uom': {
+        this.record.hbl_uom = this.record.hbl_uom.toUpperCase();
+        break;
+      }
+
+
+
+      case 'hbl_pcs': {
+        this.record.hbl_pcs = this.gs.roundNumber(this.record.hbl_pcs, 0);
+        break;
+      }
+      case 'hbl_packages': {
+        this.record.hbl_packages = this.gs.roundNumber(this.record.hbl_packages, 0);
+        break;
+      }
+      case 'hbl_weight': {
+        this.record.hbl_weight = this.gs.roundNumber(this.record.hbl_weight, 3);
+        break;
+      }
+      case 'hbl_lbs': {
+        this.record.hbl_lbs = this.gs.roundNumber(this.record.hbl_lbs, 3);
+        break;
+      }
+      case 'hbl_cbm': {
+        this.record.hbl_cbm = this.gs.roundNumber(this.record.hbl_cbm, 3);
+        break;
+      }
+      case 'hbl_cft': {
+        this.record.hbl_cft = this.gs.roundNumber(this.record.hbl_cft, 3);
+        break;
+      }
+
+      case 'hbl_pono': {
+        this.record.hbl_pono = this.record.hbl_pono.toUpperCase();
+        break;
+      }
+      case 'hbl_place_delivery': {
+        this.record.hbl_place_delivery = this.record.hbl_place_delivery.toUpperCase();
+        break;
+      }
+      case 'hbl_place_final': {
+        this.record.hbl_place_final = this.record.hbl_place_final.toUpperCase();
+        break;
+      }
+      case 'hbl_sub_house': {
+        this.record.hbl_sub_house = this.record.hbl_sub_house.toUpperCase();
+        break;
+      }
+      case 'hbl_ams_fileno': {
+        this.record.hbl_ams_fileno = this.record.hbl_ams_fileno.toUpperCase();
+        break;
+      }
+      case 'hbl_isf_no': {
+        this.record.hbl_isf_no = this.record.hbl_isf_no.toUpperCase();
+        break;
+      }
+      case 'hbl_mov_dad': {
+        this.record.hbl_mov_dad = this.record.hbl_mov_dad.toUpperCase();
+        break;
+      }
+      case 'hbl_bl_req': {
+        this.record.hbl_bl_req = this.record.hbl_bl_req.toUpperCase();
+        break;
+      }
+      case 'hbl_remark1': {
+        this.record.hbl_remark1 = this.record.hbl_remark1.toUpperCase();
+        break;
+      }
+      case 'hbl_remark2': {
+        this.record.hbl_remark2 = this.record.hbl_remark2.toUpperCase();
+        break;
+      }
+      case 'hbl_remark3': {
+        this.record.hbl_remark3 = this.record.hbl_remark3.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_instr1': {
+        this.record.hbl_devan_instr1 = this.record.hbl_devan_instr1.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_instr2': {
+        this.record.hbl_devan_instr2 = this.record.hbl_devan_instr2.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_instr3': {
+        this.record.hbl_devan_instr3 = this.record.hbl_devan_instr3.toUpperCase();
+        break;
+      }
+      case 'hbl_salesman_name': {
+        this.record.hbl_salesman_name = this.record.hbl_salesman_name.toUpperCase();
+        break;
+      }
+      case 'hbl_handled_name': {
+        this.record.hbl_handled_name = this.record.hbl_handled_name.toUpperCase();
+        break;
+      }
+      case 'hbl_handled_email': {
+        this.record.hbl_handled_email = this.record.hbl_handled_email.toUpperCase();
+        break;
+      }
+      case 'rec_created_email': {
+        this.record.rec_created_email = this.record.rec_created_email.toUpperCase();
+        break;
+      }
+      case 'hbl_liner_code': {
+        this.record.hbl_liner_code = this.record.hbl_liner_code.toUpperCase();
+        break;
+      }
+      case 'hbl_liner_name': {
+        this.record.hbl_liner_name = this.record.hbl_liner_name.toUpperCase();
+        break;
+      }
+      case 'hbl_vessel': {
+        this.record.hbl_vessel = this.record.hbl_vessel.toUpperCase();
+        break;
+      }
+      case 'hbl_voyage': {
+        this.record.hbl_voyage = this.record.hbl_voyage.toUpperCase();
+        break;
+      }
+      case 'hbl_pol_code': {
+        this.record.hbl_pol_code = this.record.hbl_pol_code.toUpperCase();
+        break;
+      }
+      case 'hbl_pol_name': {
+        this.record.hbl_pol_name = this.record.hbl_pol_name.toUpperCase();
+        break;
+      }
+      case 'hbl_pod_code': {
+        this.record.hbl_pod_code = this.record.hbl_pod_code.toUpperCase();
+        break;
+      }
+      case 'hbl_pod_name': {
+        this.record.hbl_pod_name = this.record.hbl_pod_name.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_loccode': {
+        this.record.hbl_devan_loccode = this.record.hbl_devan_loccode.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_locname': {
+        this.record.hbl_devan_locname = this.record.hbl_devan_locname.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_locaddr1': {
+        this.record.hbl_devan_locaddr1 = this.record.hbl_devan_locaddr1.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_locaddr2': {
+        this.record.hbl_devan_locaddr2 = this.record.hbl_devan_locaddr2.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_locaddr3': {
+        this.record.hbl_devan_locaddr3 = this.record.hbl_devan_locaddr3.toUpperCase();
+        break;
+      }
+      case 'hbl_devan_locaddr4': {
+        this.record.hbl_devan_locaddr4 = this.record.hbl_devan_locaddr4.toUpperCase();
+        break;
+      }
+      case 'mbl_cntr_type': {
+        this.record.mbl_cntr_type = this.record.mbl_cntr_type.toUpperCase();
+        break;
+      }
+      case 'hbl_careof_name': {
+        this.record.hbl_careof_name = this.record.hbl_careof_name.toUpperCase();
+        break;
+      }
+      case 'mbl_lock': {
+        this.record.mbl_lock = this.record.mbl_lock.toUpperCase();
+        break;
+      }
+      case 'hbl_boeno': {
+        this.record.hbl_boeno = this.record.hbl_boeno.toUpperCase();
+        break;
+      }
+      case 'hbl_paid_status': {
+        this.record.hbl_paid_status = this.record.hbl_paid_status.toUpperCase();
+        break;
+      }
+      case 'hbl_bl_status': {
+        this.record.hbl_bl_status = this.record.hbl_bl_status.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_release_status': {
+        this.record.hbl_cargo_release_status = this.record.hbl_cargo_release_status.toUpperCase();
+        break;
+      }
+      case 'hbl_shipment_stage': {
+        this.record.hbl_shipment_stage = this.record.hbl_shipment_stage.toUpperCase();
+        break;
+      }
+      case 'hbl_custom_reles_status': {
+        this.record.hbl_custom_reles_status = this.record.hbl_custom_reles_status.toUpperCase();
+        break;
+      }
+      case 'hbl_is_delivery': {
+        this.record.hbl_is_delivery = this.record.hbl_is_delivery.toUpperCase();
+        break;
+      }
+      case 'hbl_paid_remarks': {
+        this.record.hbl_paid_remarks = this.record.hbl_paid_remarks.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks1': {
+        this.record.hbl_cargo_marks1 = this.record.hbl_cargo_marks1.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks2': {
+        this.record.hbl_cargo_marks2 = this.record.hbl_cargo_marks2.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks3': {
+        this.record.hbl_cargo_marks3 = this.record.hbl_cargo_marks3.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks4': {
+        this.record.hbl_cargo_marks4 = this.record.hbl_cargo_marks4.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks5': {
+        this.record.hbl_cargo_marks5 = this.record.hbl_cargo_marks5.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks6': {
+        this.record.hbl_cargo_marks6 = this.record.hbl_cargo_marks6.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks7': {
+        this.record.hbl_cargo_marks7 = this.record.hbl_cargo_marks7.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks8': {
+        this.record.hbl_cargo_marks8 = this.record.hbl_cargo_marks8.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks9': {
+        this.record.hbl_cargo_marks9 = this.record.hbl_cargo_marks9.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks10': {
+        this.record.hbl_cargo_marks10 = this.record.hbl_cargo_marks10.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks11': {
+        this.record.hbl_cargo_marks11 = this.record.hbl_cargo_marks11.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks12': {
+        this.record.hbl_cargo_marks12 = this.record.hbl_cargo_marks12.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks13': {
+        this.record.hbl_cargo_marks13 = this.record.hbl_cargo_marks13.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks14': {
+        this.record.hbl_cargo_marks14 = this.record.hbl_cargo_marks14.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks15': {
+        this.record.hbl_cargo_marks15 = this.record.hbl_cargo_marks15.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_marks16': {
+        this.record.hbl_cargo_marks16 = this.record.hbl_cargo_marks16.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description1': {
+        this.record.hbl_cargo_description1 = this.record.hbl_cargo_description1.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description2': {
+        this.record.hbl_cargo_description2 = this.record.hbl_cargo_description2.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description3': {
+        this.record.hbl_cargo_description3 = this.record.hbl_cargo_description3.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description4': {
+        this.record.hbl_cargo_description4 = this.record.hbl_cargo_description4.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description5': {
+        this.record.hbl_cargo_description5 = this.record.hbl_cargo_description5.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description6': {
+        this.record.hbl_cargo_description6 = this.record.hbl_cargo_description6.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description7': {
+        this.record.hbl_cargo_description7 = this.record.hbl_cargo_description7.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description8': {
+        this.record.hbl_cargo_description8 = this.record.hbl_cargo_description8.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description9': {
+        this.record.hbl_cargo_description9 = this.record.hbl_cargo_description9.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description10': {
+        this.record.hbl_cargo_description10 = this.record.hbl_cargo_description10.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description11': {
+        this.record.hbl_cargo_description11 = this.record.hbl_cargo_description11.toUpperCase();
+
+        break;
+      }
+      case 'hbl_cargo_description12': {
+        this.record.hbl_cargo_description12 = this.record.hbl_cargo_description12.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description13': {
+        this.record.hbl_cargo_description13 = this.record.hbl_cargo_description13.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description14': {
+        this.record.hbl_cargo_description14 = this.record.hbl_cargo_description14.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description15': {
+        this.record.hbl_cargo_description15 = this.record.hbl_cargo_description15.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description16': {
+        this.record.hbl_cargo_description16 = this.record.hbl_cargo_description16.toUpperCase();
+        break;
+      }
+      case 'hbl_cargo_description17': {
+        this.record.hbl_cargo_description17 = this.record.hbl_cargo_description17.toUpperCase();
+        break;
+      }
 
       case 'cntr_no': {
         rec.cntr_no = rec.cntr_no.toUpperCase();
