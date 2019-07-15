@@ -14,6 +14,7 @@ import { SeaImpMasterEditComponent } from './master/edit/seaimp-master-edit.comp
 import { SeaImpHouseComponent } from './house/seaimp-house.component';
 import { SeaImpHouseHeaderComponent } from './house/seaimp-house-header.component';
 import { SeaImpHouseEditComponent } from './house/edit/seaimp-house-edit.component';
+import { SeaImpUsCustomsHoldComponent } from './uscustomshold/seaimp-uscustomshold.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SeaImpHouseEditComponent } from './house/edit/seaimp-house-edit.compone
     SeaImpMasterEditComponent,
     SeaImpHouseComponent,
     SeaImpHouseHeaderComponent,
-    SeaImpHouseEditComponent
+    SeaImpHouseEditComponent,
+    SeaImpUsCustomsHoldComponent
   ],
   imports: [
     SharedModule,    

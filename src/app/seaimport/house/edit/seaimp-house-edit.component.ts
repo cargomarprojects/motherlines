@@ -1505,19 +1505,19 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   BtnNavigation(action: string) {
 
-    // switch (action) {
-    //   case 'ARAP': {
-    //     let prm = {
-    //       menuid: this.gs.MENU_SI_MASTER_ARAP,
-    //       pkid:  this.pkid,
-    //       refno : this.record.mbl_refno,
-    //       type: 'SI',
-    //       origin: 'seaimp-master-page',
-    //     };
-    //     this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
-    //     break;
-    //   }
-    // }
+    switch (action) {
+      case 'CUSTOMSHOLD': {
+        let prm = {
+          menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
+          pkid:  this.pkid,
+          refno : this.record.mbl_refno,
+          type: 'SI',
+          origin: 'seaimp-uscustomshold-page',
+        };
+        this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));        
+        break;
+      }
+    }
   }
 
 
