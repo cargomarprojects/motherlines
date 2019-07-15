@@ -626,7 +626,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       }
     }
 
-    if (this.record.hbl_shipper_code == '') {
+    if (this.record.hbl_shipper_id == '') {
       bRet = false;
       this.errorMessage = "Shipper Code can't be blank";
       return bRet;
@@ -636,7 +636,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       this.errorMessage = "Shipper Address can't be blank";
       return bRet;
     }
-    if (this.record.hbl_consignee_code == '') {
+    if (this.record.hbl_consignee_id == '') {
       bRet = false;
       this.errorMessage = "Consignee Code can't be blank";
       return bRet;
