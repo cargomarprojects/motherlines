@@ -904,7 +904,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
     if (_Record.controlname == "CARE-OF") {
       this.record.hbl_careof_id = _Record.id;
-      this.record.hbl_careof_name = _Record.name;
+      this.record.hbl_careof_name = _Record.name;  
     }
 
     // Container
