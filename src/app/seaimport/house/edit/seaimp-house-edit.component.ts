@@ -18,7 +18,25 @@ import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
 export class SeaImpHouseEditComponent implements OnInit {
 
   @ViewChild('hbl_houseno') hbl_houseno_field: ElementRef;
-  //@ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
+  @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
+  @ViewChild('hbl_shipper_code') hbl_shipper_code_field: ElementRef;
+  @ViewChild('hbl_shipper_add1') hbl_shipper_add1_field: ElementRef;
+  @ViewChild('hbl_consignee_code') hbl_consignee_code_field: ElementRef;
+  @ViewChild('hbl_consignee_add1') hbl_consignee_add1_field: ElementRef;
+  @ViewChild('hbl_agent_name') hbl_agent_name_field: ElementRef;
+  @ViewChild('hbl_cha_code') hbl_cha_code_field: ElementRef;
+  @ViewChild('hbl_packages') hbl_packages_field: ElementRef;
+  @ViewChild('hbl_uom') hbl_uom_field: ElementRef;
+  @ViewChild('hbl_weight') hbl_weight_field: ElementRef;
+  @ViewChild('hbl_cbm') hbl_cbm_field: ElementRef;
+  @ViewChild('hbl_lbs') hbl_lbs_field: ElementRef;
+  @ViewChild('hbl_cft') hbl_cft_field: ElementRef;
+  @ViewChild('hbl_commodity') hbl_commodity_field: ElementRef;
+  @ViewChild('hbl_frt_status') hbl_frt_status_field: ElementRef;
+  @ViewChild('hbl_ship_term_id') hbl_ship_term_id_field: ElementRef;
+  @ViewChild('hbl_bltype') hbl_bltype_field: ElementRef;
+  @ViewChild('hbl_handled_code') hbl_handled_code_field: ElementRef;
+
 
   mblrecord: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   record: Tbl_cargo_imp_housem = <Tbl_cargo_imp_housem>{};
@@ -244,42 +262,9 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.record.hbl_custom_reles_status = 'NA';
     this.record.hbl_is_delivery = 'NA';
     this.record.hbl_paid_remarks = '';
-    this.record.hbl_cargo_marks1 = '';
-    this.record.hbl_cargo_marks2 = '';
-    this.record.hbl_cargo_marks3 = '';
-    this.record.hbl_cargo_marks4 = '';
-    this.record.hbl_cargo_marks5 = '';
-    this.record.hbl_cargo_marks6 = '';
-    this.record.hbl_cargo_marks7 = '';
-    this.record.hbl_cargo_marks8 = '';
-    this.record.hbl_cargo_marks9 = '';
-    this.record.hbl_cargo_marks10 = '';
-    this.record.hbl_cargo_marks11 = '';
-    this.record.hbl_cargo_marks12 = '';
-    this.record.hbl_cargo_marks13 = '';
-    this.record.hbl_cargo_marks14 = '';
-    this.record.hbl_cargo_marks15 = '';
-    this.record.hbl_cargo_marks16 = '';
-    this.record.hbl_cargo_marks17 = '';
-
-    this.record.hbl_cargo_description1 = '';
-    this.record.hbl_cargo_description2 = '';
-    this.record.hbl_cargo_description3 = '';
-    this.record.hbl_cargo_description4 = '';
-    this.record.hbl_cargo_description5 = '';
-    this.record.hbl_cargo_description6 = '';
-    this.record.hbl_cargo_description7 = '';
-    this.record.hbl_cargo_description8 = '';
+    this.initDesc();
     this.record.hbl_cargo_description9 = "QUANTITY/QUALITY AS PER SHIPPER'S DECLARATION";
     this.record.hbl_cargo_description10 = "CARRIER NOT RESPONSIBLE FOR PACKING OF CARGO";
-    this.record.hbl_cargo_description11 = '';
-    this.record.hbl_cargo_description12 = '';
-    this.record.hbl_cargo_description13 = '';
-    this.record.hbl_cargo_description14 = '';
-    this.record.hbl_cargo_description15 = '';
-    this.record.hbl_cargo_description16 = '';
-    this.record.hbl_cargo_description17 = '';
-
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
     if (this.mblrecord != null) {
@@ -331,7 +316,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
       if (this.ShipmentType != "CONSOLE")
         this.FindTotalWeight();
-
+      this.hbl_houseno_field.nativeElement.focus();
     }
   }
 
@@ -361,17 +346,55 @@ export class SeaImpHouseEditComponent implements OnInit {
         // if (this.ShipmentType.trim() == "FCL" || this.ShipmentType.trim() == "LCL") {
         //   Cmb_Shpmnt_Stage.IsEnabled = false;
         // }
-
+        this.initDesc();
         this.descrecords.forEach(Rec => {
           this.ShowDesc(Rec);
         })
 
         this.CheckData();
+
+        this.hbl_houseno_field.nativeElement.focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
+  private initDesc() {
+    this.record.hbl_cargo_marks1 = '';
+    this.record.hbl_cargo_marks2 = '';
+    this.record.hbl_cargo_marks3 = '';
+    this.record.hbl_cargo_marks4 = '';
+    this.record.hbl_cargo_marks5 = '';
+    this.record.hbl_cargo_marks6 = '';
+    this.record.hbl_cargo_marks7 = '';
+    this.record.hbl_cargo_marks8 = '';
+    this.record.hbl_cargo_marks9 = '';
+    this.record.hbl_cargo_marks10 = '';
+    this.record.hbl_cargo_marks11 = '';
+    this.record.hbl_cargo_marks12 = '';
+    this.record.hbl_cargo_marks13 = '';
+    this.record.hbl_cargo_marks14 = '';
+    this.record.hbl_cargo_marks15 = '';
+    this.record.hbl_cargo_marks16 = '';
+    this.record.hbl_cargo_marks17 = '';
 
+    this.record.hbl_cargo_description1 = '';
+    this.record.hbl_cargo_description2 = '';
+    this.record.hbl_cargo_description3 = '';
+    this.record.hbl_cargo_description4 = '';
+    this.record.hbl_cargo_description5 = '';
+    this.record.hbl_cargo_description6 = '';
+    this.record.hbl_cargo_description7 = '';
+    this.record.hbl_cargo_description8 = '';
+    this.record.hbl_cargo_description9 = '';
+    this.record.hbl_cargo_description10 = '';
+    this.record.hbl_cargo_description11 = '';
+    this.record.hbl_cargo_description12 = '';
+    this.record.hbl_cargo_description13 = '';
+    this.record.hbl_cargo_description14 = '';
+    this.record.hbl_cargo_description15 = '';
+    this.record.hbl_cargo_description16 = '';
+    this.record.hbl_cargo_description17 = '';
+  }
   private ShowDesc(_Record: Tbl_cargo_imp_desc) {
     if (_Record.cargo_ctr == 1) {
       this.record.hbl_cargo_marks1 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description1 = _Record.cargo_description.toString();
@@ -610,13 +633,15 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (this.record.hbl_houseno == '') {
       bRet = false;
       this.errorMessage = "House BL# cannot be blank";
+      this.hbl_houseno_field.nativeElement.focus();
       return bRet;
     }
 
-    if ((this.record.mbl_cntr_type == 'FCL' || this.record.mbl_cntr_type == 'LCL') == false) {
+    if (!this.hbl_shipment_stage_field.nativeElement.disabled) {
       if (this.record.hbl_shipment_stage == null) {
         bRet = false;
         this.errorMessage = "Shipment Stage cannot be blank";
+       // this.hbl_shipment_stage.nativeElement.focus();
         return bRet;
       }
       if (this.record.hbl_shipment_stage.toString().trim().length <= 0) {
@@ -629,16 +654,20 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (this.record.hbl_shipper_id == '') {
       bRet = false;
       this.errorMessage = "Shipper Code can't be blank";
+      this.hbl_shipper_code_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_shipper_add1 == '') {
       bRet = false;
       this.errorMessage = "Shipper Address can't be blank";
+      this.hbl_shipper_add1_field.nativeElement.focus();
       return bRet;
     }
-    if (this.record.hbl_consignee_id == '') {
+    if (this.record.hbl_consignee_code == '') {
       bRet = false;
       this.errorMessage = "Consignee Code can't be blank";
+      this.hbl_consignee_code_field.nativeElement.focus();
+      
       return bRet;
     }
     if (this.record.hbl_consignee_add1 == '') {
