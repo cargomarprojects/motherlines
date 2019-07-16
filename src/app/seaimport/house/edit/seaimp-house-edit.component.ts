@@ -806,6 +806,8 @@ export class SeaImpHouseEditComponent implements OnInit {
         //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
         // };
         // mPage.Show();
+
+        this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
       }
     }
 
@@ -846,6 +848,11 @@ export class SeaImpHouseEditComponent implements OnInit {
       // }
       // else
       //     LoadCHA();
+
+      if (_Record.col9 == "Y") {
+        this.SearchRecord("MsgAlertBox", this.record.hbl_consignee_id, "CONSIGNEE");
+      } else
+        this.LoadCHA();
     }
 
     if (_Record.controlname == "CARGO-LOC") {
@@ -881,6 +888,8 @@ export class SeaImpHouseEditComponent implements OnInit {
         //     Dispatcher.BeginInvoke(() => { Txt_Notify_Name.Focus(); });
         // };
         // mPage.Show();
+        this.SearchRecord("MsgAlertBox", this.record.hbl_notify_id);
+
       }
     }
 
@@ -904,7 +913,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
     if (_Record.controlname == "CARE-OF") {
       this.record.hbl_careof_id = _Record.id;
-      this.record.hbl_careof_name = _Record.name;  
+      this.record.hbl_careof_name = _Record.name;
     }
 
     // Container
@@ -959,7 +968,6 @@ export class SeaImpHouseEditComponent implements OnInit {
       }
     }
   }
-
 
   onBlur(field: string, rec: Tbl_cargo_imp_container = null) {
     switch (field) {
@@ -1509,12 +1517,10 @@ export class SeaImpHouseEditComponent implements OnInit {
       case 'CUSTOMSHOLD': {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
-          pkid:  this.pkid,
-          refno : this.record.mbl_refno,
-          type: 'SI',
+          pkid: this.pkid,
           origin: 'seaimp-uscustomshold-page',
         };
-        this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
         break;
       }
     }
@@ -1544,6 +1550,39 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
   OHBLUpload() {
+
+  }
+
+  SearchRecord(controlname: string, _id: string = "", _type: string = "") {
+    this.errorMessage = '';
+    let SearchData = {
+      table: '',
+      pkid: '',
+      SPATH: ''
+    };
+
+
+    if (controlname == "MsgAlertBox") {
+      SearchData.table = 'ACCOUNTING-ALERT';
+      SearchData.pkid = _id;
+      SearchData.SPATH = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\xmlremarks\\";
+    }
+    this.gs.SearchRecord(SearchData)
+      .subscribe(response => {
+
+        if (response.message.length > 0)
+          alert(response.message);
+
+        if (controlname == "MsgAlertBox" && _type == "CONSIGNEE")
+          this.LoadCHA();
+      },
+        error => {
+          this.errorMessage = this.gs.getError(error);
+          alert(this.errorMessage);
+        });
+  }
+
+  LoadCHA() {
 
   }
 
