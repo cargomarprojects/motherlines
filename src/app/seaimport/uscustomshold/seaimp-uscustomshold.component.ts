@@ -171,11 +171,13 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
     if (this.record.cust_parentid == "") {
       bRet = false;
       this.errorMessage = "Invalid ID";
+      alert(this.errorMessage);
       return bRet;
     }
     if (this.record.cust_title == "") {
       bRet = false;
       this.errorMessage = "Title cannot be blank";
+      alert(this.errorMessage);
       return bRet;
     }
     return bRet;
