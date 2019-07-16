@@ -105,16 +105,26 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <label class="col-4 col-form-label col-form-label-sm">Master/House</label>
+
                 <div class="col-8">
-                    <button class="btn btn-primary btn-sm mr-1">SELECT MASTER/HOUSE</button>
+                    <select class="form-control form-control-sm" [(ngModel)]="inv_house_id" (change)="onItmChange()">
+                        <option *ngFor="let rec of HouseList" [value]="rec.pkid">
+                            <ul>
+                                <li> {{rec.houseno}} / </li>
+                                <li> {{rec.shipper}} / </li>
+                                <li> {{rec.consignee}} </li>
+                            </ul>
+                        </option>
+                      </select>
                 </div>
+
             </div>
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">House No</label>
                 <div class="col-8">
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('inv_hbl_no')"
-                        [(ngModel)]="record.inv_hbl_no" [disabled]="false" maxlength="50" />
+                        [(ngModel)]="record.inv_hbl_no" [disabled]="true" maxlength="50" />
                 </div>
             </div>
             <div class="form-group row">
@@ -205,6 +215,7 @@
                             <th width='8%' *ngIf="!single_curr">CURRENCY</th>
                             <th width='5%' *ngIf="!single_curr">EX.RATE</th>
                             <th width='8%' *ngIf="!single_curr">TOTAL</th>
+                            <th width='5%' *ngIf="showvat">VAT%</th>
                             <th width='5%' *ngIf="showvat">VAT</th>
                             <th width='5%' *ngIf="show_cc_control">BRANCH</th>
                             <th width='2%'></th>
@@ -240,7 +251,7 @@
                             </td>
                             <td>
                                 <input class="form-control form-control-sm" type="number" style="text-align:right;"
-                                    [(ngModel)]="rec.invd_ftotal" (blur)="onBlur('invd_ftotal',rec)" />
+                                    [(ngModel)]="rec.invd_ftotal" (blur)="onBlur('invd_ftotal',rec)"   />
                             </td>
                             <td *ngIf="!single_curr">
                                 <app-autocomplete2 [controlname]="'INVOICED-CURR'" [tabletype]="'PARAM'"
@@ -257,10 +268,19 @@
                                     style="text-align:right;" [(ngModel)]="rec.invd_total"
                                     (blur)="onBlur('invd_total',rec)" />
                             </td>
+                            
                             <td *ngIf="showvat">
                                 <input class="form-control form-control-sm" type="number" style="text-align:right;"
-                                    [(ngModel)]="rec.invd_vat_amt" (blur)="onBlur('invd_vat_amt',rec)" />
+                                    [(ngModel)]="rec.invd_vat_per" (blur)="onBlur('invd_vat_per',rec)" />
                             </td>
+
+                            <td *ngIf="showvat">
+                                    <input class="form-control form-control-sm" type="number" style="text-align:right;"
+                                        [disabled]="true"
+                                        [(ngModel)]="rec.invd_vat_amt" (blur)="onBlur('invd_vat_amt',rec)" />
+                            </td>
+
+
                             <td *ngIf="show_cc_control">
                                 <app-autocomplete2 [controlname]="'INVOICED-BRANCH'" [tabletype]="'BRANCH'"
                                     [displaycolumn]="'CODE'" [uid]="rec.invd_pkid" [displaydata]="rec.invd_cc_code"
