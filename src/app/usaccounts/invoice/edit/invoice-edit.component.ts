@@ -32,7 +32,7 @@ export class InvoiceEditComponent implements OnInit {
   private bal_amt: number;
 
   private inv_arap: string; // AR OR AP
-  private arrival_notice : string = '';
+  private arrival_notice: string = '';
 
   private pkid: string;
   private menuid: string;
@@ -65,7 +65,7 @@ export class InvoiceEditComponent implements OnInit {
     this.arrival_notice = options.arrival_notice;
     this.initpage();
     this.initControls();
-    this.InitDefaultCodes();
+    this.SetIncomeExpenseCodesForLineItems();
     //this.enableAll();
     this.actionHandler();
   }
@@ -78,11 +78,9 @@ export class InvoiceEditComponent implements OnInit {
     this.canAdd = this.gs.canAdd(this.menuid);
     this.canEdit = this.gs.canEdit(this.menuid);
     this.canSave = this.canAdd || this.canEdit;
-    if ( this.inv_arap == 'AR')
-      this.title =  'A/R INVOICE'
-    if ( this.inv_arap == 'AP')
-      this.title =  'A/P INVOICE'
-    
+
+    this.showTitle();
+
   }
 
   acc_id: string = '';
@@ -101,6 +99,15 @@ export class InvoiceEditComponent implements OnInit {
   showinvstage: boolean = false;
   single_curr: boolean = true;
 
+
+  showTitle() {
+    if (this.inv_arap == 'AR')
+      this.title = 'A/R INVOICE'
+    if (this.inv_arap == 'AP')
+      this.title = 'A/P INVOICE'
+  }
+
+
   initControls() {
     this.showvat = (this.gs.VAT_PER > 0) ? true : false;
     this.showinvstage = false;
@@ -116,31 +123,31 @@ export class InvoiceEditComponent implements OnInit {
   }
 
 
-  InitDefaultCodes() {
+  SetIncomeExpenseCodesForLineItems() {
     if (this.inv_arap == "AR") {
       if (this.mbl_type == "AE") {
-        this.acc_id = this.gs.INCOME_AE_ID,
-          this.acc_code = this.gs.INCOME_AE_NAME;
+        this.acc_id = this.gs.INCOME_AE_ID;
+        this.acc_code = this.gs.INCOME_AE_NAME;
       }
       if (this.mbl_type == "AI") {
-        this.acc_id = this.gs.INCOME_AI_ID,
-          this.acc_code = this.gs.INCOME_AI_NAME;
+        this.acc_id = this.gs.INCOME_AI_ID;
+        this.acc_code = this.gs.INCOME_AI_NAME;
       }
       if (this.mbl_type == "OE") {
-        this.acc_id = this.gs.INCOME_SE_ID,
-          this.acc_code = this.gs.INCOME_SE_NAME;
+        this.acc_id = this.gs.INCOME_SE_ID;
+        this.acc_code = this.gs.INCOME_SE_NAME;
       }
       if (this.mbl_type == "OI") {
-        this.acc_id = this.gs.INCOME_SI_ID,
-          this.acc_code = this.gs.INCOME_SI_NAME;
+        this.acc_id = this.gs.INCOME_SI_ID;
+        this.acc_code = this.gs.INCOME_SI_NAME;
       }
       if (this.mbl_type == "OT") {
-        this.acc_id = this.gs.INCOME_OT_ID,
-          this.acc_code = this.gs.INCOME_OT_NAME;
+        this.acc_id = this.gs.INCOME_OT_ID;
+        this.acc_code = this.gs.INCOME_OT_NAME;
       }
       if (this.mbl_type == "EX") {
-        this.acc_id = this.gs.INCOME_EX_ID,
-          this.acc_code = this.gs.INCOME_EX_NAME;
+        this.acc_id = this.gs.INCOME_EX_ID;
+        this.acc_code = this.gs.INCOME_EX_NAME;
       }
     }
     if (this.inv_arap == "AP") {
@@ -226,7 +233,12 @@ export class InvoiceEditComponent implements OnInit {
 
   AddRow() {
 
+    this.SetIncomeExpenseCodesForLineItems();
+
     var rec = <Tbl_Cargo_Invoiced>{};
+    rec.invd_acc_id = this.acc_id;
+    rec.invd_acc_code = this.acc_code;
+    rec.invd_acc_name = this.acc_code;
     this.records.push(rec);
   }
 
@@ -246,8 +258,9 @@ export class InvoiceEditComponent implements OnInit {
   }
 
 
-  NewRecord() {
+  NewRecord(arorap: string) {
     this.mode = 'ADD';
+    this.inv_arap = arorap;
     this.actionHandler();
   }
 
@@ -258,7 +271,7 @@ export class InvoiceEditComponent implements OnInit {
       this.records = <Tbl_Cargo_Invoiced[]>[];
       this.history = <Tbl_PayHistory[]>[];
       this.pkid = this.gs.getGuid();
-      this.init();
+      this.InitHeader();
     }
     if (this.mode == 'EDIT') {
       this.GetRecord();
@@ -266,7 +279,7 @@ export class InvoiceEditComponent implements OnInit {
   }
 
 
-  init() {
+  InitHeader() {
 
     if (this.inv_arap == "AR") {
       this.record.inv_prefix = this.gs.AR_INVOICE_PREFIX;
@@ -286,6 +299,10 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_acc_code = this.gs.SETTINGS_AC_PAYABLE_NAME;
       this.record.inv_acc_name = this.gs.SETTINGS_AC_PAYABLE_NAME;
     }
+
+    this.paid_amt = 0;
+
+    this.showTitle();
 
   }
 
@@ -308,7 +325,7 @@ export class InvoiceEditComponent implements OnInit {
       this.mbl_pkid = this.record.inv_mbl_id;
       this.hbl_pkid = this.record.inv_hbl_id;
 
-      if ( this.inv_arap )
+      this.showTitle();
 
 
       this.DisplayBalance();

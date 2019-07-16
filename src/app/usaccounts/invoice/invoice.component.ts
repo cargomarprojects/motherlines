@@ -161,7 +161,7 @@ export class InvoiceComponent implements OnInit {
   }
 
 
-  NewRecord() {
+  NewRecord(arorap : string ) {
     if (!this.canAdd) {
       alert('Insufficient User Rights')
       return;
@@ -173,7 +173,7 @@ export class InvoiceComponent implements OnInit {
       mode: 'ADD',
       mbl_type: this.mbl_type,
       mbl_refno : this.mbl_refno, 
-      inv_arap :'AR',     
+      inv_arap :arorap,     
       arrival_notice : '',
       origin: 'invoice-list-page',
     };

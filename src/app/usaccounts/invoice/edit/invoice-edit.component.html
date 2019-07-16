@@ -2,7 +2,9 @@
     <div class="col">
         <label>{{title}} ({{mode}})</label>
 
-        <button class="btn btn-primary btn-sm mx-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
+        <button class="btn btn-primary btn-sm mx-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord('AR')">Add A/R</button>
+        <button class="btn btn-primary btn-sm mx-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord('AP')">Add A/P</button>
+
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
 
     </div>
@@ -230,7 +232,7 @@
                             </td>
                             <td>
                                 <app-autocomplete2 [controlname]="'INVOICED-ACCTM'" [tabletype]="'ACC_ACCTM'"
-                                    [subtype]="" [displaycolumn]="'CODE'" [displaydata]="rec.invd_acc_code"
+                                    [subtype]="" [displaycolumn]="'CODE'" [displaydata]="rec.invd_acc_name"
                                     [uid]="rec.invd_pkid" [disabled]="!show_acc_control"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>

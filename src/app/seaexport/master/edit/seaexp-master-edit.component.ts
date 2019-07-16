@@ -489,7 +489,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           menuid: this.gs.MENU_SI_MASTER_ARAP,
           mbl_pkid:  this.pkid,
           mbl_refno : this.record.mbl_refno,
-          mbl_type: 'SE',
+          mbl_type: 'OE',
           origin: 'seaexp-master-page',
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
