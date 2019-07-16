@@ -807,7 +807,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         // };
         // mPage.Show();
 
-        this.SearchRecord("MsgAlert", this.record.hbl_shipper_id);
+        this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
       }
     }
 
@@ -848,6 +848,11 @@ export class SeaImpHouseEditComponent implements OnInit {
       // }
       // else
       //     LoadCHA();
+
+      if (_Record.col9 == "Y") {
+        this.SearchRecord("MsgAlertBox", this.record.hbl_consignee_id, "CONSIGNEE");
+      } else
+        this.LoadCHA();
     }
 
     if (_Record.controlname == "CARGO-LOC") {
@@ -883,6 +888,8 @@ export class SeaImpHouseEditComponent implements OnInit {
         //     Dispatcher.BeginInvoke(() => { Txt_Notify_Name.Focus(); });
         // };
         // mPage.Show();
+        this.SearchRecord("MsgAlertBox", this.record.hbl_notify_id);
+
       }
     }
 
@@ -961,7 +968,6 @@ export class SeaImpHouseEditComponent implements OnInit {
       }
     }
   }
-
 
   onBlur(field: string, rec: Tbl_cargo_imp_container = null) {
     switch (field) {
@@ -1547,16 +1553,19 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   }
 
-  SearchRecord(controlname: string, _id: string = "") {
+  SearchRecord(controlname: string, _id: string = "", _type: string = "") {
     this.errorMessage = '';
     let SearchData = {
       table: '',
-      pkid: ''
+      pkid: '',
+      SPATH: ''
     };
 
-    if (controlname == "MsgAlert") {
+
+    if (controlname == "MsgAlertBox") {
       SearchData.table = 'ACCOUNTING-ALERT';
       SearchData.pkid = _id;
+      SearchData.SPATH = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\xmlremarks\\";
     }
     this.gs.SearchRecord(SearchData)
       .subscribe(response => {
@@ -1564,11 +1573,17 @@ export class SeaImpHouseEditComponent implements OnInit {
         if (response.message.length > 0)
           alert(response.message);
 
+        if (controlname == "MsgAlertBox" && _type == "CONSIGNEE")
+          this.LoadCHA();
       },
         error => {
           this.errorMessage = this.gs.getError(error);
           alert(this.errorMessage);
         });
+  }
+
+  LoadCHA() {
+
   }
 
 }
