@@ -16,6 +16,7 @@ export interface Tbl_cargo_imp_custhold {
 export interface vm_tbl_cargo_imp_custhold {
     mode: string;
     record: Tbl_cargo_imp_custhold;
-    userinfo: any,
+    pkid:string;
+    userinfo: any;
     filter: any;
 }

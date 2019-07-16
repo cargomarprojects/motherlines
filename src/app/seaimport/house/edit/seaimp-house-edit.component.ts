@@ -904,7 +904,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
     if (_Record.controlname == "CARE-OF") {
       this.record.hbl_careof_id = _Record.id;
-      this.record.hbl_careof_name = _Record.name;  
+      this.record.hbl_careof_name = _Record.name;
     }
 
     // Container
@@ -1509,12 +1509,10 @@ export class SeaImpHouseEditComponent implements OnInit {
       case 'CUSTOMSHOLD': {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
-          pkid:  this.pkid,
-          refno : this.record.mbl_refno,
-          type: 'SI',
+          pkid: this.pkid,
           origin: 'seaimp-uscustomshold-page',
         };
-        this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
         break;
       }
     }
