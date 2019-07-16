@@ -43,7 +43,7 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
-    // this.mode = options.mode;
+    this.mode =  'EDIT';
     this.initPage();
     this.actionHandler();
   }
@@ -85,12 +85,16 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
-
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
-        this.record = <Tbl_cargo_imp_custhold>response.record;
         this.mode = response.mode;
+        if(this.mode=='ADD')
+        this.actionHandler();
+        else
+        {
+        this.record = <Tbl_cargo_imp_custhold>response.record;
         this.CheckData();
+        }
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
