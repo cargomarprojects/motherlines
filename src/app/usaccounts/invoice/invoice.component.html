@@ -1,8 +1,8 @@
 <div class="page-header">
   <div class="col">
     <label class="mr-1">{{title}}</label>
-    <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
-
+    <button class="btn btn-primary btn-sm mr-1" *ngIf="canAdd" (click)="NewRecord('AR')">Add A/R</button>
+    <button class="btn btn-primary btn-sm mr-1" *ngIf="canAdd" (click)="NewRecord('AP')">Add A/P</button>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
     <i *ngIf="loading" class="fa fa-spinner"></i>
   </div>
