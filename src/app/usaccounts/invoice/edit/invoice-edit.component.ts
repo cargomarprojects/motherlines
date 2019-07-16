@@ -11,8 +11,10 @@ import { Tbl_cargo_invoicem } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
+import { Tbl_House } from '../../models/tbl_house';
+
 import { invoiceService } from '../../services/invoice.service';
-import { ReportsRoutingModule } from 'src/app/reports/reports-routing.module';
+
 
 @Component({
   selector: 'app-invoice-edit',
@@ -43,9 +45,36 @@ export class InvoiceEditComponent implements OnInit {
   private canEdit: boolean;
   private canSave: boolean;
 
-  record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
-  records: Tbl_Cargo_Invoiced[] = [];
-  history: Tbl_PayHistory[] = [];
+
+  private acc_id: string = '';
+  private acc_code: string = '';
+  private acc_name: string = '';
+
+  private inv_mbl_id: string = "";
+  private inv_hbl_id: string = "";
+
+  private inv_house_id: string = "";
+
+
+  private show_customer_control: boolean = false;
+  private show_arap_control: boolean = false;
+  private show_inv_currency: boolean = false;
+
+  private show_acc_control: boolean = false;
+  private show_cc_control: boolean = false;
+
+  private showvat: boolean = false;
+  private showinvstage: boolean = false;
+  private single_curr: boolean = true;
+
+
+
+
+  private record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
+  private records: Tbl_Cargo_Invoiced[] = [];
+  private history: Tbl_PayHistory[] = [];
+
+  private HouseList: Tbl_House[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -58,15 +87,18 @@ export class InvoiceEditComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.menuid = options.menuid;
     this.pkid = options.pkid;
+    this.mbl_pkid = options.mbl_pkid;
     this.mbl_type = options.mbl_type;
     this.inv_arap = options.inv_arap;
     this.mode = options.mode;
     this.mbl_refno = options.mbl_refno;
     this.arrival_notice = options.arrival_notice;
     this.initpage();
+    this.GetHouseList();
     this.initControls();
+
     this.SetIncomeExpenseCodesForLineItems();
-    //this.enableAll();
+    this.enableAll();
     this.actionHandler();
   }
 
@@ -78,26 +110,27 @@ export class InvoiceEditComponent implements OnInit {
     this.canAdd = this.gs.canAdd(this.menuid);
     this.canEdit = this.gs.canEdit(this.menuid);
     this.canSave = this.canAdd || this.canEdit;
-
     this.showTitle();
-
   }
 
-  acc_id: string = '';
-  acc_code: string = '';
-  acc_name: string = '';
 
 
-  show_customer_control: boolean = false;
-  show_arap_control: boolean = false;
-  show_inv_currency: boolean = false;
+  private GetHouseList() {
 
-  show_acc_control: boolean = false;
-  show_cc_control: boolean = false;
+    let SearchData: any = {
+      pkid: this.mbl_pkid,
+      TYPE: 'HOUSE',
+      INV_TYPE: this.mbl_type
 
-  showvat: boolean = false;
-  showinvstage: boolean = false;
-  single_curr: boolean = true;
+    };
+
+    this.mainservice.GetHouseList(SearchData).subscribe(response => {
+      this.HouseList = <Tbl_House[]>response.records;
+    }, Error => {
+      this.gs.getError(Error);
+    });
+  }
+
 
 
   showTitle() {
@@ -239,6 +272,11 @@ export class InvoiceEditComponent implements OnInit {
     rec.invd_acc_id = this.acc_id;
     rec.invd_acc_code = this.acc_code;
     rec.invd_acc_name = this.acc_code;
+    rec.invd_curr_id =  this.gs.base_cur_pkid;
+    rec.invd_curr_code =  this.gs.base_cur_code;
+    rec.invd_curr_name =  this.gs.base_cur_name;
+    rec.invd_exrate = 1;
+
     this.records.push(rec);
   }
 
@@ -271,7 +309,7 @@ export class InvoiceEditComponent implements OnInit {
       this.records = <Tbl_Cargo_Invoiced[]>[];
       this.history = <Tbl_PayHistory[]>[];
       this.pkid = this.gs.getGuid();
-      this.InitHeader();
+      this.SetInitialValues();
     }
     if (this.mode == 'EDIT') {
       this.GetRecord();
@@ -279,7 +317,10 @@ export class InvoiceEditComponent implements OnInit {
   }
 
 
-  InitHeader() {
+  SetInitialValues() {
+
+
+    this.inv_house_id = '';
 
     if (this.inv_arap == "AR") {
       this.record.inv_prefix = this.gs.AR_INVOICE_PREFIX;
@@ -288,6 +329,7 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_acc_id = this.gs.SETTINGS_AC_RECEIVABLE;
       this.record.inv_acc_code = this.gs.SETTINGS_AC_RECEIVABLE_NAME;
       this.record.inv_acc_name = this.gs.SETTINGS_AC_RECEIVABLE_NAME;
+      this.record.inv_arrnotice = 'N';
 
     }
     else {
@@ -298,9 +340,14 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_acc_id = this.gs.SETTINGS_AC_PAYABLE;
       this.record.inv_acc_code = this.gs.SETTINGS_AC_PAYABLE_NAME;
       this.record.inv_acc_name = this.gs.SETTINGS_AC_PAYABLE_NAME;
+
+      this.record.inv_arrnotice = 'N';
+
+
     }
 
     this.paid_amt = 0;
+    this.bal_amt = 0;
 
     this.showTitle();
 
@@ -325,14 +372,44 @@ export class InvoiceEditComponent implements OnInit {
       this.mbl_pkid = this.record.inv_mbl_id;
       this.hbl_pkid = this.record.inv_hbl_id;
 
-      this.showTitle();
+      this.inv_house_id = this.record.inv_hbl_id;
+      if (this.record.inv_hbl_id == null || this.record.inv_hbl_id == '')
+        this.inv_house_id = this.record.inv_mbl_id;
 
+
+      this.showTitle();
 
       this.DisplayBalance();
 
 
     }, error => {
-      this.errorMessage = this.gs.getError(error)
+      this.errorMessage = this.gs.getError(error);
+    });
+  }
+
+  onItmChange() {
+    this.HouseList.forEach(rec => {
+      if (rec.pkid == this.inv_house_id) {
+
+        if (rec.type == 'A') {
+          this.record.inv_hbl_id = '';
+          this.record.inv_cost_type = 'M';
+          this.record.inv_hbl_no = '';
+        }
+        if (rec.type == 'B') {
+          this.record.inv_hbl_id = rec.pkid;
+          this.record.inv_cost_type = 'B';
+          this.record.inv_hbl_no = rec.houseno;
+        }
+        this.record.inv_hbl_shipper_name = rec.shipper.toString();
+        this.record.inv_hbl_consignee_name = rec.consignee.toString();
+        this.record.inv_hbl_packages = +rec.pkgs;
+        this.record.inv_hbl_uom = rec.unit;
+        this.record.inv_hbl_lbs = +rec.lbs;
+        this.record.inv_hbl_weight = +rec.wt;
+        this.record.inv_hbl_cbm = +rec.cbm;
+        this.record.inv_hbl_cft = +rec.cft;
+      }
     });
   }
 
@@ -345,6 +422,66 @@ export class InvoiceEditComponent implements OnInit {
       this.show_inv_currency = false;
     }
   }
+
+  FindGrandTotal() {
+    let nfTot = 0;
+    let nTot = 0;
+    let nBal = 0;
+    let nPaid = 0;
+
+    let nfVat = 0;
+    let nVat = 0;
+
+    this.records.forEach(Rec => {
+      nTot += Rec.invd_total;
+      nfTot += Rec.invd_ftotal;
+      nVat += Rec.invd_vat_amt;
+      nfVat += Rec.invd_fvat_amt;
+    });
+
+    nTot = this.gs.roundNumber(nTot, 2);
+    nfTot = this.gs.roundNumber(nfTot, 2);
+
+
+    this.record.inv_total1 = nTot;
+    this.record.inv_ftotal1 = nfTot;
+
+    this.record.inv_vat = nVat;
+    this.record.inv_fvat = nfVat;
+
+    nTot += nVat;
+    nfTot += nfVat;
+    this.record.inv_total = nTot;
+    this.record.inv_ftotal = nfTot;
+
+    nPaid = this.record.inv_paid;
+    nBal = nTot - nPaid;
+
+    this.record.inv_balance = nBal;
+
+    /*
+    Txt_Total1.Text = nTot.ToString();
+    Txt_ftotal1.Text = nfTot.ToString();
+
+    Txt_Vat.Text = nVat.ToString();
+    Txt_FVat.Text = nfVat.ToString();
+
+    nTot += nVat;
+    nfTot += nfVat;
+
+    Txt_Invoice_Total.Text = nTot.ToString();
+    Txt_Invoice_FTotal.Text = nfTot.ToString();
+
+    nPaid = Lib.Convert2Decimal(Txt_Paid.Text);
+    nBal = nTot - nPaid;
+    Txt_Balance.Text = nBal.ToString();
+    */
+
+  }
+
+
+
+
 
 
   FindWeight(_type: string) {
@@ -370,7 +507,66 @@ export class InvoiceEditComponent implements OnInit {
       case 'invoice_code': {
         break;
       }
+
+      case 'invd_ftotal': {
+        this.findRowTotal( field,rec);
+        break;
+      }
+      case 'invd_total': {
+        this.findRowTotal( field,rec);
+        break;
+      }
+      case 'invd_exrate': {
+        this.findRowTotal( field,rec);
+        break;
+      }
+      case 'invd_vat_per': {
+        this.findRowTotal( field,rec);
+        break;
+      }
+
     }
+  }
+
+  findRowTotal( field: string, rec: Tbl_Cargo_Invoiced) {
+    
+
+    let nAmt = rec.invd_ftotal;
+    let nExRate = rec.invd_exrate;
+    let nTotal = 0;
+
+    let Row_FVat = 0;
+    let Row_Vat = 0;
+
+    if (nExRate <= 0)
+    {
+      rec.invd_exrate =1;
+      nExRate = 1;
+    }
+    nTotal = nAmt * nExRate;
+    if (this.gs.IS_SINGLE_CURRENCY == false)
+    {
+        if (this.record.inv_curr_code != this.gs.base_cur_code && rec.invd_curr_code == this.gs.base_cur_code)
+        {
+            nTotal = nAmt / nExRate;
+        }
+    }
+    nTotal = this.gs.roundNumber(nTotal, 2);
+
+    rec.invd_total = nTotal;
+
+    if (rec.invd_vat_per > 0)
+    {
+        Row_FVat = nAmt * rec.invd_vat_per / 100;
+        Row_FVat =  this.gs.roundNumber(Row_FVat, 2);
+        Row_Vat = nTotal * rec.invd_vat_per / 100;
+        Row_Vat =  this.gs.roundNumber( Row_Vat, 2);
+    }
+
+    rec.invd_vat_amt = Row_Vat;
+    rec.invd_fvat_amt = Row_FVat;
+
+    this.FindGrandTotal();
   }
 
   LovSelected(_Record: SearchTable) {
@@ -399,6 +595,9 @@ export class InvoiceEditComponent implements OnInit {
           if (_Record.controlname == "INVOICED-CURR") {
             rec.invd_curr_id = _Record.id;
             rec.invd_curr_code = _Record.code;
+            rec.invd_exrate = +_Record.col1;
+            if ( this.gs.IS_SINGLE_CURRENCY)
+              rec.invd_exrate = 1;
           }
 
           if (_Record.controlname == "INVOICED-ACCTM") {
@@ -416,15 +615,12 @@ export class InvoiceEditComponent implements OnInit {
       });
     }
 
-
-
   }
 
 
   Close() {
     this.location.back();
   }
-
 
 
 
