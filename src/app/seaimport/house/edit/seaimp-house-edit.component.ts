@@ -806,6 +806,8 @@ export class SeaImpHouseEditComponent implements OnInit {
         //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
         // };
         // mPage.Show();
+
+        this.SearchRecord("MsgAlert", this.record.hbl_shipper_id);
       }
     }
 
@@ -1543,6 +1545,30 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   OHBLUpload() {
 
+  }
+
+  SearchRecord(controlname: string, _id: string = "") {
+    this.errorMessage = '';
+    let SearchData = {
+      table: '',
+      pkid: ''
+    };
+
+    if (controlname == "MsgAlert") {
+      SearchData.table = 'ACCOUNTING-ALERT';
+      SearchData.pkid = _id;
+    }
+    this.gs.SearchRecord(SearchData)
+      .subscribe(response => {
+
+        if (response.message.length > 0)
+          alert(response.message);
+
+      },
+        error => {
+          this.errorMessage = this.gs.getError(error);
+          alert(this.errorMessage);
+        });
   }
 
 }

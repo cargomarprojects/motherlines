@@ -51,7 +51,7 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
 
   private initPage() {
     this.title = 'US Custom Hold';
-    this.isAdmin = this.gs.IsAdmin(this.menuid);
+    this.isAdmin = this.gs.IsAdmin(this.menuid); 
     this.errorMessage = '';
     this.LoadCombo();
   }

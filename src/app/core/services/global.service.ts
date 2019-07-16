@@ -652,7 +652,7 @@ export class GlobalService {
   }
 
   public SearchRecord(SearchData: any) {
-    return this.http2.post<any>(this.baseUrl + "/api/Admin/Lov/SearchRecord", SearchData, this.headerparam2('authorized'));
+    return this.http2.post<any>(this.baseUrl + "/api/Auth/SearchRecord", SearchData, this.headerparam2('authorized'));
   }
 
   public DownloadFile(report_folder: string, filename: string, filetype: string, filedisplayname: string = 'N') {
