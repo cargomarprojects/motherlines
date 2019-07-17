@@ -19,12 +19,12 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   @ViewChild('hbl_houseno') hbl_houseno_field: ElementRef;
   @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
-  @ViewChild('hbl_shipper_code') hbl_shipper_code_field: ElementRef;
+  //@ViewChild('hbl_shipper_code') hbl_shipper_code_field: ElementRef;
   @ViewChild('hbl_shipper_add1') hbl_shipper_add1_field: ElementRef;
-  @ViewChild('hbl_consignee_code') hbl_consignee_code_field: ElementRef;
+  //@ViewChild('hbl_consignee_code') hbl_consignee_code_field: ElementRef;
   @ViewChild('hbl_consignee_add1') hbl_consignee_add1_field: ElementRef;
-  @ViewChild('hbl_agent_name') hbl_agent_name_field: ElementRef;
-  @ViewChild('hbl_cha_code') hbl_cha_code_field: ElementRef;
+  //@ViewChild('hbl_agent_name') hbl_agent_name_field: ElementRef;
+  //@ViewChild('hbl_cha_code') hbl_cha_code_field: ElementRef;
   @ViewChild('hbl_packages') hbl_packages_field: ElementRef;
   @ViewChild('hbl_uom') hbl_uom_field: ElementRef;
   @ViewChild('hbl_weight') hbl_weight_field: ElementRef;
@@ -35,7 +35,7 @@ export class SeaImpHouseEditComponent implements OnInit {
   @ViewChild('hbl_frt_status') hbl_frt_status_field: ElementRef;
   @ViewChild('hbl_ship_term_id') hbl_ship_term_id_field: ElementRef;
   @ViewChild('hbl_bltype') hbl_bltype_field: ElementRef;
-  @ViewChild('hbl_handled_code') hbl_handled_code_field: ElementRef;
+  //@ViewChild('hbl_handled_name') hbl_handled_name_field: ElementRef;
 
 
   mblrecord: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
@@ -627,12 +627,14 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (this.parentid.trim().length <= 0) {
       bRet = false;
       this.errorMessage = "Invalid MBL ID";
+      alert(this.errorMessage);
       return bRet;
     }
 
     if (this.record.hbl_houseno == '') {
       bRet = false;
       this.errorMessage = "House BL# cannot be blank";
+      alert(this.errorMessage);
       this.hbl_houseno_field.nativeElement.focus();
       return bRet;
     }
@@ -641,12 +643,15 @@ export class SeaImpHouseEditComponent implements OnInit {
       if (this.record.hbl_shipment_stage == null) {
         bRet = false;
         this.errorMessage = "Shipment Stage cannot be blank";
-       // this.hbl_shipment_stage.nativeElement.focus();
+        alert(this.errorMessage);
+        this.hbl_shipment_stage_field.nativeElement.focus();
         return bRet;
       }
       if (this.record.hbl_shipment_stage.toString().trim().length <= 0) {
         bRet = false;
         this.errorMessage = "Shipment Stage cannot be blank";
+        alert(this.errorMessage);
+        this.hbl_shipment_stage_field.nativeElement.focus();
         return bRet;
       }
     }
@@ -654,31 +659,37 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (this.record.hbl_shipper_id == '') {
       bRet = false;
       this.errorMessage = "Shipper Code can't be blank";
-      this.hbl_shipper_code_field.nativeElement.focus();
+      alert(this.errorMessage);
+     //this.hbl_shipper_code_field.nativeElement.Focus();
       return bRet;
     }
     if (this.record.hbl_shipper_add1 == '') {
       bRet = false;
       this.errorMessage = "Shipper Address can't be blank";
+      alert(this.errorMessage);
       this.hbl_shipper_add1_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_consignee_code == '') {
       bRet = false;
       this.errorMessage = "Consignee Code can't be blank";
-      this.hbl_consignee_code_field.nativeElement.focus();
-      
+      alert(this.errorMessage);
+    //  this.hbl_consignee_code_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_consignee_add1 == '') {
       bRet = false;
       this.errorMessage = "Consignee Address can't be blank";
+      alert(this.errorMessage);
+      this.hbl_consignee_add1_field.nativeElement.focus();
       return bRet;
     }
 
     if (this.record.hbl_agent_id == '') {
       bRet = false;
       this.errorMessage = "Agent can't be blank";
+      alert(this.errorMessage);
+    //  this.hbl_agent_name_field.nativeElement.focus();
       return bRet;
     }
 
@@ -686,6 +697,8 @@ export class SeaImpHouseEditComponent implements OnInit {
       if (this.record.hbl_cha_id == '') {
         bRet = false;
         this.errorMessage = "Invalid CHB";
+        alert(this.errorMessage);
+      //  this.hbl_cha_code_field.nativeElement.focus();
         return bRet;
       }
     }
@@ -694,33 +707,45 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (this.record.hbl_packages <= 0) {
       bRet = false;
       this.errorMessage = "No. of packages can't be blank";
+      alert(this.errorMessage);
+      this.hbl_packages_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_uom == '') {
       bRet = false;
       this.errorMessage = "Unit of packages can't be blank";
+      alert(this.errorMessage);
+      this.hbl_uom_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_weight <= 0) {
       bRet = false;
       this.errorMessage = "Weight can't be blank";
+      alert(this.errorMessage);
+      this.hbl_weight_field.nativeElement.focus();
       return bRet;
     }
 
     if (this.record.hbl_cbm <= 0 && this.ShipmentType != "FCL") {
       bRet = false;
       this.errorMessage = "CBM can't be blank";
+      alert(this.errorMessage);
+      this.hbl_cbm_field.nativeElement.focus();
       return bRet;
     }
     if (this.gs.BRANCH_REGION == "USA") {
       if (this.record.hbl_lbs <= 0) {
         bRet = false;
         this.errorMessage = "LBS can't be blank";
+        alert(this.errorMessage);
+        this.hbl_lbs_field.nativeElement.focus();
         return bRet;
       }
       if (this.record.hbl_cft <= 0 && this.ShipmentType != "FCL") {
         bRet = false;
         this.errorMessage = "CFT can't be blank";
+        alert(this.errorMessage);
+        this.hbl_cft_field.nativeElement.focus();
         return bRet;
       }
     }
@@ -729,6 +754,8 @@ export class SeaImpHouseEditComponent implements OnInit {
       if (this.record.hbl_commodity == '') {
         bRet = false;
         this.errorMessage = "Goods description can't be blank";
+        alert(this.errorMessage);
+        this.hbl_commodity_field.nativeElement.focus();
         return bRet;
       }
     }
@@ -736,16 +763,22 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (this.record.hbl_frt_status == '') {
       bRet = false;
       this.errorMessage = "Freight Status can't be blank";
+      alert(this.errorMessage);
+      this.hbl_frt_status_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_ship_term_id == '') {
       bRet = false;
       this.errorMessage = "Terms can't be blank";
+      alert(this.errorMessage);
+      this.hbl_ship_term_id_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_bltype == '') {
       bRet = false;
       this.errorMessage = "Nomination Type can't be blank";
+      alert(this.errorMessage);
+      this.hbl_bltype_field.nativeElement.focus();
       return bRet;
     }
 
@@ -756,11 +789,13 @@ export class SeaImpHouseEditComponent implements OnInit {
       if (Rec.cntr_no.toString().trim().length < 11) {
         bRet = false;
         this.errorMessage = "Container( " + Rec.cntr_no.toString() + " ) Invalid ";
+        alert(this.errorMessage);
         return bRet;
       }
       if (Rec.cntr_type.toString().trim().length <= 0) {
         bRet = false;
         this.errorMessage = "Container( " + Rec.cntr_no.toString() + " ) container type has to be select";
+        alert(this.errorMessage);
         return bRet;
       }
 
@@ -769,6 +804,8 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (this.record.hbl_handled_id == '') {
       bRet = false;
       this.errorMessage = "Handled By cannot be blank";
+      alert(this.errorMessage);
+     // this.hbl_handled_name_field.nativeElement.focus();
       return bRet;
     }
     /*
@@ -1547,9 +1584,18 @@ export class SeaImpHouseEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
           pkid: this.pkid,
-          origin: 'seaimp-uscustomshold-page',
+          origin: 'seaimp-House-page',
         };
         this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
+        break;
+      }
+      case 'CARGOPICKUP': {
+        let prm = {
+          menuid: this.gs.MENU_SI_HOUSE_DELIVERY_ORDER,
+          pkid: this.pkid,
+          origin: 'seaimp-House-page',
+        };
+        this.gs.Naviagete('Silver.SeaImport/CargoPickupPage', JSON.stringify(prm));
         break;
       }
     }
