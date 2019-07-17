@@ -56,19 +56,20 @@ export class InvoiceEditComponent implements OnInit {
   private inv_house_id: string = "";
 
 
-  private show_customer_control: boolean = false;
-  private show_arap_control: boolean = false;
-  private show_inv_currency: boolean = false;
+  private enable_customer_control: boolean = false;
+  private enable_arap_control: boolean = false;
+  private enable_acc_control: boolean = false;
 
-  private show_acc_control: boolean = false;
+  private enable_currency: boolean = false;
+
+  private show_currency: boolean = false;
   private show_cc_control: boolean = false;
-
-  private showvat: boolean = false;
-  private showinvstage: boolean = false;
-  private single_curr: boolean = true;
-
-
-
+  private show_vat: boolean = false;
+  private show_confirm: boolean = false;
+  private show_invstage: boolean = false;
+  
+  private isVat : boolean = false;
+  private isConfirmed : boolean =true;
 
   private record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
   private records: Tbl_Cargo_Invoiced[] = [];
@@ -98,7 +99,7 @@ export class InvoiceEditComponent implements OnInit {
     this.initControls();
 
     this.SetIncomeExpenseCodesForLineItems();
-    this.enableAll();
+    //this.enableAll();
     this.actionHandler();
   }
 
@@ -142,17 +143,29 @@ export class InvoiceEditComponent implements OnInit {
 
 
   initControls() {
-    this.showvat = (this.gs.VAT_PER > 0) ? true : false;
-    this.showinvstage = false;
-    this.single_curr = this.gs.IS_SINGLE_CURRENCY;
-    this.show_inv_currency = this.single_curr;
+    this.show_vat = (this.gs.VAT_PER > 0) ? true : false;
+    this.show_confirm = (this.gs.VAT_PER > 0) ? true : false;
+    this.show_currency = ( this.gs.IS_SINGLE_CURRENCY) ? false  : true ;
+    this.show_invstage = false;
+
+    this.enable_customer_control = true;
+
   }
 
   enableAll() {
-    this.single_curr = false;
+    
+    this.enable_customer_control = true;
+    this.enable_arap_control = true;
+    this.enable_acc_control = true;
+    
+    this.show_vat = true;
+    this.show_confirm = true;
+    this.show_currency = true;
+    this.show_invstage= true;
     this.show_cc_control = true;
-    this.showvat = true;
-    this.show_inv_currency = this.single_curr;
+
+    this.enable_currency = true;
+
   }
 
 
@@ -212,14 +225,14 @@ export class InvoiceEditComponent implements OnInit {
 
 
     if (this.mbl_type == "GE" || this.mbl_type == "PR" || this.mbl_type == "CM" || this.mbl_type == "PS" || this.mbl_type == "FA") {
-      this.show_acc_control = true;
+      this.enable_acc_control = true;
       this.show_cc_control = true;
-      this.show_arap_control = false;
+      this.enable_arap_control = false;
 
       if (this.gs.ALLOW_ARAP_CODE_SELECTION == "Y")
-        this.show_arap_control = true;
+        this.enable_arap_control = true;
       else
-        this.show_arap_control = false;
+        this.enable_arap_control = false;
 
       if (this.mbl_type == "PS") {
         if (this.inv_arap == "AR") {
@@ -237,9 +250,9 @@ export class InvoiceEditComponent implements OnInit {
       }
     }
     else {
-      this.show_acc_control = false;
+      this.enable_acc_control = false;
       this.show_cc_control = false;
-      this.show_arap_control = false;
+      this.enable_arap_control = false;
     }
 
     /*
@@ -319,9 +332,6 @@ export class InvoiceEditComponent implements OnInit {
 
   SetInitialValues() {
 
-
-    this.inv_house_id = '';
-
     if (this.inv_arap == "AR") {
       this.record.inv_prefix = this.gs.AR_INVOICE_PREFIX;
       this.record.inv_startingno = this.gs.AR_INVOICE_STARTING_NO;
@@ -343,8 +353,11 @@ export class InvoiceEditComponent implements OnInit {
 
       this.record.inv_arrnotice = 'N';
 
-
     }
+
+    this.inv_house_id = '';
+  
+    this.isConfirmed =true;
 
     this.paid_amt = 0;
     this.bal_amt = 0;
@@ -366,6 +379,8 @@ export class InvoiceEditComponent implements OnInit {
       this.records = <Tbl_Cargo_Invoiced[]>response.records;
       this.history = <Tbl_PayHistory[]>response.history;
       this.paid_amt = response.paid;
+
+      this.paid_amt = 0;
 
       this.mbl_type = this.record.inv_type;
       this.inv_arap = this.record.inv_arap;
@@ -416,10 +431,11 @@ export class InvoiceEditComponent implements OnInit {
   DisplayBalance() {
     this.bal_amt = this.record.inv_total - this.paid_amt;
     this.bal_amt = this.gs.roundNumber(this.bal_amt, 2);
+    
     if (this.paid_amt != 0) {
-      this.show_customer_control = false;
-      this.show_arap_control = false;
-      this.show_inv_currency = false;
+      this.enable_customer_control = false;
+      this.enable_arap_control = false;
+      this.enable_currency = false;
     }
   }
 
@@ -503,12 +519,32 @@ export class InvoiceEditComponent implements OnInit {
       case 'mbl_refno': {
         break;
       }
-
       case 'invoice_code': {
         break;
       }
 
+      case 'inv_hbl_packages': {
+        this.record.inv_hbl_packages =  this.gs.roundNumber(this.record.inv_hbl_packages,0)
+        break;
+      }
+      case 'inv_hbl_lbs': {
+        this.record.inv_hbl_lbs =  this.gs.roundNumber(this.record.inv_hbl_lbs,3)
+        break;
+      }
+      case 'inv_hbl_weight': {
+        this.record.inv_hbl_weight =  this.gs.roundNumber(this.record.inv_hbl_weight,3)
+        break;
+      }
+      case 'inv_hbl_cbm': {
+        this.record.inv_hbl_cbm =  this.gs.roundNumber(this.record.inv_hbl_cbm,3)
+        break;
+      }      
+      case 'inv_hbl_cft': {
+        this.record.inv_hbl_cft =  this.gs.roundNumber(this.record.inv_hbl_cft,3)
+        break;
+      }      
       case 'invd_ftotal': {
+        rec.invd_ftotal =  this.gs.roundNumber(rec.invd_ftotal,2)        
         this.findRowTotal( field,rec);
         break;
       }
