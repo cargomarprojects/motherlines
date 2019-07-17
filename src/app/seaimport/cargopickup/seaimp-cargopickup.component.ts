@@ -1,0 +1,238 @@
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { GlobalService } from '../../core/services/global.service';
+
+import { SeaImpCargoPickupService } from '../services/seaimp-cargopickup.service';
+import { User_Menu } from '../../core/models/menum';
+import { Tbl_cargo_imp_pickup, vm_tbl_cargo_imp_pickup } from '../models/tbl_cargo_imp_pickup';
+import { SearchTable } from '../../shared/models/searchtable';
+import { strictEqual } from 'assert';
+import { Tbl_cargo_imp_container } from '../models/tbl_cargo_imp_housem';
+
+@Component({
+  selector: 'app-seaimp-cargopickup',
+  templateUrl: './seaimp-cargopickup.component.html'
+})
+export class SeaImpCargoPickupComponent implements OnInit {
+
+  @ViewChild('mbl_no') mbl_no_field: ElementRef;
+  record: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
+
+  // 17-07-2019 Created By Ajith  
+
+  private pkid: string;
+  private menuid: string;
+  private mode: string;
+  private title: string='';
+  private isAdmin: boolean;
+  
+  private errorMessage: string;
+  IsLocked: boolean = false;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
+    public gs: GlobalService,
+    private mainService: SeaImpCargoPickupService,
+  ) { }
+
+  ngOnInit() {
+    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+    this.pkid = options.pkid;
+    this.menuid = options.menuid;
+    this.mode = 'EDIT';
+    this.initPage();
+    this.actionHandler();
+  }
+
+  private initPage() {
+    this.title = 'Delivery Order';
+    this.isAdmin = this.gs.IsAdmin(this.menuid); 
+    this.errorMessage = '';
+    this.LoadCombo();
+  }
+
+  LoadCombo() {
+
+  }
+
+  NewRecord() {
+    this.mode = 'ADD'
+    this.actionHandler();
+  }
+
+  actionHandler() {
+    this.errorMessage = '';
+    if (this.mode == 'ADD') {
+      this.record = <Tbl_cargo_imp_pickup>{};
+      this.init();
+    }
+    if (this.mode == 'EDIT') {
+      this.GetRecord();
+    }
+  }
+
+  init() {
+    // this.record.cust_parentid = this.pkid;
+    // this.record.cust_title = '';
+    // this.record.cust_comm_inv_yn = 'N';
+    // this.record.cust_comm_inv = '';
+    // this.record.cust_fumi_cert_yn = 'N';
+    // this.record.cust_fumi_cert = '';
+    // this.record.cust_insp_chrg_yn = 'N';
+    // this.record.cust_insp_chrg = '';
+    // this.record.cust_remarks = '';
+    // this.record.IS_comm_inv = false;
+    // this.record.IS_fumi_cert = false;
+    // this.record.IS_insp_chrg = false;
+  }
+
+  GetRecord() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+     SearchData.pkid = this.pkid;
+    this.mainService.GetRecord(SearchData)
+      .subscribe(response => {
+        this.mode = response.mode;
+        // this.houseno = response.houseno;
+        // this.mblrefno = response.mblrefno;
+
+        if (this.mode == 'ADD')
+          this.actionHandler();
+        else {
+          this.record = <Tbl_cargo_imp_pickup>response.record;
+        //   this.record.IS_comm_inv = (this.record.cust_comm_inv_yn == "Y") ? true : false;
+        //   this.record.IS_fumi_cert = (this.record.cust_fumi_cert_yn == "Y") ? true : false;
+        //   this.record.IS_insp_chrg = (this.record.cust_insp_chrg_yn == "Y") ? true : false;
+
+          this.CheckData();
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
+
+  CheckData() {
+    /*
+        if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
+        {
+            IsLocked = true;
+            LBL_LOCK.Content = "LOCKED";
+            CmdSave.IsEnabled = false;
+            CmdCopyCntr.IsEnabled = false;
+        }
+        else
+            LBL_LOCK.Content = "UNLOCKED";
+    
+    */
+  }
+
+
+
+  Save() {
+
+    if (!this.Allvalid())
+      return;
+
+    // this.record.cust_comm_inv_yn = (this.record.IS_comm_inv == true) ? "Y" : "N";
+    // this.record.cust_fumi_cert_yn = (this.record.IS_fumi_cert == true) ? "Y" : "N";
+    // this.record.cust_insp_chrg_yn = (this.record.IS_insp_chrg == true) ? "Y" : "N";
+
+    const saveRecord = <vm_tbl_cargo_imp_pickup>{};
+    saveRecord.record = this.record;
+    saveRecord.pkid = this.pkid;
+    saveRecord.userinfo = this.gs.UserInfo;
+
+    this.mainService.Save(saveRecord)
+      .subscribe(response => {
+        this.mode = response.mode;
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+          this.errorMessage = 'Save Complete';
+          alert(this.errorMessage);
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+        alert(this.errorMessage);
+      });
+  }
+
+  private Allvalid(): boolean {
+
+    var bRet = true;
+    this.errorMessage = "";
+    if (this.record.pick_parentid == "") {
+      bRet = false;
+      this.errorMessage = "Invalid ID";
+      alert(this.errorMessage);
+      return bRet;
+    }
+    // if (this.record.cust_title == "") {
+    //   bRet = false;
+    //   this.errorMessage = "Title cannot be blank";
+    //   alert(this.errorMessage);
+    //   return bRet;
+    // }
+    return bRet;
+  }
+
+
+  Close() {
+    this.location.back();
+  }
+
+
+  LovSelected(_Record: SearchTable) {
+
+    // if (_Record.controlname == "AGENT") {
+    //   this.record.mbl_agent_id = _Record.id;
+    //   this.record.mbl_agent_name = _Record.name;
+    // }
+  }
+
+  onFocusout(field: string) {
+
+    switch (field) {
+      //   case 'mbl_no': {
+      //     this.IsBLDupliation('MBL', this.record.mbl_no);
+      //     break;
+      //   }
+    }
+  }
+
+
+  onBlur(field: string) {
+    switch (field) {
+    //   case 'cust_title': {
+    //     this.record.cust_title = this.record.cust_title.toUpperCase();
+    //     break;
+    //   }
+    //   case 'cust_comm_inv': {
+    //     this.record.cust_comm_inv = this.record.cust_comm_inv.toUpperCase();
+    //     break;
+    //   }
+    //   case 'cust_fumi_cert': {
+    //     this.record.cust_fumi_cert = this.record.cust_fumi_cert.toUpperCase();
+    //     break;
+    //   }
+    //   case 'cust_insp_chrg': {
+    //     this.record.cust_insp_chrg = this.record.cust_insp_chrg.toUpperCase();
+    //     break;
+    //   }
+    //   case 'cust_remarks': {
+    //     this.record.cust_remarks = this.record.cust_remarks.toUpperCase();
+    //     break;
+    //   }
+      //   case 'cntr_pieces': {
+      //     rec.cntr_pieces = this.gs.roundNumber(rec.cntr_pieces, 0);
+      //     break;
+      //   }
+    }
+  }
+
+}
