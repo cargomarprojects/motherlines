@@ -1,11 +1,8 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { Observable, BehaviorSubject } from 'rxjs';
-
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_cargo_imp_custhold, vm_tbl_cargo_imp_custhold } from '../models/tbl_cargo_imp_custhold';
 
 @Injectable({
     providedIn: 'root'
