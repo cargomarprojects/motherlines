@@ -17,34 +17,38 @@
 
     <div class="col-md-10">
 
-      <div class="row pt-2">
-
-        <!-- First row -->
-        <div class="col-md-12 px-0 mx-0">
-          <div class="row">
-            <div class="col-md-6 testbox  px-0 mx-0">
-              <div class="form-group row">
-                <label class="col-2 col-form-label col-form-label-sm">Order ID</label>
-                <div class="col-4">
-                  <input class="form-control form-control-sm" type="text" [(ngModel)]="record.pick_orderno"
-                    [disabled]="true" maxlength="15" />
-                </div>
-                <label class="col-2 col-form-label col-form-label-sm">Date</label>
-                <div class="col-4">
-                  <app-date [inputdate]="record.pick_order_date" (ValueChanged)="record.pick_order_date=$event">
-                  </app-date>
-                </div>
+      <div class="col-md-12 px-0 mx-0">
+        <div class="row">
+          <div class="col-md-6 testbox  px-0 mx-0">
+            <div class="form-group row">
+              <label class="col-2 col-form-label col-form-label-sm">Order ID</label>
+              <div class="col-4">
+                <input class="form-control form-control-sm" type="text" [(ngModel)]="record.pick_orderno"
+                  [disabled]="true" maxlength="15" />
+              </div>
+              <label class="col-2 col-form-label col-form-label-sm">Date</label>
+              <div class="col-4">
+                <app-date [inputdate]="record.pick_order_date" (ValueChanged)="record.pick_order_date=$event">
+                </app-date>
               </div>
             </div>
           </div>
-          <hr>
         </div>
+        <hr>
+      </div>
+    </div>
+    <div class="col-md-10">
+
+      <div class="row pt-2">
+
+        <!-- First row -->
+
         <div class="col-md-12 px-0 mx-0">
           <div class="row">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Trucker</label>
-                <div class="col-9">
+                <label class="col-2 col-form-label col-form-label-sm">Trucker</label>
+                <div class="col-10">
                   <app-autocomplete2 [controlname]="'TRUCKER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
                     [displaydata]="record.pick_truk_code" (ValueChanged)="LovSelected($event)" #pick_truk_code>
                   </app-autocomplete2>
@@ -52,37 +56,37 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Name</label>
-                <div class="col-9">
+                <label class="col-2 col-form-label col-form-label-sm">Name</label>
+                <div class="col-10">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_name')"
                     [(ngModel)]="record.pick_truk_name" maxlength="60" />
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Attention</label>
-                <div class="col-9">
+                <label class="col-2 col-form-label col-form-label-sm">Attention</label>
+                <div class="col-10">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_attn')"
                     [(ngModel)]="record.pick_truk_attn" maxlength="60" />
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Telephone</label>
-                <div class="col-9">
+                <label class="col-2 col-form-label col-form-label-sm">Telephone</label>
+                <div class="col-10">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_tel')"
                     [(ngModel)]="record.pick_truk_tel" maxlength="60" />
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Fax.</label>
-                <div class="col-9">
+                <label class="col-2 col-form-label col-form-label-sm">Fax.</label>
+                <div class="col-10">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_fax')"
                     [(ngModel)]="record.pick_truk_fax" maxlength="60" />
                 </div>
               </div>
 
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">CC</label>
-                <div class="col-9">
+                <label class="col-2 col-form-label col-form-label-sm">CC</label>
+                <div class="col-10">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_cc')"
                     [(ngModel)]="record.pick_truk_cc" maxlength="60" />
                 </div>
@@ -90,75 +94,533 @@
             </div>
             <div class="col-md-6 testbox  px-0 mx-0">
 
-                <div class="form-group row">
-                    <label class="col-3 col-form-label col-form-label-sm">Pick-up</label>
-                    <div class="col-9">
-                      <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_pickup')"
-                        [(ngModel)]="record.pick_pickup" maxlength="60" />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-3 col-form-label col-form-label-sm">Address</label>
-                    <div class="col-9">
-                      <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_attn')"
-                        [(ngModel)]="record.pick_truk_attn" maxlength="60" />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-3 col-form-label col-form-label-sm"></label>
-                    <div class="col-9">
-                      <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_tel')"
-                        [(ngModel)]="record.pick_truk_tel" maxlength="60" />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-3 col-form-label col-form-label-sm"></label>
-                    <div class="col-9">
-                      <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_fax')"
-                        [(ngModel)]="record.pick_truk_fax" maxlength="60" />
-                    </div>
-                  </div>
-    
-                  <div class="form-group row">
-                    <label class="col-3 col-form-label col-form-label-sm">Telephone</label>
-                    <div class="col-9">
-                      <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_cc')"
-                        [(ngModel)]="record.pick_truk_cc" maxlength="60" />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                  <label class="col-3 col-form-label col-form-label-sm">Date</label>
-                  <div class="col-4">
-                    <app-date [inputdate]="record.pick_order_date" (ValueChanged)="record.pick_order_date=$event">
-                    </app-date>
-                  </div>
-                  <label class="col-1 col-form-label col-form-label-sm">Time</label>
-                  <div class="col-4">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_cc')"
-                      [(ngModel)]="record.pick_truk_cc" maxlength="60" />
-                  </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">Pick-up</label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_pickup')"
+                    [(ngModel)]="record.pick_pickup" maxlength="60" />
                 </div>
-                <div class="form-group row">
-                    <label class="col-3 col-form-label col-form-label-sm">Attention</label>
-                    <div class="col-9">
-                      <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_attn')"
-                        [(ngModel)]="record.pick_truk_attn" maxlength="60" />
-                    </div>
-                  </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">Address</label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr1')"
+                    [(ngModel)]="record.pick_addr1" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr2')"
+                    [(ngModel)]="record.pick_addr2" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr3')"
+                    [(ngModel)]="record.pick_addr3" maxlength="60" />
+                </div>
+              </div>
 
-
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">Tel.No.</label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_tel')"
+                    [(ngModel)]="record.pick_tel" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">Date</label>
+                <div class="col-4">
+                  <app-date [inputdate]="record.pick_date" (ValueChanged)="record.pick_date=$event">
+                  </app-date>
+                </div>
+                <label class="col-2 col-form-label col-form-label-sm">Time</label>
+                <div class="col-4">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_time')"
+                    [(ngModel)]="record.pick_time" maxlength="15" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">Attention</label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_attn')"
+                    [(ngModel)]="record.pick_attn" maxlength="60" />
+                </div>
+              </div>
             </div>
           </div>
           <hr>
+          <div class="row">
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">From.</label>
+                <div class="col-10">
+                  <app-autocomplete2 [controlname]="'FROM'" [tabletype]="'MASTER'" [subtype]="'SHIPPER'"
+                    [displaycolumn]="'CODE'" [displaydata]="record.pick_from_code" (ValueChanged)="LovSelected($event)">
+                  </app-autocomplete2>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr1')"
+                    [(ngModel)]="record.pick_fromaddr1" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr2')"
+                    [(ngModel)]="record.pick_fromaddr2" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr3')"
+                    [(ngModel)]="record.pick_fromaddr3" maxlength="120" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr4')"
+                    [(ngModel)]="record.pick_fromaddr4" maxlength="60" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">To.</label>
+                <div class="col-10">
+                  <app-autocomplete2 [controlname]="'TO'" [tabletype]="'MASTER'" [subtype]="'CONSIGNEE'"
+                    [displaycolumn]="'CODE'" [displaydata]="record.pick_to_code" (ValueChanged)="LovSelected($event)">
+                  </app-autocomplete2>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr1')"
+                    [(ngModel)]="record.pick_toaddr1" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr2')"
+                    [(ngModel)]="record.pick_toaddr2" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr3')"
+                    [(ngModel)]="record.pick_toaddr3" maxlength="120" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr4')"
+                    [(ngModel)]="record.pick_toaddr4" maxlength="60" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="offset-1 col-3 col-form-label col-form-label-sm">Description</label>
+                <label class="col-2 pl-0 col-form-label col-form-label-sm"># of piece</label>
+                <label class="col-2 pl-0 col-form-label col-form-label-sm">Unit</label>
+                <label class="col-2 pl-0 col-form-label col-form-label-sm">Weight (LB)</label>
+                <label class="col-2 pl-0 col-form-label col-form-label-sm">CBM</label>
+              </div>
+              <div class="form-group row">
+                <div class="offset-1 col-3">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="offset-1 col-3">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="offset-1 col-3">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="offset-1 col-3">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+                <div class="col-2 pl-0">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                </div>
+              </div>
+              -
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="offset-1 col-11 col-form-label col-form-label-sm">Remark</label>
+              </div>
+              <div class="form-group row">
+                <div class="offset-1 col-11">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="offset-1 col-11">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="offset-1 col-11">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="offset-1 col-11">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 testbox  px-0 mx-0">
+              <div class="form-group row">
+                <label class="offset-2 col-4 col-form-label col-form-label-sm">Dangerous Goods</label>
+                <div class="col-6">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_custom_reles_status">
+                    <option [value]="'YES'">YES</option>
+                    <option [value]="'NO'">NO</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="offset-2 col-4 col-form-label col-form-label-sm">Terms of Shipment</label>
+                <div class="col-6">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_custom_reles_status">
+                    <option [value]="'YES'">YES</option>
+                    <option [value]="'NO'">NO</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 testbox  px-0 mx-0">
+
+              <div class="form-group row">
+                <label class="offset-2 col-4 col-form-label col-form-label-sm">Vessel</label>
+                <div class="col-6">
+                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_vessel')"
+                    [(ngModel)]="record.mbl_vessel" maxlength="60" />
+                </div>
+              </div>
+              <div class="form-group row">
+
+                <label class="offset-2 col-4 col-form-label col-form-label-sm pr-0">Voyage</label>
+                <div class="col-6 ">
+                  <input class="form-control form-control-sm " type="text" (blur)="onBlur('mbl_voyage')"
+                    [(ngModel)]="record.mbl_voyage" maxlength="60" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="col-md-2 testbox">
+      <div class="col-md-12  px-0 mx-0 py-0">
+        <hr>
+        <div class="form-group row">
+          <label class="col-12 col-form-label col-form-label-sm">Freight</label>
+        </div>
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+            <span>EXW</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+            <span>FOB</span>
+          </div>
+        </div> 
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+            <span>FCA</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+            <span>CPU</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+            <span>DDU</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+            <span>EXW</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+            <span>Others</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="offset-2 col-10">
+            <input class="form-control form-control-sm " type="text" (blur)="onBlur('mbl_voyage')"
+                    [(ngModel)]="record.mbl_voyage" maxlength="60" />
+          </div>
+        </div>
 
-      <div class="col-md-12  px-0 mx-0 py-2">
-        <!-- <div class="form-group row">
-            <button class=" col-12 btn btn-primary btn-sm">House Maintenence</button>
-          </div> -->
+        <div class="col-md-12  px-0 mx-0 py-0">
+          <hr>
+          <div class="form-group row">
+            <label class="col-12 col-form-label col-form-label-sm">Freight</label>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>EXW</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>FOB</span>
+            </div>
+          </div> 
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>FCA</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>CPU</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>DDU</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>EXW</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>Others</span>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input class="form-control form-control-sm " type="text" (blur)="onBlur('mbl_voyage')"
+                      [(ngModel)]="record.mbl_voyage" maxlength="60" />
+            </div>
+          </div>
+  
+
+
+         
+          
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>CPU</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>DDU</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>EXW</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+              <span>Others</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-2 col-10">
+              <input class="form-control form-control-sm " type="text" (blur)="onBlur('mbl_voyage')"
+                      [(ngModel)]="record.mbl_voyage" maxlength="60" />
+            </div>
+         
+            <hr>
+            <div class="form-group row">
+              <label class="col-12 col-form-label col-form-label-sm">Export Document</label>
+            </div>
+            <div class="form-group row">
+              <div class="offset-2 col-10">
+                <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+                <span>Commerical Invoice</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-2 col-10">
+                <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+                <span>Copy of L/C</span>
+              </div>
+            </div> 
+            <div class="form-group row">
+              <div class="offset-2 col-10">
+                <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+                <span>Certificate of Origin</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-2 col-10">
+                <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+                <span>Export Declaration</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-2 col-10">
+                <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+                <span>DDU</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-2 col-10">
+                <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+                <span>EXW</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-2 col-10">
+                <input type="checkbox" [(ngModel)]="record.IS_comm_inv" />
+                <span>Others</span>
+              </div>
+            </div>
+            
+            <div class="form-group row">
+              <div class="offset-2 col-10">
+                <input class="form-control form-control-sm " type="text" (blur)="onBlur('mbl_voyage')"
+                        [(ngModel)]="record.mbl_voyage" maxlength="60" />
+              </div>
+            </div>
+        </div>
+
+
       </div>
     </div>
   </div>
