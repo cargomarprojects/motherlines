@@ -1,3 +1,5 @@
+import { Tbl_cargo_imp_container } from './tbl_cargo_imp_housem';
+
 export interface Tbl_cargo_imp_pickup {
     pick_parentid:string;
     pick_truk_code: string;

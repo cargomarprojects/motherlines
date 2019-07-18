@@ -18,15 +18,17 @@ export class SeaImpCargoPickupComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
   record: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
-
+  defaultrecord: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
+  cntrrecords: Tbl_cargo_imp_container[] = [];
   // 17-07-2019 Created By Ajith  
 
   private pkid: string;
   private menuid: string;
   private mode: string;
-  private title: string='';
+  private title: string = '';
   private isAdmin: boolean;
-  
+  private chkallselected: boolean = false;
+  private selectdeselect: boolean = false;
   private errorMessage: string;
   IsLocked: boolean = false;
 
@@ -49,7 +51,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
 
   private initPage() {
     this.title = 'Delivery Order';
-    this.isAdmin = this.gs.IsAdmin(this.menuid); 
+    this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.errorMessage = '';
     this.LoadCombo();
   }
@@ -67,7 +69,9 @@ export class SeaImpCargoPickupComponent implements OnInit {
     this.errorMessage = '';
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_imp_pickup>{};
+     //this.cntrrecords = <Tbl_cargo_imp_container[]>[];
       this.init();
+      this.LoadDefault();
     }
     if (this.mode == 'EDIT') {
       this.GetRecord();
@@ -75,45 +79,216 @@ export class SeaImpCargoPickupComponent implements OnInit {
   }
 
   init() {
-    // this.record.cust_parentid = this.pkid;
-    // this.record.cust_title = '';
-    // this.record.cust_comm_inv_yn = 'N';
-    // this.record.cust_comm_inv = '';
-    // this.record.cust_fumi_cert_yn = 'N';
-    // this.record.cust_fumi_cert = '';
-    // this.record.cust_insp_chrg_yn = 'N';
-    // this.record.cust_insp_chrg = '';
-    // this.record.cust_remarks = '';
-    // this.record.IS_comm_inv = false;
-    // this.record.IS_fumi_cert = false;
-    // this.record.IS_insp_chrg = false;
+
+    this.record.pick_parentid = this.pkid;
+    this.record.pick_truk_code = '';
+    this.record.pick_truk_name = '';
+    this.record.pick_truk_id = '';
+    this.record.pick_truk_attn = '';
+    this.record.pick_truk_tel = '';
+    this.record.pick_truk_fax = '';
+    this.record.pick_truk_cc = '';
+    this.record.pick_pickup = '';
+    this.record.pick_addr1 = '';
+    this.record.pick_addr2 = '';
+    this.record.pick_addr3 = '';
+    this.record.pick_date = '';
+    this.record.pick_time = '';
+    this.record.pick_attn = '';
+    this.record.pick_tel = '';
+    this.record.pick_from_code = '';
+    this.record.pick_from_id = '';
+    this.record.pick_fromname = '';
+    this.record.pick_fromaddr1 = '';
+    this.record.pick_fromaddr2 = '';
+    this.record.pick_fromaddr3 = '';
+    this.record.pick_fromaddr4 = '';
+    this.record.pick_to_code = '';
+    this.record.pick_to_id = '';
+    this.record.pick_toname = '';
+    this.record.pick_toaddr1 = '';
+    this.record.pick_toaddr2 = '';
+    this.record.pick_toaddr3 = '';
+    this.record.pick_toaddr4 = '';
+    this.record.pick_desc1 = '';
+    this.record.pick_tot_piece1 = 0;
+    this.record.pick_uom1 = '';
+    this.record.pick_wt1 = 0;
+    this.record.pick_cbm_cft1 = 0;
+    this.record.pick_desc2 = '';
+    this.record.pick_tot_piece2 = 0;
+    this.record.pick_uom2 = '';
+    this.record.pick_wt2 = 0;
+    this.record.pick_cbm_cft2 = 0;
+    this.record.pick_desc3 = '';
+    this.record.pick_tot_piece3 = 0;
+    this.record.pick_uom3 = '';
+    this.record.pick_wt3 = 0;
+    this.record.pick_cbm_cft3 = 0;
+    this.record.pick_desc4 = '';
+    this.record.pick_tot_piece4 = 0;
+    this.record.pick_uom4 = '';
+    this.record.pick_wt4 = 0;
+    this.record.pick_cbm_cft4 = 0;
+    this.record.pick_remark_1 = '';
+    this.record.pick_remark_2 = '';
+    this.record.pick_remark_3 = '';
+    this.record.pick_remark_4 = '';
+    this.record.pick_danger_goods = 'NO';
+    this.record.pick_terms_ship = 'OCEAN';
+    this.record.pick_freight = '';
+    this.record.pick_export_doc = '';
+
+    this.record.IS_EXW = false;
+    this.record.IS_FOB = false;
+    this.record.IS_FCA = false;
+    this.record.IS_CPU = false;
+    this.record.IS_DDU = false;
+    this.record.IS_FRT_OTH = false;
+    this.record.IS_Commercial = false;
+    this.record.IS_CopyLC = false;
+    this.record.IS_Certificate = false;
+    this.record.IS_PktList = false;
+    this.record.IS_ExDeclaration = false;
+    this.record.IS_Export_OTH = false;
+
+    this.record.freightothers = '';
+    this.record.exportothers = '';
+    this.record.pick_orderno = '';
+    this.record.pick_order_date = '';
+    this.record.pick_is_delivery_sent = false;
+    this.record.pick_delivery_date = '';
+    this.record.pick_vessel = '';
+    this.record.pick_voyage = '';
+
   }
 
   GetRecord() {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
-     SearchData.pkid = this.pkid;
+    SearchData.pkid = this.pkid;
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
+        this.chkallselected = false;
+        this.selectdeselect = false;
+        this.cntrrecords = <Tbl_cargo_imp_container[]>response.cntrrecords;
         this.mode = response.mode;
-        // this.houseno = response.houseno;
-        // this.mblrefno = response.mblrefno;
-
-        if (this.mode == 'ADD')
+        if (this.mode == 'ADD') {
+          this.defaultrecord = <Tbl_cargo_imp_pickup>response.defaultrecord;
           this.actionHandler();
+        }
         else {
+          let str: string = "";
+          var sData = null;
           this.record = <Tbl_cargo_imp_pickup>response.record;
-        //   this.record.IS_comm_inv = (this.record.cust_comm_inv_yn == "Y") ? true : false;
-        //   this.record.IS_fumi_cert = (this.record.cust_fumi_cert_yn == "Y") ? true : false;
-        //   this.record.IS_insp_chrg = (this.record.cust_insp_chrg_yn == "Y") ? true : false;
 
+          str = this.record.pick_freight.toString();
+          this.record.IS_EXW = (str.includes("EXW")) ? true : false;
+          this.record.IS_FOB = (str.includes("FOB")) ? true : false;
+          this.record.IS_FCA = (str.includes("FCA")) ? true : false;
+          this.record.IS_CPU = (str.includes("CPU")) ? true : false;
+          this.record.IS_DDU = (str.includes("DDU")) ? true : false;
+          this.record.IS_FRT_OTH = (str.includes("Others")) ? true : false;
+          if (this.record.IS_FRT_OTH) {
+            sData = str.split(':');
+            this.record.freightothers = sData[1];
+          }
+
+          str = this.record.pick_export_doc.toString();
+          this.record.IS_Commercial = (str.includes("CINV")) ? true : false;
+          this.record.IS_CopyLC = (str.includes("CLC")) ? true : false;
+          this.record.IS_Certificate = (str.includes("CORG")) ? true : false;
+          this.record.IS_PktList = (str.includes("PLST")) ? true : false;
+          this.record.IS_ExDeclaration = (str.includes("EDEC")) ? true : false;
+          this.record.IS_Export_OTH = (str.includes("OTH")) ? true : false;
+          if (this.record.IS_Export_OTH) {
+            sData = str.split(':');
+            this.record.exportothers = sData[1];
+          }
+          this.SelectDeselect();
+          //cmd_cntr_selectAll_Click(null, null);
           this.CheckData();
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
+  private LoadDefault() {
+    if (this.defaultrecord == null)
+      return;
 
+    this.record.pick_orderno = this.defaultrecord.pick_orderno;
+    this.record.pick_order_date = this.gs.defaultValues.today;
+    this.record.pick_pickup = this.defaultrecord.pick_pickup;
+    this.record.pick_addr1 = this.defaultrecord.pick_addr1;
+    this.record.pick_addr2 = this.defaultrecord.pick_addr2;
+    this.record.pick_addr3 = this.defaultrecord.pick_addr3;
+    this.record.pick_tel = this.GetTelNumberOnly(this.defaultrecord.pick_tel);
+    this.record.pick_from_id = this.defaultrecord.pick_from_id;
+    this.record.pick_from_code = this.defaultrecord.pick_from_code;
+    this.record.pick_fromname = this.defaultrecord.pick_fromname;
+    this.record.pick_fromaddr1 = this.defaultrecord.pick_fromaddr1;
+    this.record.pick_fromaddr2 = this.defaultrecord.pick_fromaddr2;
+    this.record.pick_fromaddr3 = this.defaultrecord.pick_fromaddr3;
+    this.record.pick_fromaddr4 = this.defaultrecord.pick_fromaddr4;
+    this.record.pick_to_id = this.defaultrecord.pick_to_id;
+    this.record.pick_to_code = this.defaultrecord.pick_to_code;
+    this.record.pick_toname = this.defaultrecord.pick_toname;
+    this.record.pick_toaddr1 = this.defaultrecord.pick_toaddr1;
+    this.record.pick_toaddr2 = this.defaultrecord.pick_toaddr2;
+    this.record.pick_toaddr3 = this.defaultrecord.pick_toaddr3;
+    this.record.pick_toaddr4 = this.defaultrecord.pick_toaddr4;
+    this.record.pick_desc1 = this.defaultrecord.pick_desc1;
+    this.record.pick_tot_piece1 = this.defaultrecord.pick_tot_piece1;
+    if (this.gs.BRANCH_REGION == "USA")
+      this.record.pick_wt1 = this.defaultrecord.pick_wt1; // hbl_lbs;
+    else
+      this.record.pick_wt1 = this.defaultrecord.pick_wt2; // hbl_weight;
+
+    this.record.pick_cbm_cft1 = this.defaultrecord.pick_cbm_cft1;
+    this.record.pick_uom1 = this.defaultrecord.pick_uom1;
+    this.record.pick_remark_1 = "PLEASE CONTACT CONSIGNEE FOR DELIVERY APPOINTMENT!";
+    this.record.pick_vessel = this.defaultrecord.pick_vessel;
+    this.record.pick_voyage = this.defaultrecord.pick_voyage;
+    this.record.pick_terms_ship = this.defaultrecord.pick_terms_ship;
+    if (this.gs.company_code != "MNYC") {
+      this.record.pick_truk_code = this.defaultrecord.pick_truk_code;
+      this.record.pick_truk_name = this.defaultrecord.pick_truk_name;
+      this.record.pick_truk_id = this.defaultrecord.pick_truk_id;
+      this.record.pick_truk_attn = this.defaultrecord.pick_truk_attn;
+      this.record.pick_truk_tel = this.defaultrecord.pick_truk_tel;
+      this.record.pick_truk_fax = this.defaultrecord.pick_truk_fax;
+      this.record.pick_truk_cc = this.defaultrecord.pick_truk_cc;
+      this.record.pick_remark_1 = this.defaultrecord.pick_remark_1;
+      this.record.pick_remark_2 = this.defaultrecord.pick_remark_2;
+      this.record.pick_remark_3 = this.defaultrecord.pick_remark_3;
+      this.record.pick_remark_4 = this.defaultrecord.pick_remark_4;
+    }
+
+  }
+  private GetTelNumberOnly(sValue: string) {
+    try {
+      if (sValue.trim().length <= 0)
+        return sValue;
+
+      if (sValue.toUpperCase().includes("FAX")) {
+        var NewStr = sValue.split(' ');
+        sValue = "";
+        for (let k = 0; k < NewStr.length; k++) {
+          if (NewStr[k].toUpperCase().includes("FAX"))
+            break;
+          if (sValue != "")
+            sValue += " ";
+          sValue += NewStr[k];
+        }
+      }
+
+      return sValue;
+    }
+    catch (Exception) {
+      return sValue;
+    }
+  }
   CheckData() {
     /*
         if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
@@ -136,9 +311,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
-    // this.record.cust_comm_inv_yn = (this.record.IS_comm_inv == true) ? "Y" : "N";
-    // this.record.cust_fumi_cert_yn = (this.record.IS_fumi_cert == true) ? "Y" : "N";
-    // this.record.cust_insp_chrg_yn = (this.record.IS_insp_chrg == true) ? "Y" : "N";
+    this.SaveParent();
 
     const saveRecord = <vm_tbl_cargo_imp_pickup>{};
     saveRecord.record = this.record;
@@ -161,7 +334,69 @@ export class SeaImpCargoPickupComponent implements OnInit {
         alert(this.errorMessage);
       });
   }
+  private SaveParent() {
+    let str = "";
+    if (this.record.IS_EXW == true) {
+      str += "EXW";
+    }
+    if (this.record.IS_FOB == true) {
+      if (str != "")
+        str += ",";
+      str += "FOB";
+    }
+    if (this.record.IS_FCA == true) {
+      if (str != "")
+        str += ",";
+      str += "FCA";
+    }
+    if (this.record.IS_CPU == true) {
+      if (str != "")
+        str += ",";
+      str += "CPU";
+    }
+    if (this.record.IS_DDU == true) {
+      if (str != "")
+        str += ",";
+      str += "DDU";
+    }
+    if (this.record.IS_FRT_OTH == true || this.record.freightothers.trim().length > 1) {
+      if (str != "")
+        str += ",";
+      str += "Others :" + this.record.freightothers.replace(":", "");
+    }
+    this.record.pick_freight = str;
 
+    str = "";
+    if (this.record.IS_Commercial == true) {
+      str += "CINV";
+    }
+    if (this.record.IS_CopyLC == true) {
+      if (str != "")
+        str += ",";
+      str += "CLC";
+    }
+    if (this.record.IS_Certificate == true) {
+      if (str != "")
+        str += ",";
+      str += "CORG";
+    }
+    if (this.record.IS_PktList == true) {
+      if (str != "")
+        str += ",";
+      str += "PLST";
+    }
+    if (this.record.IS_ExDeclaration == true) {
+      if (str != "")
+        str += ",";
+      str += "EDEC";
+    }
+    if (this.record.IS_Export_OTH == true || this.record.exportothers.trim().length > 1) {
+      if (str != "")
+        str += ",";
+      str += "OTH :" + this.record.exportothers.replace(":", "");
+    }
+    this.record.pick_export_doc = str;
+  }
   private Allvalid(): boolean {
 
     var bRet = true;
@@ -172,12 +407,56 @@ export class SeaImpCargoPickupComponent implements OnInit {
       alert(this.errorMessage);
       return bRet;
     }
-    // if (this.record.cust_title == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Title cannot be blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+
+    if (this.record.pick_truk_id == "") {
+      this.errorMessage = "Truker Code cannot be empty";
+      alert(this.errorMessage);
+      //  Txt_Truker_Code.TxtLovBox.Focus();
+      return false;
+    }
+    if (this.record.pick_truk_name == "") {
+      this.errorMessage = "Truker Name cannot be empty";
+      alert(this.errorMessage);
+      //    Txt_Truker.Focus();
+      return false;
+    }
+    if (this.record.pick_pickup == "") {
+      this.errorMessage = "Pick-up  cannot be empty";
+      alert(this.errorMessage);
+      //  Txt_Pickup.Focus();
+      return false;
+    }
+    if (this.record.pick_addr1 == "") {
+      this.errorMessage = "Pick-up address cannot be empty";
+      alert(this.errorMessage);
+      //Txt_Pick_Addr1.Focus();
+      return false;
+    }
+    if (this.record.pick_toname == "") {
+      this.errorMessage = "To Name cannot be empty"
+      alert(this.errorMessage);
+      // Txt_To_Name.Focus();
+      return false;
+    }
+    if (this.record.pick_toaddr1 == "") {
+      this.errorMessage = "To address cannot be empty"
+      alert(this.errorMessage);
+      // Txt_To_Addr1.Focus();
+      return false;
+    }
+    if (this.record.pick_danger_goods == '') {
+      this.errorMessage = "Dangerous goods not selected"
+      alert(this.errorMessage);
+      // cmb_Danger_Goods.Focus();
+      return false;
+    }
+    if (this.record.pick_terms_ship == '') {
+      this.errorMessage = "Terms of shipment not selected";
+      alert(this.errorMessage);
+      // cmb_Term_shipment.Focus();
+      return false;
+    }
+
     return bRet;
   }
 
@@ -189,10 +468,47 @@ export class SeaImpCargoPickupComponent implements OnInit {
 
   LovSelected(_Record: SearchTable) {
 
-    // if (_Record.controlname == "AGENT") {
-    //   this.record.mbl_agent_id = _Record.id;
-    //   this.record.mbl_agent_name = _Record.name;
-    // }
+    if (_Record.controlname == "TRUCKER") {
+      this.record.pick_truk_id = _Record.id;
+      this.record.pick_truk_code = _Record.code;
+      this.record.pick_truk_name = _Record.name;
+      if (_Record.col8.toString() != "")
+        this.record.pick_truk_name = _Record.col8.toString();
+      this.record.pick_truk_attn = _Record.col5.toString();
+      this.record.pick_truk_tel = _Record.col6.toString();
+      this.record.pick_truk_fax = _Record.col7.toString();
+      // Dispatcher.BeginInvoke(() => { Txt_Truker.Focus(); });
+
+    }
+
+    if (_Record.controlname == "FROM") {
+
+      this.record.pick_from_id = _Record.id;
+      this.record.pick_from_code = _Record.code;
+      this.record.pick_fromname = _Record.name;
+      if (_Record.col8.toString() != "")
+        this.record.pick_fromname = _Record.col8.toString();
+      this.record.pick_fromaddr1 = _Record.col1.toString();
+      this.record.pick_fromaddr2 = _Record.col2.toString();
+      this.record.pick_fromaddr3 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+      this.record.pick_fromaddr4 = this.gs.GetAttention(_Record.col5.toString())
+      //        Dispatcher.BeginInvoke(() => { Txt_From_Name.Focus(); });
+    }
+
+    if (_Record.controlname == "TO") {
+
+      this.record.pick_to_id = _Record.id;
+      this.record.pick_to_code = _Record.code;
+      this.record.pick_toname = _Record.name;
+      if (_Record.col8.toString() != "")
+        this.record.pick_toname = _Record.col8.toString();
+      this.record.pick_toaddr1 = _Record.col1.toString();
+      this.record.pick_toaddr2 = _Record.col2.toString();
+      this.record.pick_toaddr3 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+      this.record.pick_toaddr4 = this.gs.GetAttention(_Record.col5.toString())
+      //        Dispatcher.BeginInvoke(() => { Txt_to_Name.Focus(); });
+    }
+
   }
 
   onFocusout(field: string) {
@@ -208,31 +524,216 @@ export class SeaImpCargoPickupComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-    //   case 'cust_title': {
-    //     this.record.cust_title = this.record.cust_title.toUpperCase();
-    //     break;
-    //   }
-    //   case 'cust_comm_inv': {
-    //     this.record.cust_comm_inv = this.record.cust_comm_inv.toUpperCase();
-    //     break;
-    //   }
-    //   case 'cust_fumi_cert': {
-    //     this.record.cust_fumi_cert = this.record.cust_fumi_cert.toUpperCase();
-    //     break;
-    //   }
-    //   case 'cust_insp_chrg': {
-    //     this.record.cust_insp_chrg = this.record.cust_insp_chrg.toUpperCase();
-    //     break;
-    //   }
-    //   case 'cust_remarks': {
-    //     this.record.cust_remarks = this.record.cust_remarks.toUpperCase();
-    //     break;
-    //   }
-      //   case 'cntr_pieces': {
-      //     rec.cntr_pieces = this.gs.roundNumber(rec.cntr_pieces, 0);
-      //     break;
-      //   }
+
+      case 'pick_truk_name': {
+        this.record.pick_truk_name = this.record.pick_truk_name.toUpperCase();
+        break;
+      }
+      case 'pick_truk_attn': {
+        this.record.pick_truk_attn = this.record.pick_truk_attn.toUpperCase();
+        break;
+      }
+      case 'pick_truk_tel': {
+        this.record.pick_truk_tel = this.record.pick_truk_tel.toUpperCase();
+        break;
+      }
+      case 'pick_truk_fax': {
+        this.record.pick_truk_fax = this.record.pick_truk_fax.toUpperCase();
+        break;
+      }
+      case 'pick_truk_cc': {
+        this.record.pick_truk_cc = this.record.pick_truk_cc.toUpperCase();
+        break;
+      }
+      case 'pick_pickup': {
+        this.record.pick_pickup = this.record.pick_pickup.toUpperCase();
+        break;
+      }
+      case 'pick_addr1': {
+        this.record.pick_addr1 = this.record.pick_addr1.toUpperCase();
+        break;
+      }
+      case 'pick_addr2': {
+        this.record.pick_addr2 = this.record.pick_addr2.toUpperCase();
+        break;
+      }
+      case 'pick_addr3': {
+        this.record.pick_addr3 = this.record.pick_addr3.toUpperCase();
+        break;
+      }
+      case 'pick_time': {
+        this.record.pick_time = this.record.pick_time.toUpperCase();
+        break;
+      }
+      case 'pick_attn': {
+        this.record.pick_attn = this.record.pick_attn.toUpperCase();
+        break;
+      }
+      case 'pick_tel': {
+        this.record.pick_tel = this.record.pick_tel.toUpperCase();
+        break;
+      }
+      case 'pick_fromname': {
+        this.record.pick_fromname = this.record.pick_fromname.toUpperCase();
+        break;
+      }
+      case 'pick_fromaddr1': {
+        this.record.pick_fromaddr1 = this.record.pick_fromaddr1.toUpperCase();
+        break;
+      }
+      case 'pick_fromaddr2': {
+        this.record.pick_fromaddr2 = this.record.pick_fromaddr2.toUpperCase();
+        break;
+      }
+      case 'pick_fromaddr3': {
+        this.record.pick_fromaddr3 = this.record.pick_fromaddr3.toUpperCase();
+        break;
+      }
+      case 'pick_fromaddr4': {
+        this.record.pick_fromaddr4 = this.record.pick_fromaddr4.toUpperCase();
+        break;
+      }
+      case 'pick_toname': {
+        this.record.pick_toname = this.record.pick_toname.toUpperCase();
+        break;
+      }
+      case 'pick_toaddr1': {
+        this.record.pick_toaddr1 = this.record.pick_toaddr1.toUpperCase();
+        break;
+      }
+      case 'pick_toaddr2': {
+        this.record.pick_toaddr2 = this.record.pick_toaddr2.toUpperCase();
+        break;
+      }
+      case 'pick_toaddr3': {
+        this.record.pick_toaddr3 = this.record.pick_toaddr3.toUpperCase();
+        break;
+      }
+      case 'pick_toaddr4': {
+        this.record.pick_toaddr4 = this.record.pick_toaddr4.toUpperCase();
+        break;
+      }
+      case 'pick_desc1': {
+        this.record.pick_desc1 = this.record.pick_desc1.toUpperCase();
+        break;
+      }
+      case 'pick_tot_piece1': {
+        this.record.pick_tot_piece1 = this.gs.roundNumber(this.record.pick_tot_piece1, 0);
+        break;
+      }
+      case 'pick_uom1': {
+        this.record.pick_uom1 = this.record.pick_uom1.toUpperCase();
+        break;
+      }
+      case 'pick_wt1': {
+        this.record.pick_wt1 = this.gs.roundNumber(this.record.pick_wt1, 3);
+        break;
+      }
+      case 'pick_cbm_cft1': {
+        this.record.pick_cbm_cft1 = this.gs.roundNumber(this.record.pick_cbm_cft1, 3);
+        break;
+      }
+      case 'pick_desc2': {
+        this.record.pick_desc2 = this.record.pick_desc2.toUpperCase();
+        break;
+      }
+      case 'pick_tot_piece2': {
+        this.record.pick_tot_piece2 = this.gs.roundNumber(this.record.pick_tot_piece2, 0);
+        break;
+      }
+      case 'pick_uom2': {
+        this.record.pick_uom2 = this.record.pick_uom2.toUpperCase();
+        break;
+      }
+      case 'pick_wt2': {
+        this.record.pick_wt2 = this.gs.roundNumber(this.record.pick_wt2, 3);
+        break;
+      }
+      case 'pick_cbm_cft2': {
+        this.record.pick_cbm_cft2 = this.gs.roundNumber(this.record.pick_cbm_cft2, 3);
+        break;
+      }
+      case 'pick_desc3': {
+        this.record.pick_desc3 = this.record.pick_desc3.toUpperCase();
+        break;
+      }
+      case 'pick_tot_piece3': {
+        this.record.pick_tot_piece3 = this.gs.roundNumber(this.record.pick_tot_piece3, 0);
+        break;
+      }
+      case 'pick_uom3': {
+        this.record.pick_uom3 = this.record.pick_uom3.toUpperCase();
+        break;
+      }
+      case 'pick_wt3': {
+        this.record.pick_wt3 = this.gs.roundNumber(this.record.pick_wt3, 3);
+        break;
+      }
+      case 'pick_cbm_cft3': {
+        this.record.pick_cbm_cft3 = this.gs.roundNumber(this.record.pick_cbm_cft3, 3);
+        break;
+      }
+      case 'pick_desc4': {
+        this.record.pick_desc4 = this.record.pick_desc4.toUpperCase();
+        break;
+      }
+      case 'pick_tot_piece4': {
+        this.record.pick_tot_piece4 = this.gs.roundNumber(this.record.pick_tot_piece4, 0);
+        break;
+      }
+      case 'pick_uom4': {
+        this.record.pick_uom4 = this.record.pick_uom4.toUpperCase();
+        break;
+      }
+      case 'pick_wt4': {
+        this.record.pick_wt4 = this.gs.roundNumber(this.record.pick_wt4, 3);
+        break;
+      }
+      case 'pick_cbm_cft4': {
+        this.record.pick_cbm_cft4 = this.gs.roundNumber(this.record.pick_cbm_cft4, 3);
+        break;
+      }
+      case 'pick_remark_1': {
+        this.record.pick_remark_1 = this.record.pick_remark_1.toUpperCase();
+        break;
+      }
+      case 'pick_remark_2': {
+        this.record.pick_remark_2 = this.record.pick_remark_2.toUpperCase();
+        break;
+      }
+      case 'pick_remark_3': {
+        this.record.pick_remark_3 = this.record.pick_remark_3.toUpperCase();
+        break;
+      }
+      case 'pick_remark_4': {
+        this.record.pick_remark_4 = this.record.pick_remark_4.toUpperCase();
+        break;
+      }
+      case 'freightothers': {
+        this.record.freightothers = this.record.freightothers.toUpperCase();
+        break;
+      }
+      case 'exportothers': {
+        this.record.exportothers = this.record.exportothers.toUpperCase();
+        break;
+      }
+      case 'pick_vessel': {
+        this.record.pick_vessel = this.record.pick_vessel.toUpperCase();
+        break;
+      }
+      case 'pick_voyage': {
+        this.record.pick_voyage = this.record.pick_voyage.toUpperCase();
+        break;
+      }
     }
+  }
+
+  SelectDeselect() {
+    this.selectdeselect = !this.selectdeselect;
+    for (let rec of this.cntrrecords) {
+      rec.cntr_selected = this.selectdeselect;
+    }
+    this.chkallselected=this.selectdeselect;
   }
 
 }

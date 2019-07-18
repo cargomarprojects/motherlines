@@ -207,6 +207,7 @@ export interface Tbl_cargo_imp_container {
     cntr_tare_weight: number;
     cntr_pick_date: string;
     cntr_return_date: string;
+    cntr_selected:boolean;
 }
 
 export interface Tbl_cargo_imp_desc {
