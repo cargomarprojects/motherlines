@@ -16,6 +16,7 @@ import { SeaImpHouseHeaderComponent } from './house/seaimp-house-header.componen
 import { SeaImpHouseEditComponent } from './house/edit/seaimp-house-edit.component';
 import { SeaImpUsCustomsHoldComponent } from './uscustomshold/seaimp-uscustomshold.component';
 import { SeaImpCargoPickupComponent } from './cargopickup/seaimp-cargopickup.component';
+import { SeaImpRiderPageComponent } from './riderpage/seaimp-riderpage.component';
 @NgModule({
   declarations: [
     SeaImpMasterComponent,
@@ -25,7 +26,8 @@ import { SeaImpCargoPickupComponent } from './cargopickup/seaimp-cargopickup.com
     SeaImpHouseHeaderComponent,
     SeaImpHouseEditComponent,
     SeaImpUsCustomsHoldComponent,
-    SeaImpCargoPickupComponent
+    SeaImpCargoPickupComponent,
+    SeaImpRiderPageComponent
   ],
   imports: [
     SharedModule,    
