@@ -1598,6 +1598,15 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.gs.Naviagete('Silver.SeaImport/CargoPickupPage', JSON.stringify(prm));
         break;
       }
+      case 'RIDERPAGE': {
+        let prm = {
+          menuid: this.gs.MENU_SI_HOUSE,
+          pkid: this.pkid,
+          origin: 'seaimp-House-page',
+        };
+        this.gs.Naviagete('Silver.SeaImport/RiderPage', JSON.stringify(prm));
+        break;
+      }
     }
   }
 
