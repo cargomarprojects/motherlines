@@ -660,7 +660,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Shipper Code can't be blank";
       alert(this.errorMessage);
-     //this.hbl_shipper_code_field.nativeElement.Focus();
+      //this.hbl_shipper_code_field.nativeElement.Focus();
       return bRet;
     }
     if (this.record.hbl_shipper_add1 == '') {
@@ -674,7 +674,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Consignee Code can't be blank";
       alert(this.errorMessage);
-    //  this.hbl_consignee_code_field.nativeElement.focus();
+      //  this.hbl_consignee_code_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_consignee_add1 == '') {
@@ -689,7 +689,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Agent can't be blank";
       alert(this.errorMessage);
-    //  this.hbl_agent_name_field.nativeElement.focus();
+      //  this.hbl_agent_name_field.nativeElement.focus();
       return bRet;
     }
 
@@ -698,7 +698,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         bRet = false;
         this.errorMessage = "Invalid CHB";
         alert(this.errorMessage);
-      //  this.hbl_cha_code_field.nativeElement.focus();
+        //  this.hbl_cha_code_field.nativeElement.focus();
         return bRet;
       }
     }
@@ -805,7 +805,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Handled By cannot be blank";
       alert(this.errorMessage);
-     // this.hbl_handled_name_field.nativeElement.focus();
+      // this.hbl_handled_name_field.nativeElement.focus();
       return bRet;
     }
     /*
@@ -1603,6 +1603,9 @@ export class SeaImpHouseEditComponent implements OnInit {
           menuid: this.gs.MENU_SI_HOUSE,
           pkid: this.pkid,
           origin: 'seaimp-House-page',
+          source: 'SI-DESC-EX',
+          canPrint: false,
+          isLocked: false
         };
         this.gs.Naviagete('Silver.SeaImport/RiderPage', JSON.stringify(prm));
         break;

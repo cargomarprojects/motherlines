@@ -9,8 +9,9 @@ export interface Tbl_cargo_imp_desc {
 
 export interface vm_tbl_cargo_imp_desc {
     mode: string;
-    record: Tbl_cargo_imp_desc;
+    records: Tbl_cargo_imp_desc[]
     pkid:string;
+    source:string;
     userinfo: any;
     filter: any;
 }
