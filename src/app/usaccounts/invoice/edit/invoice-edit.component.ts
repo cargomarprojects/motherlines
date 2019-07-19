@@ -13,8 +13,8 @@ import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_House } from '../../models/tbl_house';
 
 import { invoiceService } from '../../services/invoice.service';
-import { ThrowStmt } from '@angular/compiler';
-import { SeaImpMasterEditComponent } from 'src/app/seaimport/master/edit/seaimp-master-edit.component';
+
+
 
 
 @Component({
@@ -295,15 +295,18 @@ export class InvoiceEditComponent implements OnInit {
     rec.invd_acc_id = this.acc_id;
     rec.invd_acc_code = this.acc_code;
     rec.invd_acc_name = this.acc_code;
-    rec.invd_curr_id = this.gs.base_cur_pkid;
-    rec.invd_curr_code = this.gs.base_cur_code;
-    rec.invd_curr_name = this.gs.base_cur_name;
-    rec.invd_exrate = 1;
+    rec.invd_curr_code = this.record.inv_curr_code;
+    rec.invd_exrate = this.record.inv_exrate;
     rec.invd_qty   = 1;
     rec.invd_vat_per   = 0;
     rec.invd_vat_amt   = 0;
     rec.invd_fvat_amt   = 0;
     rec.invd_frate   = 0;
+    
+    rec.invd_cc_id =this.gs.branch_pkid;
+    rec.invd_cc_code = this.gs.branch_code;
+
+    rec.invd_remarks   = '';
 
     this.records.push(rec);
   }
@@ -362,12 +365,12 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_acc_name = this.gs.SETTINGS_AC_PAYABLE_NAME;
     }
 
-
+    this.record.inv_pkid = this.pkid ;
     this.record.inv_mbl_id = this.mbl_pkid;
     this.record.inv_arap = this.inv_arap;
     this.record.inv_type = this.mbl_type;
     
-    this.record.inv_date = this.gs.defaultValues.today;
+    //this.record.inv_date = this.gs.defaultValues.today;
 
     this.record.inv_arrnotice = 'N';
 
@@ -384,12 +387,9 @@ export class InvoiceEditComponent implements OnInit {
     this.record.inv_agent_drcr = 'N';
     this.record.inv_stage = '';
 
-
     this.record.inv_remarks = '';
     this.record.inv_remarks2 = '';
     this.record.inv_remarks3 = '';
-
-
 
     this.inv_house_id = '';
 
@@ -447,8 +447,16 @@ export class InvoiceEditComponent implements OnInit {
     });
   }
 
+  SaveParent(){
+    this.record.inv_confirmed =   'N';
+    if ( this.isConfirmed )
+      this.record.inv_confirmed =   'Y';
+  }
 
   Save() {
+
+
+    this.SaveParent();
 
     if (!this.Allvalid())
       return;
@@ -473,7 +481,7 @@ export class InvoiceEditComponent implements OnInit {
         }
         else {
           this.record.inv_cfno =  rec.cfno;
-          this.record.inv_no =  rec.inv_no;
+          this.record.inv_no =  rec.docno;
         }
       },
       error => {
@@ -504,25 +512,45 @@ export class InvoiceEditComponent implements OnInit {
     }
 
 
+    if ( this.gs.isBlank(this.record.inv_date)) {
+      this.errorMessage = "Invalid Invoice Date";
+      return false;
+    }
 
-    if (this.record.inv_acc_id == '') {
+
+    if (this.gs.isBlank(this.record.inv_acc_id)) {
       this.errorMessage = "AR or AP  A/c Not Found";
       return false;
     }
 
-    if (this.record.inv_date == '') {
-      this.errorMessage = "Invoice Date Cannot blank";
-      return false;
-    }
 
-
-
-    if (this.record.inv_cust_id == '') {
+    if (this.gs.isBlank(this.record.inv_cust_id)) {
       this.errorMessage = "Invalid Customer";
       return false;
     }
 
-    if (this.record.inv_total <= 0) {
+    if (this.gs.isBlank(this.record.inv_curr_code)) {
+      this.errorMessage = "Invalid Currency";
+      return false;
+    }
+
+
+    if (this.gs.isZero(this.record.inv_exrate)) {
+      this.errorMessage = "Invalid Ex.Rate";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.inv_house_id)) {
+      this.errorMessage = "Invalid Master/House Selection";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.inv_cost_type)) {
+      this.errorMessage = "Invalid Cost Type";
+      return false;
+    }
+
+    if (this.gs.isZero(this.record.inv_total)) {
       this.errorMessage = "Invalid Invoice Total";
       return false;
     }
@@ -549,22 +577,35 @@ export class InvoiceEditComponent implements OnInit {
       iCtr++;
       Rec.invd_order = iCtr;
 
-      if (Rec.invd_desc_id == '' || Rec.invd_desc_name == '') {
+      if ( this.gs.isBlank(Rec.invd_desc_id) ||  this.gs.isBlank(Rec.invd_desc_name)) {
         sErrMsg = 'Invalid Invoice Description in Invoice Detail';
       }
-      if (Rec.invd_acc_id == '') {
+      if ( this.gs.isBlank(Rec.invd_acc_id)) {
         sErrMsg = 'Invalid A/ Code in Invoice Detail';
       }
-      if (Rec.invd_curr_code == '') {
+      if ( this.gs.isBlank(Rec.invd_curr_code)) {
         sErrMsg = 'Invalid Currency in Invoice Detail';
       }
+
       if (this.gs.IS_SINGLE_CURRENCY == false) {
         if (Rec.invd_curr_code != this.record.inv_curr_code) {
           sErrMsg = 'Invalid Currency in Invoice Detail';
         }
       }
-      if (Rec.invd_ftotal == 0 || Rec.invd_total == 0) {
+      if ( this.gs.isZero(Rec.invd_exrate)) {
+        sErrMsg = 'Invalid Ex.Rate in Invoice Detail';
+      }      
+
+      if ( this.gs.isZero(Rec.invd_ftotal) || this.gs.isZero(Rec.invd_total)) {
         sErrMsg = 'Invalid Amount in Invoice Detail';
+      }
+
+      if (this.record.inv_type == "GE" || this.record.inv_type == "PR" || this.record.inv_type == "CM" || this.record.inv_type == "PS" || this.record.inv_type == "FA")
+      {
+          if ( this.gs.isBlank(Rec.invd_cc_id ))
+          {
+               sErrMsg =  "Branch Has to be selected";
+          }
       }
 
     });
@@ -754,6 +795,8 @@ export class InvoiceEditComponent implements OnInit {
     let Row_FVat = 0;
     let Row_Vat = 0;
 
+    rec.invd_frate = nAmt;
+
     if (nExRate <= 0) {
       rec.invd_exrate = 1;
       nExRate = 1;
@@ -766,6 +809,7 @@ export class InvoiceEditComponent implements OnInit {
     }
     nTotal = this.gs.roundNumber(nTotal, 2);
 
+  
     rec.invd_total = nTotal;
 
     if (rec.invd_vat_per > 0) {
@@ -777,6 +821,7 @@ export class InvoiceEditComponent implements OnInit {
 
     rec.invd_vat_amt = Row_Vat;
     rec.invd_fvat_amt = Row_FVat;
+
 
     this.FindGrandTotal();
   }
@@ -829,6 +874,9 @@ export class InvoiceEditComponent implements OnInit {
     }
 
   }
+
+
+ 
 
 
   Close() {
