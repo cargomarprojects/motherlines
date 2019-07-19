@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -7,13 +6,15 @@ import { GlobalService } from '../../../core/services/global.service';
 
 import { SearchTable } from '../../../shared/models/searchtable';
 
-import { Tbl_cargo_invoicem } from '../../models/Tbl_cargo_Invoicem';
+import { Tbl_cargo_invoicem, vm_tbl_cargo_invoicem } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
 import { Tbl_House } from '../../models/tbl_house';
 
 import { invoiceService } from '../../services/invoice.service';
+import { ThrowStmt } from '@angular/compiler';
+import { SeaImpMasterEditComponent } from 'src/app/seaimport/master/edit/seaimp-master-edit.component';
 
 
 @Component({
@@ -35,6 +36,8 @@ export class InvoiceEditComponent implements OnInit {
 
   private inv_arap: string; // AR OR AP
   private arrival_notice: string = '';
+
+  private ArAp_Where_Condition: string = '';
 
   private pkid: string;
   private menuid: string;
@@ -67,9 +70,9 @@ export class InvoiceEditComponent implements OnInit {
   private show_vat: boolean = false;
   private show_confirm: boolean = false;
   private show_invstage: boolean = false;
-  
-  private isVat : boolean = false;
-  private isConfirmed : boolean =true;
+
+  private isVat: boolean = false;
+  private isConfirmed: boolean = true;
 
   private record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
   private records: Tbl_Cargo_Invoiced[] = [];
@@ -99,7 +102,7 @@ export class InvoiceEditComponent implements OnInit {
     this.initControls();
 
     this.SetIncomeExpenseCodesForLineItems();
-    //this.enableAll();
+    this.enableAll();
     this.actionHandler();
   }
 
@@ -142,10 +145,13 @@ export class InvoiceEditComponent implements OnInit {
   }
 
 
+
+
+
   initControls() {
     this.show_vat = (this.gs.VAT_PER > 0) ? true : false;
     this.show_confirm = (this.gs.VAT_PER > 0) ? true : false;
-    this.show_currency = ( this.gs.IS_SINGLE_CURRENCY) ? false  : true ;
+    this.show_currency = (this.gs.IS_SINGLE_CURRENCY) ? false : true;
     this.show_invstage = false;
 
     this.enable_customer_control = true;
@@ -153,15 +159,15 @@ export class InvoiceEditComponent implements OnInit {
   }
 
   enableAll() {
-    
+
     this.enable_customer_control = true;
     this.enable_arap_control = true;
     this.enable_acc_control = true;
-    
+
     this.show_vat = true;
     this.show_confirm = true;
     this.show_currency = true;
-    this.show_invstage= true;
+    this.show_invstage = true;
     this.show_cc_control = true;
 
     this.enable_currency = true;
@@ -282,13 +288,22 @@ export class InvoiceEditComponent implements OnInit {
     this.SetIncomeExpenseCodesForLineItems();
 
     var rec = <Tbl_Cargo_Invoiced>{};
+    rec.invd_pkid = this.gs.getGuid();
+    rec.invd_parent_id   = this.pkid ;
+
+
     rec.invd_acc_id = this.acc_id;
     rec.invd_acc_code = this.acc_code;
     rec.invd_acc_name = this.acc_code;
-    rec.invd_curr_id =  this.gs.base_cur_pkid;
-    rec.invd_curr_code =  this.gs.base_cur_code;
-    rec.invd_curr_name =  this.gs.base_cur_name;
+    rec.invd_curr_id = this.gs.base_cur_pkid;
+    rec.invd_curr_code = this.gs.base_cur_code;
+    rec.invd_curr_name = this.gs.base_cur_name;
     rec.invd_exrate = 1;
+    rec.invd_qty   = 1;
+    rec.invd_vat_per   = 0;
+    rec.invd_vat_amt   = 0;
+    rec.invd_fvat_amt   = 0;
+    rec.invd_frate   = 0;
 
     this.records.push(rec);
   }
@@ -317,6 +332,7 @@ export class InvoiceEditComponent implements OnInit {
 
   actionHandler() {
     this.errorMessage = '';
+
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_invoicem>{};
       this.records = <Tbl_Cargo_Invoiced[]>[];
@@ -332,37 +348,67 @@ export class InvoiceEditComponent implements OnInit {
 
   SetInitialValues() {
 
+
     if (this.inv_arap == "AR") {
       this.record.inv_prefix = this.gs.AR_INVOICE_PREFIX;
       this.record.inv_startingno = this.gs.AR_INVOICE_STARTING_NO;
-
       this.record.inv_acc_id = this.gs.SETTINGS_AC_RECEIVABLE;
-      this.record.inv_acc_code = this.gs.SETTINGS_AC_RECEIVABLE_NAME;
       this.record.inv_acc_name = this.gs.SETTINGS_AC_RECEIVABLE_NAME;
-      this.record.inv_arrnotice = 'N';
-
     }
     else {
-
       this.record.inv_prefix = this.gs.AP_INVOICE_PREFIX;
       this.record.inv_startingno = this.gs.AP_INVOICE_STARTING_NO;
-
       this.record.inv_acc_id = this.gs.SETTINGS_AC_PAYABLE;
-      this.record.inv_acc_code = this.gs.SETTINGS_AC_PAYABLE_NAME;
       this.record.inv_acc_name = this.gs.SETTINGS_AC_PAYABLE_NAME;
-
-      this.record.inv_arrnotice = 'N';
-
     }
 
+
+    this.record.inv_mbl_id = this.mbl_pkid;
+    this.record.inv_arap = this.inv_arap;
+    this.record.inv_type = this.mbl_type;
+    
+    this.record.inv_date = this.gs.defaultValues.today;
+
+    this.record.inv_arrnotice = 'N';
+
+    this.record.inv_curr_code = this.gs.base_cur_code;
+    this.record.inv_exrate = 1;
+
+
+    this.record.inv_vat =0;
+    this.record.inv_fvat =0;
+    this.record.inv_vat_per =0;
+
+    this.record.inv_confirmed ='Y';
+
+    this.record.inv_agent_drcr = 'N';
+    this.record.inv_stage = '';
+
+
+    this.record.inv_remarks = '';
+    this.record.inv_remarks2 = '';
+    this.record.inv_remarks3 = '';
+
+
+
     this.inv_house_id = '';
-  
-    this.isConfirmed =true;
+
+    this.isConfirmed = true;
 
     this.paid_amt = 0;
     this.bal_amt = 0;
 
+    this.InitCommonValues();
+
+  }
+
+
+  InitCommonValues() {
     this.showTitle();
+    if (this.record.inv_arap == 'AR')
+      this.ArAp_Where_Condition = "ACC_IS_ARAP_CODE='R' ";
+    if (this.record.inv_arap == 'AP')
+      this.ArAp_Where_Condition = "ACC_IS_ARAP_CODE='P' ";
 
   }
 
@@ -391,8 +437,7 @@ export class InvoiceEditComponent implements OnInit {
       if (this.record.inv_hbl_id == null || this.record.inv_hbl_id == '')
         this.inv_house_id = this.record.inv_mbl_id;
 
-
-      this.showTitle();
+      this.InitCommonValues();
 
       this.DisplayBalance();
 
@@ -401,6 +446,141 @@ export class InvoiceEditComponent implements OnInit {
       this.errorMessage = this.gs.getError(error);
     });
   }
+
+
+  Save() {
+
+    if (!this.Allvalid())
+      return;
+
+    this.errorMessage = '';
+
+    var SearchData = this.gs.UserInfo;
+
+
+    SearchData.IS_SINGLE_CURRENCY = (this.gs.IS_SINGLE_CURRENCY)  ? "Y" : "N";
+    SearchData.BASE_CURRENCY_CODE = this.gs.base_cur_code;
+
+    const data = <vm_tbl_cargo_invoicem>{};
+    data.record = this.record;
+    data.records = this.records;
+    data.mode = this.mode;
+    data.userinfo = SearchData;
+
+    this.mainservice.Save(data).subscribe(rec => {
+        if ( rec.retvalue ) {
+          this.mode = 'EDIT';
+        }
+        else {
+          this.record.inv_cfno =  rec.cfno;
+          this.record.inv_no =  rec.inv_no;
+        }
+      },
+      error => {
+        this.errorMessage =  this.gs.getError(error);
+      }
+    );
+
+
+  }
+
+  Allvalid() : boolean {
+    let bret = true;
+
+    if (this.record.rec_deleted == 'Y') {
+      this.errorMessage = 'This a deleted Invoice';
+      return false;
+    }
+
+    if (this.isVat) {
+      if (this.gs.VAT_ACC_ID.length <= 0) {
+        this.errorMessage = "Vat A/c Not Defined";
+        return false;
+      }
+      if (this.gs.VAT_INVDESC_ID.length <= 0) {
+        this.errorMessage = "Vat Invoice Description Not Defined";
+        return false;
+      }
+    }
+
+
+
+    if (this.record.inv_acc_id == '') {
+      this.errorMessage = "AR or AP  A/c Not Found";
+      return false;
+    }
+
+    if (this.record.inv_date == '') {
+      this.errorMessage = "Invoice Date Cannot blank";
+      return false;
+    }
+
+
+
+    if (this.record.inv_cust_id == '') {
+      this.errorMessage = "Invalid Customer";
+      return false;
+    }
+
+    if (this.record.inv_total <= 0) {
+      this.errorMessage = "Invalid Invoice Total";
+      return false;
+    }
+
+
+    if (this.gs.IS_SINGLE_CURRENCY == false) {
+      if (this.record.inv_curr_code == this.gs.base_cur_code) {
+        if (this.record.inv_exrate != 1) {
+          this.errorMessage = "Invalid Exchange Rate";
+          return false;
+        }
+      }
+      else {
+        if (this.record.inv_exrate == 0) {
+          this.errorMessage = "Invalid Exchange Rate";
+          return false;
+        }
+      }
+    }
+
+    let sErrMsg = "";
+    let iCtr = 0;
+    this.records.forEach(Rec => {
+      iCtr++;
+      Rec.invd_order = iCtr;
+
+      if (Rec.invd_desc_id == '' || Rec.invd_desc_name == '') {
+        sErrMsg = 'Invalid Invoice Description in Invoice Detail';
+      }
+      if (Rec.invd_acc_id == '') {
+        sErrMsg = 'Invalid A/ Code in Invoice Detail';
+      }
+      if (Rec.invd_curr_code == '') {
+        sErrMsg = 'Invalid Currency in Invoice Detail';
+      }
+      if (this.gs.IS_SINGLE_CURRENCY == false) {
+        if (Rec.invd_curr_code != this.record.inv_curr_code) {
+          sErrMsg = 'Invalid Currency in Invoice Detail';
+        }
+      }
+      if (Rec.invd_ftotal == 0 || Rec.invd_total == 0) {
+        sErrMsg = 'Invalid Amount in Invoice Detail';
+      }
+
+    });
+
+    if (iCtr == 0) {
+      sErrMsg = "No Detail Rows To Save";
+    }
+    if (sErrMsg != '') {
+      this.errorMessage = sErrMsg;
+      return false;
+    }
+
+    return bret;
+  }
+
+
 
   onItmChange() {
     this.HouseList.forEach(rec => {
@@ -431,7 +611,7 @@ export class InvoiceEditComponent implements OnInit {
   DisplayBalance() {
     this.bal_amt = this.record.inv_total - this.paid_amt;
     this.bal_amt = this.gs.roundNumber(this.bal_amt, 2);
-    
+
     if (this.paid_amt != 0) {
       this.enable_customer_control = false;
       this.enable_arap_control = false;
@@ -524,48 +704,48 @@ export class InvoiceEditComponent implements OnInit {
       }
 
       case 'inv_hbl_packages': {
-        this.record.inv_hbl_packages =  this.gs.roundNumber(this.record.inv_hbl_packages,0)
+        this.record.inv_hbl_packages = this.gs.roundNumber(this.record.inv_hbl_packages, 0)
         break;
       }
       case 'inv_hbl_lbs': {
-        this.record.inv_hbl_lbs =  this.gs.roundNumber(this.record.inv_hbl_lbs,3)
+        this.record.inv_hbl_lbs = this.gs.roundNumber(this.record.inv_hbl_lbs, 3)
         break;
       }
       case 'inv_hbl_weight': {
-        this.record.inv_hbl_weight =  this.gs.roundNumber(this.record.inv_hbl_weight,3)
+        this.record.inv_hbl_weight = this.gs.roundNumber(this.record.inv_hbl_weight, 3)
         break;
       }
       case 'inv_hbl_cbm': {
-        this.record.inv_hbl_cbm =  this.gs.roundNumber(this.record.inv_hbl_cbm,3)
+        this.record.inv_hbl_cbm = this.gs.roundNumber(this.record.inv_hbl_cbm, 3)
         break;
-      }      
+      }
       case 'inv_hbl_cft': {
-        this.record.inv_hbl_cft =  this.gs.roundNumber(this.record.inv_hbl_cft,3)
+        this.record.inv_hbl_cft = this.gs.roundNumber(this.record.inv_hbl_cft, 3)
         break;
-      }      
+      }
       case 'invd_ftotal': {
-        rec.invd_ftotal =  this.gs.roundNumber(rec.invd_ftotal,2)        
-        this.findRowTotal( field,rec);
+        rec.invd_ftotal = this.gs.roundNumber(rec.invd_ftotal, 2)
+        this.findRowTotal(field, rec);
         break;
       }
       case 'invd_total': {
-        this.findRowTotal( field,rec);
+        this.findRowTotal(field, rec);
         break;
       }
       case 'invd_exrate': {
-        this.findRowTotal( field,rec);
+        this.findRowTotal(field, rec);
         break;
       }
       case 'invd_vat_per': {
-        this.findRowTotal( field,rec);
+        this.findRowTotal(field, rec);
         break;
       }
 
     }
   }
 
-  findRowTotal( field: string, rec: Tbl_Cargo_Invoiced) {
-    
+  findRowTotal(field: string, rec: Tbl_Cargo_Invoiced) {
+
 
     let nAmt = rec.invd_ftotal;
     let nExRate = rec.invd_exrate;
@@ -574,29 +754,25 @@ export class InvoiceEditComponent implements OnInit {
     let Row_FVat = 0;
     let Row_Vat = 0;
 
-    if (nExRate <= 0)
-    {
-      rec.invd_exrate =1;
+    if (nExRate <= 0) {
+      rec.invd_exrate = 1;
       nExRate = 1;
     }
     nTotal = nAmt * nExRate;
-    if (this.gs.IS_SINGLE_CURRENCY == false)
-    {
-        if (this.record.inv_curr_code != this.gs.base_cur_code && rec.invd_curr_code == this.gs.base_cur_code)
-        {
-            nTotal = nAmt / nExRate;
-        }
+    if (this.gs.IS_SINGLE_CURRENCY == false) {
+      if (this.record.inv_curr_code != this.gs.base_cur_code && rec.invd_curr_code == this.gs.base_cur_code) {
+        nTotal = nAmt / nExRate;
+      }
     }
     nTotal = this.gs.roundNumber(nTotal, 2);
 
     rec.invd_total = nTotal;
 
-    if (rec.invd_vat_per > 0)
-    {
-        Row_FVat = nAmt * rec.invd_vat_per / 100;
-        Row_FVat =  this.gs.roundNumber(Row_FVat, 2);
-        Row_Vat = nTotal * rec.invd_vat_per / 100;
-        Row_Vat =  this.gs.roundNumber( Row_Vat, 2);
+    if (rec.invd_vat_per > 0) {
+      Row_FVat = nAmt * rec.invd_vat_per / 100;
+      Row_FVat = this.gs.roundNumber(Row_FVat, 2);
+      Row_Vat = nTotal * rec.invd_vat_per / 100;
+      Row_Vat = this.gs.roundNumber(Row_Vat, 2);
     }
 
     rec.invd_vat_amt = Row_Vat;
@@ -609,6 +785,7 @@ export class InvoiceEditComponent implements OnInit {
 
     if (_Record.controlname == "CUSTOMER") {
       this.record.inv_cust_id = _Record.id;
+      this.record.inv_cust_code = _Record.code;
       this.record.inv_cust_name = _Record.name;
     }
 
@@ -632,7 +809,7 @@ export class InvoiceEditComponent implements OnInit {
             rec.invd_curr_id = _Record.id;
             rec.invd_curr_code = _Record.code;
             rec.invd_exrate = +_Record.col1;
-            if ( this.gs.IS_SINGLE_CURRENCY)
+            if (this.gs.IS_SINGLE_CURRENCY)
               rec.invd_exrate = 1;
           }
 

@@ -242,9 +242,9 @@ export interface Tbl_PayHistory {
 
 export interface vm_tbl_cargo_invoicem {
     mode: string;
-    record: Tbl_cargo_invoicem[];
-    userinfo: any,
-    filter: any;
+    record: Tbl_cargo_invoicem;
+    records: Tbl_Cargo_Invoiced[];
+    userinfo: any
 }
 
 export interface InvoiceModel {

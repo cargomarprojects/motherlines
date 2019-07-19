@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SearchTable } from '../models/searchtable';
 import { LoginService } from '../../core/services/login.service';
 import { GlobalService } from '../../core/services/global.service';
-import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
+
 
 
 @Component({
