@@ -11,6 +11,7 @@ import { SeaexpMasterComponent } from './master/seaexp-master.component';
 import { SeaExpMasterHeaderComponent } from './master/seaexp-master-header.component';
 
 import { SeaexpMasterEditComponent } from './master/edit/seaexp-master-edit.component';
+import { BookingComponent } from './booking/booking.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SeaexpMasterEditComponent } from './master/edit/seaexp-master-edit.comp
     SeaexpMasterComponent,
     SeaExpMasterHeaderComponent,
     SeaexpMasterEditComponent,
+    BookingComponent,
   ],
   imports: [
     SharedModule,    

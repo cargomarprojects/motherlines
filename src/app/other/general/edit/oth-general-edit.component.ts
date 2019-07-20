@@ -735,4 +735,20 @@ export class OthGeneralEditComponent implements OnInit {
   }
   ShowCntrMovement() {
   }
+
+  BtnNavigation(action: string) {
+
+    switch (action) {
+      case 'TRACKING': {
+        let prm = {
+          menuid: this.gs.MENU_OT_MASTER_INTERNAL_MEMO,
+          pkid: this.pkid,
+          origin: 'other-page',
+        };
+        this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+        break;
+      }
+     
+    }
+  }
 }

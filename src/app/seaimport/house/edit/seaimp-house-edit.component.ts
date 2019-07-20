@@ -1602,12 +1602,23 @@ export class SeaImpHouseEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE,
           pkid: this.pkid,
+          source:'SI-DESC-EX',
+          islocked:false,
           origin: 'seaimp-House-page',
           source: 'SI-DESC-EX',
           canPrint: false,
           isLocked: false
         };
         this.gs.Naviagete('Silver.SeaImport/RiderPage', JSON.stringify(prm));
+        break;
+      }
+      case 'TRACKING': {
+        let prm = {
+          menuid: this.gs.MENU_SI_CONTAINER_MOVEMENT,
+          pkid: this.pkid,
+          origin: 'other-page',
+        };
+        this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
       }
     }

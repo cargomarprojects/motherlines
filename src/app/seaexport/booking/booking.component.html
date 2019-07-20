@@ -1,0 +1,574 @@
+<div class="page-header">
+  <div class="col">
+    <label class="pr-1">{{title}} ({{mode}}) </label>
+    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+  </div>
+
+</div>
+
+<div *ngIf="errorMessage">
+  <div class="alert alert-primary">
+    {{errorMessage}}
+  </div>
+</div>
+
+
+<div class="page-body">
+
+  <div class="row">
+
+
+    <div class="col-md-6">
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Ref#</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
+            [(ngModel)]="record.book_refno" [disabled]="true" maxlength="15" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Booking#</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_no')" [disabled]="true"
+            [(ngModel)]="record.book_no" [disabled]="true" maxlength="15" />
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Date</label>
+        <div class="col-8">
+          <app-date [inputdate]="record.book_date" (ValueChanged)="sdate=$event"></app-date>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Shipper</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+            [displaydata]="record.book_shipper_code" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Name</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_name')"
+            [(ngModel)]="record.book_shipper_name" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Address</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add1')"
+            [(ngModel)]="record.book_shipper_add1" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add2')"
+            [(ngModel)]="record.book_shipper_add2" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
+            [(ngModel)]="record.book_shipper_add3" maxlength="60" />
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add4')"
+            [(ngModel)]="record.book_shipper_add4" maxlength="120" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add5')"
+            [(ngModel)]="record.book_shipper_add5" maxlength="120" />
+        </div>
+      </div>
+
+
+
+    </div>
+    <div class="col-md-6">
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Forwarder</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'FORWARDER'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+            [displaydata]="record.book_forwarder_name" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Trucker</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'TRUCKER'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+            [displaydata]="record.book_trucker_name" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Vessel</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_vessel')"
+            [(ngModel)]="record.book_vessel" maxlength="60" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Voyage</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_voyage')"
+            [(ngModel)]="record.book_voyage" maxlength="30" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Shippers Ref.</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_exp_refno')"
+            [(ngModel)]="record.book_exp_refno" maxlength="30" />
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Commodity</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_commodity')"
+            [(ngModel)]="record.book_commodity" maxlength="100" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">No.Of.Cntr</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_cntrs')"
+            [(ngModel)]="record.book_cntrs" maxlength="100" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">No.Of.Pkgs</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_package')"
+            [(ngModel)]="record.book_package" maxlength="100" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Weight</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_weight')"
+            [(ngModel)]="record.book_weight" maxlength="100" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"> Measurement </label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_cbm')"
+            [(ngModel)]="record.book_cbm" maxlength="100" />
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="page-body">
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Place.Receipt</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
+            [(ngModel)]="record.book_por_place" maxlength="60" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Pickup Time</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_pickuptime')"
+            [(ngModel)]="record.book_pickuptime" maxlength="60" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+
+        <label class="col-4 col-form-label col-form-label-sm">Pol</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'POL'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
+            [displaydata]="record.book_pol_name" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+
+        <label class="col-4 col-form-label col-form-label-sm">Pol-Etd</label>
+        <div class="col-8">
+          <app-date [inputdate]="record.book_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+
+        <label class="col-4 col-form-label col-form-label-sm">Pod</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'POD'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
+            [displaydata]="record.book_pod_name" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+
+        <label class="col-4 col-form-label col-form-label-sm">Pod-Eta</label>
+        <div class="col-8">
+          <app-date [inputdate]="record.book_pol_eta" (ValueChanged)="sdate=$event"></app-date>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="page-body">
+
+
+  <div class="row">
+
+    <div class="col-md-6">
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Place.Delivery</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
+            [(ngModel)]="record.book_pod_place" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Inland Routing</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
+            [(ngModel)]="record.book_routing1" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
+            [(ngModel)]="record.book_routing2" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
+            [(ngModel)]="record.book_routing3" maxlength="60" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Cargo Cut-Off</label>
+        <div class="col-3">
+          <app-date [inputdate]="record.book_cutoff" (ValueChanged)="sdate=$event"></app-date>
+        </div>
+        <label class="col-2 col-form-label col-form-label-sm">Time</label>
+        <div class="col-3">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
+            [(ngModel)]="record.book_cuttime" maxlength="10" />
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Doc Cut-Off</label>
+        <div class="col-3">
+          <app-date [inputdate]="record.book_doc_cutoff" (ValueChanged)="sdate=$event"></app-date>
+        </div>
+        <label class="col-2 col-form-label col-form-label-sm">Time</label>
+        <div class="col-3">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
+            [(ngModel)]="record.book_doc_cuttime" maxlength="10" />
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="page-body">
+  <div class="row">
+
+    <div class="col-md-6">
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Cntr Pickup At</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'PICKUPAT'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+            [displaydata]="record.book_cntr_pickupat_code" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_name')"
+            [(ngModel)]="record.book_cntr_pickupat1" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add1')"
+            [(ngModel)]="record.book_cntr_pickupat2" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add2')"
+            [(ngModel)]="record.book_cntr_pickupat3" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
+            [(ngModel)]="record.book_cntr_pickupat4" maxlength="60" />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Loading Location</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'LOCATION'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+            [displaydata]="record.book_location_code" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_name')"
+            [(ngModel)]="record.book_location_name" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add1')"
+            [(ngModel)]="record.book_location_addr1" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add2')"
+            [(ngModel)]="record.book_location_addr2" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
+            [(ngModel)]="record.book_location_addr3" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
+            [(ngModel)]="record.book_location_addr4" maxlength="60" />
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>
+
+
+
+<div class="page-body">
+  <div class="row">
+
+    <div class="col-md-6">
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Cntr Return At</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'RETURNAT'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+            [displaydata]="record.book_cntr_returnat_code" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_name')"
+            [(ngModel)]="record.book_cntr_returnat1" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add1')"
+            [(ngModel)]="record.book_cntr_returnat2" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add2')"
+            [(ngModel)]="record.book_cntr_returnat3" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
+            [(ngModel)]="record.book_cntr_returnat4" maxlength="60" />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Remarks</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
+            [(ngModel)]="record.book_remarks1" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
+            [(ngModel)]="record.book_remarks2" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
+            [(ngModel)]="record.book_remarks3" maxlength="60" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Handled.By</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+            [displaycolumn]="'NAME'" [displaydata]="record.book_handled_name" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Sales.Rep</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+            [displaycolumn]="'NAME'" [displaydata]="record.book_salesman_name" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+<div class="page-footer">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}} /
+    {{record.rec_created_date}} </label>
+</div>
