@@ -484,9 +484,20 @@ export class SeaexpMasterEditComponent implements OnInit {
   BtnNavigation(action: string) {
 
     switch (action) {
+
+      case 'BOOKING': {
+        let prm = {
+          menuid: this.gs.MENU_SE_BOOKING,
+          pkid:  this.pkid,
+          origin: 'seaexp-master-page',
+        };
+        this.gs.Naviagete('Silver.SeaExport.Trans/BookingPage', JSON.stringify(prm));        
+        break;
+      }
+
       case 'ARAP': {
         let prm = {
-          menuid: this.gs.MENU_SI_MASTER_ARAP,
+          menuid: this.gs.MENU_SE_MASTER_ARAP,
           mbl_pkid:  this.pkid,
           mbl_refno : this.record.mbl_refno,
           mbl_type: 'OE',
@@ -495,6 +506,7 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
         break;
       }
+
      
     }
 

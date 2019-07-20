@@ -555,6 +555,7 @@ export class GlobalService {
       return false;
   }
 
+
   public canSave(menuid: string, mode: string): boolean {
     var bret: boolean = false;
     var itm = this.MenuList.find(f => f.menu_pkid == menuid);
