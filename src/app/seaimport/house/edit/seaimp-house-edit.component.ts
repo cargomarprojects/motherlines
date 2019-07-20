@@ -1605,9 +1605,7 @@ export class SeaImpHouseEditComponent implements OnInit {
           source:'SI-DESC-EX',
           islocked:false,
           origin: 'seaimp-House-page',
-          source: 'SI-DESC-EX',
-          canPrint: false,
-          isLocked: false
+          canPrint: false
         };
         this.gs.Naviagete('Silver.SeaImport/RiderPage', JSON.stringify(prm));
         break;
