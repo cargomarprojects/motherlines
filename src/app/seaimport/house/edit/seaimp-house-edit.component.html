@@ -1054,8 +1054,6 @@
             </div>
           </div>
 
-
-
         </div>
 
       </div>
@@ -1094,7 +1092,7 @@
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">House Internal Memo</button>
+          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('TRACKING')">House Internal Memo</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
