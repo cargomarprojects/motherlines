@@ -11,6 +11,7 @@ export interface vm_tbl_cargo_imp_desc {
     mode: string;
     record: Tbl_cargo_imp_desc;
     pkid:string;
+    source:string;
     userinfo: any;
     filter: any;
 }

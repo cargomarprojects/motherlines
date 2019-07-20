@@ -22,6 +22,7 @@ export class SeaImpRiderPageComponent implements OnInit {
   // 15-07-2019 Created By Ajith  
 
   private pkid: string;
+  private source: string;
   private menuid: string;
   private mode: string;
   private title: string = '';
@@ -42,6 +43,7 @@ export class SeaImpRiderPageComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.source = options.source;
     this.mode = 'ADD';
     this.initPage();
     this.actionHandler();
@@ -64,14 +66,16 @@ export class SeaImpRiderPageComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
-    if (this.mode == 'ADD') {
-      this.record = <Tbl_cargo_imp_desc>{};
-      this.init();
-    }
-    if (this.mode == 'EDIT') {
-      this.GetRecord();
-    }
+    // this.errorMessage = '';
+    // if (this.mode == 'ADD') {
+    //   this.record = <Tbl_cargo_imp_desc>{};
+    //   this.init();
+    // }
+    // if (this.mode == 'EDIT') {
+    //   this.GetRecord();
+    // }
+
+    this.GetRecord();
   }
 
   init() {
@@ -86,16 +90,10 @@ export class SeaImpRiderPageComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
+    SearchData.source = this.source;
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
-        this.mode = response.mode;
-        if (this.mode == 'ADD')
-          this.actionHandler();
-        else {
-
-
-          this.CheckData();
-        }
+        this.descrecords = response.records
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -123,18 +121,14 @@ export class SeaImpRiderPageComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
-    // this.record.cust_comm_inv_yn = (this.record.IS_comm_inv == true) ? "Y" : "N";
-    // this.record.cust_fumi_cert_yn = (this.record.IS_fumi_cert == true) ? "Y" : "N";
-    // this.record.cust_insp_chrg_yn = (this.record.IS_insp_chrg == true) ? "Y" : "N";
-
     const saveRecord = <vm_tbl_cargo_imp_desc>{};
     saveRecord.record = this.record;
     saveRecord.pkid = this.pkid;
+    saveRecord.source = this.source;
     saveRecord.userinfo = this.gs.UserInfo;
 
     this.mainService.Save(saveRecord)
       .subscribe(response => {
-        this.mode = response.mode;
         if (response.retvalue == false) {
           this.errorMessage = response.error;
           alert(this.errorMessage);
@@ -153,18 +147,13 @@ export class SeaImpRiderPageComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
-    // if (this.record.cust_parentid == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid ID";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
-    // if (this.record.cust_title == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Title cannot be blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.pkid == "") {
+      bRet = false;
+      this.errorMessage = "Invalid ID";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
     return bRet;
   }
 
@@ -174,51 +163,18 @@ export class SeaImpRiderPageComponent implements OnInit {
   }
 
 
-  LovSelected(_Record: SearchTable) {
 
-    // if (_Record.controlname == "AGENT") {
-    //   this.record.mbl_agent_id = _Record.id;
-    //   this.record.mbl_agent_name = _Record.name;
-    // }
-  }
 
-  onFocusout(field: string) {
-
+  onBlur(field: string, _rec: Tbl_cargo_imp_desc = null) {
     switch (field) {
-      //   case 'mbl_no': {
-      //     this.IsBLDupliation('MBL', this.record.mbl_no);
-      //     break;
-      //   }
-    }
-  }
-
-
-  onBlur(field: string) {
-    switch (field) {
-      // case 'cust_title': {
-      //   this.record.cust_title = this.record.cust_title.toUpperCase();
-      //   break;
-      // }
-      // case 'cust_comm_inv': {
-      //   this.record.cust_comm_inv = this.record.cust_comm_inv.toUpperCase();
-      //   break;
-      // }
-      // case 'cust_fumi_cert': {
-      //   this.record.cust_fumi_cert = this.record.cust_fumi_cert.toUpperCase();
-      //   break;
-      // }
-      // case 'cust_insp_chrg': {
-      //   this.record.cust_insp_chrg = this.record.cust_insp_chrg.toUpperCase();
-      //   break;
-      // }
-      // case 'cust_remarks': {
-      //   this.record.cust_remarks = this.record.cust_remarks.toUpperCase();
-      //   break;
-      // }
-      //   case 'cntr_pieces': {
-      //     rec.cntr_pieces = this.gs.roundNumber(rec.cntr_pieces, 0);
-      //     break;
-      //   }
+      case 'cargo_marks': {
+        _rec.cargo_marks = _rec.cargo_marks.toUpperCase();
+        break;
+      }
+      case 'cargo_description': {
+        _rec.cargo_description = _rec.cargo_description.toUpperCase();
+        break;
+      }
     }
   }
 
@@ -228,10 +184,19 @@ export class SeaImpRiderPageComponent implements OnInit {
     rec.parentid = this.pkid;
     rec.cargo_marks = "",
       rec.cargo_description = "",
-      rec.cargo_ctr = this.descrecords.length + 1;
+      rec.cargo_ctr = this.findNextCtr();
 
     this.descrecords.push(rec);
   }
+
+  findNextCtr() {
+    let max: number = 16;
+    this.descrecords.forEach(Rec => {
+      max = Rec.cargo_ctr > max ? Rec.cargo_ctr : max;
+    })
+    return max + 1;
+  }
+
 
   SetRowIndex(_indx: number) {
     this.selectedRowIndex = _indx;
@@ -247,30 +212,10 @@ export class SeaImpRiderPageComponent implements OnInit {
     if (thistype == 'DOWN')
       _newindx++;
 
-    if (_newindx>=0 && _newindx < this.descrecords.length) {
+    if (_newindx >= 0 && _newindx < this.descrecords.length) {
       this.swaparritem(this.selectedRowIndex, _newindx);
       this.selectedRowIndex = _newindx;
     }
-
-
-
-    // Tbl_cargo_imp_desc mRec = (Tbl_cargo_imp_desc)Grid_Desc.SelectedItem;
-    // Tbl_cargo_imp_desc NewRec = new Tbl_cargo_imp_desc();
-    // let iIndex = DetailList_Desc.IndexOf(mRec);
-    // if (thistype == "DOWN")
-    //     iIndex++;
-    // else
-    //     iIndex--;
-    // if (iIndex < 0)
-    //     return;
-    // if (iIndex  == DetailList_Desc.Count)
-    //     return;
-    // DetailList_Desc.Remove(mRec);
-    // DetailList_Desc.Insert(iIndex, mRec);
-    // Grid_Desc.SelectedItem = mRec;
-
-    // Grid_Desc.BeginEdit();
-    // Grid_Desc.Focus(); 
   }
 
 
@@ -280,8 +225,8 @@ export class SeaImpRiderPageComponent implements OnInit {
     this.descrecords[slot1] = tempVal;
   }
 
-  RemoveRow(_indx:number)
-  {
-    this.descrecords.splice(_indx);
+  RemoveRow(_rec: Tbl_cargo_imp_desc) {
+    this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   }
+
 }
