@@ -42,12 +42,7 @@ export class SeaImpRiderPageComponent implements OnInit {
     this.pkid = options.pkid;
     this.source = options.source;
     this.menuid = options.menuid;
-<<<<<<< HEAD
     this.mode = 'EDIT';
-=======
-    this.source = options.source;
-    this.mode = 'ADD';
->>>>>>> f8c861de35421f87c4199198d5d787a00fcd8787
     this.initPage();
     this.actionHandler();
   }
@@ -65,18 +60,6 @@ export class SeaImpRiderPageComponent implements OnInit {
 
 
   actionHandler() {
-<<<<<<< HEAD
-=======
-    // this.errorMessage = '';
-    // if (this.mode == 'ADD') {
-    //   this.record = <Tbl_cargo_imp_desc>{};
-    //   this.init();
-    // }
-    // if (this.mode == 'EDIT') {
-    //   this.GetRecord();
-    // }
-
->>>>>>> f8c861de35421f87c4199198d5d787a00fcd8787
     this.GetRecord();
   }
 
@@ -88,12 +71,8 @@ export class SeaImpRiderPageComponent implements OnInit {
     SearchData.source = this.source;
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
-<<<<<<< HEAD
 
         this.descrecords = response.records;
-=======
-        this.descrecords = response.records
->>>>>>> f8c861de35421f87c4199198d5d787a00fcd8787
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -153,16 +132,12 @@ export class SeaImpRiderPageComponent implements OnInit {
       alert(this.errorMessage);
       return bRet;
     }
-<<<<<<< HEAD
     // if (this.record.cust_title == "") {
     //   bRet = false;
     //   this.errorMessage = "Title cannot be blank";
     //   alert(this.errorMessage);
     //   return bRet;
     // }
-=======
-
->>>>>>> f8c861de35421f87c4199198d5d787a00fcd8787
     return bRet;
   }
 
@@ -172,11 +147,6 @@ export class SeaImpRiderPageComponent implements OnInit {
   }
 
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> f8c861de35421f87c4199198d5d787a00fcd8787
   onBlur(field: string, _rec: Tbl_cargo_imp_desc = null) {
     switch (field) {
       case 'cargo_marks': {
@@ -196,10 +166,6 @@ export class SeaImpRiderPageComponent implements OnInit {
     rec.cargo_marks = "",
       rec.cargo_description = "",
       rec.cargo_ctr = this.findNextCtr();
-<<<<<<< HEAD
-=======
-
->>>>>>> f8c861de35421f87c4199198d5d787a00fcd8787
     this.descrecords.push(rec);
   }
 
@@ -230,10 +196,6 @@ export class SeaImpRiderPageComponent implements OnInit {
       this.swaparritem(this.selectedRowIndex, _newindx);
       this.selectedRowIndex = _newindx;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> f8c861de35421f87c4199198d5d787a00fcd8787
   }
 
 
@@ -243,23 +205,10 @@ export class SeaImpRiderPageComponent implements OnInit {
     this.descrecords[slot1] = tempVal;
   }
 
-<<<<<<< HEAD
-
   RemoveRow(_rec: Tbl_cargo_imp_desc) {
     this.selectedRowIndex = -1;
     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   }
-
-  findNextCtr() {
-    let max = 16;
-    for (let i = 0; i < this.descrecords.length; i++) {
-      max = (this.descrecords[i].cargo_ctr > max) ? this.descrecords[i].cargo_ctr : max;
-    }
-    return max + 1;
-=======
-  RemoveRow(_rec: Tbl_cargo_imp_desc) {
-    this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
->>>>>>> f8c861de35421f87c4199198d5d787a00fcd8787
-  }
-
+ 
+  
 }
