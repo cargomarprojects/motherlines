@@ -1610,11 +1610,16 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.gs.Naviagete('Silver.SeaImport/RiderPage', JSON.stringify(prm));
         break;
       }
-      case 'TRACKING': {
+      case 'SHIPMOVEMENT': {
         let prm = {
-          menuid: this.gs.MENU_SI_CONTAINER_MOVEMENT,
+          menuid: this.gs.MENU_SI_SHIPMENT_MOVEMENT,
+          refno:"REF : " + this.record.mbl_refno + "  HBL : " + this.record.hbl_houseno,
           pkid: this.pkid,
-          origin: 'other-page',
+          origin: 'seaimp-House-page',
+          oprgrp:'SEA IMPORT',
+          parentType:'SEAIMP-SHIP',
+          paramType:'SHIP-MOVE-STATUS',
+          hideTracking:'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;

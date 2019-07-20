@@ -16,13 +16,17 @@ import { strictEqual } from 'assert';
 export class OthTrackingPageComponent implements OnInit {
 
   //@ViewChild('mbl_no') mbl_no_field: ElementRef;
-  trackrecords: Tbl_Cargo_Tracking_Status [] = [];
+  trackrecords: Tbl_Cargo_Tracking_Status[] = [];
 
   // 15-07-2019 Created By Ajith  
 
   private pkid: string;
-  private source: string;
+  private parentType: string;
+  private paramType: string;
   private menuid: string;
+  private refno: string;
+  private hideTracking: string = 'N';
+  private oprgrp: string = '';
   private mode: string;
   private title: string = '';
   private isAdmin: boolean;
@@ -42,8 +46,12 @@ export class OthTrackingPageComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
-  //  this.source = options.source;
-   // this.mode = 'ADD';
+    this.parentType = options.parentType;
+    this.paramType = options.paramType;
+    this.hideTracking = options.hideTracking;
+    this.oprgrp = options.oprgrp;
+    this.refno = options.refno;
+    // this.mode = 'ADD';
     this.initPage();
     this.actionHandler();
   }
@@ -90,10 +98,12 @@ export class OthTrackingPageComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
-    SearchData.source = this.source;
+    SearchData.parentType = this.parentType;
+    SearchData.paramType = this.paramType;
+
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
-        this.trackrecords = response.records
+        this.trackrecords = <Tbl_Cargo_Tracking_Status[]>response.records;
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -124,8 +134,8 @@ export class OthTrackingPageComponent implements OnInit {
     const saveRecord = <vm_Tbl_Cargo_Tracking_Status>{};
     saveRecord.record = this.trackrecords;
     saveRecord.pkid = this.pkid;
-   // saveRecord.source = this.source;
-  //  saveRecord.userinfo = this.gs.UserInfo;
+    // saveRecord.source = this.source;
+    //  saveRecord.userinfo = this.gs.UserInfo;
 
     this.mainService.Save(saveRecord)
       .subscribe(response => {
@@ -165,14 +175,14 @@ export class OthTrackingPageComponent implements OnInit {
 
   onBlur(field: string, _rec: Tbl_Cargo_Tracking_Status = null) {
     switch (field) {
-    //   case 'cargo_marks': {
-    //     _rec.cargo_marks = _rec.cargo_marks.toUpperCase();
-    //     break;
-    //   }
-    //   case 'cargo_description': {
-    //     _rec.cargo_description = _rec.cargo_description.toUpperCase();
-    //     break;
-    //   }
+      //   case 'cargo_marks': {
+      //     _rec.cargo_marks = _rec.cargo_marks.toUpperCase();
+      //     break;
+      //   }
+      //   case 'cargo_description': {
+      //     _rec.cargo_description = _rec.cargo_description.toUpperCase();
+      //     break;
+      //   }
     }
   }
 
@@ -186,13 +196,13 @@ export class OthTrackingPageComponent implements OnInit {
     // this.descrecords.push(rec);
   }
 
-//   findNextCtr() {
-//     let max: number = 16;
-//     this.trackrecords.forEach(Rec => {
-//       max = Rec.cargo_ctr > max ? Rec.cargo_ctr : max;
-//     })
-//     return max + 1;
-//   }
+  //   findNextCtr() {
+  //     let max: number = 16;
+  //     this.trackrecords.forEach(Rec => {
+  //       max = Rec.cargo_ctr > max ? Rec.cargo_ctr : max;
+  //     })
+  //     return max + 1;
+  //   }
 
 
   SetRowIndex(_indx: number) {
@@ -201,8 +211,8 @@ export class OthTrackingPageComponent implements OnInit {
 
 
 
-//   RemoveRow(_rec: Tbl_cargo_imp_desc) {
-//     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
-//   }
+  //   RemoveRow(_rec: Tbl_cargo_imp_desc) {
+  //     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
+  //   }
 
 }

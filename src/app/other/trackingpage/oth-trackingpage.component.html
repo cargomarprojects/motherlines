@@ -23,8 +23,8 @@
                                 <label class="col-2 col-form-label col-form-label-sm">Ref No</label>
                                 <div class="col-10">
                                     <input disabled class="form-control form-control-sm" type="text"
-                                        [(ngModel)]="rec.cargo_marks" maxlength="500"
-                                        (blur)="onBlur('cargo_marks',null)" />
+                                        [(ngModel)]="refno" maxlength="500"
+                                        (blur)="onBlur('refno',null)" />
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="page-body-tbody">
-                                            <tr *ngFor="let rec of descrecords; let i = index"
+                                            <tr *ngFor="let rec of trackrecords; let i = index"
                                                 [class.active]="i == selectedRowIndex" (click)="SetRowIndex(i)">
                                                 <td>{{rec.param_name1}} </td>
                                                 <td class="p-0"><input class="form-control form-control-sm" type="text"
@@ -83,8 +83,3 @@
     </div>
 </div>
 
-<div>
-    <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}}
-        /
-        {{record.rec_created_date}} </label>
-</div>
