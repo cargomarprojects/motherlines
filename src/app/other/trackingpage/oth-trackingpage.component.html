@@ -100,14 +100,14 @@
                             <div class="form-group row">
                                 <label class="col-1 col-form-label col-form-label-sm">Date</label>
                                 <div class="col-9">
-                                    <app-date [inputdate]="refno" (ValueChanged)="refno=$event">
+                                    <app-date [inputdate]="trackmemorecord.date" (ValueChanged)="trackmemorecord.date=$event">
                                     </app-date>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-1 col-form-label col-form-label-sm">Memo</label>
+                                <label class="col-1 col-form-label col-form-label-sm">*Memo</label>
                                 <div class="col-9">
-                                    <select class="form-control form-control-sm" [(ngModel)]="refno">
+                                    <select class="form-control form-control-sm" [(ngModel)]="cmbNotes" (change)="OnChange('cmbNotes')">
                                         <option [value]="'YES'">YES</option>
                                         <option [value]="'NO'">NO</option>
                                       </select>
@@ -116,16 +116,16 @@
                             <div class="form-group row">
                                 <label class="col-1 col-form-label col-form-label-sm"></label>
                                 <div class="col-9">
-                                    <textarea rows="5" class="form-control form-control-sm" [(ngModel)]="refno" (blur)="onBlur('cust_remarks')" required maxlength="500"></textarea>  
+                                    <textarea rows="5" class="form-control form-control-sm" [(ngModel)]="trackmemorecord.remarks" (blur)="onBlur('remarks')" required maxlength="500"></textarea>  
                                 </div>
                             </div>
                             <div class="form-group row">
-                                    <label class="offset-1 col-9 col-form-label col-form-label-sm">Memo (Press ENTER Key to Add a New Line.)</label>
+                                    <label class="offset-1 col-9 col-form-label col-form-label-sm">*Memo (Press ENTER Key to Add a New Line.)</label>
                                 <div class="col-1">
-                                    <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
+                                    <button class="btn btn-primary btn-sm mr-1" (click)="SaveMemo()">Save</button>
                                 </div>
                                 <div class="col-1">
-                                    <button class="btn btn-primary btn-sm mr-1" (click)="Save()">New</button>
+                                    <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
                                 </div>
                             </div>
                         </div>
@@ -145,29 +145,18 @@
                                                 <th>CREATED-BY</th>
                                                 <th>DATE </th>
                                                 <th>MEMO</th>
-                                                <th>ATTACHMENTS</th>
-                                                <th>REMOVE</th>
+                                                <th style="text-align:center">ATTACHMENTS</th>
+                                                <th style="text-align:center">REMOVE</th>
                                             </tr>
                                         </thead>
                                         <tbody class="page-body-tbody">
-                                            <tr *ngFor="let rec of trackrecords; let i = index"
+                                            <tr *ngFor="let rec of trackmemorecords; let i = index"
                                                 [class.active]="i == selectedRowIndex" (click)="SetRowIndex(i)">
-                                                <td>{{rec.param_name1}} </td>
-                                                <td class="p-0"><input class="form-control form-control-sm" type="text"
-                                                        [(ngModel)]="rec.remarks" maxlength="100"
-                                                        (blur)="onBlur('remarks',rec)" /></td>
-                                                <td class="p-0">
-                                                    <app-date [inputdate]="rec.date" (ValueChanged)="rec.date=$event">
-                                                    </app-date>
-                                                </td>
-                                                <td class="p-0">
-                                                        <app-date [inputdate]="rec.date" (ValueChanged)="rec.date=$event">
-                                                        </app-date>
-                                                    </td>
-                                                    <td class="p-0">
-                                                            <app-date [inputdate]="rec.date" (ValueChanged)="rec.date=$event">
-                                                            </app-date>
-                                                        </td>
+                                                <td class="p-0">{{rec.rec_created_by}} </td>
+                                                <td class="p-0">{{rec.date}}</td>
+                                                <td class="p-0" (click)="EditRow(rec)" >{{rec.remarks}}</td>
+                                                <td align='center'><i class="fa fa-paperclip  fa-lg pointer" style="font-size:24px;color:black" aria-hidden="true" (click)="AttachRow(rec)" ></i></td>                                    
+                                                <td align='center'><i class="fa fa-trash  fa-lg pointer" aria-hidden="true" (click)="RemoveRow(rec)" ></i></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -182,14 +171,3 @@
     </div>
 </div>
 
-<div class="page-footer">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group row">
-                <div class="col-8">
-                    <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

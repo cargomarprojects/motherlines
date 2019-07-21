@@ -8,6 +8,8 @@ import { User_Menu } from '../../core/models/menum';
 import { Tbl_Cargo_Tracking_Status, vm_Tbl_Cargo_Tracking_Status } from '../models/tbl_cargo_tracking_status';
 import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { ThrowStmt } from '@angular/compiler';
+import { Recoverable } from 'repl';
 
 @Component({
   selector: 'app-oth-trackingpage',
@@ -17,7 +19,8 @@ export class OthTrackingPageComponent implements OnInit {
 
   //@ViewChild('mbl_no') mbl_no_field: ElementRef;
   trackrecords: Tbl_Cargo_Tracking_Status[] = [];
-
+  trackmemorecord: Tbl_Cargo_Tracking_Status = <Tbl_Cargo_Tracking_Status>{};
+  trackmemorecords: Tbl_Cargo_Tracking_Status[] = [];
   // 15-07-2019 Created By Ajith  
 
   private pkid: string;
@@ -33,7 +36,10 @@ export class OthTrackingPageComponent implements OnInit {
   private errorMessage: string;
   private selectedRowIndex: number = -1;
   IsLocked: boolean = false;
-
+  private Memo_Mode: string = "ADD";
+  private Memo_Id: string = "";
+  private lblSaveMemo: string = "Save";
+  private cmbNotes:string="";
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -67,10 +73,10 @@ export class OthTrackingPageComponent implements OnInit {
 
   }
 
-  NewRecord() {
-    this.mode = 'ADD'
-    this.actionHandler();
-  }
+  // NewRecord() {
+  //   this.mode = 'ADD'
+  //   this.actionHandler();
+  // }
 
   actionHandler() {
     // this.errorMessage = '';
@@ -171,7 +177,11 @@ export class OthTrackingPageComponent implements OnInit {
   Close() {
     this.location.back();
   }
-
+  OnChange(field: string) {
+    if (field == 'cmbNotes') {
+      this.trackmemorecord.remarks=this.cmbNotes;
+    }
+  }
 
   onBlur(field: string, _rec: Tbl_Cargo_Tracking_Status = null) {
     switch (field) {
@@ -209,10 +219,65 @@ export class OthTrackingPageComponent implements OnInit {
     this.selectedRowIndex = _indx;
   }
 
+  AttachRow(_rec: Tbl_Cargo_Tracking_Status) {
 
+  }
+  RemoveRow(_rec: Tbl_Cargo_Tracking_Status) {
 
+  }
   //   RemoveRow(_rec: Tbl_cargo_imp_desc) {
   //     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   //   }
 
+  private NewRecord() {
+    this.Memo_Mode = "ADD";
+    this.Memo_Id = this.gs.getGuid();
+    this.trackmemorecord = <Tbl_Cargo_Tracking_Status>{};
+    this.trackmemorecord.date = this.gs.defaultValues.today;
+    this.trackmemorecord.remarks = ''
+    this.lblSaveMemo = "Save";
+    //Txtmemo.Focus();
+  }
+  private EditRow(_rec: Tbl_Cargo_Tracking_Status) {
+    //Dt_Date.IsEnabled = false;
+    this.Memo_Id = _rec.param_id.toString();
+    this.Memo_Mode = "EDIT";
+    this.trackmemorecord.date = _rec.date;
+    this.trackmemorecord.remarks = _rec.remarks.toString();
+  }
+
+  SaveMemo(){
+    const saveRecord = <vm_Tbl_Cargo_Tracking_Status>{};
+    saveRecord.memorecord = this.trackmemorecord;
+    saveRecord.pkid = this.pkid;
+    // saveRecord.source = this.source;
+    //  saveRecord.userinfo = this.gs.UserInfo;
+
+    this.mainService.SaveMemo(saveRecord)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+
+          if (this.Memo_Mode == "ADD")
+          {
+             this.trackmemorecord.rec_created_by = this.gs.user_code; 
+            this.trackmemorecords.push(this.trackmemorecord);
+             // Grid_Memo.ScrollIntoView(memo_Record, Grid_Memo.Columns[0]);
+              //Grid_Memo.Focus();
+          }
+         this.NewRecord();
+
+          // this.errorMessage = 'Save Complete';
+          // alert(this.errorMessage);
+
+
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+        alert(this.errorMessage);
+      });
+  }
 }
