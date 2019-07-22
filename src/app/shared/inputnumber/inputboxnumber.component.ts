@@ -13,7 +13,9 @@ export class InputBoxNumberComponent {
     @Input() disabled: boolean = false;
     @Input() maxlength: number = 25;
     @Input() dec: number = 2;
+    @Input() field: string;
     @Input() rec: any;
+    @Output() onBlur = new EventEmitter<{field : string , rec : any}>();
 
     @ViewChild('inputbox') private inputbox: ElementRef;
 
@@ -30,6 +32,8 @@ export class InputBoxNumberComponent {
             this.inputModel = this.gs.roundNumber(this.inputModel, this.dec);            
         }
         this.inputModelChange.emit(this.inputModel);        
+        if ( this.onBlur)
+            this.onBlur.emit({ field: this.field,rec: this.rec});        
     }
 
     public focus() {

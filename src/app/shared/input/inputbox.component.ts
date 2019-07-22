@@ -17,6 +17,11 @@ export class InputBoxComponent {
     @Input() uppercase: boolean = false;
     @Input() lowercase: boolean = false;
 
+
+    @Input() field: string;
+    @Input() rec: any;
+    @Output() onBlur = new EventEmitter<{field : string , rec : any}>();
+
     @ViewChild('inputbox') private inputbox: ElementRef;
 
     constructor() {
@@ -26,7 +31,7 @@ export class InputBoxComponent {
 
     }
 
-    onBlur() {
+    onBlur1() {
         if (this.inputModel != null) {
             if (this.uppercase) {
                 this.inputModel = this.inputModel.toUpperCase();
@@ -37,6 +42,8 @@ export class InputBoxComponent {
             }
         }
         this.inputModelChange.emit(this.inputModel);        
+        if ( this.onBlur)
+            this.onBlur.emit({ field: this.field,rec: this.rec});        
     }
 
     public focus() {
