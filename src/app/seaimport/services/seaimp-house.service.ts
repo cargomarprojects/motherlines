@@ -125,4 +125,9 @@ export class SeaImpHouseService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/LoadMasterData', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    LoadCha(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/LoadCha', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+
 }

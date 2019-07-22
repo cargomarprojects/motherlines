@@ -262,7 +262,7 @@ export class OthTrackingPageComponent implements OnInit {
     saveRecord.memoPkid = this.Memo_Id;
     saveRecord.memoMode = this.Memo_Mode;
     saveRecord.parentType = this.parentType;
-
+  
     this.mainService.SaveMemo(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {

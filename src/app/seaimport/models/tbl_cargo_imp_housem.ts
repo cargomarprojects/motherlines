@@ -210,6 +210,15 @@ export interface Tbl_cargo_imp_container {
     cntr_selected:boolean;
 }
 
+export interface Table_Address {
+    code: string;
+    name: string;
+    attention: string;
+    telephone: string;
+    fax: string;
+    sman_id: string;
+    sman_name: string;
+}
 export interface Tbl_cargo_imp_desc {
     parentid: string;
     parent_type: string;
