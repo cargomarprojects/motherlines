@@ -5,7 +5,7 @@ import { GlobalService } from '../../../core/services/global.service';
 
 import { SeaImpHouseService } from '../../services/seaimp-house.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem } from '../../models/tbl_cargo_imp_housem';
+import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem,Table_Address } from '../../models/tbl_cargo_imp_housem';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
@@ -624,14 +624,14 @@ export class SeaImpHouseEditComponent implements OnInit {
     var bRet = true;
     this.errorMessage = "";
 
-    if (this.parentid.trim().length <= 0) {
+    if (this.gs.isBlank(this.parentid)) {
       bRet = false;
       this.errorMessage = "Invalid MBL ID";
       alert(this.errorMessage);
       return bRet;
     }
 
-    if (this.record.hbl_houseno == '') {
+    if (this.gs.isBlank(this.record.hbl_houseno)) {
       bRet = false;
       this.errorMessage = "House BL# cannot be blank";
       alert(this.errorMessage);
@@ -640,14 +640,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
 
     if (!this.hbl_shipment_stage_field.nativeElement.disabled) {
-      if (this.record.hbl_shipment_stage == null) {
-        bRet = false;
-        this.errorMessage = "Shipment Stage cannot be blank";
-        alert(this.errorMessage);
-        this.hbl_shipment_stage_field.nativeElement.focus();
-        return bRet;
-      }
-      if (this.record.hbl_shipment_stage.toString().trim().length <= 0) {
+      if (this.gs.isBlank(this.record.hbl_shipment_stage)) {
         bRet = false;
         this.errorMessage = "Shipment Stage cannot be blank";
         alert(this.errorMessage);
@@ -656,28 +649,28 @@ export class SeaImpHouseEditComponent implements OnInit {
       }
     }
 
-    if (this.record.hbl_shipper_id == '') {
+    if ( this.gs.isBlank(this.record.hbl_shipper_id)) {
       bRet = false;
       this.errorMessage = "Shipper Code can't be blank";
       alert(this.errorMessage);
       //this.hbl_shipper_code_field.nativeElement.Focus();
       return bRet;
     }
-    if (this.record.hbl_shipper_add1 == '') {
+    if (this.gs.isBlank(this.record.hbl_shipper_add1)) {
       bRet = false;
       this.errorMessage = "Shipper Address can't be blank";
       alert(this.errorMessage);
       this.hbl_shipper_add1_field.nativeElement.focus();
       return bRet;
     }
-    if (this.record.hbl_consignee_code == '') {
+    if (this.gs.isBlank(this.record.hbl_consignee_code)) {
       bRet = false;
       this.errorMessage = "Consignee Code can't be blank";
       alert(this.errorMessage);
       //  this.hbl_consignee_code_field.nativeElement.focus();
       return bRet;
     }
-    if (this.record.hbl_consignee_add1 == '') {
+    if (this.gs.isBlank(this.record.hbl_consignee_add1)) {
       bRet = false;
       this.errorMessage = "Consignee Address can't be blank";
       alert(this.errorMessage);
@@ -685,7 +678,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       return bRet;
     }
 
-    if (this.record.hbl_agent_id == '') {
+    if (this.gs.isBlank(this.record.hbl_agent_id)) {
       bRet = false;
       this.errorMessage = "Agent can't be blank";
       alert(this.errorMessage);
@@ -693,8 +686,8 @@ export class SeaImpHouseEditComponent implements OnInit {
       return bRet;
     }
 
-    if (this.record.hbl_cha_code.trim().length > 0) {
-      if (this.record.hbl_cha_id == '') {
+    if (!this.gs.isBlank(this.record.hbl_cha_code)) {
+      if (this.gs.isBlank(this.record.hbl_cha_id)) {
         bRet = false;
         this.errorMessage = "Invalid CHB";
         alert(this.errorMessage);
@@ -704,21 +697,21 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
 
 
-    if (this.record.hbl_packages <= 0) {
+    if ( this.gs.isZero(this.record.hbl_packages)) {
       bRet = false;
       this.errorMessage = "No. of packages can't be blank";
       alert(this.errorMessage);
       this.hbl_packages_field.nativeElement.focus();
       return bRet;
     }
-    if (this.record.hbl_uom == '') {
+    if (this.gs.isBlank(this.record.hbl_uom)) {
       bRet = false;
       this.errorMessage = "Unit of packages can't be blank";
       alert(this.errorMessage);
       this.hbl_uom_field.nativeElement.focus();
       return bRet;
     }
-    if (this.record.hbl_weight <= 0) {
+    if (this.gs.isZero(this.record.hbl_weight)) {
       bRet = false;
       this.errorMessage = "Weight can't be blank";
       alert(this.errorMessage);
@@ -726,7 +719,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       return bRet;
     }
 
-    if (this.record.hbl_cbm <= 0 && this.ShipmentType != "FCL") {
+    if (this.gs.isZero(this.record.hbl_cbm) && this.ShipmentType != "FCL") {
       bRet = false;
       this.errorMessage = "CBM can't be blank";
       alert(this.errorMessage);
@@ -734,14 +727,14 @@ export class SeaImpHouseEditComponent implements OnInit {
       return bRet;
     }
     if (this.gs.BRANCH_REGION == "USA") {
-      if (this.record.hbl_lbs <= 0) {
+      if (this.gs.isZero(this.record.hbl_lbs)) {
         bRet = false;
         this.errorMessage = "LBS can't be blank";
         alert(this.errorMessage);
         this.hbl_lbs_field.nativeElement.focus();
         return bRet;
       }
-      if (this.record.hbl_cft <= 0 && this.ShipmentType != "FCL") {
+      if (this.gs.isZero(this.record.hbl_cft) && this.ShipmentType != "FCL") {
         bRet = false;
         this.errorMessage = "CFT can't be blank";
         alert(this.errorMessage);
@@ -751,7 +744,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
 
     if (this.gs.OPTIONAL_DESCRIPTION == "N") {
-      if (this.record.hbl_commodity == '') {
+      if (this.gs.isBlank(this.record.hbl_commodity)) {
         bRet = false;
         this.errorMessage = "Goods description can't be blank";
         alert(this.errorMessage);
@@ -760,21 +753,21 @@ export class SeaImpHouseEditComponent implements OnInit {
       }
     }
 
-    if (this.record.hbl_frt_status == '') {
+    if (this.gs.isBlank(this.record.hbl_frt_status)) {
       bRet = false;
       this.errorMessage = "Freight Status can't be blank";
       alert(this.errorMessage);
       this.hbl_frt_status_field.nativeElement.focus();
       return bRet;
     }
-    if (this.record.hbl_ship_term_id == '') {
+    if (this.gs.isBlank(this.record.hbl_ship_term_id)) {
       bRet = false;
       this.errorMessage = "Terms can't be blank";
       alert(this.errorMessage);
       this.hbl_ship_term_id_field.nativeElement.focus();
       return bRet;
     }
-    if (this.record.hbl_bltype == '') {
+    if (this.gs.isBlank(this.record.hbl_bltype)) {
       bRet = false;
       this.errorMessage = "Nomination Type can't be blank";
       alert(this.errorMessage);
@@ -801,7 +794,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
     })
 
-    if (this.record.hbl_handled_id == '') {
+    if (this.gs.isBlank(this.record.hbl_handled_id)) {
       bRet = false;
       this.errorMessage = "Handled By cannot be blank";
       alert(this.errorMessage);
@@ -1685,6 +1678,52 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   LoadCHA() {
 
+    this.record.hbl_cha_id = "";
+    this.record.hbl_cha_code = "";
+    this.record.hbl_cha_name = "";
+    this.record.hbl_cha_attn = "";
+    this.record.hbl_cha_tel = "";
+    this.record.hbl_cha_fax = "";
+    if (this.gs.GENERAL_BRANCH_CODE == "MFDR")
+    {
+      this.record.hbl_salesman_id = "";
+      this.record.hbl_salesman_code = "";
+      this.record.hbl_salesman_name = "";
+    }
+
+    if (this.gs.isBlank(this.record.hbl_consignee_id))
+        return;
+
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.record.hbl_consignee_id;
+    this.mainService.LoadCha(SearchData)
+      .subscribe(response => {
+        let charecord: Table_Address = <Table_Address>{};
+        charecord = <Table_Address>response.record;
+        
+        if (charecord != null)
+        {
+          this.record.hbl_agent_id= charecord.pkid;
+          this.record.hbl_cha_code = charecord.code;
+          this.record.hbl_cha_name = charecord.name;
+          this.record.hbl_cha_attn = charecord.attention;
+          this.record.hbl_cha_tel = charecord.telephone;
+          this.record.hbl_cha_fax = charecord.fax;
+          if (this.gs.GENERAL_BRANCH_CODE == "MFDR")
+          {
+            this.record.hbl_salesman_id = charecord.sman_id;
+            this.record.hbl_salesman_name = charecord.sman_name;
+          }
+        }
+
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
+
+  RemoveRow(_rec: Tbl_cargo_imp_container) {
+    this.cntrrecords.splice(this.cntrrecords.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
 
 }
