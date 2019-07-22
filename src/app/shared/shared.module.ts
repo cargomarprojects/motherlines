@@ -53,6 +53,7 @@ import { PageComponent } from './page/page.component';
 import { Page2Component } from './page2/page2.component';
 
 import { InputBoxComponent } from './input/inputbox.component';
+import { InputBoxNumberComponent } from './inputnumber/inputboxnumber.component';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { InputBoxComponent } from './input/inputbox.component';
     PageComponent,
     Page2Component,
     InputBoxComponent,
+    InputBoxNumberComponent,
   ],
   exports: [
     CommonModule,
