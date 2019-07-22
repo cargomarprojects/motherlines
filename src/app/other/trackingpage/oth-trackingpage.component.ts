@@ -37,7 +37,9 @@ export class OthTrackingPageComponent implements OnInit {
   private Memo_Mode: string = "ADD";
   private Memo_Id: string = "";
   private lblSaveMemo: string = "Save";
-  private cmbNotes:string="";
+  private cmbNotes: string = "";
+  private MemoList: any[] = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -68,7 +70,7 @@ export class OthTrackingPageComponent implements OnInit {
   }
 
   LoadCombo() {
-
+  this.SearchRecord('loadcombo');
   }
 
   // NewRecord() {
@@ -108,6 +110,8 @@ export class OthTrackingPageComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.trackrecords = <Tbl_Cargo_Tracking_Status[]>response.records;
+        this.trackmemorecords = <Tbl_Cargo_Tracking_Status[]>response.memorecords;
+        this.NewRecord();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -136,10 +140,11 @@ export class OthTrackingPageComponent implements OnInit {
       return;
 
     const saveRecord = <vm_Tbl_Cargo_Tracking_Status>{};
+    saveRecord.userinfo = this.gs.UserInfo;
     saveRecord.record = this.trackrecords;
     saveRecord.pkid = this.pkid;
-    // saveRecord.source = this.source;
-    //  saveRecord.userinfo = this.gs.UserInfo;
+    saveRecord.parentType = this.parentType;
+    saveRecord.paramType = this.paramType;
 
     this.mainService.Save(saveRecord)
       .subscribe(response => {
@@ -177,20 +182,20 @@ export class OthTrackingPageComponent implements OnInit {
   }
   OnChange(field: string) {
     if (field == 'cmbNotes') {
-      this.trackmemorecord.remarks=this.cmbNotes;
+      this.trackmemorecord.remarks = this.cmbNotes;
     }
   }
 
   onBlur(field: string, _rec: Tbl_Cargo_Tracking_Status = null) {
     switch (field) {
-      //   case 'cargo_marks': {
-      //     _rec.cargo_marks = _rec.cargo_marks.toUpperCase();
-      //     break;
-      //   }
-      //   case 'cargo_description': {
-      //     _rec.cargo_description = _rec.cargo_description.toUpperCase();
-      //     break;
-      //   }
+      case 'remarks': {
+        _rec.remarks = _rec.remarks.toUpperCase();
+        break;
+      }
+      case 'trackremarks': {
+        this.trackmemorecord.remarks = this.trackmemorecord.remarks.toUpperCase();
+        break;
+      }
     }
   }
 
@@ -231,6 +236,8 @@ export class OthTrackingPageComponent implements OnInit {
     this.Memo_Mode = "ADD";
     this.Memo_Id = this.gs.getGuid();
     this.trackmemorecord = <Tbl_Cargo_Tracking_Status>{};
+    this.trackmemorecord.rec_created_by = this.gs.user_code;
+    this.trackmemorecord.param_id = this.Memo_Id;
     this.trackmemorecord.date = this.gs.defaultValues.today;
     this.trackmemorecord.remarks = ''
     this.lblSaveMemo = "Save";
@@ -240,16 +247,21 @@ export class OthTrackingPageComponent implements OnInit {
     //Dt_Date.IsEnabled = false;
     this.Memo_Id = _rec.param_id.toString();
     this.Memo_Mode = "EDIT";
+    this.trackmemorecord.param_id = this.Memo_Id;
     this.trackmemorecord.date = _rec.date;
     this.trackmemorecord.remarks = _rec.remarks.toString();
+    this.lblSaveMemo = "Update";
   }
 
-  SaveMemo(){
+  SaveMemo() 
+  {
     const saveRecord = <vm_Tbl_Cargo_Tracking_Status>{};
+    saveRecord.userinfo = this.gs.UserInfo;
     saveRecord.memorecord = this.trackmemorecord;
     saveRecord.pkid = this.pkid;
-    // saveRecord.source = this.source;
-    //  saveRecord.userinfo = this.gs.UserInfo;
+    saveRecord.memoPkid = this.Memo_Id;
+    saveRecord.memoMode = this.Memo_Mode;
+    saveRecord.parentType = this.parentType;
 
     this.mainService.SaveMemo(saveRecord)
       .subscribe(response => {
@@ -259,23 +271,48 @@ export class OthTrackingPageComponent implements OnInit {
         }
         else {
 
-          if (this.Memo_Mode == "ADD")
-          {
-             this.trackmemorecord.rec_created_by = this.gs.user_code; 
+          if (this.Memo_Mode == "ADD") {
             this.trackmemorecords.push(this.trackmemorecord);
-             // Grid_Memo.ScrollIntoView(memo_Record, Grid_Memo.Columns[0]);
-              //Grid_Memo.Focus();
+            // Grid_Memo.ScrollIntoView(memo_Record, Grid_Memo.Columns[0]);
+            //Grid_Memo.Focus();
+          } else {
+            if (this.trackmemorecords != null) {
+              var REC = this.trackmemorecords.find(rec => rec.param_id == this.Memo_Id);
+              if (REC != null)
+                REC.remarks = this.trackmemorecord.remarks;
+            }
           }
-         this.NewRecord();
 
+          this.NewRecord();
           // this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
-
-
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
       });
   }
+
+
+  SearchRecord(controlname: string) {
+    this.errorMessage = '';
+    let SearchData = {
+      table: '',
+      pkid: '',
+    };
+
+    if (controlname == "loadcombo") {
+      SearchData.table = 'LOAD_COMBO_TRACKING_PAGE';
+      SearchData.pkid = '';
+    }
+    this.gs.SearchRecord(SearchData)
+      .subscribe(response => {
+        this.MemoList = response.memolist;
+      },
+        error => {
+          this.errorMessage = this.gs.getError(error);
+          alert(this.errorMessage);
+        });
+  }
+
 }
