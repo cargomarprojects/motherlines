@@ -211,6 +211,8 @@ export interface Tbl_cargo_imp_container {
 }
 
 export interface Table_Address {
+    
+    pkid: string;
     code: string;
     name: string;
     attention: string;

@@ -630,7 +630,6 @@
                 <div class="form-group row">
                   <div class="col-12">
                     <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
-                    <button class="btn btn-primary btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
                     <button class="btn btn-primary btn-sm mr-1" (click)="FindTotalWeight()">Find Total</button>
                   </div>
                 </div>
@@ -648,6 +647,7 @@
                       <th>CBM</th>
                       <th>PICKUP</th>
                       <th>EMPTY RETURN</th>
+                      <th style="text-align:center">REMOVE</th>
                     </tr>
                   </thead>
                   <tbody class="page-body-tbody">
@@ -694,6 +694,7 @@
                         <app-date [inputdate]="rec.cntr_return_date" (ValueChanged)="rec.cntr_return_date=$event">
                         </app-date>
                       </td>
+                      <td align='center'><i class="fa fa-trash  fa-lg pointer" aria-hidden="true" (click)="RemoveRow(rec)" ></i></td>
                     </tr>
                   </tbody>
                 </table>

@@ -1678,17 +1678,52 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   LoadCHA() {
 
+    this.record.hbl_cha_id = "";
+    this.record.hbl_cha_code = "";
+    this.record.hbl_cha_name = "";
+    this.record.hbl_cha_attn = "";
+    this.record.hbl_cha_tel = "";
+    this.record.hbl_cha_fax = "";
+    if (this.gs.GENERAL_BRANCH_CODE == "MFDR")
+    {
+      this.record.hbl_salesman_id = "";
+      this.record.hbl_salesman_code = "";
+      this.record.hbl_salesman_name = "";
+    }
+
+    if (this.gs.isBlank(this.record.hbl_consignee_id))
+        return;
+
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.parentid;
+    SearchData.pkid = this.record.hbl_consignee_id;
     this.mainService.LoadCha(SearchData)
       .subscribe(response => {
         let charecord: Table_Address = <Table_Address>{};
         charecord = <Table_Address>response.record;
+        
+        if (charecord != null)
+        {
+          this.record.hbl_agent_id= charecord.pkid;
+          this.record.hbl_cha_code = charecord.code;
+          this.record.hbl_cha_name = charecord.name;
+          this.record.hbl_cha_attn = charecord.attention;
+          this.record.hbl_cha_tel = charecord.telephone;
+          this.record.hbl_cha_fax = charecord.fax;
+          if (this.gs.GENERAL_BRANCH_CODE == "MFDR")
+          {
+            this.record.hbl_salesman_id = charecord.sman_id;
+            this.record.hbl_salesman_name = charecord.sman_name;
+          }
+        }
 
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
+  }
+
+  RemoveRow(_rec: Tbl_cargo_imp_container) {
+    this.cntrrecords.splice(this.cntrrecords.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
 
 }
