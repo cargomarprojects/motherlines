@@ -52,6 +52,8 @@ import { FtpReportComponent } from './ftpreport/ftpreport.component';
 import { PageComponent } from './page/page.component';
 import { Page2Component } from './page2/page2.component';
 
+import { InputBoxComponent } from './input/inputbox.component';
+
 
 @NgModule({
   imports: [
@@ -85,7 +87,7 @@ import { Page2Component } from './page2/page2.component';
     FtpReportComponent,
     PageComponent,
     Page2Component,
-    
+    InputBoxComponent,
   ],
   exports: [
     CommonModule,
@@ -116,10 +118,10 @@ import { Page2Component } from './page2/page2.component';
     FtpReportComponent,
     PageComponent,
     Page2Component,
+    InputBoxComponent,
     
   ],
   providers: [
-    
     LovService,
     GenerateDocService
   ]
