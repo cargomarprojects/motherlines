@@ -15,7 +15,6 @@ import { BookingService } from '../services/booking.service';
 import { Tbl_cargo_exp_bookingm, vm_Tbl_cargo_exp_bookingm } from '../models/Tbl_cargo_exp_bookingm';
 
 
-
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html'
@@ -34,7 +33,7 @@ export class BookingComponent implements OnInit {
   record: Tbl_cargo_exp_bookingm = <Tbl_cargo_exp_bookingm>{};
 
 
-  @ViewChild('book_shipper_name') sa: InputBoxComponent;
+  @ViewChild('book_shipper_name') book_shipper_name_ctrl: InputBoxComponent;
   
 
   constructor(
@@ -142,13 +141,6 @@ export class BookingComponent implements OnInit {
   }
 
   
-
-  
-
-  ff(){
-    this.sa.focus();
-  }
-
 
   Save() {
 
