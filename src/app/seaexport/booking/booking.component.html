@@ -56,16 +56,14 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Name</label>
         <div class="col-8">
-          <InputBox [(inputModel)]="record.book_shipper_name" [maxlength]="60" [uppercase]="true" #book_shipper_name>
-          </InputBox>
+          <InputBox [(inputModel)]="record.book_shipper_name" [maxlength]="60" [uppercase]="true" #book_shipper_name></InputBox>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Address</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add1')"
-            [(ngModel)]="record.book_shipper_add1" maxlength="60" />
+            <InputBox [(inputModel)]="record.book_shipper_add1" [maxlength]="60" [uppercase]="true" #book_shipper_add1></InputBox>
         </div>
       </div>
 
@@ -73,16 +71,16 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add2')"
-            [(ngModel)]="record.book_shipper_add2" maxlength="60" />
+            <InputBox [(inputModel)]="record.book_shipper_add2" [maxlength]="60" [uppercase]="true" #book_shipper_add2></InputBox>          
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
-            [(ngModel)]="record.book_shipper_add3" maxlength="60" />
+            
+            <InputBox [(inputModel)]="record.book_shipper_add3" [maxlength]="60" [uppercase]="true" #book_shipper_add3></InputBox>          
+
         </div>
       </div>
 
@@ -90,16 +88,18 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add4')"
-            [(ngModel)]="record.book_shipper_add4" maxlength="120" />
+
+
+            <InputBox [(inputModel)]="record.book_shipper_add4" [maxlength]="120" [uppercase]="true" #book_shipper_add4></InputBox>          
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add5')"
-            [(ngModel)]="record.book_shipper_add5" maxlength="120" />
+            <InputBox [(inputModel)]="record.book_shipper_add5" [maxlength]="120" [uppercase]="true" #book_shipper_add5></InputBox>          
         </div>
       </div>
 
@@ -123,29 +123,28 @@
           <app-autocomplete2 [controlname]="'TRUCKER'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
             [displaydata]="record.book_trucker_name" (ValueChanged)="LovSelected($event)">
           </app-autocomplete2>
+
+         
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Vessel</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_vessel')"
-            [(ngModel)]="record.book_vessel" maxlength="60" />
+            <InputBox [(inputModel)]="record.book_vessel" [maxlength]="60" [uppercase]="true" #book_vessel></InputBox>          
         </div>
       </div>
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Voyage</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_voyage')"
-            [(ngModel)]="record.book_voyage" maxlength="30" />
+            <InputBox [(inputModel)]="record.book_voyage" [maxlength]="30" [uppercase]="true" #book_voyage></InputBox>          
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Shippers Ref.</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_exp_refno')"
-            [(ngModel)]="record.book_exp_refno" maxlength="30" />
+            <InputBox [(inputModel)]="record.book_exp_refno" [maxlength]="30" [uppercase]="true" #book_exp_refno></InputBox>                      
         </div>
       </div>
 
@@ -153,40 +152,35 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Commodity</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_commodity')"
-            [(ngModel)]="record.book_commodity" maxlength="100" />
+            <InputBox [(inputModel)]="record.book_commodity" [maxlength]="100" [uppercase]="true" #book_commodity></InputBox>                      
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">No.Of.Cntr</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_cntrs')"
-            [(ngModel)]="record.book_cntrs" maxlength="100" />
+            <InputBox [(inputModel)]="record.book_cntrs" [maxlength]="100" [uppercase]="true" #book_cntrs></InputBox>                      
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">No.Of.Pkgs</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_package')"
-            [(ngModel)]="record.book_package" maxlength="100" />
+            <InputBox [(inputModel)]="record.book_package" [maxlength]="100" [uppercase]="true" #book_package></InputBox>                      
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Weight</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_weight')"
-            [(ngModel)]="record.book_weight" maxlength="100" />
+            <InputBox [(inputModel)]="record.book_weight" [maxlength]="100" [uppercase]="true" #book_weight></InputBox>                                  
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"> Measurement </label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_cbm')"
-            [(ngModel)]="record.book_cbm" maxlength="100" />
+            <InputBox [(inputModel)]="record.book_cbm" [maxlength]="100" [uppercase]="true" #book_cbm></InputBox>
         </div>
       </div>
 
@@ -204,8 +198,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Place.Receipt</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
-            [(ngModel)]="record.book_por_place" maxlength="60" />
+            <InputBox [(inputModel)]="record.book_por_place" [maxlength]="60" [uppercase]="true" #book_por_place></InputBox>
         </div>
       </div>
     </div>
@@ -213,8 +206,10 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Pickup Time</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_pickuptime')"
-            [(ngModel)]="record.book_pickuptime" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_pickuptime" [maxlength]="60" [uppercase]="true" #book_pickuptime></InputBox>
+
+
         </div>
       </div>
     </div>
@@ -283,32 +278,38 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Place.Delivery</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
-            [(ngModel)]="record.book_pod_place" maxlength="60" />
+            <InputBox [(inputModel)]="record.book_pod_place" [maxlength]="60" [uppercase]="true" #book_pod_place></InputBox>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Inland Routing</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
-            [(ngModel)]="record.book_routing1" maxlength="60" />
+            
+            <InputBox [(inputModel)]="record.book_routing1" [maxlength]="60" [uppercase]="true" #book_routing1></InputBox>
+
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
-            [(ngModel)]="record.book_routing2" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_routing2" [maxlength]="60" [uppercase]="true" #book_routing2></InputBox>
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
-            [(ngModel)]="record.book_routing3" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_routing3" [maxlength]="60" [uppercase]="true" #book_routing3></InputBox>
+
+
         </div>
       </div>
 
@@ -323,8 +324,7 @@
         </div>
         <label class="col-2 col-form-label col-form-label-sm">Time</label>
         <div class="col-3">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
-            [(ngModel)]="record.book_cuttime" maxlength="10" />
+            <InputBox [(inputModel)]="record.book_cuttime" [maxlength]="10" [uppercase]="true" #book_cuttime></InputBox>
         </div>
       </div>
 
@@ -336,8 +336,10 @@
         </div>
         <label class="col-2 col-form-label col-form-label-sm">Time</label>
         <div class="col-3">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_por')"
-            [(ngModel)]="record.book_doc_cuttime" maxlength="10" />
+
+            <InputBox [(inputModel)]="record.book_doc_cuttime" [maxlength]="10" [uppercase]="true" #book_doc_cuttime></InputBox>
+
+
         </div>
       </div>
 
@@ -364,32 +366,39 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_name')"
-            [(ngModel)]="record.book_cntr_pickupat1" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_cntr_pickupat1" [maxlength]="60" [uppercase]="true" #book_cntr_pickupat1></InputBox>
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add1')"
-            [(ngModel)]="record.book_cntr_pickupat2" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_cntr_pickupat2" [maxlength]="60" [uppercase]="true" #book_cntr_pickupat2></InputBox>
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add2')"
-            [(ngModel)]="record.book_cntr_pickupat3" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_cntr_pickupat3" [maxlength]="60" [uppercase]="true" #book_cntr_pickupat3></InputBox>            
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
-            [(ngModel)]="record.book_cntr_pickupat4" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_cntr_pickupat4" [maxlength]="60" [uppercase]="true" #book_cntr_pickupat4></InputBox>            
+
+
         </div>
       </div>
     </div>
@@ -408,40 +417,49 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_name')"
-            [(ngModel)]="record.book_location_name" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_location_name" [maxlength]="60" [uppercase]="true" #book_location_name></InputBox>            
+
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add1')"
-            [(ngModel)]="record.book_location_addr1" maxlength="60" />
+          
+            <InputBox [(inputModel)]="record.book_location_addr1" [maxlength]="60" [uppercase]="true" #book_location_addr1></InputBox>            
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add2')"
-            [(ngModel)]="record.book_location_addr2" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_location_addr2" [maxlength]="60" [uppercase]="true" #book_location_addr2></InputBox>                        
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
-            [(ngModel)]="record.book_location_addr3" maxlength="60" />
+          
+            <InputBox [(inputModel)]="record.book_location_addr3" [maxlength]="60" [uppercase]="true" #book_location_addr3></InputBox>                        
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
-            [(ngModel)]="record.book_location_addr4" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_location_addr4" [maxlength]="60" [uppercase]="true" #book_location_addr4></InputBox>                        
+
         </div>
       </div>
 
@@ -471,32 +489,41 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_name')"
-            [(ngModel)]="record.book_cntr_returnat1" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_cntr_returnat1" [maxlength]="60" [uppercase]="true" #book_cntr_returnat1></InputBox>                        
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add1')"
-            [(ngModel)]="record.book_cntr_returnat2" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_cntr_returnat2" [maxlength]="60" [uppercase]="true" #book_cntr_returnat2></InputBox>                        
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add2')"
-            [(ngModel)]="record.book_cntr_returnat3" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_cntr_returnat3" [maxlength]="60" [uppercase]="true" #book_cntr_returnat3></InputBox>                        
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
-            [(ngModel)]="record.book_cntr_returnat4" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_cntr_returnat4" [maxlength]="60" [uppercase]="true" #book_cntr_returnat4></InputBox>                        
+
+
+
         </div>
       </div>
     </div>
@@ -506,24 +533,28 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Remarks</label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
-            [(ngModel)]="record.book_remarks1" maxlength="60" />
+          
+            <InputBox [(inputModel)]="record.book_remarks1" [maxlength]="60" [uppercase]="true" #book_cntr_remarks1></InputBox>                        
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
-            [(ngModel)]="record.book_remarks2" maxlength="60" />
+            <InputBox [(inputModel)]="record.book_remarks2" [maxlength]="60" [uppercase]="true" #book_cntr_remarks2></InputBox>                        
+
+
+
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_shipper_add3')"
-            [(ngModel)]="record.book_remarks3" maxlength="60" />
+
+            <InputBox [(inputModel)]="record.book_remarks3" [maxlength]="60" [uppercase]="true" #book_cntr_remarks3></InputBox>                        
+
         </div>
       </div>
 
