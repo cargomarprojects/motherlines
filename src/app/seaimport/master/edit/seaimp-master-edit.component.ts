@@ -695,7 +695,22 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
 
-  ShowCntrMovement() {
+  ShowCntrMovement(_rec:Tbl_cargo_imp_container) {
+  
+    if(!this.gs.isBlank(_rec.cntr_pkid))
+    {
+      let prm = {
+        menuid: this.gs.MENU_SI_CONTAINER_MOVEMENT,
+        refno:"REF : " + this.record.mbl_refno + "  CNTR : " + _rec.cntr_no,
+        pkid: _rec.cntr_pkid,
+        origin: 'seaimp-Master-page',
+        oprgrp:'SEA IMPORT',
+        parentType:'SEAIMP-CNTR',
+        paramType:'CNTR-MOVE-STATUS',
+        hideTracking:'N'
+      };
+      this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+    } 
   }
 
 }
