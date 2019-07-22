@@ -11,9 +11,13 @@ export interface Tbl_Cargo_Tracking_Status {
 
 export interface vm_Tbl_Cargo_Tracking_Status {
     mode: string;
-    record: Tbl_Cargo_Tracking_Status[];
     pkid: string;
-    source: string;
+    record: Tbl_Cargo_Tracking_Status[];
+    memorecord: Tbl_Cargo_Tracking_Status;
+    memoMode:string;
+    memoPkid:string;
+    parentType: string;
+    paramType: string;
     userinfo: any;
     filter: any;
 }

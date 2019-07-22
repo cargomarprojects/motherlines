@@ -15,8 +15,6 @@ import { strictEqual } from 'assert';
 })
 export class SeaImpRiderPageComponent implements OnInit {
 
-  @ViewChild('mbl_no') mbl_no_field: ElementRef;
-  record: Tbl_cargo_imp_desc = <Tbl_cargo_imp_desc>{};
   descrecords: Tbl_cargo_imp_desc[] = [];
 
   // 15-07-2019 Created By Ajith  
@@ -42,9 +40,9 @@ export class SeaImpRiderPageComponent implements OnInit {
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
-    this.menuid = options.menuid;
     this.source = options.source;
-    this.mode = 'ADD';
+    this.menuid = options.menuid;
+    this.mode = 'EDIT';
     this.initPage();
     this.actionHandler();
   }
@@ -60,31 +58,11 @@ export class SeaImpRiderPageComponent implements OnInit {
 
   }
 
-  NewRecord() {
-    this.mode = 'ADD'
-    this.actionHandler();
-  }
 
   actionHandler() {
-    // this.errorMessage = '';
-    // if (this.mode == 'ADD') {
-    //   this.record = <Tbl_cargo_imp_desc>{};
-    //   this.init();
-    // }
-    // if (this.mode == 'EDIT') {
-    //   this.GetRecord();
-    // }
-
     this.GetRecord();
   }
 
-  init() {
-    this.record.parentid = this.pkid;
-    this.record.cargo_description = '';
-    this.record.cargo_marks = '';
-    this.record.cargo_packages = '';
-    this.record.cargo_ctr = 1;
-  }
 
   GetRecord() {
     this.errorMessage = '';
@@ -93,7 +71,8 @@ export class SeaImpRiderPageComponent implements OnInit {
     SearchData.source = this.source;
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
-        this.descrecords = response.records
+
+        this.descrecords = response.records;
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -122,7 +101,7 @@ export class SeaImpRiderPageComponent implements OnInit {
       return;
 
     const saveRecord = <vm_tbl_cargo_imp_desc>{};
-    saveRecord.record = this.record;
+    saveRecord.records = this.descrecords;
     saveRecord.pkid = this.pkid;
     saveRecord.source = this.source;
     saveRecord.userinfo = this.gs.UserInfo;
@@ -153,7 +132,12 @@ export class SeaImpRiderPageComponent implements OnInit {
       alert(this.errorMessage);
       return bRet;
     }
-
+    // if (this.record.cust_title == "") {
+    //   bRet = false;
+    //   this.errorMessage = "Title cannot be blank";
+    //   alert(this.errorMessage);
+    //   return bRet;
+    // }
     return bRet;
   }
 
@@ -161,8 +145,6 @@ export class SeaImpRiderPageComponent implements OnInit {
   Close() {
     this.location.back();
   }
-
-
 
 
   onBlur(field: string, _rec: Tbl_cargo_imp_desc = null) {
@@ -179,13 +161,11 @@ export class SeaImpRiderPageComponent implements OnInit {
   }
 
   AddRow() {
-
     var rec = <Tbl_cargo_imp_desc>{};
     rec.parentid = this.pkid;
     rec.cargo_marks = "",
       rec.cargo_description = "",
       rec.cargo_ctr = this.findNextCtr();
-
     this.descrecords.push(rec);
   }
 
@@ -226,7 +206,9 @@ export class SeaImpRiderPageComponent implements OnInit {
   }
 
   RemoveRow(_rec: Tbl_cargo_imp_desc) {
+    this.selectedRowIndex = -1;
     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   }
-
+ 
+  
 }

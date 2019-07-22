@@ -660,7 +660,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Shipper Code can't be blank";
       alert(this.errorMessage);
-     //this.hbl_shipper_code_field.nativeElement.Focus();
+      //this.hbl_shipper_code_field.nativeElement.Focus();
       return bRet;
     }
     if (this.record.hbl_shipper_add1 == '') {
@@ -674,7 +674,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Consignee Code can't be blank";
       alert(this.errorMessage);
-    //  this.hbl_consignee_code_field.nativeElement.focus();
+      //  this.hbl_consignee_code_field.nativeElement.focus();
       return bRet;
     }
     if (this.record.hbl_consignee_add1 == '') {
@@ -689,7 +689,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Agent can't be blank";
       alert(this.errorMessage);
-    //  this.hbl_agent_name_field.nativeElement.focus();
+      //  this.hbl_agent_name_field.nativeElement.focus();
       return bRet;
     }
 
@@ -698,7 +698,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         bRet = false;
         this.errorMessage = "Invalid CHB";
         alert(this.errorMessage);
-      //  this.hbl_cha_code_field.nativeElement.focus();
+        //  this.hbl_cha_code_field.nativeElement.focus();
         return bRet;
       }
     }
@@ -805,7 +805,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Handled By cannot be blank";
       alert(this.errorMessage);
-     // this.hbl_handled_name_field.nativeElement.focus();
+      // this.hbl_handled_name_field.nativeElement.focus();
       return bRet;
     }
     /*
@@ -1605,15 +1605,21 @@ export class SeaImpHouseEditComponent implements OnInit {
           source:'SI-DESC-EX',
           islocked:false,
           origin: 'seaimp-House-page',
+          canPrint: false
         };
         this.gs.Naviagete('Silver.SeaImport/RiderPage', JSON.stringify(prm));
         break;
       }
-      case 'TRACKING': {
+      case 'SHIPMOVEMENT': {
         let prm = {
-          menuid: this.gs.MENU_SI_CONTAINER_MOVEMENT,
+          menuid: this.gs.MENU_SI_SHIPMENT_MOVEMENT,
+          refno:"REF : " + this.record.mbl_refno + "  HBL : " + this.record.hbl_houseno,
           pkid: this.pkid,
-          origin: 'other-page',
+          origin: 'seaimp-House-page',
+          oprgrp:'SEA IMPORT',
+          parentType:'SEAIMP-SHIP',
+          paramType:'SHIP-MOVE-STATUS',
+          hideTracking:'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
