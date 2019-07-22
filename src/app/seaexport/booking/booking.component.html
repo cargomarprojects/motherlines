@@ -56,7 +56,8 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Name</label>
         <div class="col-8">
-          <InputBox [(inputModel)]="record.book_shipper_name" [maxlength]="60" [uppercase]="true" ></InputBox> 
+          <InputBox [(inputModel)]="record.book_shipper_name" [maxlength]="60" [uppercase]="true" #book_shipper_name>
+          </InputBox>
         </div>
       </div>
 
@@ -70,6 +71,11 @@
         </div>
       </div>
 
+      <div class="form-group row">
+        <div class="col-8">
+          <button class="btn btn-primary" (click)="ff()"> Focus </button>
+        </div>
+      </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>

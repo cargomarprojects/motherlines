@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, SimpleChanges , HostListener} from '@angular/core';
 
 
 @Component({
@@ -17,6 +17,8 @@ export class InputBoxComponent {
     @Input() uppercase: boolean = false;
     @Input() lowercase: boolean = false;
 
+    @ViewChild('inputbox') private inputbox: ElementRef;
+
     constructor() {
     }
 
@@ -24,7 +26,7 @@ export class InputBoxComponent {
 
     }
 
-    OnBlur() {
+    onBlur() {
         if (this.inputModel != null) {
             if (this.uppercase) {
                 this.inputModel = this.inputModel.toUpperCase();
@@ -36,5 +38,10 @@ export class InputBoxComponent {
         }
         this.inputModelChange.emit(this.inputModel);        
     }
+
+    public focus() {
+        if (!this.disabled)
+          this.inputbox.nativeElement.focus();
+      }
 
 }

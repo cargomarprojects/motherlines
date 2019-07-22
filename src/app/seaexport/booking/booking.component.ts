@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild, ElementRef } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+
+
+import { InputBoxComponent } from '../../shared/input/inputbox.component';
 
 import { GlobalService } from '../../core/services/global.service';
 import { User_Menu } from '../../core/models/menum';
@@ -30,6 +33,9 @@ export class BookingComponent implements OnInit {
 
   record: Tbl_cargo_exp_bookingm = <Tbl_cargo_exp_bookingm>{};
 
+
+  @ViewChild('book_shipper_name') sa: InputBoxComponent;
+  
 
   constructor(
     private router: Router,
@@ -133,6 +139,14 @@ export class BookingComponent implements OnInit {
 
   onBlur( field : string){
 
+  }
+
+  
+
+  
+
+  ff(){
+    this.sa.focus();
   }
 
 

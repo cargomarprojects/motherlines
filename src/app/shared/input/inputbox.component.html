@@ -6,6 +6,6 @@ type="text"
 [(ngModel)]="inputModel" 
 [maxlength]="maxlength"
 (ngModelChange)="inputModelChange.emit(inputModel)" 
-(blur)="OnBlur()"
+(blur)="onBlur($event)"
 #inputbox
 />
