@@ -131,7 +131,9 @@ export class BookingComponent implements OnInit {
       return bRet;
   }
 
+  onBlur( field : string){
 
+  }
 
 
   Save() {
