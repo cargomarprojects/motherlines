@@ -8,8 +8,6 @@ import { User_Menu } from '../../core/models/menum';
 import { Tbl_Cargo_Tracking_Status, vm_Tbl_Cargo_Tracking_Status } from '../models/tbl_cargo_tracking_status';
 import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
-import { ThrowStmt } from '@angular/compiler';
-import { Recoverable } from 'repl';
 
 @Component({
   selector: 'app-oth-trackingpage',
