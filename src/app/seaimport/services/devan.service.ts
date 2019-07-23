@@ -14,10 +14,10 @@ export class DevanService {
     ) { }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/Devan/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/DevanPage/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/Devan/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/DevanPage/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 }

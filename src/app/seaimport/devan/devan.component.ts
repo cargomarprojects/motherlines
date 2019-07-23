@@ -2,7 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef }
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
-
+import { InputBoxComponent } from '../../shared/input/inputbox.component';
+import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 import { DevanService } from '../services/devan.service';
 import { User_Menu } from '../../core/models/menum';
 import { Tbl_Cargo_Imp_Devan_Instruction, vm_Tbl_Cargo_Imp_Devan_Instruction } from '../models/tbl_cargo_Imp_devan_instruction';
@@ -15,7 +16,9 @@ import { strictEqual } from 'assert';
 })
 export class DevanComponent implements OnInit {
 
-    @ViewChild('mbl_no') mbl_no_field: ElementRef;
+    @ViewChild('request_to_code') request_to_code_ctrl: AutoComplete2Component;
+    @ViewChild('request_to_name') request_to_name_ctrl: InputBoxComponent;
+    @ViewChild('cargo_loc_name') cargo_loc_name_ctrl: InputBoxComponent;
     record: Tbl_Cargo_Imp_Devan_Instruction = <Tbl_Cargo_Imp_Devan_Instruction>{};
 
     // 15-07-2019 Created By Ajith  
@@ -25,9 +28,7 @@ export class DevanComponent implements OnInit {
     private mode: string;
     private title: string = '';
     private isAdmin: boolean;
-    private houseno: string = '';
-    private mblrefno: string = '';
-
+    
     private errorMessage: string;
 
     IsLocked: boolean = false;
@@ -44,7 +45,7 @@ export class DevanComponent implements OnInit {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
         this.pkid = options.pkid;
         this.menuid = options.menuid;
-        this.mode = 'EDIT';
+        //this.mode = 'EDIT';
         this.initPage();
         this.actionHandler();
     }
@@ -67,13 +68,15 @@ export class DevanComponent implements OnInit {
 
     actionHandler() {
         this.errorMessage = '';
-        if (this.mode == 'ADD') {
-            this.record = <Tbl_Cargo_Imp_Devan_Instruction>{};
-            this.init();
-        }
-        if (this.mode == 'EDIT') {
-            this.GetRecord();
-        }
+        // if (this.mode == 'ADD') {
+        //     this.record = <Tbl_Cargo_Imp_Devan_Instruction>{};
+        //     this.init();
+        // }
+        // if (this.mode == 'EDIT') {
+        //     this.GetRecord();
+        // }
+
+        this.GetRecord();
     }
 
     init() {
@@ -97,6 +100,7 @@ export class DevanComponent implements OnInit {
         this.record.di_cargo_loc_addr4 = '';
         this.record.di_is_devan_sent = false;
         this.record.di_devan_date = '';
+        this.request_to_code_ctrl.Focus();
 
     }
 
@@ -107,19 +111,16 @@ export class DevanComponent implements OnInit {
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
                 this.mode = response.mode;
-                // this.houseno = response.houseno;
-                // this.mblrefno = response.mblrefno;
+                this.record = <Tbl_Cargo_Imp_Devan_Instruction>response.record;
+                this.request_to_code_ctrl.Focus();
+                // if (this.mode == 'ADD')
+                //     this.actionHandler();
+                // else {
+                //     this.record = <Tbl_Cargo_Imp_Devan_Instruction>response.record;
+                //     this.request_to_code_ctrl.nativeElement.Focus();
 
-                if (this.mode == 'ADD')
-                    this.actionHandler();
-                else {
-                    this.record = <Tbl_Cargo_Imp_Devan_Instruction>response.record;
-                    //   this.record.IS_comm_inv = (this.record.cust_comm_inv_yn == "Y") ? true : false;
-                    //   this.record.IS_fumi_cert = (this.record.cust_fumi_cert_yn == "Y") ? true : false;
-                    //   this.record.IS_insp_chrg = (this.record.cust_insp_chrg_yn == "Y") ? true : false;
-
-                    this.CheckData();
-                }
+                //     this.CheckData();
+                // }
             }, error => {
                 this.errorMessage = this.gs.getError(error);
             });
@@ -146,11 +147,7 @@ export class DevanComponent implements OnInit {
 
         if (!this.Allvalid())
             return;
-
-        // this.record.cust_comm_inv_yn = (this.record.IS_comm_inv == true) ? "Y" : "N";
-        // this.record.cust_fumi_cert_yn = (this.record.IS_fumi_cert == true) ? "Y" : "N";
-        // this.record.cust_insp_chrg_yn = (this.record.IS_insp_chrg == true) ? "Y" : "N";
-
+ 
         const saveRecord = <vm_Tbl_Cargo_Imp_Devan_Instruction>{};
         saveRecord.record = this.record;
         saveRecord.pkid = this.pkid;
@@ -177,18 +174,14 @@ export class DevanComponent implements OnInit {
 
         var bRet = true;
         this.errorMessage = "";
-        // if (this.record.cust_parentid == "") {
-        //   bRet = false;
-        //   this.errorMessage = "Invalid ID";
-        //   alert(this.errorMessage);
-        //   return bRet;
-        // }
-        // if (this.record.cust_title == "") {
-        //   bRet = false;
-        //   this.errorMessage = "Title cannot be blank";
-        //   alert(this.errorMessage);
-        //   return bRet;
-        // }
+        if ( this.gs.isBlank(this.record.di_request_to_id)) {
+          bRet = false;
+          this.errorMessage = "Request To cannot be empty";
+          alert(this.errorMessage);
+          this.request_to_code_ctrl.Focus();
+          return bRet;
+        }
+        
         return bRet;
     }
 
@@ -211,6 +204,7 @@ export class DevanComponent implements OnInit {
             this.record.di_request_to_addr2 = _Record.col2.toString();
             this.record.di_request_to_addr3 = this.gs.GetAttention(_Record.col5.toString());
             this.record.di_request_to_addr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+            this.request_to_name_ctrl.focus();
             //  Dispatcher.BeginInvoke(() => { Txt_Request_To_Name.Focus(); });
 
         }
@@ -225,6 +219,7 @@ export class DevanComponent implements OnInit {
             this.record.di_cargo_loc_addr2 = _Record.col2.toString();
             this.record.di_cargo_loc_addr3 = this.gs.GetAttention(_Record.col5.toString());
             this.record.di_cargo_loc_addr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+            this.cargo_loc_name_ctrl.focus();
             // Dispatcher.BeginInvoke(() => { Txt_Cargo_Loc_Name.Focus(); });
 
         }

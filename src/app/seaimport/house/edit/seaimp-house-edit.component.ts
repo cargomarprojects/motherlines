@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef }
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
-
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 import { SeaImpHouseService } from '../../services/seaimp-house.service';
 import { User_Menu } from '../../../core/models/menum';
 import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem,Table_Address } from '../../models/tbl_cargo_imp_housem';
@@ -19,12 +19,12 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   @ViewChild('hbl_houseno') hbl_houseno_field: ElementRef;
   @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
-  //@ViewChild('hbl_shipper_code') hbl_shipper_code_field: ElementRef;
+  @ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
   @ViewChild('hbl_shipper_add1') hbl_shipper_add1_field: ElementRef;
-  //@ViewChild('hbl_consignee_code') hbl_consignee_code_field: ElementRef;
+  @ViewChild('hbl_consignee_code') hbl_consignee_code_field: AutoComplete2Component;
   @ViewChild('hbl_consignee_add1') hbl_consignee_add1_field: ElementRef;
-  //@ViewChild('hbl_agent_name') hbl_agent_name_field: ElementRef;
-  //@ViewChild('hbl_cha_code') hbl_cha_code_field: ElementRef;
+  @ViewChild('hbl_agent_name') hbl_agent_name_field: AutoComplete2Component;
+  @ViewChild('hbl_cha_code') hbl_cha_code_field: AutoComplete2Component;
   @ViewChild('hbl_packages') hbl_packages_field: ElementRef;
   @ViewChild('hbl_uom') hbl_uom_field: ElementRef;
   @ViewChild('hbl_weight') hbl_weight_field: ElementRef;
@@ -35,7 +35,7 @@ export class SeaImpHouseEditComponent implements OnInit {
   @ViewChild('hbl_frt_status') hbl_frt_status_field: ElementRef;
   @ViewChild('hbl_ship_term_id') hbl_ship_term_id_field: ElementRef;
   @ViewChild('hbl_bltype') hbl_bltype_field: ElementRef;
-  //@ViewChild('hbl_handled_name') hbl_handled_name_field: ElementRef;
+  @ViewChild('hbl_handled_name') hbl_handled_name_field: AutoComplete2Component;
 
 
   mblrecord: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
@@ -653,7 +653,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Shipper Code can't be blank";
       alert(this.errorMessage);
-      //this.hbl_shipper_code_field.nativeElement.Focus();
+      this.hbl_shipper_code_field.Focus();
       return bRet;
     }
     if (this.gs.isBlank(this.record.hbl_shipper_add1)) {
@@ -667,7 +667,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Consignee Code can't be blank";
       alert(this.errorMessage);
-      //  this.hbl_consignee_code_field.nativeElement.focus();
+      this.hbl_consignee_code_field.Focus();
       return bRet;
     }
     if (this.gs.isBlank(this.record.hbl_consignee_add1)) {
@@ -682,7 +682,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Agent can't be blank";
       alert(this.errorMessage);
-      //  this.hbl_agent_name_field.nativeElement.focus();
+      this.hbl_agent_name_field.Focus();
       return bRet;
     }
 
@@ -691,7 +691,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         bRet = false;
         this.errorMessage = "Invalid CHB";
         alert(this.errorMessage);
-        //  this.hbl_cha_code_field.nativeElement.focus();
+        this.hbl_cha_code_field.Focus();
         return bRet;
       }
     }
@@ -798,7 +798,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Handled By cannot be blank";
       alert(this.errorMessage);
-      // this.hbl_handled_name_field.nativeElement.focus();
+       this.hbl_handled_name_field.Focus();
       return bRet;
     }
     /*

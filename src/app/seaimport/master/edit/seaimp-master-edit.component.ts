@@ -694,7 +694,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       case 'DEVAN': {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER,
-          parentid: this.pkid,
+          pkid: this.pkid,
           refno: this.record.mbl_refno,
           type: 'SI',
           origin: 'seaimp-master-page'
