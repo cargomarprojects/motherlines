@@ -14,17 +14,17 @@
 <div class="page-body">
 
   <div class="row">
-
-    <div class="col-md-10">
-
-      <div class="col-md-12 px-0 mx-0">
+    <div class="col-md-12">
+      <div class="page-body">
+          <div class="col-md-10">
         <div class="row">
           <div class="col-md-6 testbox  px-0 mx-0">
             <div class="form-group row">
               <label class="col-2 col-form-label col-form-label-sm">Order ID</label>
               <div class="col-4">
-                <input class="form-control form-control-sm" type="text" [(ngModel)]="record.pick_orderno"
-                  [disabled]="true" maxlength="15" />
+                <!-- <input class="form-control form-control-sm" type="text" [(ngModel)]="record.pick_orderno"
+                  [disabled]="true" maxlength="15" /> -->
+                  <InputBox [(inputModel)]="record.pick_orderno" [maxlength]="15" [uppercase]="true" [disabled]="true" #pick_orderno></InputBox>
               </div>
               <label class="col-2 col-form-label col-form-label-sm">Date</label>
               <div class="col-4">
@@ -34,16 +34,12 @@
             </div>
           </div>
         </div>
-        <hr>
+      </div>
       </div>
     </div>
-    <div class="col-md-10">
 
-      <div class="row pt-2">
-
-        <!-- First row -->
-
-        <div class="col-md-12 px-0 mx-0">
+    <div class="col-md-10 pr-0">
+         <div class="page-body">
           <div class="row">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
@@ -58,37 +54,42 @@
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Name</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_name')"
-                    [(ngModel)]="record.pick_truk_name" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_name')"
+                    [(ngModel)]="record.pick_truk_name" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_truk_name" [maxlength]="60" [uppercase]="true"  #pick_truk_name></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Attention</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_attn')"
-                    [(ngModel)]="record.pick_truk_attn" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_attn')"
+                    [(ngModel)]="record.pick_truk_attn" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_truk_attn" [maxlength]="60" [uppercase]="true"  #pick_truk_attn></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Telephone</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_tel')"
-                    [(ngModel)]="record.pick_truk_tel" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_tel')"
+                    [(ngModel)]="record.pick_truk_tel" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_truk_tel" [maxlength]="60" [uppercase]="true"  #pick_truk_tel></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Fax.</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_fax')"
-                    [(ngModel)]="record.pick_truk_fax" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_fax')"
+                    [(ngModel)]="record.pick_truk_fax" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_truk_fax" [maxlength]="60" [uppercase]="true"  #pick_truk_fax></InputBox>
                 </div>
               </div>
 
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">CC</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_cc')"
-                    [(ngModel)]="record.pick_truk_cc" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_truk_cc')"
+                    [(ngModel)]="record.pick_truk_cc" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_truk_cc" [maxlength]="60" [uppercase]="true"  #pick_truk_cc></InputBox>
                 </div>
               </div>
             </div>
@@ -97,37 +98,42 @@
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Pick-up</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_pickup')"
-                    [(ngModel)]="record.pick_pickup" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_pickup')"
+                    [(ngModel)]="record.pick_pickup" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_pickup" [maxlength]="60" [uppercase]="true"  #pick_pickup></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Address</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr1')"
-                    [(ngModel)]="record.pick_addr1" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr1')"
+                    [(ngModel)]="record.pick_addr1" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_addr1" [maxlength]="60" [uppercase]="true"  #pick_addr1></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr2')"
-                    [(ngModel)]="record.pick_addr2" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr2')"
+                    [(ngModel)]="record.pick_addr2" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_addr2" [maxlength]="60" [uppercase]="true"  #pick_addr2></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr3')"
-                    [(ngModel)]="record.pick_addr3" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_addr3')"
+                    [(ngModel)]="record.pick_addr3" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_addr3" [maxlength]="60" [uppercase]="true"  #pick_addr3></InputBox>
                 </div>
               </div>
 
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Tel.No.</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_tel')"
-                    [(ngModel)]="record.pick_tel" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_tel')"
+                    [(ngModel)]="record.pick_tel" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_tel" [maxlength]="60" [uppercase]="true"  #pick_tel></InputBox>
                 </div>
               </div>
               <div class="form-group row">
@@ -138,20 +144,26 @@
                 </div>
                 <label class="col-2 col-form-label col-form-label-sm">Time</label>
                 <div class="col-4">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_time')"
-                    [(ngModel)]="record.pick_time" maxlength="15" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_time')"
+                    [(ngModel)]="record.pick_time" maxlength="15" /> -->
+                    <InputBox [(inputModel)]="record.pick_time" [maxlength]="15" [uppercase]="true"  #pick_time></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Attention</label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_attn')"
-                    [(ngModel)]="record.pick_attn" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_attn')"
+                    [(ngModel)]="record.pick_attn" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_attn" [maxlength]="60" [uppercase]="true"  #pick_attn></InputBox>
                 </div>
               </div>
             </div>
           </div>
-          <hr>
+        </div>
+      
+
+          <div class="page-body">
+              <div class="page-body">
           <div class="row">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
@@ -165,36 +177,41 @@
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
-                    [(ngModel)]="record.pick_fromname" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromname')"
+                    [(ngModel)]="record.pick_fromname" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_fromname" [maxlength]="60" [uppercase]="true"  #pick_fromname></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr1')"
-                    [(ngModel)]="record.pick_fromaddr1" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr1')"
+                    [(ngModel)]="record.pick_fromaddr1" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_fromaddr1" [maxlength]="60" [uppercase]="true"  #pick_fromaddr1></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr2')"
-                    [(ngModel)]="record.pick_fromaddr2" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr2')"
+                    [(ngModel)]="record.pick_fromaddr2" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_fromaddr2" [maxlength]="60" [uppercase]="true"  #pick_fromaddr2></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr3')"
-                    [(ngModel)]="record.pick_fromaddr3" maxlength="120" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr3')"
+                    [(ngModel)]="record.pick_fromaddr3" maxlength="120" /> -->
+                    <InputBox [(inputModel)]="record.pick_fromaddr3" [maxlength]="120" [uppercase]="true"  #pick_fromaddr3></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr4')"
-                    [(ngModel)]="record.pick_fromaddr4" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_fromaddr4')"
+                    [(ngModel)]="record.pick_fromaddr4" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_fromaddr4" [maxlength]="60" [uppercase]="true"  #pick_fromaddr4></InputBox>
                 </div>
               </div>
             </div>
@@ -210,141 +227,158 @@
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
-                    [(ngModel)]="record.pick_toname" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toname')"
+                    [(ngModel)]="record.pick_toname" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_toname" [maxlength]="60" [uppercase]="true"  #pick_toname></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr1')"
-                    [(ngModel)]="record.pick_toaddr1" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr1')"
+                    [(ngModel)]="record.pick_toaddr1" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_toaddr1" [maxlength]="60" [uppercase]="true"  #pick_toaddr1></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr2')"
-                    [(ngModel)]="record.pick_toaddr2" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr2')"
+                    [(ngModel)]="record.pick_toaddr2" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_toaddr2" [maxlength]="60" [uppercase]="true"  #pick_toaddr2></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr3')"
-                    [(ngModel)]="record.pick_toaddr3" maxlength="120" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr3')"
+                    [(ngModel)]="record.pick_toaddr3" maxlength="120" /> -->
+                    <InputBox [(inputModel)]="record.pick_toaddr3" [maxlength]="120" [uppercase]="true"  #pick_toaddr3></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm"></label>
                 <div class="col-10">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr4')"
-                    [(ngModel)]="record.pick_toaddr4" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_toaddr4')"
+                    [(ngModel)]="record.pick_toaddr4" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_toaddr4" [maxlength]="60" [uppercase]="true"  #pick_toaddr4></InputBox>
                 </div>
               </div>
             </div>
           </div>
-          <hr>
+        </div>
+          <div class="page-body">
           <div class="row">
-            <div class="col-md-12 testbox  px-0 mx-0">
+            <div class="col-md-12">
               <div class="form-group row">
-                <label class="offset-1 col-3 col-form-label col-form-label-sm">Description</label>
-                <label class="col-2 pl-0 col-form-label col-form-label-sm"># of piece</label>
-                <label class="col-2 pl-0 col-form-label col-form-label-sm">Unit</label>
-                <label class="col-2 pl-0 col-form-label col-form-label-sm">Weight (LB)</label>
-                <label class="col-2 pl-0 col-form-label col-form-label-sm">CBM</label>
+                <label class="offset-1 col-3  pl-0  pr-0 col-form-label col-form-label-sm">Description</label>
+                <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm"># of piece</label>
+                <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">Unit</label>
+                <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">Weight (LB)</label>
+                <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">CBM</label>
               </div>
               <div class="form-group row">
-                <div class="offset-1 col-3">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc1')"
-                    [(ngModel)]="record.pick_desc1" maxlength="100" />
+                <div class="offset-1 col-3  pl-0  pr-0">
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc1')"
+                    [(ngModel)]="record.pick_desc1" maxlength="100" /> -->
+                    <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true"  #pick_desc1></InputBox>
                 </div>
-                <div class="col-2 pl-0">
-                  <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
-                    [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
+                <div class="col-2 pl-0  pr-0">
+                  <!-- <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
+                    [(ngModel)]="record.pick_tot_piece1" maxlength="15" /> -->
+                    <InputBoxNumber [(inputModel)]="record.pick_tot_piece1" [maxlength]="15" [dec]="0"  #pick_tot_piece1></InputBoxNumber>
                 </div>
-                <div class="col-2 pl-0">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom1')"
-                    [(ngModel)]="record.pick_uom1" maxlength="10" />
+                <div class="col-2 pl-0  pr-0">
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom1')"
+                    [(ngModel)]="record.pick_uom1" maxlength="10" /> -->
+                    <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"  #pick_uom1></InputBox>
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0  pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_wt1')"
                     [(ngModel)]="record.pick_wt1" maxlength="15" />
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0  pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_cbm_cft1')"
                     [(ngModel)]="record.pick_cbm_cft1" maxlength="15" />
                 </div>
               </div>
               <div class="form-group row">
-                <div class="offset-1 col-3">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc2')"
-                    [(ngModel)]="record.pick_desc2" maxlength="100" />
+                <div class="offset-1 col-3  pl-0  pr-0">
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc2')"
+                    [(ngModel)]="record.pick_desc2" maxlength="100" /> -->
+                    <InputBox [(inputModel)]="record.pick_desc2" [maxlength]="100" [uppercase]="true"  #pick_desc2></InputBox>
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0  pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece2')"
                     [(ngModel)]="record.pick_tot_piece2" maxlength="15" />
                 </div>
-                <div class="col-2 pl-0">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom2')"
-                    [(ngModel)]="record.pick_uom2" maxlength="10" />
+                <div class="col-2 pl-0  pr-0">
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom2')"
+                    [(ngModel)]="record.pick_uom2" maxlength="10" /> -->
+                    <InputBox [(inputModel)]="record.pick_uom2" [maxlength]="10" [uppercase]="true"  #pick_uom2></InputBox>
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0  pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_wt2')"
                     [(ngModel)]="record.pick_wt2" maxlength="15" />
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0 pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_cbm_cft2')"
                     [(ngModel)]="record.pick_cbm_cft2" maxlength="15" />
                 </div>
               </div>
               <div class="form-group row">
-                <div class="offset-1 col-3">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc3')"
-                    [(ngModel)]="record.pick_desc3" maxlength="100" />
+                <div class="offset-1 col-3  pl-0  pr-0">
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc3')"
+                    [(ngModel)]="record.pick_desc3" maxlength="100" /> -->
+                    <InputBox [(inputModel)]="record.pick_desc3" [maxlength]="100" [uppercase]="true"  #pick_desc3></InputBox>
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0 pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece3')"
                     [(ngModel)]="record.pick_tot_piece3" maxlength="15" />
                 </div>
-                <div class="col-2 pl-0">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom3')"
-                    [(ngModel)]="record.pick_uom3" maxlength="10" />
+                <div class="col-2 pl-0  pr-0">
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom3')"
+                    [(ngModel)]="record.pick_uom3" maxlength="10" /> -->
+                    <InputBox [(inputModel)]="record.pick_uom3" [maxlength]="10" [uppercase]="true"  #pick_uom3></InputBox>
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0  pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_wt3')"
                     [(ngModel)]="record.pick_wt3" maxlength="15" />
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0 pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_cbm_cft3')"
                     [(ngModel)]="record.pick_cbm_cft3" maxlength="15" />
                 </div>
               </div>
               <div class="form-group row">
-                <div class="offset-1 col-3">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc4')"
-                    [(ngModel)]="record.pick_desc4" maxlength="100" />
+                <div class="offset-1 col-3  pl-0 pr-0">
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc4')"
+                    [(ngModel)]="record.pick_desc4" maxlength="100" /> -->
+                    <InputBox [(inputModel)]="record.pick_desc4" [maxlength]="100" [uppercase]="true"  #pick_desc4></InputBox>
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0 pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece4')"
                     [(ngModel)]="record.pick_tot_piece4" maxlength="15" />
                 </div>
-                <div class="col-2 pl-0">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom4')"
-                    [(ngModel)]="record.pick_uom4" maxlength="10" />
+                <div class="col-2 pl-0 pr-0">
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom4')"
+                    [(ngModel)]="record.pick_uom4" maxlength="10" /> -->
+                    <InputBox [(inputModel)]="record.pick_uom4" [maxlength]="10" [uppercase]="true"  #pick_uom4></InputBox>
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0 pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_wt4')"
                     [(ngModel)]="record.pick_wt4" maxlength="15" />
                 </div>
-                <div class="col-2 pl-0">
+                <div class="col-2 pl-0 pr-0">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_cbm_cft4')"
                     [(ngModel)]="record.pick_cbm_cft4" maxlength="15" />
                 </div>
               </div>
             </div>
           </div>
-          <hr>
+        </div>
+
+        <div class="page-body">
           <div class="row">
             <div class="col-md-12 testbox  px-0 mx-0">
               <div class="form-group row">
@@ -352,31 +386,36 @@
               </div>
               <div class="form-group row">
                 <div class="offset-1 col-11">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_remark_1')"
-                    [(ngModel)]="record.pick_remark_1" maxlength="100" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_remark_1')"
+                    [(ngModel)]="record.pick_remark_1" maxlength="100" /> -->
+                    <InputBox [(inputModel)]="record.pick_remark_1" [maxlength]="100" [uppercase]="true"  #pick_remark_1></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <div class="offset-1 col-11">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_remark_2')"
-                    [(ngModel)]="record.pick_remark_2" maxlength="100" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_remark_2')"
+                    [(ngModel)]="record.pick_remark_2" maxlength="100" /> -->
+                    <InputBox [(inputModel)]="record.pick_remark_2" [maxlength]="100" [uppercase]="true"  #pick_remark_2></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <div class="offset-1 col-11">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_remark_3')"
-                    [(ngModel)]="record.pick_remark_3" maxlength="100" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_remark_3')"
+                    [(ngModel)]="record.pick_remark_3" maxlength="100" /> -->
+                    <InputBox [(inputModel)]="record.pick_remark_3" [maxlength]="100" [uppercase]="true"  #pick_remark_3></InputBox>
                 </div>
               </div>
               <div class="form-group row">
                 <div class="offset-1 col-11">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_remark_4')"
-                    [(ngModel)]="record.pick_remark_4" maxlength="100" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_remark_4')"
+                    [(ngModel)]="record.pick_remark_4" maxlength="100" /> -->
+                    <InputBox [(inputModel)]="record.pick_remark_4" [maxlength]="100" [uppercase]="true"  #pick_remark_4></InputBox>
                 </div>
               </div>
             </div>
           </div>
-          <hr>
+        </div>
+        <div class="page-body">
           <div class="row">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
@@ -404,21 +443,23 @@
               <div class="form-group row">
                 <label class="offset-2 col-4 col-form-label col-form-label-sm">Vessel</label>
                 <div class="col-6">
-                  <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_vessel')"
-                    [(ngModel)]="record.pick_vessel" maxlength="60" />
+                  <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_vessel')"
+                    [(ngModel)]="record.pick_vessel" maxlength="60" /> -->
+                    <InputBox [(inputModel)]="record.pick_vessel" [maxlength]="60" [uppercase]="true"  #pick_vessel></InputBox>
                 </div>
               </div>
               <div class="form-group row">
 
                 <label class="offset-2 col-4 col-form-label col-form-label-sm pr-0">Voyage</label>
                 <div class="col-6 ">
-                  <input class="form-control form-control-sm " type="text" (blur)="onBlur('pick_voyage')"
-                    [(ngModel)]="record.pick_voyage" maxlength="15" />
+                  <!-- <input class="form-control form-control-sm " type="text" (blur)="onBlur('pick_voyage')"
+                    [(ngModel)]="record.pick_voyage" maxlength="15" /> -->
+                    <InputBox [(inputModel)]="record.pick_voyage" [maxlength]="15" [uppercase]="true"  #pick_voyage></InputBox>
                 </div>
               </div>
             </div>
           </div>
-          <hr>
+        </div>
           <div class="row">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="offset-2 col-10">
@@ -446,11 +487,18 @@
             </div>
           </div>
         </div>
+      
       </div>
-    </div>
-    <div class="col-md-2 testbox">
+
+    <div class="col-md-2 pl-0">
+
+
+        <div class="page-body">
+
+            <div class="row">
+          
       <div class="col-md-12  px-0 mx-0 py-0">
-        <hr>
+        
         <div class="form-group row">
           <label class="col-12 col-form-label col-form-label-sm">Freight</label>
         </div>
@@ -568,7 +616,12 @@
           </div>
         </div>
       </div>
+
     </div>
+  </div>
+
+    </div>
+
   </div>
 </div>
 

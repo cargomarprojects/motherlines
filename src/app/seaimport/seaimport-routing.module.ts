@@ -7,6 +7,8 @@ import { SeaImpHouseEditComponent } from './house/edit/seaimp-house-edit.compone
 import { SeaImpUsCustomsHoldComponent } from './uscustomshold/seaimp-uscustomshold.component';
 import { SeaImpCargoPickupComponent } from './cargopickup/seaimp-cargopickup.component';
 import { SeaImpRiderPageComponent } from './riderpage/seaimp-riderpage.component';
+import { DevanComponent } from './devan/devan.component';
+
 const routes: Routes = [
   { path : 'SeaImpMasterPage', component : SeaImpMasterComponent },
   { path : 'SeaImpMasterEditPage', component : SeaImpMasterEditComponent },
@@ -14,7 +16,8 @@ const routes: Routes = [
   { path : 'SeaImpHouseEditPage', component : SeaImpHouseEditComponent } ,
   { path : 'USCustomsHoldPage', component : SeaImpUsCustomsHoldComponent },
   { path : 'CargoPickupPage', component : SeaImpCargoPickupComponent }  ,
-  { path : 'RiderPage', component : SeaImpRiderPageComponent }  
+  { path : 'RiderPage', component : SeaImpRiderPageComponent }  ,
+  { path : 'DevanInstructionPage', component : DevanComponent } 
 ];
 
 
