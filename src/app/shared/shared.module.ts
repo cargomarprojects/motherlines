@@ -121,7 +121,7 @@ import { InputBoxNumberComponent } from './inputnumber/inputboxnumber.component'
     PageComponent,
     Page2Component,
     InputBoxComponent,
-    
+    InputBoxNumberComponent,
   ],
   providers: [
     LovService,

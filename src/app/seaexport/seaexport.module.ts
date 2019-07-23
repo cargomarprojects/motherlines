@@ -13,6 +13,8 @@ import { SeaExpMasterHeaderComponent } from './master/seaexp-master-header.compo
 import { SeaexpMasterEditComponent } from './master/edit/seaexp-master-edit.component';
 import { BookingComponent } from './booking/booking.component';
 
+import { MblPageComponent } from './mblpage/mblpage.component';
+
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { BookingComponent } from './booking/booking.component';
     SeaExpMasterHeaderComponent,
     SeaexpMasterEditComponent,
     BookingComponent,
+    MblPageComponent
   ],
   imports: [
     SharedModule,    
