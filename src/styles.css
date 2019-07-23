@@ -55,6 +55,10 @@
     margin: 0px !important;
     padding: 0px  !important;
   }
+
+  .form-group {
+    margin-bottom: 0.1rem !important;
+  }
   
   p, ul, li, div, nav {
     padding: 0;
@@ -389,9 +393,7 @@
     cursor: pointer;
   }
   
-  .form-group {
-    margin-bottom: 0.1rem !important;
-  }
+
   
   
   .border-left {
@@ -629,3 +631,4 @@
   .fixed_header thead tr th td {
     width:auto;
   }
+

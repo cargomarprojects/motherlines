@@ -40,7 +40,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Date</label>
         <div class="col-8">
-          <app-date [inputdate]="record.book_date" (ValueChanged)="sdate=$event"></app-date>
+          <app-date [inputdate]="record.book_date" (ValueChanged)="record.book_date=$event"></app-date>
         </div>
       </div>
 
@@ -233,7 +233,7 @@
 
         <label class="col-4 col-form-label col-form-label-sm">Pol-Etd</label>
         <div class="col-8">
-          <app-date [inputdate]="record.book_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+          <app-date [inputdate]="record.book_pol_etd" (ValueChanged)="record.book_pol_etd=$event"></app-date>
         </div>
 
       </div>
@@ -259,7 +259,7 @@
 
         <label class="col-4 col-form-label col-form-label-sm">Pod-Eta</label>
         <div class="col-8">
-          <app-date [inputdate]="record.book_pol_eta" (ValueChanged)="sdate=$event"></app-date>
+          <app-date [inputdate]="record.book_pol_eta" (ValueChanged)="record.book_pol_eta=$event"></app-date>
         </div>
 
       </div>
@@ -320,7 +320,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Cargo Cut-Off</label>
         <div class="col-3">
-          <app-date [inputdate]="record.book_cutoff" (ValueChanged)="sdate=$event"></app-date>
+          <app-date [inputdate]="record.book_cutoff" (ValueChanged)="record.book_cutoff=$event"></app-date>
         </div>
         <label class="col-2 col-form-label col-form-label-sm">Time</label>
         <div class="col-3">
@@ -332,7 +332,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Doc Cut-Off</label>
         <div class="col-3">
-          <app-date [inputdate]="record.book_doc_cutoff" (ValueChanged)="sdate=$event"></app-date>
+          <app-date [inputdate]="record.book_doc_cutoff" (ValueChanged)="record.book_doc_cutoff=$event"></app-date>
         </div>
         <label class="col-2 col-form-label col-form-label-sm">Time</label>
         <div class="col-3">
