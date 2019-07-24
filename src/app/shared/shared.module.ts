@@ -54,14 +54,15 @@ import { Page2Component } from './page2/page2.component';
 
 import { InputBoxComponent } from './input/inputbox.component';
 import { InputBoxNumberComponent } from './inputnumber/inputboxnumber.component';
-
+import { SharedRoutingModule } from './shared-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    SharedRoutingModule
   ],
   declarations: [
     
