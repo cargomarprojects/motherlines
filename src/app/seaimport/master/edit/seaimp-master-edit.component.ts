@@ -24,6 +24,8 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
 
+  bPreq:boolean =false;
+  
   private pkid: string;
   private menuid: string;
   private hblid: string = '';

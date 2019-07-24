@@ -261,7 +261,8 @@
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">MBL Status</label>
                 <div class="col-4 pr-0">
-                  <select [disabled]="mode=='EDIT' && this.gs.USER_DISABLE_EDIT_SI_MBLSTATUS=='Y'" class="form-control form-control-sm" [(ngModel)]="record.mbl_status">
+                  <select [disabled]="mode=='EDIT' && this.gs.USER_DISABLE_EDIT_SI_MBLSTATUS=='Y'"
+                    class="form-control form-control-sm" [(ngModel)]="record.mbl_status">
                     <option *ngFor="let rec of MblStatusList" [value]="rec.name">{{rec.name}}</option>
                   </select>
                 </div>
@@ -536,7 +537,8 @@
 
         <div class="form-group row">
 
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('DEVAN-INSTRUCTION')">Devanning Instruction</button>
+          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('DEVAN-INSTRUCTION')">Devanning
+            Instruction</button>
         </div>
 
         <div class="form-group row">
@@ -556,7 +558,11 @@
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment Request</button>
+          <!-- <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
+            Request</button> -->
+          <button class=" col-12 btn btn-primary btn-sm" data-toggle="modal" data-target="#paymentreq">Payment
+            Request</button>
+
         </div>
 
         <div class="form-group row">
@@ -604,3 +610,22 @@
   <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}} /
     {{record.rec_created_date}} </label>
 </div>
+
+<div class="modal fade" data-backdrop="static" id="paymentreq" role="dialog" aria-labelledby="paymenttitle">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paytiltle">Payment Request</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-paymentreq [cp_ref_no]="record.mbl_refno" [cp_master_id]="pkid" [cp_source]="'SEA-MASTER'"
+          [cp_mode]="'SEA IMPORT'"> </app-paymentreq>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
