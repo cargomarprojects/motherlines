@@ -8,10 +8,10 @@
 
 <div *ngIf="errorMessage.length >0">
   <div class="alert alert-success">
-    <a (click)="errorMessage=[]" class="close" aria-label="close" >&times;</a>
+    <a (click)="errorMessage=[]" class="close" aria-label="close">&times;</a>
     <ul>
       <li *ngFor="let str of errorMessage">
-         <p class="h4"> {{str}}</p>
+        <p class="h4"> {{str}}</p>
       </li>
     </ul>
   </div>
@@ -359,9 +359,11 @@
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
-        <div class="col-8">
-          <input type="checkbox" [(ngModel)]="record.mbld_is_cntrized" />
-          <span>Is Containerized</span>
+        <div class="col-8 ">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record._mbld_is_cntrized" />
+            <span>Is Containerized</span>
+          </div>
         </div>
       </div>
 
@@ -461,8 +463,10 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input type="checkbox" [(ngModel)]="record.mbld_print_kgs" />
-          <span>Print KGS</span>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record._mbld_print_kgs" />
+            <span>Print KGS</span>
+          </div>
         </div>
       </div>
 
@@ -470,8 +474,10 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <input type="checkbox" [(ngModel)]="record.mbld_print_lbs" />
-          <span>Print LBS</span>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record._mbld_print_lbs" />
+            <span>Print LBS</span>
+          </div>
         </div>
       </div>
 
@@ -493,15 +499,67 @@
 
 <!-- Detail -->
 
+<div class="page-body">
+
+  <div class="row">
+    <div class="col-md-5">
+
+      <div class="form-group row">
+        <label class="col-3 px-0 col-form-label col-form-label-sm">Marks & Nos</label>
+        <button class="col-3 btn btn-success btn-sm" (click)="LoadContainer()">Load Cntr</button>
+        <label class="col-1 px-0 col-form-label col-form-label-sm"></label>
+        <label class="col-5 px-0 col-form-label col-form-label-sm">Pkgs</label>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-8 px-0">
+          <InputBox [(inputModel)]="record.mark1" [maxlength]="15" [uppercase]="true"></InputBox>
+        </div>
+        <div class="col-4 px-0">
+          <InputBox [(inputModel)]="record.pkg1" [maxlength]="12" [uppercase]="true"></InputBox>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+
+      <div class="form-group row">
+        <label class="col-12 pl-1 col-form-label col-form-label-sm">Description</label>
+      </div>
+      <div class="form-group row">
+        <div class="col-12 pl-1">
+          <InputBox [(inputModel)]="record.desc1" [maxlength]="40" [uppercase]="true"></InputBox>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group row">
+        <div class="col-12">
+          <label class="col-12 px-0 mx-0 col-form-label col-form-label-sm">Lbs</label>
+          <div class="col-10">
+            <InputBoxNumber [(inputModel)]="record.mbld_lbs" [maxlength]="15" [dec]="3"></InputBoxNumber>
+          </div>
+          <span style="cursor:pointer" (click)="FindWeight('Lbs2Kgs')"> <i class="fa fa-arrow-down"> </i> </span>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
 
 <div class="page-body">
 
   <div class="row">
     <div class="col-md-12">
       <div class="form-group row">
-        <label class="col-3 px-0 col-form-label col-form-label-sm">Marks & Nos</label>
-        <label class="col-1 px-0 col-form-label col-form-label-sm">Pkgs</label>
-        <label class="col-5 pl-1 col-form-label col-form-label-sm">Description</label>
+        <label class="col-1 px-0 col-form-label col-form-label-sm">Marks & Nos</label>
+        <button class="col-1 btn btn-success btn-sm" (click)="LoadContainer()">Load Cntr</button>
+        <label class="col-1 px-0 col-form-label col-form-label-sm"></label>
+        <label class="col-2 px-0 col-form-label col-form-label-sm">Pkgs</label>
+        <label class="col-7 pl-1 col-form-label col-form-label-sm">Description</label>
       </div>
     </div>
   </div>
@@ -509,6 +567,7 @@
 
   <div class="row">
     <div class="col-md-12">
+
       <div class="form-group row">
         <div class="col-3 px-0">
           <InputBox [(inputModel)]="record.mark1" [maxlength]="15" [uppercase]="true"></InputBox>
@@ -527,8 +586,8 @@
           </div>
           <span style="cursor:pointer" (click)="FindWeight('Lbs2Kgs')"> <i class="fa fa-arrow-down"> </i> </span>
         </div>
-
       </div>
+
     </div>
   </div>
 
@@ -801,7 +860,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+          <button class="btn btn-primary btn-sm mr-1" *ngIf="canSave" (click)="Save()">Save</button>
 
         </div>
       </div>

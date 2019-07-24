@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -14,6 +14,7 @@ import { MbldService } from '../services/mbld.service';
 
 import { Tbl_cargo_exp_mbldet, vm_Tbl_cargo_exp_mbldet } from '../models/Tbl_cargo_exp_mbldet';
 import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
+import { Tbl_cargo_container } from 'src/app/other/models/tbl_cargo_general';
 
 
 
@@ -39,6 +40,8 @@ export class MblPageComponent implements OnInit {
 
   recorddet: Tbl_cargo_exp_desc[] = [];
 
+  cntrs: Tbl_cargo_container[] = [];
+
   ShipmentType: string = '';
 
   @ViewChild('mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
@@ -46,6 +49,7 @@ export class MblPageComponent implements OnInit {
 
   DESC_TYPE: string = "MBLDESC";
 
+  canSave : boolean = false;
 
   constructor(
     private router: Router,
@@ -96,8 +100,10 @@ export class MblPageComponent implements OnInit {
         this.records = <Tbl_cargo_exp_desc[]>response.records;
 
         this.ShipmentType = this.record.mbld_cntr_type;
-        if (this.record.mbld_pkid == "") {
 
+        this.mode = "EDIT";
+        if (this.record.mbld_pkid == "") {
+          this.mode = "ADD";
           this.record.mbld_type_move = this.record.mbld_ship_term;//default data
           this.record.mbld_notify_name = "SAME AS CONSIGNEE";
 
@@ -116,8 +122,7 @@ export class MblPageComponent implements OnInit {
 
         }
 
-
-
+        this.canSave =  this.gs.canSave(this.menuid, this.mode);
 
         this.InitDesc();
 
@@ -129,17 +134,63 @@ export class MblPageComponent implements OnInit {
 
         }
 
-        this.record._mbld_is_cntrized = (this.record.mbld_is_cntrized) ? true : false;
-        this.record._mbld_print_kgs = (this.record.mbld_print_kgs) ? true : false;
-        this.record._mbld_print_lbs = (this.record.mbld_print_lbs) ? true : false;
+        this.record._mbld_is_cntrized = (this.record.mbld_is_cntrized == "Y") ? true : false;
+        this.record._mbld_print_kgs = (this.record.mbld_print_kgs == "Y") ? true : false;
+        this.record._mbld_print_lbs = (this.record.mbld_print_lbs == "Y") ? true : false;
 
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
-        alert('Error While Saving');
+
       });
   }
 
+
+  LoadContainer() {
+    this.errorMessage = [];
+    let SearchData = {
+      pkid: this.pkid,
+    }
+    this.mainService.GetContainer(SearchData).subscribe(response => {
+      this.cntrs = response.records;
+      this.showContainer();
+    }, error => {
+      this.errorMessage.push(this.gs.getError(error));
+      alert(this.errorMessage[0]);
+    });
+  }
+
+  GetCntrInfo(CntrNo: string, CntrSealNo: string) {
+    if (CntrSealNo.length > 0)
+      CntrNo += "/ " + CntrSealNo;
+    return CntrNo;
+  }
+
+  showContainer() {
+    this.record.mark6 = "CONTAINER NO./ SEAL NO.";
+    if (this.cntrs.length > 0)
+      this.record.mark7 = this.GetCntrInfo(this.cntrs[0].cntr_no, this.cntrs[0].cntr_sealno);
+    if (this.cntrs.length > 1)
+      this.record.mark8 = this.GetCntrInfo(this.cntrs[1].cntr_no, this.cntrs[1].cntr_sealno);
+    if (this.cntrs.length > 2)
+      this.record.mark9 = this.GetCntrInfo(this.cntrs[2].cntr_no, this.cntrs[2].cntr_sealno);
+    if (this.cntrs.length > 3)
+      this.record.mark10 = this.GetCntrInfo(this.cntrs[10].cntr_no, this.cntrs[10].cntr_sealno);
+    if (this.cntrs.length > 4)
+      this.record.mark11 = this.GetCntrInfo(this.cntrs[11].cntr_no, this.cntrs[11].cntr_sealno);
+    if (this.cntrs.length > 5)
+      this.record.mark12 = this.GetCntrInfo(this.cntrs[12].cntr_no, this.cntrs[12].cntr_sealno);
+    if (this.cntrs.length > 6)
+      this.record.mark13 = this.GetCntrInfo(this.cntrs[13].cntr_no, this.cntrs[13].cntr_sealno);
+    if (this.cntrs.length > 7)
+      this.record.mark14 = this.GetCntrInfo(this.cntrs[14].cntr_no, this.cntrs[14].cntr_sealno);
+    if (this.cntrs.length > 8)
+      this.record.mark15 = this.GetCntrInfo(this.cntrs[15].cntr_no, this.cntrs[15].cntr_sealno);
+    if (this.cntrs.length > 9)
+      this.record.mark16 = this.GetCntrInfo(this.cntrs[16].cntr_no, this.cntrs[16].cntr_sealno);
+    if (this.cntrs.length > 10)
+      this.record.mark17 = this.GetCntrInfo(this.cntrs[17].cntr_no, this.cntrs[17].cntr_sealno);
+  }
 
   ShowDesc(Rec: Tbl_cargo_exp_desc) {
     if (Rec.cargo_ctr == 1) {
@@ -247,15 +298,16 @@ export class MblPageComponent implements OnInit {
       bret = false;
     }
 
+    if (!this.gs.isBlank(this.record.mbld_notify_id)) {
 
-    if (this.gs.isBlank(this.record.mbld_notify_id) || this.gs.isBlank(this.record.mbld_notify_code)) {
-      this.errorMessage.push("Notify Code cannot be blank");
-      bret = false;
-    }
-
-    if (this.gs.isBlank(this.record.mbld_notify_name)) {
-      this.errorMessage.push("Notify Name cannot be blank");
-      bret = false;
+      if (this.gs.isBlank(this.record.mbld_notify_code)) {
+        this.errorMessage.push("Notify Code cannot be blank");
+        bret = false;
+      }
+      if (this.gs.isBlank(this.record.mbld_notify_name)) {
+        this.errorMessage.push("Notify Name cannot be blank");
+        bret = false;
+      }
     }
 
     if (this.gs.isBlank(this.record.mbld_pol_name)) {
@@ -341,7 +393,9 @@ export class MblPageComponent implements OnInit {
         this.mode = 'EDIT';
 
     }, error => {
-      this.errorMessage = this.gs.getError(error);
+      this.errorMessage.push(this.gs.getError(error));
+      alert(this.errorMessage[0]);
+
     }
     );
 

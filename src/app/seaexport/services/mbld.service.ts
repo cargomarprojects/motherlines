@@ -18,6 +18,11 @@ export class MbldService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Mblpage/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
+
+    GetContainer(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Common/GetContainer', SearchData, this.gs.headerparam2('authorized'));
+    }
+
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Mblpage/Save', SearchData, this.gs.headerparam2('authorized'));
     }
