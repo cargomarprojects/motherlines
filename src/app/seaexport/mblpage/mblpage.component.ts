@@ -33,14 +33,16 @@ export class MblPageComponent implements OnInit {
   private isAdmin: boolean;
 
   record: Tbl_cargo_exp_mbldet = <Tbl_cargo_exp_mbldet>{};
-  records : Tbl_cargo_exp_desc [] =[];
+  records: Tbl_cargo_exp_desc[] = [];
 
-  recorddet : Tbl_cargo_exp_desc [] =[];
+  recorddet: Tbl_cargo_exp_desc[] = [];
+
+  ShipmentType: string = '';
 
   @ViewChild('mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
 
 
-  DESC_TYPE : string = "MBLDESC";
+  DESC_TYPE: string = "MBLDESC";
 
 
   constructor(
@@ -91,45 +93,43 @@ export class MblPageComponent implements OnInit {
         this.record = <Tbl_cargo_exp_mbldet>response.record;
         this.records = <Tbl_cargo_exp_desc[]>response.records;
 
-        if ( this.record.mbld_pkid == ""){
+        this.ShipmentType = this.record.mbld_cntr_type;
+        if (this.record.mbld_pkid == "") {
+
           this.record.mbld_type_move = this.record.mbld_ship_term;//default data
           this.record.mbld_notify_name = "SAME AS CONSIGNEE";
+
           this.record.mbld_is_cntrized = (this.record.mbld_cntr_type != "OTHERS") ? "Y" : "N";
-          if (this.record.mbld_cntr_type == "FCL" || this.record.mbld_cntr_type == "CONSOLE")
-          {
+
+          this.record.mbld_print_kgs = "N";
+          this.record.mbld_print_lbs = "N";
+
+          if (this.record.mbld_cntr_type == "FCL" || this.record.mbld_cntr_type == "CONSOLE") {
             this.record.desc1 = "SHIPPERS'S LOAD, COUNT, AND SEALED";
             this.record.desc2 = "SAID TO CONTAIN";
           }
-          else if (this.record.mbld_cntr_type == "LCL")
-          {
+          else if (this.record.mbld_cntr_type == "LCL") {
             this.record.desc1 = "SAID TO CONTAIN";
           }
-          
+
         }
 
-        this.InitDesc();
-        
-        if ( this.records != null) {
 
-          this.records.forEach( rec =>{
-              this.ShowDesc(rec);
+
+
+        this.InitDesc();
+
+        if (this.records != null) {
+
+          this.records.forEach(rec => {
+            this.ShowDesc(rec);
           });
 
         }
 
-
-        this.record._mbld_is_cntrized = false;
-        if (this.record.mbld_is_cntrized == "Y")
-          this.record._mbld_is_cntrized = true;
-
-        this.record._mbld_print_kgs = false;
-        if (this.record.mbld_print_kgs == "Y")
-          this.record._mbld_print_kgs = true;
-
-        this.record._mbld_print_lbs = false;
-        if (this.record.mbld_print_lbs == "Y")
-          this.record._mbld_print_lbs = true;
-
+        this.record._mbld_is_cntrized = (this.record.mbld_is_cntrized) ? true : false;
+        this.record._mbld_print_kgs = (this.record.mbld_print_kgs) ? true : false;
+        this.record._mbld_print_lbs = (this.record.mbld_print_lbs) ? true : false;
 
 
       }, error => {
@@ -138,85 +138,66 @@ export class MblPageComponent implements OnInit {
   }
 
 
-  ShowDesc(Rec : Tbl_cargo_exp_desc )
-  {
-      if (Rec.cargo_ctr == 1)
-      {
-          this.record.mark1 = Rec.cargo_marks; this.record.pkg1 = Rec.cargo_packages; this.record.desc1 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 2)
-      {
-          this.record.mark2 = Rec.cargo_marks; this.record.pkg2 = Rec.cargo_packages; this.record.desc2 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 3)
-      {
-          this.record.mark3 = Rec.cargo_marks; this.record.pkg3 = Rec.cargo_packages; this.record.desc3 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 4)
-      {
-          this.record.mark4 = Rec.cargo_marks; this.record.desc4 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 5)
-      {
-          this.record.mark5 = Rec.cargo_marks; this.record.desc5 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 6)
-      {
-          this.record.mark6 = Rec.cargo_marks; this.record.desc6 = Rec.cargo_description;
-      }      
-      if (Rec.cargo_ctr == 7)
-      {
-          this.record.mark7 = Rec.cargo_marks; this.record.desc7 = Rec.cargo_description;
-      }      
-      if (Rec.cargo_ctr == 8)
-      {
-          this.record.mark8 = Rec.cargo_marks; this.record.desc8 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 9)
-      {
-          this.record.mark9 = Rec.cargo_marks; this.record.desc9 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 10)
-      {
-          this.record.mark10 = Rec.cargo_marks; this.record.desc10 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 11)
-      {
-          this.record.mark11 = Rec.cargo_marks; this.record.desc11 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 12)
-      {
-          this.record.mark12 = Rec.cargo_marks; this.record.desc12 = Rec.cargo_description;
-      }
-      if (Rec.cargo_ctr == 13)
-      {
-          this.record.mark13 = Rec.cargo_marks; this.record.desc13 = Rec.cargo_description;
-      }      
-      if (Rec.cargo_ctr == 14)
-      {
-          this.record.mark14 = Rec.cargo_marks; this.record.desc14 = Rec.cargo_description;
-      }      
-      if (Rec.cargo_ctr == 15)
-      {
-          this.record.mark15 = Rec.cargo_marks; this.record.desc15 = Rec.cargo_description;
-      }      
-      if (Rec.cargo_ctr == 16)
-      {
-          this.record.mark16 = Rec.cargo_marks; this.record.desc16 = Rec.cargo_description;
-      }      
-      if (Rec.cargo_ctr == 17)
-      {
-          this.record.mark17 = Rec.cargo_marks; this.record.desc17 = Rec.cargo_description;
-      }
+  ShowDesc(Rec: Tbl_cargo_exp_desc) {
+    if (Rec.cargo_ctr == 1) {
+      this.record.mark1 = Rec.cargo_marks; this.record.pkg1 = Rec.cargo_packages; this.record.desc1 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 2) {
+      this.record.mark2 = Rec.cargo_marks; this.record.pkg2 = Rec.cargo_packages; this.record.desc2 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 3) {
+      this.record.mark3 = Rec.cargo_marks; this.record.pkg3 = Rec.cargo_packages; this.record.desc3 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 4) {
+      this.record.mark4 = Rec.cargo_marks; this.record.desc4 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 5) {
+      this.record.mark5 = Rec.cargo_marks; this.record.desc5 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 6) {
+      this.record.mark6 = Rec.cargo_marks; this.record.desc6 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 7) {
+      this.record.mark7 = Rec.cargo_marks; this.record.desc7 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 8) {
+      this.record.mark8 = Rec.cargo_marks; this.record.desc8 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 9) {
+      this.record.mark9 = Rec.cargo_marks; this.record.desc9 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 10) {
+      this.record.mark10 = Rec.cargo_marks; this.record.desc10 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 11) {
+      this.record.mark11 = Rec.cargo_marks; this.record.desc11 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 12) {
+      this.record.mark12 = Rec.cargo_marks; this.record.desc12 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 13) {
+      this.record.mark13 = Rec.cargo_marks; this.record.desc13 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 14) {
+      this.record.mark14 = Rec.cargo_marks; this.record.desc14 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 15) {
+      this.record.mark15 = Rec.cargo_marks; this.record.desc15 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 16) {
+      this.record.mark16 = Rec.cargo_marks; this.record.desc16 = Rec.cargo_description;
+    }
+    if (Rec.cargo_ctr == 17) {
+      this.record.mark17 = Rec.cargo_marks; this.record.desc17 = Rec.cargo_description;
+    }
   }
 
-   InitDesc()
-  {
+  InitDesc() {
     this.record.mark1 = ""; this.record.pkg1 = ""; this.record.desc1 = "";
     this.record.mark2 = ""; this.record.pkg2 = ""; this.record.desc2 = "";
     this.record.mark3 = ""; this.record.pkg3 = ""; this.record.desc3 = "";
-    this.record.mark4 = ""; this.record.desc4= "";
-    this.record.mark5 = ""; this.record.desc5= "";
+    this.record.mark4 = ""; this.record.desc4 = "";
+    this.record.mark5 = ""; this.record.desc5 = "";
     this.record.mark6 = ""; this.record.desc6 = "";
     this.record.mark7 = ""; this.record.desc7 = "";
     this.record.mark8 = ""; this.record.desc8 = "";
@@ -237,6 +218,87 @@ export class MblPageComponent implements OnInit {
   Allvalid() {
     let bRet = true;
 
+    if (this.gs.isBlank(this.record.mbld_shipper_id) || this.gs.isBlank(this.record.mbld_shipper_code)) {
+      this.errorMessage = "Shipper Code cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.mbld_shipper_name)) {
+      this.errorMessage = "Shipper Name cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.mbld_shipper_add1)) {
+      this.errorMessage = "Shipper Address1 cannot be blank";
+      return false;
+    }
+
+
+    if (this.gs.isBlank(this.record.mbld_consignee_id) || this.gs.isBlank(this.record.mbld_consignee_code)) {
+      this.errorMessage = "Consignee Code cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.mbld_consigned_to1)) {
+      this.errorMessage = "Consignee Name cannot be blank";
+      return false;
+    }
+
+
+    if (this.gs.isBlank(this.record.mbld_notify_id) || this.gs.isBlank(this.record.mbld_notify_code)) {
+      this.errorMessage = "Notify Code cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.mbld_notify_name)) {
+      this.errorMessage = "Notify Name cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.mbld_pol_name)) {
+      this.errorMessage = "Pol cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.mbld_pod_name)) {
+      this.errorMessage = "Pod cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.mbld_handled_id) || this.gs.isBlank(this.record.mbld_handled_name)) {
+      this.errorMessage = "Handled By cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isBlank(this.record.mbld_sendto_id) || this.gs.isBlank(this.record.mbld_sendto_code)) {
+      this.errorMessage = "Send To cannot be blank";
+      return false;
+    }
+
+
+    if (this.gs.BRANCH_REGION == "USA") {
+      if (this.gs.isZero(this.record.mbld_lbs)) {
+        this.errorMessage = "LBS cannot be blank";
+        return false;
+      }
+
+      if (this.gs.isZero(this.record.mbld_cft) && this.ShipmentType != "FCL") {
+        this.errorMessage = "CFT cannot be blank";
+        return false;
+      }
+    }
+
+    if (this.gs.isZero(this.record.mbld_weight)) {
+      this.errorMessage = "Weight cannot be blank";
+      return false;
+    }
+
+    if (this.gs.isZero(this.record.mbld_cbm) && this.ShipmentType != "FCL") {
+      this.errorMessage = "CBM cannot be blank";
+      return false;
+    }
+
+
     return bRet;
   }
 
@@ -251,10 +313,14 @@ export class MblPageComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
+    this.record.mbld_is_cntrized = (this.record._mbld_is_cntrized) ? "Y" : "N";
+    this.record.mbld_print_kgs = (this.record._mbld_print_kgs) ? "Y" : "N";
+    this.record.mbld_print_lbs = (this.record._mbld_print_lbs) ? "Y" : "N";
+
     this.SaveDescList();
 
     const saverec = <vm_Tbl_cargo_exp_mbldet>{};
-    
+
     saverec.mode = this.mode;
     saverec.pkid = this.pkid;
     saverec.record = this.record;
@@ -341,46 +407,43 @@ export class MblPageComponent implements OnInit {
 
 
 
-  SaveDescList()
-  {
+  SaveDescList() {
 
-      this.recorddet = <Tbl_cargo_exp_desc[]>[];
+    this.recorddet = <Tbl_cargo_exp_desc[]>[];
 
-      this.SaveDesc(1, this.record.mark1, this.record.pkg1, this.record.desc1);
-      this.SaveDesc(2, this.record.mark2, this.record.pkg2, this.record.desc2);
-      this.SaveDesc(3, this.record.mark3, this.record.pkg3, this.record.desc3);
+    this.SaveDesc(1, this.record.mark1, this.record.pkg1, this.record.desc1);
+    this.SaveDesc(2, this.record.mark2, this.record.pkg2, this.record.desc2);
+    this.SaveDesc(3, this.record.mark3, this.record.pkg3, this.record.desc3);
 
-      this.SaveDesc(4, this.record.mark4, '', this.record.desc4);
-      this.SaveDesc(5, this.record.mark5, '', this.record.desc5);
-      this.SaveDesc(6, this.record.mark6, '', this.record.desc6);
-      this.SaveDesc(7, this.record.mark7, '', this.record.desc7);
-      this.SaveDesc(8, this.record.mark8, '', this.record.desc8);
-      this.SaveDesc(9, this.record.mark9, '', this.record.desc9);
-      this.SaveDesc(10, this.record.mark10, '', this.record.desc10);
-      this.SaveDesc(11, this.record.mark11, '', this.record.desc11);
-      
-      this.SaveDesc(12, this.record.mark12, '', this.record.desc12);
-      this.SaveDesc(13, this.record.mark13, '', this.record.desc13);
-      this.SaveDesc(14, this.record.mark14, '', this.record.desc14);
-      this.SaveDesc(15, this.record.mark15, '', this.record.desc15);
-      this.SaveDesc(16, this.record.mark16, '', this.record.desc16);
-      this.SaveDesc(17, this.record.mark17, '', this.record.desc17);
+    this.SaveDesc(4, this.record.mark4, '', this.record.desc4);
+    this.SaveDesc(5, this.record.mark5, '', this.record.desc5);
+    this.SaveDesc(6, this.record.mark6, '', this.record.desc6);
+    this.SaveDesc(7, this.record.mark7, '', this.record.desc7);
+    this.SaveDesc(8, this.record.mark8, '', this.record.desc8);
+    this.SaveDesc(9, this.record.mark9, '', this.record.desc9);
+    this.SaveDesc(10, this.record.mark10, '', this.record.desc10);
+    this.SaveDesc(11, this.record.mark11, '', this.record.desc11);
+
+    this.SaveDesc(12, this.record.mark12, '', this.record.desc12);
+    this.SaveDesc(13, this.record.mark13, '', this.record.desc13);
+    this.SaveDesc(14, this.record.mark14, '', this.record.desc14);
+    this.SaveDesc(15, this.record.mark15, '', this.record.desc15);
+    this.SaveDesc(16, this.record.mark16, '', this.record.desc16);
+    this.SaveDesc(17, this.record.mark17, '', this.record.desc17);
 
   }
-  
-  SaveDesc(iCtr :  number, M1 : string, P1 :string, D1 : string)
-  {
-      if (M1.length > 0 || P1.length > 0 || D1.length > 0)
-      {
-          var Rec : Tbl_cargo_exp_desc =  <Tbl_cargo_exp_desc>{};
-          Rec.parentid = this.pkid;
-          Rec.parent_type = this.DESC_TYPE;
-          Rec.cargo_ctr = iCtr;
-          Rec.cargo_marks = M1;
-          Rec.cargo_packages = P1;
-          Rec.cargo_description = D1;
-          this.recorddet.push (Rec);
-      }
+
+  SaveDesc(iCtr: number, M1: string, P1: string, D1: string) {
+    if (M1.length > 0 || P1.length > 0 || D1.length > 0) {
+      var Rec: Tbl_cargo_exp_desc = <Tbl_cargo_exp_desc>{};
+      Rec.parentid = this.pkid;
+      Rec.parent_type = this.DESC_TYPE;
+      Rec.cargo_ctr = iCtr;
+      Rec.cargo_marks = M1;
+      Rec.cargo_packages = P1;
+      Rec.cargo_description = D1;
+      this.recorddet.push(Rec);
+    }
   }
 
 
