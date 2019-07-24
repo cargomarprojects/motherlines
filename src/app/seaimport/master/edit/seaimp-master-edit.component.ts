@@ -691,15 +691,26 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.SeaImport/SeaImpHouseEditPage', JSON.stringify(prm));
         break;
       }
-      case 'DEVAN': {
+      case 'DEVAN-INSTRUCTION': {
         let prm = {
-          menuid: this.gs.MENU_SI_MASTER,
+          menuid: this.gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION,
           pkid: this.pkid,
           refno: this.record.mbl_refno,
-          type: 'SI',
           origin: 'seaimp-master-page'
         };
         this.gs.Naviagete('Silver.SeaImport/DevanInstructionPage', JSON.stringify(prm));
+        break;
+      }
+      case 'PAYMENT-REQUEST': {
+        let prm = {
+          menuid: this.gs.MENU_SI_PAYMENT_REQUEST,
+          cp_master_id: this.pkid,
+          cp_source: 'SEA-MASTER',
+          cp_mode: 'SEA IMPORT',
+          cp_ref_no: this.record.mbl_refno,
+          origin: 'seaimp-master-page'
+        };
+        this.gs.Naviagete('Silver.Library/PaymentRequestPage', JSON.stringify(prm));
         break;
       }
     }
