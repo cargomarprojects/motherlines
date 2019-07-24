@@ -620,6 +620,7 @@ export class GlobalService {
   }
 
 
+
   public headerparam2(type: string, company_code: string = '') {
     let headers = new HttpHeaders();
 

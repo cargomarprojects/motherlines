@@ -27,7 +27,9 @@ export class MblPageComponent implements OnInit {
   private pkid: string;
   private menuid: string;
   private mode: string = "ADD";
-  private errorMessage: string;
+
+
+  private errorMessage: string[] = [];
 
   private title: string;
   private isAdmin: boolean;
@@ -66,13 +68,13 @@ export class MblPageComponent implements OnInit {
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage = '';
+    this.errorMessage = [];
 
   }
 
   actionHandler() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
 
     this.record = <Tbl_cargo_exp_mbldet>{};
     this.records = <Tbl_cargo_exp_desc[]>[];
@@ -83,7 +85,7 @@ export class MblPageComponent implements OnInit {
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.desc_type = this.DESC_TYPE;
@@ -133,7 +135,8 @@ export class MblPageComponent implements OnInit {
 
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
+        alert('Error While Saving');
       });
   }
 
@@ -216,90 +219,92 @@ export class MblPageComponent implements OnInit {
 
 
   Allvalid() {
-    let bRet = true;
+    let bret = true;
 
     if (this.gs.isBlank(this.record.mbld_shipper_id) || this.gs.isBlank(this.record.mbld_shipper_code)) {
-      this.errorMessage = "Shipper Code cannot be blank";
-      return false;
+      this.errorMessage.push("Shipper Code cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isBlank(this.record.mbld_shipper_name)) {
-      this.errorMessage = "Shipper Name cannot be blank";
-      return false;
+      this.errorMessage.push("Shipper Name cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isBlank(this.record.mbld_shipper_add1)) {
-      this.errorMessage = "Shipper Address1 cannot be blank";
-      return false;
+      this.errorMessage.push("Shipper Address1 cannot be blank");
+      bret = false;
     }
 
 
     if (this.gs.isBlank(this.record.mbld_consignee_id) || this.gs.isBlank(this.record.mbld_consignee_code)) {
-      this.errorMessage = "Consignee Code cannot be blank";
-      return false;
+      this.errorMessage.push("Consignee Code cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isBlank(this.record.mbld_consigned_to1)) {
-      this.errorMessage = "Consignee Name cannot be blank";
-      return false;
+      this.errorMessage.push("Consignee Name cannot be blank");
+      bret = false;
     }
 
 
     if (this.gs.isBlank(this.record.mbld_notify_id) || this.gs.isBlank(this.record.mbld_notify_code)) {
-      this.errorMessage = "Notify Code cannot be blank";
-      return false;
+      this.errorMessage.push("Notify Code cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isBlank(this.record.mbld_notify_name)) {
-      this.errorMessage = "Notify Name cannot be blank";
-      return false;
+      this.errorMessage.push("Notify Name cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isBlank(this.record.mbld_pol_name)) {
-      this.errorMessage = "Pol cannot be blank";
-      return false;
+      this.errorMessage.push("Pol cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isBlank(this.record.mbld_pod_name)) {
-      this.errorMessage = "Pod cannot be blank";
-      return false;
+      this.errorMessage.push("Pod cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isBlank(this.record.mbld_handled_id) || this.gs.isBlank(this.record.mbld_handled_name)) {
-      this.errorMessage = "Handled By cannot be blank";
-      return false;
+      this.errorMessage.push("Handled By cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isBlank(this.record.mbld_sendto_id) || this.gs.isBlank(this.record.mbld_sendto_code)) {
-      this.errorMessage = "Send To cannot be blank";
-      return false;
+      this.errorMessage.push("Send To cannot be blank");
+      bret = false;
     }
 
 
     if (this.gs.BRANCH_REGION == "USA") {
       if (this.gs.isZero(this.record.mbld_lbs)) {
-        this.errorMessage = "LBS cannot be blank";
-        return false;
+        this.errorMessage.push("LBS cannot be blank");
+        bret = false;
       }
 
       if (this.gs.isZero(this.record.mbld_cft) && this.ShipmentType != "FCL") {
-        this.errorMessage = "CFT cannot be blank";
-        return false;
+        this.errorMessage.push("CFT cannot be blank");
+        bret = false;
       }
     }
 
     if (this.gs.isZero(this.record.mbld_weight)) {
-      this.errorMessage = "Weight cannot be blank";
-      return false;
+      this.errorMessage.push("Weight cannot be blank");
+      bret = false;
     }
 
     if (this.gs.isZero(this.record.mbld_cbm) && this.ShipmentType != "FCL") {
-      this.errorMessage = "CBM cannot be blank";
-      return false;
+      this.errorMessage.push("CBM cannot be blank");
+      bret = false;
     }
 
+    if (!bret)
+      alert('Error While Saving');
 
-    return bRet;
+    return bret;
   }
 
   onBlur(field: string) {
@@ -310,12 +315,15 @@ export class MblPageComponent implements OnInit {
 
   Save() {
 
+    this.errorMessage = [];
+
     if (!this.Allvalid())
       return;
 
     this.record.mbld_is_cntrized = (this.record._mbld_is_cntrized) ? "Y" : "N";
     this.record.mbld_print_kgs = (this.record._mbld_print_kgs) ? "Y" : "N";
     this.record.mbld_print_lbs = (this.record._mbld_print_lbs) ? "Y" : "N";
+
 
     this.SaveDescList();
 
@@ -344,6 +352,7 @@ export class MblPageComponent implements OnInit {
 
     if (rec.controlname == "SHIPPER") {
       this.record.mbld_shipper_id = rec.id;
+      this.record.mbld_shipper_code = rec.code;
       this.record.mbld_shipper_name = rec.name;
       if (rec.col8 != "")
         this.record.mbld_shipper_name = rec.col8;
@@ -366,6 +375,7 @@ export class MblPageComponent implements OnInit {
 
     if (rec.controlname == "NOTIFY") {
       this.record.mbld_notify_id = rec.id;
+      this.record.mbld_notify_code = rec.code;
       this.record.mbld_notify_name = rec.name;
       if (rec.col8 != "")
         this.record.mbld_notify_name = rec.col8;
