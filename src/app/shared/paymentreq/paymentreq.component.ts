@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, ViewChild, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
 import { SearchTable } from '../../shared/models/searchtable';
 //import { Auditlog } from '../../shared/models/auditlog';
@@ -9,161 +10,134 @@ import { SearchTable } from '../../shared/models/searchtable';
   selector: 'app-paymentreq',
   templateUrl: './paymentreq.component.html',
 })
-export class PaymentReqComponent {
+export class PaymentReqComponent implements OnInit {
   // Local Variables 
-  title = 'Payment Request Details';
+ 
+  @Input() public cp_ref_no: string = 'TEST';
+  @Input() public cp_master_id: string = '';
+  @Input() public cp_source: string = '';
+  @Input() public cp_mode: string = '';
+   
+ 
+  // trackrecords: Tbl_Cargo_Tracking_Status[] = [];
+  // trackmemorecord: Tbl_Cargo_Tracking_Status = <Tbl_Cargo_Tracking_Status>{};
+  // trackmemorecords: Tbl_Cargo_Tracking_Status[] = [];
+  // 15-07-2019 Created By Ajith  
+  private pkid: string;
+  private menuid: string;
+  private mode: string;
+  private title: string = '';
+  private isAdmin: boolean;
+  private errorMessage: string;
 
-  @Input() public parentid: string = '';
-  @Input() public jvhid: string = '';
-  @Input() public type: string = '';
-  @Input() public party_name: string = '';
-  @Input() public vrno: string = '';
-
-  InitCompleted: boolean = false;
-  disableSave = true;
-  loading = false;
-  currentTab = 'LIST';
-  sub: any;
-  urlid: string;
-  
-  pay_date: string = '';
-  pay_chq_name: string = ''; 
-  pkid ='';
-  ErrorMessage = "";
-  InfoMessage = "";
-    constructor(
+  constructor(
+    private router: Router,
     private route: ActivatedRoute,
-    private gs: GlobalService
-  ) {
-    // URL Query Parameter 
-  }
+    private location: Location,
+    public gs: GlobalService,
+    //private mainService: OthTrackingPageService
+  ) { }
 
-  // Init Will be called After executing Constructor
   ngOnInit() {
+    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+    this.menuid = options.menuid;
+    this.cp_master_id = options.cp_master_id;
+    this.cp_source = options.cp_source;
+    this.cp_mode = options.cp_mode;
+    this.cp_ref_no = options.cp_ref_no;
+    this.mode = 'ADD';
+    this.initPage();
+    this.actionHandler();
+  }
+
+  private initPage() {
+    this.title = 'Tracking';
+    this.isAdmin = this.gs.IsAdmin(this.menuid);
+    this.errorMessage = '';
     this.LoadCombo();
-    this.SearchRecord("paymentrequest",'LIST');
-  }
-
-  InitComponent() {
-    this.InitLov();
-  }
-
-  InitLov() {
-
-   
-  }
-  LovSelected(_Record: SearchTable) {
-   
-  }
-  // Destroy Will be called when this component is closed
-  ngOnDestroy() {
-   // this.sub.unsubscribe();
   }
 
   LoadCombo() {
-   
-   
-  }
   
-  // Save Data
+  }
+
+   
+  actionHandler() {
+    this.GetRecord();
+  }
+
+  init() {
+
+    // this.record.parentid = this.pkid;
+    // this.record.cargo_description = '';
+    // this.record.cargo_marks = '';
+    // this.record.cargo_packages = '';
+    // this.record.cargo_ctr = 1;
+  }
+
+  GetRecord() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+   
+    // this.mainService.GetRecord(SearchData)
+    //   .subscribe(response => {
+    //     this.trackrecords = <Tbl_Cargo_Tracking_Status[]>response.records;
+    //     this.trackmemorecords = <Tbl_Cargo_Tracking_Status[]>response.memorecords;
+    //     this.NewRecord();
+    //   }, error => {
+    //     this.errorMessage = this.gs.getError(error);
+    //   });
+  }
+ 
+
   Save() {
 
-    if (!this.allvalid())
+    if (!this.Allvalid())
       return;
 
-    this.SearchRecord('paymentrequest', 'SAVE');
+    // const saveRecord = <vm_Tbl_Cargo_Tracking_Status>{};
+    // saveRecord.userinfo = this.gs.UserInfo;
+    // saveRecord.record = this.trackrecords;
+    // saveRecord.pkid = this.pkid;
+    // saveRecord.parentType = this.parentType;
+    // saveRecord.paramType = this.paramType;
+
+    // this.mainService.Save(saveRecord)
+    //   .subscribe(response => {
+    //     if (response.retvalue == false) {
+    //       this.errorMessage = response.error;
+    //       alert(this.errorMessage);
+    //     }
+    //     else {
+    //       this.errorMessage = 'Save Complete';
+    //       alert(this.errorMessage);
+    //     }
+    //   }, error => {
+    //     this.errorMessage = this.gs.getError(error);
+    //     alert(this.errorMessage);
+    //   });
   }
 
-  allvalid() {
-    let sError: string = "";
-    let bret: boolean = true;
-    this.ErrorMessage = '';
-    this.InfoMessage = '';
-    if (this.pay_date.trim().length <= 0) {
-      sError = "Date Cannot Be Blank";
-      bret = false;
-    }
-    if (this.pay_chq_name.trim().length <= 0) {
-      sError += " | Name On Cheque Cannot Be Blank";
-      bret = false;
-    }
-    if (bret === false)
-      this.ErrorMessage = sError;
-    return bret;
+  private Allvalid(): boolean {
+
+     var bRet = true;
+    // this.errorMessage = "";
+    // if (this.pkid == "") {
+    //   bRet = false;
+    //   this.errorMessage = "Invalid ID";
+    //   alert(this.errorMessage);
+    //   return bRet;
+    // }
+
+     return bRet;
   }
 
-  OnBlur(field: string) {
 
-  }
   Close() {
-    
+    this.location.back();
   }
   
-  SearchRecord(controlname: string, _type: string) {
-    this.InfoMessage = '';
-    this.ErrorMessage = '';
-    if (this.parentid.trim().length <= 0 && this.jvhid.trim().length <= 0) {
-      this.ErrorMessage = "Invalid ID";
-      return;
-    }
 
-    this.loading = true;
-    let SearchData = {
-      pkid: this.pkid,
-      company_code: this.gs.globalVariables.comp_code,
-      branch_code: this.gs.globalVariables.branch_code,
-      year_code: this.gs.globalVariables.year_code,
-      user_id: this.gs.globalVariables.user_pkid,
-      user_code: this.gs.globalVariables.user_code,
-      jvhid: this.jvhid,
-      parentid: this.parentid,
-      rowtype: this.type,
-      paydate: this.pay_date,
-      paychqname:this.pay_chq_name,
-      table: 'paymentrequest',
-      type: _type,
-    };
-
-    SearchData.pkid = this.pkid;
-    SearchData.paydate = this.pay_date;
-    SearchData.table = 'paymentrequest';
-    SearchData.company_code = this.gs.globalVariables.comp_code;
-    SearchData.branch_code = this.gs.globalVariables.branch_code;
-    SearchData.year_code = this.gs.globalVariables.year_code;
-    SearchData.user_id = this.gs.globalVariables.user_pkid;
-    SearchData.user_code = this.gs.globalVariables.user_code;
-    SearchData.jvhid = this.jvhid;
-    SearchData.parentid = this.parentid;
-    SearchData.rowtype = this.type;
-    SearchData.type = _type;
-    SearchData.paychqname = this.pay_chq_name;
-    
-
-
-    this.gs.SearchRecord(SearchData)
-      .subscribe(response => {
-        this.loading = false;
-        this.InfoMessage = '';
-        if (_type == "LIST") {
-          if (response.paydate.length <= 0) {
-            this.pay_date = this.gs.defaultValues.today;
-            this.pay_chq_name = this.party_name;
-          }
-          else {
-            this.pay_date = response.paydate;
-            this.pay_chq_name = response.paychqname;
-          }
-
-        } else {
-          if (response.savemsg == "Save Complete")
-            this.InfoMessage = response.savemsg;
-          else
-            this.ErrorMessage = response.savemsg;
-        }
-      },
-      error => {
-        this.loading = false;
-        this.InfoMessage = this.gs.getError(error);
-      });
-  }
+  
 }
