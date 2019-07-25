@@ -540,7 +540,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           origin: 'seaexp-master-page',
           mode: this.hblmode
         };
-        this.gs.Naviagete('Silver.SeaExport/SeaExpHouseEditPage', JSON.stringify(prm));
+        this.gs.Naviagete('Silver.SeaExport.Trans/SeaExpHouseEditPage', JSON.stringify(prm));
         break;
       }
       
