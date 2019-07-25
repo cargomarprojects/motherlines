@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, ViewChild, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { InputBoxComponent } from '../../shared/input/inputbox.component';
 import { GlobalService } from '../../core/services/global.service';
 import { SearchTable } from '../../shared/models/searchtable';
 import { Table_Cargo_Payrequest, vm_Table_Cargo_Payrequest } from '../../shared/models/table_cargo_payrequest';
@@ -20,6 +21,7 @@ export class PaymentReqComponent implements OnInit {
 
   payrecord: Table_Cargo_Payrequest = <Table_Cargo_Payrequest>{};
   payrecords: Table_Cargo_Payrequest[] = [];
+  invrecords: Table_Cargo_Payrequest[] = [];
 
   // 15-07-2019 Created By Ajith  
   private pkid: string;
@@ -38,13 +40,13 @@ export class PaymentReqComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    // this.menuid = options.menuid;
-    // this.cp_master_id = options.cp_master_id;
-    // this.cp_source = options.cp_source;
-    // this.cp_mode = options.cp_mode;
-    // this.cp_ref_no = options.cp_ref_no;
-    // this.mode = 'ADD';
+    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+    this.menuid = options.menuid;
+    this.cp_master_id = options.cp_master_id;
+    this.cp_source = options.cp_source;
+    this.cp_mode = options.cp_mode;
+    this.cp_ref_no = options.cp_ref_no;
+    this.mode = 'ADD';
     this.initPage();
     this.actionHandler();
   }
@@ -68,9 +70,21 @@ export class PaymentReqComponent implements OnInit {
   }
 
   EditRecord(_rec: Table_Cargo_Payrequest) {
-    this.pkid = _rec.cp_pkid;
     this.mode = 'EDIT'
-    this.actionHandler();
+    this.pkid = _rec.cp_pkid;
+    this.payrecord.cp_paytype_needed = _rec.cp_paytype_needed;
+    this.payrecord.cp_spl_notes = _rec.cp_spl_notes;
+    this.payrecord.cp_payment_date = _rec.cp_payment_date;
+    this.payrecord.cp_cust_name = _rec.cp_cust_name;
+    this.payrecord.cp_cust_id = _rec.cp_cust_id;
+    this.payrecord.cp_inv_no = _rec.cp_inv_no
+    this.payrecord.cp_inv_id = _rec.cp_inv_id;
+    this.invrecords.forEach(Rec => {
+      if (_rec.cp_inv_no.includes(Rec.cp_inv_no))
+        Rec.cp_selected = true;
+      else
+        Rec.cp_selected = false;
+    })
   }
 
   actionHandler() {
@@ -80,32 +94,23 @@ export class PaymentReqComponent implements OnInit {
       this.pkid = this.gs.getGuid();
       this.init();
     }
-    if (this.mode == 'EDIT') {
-      this.init();
-      this.Fill();
-    }
+     
   }
 
   init() {
-    this.payrecord.cp_paytype_needed = '';
+    this.payrecord.cp_paytype_needed = 'PAYMENT NEEDED ONLY';
     this.payrecord.cp_spl_notes = '';
     this.payrecord.cp_payment_date = '';
     this.payrecord.cp_cust_name = '';
     this.payrecord.cp_cust_id = '';
     this.payrecord.cp_inv_no = '';
     this.payrecord.cp_inv_id = '';
-  }
-  private Fill()
-  {
-      // CmbPayReq.SelectedValue = DetailRow.cp_paytype_needed;
-      // Txt_Remark1.Text = DetailRow.cp_spl_notes;
-      // Dt_Pay_date.SelectedDate = DetailRow.cp_payment_date;
+    this.invrecords.forEach(Rec => {
+      Rec.cp_selected = false;
+    })
 
-      // Txt_Customer.Text = DetailRow.cp_cust_name;
-      // Txt_Customer.PKID = DetailRow.cp_cust_id;
-      // Txt_AP_No.Text = DetailRow.cp_inv_no;
-      // Txt_AP_No.Tag = DetailRow.cp_inv_id;
   }
+   
 
   List(_type: string) {
 
@@ -113,36 +118,34 @@ export class PaymentReqComponent implements OnInit {
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.cp_master_id;
     SearchData.source = this.cp_source;
-        
+
 
     this.mainService.List(SearchData)
       .subscribe(response => {
         this.payrecords = <Table_Cargo_Payrequest[]>response.records;
+        this.invrecords = <Table_Cargo_Payrequest[]>response.invrecords;
+
       },
         error => {
           this.errorMessage = this.gs.getError(error);
         });
   }
 
-  GetRecord() {
-    // this.errorMessage = '';
-    // var SearchData = this.gs.UserInfo;
-    // SearchData.pkid = this.pkid;
+   
+  LovSelected(_Record: SearchTable) {
 
-    // this.mainService.GetRecord(SearchData)
-    //   .subscribe(response => {
-    //     this.payrecord = <Table_Cargo_Payrequest>response.record;
-    //     this.mode = 'EDIT';
-    //   }, error => {
-    //     this.errorMessage = this.gs.getError(error);
-    //   });
+    if (_Record.controlname == "PAYEE") {
+      this.payrecord.cp_cust_id = _Record.id;
+      this.payrecord.cp_cust_name = _Record.name;
+    }
+
   }
-
 
   Save() {
 
     if (!this.Allvalid())
       return;
+
     const saveRecord = <vm_Table_Cargo_Payrequest>{};
     saveRecord.userinfo = this.gs.UserInfo;
     saveRecord.record = this.payrecord;
@@ -167,13 +170,32 @@ export class PaymentReqComponent implements OnInit {
   private Allvalid(): boolean {
 
     var bRet = true;
-    // this.errorMessage = "";
-    // if (this.pkid == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid ID";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    this.errorMessage = "";
+    if (this.cp_master_id == "") {
+      bRet = false;
+      this.errorMessage = "Invalid ID";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+
+    let selectCount: number = 0;
+    this.invrecords.forEach(Rec => {
+      if (Rec.cp_selected) {
+        selectCount++;
+        this.payrecord.cp_inv_no = Rec.cp_inv_no;
+        this.payrecord.cp_inv_id = Rec.cp_inv_id;
+        this.payrecord.cp_cust_id = Rec.cp_cust_id;
+        this.payrecord.cp_cust_name = Rec.cp_cust_name;
+      }
+    })
+
+    if (selectCount > 1) {
+      bRet = false;
+      this.errorMessage = "Multiple invoice selection not allowed";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
     return bRet;
   }
@@ -183,6 +205,12 @@ export class PaymentReqComponent implements OnInit {
     this.location.back();
   }
 
+  SelectInvoice(_rec: Table_Cargo_Payrequest) {
+    this.payrecord.cp_inv_no = _rec.cp_inv_no;
+    this.payrecord.cp_inv_id = _rec.cp_inv_id;
+    this.payrecord.cp_cust_id = _rec.cp_cust_id;
+    this.payrecord.cp_cust_name = _rec.cp_cust_name;
+  }
 
 
 }

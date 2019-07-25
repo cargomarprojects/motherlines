@@ -1,9 +1,9 @@
-<!-- <div class="page-header">
+<div class="page-header">
   <div class="col">
     <label>Payment Request</label>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
   </div>
-</div> -->
+</div>
 
 <div *ngIf="errorMessage">
   <div class="alert alert-primary">
@@ -13,11 +13,11 @@
 
 <div class="page-body">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">Ref#</label>
-        <div class="col-10">
-          <InputBox [(ngModel)]="payrecord.cp_ref_no" [disabled]="true" maxlength="25"></InputBox>
+        <div class="col-4">
+          <InputBox [(inputModel)]="cp_ref_no" [disabled]="true" maxlength="25" #ref_no></InputBox>
         </div>
       </div>
 
@@ -45,12 +45,32 @@
       </div>
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">A/P.No.</label>
-        <div class="col-2">
+        <div class="col-4">
+          <div class="page-body table-responsive">
+            <table class="table  table-hover table-sm">
+              <thead class="page-body-thead">
+                <tr>
+                  <th>INVOICE-NO</th>
+                  <th>DATE</th>
+                  <th>CUSTOMER</th>
+                </tr>
+              </thead>
+              <tbody class="page-body-tbody">
+                <tr *ngFor="let rec of invrecords">
+                  <td (click)="SelectInvoice(rec)"> <div class="form-check"> <input type="checkbox" class="form-check-input" [(ngModel)]="rec.cp_selected"><span>{{rec.cp_inv_no}}</span></div></td>
+                  <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+                  <td>{{rec.cp_cust_name}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- <div class="col-2">
           <button class="btn btn-primary btn-sm mr-1">Select A/P No.</button>
         </div>
         <div class="col-2">
           <InputBox [(inputModel)]="payrecord.cp_inv_no" [maxlength]="100" [uppercase]="true" #inv_no></InputBox>
-        </div>
+        </div> -->
       </div>
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">Payee</label>
@@ -63,11 +83,12 @@
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">PaymentDate</label>
         <div class="col-4">
-          <app-date [inputdate]="payrecord.cp_payment_date" (ValueChanged)="payrecord.cp_payment_date=$event"></app-date>
+          <app-date [inputdate]="payrecord.cp_payment_date" (ValueChanged)="payrecord.cp_payment_date=$event">
+          </app-date>
         </div>
         <div class="col-6">
-            <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
-            <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
+          <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
+          <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
         </div>
       </div>
     </div>
@@ -76,29 +97,29 @@
 <div class="page-body">
   <div class="row">
     <div class="col-md-12">
-        <div class="page-body table-responsive">
-            <table class="table  table-hover table-sm">
-                <thead class="page-body-thead">
-                    <tr>
-                        <th>REQUEST TYPE</th>
-                        <th>PAYMENT-NO</th>
-                        <th>PAYMENT-DATE</th>
-                        <th>PAYMENT-STATUS</th>
-                        <th>NOTES</th>       
-                    </tr>
-                </thead>
-                <tbody class="page-body-tbody">
-                    <tr *ngFor="let rec of payrecords">
-                        <td (click)="EditRecord(rec)" >{{rec.cp_paytype_needed}}</td>
-                        <td>{{rec.cp_inv_no}}</td>
-                        <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-                        <td>{{rec.cp_pay_status}}</td>
-                        <td>{{rec.cp_spl_notes}}</td>
-                    </tr>
-                </tbody>
-            </table>
-          </div>
-          
+      <div class="page-body table-responsive">
+        <table class="table  table-hover table-sm">
+          <thead class="page-body-thead">
+            <tr>
+              <th>REQUEST TYPE</th>
+              <th>PAYMENT-NO</th>
+              <th>PAYMENT-DATE</th>
+              <th>PAYMENT-STATUS</th>
+              <th>NOTES</th>
+            </tr>
+          </thead>
+          <tbody class="page-body-tbody">
+            <tr *ngFor="let rec of payrecords">
+              <td (click)="EditRecord(rec)">{{rec.cp_paytype_needed}}</td>
+              <td>{{rec.cp_inv_no}}</td>
+              <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+              <td>{{rec.cp_pay_status}}</td>
+              <td>{{rec.cp_spl_notes}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
 
 
     </div>
