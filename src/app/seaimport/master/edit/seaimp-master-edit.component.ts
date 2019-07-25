@@ -23,8 +23,9 @@ export class SeaImpMasterEditComponent implements OnInit {
   records: Tbl_cargo_imp_container[] = [];
 
   // 24-05-2019 Created By Joy  
+  
 
-  bPreq:boolean =false;
+  showPayReq:boolean =false;
   
   private pkid: string;
   private menuid: string;

@@ -560,8 +560,10 @@
         <div class="form-group row">
           <!-- <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
             Request</button> -->
-          <button class=" col-12 btn btn-primary btn-sm" data-toggle="modal" data-target="#paymentreq">Payment
+
+          <button class=" col-12 btn btn-primary btn-sm" (click)="showPayReq=true" data-toggle="modal" data-target="#paymentreq">Payment
             Request</button>
+
 
         </div>
 
@@ -611,6 +613,7 @@
     {{record.rec_created_date}} </label>
 </div>
 
+
 <div class="modal fade" data-backdrop="static" id="paymentreq" role="dialog" aria-labelledby="paymenttitle">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -621,10 +624,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <app-paymentreq [cp_ref_no]="record.mbl_refno" [cp_master_id]="record.mbl_pkid" [cp_source]="'SEA-MASTER'"
-          [cp_mode]="'SEA IMPORT'"> </app-paymentreq>
+        <div *ngIf="showPayReq">
+          <app-paymentreq [cp_ref_no]="record.mbl_refno" [cp_master_id]="record.mbl_pkid" [cp_source]="'SEA-MASTER'"
+            [cp_mode]="'SEA IMPORT'"> </app-paymentreq>
+        </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" (click)="showPayReq=false" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
