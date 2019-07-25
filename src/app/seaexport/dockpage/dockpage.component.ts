@@ -10,7 +10,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { User_Menu } from '../../core/models/menum';
 import { SearchTable } from '../../shared/models/searchtable';
 
-import { MbldService } from '../services/mbld.service';
+import { DockService } from '../services/dock.service';
 
 import { Tbl_cargo_exp_mbldet, vm_Tbl_cargo_exp_mbldet } from '../models/Tbl_cargo_exp_mbldet';
 import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
@@ -56,7 +56,7 @@ export class DockPageComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
-    private mainService: MbldService,
+    private mainService: DockService,
   ) { }
 
 
