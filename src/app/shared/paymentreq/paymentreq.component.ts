@@ -91,7 +91,7 @@ export class PaymentReqComponent implements OnInit {
     this.payrecord.cp_inv_no = _rec.cp_inv_no
     this.payrecord.cp_inv_id = _rec.cp_inv_id;
     this.invrecords.forEach(Rec => {
-      if (_rec.cp_inv_no.includes(Rec.cp_inv_no))
+      if (_rec.cp_inv_no == Rec.cp_inv_no)
         Rec.cp_selected = true;
       else
         Rec.cp_selected = false;

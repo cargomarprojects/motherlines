@@ -1,0 +1,78 @@
+<div class="page-header">
+    <div class="col">
+      <label>Messenger Slip</label>
+      <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    </div>
+  </div>
+  
+  <div *ngIf="errorMessage">
+    <div class="alert alert-primary">
+      {{errorMessage}}
+    </div>
+  </div>
+  
+  <div class="page-body">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group row">
+          <label class="col-2 col-form-label col-form-label-sm">Ref#</label>
+          <div class="col-4">
+            <InputBox [(inputModel)]="mblid" [disabled]="true" maxlength="25" #ref_no></InputBox>
+          </div>
+          <label class="col-2 col-form-label col-form-label-sm">Date</label>
+          <div class="col-4">
+            <InputBox [(inputModel)]="mblid" [disabled]="true" maxlength="25" #ref_no1></InputBox>
+          </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="row">
+      <div class="col-md-4 testbox  px-0 mx-0">
+        <div class="form-group row">
+          <label class="col-2 col-form-label col-form-label-sm">To</label>
+          <div class="col-10">
+            <app-autocomplete2 [controlname]="'TRUCKER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+              [displaydata]="record.cs_to_code" (ValueChanged)="LovSelected($event)" #to_code>
+            </app-autocomplete2>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label col-form-label-sm">Name</label>
+          <div class="col-10">
+            <InputBox [(inputModel)]="record.cs_to_name" [maxlength]="60" [uppercase]="true" #to_name>
+            </InputBox>
+          </div>
+        </div>
+       
+        <div class="form-group row">
+          <label class="col-2 col-form-label col-form-label-sm">Telephone</label>
+          <div class="col-10">
+               <InputBox [(inputModel)]="record.cs_to_tel" [maxlength]="60" [uppercase]="true" #to_tel>
+            </InputBox>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-2 col-form-label col-form-label-sm">Fax.</label>
+          <div class="col-10">
+                <InputBox [(inputModel)]="record.cs_to_fax" [maxlength]="60" [uppercase]="true" #to_fax>
+            </InputBox>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label col-form-label-sm">From</label>
+          <div class="col-10">
+               <InputBox [(inputModel)]="record.cs_from_name" [maxlength]="60" [uppercase]="true" #pick_truk_cc>
+            </InputBox>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 testbox  px-0 mx-0">
+
+      
+      </div>
+    </div>
+  </div>
