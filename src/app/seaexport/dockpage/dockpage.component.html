@@ -20,18 +20,48 @@
 
 <div class="page-body">
 
+
+  <div class="row">
+      
+    <div class="col-md-4">
+          <div class="form-group row">
+              <label class="col-4 col-form-label col-form-label-sm">Ref#</label>
+              <div class="col-8">
+                <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
+                  [(ngModel)]="record.mbld_refno" [disabled]="true" maxlength="15" />
+              </div>
+            </div>
+      </div>
+
+      <div class="col-md-4">
+          <div class="form-group row">
+              <label class="col-4 col-form-label col-form-label-sm">Dock#</label>
+              <div class="col-8">
+                <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
+                  [(ngModel)]="record.mbld_dockno" [disabled]="true" maxlength="15" />
+              </div>
+            </div>
+      </div>
+
+      <div class="col-md-4">
+          <div class="form-group row">
+              <label class="col-4 col-form-label col-form-label-sm">Booking#</label>
+              <div class="col-8">
+                <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
+                  [(ngModel)]="record.mbld_booking_no" [disabled]="true" maxlength="15" />
+              </div>
+            </div>
+      </div>
+
+
+  </div>
+
   <div class="row">
 
 
     <div class="col-md-4">
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm">Ref#</label>
-        <div class="col-8">
-          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
-            [(ngModel)]="record.mbld_refno" [disabled]="true" maxlength="15" />
-        </div>
-      </div>
+
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Shipper</label>
@@ -287,24 +317,17 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Place Receipt</label>
         <div class="col-8">
-          <InputBox [(inputModel)]="record.mbld_place_recceipt" [maxlength]="60" [uppercase]="true" #place_receipt>
+          <InputBox [(inputModel)]="record.mbld_place_receipt" [maxlength]="60" [uppercase]="true" #place_receipt>
           </InputBox>
         </div>
       </div>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm">Pre Carriage</label>
-        <div class="col-8">
-          <InputBox [(inputModel)]="record.mbld_pre_carriage" [maxlength]="60" [uppercase]="true" #pre_carriage>
-          </InputBox>
-        </div>
-      </div>
 
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Pol</label>
         <div class="col-8">
-          <InputBox [(inputModel)]="record.mbld_pol" [maxlength]="60" [uppercase]="true" #pol>
+          <InputBox [(inputModel)]="record.mbld_pol_name" [maxlength]="60" [uppercase]="true" #pol>
           </InputBox>
         </div>
       </div>
@@ -313,7 +336,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Pod</label>
         <div class="col-8">
-          <InputBox [(inputModel)]="record.mbld_pod" [maxlength]="60" [uppercase]="true" #pod>
+          <InputBox [(inputModel)]="record.mbld_pod_name" [maxlength]="60" [uppercase]="true" #pod>
           </InputBox>
         </div>
       </div>

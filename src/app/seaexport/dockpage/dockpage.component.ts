@@ -49,7 +49,7 @@ export class DockPageComponent implements OnInit {
 
   DESC_TYPE: string = "DOCKDESC";
 
-  canSave : boolean = false;
+  canSave: boolean = false;
 
   constructor(
     private router: Router,
@@ -122,7 +122,7 @@ export class DockPageComponent implements OnInit {
 
         }
 
-        this.canSave =  this.gs.canSave(this.menuid, this.mode);
+        this.canSave = this.gs.canSave(this.menuid, this.mode);
 
         this.InitDesc();
 
@@ -272,86 +272,12 @@ export class DockPageComponent implements OnInit {
   Allvalid() {
     let bret = true;
 
-    if (this.gs.isBlank(this.record.mbld_shipper_id) || this.gs.isBlank(this.record.mbld_shipper_code)) {
-      this.errorMessage.push("Shipper Code cannot be blank");
-      bret = false;
-    }
-
-    if (this.gs.isBlank(this.record.mbld_shipper_name)) {
-      this.errorMessage.push("Shipper Name cannot be blank");
-      bret = false;
-    }
-
-    if (this.gs.isBlank(this.record.mbld_shipper_add1)) {
-      this.errorMessage.push("Shipper Address1 cannot be blank");
-      bret = false;
-    }
-
-
-    if (this.gs.isBlank(this.record.mbld_consignee_id) || this.gs.isBlank(this.record.mbld_consignee_code)) {
-      this.errorMessage.push("Consignee Code cannot be blank");
-      bret = false;
-    }
-
-    if (this.gs.isBlank(this.record.mbld_consigned_to1)) {
-      this.errorMessage.push("Consignee Name cannot be blank");
-      bret = false;
-    }
-
-    if (!this.gs.isBlank(this.record.mbld_notify_id)) {
-
-      if (this.gs.isBlank(this.record.mbld_notify_code)) {
-        this.errorMessage.push("Notify Code cannot be blank");
-        bret = false;
-      }
-      if (this.gs.isBlank(this.record.mbld_notify_name)) {
-        this.errorMessage.push("Notify Name cannot be blank");
-        bret = false;
-      }
-    }
-
-    if (this.gs.isBlank(this.record.mbld_pol_name)) {
-      this.errorMessage.push("Pol cannot be blank");
-      bret = false;
-    }
-
-    if (this.gs.isBlank(this.record.mbld_pod_name)) {
-      this.errorMessage.push("Pod cannot be blank");
-      bret = false;
-    }
 
     if (this.gs.isBlank(this.record.mbld_handled_id) || this.gs.isBlank(this.record.mbld_handled_name)) {
       this.errorMessage.push("Handled By cannot be blank");
       bret = false;
     }
 
-    if (this.gs.isBlank(this.record.mbld_sendto_id) || this.gs.isBlank(this.record.mbld_sendto_code)) {
-      this.errorMessage.push("Send To cannot be blank");
-      bret = false;
-    }
-
-
-    if (this.gs.BRANCH_REGION == "USA") {
-      if (this.gs.isZero(this.record.mbld_lbs)) {
-        this.errorMessage.push("LBS cannot be blank");
-        bret = false;
-      }
-
-      if (this.gs.isZero(this.record.mbld_cft) && this.ShipmentType != "FCL") {
-        this.errorMessage.push("CFT cannot be blank");
-        bret = false;
-      }
-    }
-
-    if (this.gs.isZero(this.record.mbld_weight)) {
-      this.errorMessage.push("Weight cannot be blank");
-      bret = false;
-    }
-
-    if (this.gs.isZero(this.record.mbld_cbm) && this.ShipmentType != "FCL") {
-      this.errorMessage.push("CBM cannot be blank");
-      bret = false;
-    }
 
     if (!bret)
       alert('Error While Saving');
@@ -389,8 +315,9 @@ export class DockPageComponent implements OnInit {
 
     this.mainService.Save(saverec).subscribe(response => {
 
-      if (response.retvalue)
-        this.mode = 'EDIT';
+      if (this.mode == "ADD" && response.retvalue)
+        this.record.mbld_dockno = response.docno;
+      this.mode = 'EDIT';
 
     }, error => {
       this.errorMessage.push(this.gs.getError(error));
