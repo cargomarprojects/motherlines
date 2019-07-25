@@ -15,6 +15,8 @@ import { BookingComponent } from './booking/booking.component';
 
 import { MblPageComponent } from './mblpage/mblpage.component';
 
+import { DockPageComponent } from './dockpage/dockpage.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { MblPageComponent } from './mblpage/mblpage.component';
     SeaExpMasterHeaderComponent,
     SeaexpMasterEditComponent,
     BookingComponent,
-    MblPageComponent
+    MblPageComponent,
+    DockPageComponent
+
   ],
   imports: [
     SharedModule,    
