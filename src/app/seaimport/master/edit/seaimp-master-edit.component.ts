@@ -23,10 +23,10 @@ export class SeaImpMasterEditComponent implements OnInit {
   records: Tbl_cargo_imp_container[] = [];
 
   // 24-05-2019 Created By Joy  
-  
 
-  showPayReq:boolean =false;
-  
+
+  showPayReq: boolean = false;
+
   private pkid: string;
   private menuid: string;
   private hblid: string = '';
@@ -711,6 +711,7 @@ export class SeaImpMasterEditComponent implements OnInit {
           cp_source: 'SEA-MASTER',
           cp_mode: 'SEA IMPORT',
           cp_ref_no: this.record.mbl_refno,
+          islocked: false,
           origin: 'seaimp-master-page'
         };
         this.gs.Naviagete('Silver.Library/PaymentRequestPage', JSON.stringify(prm));
@@ -720,22 +721,21 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
 
-  ShowCntrMovement(_rec:Tbl_cargo_imp_container) {
-  
-    if(!this.gs.isBlank(_rec.cntr_pkid))
-    {
+  ShowCntrMovement(_rec: Tbl_cargo_imp_container) {
+
+    if (!this.gs.isBlank(_rec.cntr_pkid)) {
       let prm = {
         menuid: this.gs.MENU_SI_CONTAINER_MOVEMENT,
-        refno:"REF : " + this.record.mbl_refno + "  CNTR : " + _rec.cntr_no,
+        refno: "REF : " + this.record.mbl_refno + "  CNTR : " + _rec.cntr_no,
         pkid: _rec.cntr_pkid,
         origin: 'seaimp-Master-page',
-        oprgrp:'SEA IMPORT',
-        parentType:'SEAIMP-CNTR',
-        paramType:'CNTR-MOVE-STATUS',
-        hideTracking:'N'
+        oprgrp: 'SEA IMPORT',
+        parentType: 'SEAIMP-CNTR',
+        paramType: 'CNTR-MOVE-STATUS',
+        hideTracking: 'N'
       };
       this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
-    } 
+    }
   }
 
 }

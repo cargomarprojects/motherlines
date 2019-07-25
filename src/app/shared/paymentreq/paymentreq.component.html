@@ -30,7 +30,7 @@
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">RequestType</label>
         <div class="col-4">
-          <select class="form-control form-control-sm" [(ngModel)]="payrecord.cp_paytype_needed">
+          <select class="form-control form-control-sm" [(ngModel)]="payrecord.cp_paytype_needed" #paytype_needed>
             <option [value]="'PAYMENT NEEDED ONLY'">PAYMENT NEEDED ONLY</option>
             <option [value]="'OMBL NEEDED ONLY'">OMBL NEEDED ONLY</option>
             <option [value]="'PAYMENT & OMBL NEEDED'">PAYMENT & OMBL NEEDED</option>
@@ -83,7 +83,7 @@
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">PaymentDate</label>
         <div class="col-4">
-          <app-date [inputdate]="payrecord.cp_payment_date" (ValueChanged)="payrecord.cp_payment_date=$event">
+          <app-date [inputdate]="payrecord.cp_payment_date" (ValueChanged)="payrecord.cp_payment_date=$event" #payment_date>
           </app-date>
         </div>
         <div class="col-6">
@@ -106,6 +106,7 @@
               <th>PAYMENT-DATE</th>
               <th>PAYMENT-STATUS</th>
               <th>NOTES</th>
+              <th style="text-align:center">REMOVE</th>
             </tr>
           </thead>
           <tbody class="page-body-tbody">
@@ -115,6 +116,7 @@
               <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
               <td>{{rec.cp_pay_status}}</td>
               <td>{{rec.cp_spl_notes}}</td>
+              <td align='center'><i class="fa fa-trash  fa-lg pointer" aria-hidden="true" (click)="RemoveRow(rec)" ></i></td>
             </tr>
           </tbody>
         </table>
