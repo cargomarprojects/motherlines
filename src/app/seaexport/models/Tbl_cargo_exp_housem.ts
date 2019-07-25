@@ -1,4 +1,22 @@
 
+import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
+import { Tbl_cargo_exp_container } from './Tbl_cargo_exp_container';
+
+export interface vm_Tbl_cargo_exp_housem {
+        mode: string;
+        pkid: string;
+        HousePrefix : string;
+        IsPOL : string; 
+        IsPod : string;
+        iStartNo : number;
+        iStep  : number;
+        cntrs: Tbl_cargo_exp_container[];
+        records : Tbl_cargo_exp_desc[];
+        userinfo: any
+    }
+
+
+
 export interface Tbl_cargo_exp_housem {
     hbl_pkid: string;
     hbl_mbl_id: string;
