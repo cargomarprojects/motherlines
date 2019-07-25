@@ -6,6 +6,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { SearchTable } from '../../shared/models/searchtable';
 import { Table_Cargo_Payrequest, vm_Table_Cargo_Payrequest } from '../../shared/models/table_cargo_payrequest';
 import { PaymentReqService } from '../services/paymentreq.service';
+import { DateComponent } from '../../shared/Date/date.component';
 
 @Component({
   selector: 'app-paymentreq',
@@ -19,6 +20,9 @@ export class PaymentReqComponent implements OnInit {
   @Input() public cp_source: string = '';
   @Input() public cp_mode: string = '';
 
+  @ViewChild('paytype_needed') paytype_needed_field: ElementRef;
+  @ViewChild('payment_date') payment_date_field: DateComponent;
+
   payrecord: Table_Cargo_Payrequest = <Table_Cargo_Payrequest>{};
   payrecords: Table_Cargo_Payrequest[] = [];
   invrecords: Table_Cargo_Payrequest[] = [];
@@ -30,6 +34,7 @@ export class PaymentReqComponent implements OnInit {
   private title: string = '';
   private isAdmin: boolean;
   private errorMessage: string;
+  private IsLocked: boolean = false;
 
   constructor(
     private router: Router,
@@ -46,6 +51,7 @@ export class PaymentReqComponent implements OnInit {
     this.cp_source = options.cp_source;
     this.cp_mode = options.cp_mode;
     this.cp_ref_no = options.cp_ref_no;
+    this.IsLocked = options.islocked;
     this.mode = 'ADD';
     this.initPage();
     this.actionHandler();
@@ -72,6 +78,11 @@ export class PaymentReqComponent implements OnInit {
   EditRecord(_rec: Table_Cargo_Payrequest) {
     this.mode = 'EDIT'
     this.pkid = _rec.cp_pkid;
+    this.payrecord.cp_pkid = this.pkid;
+    this.payrecord.cp_master_id = this.cp_master_id;
+    this.payrecord.cp_source = this.cp_source;
+    this.payrecord.cp_mode = this.cp_mode;
+    this.payrecord.cp_pay_status = _rec.cp_pay_status;
     this.payrecord.cp_paytype_needed = _rec.cp_paytype_needed;
     this.payrecord.cp_spl_notes = _rec.cp_spl_notes;
     this.payrecord.cp_payment_date = _rec.cp_payment_date;
@@ -94,10 +105,12 @@ export class PaymentReqComponent implements OnInit {
       this.pkid = this.gs.getGuid();
       this.init();
     }
-     
+
   }
 
   init() {
+    this.payrecord.cp_pkid = this.pkid;
+    this.payrecord.cp_pay_status = '';
     this.payrecord.cp_paytype_needed = 'PAYMENT NEEDED ONLY';
     this.payrecord.cp_spl_notes = '';
     this.payrecord.cp_payment_date = '';
@@ -110,15 +123,13 @@ export class PaymentReqComponent implements OnInit {
     })
 
   }
-   
+
 
   List(_type: string) {
 
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.cp_master_id;
-    SearchData.source = this.cp_source;
-
 
     this.mainService.List(SearchData)
       .subscribe(response => {
@@ -131,7 +142,7 @@ export class PaymentReqComponent implements OnInit {
         });
   }
 
-   
+
   LovSelected(_Record: SearchTable) {
 
     if (_Record.controlname == "PAYEE") {
@@ -146,6 +157,10 @@ export class PaymentReqComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
+    this.payrecord.cp_master_id = this.cp_master_id;
+    this.payrecord.cp_source = this.cp_source;
+    this.payrecord.cp_mode = this.cp_mode;
+
     const saveRecord = <vm_Table_Cargo_Payrequest>{};
     saveRecord.userinfo = this.gs.UserInfo;
     saveRecord.record = this.payrecord;
@@ -158,8 +173,10 @@ export class PaymentReqComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
+          this.RefreshList();
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
+          this.NewRecord();
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -171,10 +188,34 @@ export class PaymentReqComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
+
     if (this.cp_master_id == "") {
       bRet = false;
       this.errorMessage = "Invalid ID";
       alert(this.errorMessage);
+      return bRet;
+    }
+
+    if (this.payrecord.cp_pay_status != null && this.payrecord.cp_pay_status.trim() == "PAID") {
+      bRet = false;
+      this.errorMessage = "Already Paid";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+    if (this.gs.isBlank(this.payrecord.cp_paytype_needed)) {
+      bRet = false;
+      this.errorMessage = "Request Type cannot be blank";
+      alert(this.errorMessage);
+      this.paytype_needed_field.nativeElement.Focus();
+      return bRet;
+    }
+
+    if (this.gs.isBlank(this.payrecord.cp_payment_date)) {
+      bRet = false;
+      this.errorMessage = "Payment Date cannot be blank";
+      alert(this.errorMessage);
+      this.payment_date_field.Focus();
       return bRet;
     }
 
@@ -206,11 +247,65 @@ export class PaymentReqComponent implements OnInit {
   }
 
   SelectInvoice(_rec: Table_Cargo_Payrequest) {
+    this.invrecords.forEach(Rec => {
+      if (Rec.cp_inv_no != _rec.cp_inv_no)
+        Rec.cp_selected = false;
+    })
     this.payrecord.cp_inv_no = _rec.cp_inv_no;
     this.payrecord.cp_inv_id = _rec.cp_inv_id;
     this.payrecord.cp_cust_id = _rec.cp_cust_id;
     this.payrecord.cp_cust_name = _rec.cp_cust_name;
   }
 
+  RefreshList() {
+    if (this.payrecords == null)
+      return;
+    var REC = this.payrecords.find(rec => rec.cp_pkid == this.payrecord.cp_pkid);
+    if (REC == null) {
+      this.payrecords.push(this.payrecord);
+    }
+    else {
+      REC.cp_paytype_needed = this.payrecord.cp_paytype_needed;
+      REC.cp_inv_no = this.payrecord.cp_inv_no;
+      REC.cp_payment_date = this.payrecord.cp_payment_date;
+      REC.cp_pay_status = this.payrecord.cp_pay_status;
+      REC.cp_spl_notes = this.payrecord.cp_spl_notes;
+    }
+  }
 
+  RemoveRow(_rec: Table_Cargo_Payrequest) {
+    this.errorMessage = '';
+
+    if (this.IsLocked) {
+      this.errorMessage = "Cannot Delete, Locked";
+      alert(this.errorMessage);
+      return;
+    }
+
+    if (_rec.cp_pay_status.toString().trim() == "PAID") {
+      this.errorMessage = "Cannot Delete, Paid";
+      alert(this.errorMessage);
+      return;
+    }
+
+    if (!confirm("DELETE RECORD")) {
+      return;
+    }
+
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = _rec.cp_pkid;
+    this.mainService.DeleteRecord(SearchData)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+          this.payrecords.splice(this.payrecords.findIndex(rec => rec.cp_pkid == _rec.cp_pkid), 1);
+          this.NewRecord();
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
 }

@@ -20,5 +20,9 @@ export class PaymentReqService {
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/LoginService/PaymentReqPage/Save', SearchData, this.gs.headerparam2('authorized'));
     }
+
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/LoginService/PaymentReqPage/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
 }
 

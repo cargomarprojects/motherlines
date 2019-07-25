@@ -5,7 +5,7 @@ import { GlobalService } from '../../../core/services/global.service';
 import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 import { SeaImpHouseService } from '../../services/seaimp-house.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem,Table_Address } from '../../models/tbl_cargo_imp_housem';
+import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem, Table_Address } from '../../models/tbl_cargo_imp_housem';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
@@ -649,7 +649,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       }
     }
 
-    if ( this.gs.isBlank(this.record.hbl_shipper_id)) {
+    if (this.gs.isBlank(this.record.hbl_shipper_id)) {
       bRet = false;
       this.errorMessage = "Shipper Code can't be blank";
       alert(this.errorMessage);
@@ -697,7 +697,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
 
 
-    if ( this.gs.isZero(this.record.hbl_packages)) {
+    if (this.gs.isZero(this.record.hbl_packages)) {
       bRet = false;
       this.errorMessage = "No. of packages can't be blank";
       alert(this.errorMessage);
@@ -798,7 +798,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Handled By cannot be blank";
       alert(this.errorMessage);
-       this.hbl_handled_name_field.Focus();
+      this.hbl_handled_name_field.Focus();
       return bRet;
     }
     /*
@@ -1595,8 +1595,8 @@ export class SeaImpHouseEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE,
           pkid: this.pkid,
-          source:'SI-DESC-EX',
-          islocked:false,
+          source: 'SI-DESC-EX',
+          islocked: false,
           origin: 'seaimp-House-page',
           canPrint: false
         };
@@ -1606,13 +1606,13 @@ export class SeaImpHouseEditComponent implements OnInit {
       case 'SHIPMOVEMENT': {
         let prm = {
           menuid: this.gs.MENU_SI_SHIPMENT_MOVEMENT,
-          refno:"REF : " + this.record.mbl_refno + "  HBL : " + this.record.hbl_houseno,
+          refno: "REF : " + this.record.mbl_refno + "  HBL : " + this.record.hbl_houseno,
           pkid: this.pkid,
           origin: 'seaimp-House-page',
-          oprgrp:'SEA IMPORT',
-          parentType:'SEAIMP-SHIP',
-          paramType:'SHIP-MOVE-STATUS',
-          hideTracking:'Y'
+          oprgrp: 'SEA IMPORT',
+          parentType: 'SEAIMP-SHIP',
+          paramType: 'SHIP-MOVE-STATUS',
+          hideTracking: 'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
@@ -1684,15 +1684,14 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.record.hbl_cha_attn = "";
     this.record.hbl_cha_tel = "";
     this.record.hbl_cha_fax = "";
-    if (this.gs.GENERAL_BRANCH_CODE == "MFDR")
-    {
+    if (this.gs.GENERAL_BRANCH_CODE == "MFDR") {
       this.record.hbl_salesman_id = "";
       this.record.hbl_salesman_code = "";
       this.record.hbl_salesman_name = "";
     }
 
     if (this.gs.isBlank(this.record.hbl_consignee_id))
-        return;
+      return;
 
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
@@ -1701,17 +1700,15 @@ export class SeaImpHouseEditComponent implements OnInit {
       .subscribe(response => {
         let charecord: Table_Address = <Table_Address>{};
         charecord = <Table_Address>response.record;
-        
-        if (charecord != null)
-        {
-          this.record.hbl_agent_id= charecord.pkid;
+
+        if (charecord != null) {
+          this.record.hbl_agent_id = charecord.pkid;
           this.record.hbl_cha_code = charecord.code;
           this.record.hbl_cha_name = charecord.name;
           this.record.hbl_cha_attn = charecord.attention;
           this.record.hbl_cha_tel = charecord.telephone;
           this.record.hbl_cha_fax = charecord.fax;
-          if (this.gs.GENERAL_BRANCH_CODE == "MFDR")
-          {
+          if (this.gs.GENERAL_BRANCH_CODE == "MFDR") {
             this.record.hbl_salesman_id = charecord.sman_id;
             this.record.hbl_salesman_name = charecord.sman_name;
           }
