@@ -505,6 +505,17 @@ export class SeaexpMasterEditComponent implements OnInit {
         break;
       }
 
+      case 'DOCKPAGE': {
+        let prm = {
+          menuid: this.gs.MENU_SE_MASTER_DOCK_RECEIPT,
+          pkid:  this.pkid,
+          origin: 'seaexp-master-page',
+        };
+        this.gs.Naviagete('Silver.SeaExport.Trans/DockPage', JSON.stringify(prm));        
+        break;
+      }      
+
+
       case 'ARAP': {
         let prm = {
           menuid: this.gs.MENU_SE_MASTER_ARAP,
