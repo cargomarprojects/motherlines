@@ -5,7 +5,8 @@ import { SeaexpMasterComponent } from './master/seaexp-master.component';
 import { SeaexpMasterEditComponent } from './master/edit/seaexp-master-edit.component';
 import { BookingComponent } from './booking/booking.component';
 import { MblPageComponent } from './mblpage/mblpage.component';
-import {DockPageComponent } from './dockpage/dockpage.component';
+import { DockPageComponent } from './dockpage/dockpage.component';
+import { HousePageComponent } from './housepage/housepage.component';
 
 const routes: Routes = [
   { path : 'SeaExpMasterPage', component : SeaexpMasterComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path : 'BookingPage', component : BookingComponent },
   { path : 'MBLPage', component : MblPageComponent },
   { path : 'DockPage', component : DockPageComponent },
+  { path : 'SeaExpHouseEditPage', component : HousePageComponent },
 ];
 
 

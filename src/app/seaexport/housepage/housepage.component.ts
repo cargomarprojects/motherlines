@@ -10,32 +10,34 @@ import { GlobalService } from '../../core/services/global.service';
 import { User_Menu } from '../../core/models/menum';
 import { SearchTable } from '../../shared/models/searchtable';
 
-import { DockService } from '../services/dock.service';
+import { HouseService } from '../services/house.service';
 
-import { Tbl_cargo_exp_mbldet, vm_Tbl_cargo_exp_mbldet } from '../models/Tbl_cargo_exp_mbldet';
+import { Tbl_cargo_exp_housem, vm_Tbl_cargo_exp_housem } from '../models/Tbl_cargo_exp_housem';
 import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
 import { Tbl_cargo_container } from 'src/app/other/models/tbl_cargo_general';
+import { Tbl_cargo_exp_container } from '../models/tbl_cargo_exp_masterm';
 
 
 
 @Component({
-  selector: 'app-dockpage',
-  templateUrl: './dockpage.component.html'
+  selector: 'app-housepage',
+  templateUrl: './housepage.component.html'
 })
-export class DockPageComponent implements OnInit {
+export class HousePageComponent implements OnInit {
 
 
   private pkid: string;
   private menuid: string;
   private mode: string = "ADD";
 
+  
 
   private errorMessage: string[] = [];
 
   private title: string;
   private isAdmin: boolean;
 
-  record: Tbl_cargo_exp_mbldet = <Tbl_cargo_exp_mbldet>{};
+  record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
   records: Tbl_cargo_exp_desc[] = [];
 
   recorddet: Tbl_cargo_exp_desc[] = [];
@@ -44,19 +46,25 @@ export class DockPageComponent implements OnInit {
 
   ShipmentType: string = '';
 
-  @ViewChild('mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
 
 
-  DESC_TYPE: string = "DOCKDESC";
+  DESC_TYPE: string = "SE-DESC";
 
-  canSave: boolean = false;
+  canSave : boolean = false;
+
+  private parentid : string ;
+  private mbl_refno : string ;
+  private type : string ;
+
+  private refno : string ;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
-    private mainService: DockService,
+    private mainService: HouseService,
   ) { }
 
 
@@ -64,6 +72,12 @@ export class DockPageComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.parentid = options.parentid;
+    this.pkid = options.pkid;
+    this.mbl_refno = options.refno;
+    this.type = options.type;
+    this.mode = options.mode;
+
     this.initPage();
     this.actionHandler();
   }
@@ -72,6 +86,8 @@ export class DockPageComponent implements OnInit {
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
+    this.canSave =  this.gs.canSave(this.menuid, this.mode);
+
     this.errorMessage = [];
 
   }
@@ -79,11 +95,17 @@ export class DockPageComponent implements OnInit {
   actionHandler() {
 
     this.errorMessage = [];
-
-    this.record = <Tbl_cargo_exp_mbldet>{};
-    this.records = <Tbl_cargo_exp_desc[]>[];
     this.InitDesc();
-    this.GetRecord();
+    if ( this.mode == 'ADD')
+    {
+      this.pkid = this.gs.getGuid();
+      this.record = <Tbl_cargo_exp_housem>{};
+      this.cntrs = <Tbl_cargo_exp_container[]>[];
+      this.records = <Tbl_cargo_exp_desc[]>[];
+
+    }
+    if ( this.mode == 'EDIT')
+      this.GetRecord();
 
   }
 
@@ -96,48 +118,43 @@ export class DockPageComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
 
-        this.record = <Tbl_cargo_exp_mbldet>response.record;
+        this.record = <Tbl_cargo_exp_housem>response.record;
+        this.cntrs = <Tbl_cargo_exp_container[]>response.cntrs;
         this.records = <Tbl_cargo_exp_desc[]>response.records;
 
-        this.ShipmentType = this.record.mbld_cntr_type;
 
-        this.mode = "EDIT";
-        if (this.record.mbld_pkid == "") {
-          this.mode = "ADD";
-          this.record.mbld_type_move = this.record.mbld_ship_term;//default data
-          this.record.mbld_notify_name = "SAME AS CONSIGNEE";
-
-          this.record.mbld_is_cntrized = (this.record.mbld_cntr_type != "OTHERS") ? "Y" : "N";
-
-          this.record.mbld_print_kgs = "N";
-          this.record.mbld_print_lbs = "N";
-
-          if (this.record.mbld_cntr_type == "FCL" || this.record.mbld_cntr_type == "CONSOLE") {
-            this.record.desc1 = "SHIPPERS'S LOAD, COUNT, AND SEALED";
-            this.record.desc2 = "SAID TO CONTAIN";
-          }
-          else if (this.record.mbld_cntr_type == "LCL") {
-            this.record.desc1 = "SAID TO CONTAIN";
-          }
-
+        this.ShipmentType = this.record.mbl_cntr_type;
+        
+        /*
+        cmb_Frt_Status.SelectedValue = this.record.hbl_frt_status;
+        Cmb_Nomination.SelectedValue = this.record..hbl_bltype;
+        CmbHblFormat.SelectedValue = ParentRec.hbl_format_id;
+        CmbHblFormat_Draft.SelectedValue = ParentRec.hbl_draft_format_id;
+        if (this.ShipmentType == "FCL" || this.ShipmentType == "LCL")
+        {
+            Cmb_Shpmnt_Stage.IsEnabled = false;
         }
+        if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
+        {
+            IsLocked = true;
+            LBL_LOCK.Content = "LOCKED";
+            CmdSave.IsEnabled = false;
+        }
+        else
+            LBL_LOCK.Content = "UNLOCKED";
+        */
 
-        this.canSave = this.gs.canSave(this.menuid, this.mode);
-
-        this.InitDesc();
 
         if (this.records != null) {
-
           this.records.forEach(rec => {
             this.ShowDesc(rec);
           });
-
         }
 
-        this.record._mbld_is_cntrized = (this.record.mbld_is_cntrized == "Y") ? true : false;
-        this.record._mbld_print_kgs = (this.record.mbld_print_kgs == "Y") ? true : false;
-        this.record._mbld_print_lbs = (this.record.mbld_print_lbs == "Y") ? true : false;
-
+        this.record._hbl_is_cntrized = (this.record.hbl_is_cntrized == "Y") ? true : false;
+        this.record._hbl_is_arranged = (this.record.hbl_is_arranged == "Y") ? true : false;
+        this.record._hbl_print_kgs = (this.record.hbl_print_kgs == "Y") ? true : false;
+        this.record._hbl_print_lbs = (this.record.hbl_print_lbs == "Y") ? true : false;
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -272,12 +289,82 @@ export class DockPageComponent implements OnInit {
   Allvalid() {
     let bret = true;
 
+    if (this.gs.isBlank(this.record.hbl_shipper_id) || this.gs.isBlank(this.record.hbl_shipper_code)) {
+      this.errorMessage.push("Shipper Code cannot be blank");
+      bret = false;
+    }
 
-    if (this.gs.isBlank(this.record.mbld_handled_id) || this.gs.isBlank(this.record.mbld_handled_name)) {
+    if (this.gs.isBlank(this.record.hbl_shipper_name)) {
+      this.errorMessage.push("Shipper Name cannot be blank");
+      bret = false;
+    }
+
+    if (this.gs.isBlank(this.record.hbl_shipper_add1)) {
+      this.errorMessage.push("Shipper Address1 cannot be blank");
+      bret = false;
+    }
+
+
+    if (this.gs.isBlank(this.record.hbl_consignee_id) || this.gs.isBlank(this.record.hbl_consignee_code)) {
+      this.errorMessage.push("Consignee Code cannot be blank");
+      bret = false;
+    }
+
+    if (this.gs.isBlank(this.record.hbl_consigned_to1)) {
+      this.errorMessage.push("Consignee Name cannot be blank");
+      bret = false;
+    }
+
+    if (!this.gs.isBlank(this.record.hbl_notify_id)) {
+
+      if (this.gs.isBlank(this.record.hbl_notify_code)) {
+        this.errorMessage.push("Notify Code cannot be blank");
+        bret = false;
+      }
+      if (this.gs.isBlank(this.record.hbl_notify_name)) {
+        this.errorMessage.push("Notify Name cannot be blank");
+        bret = false;
+      }
+    }
+
+    if (this.gs.isBlank(this.record.hbl_pol_name)) {
+      this.errorMessage.push("Pol cannot be blank");
+      bret = false;
+    }
+
+    if (this.gs.isBlank(this.record.hbl_pod_name)) {
+      this.errorMessage.push("Pod cannot be blank");
+      bret = false;
+    }
+
+    if (this.gs.isBlank(this.record.hbl_handled_id) || this.gs.isBlank(this.record.hbl_handled_name)) {
       this.errorMessage.push("Handled By cannot be blank");
       bret = false;
     }
 
+
+
+    if (this.gs.BRANCH_REGION == "USA") {
+      if (this.gs.isZero(this.record.hbl_lbs)) {
+        this.errorMessage.push("LBS cannot be blank");
+        bret = false;
+      }
+
+      if (this.gs.isZero(this.record.hbl_cft) && this.ShipmentType != "FCL") {
+        this.errorMessage.push("CFT cannot be blank");
+        bret = false;
+      }
+    }
+
+    if (this.gs.isZero(this.record.hbl_weight)) {
+      this.errorMessage.push("Weight cannot be blank");
+      bret = false;
+    }
+
+    if (this.gs.isZero(this.record.hbl_cbm) && this.ShipmentType != "FCL") {
+      this.errorMessage.push("CBM cannot be blank");
+      bret = false;
+    }
 
     if (!bret)
       alert('Error While Saving');
@@ -298,14 +385,15 @@ export class DockPageComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
-    this.record.mbld_is_cntrized = (this.record._mbld_is_cntrized) ? "Y" : "N";
-    this.record.mbld_print_kgs = (this.record._mbld_print_kgs) ? "Y" : "N";
-    this.record.mbld_print_lbs = (this.record._mbld_print_lbs) ? "Y" : "N";
+    this.record.hbl_is_cntrized = (this.record._hbl_is_cntrized) ? "Y" : "N";
+    this.record.hbl_is_arranged    = (this.record._hbl_is_arranged) ? "Y" : "N";
+    this.record.hbl_print_kgs = (this.record._hbl_print_kgs) ? "Y" : "N";
+    this.record.hbl_print_lbs = (this.record._hbl_print_lbs) ? "Y" : "N";
 
 
     this.SaveDescList();
 
-    const saverec = <vm_Tbl_cargo_exp_mbldet>{};
+    const saverec = <vm_Tbl_cargo_exp_housem>{};
 
     saverec.mode = this.mode;
     saverec.pkid = this.pkid;
@@ -315,9 +403,10 @@ export class DockPageComponent implements OnInit {
 
     this.mainService.Save(saverec).subscribe(response => {
 
-      if (this.mode == "ADD" && response.retvalue)
-        this.record.mbld_dockno = response.docno;
-      this.mode = 'EDIT';
+      if (response.retvalue) {
+        this.refno= response.refno;
+        this.mode = 'EDIT';
+      }
 
     }, error => {
       this.errorMessage.push(this.gs.getError(error));
@@ -326,53 +415,56 @@ export class DockPageComponent implements OnInit {
     }
     );
 
+    
+
   }
 
+  
 
   LovSelected(rec: SearchTable) {
 
     if (rec.controlname == "SHIPPER") {
-      this.record.mbld_shipper_id = rec.id;
-      this.record.mbld_shipper_code = rec.code;
-      this.record.mbld_shipper_name = rec.name;
+      this.record.hbl_shipper_id = rec.id;
+      this.record.hbl_shipper_code = rec.code;
+      this.record.hbl_shipper_name = rec.name;
       if (rec.col8 != "")
-        this.record.mbld_shipper_name = rec.col8;
-      this.record.mbld_shipper_add1 = rec.col1;
-      this.record.mbld_shipper_add2 = rec.col2;
-      this.record.mbld_shipper_add3 = rec.col3;
-      this.record.mbld_shipper_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+        this.record.hbl_shipper_name = rec.col8;
+      this.record.hbl_shipper_add1 = rec.col1;
+      this.record.hbl_shipper_add2 = rec.col2;
+      this.record.hbl_shipper_add3 = rec.col3;
+      this.record.hbl_shipper_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
     }
 
     if (rec.controlname == 'CONSIGNEE') {
 
-      this.record.mbld_consignee_id = rec.id;
-      this.record.mbld_consigned_to1 = rec.name;
-      this.record.mbld_consigned_to2 = rec.col1;
-      this.record.mbld_consigned_to3 = rec.col2;
-      this.record.mbld_consigned_to4 = rec.col3;
-      this.record.mbld_consigned_to5 = this.gs.GetTelFax(rec.col6, rec.col7);
+      this.record.hbl_consignee_id = rec.id;
+      this.record.hbl_consigned_to1 = rec.name;
+      this.record.hbl_consigned_to2 = rec.col1;
+      this.record.hbl_consigned_to3 = rec.col2;
+      this.record.hbl_consigned_to4 = rec.col3;
+      this.record.hbl_consigned_to5 = this.gs.GetTelFax(rec.col6, rec.col7);
 
     }
 
     if (rec.controlname == "NOTIFY") {
-      this.record.mbld_notify_id = rec.id;
-      this.record.mbld_notify_code = rec.code;
-      this.record.mbld_notify_name = rec.name;
+      this.record.hbl_notify_id = rec.id;
+      this.record.hbl_notify_code = rec.code;
+      this.record.hbl_notify_name = rec.name;
       if (rec.col8 != "")
-        this.record.mbld_notify_name = rec.col8;
-      this.record.mbld_notify_add1 = rec.col1;
-      this.record.mbld_notify_add2 = rec.col2;
-      this.record.mbld_notify_add3 = rec.col3;
-      this.record.mbld_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+        this.record.hbl_notify_name = rec.col8;
+      this.record.hbl_notify_add1 = rec.col1;
+      this.record.hbl_notify_add2 = rec.col2;
+      this.record.hbl_notify_add3 = rec.col3;
+      this.record.hbl_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
     }
 
 
     if (rec.controlname == "AGENT") {
-      this.record.mbld_agent_id = rec.id;
+      this.record.hbl_agent_id = rec.id;
     }
 
     if (rec.controlname == "HANDLEDBY") {
-      this.record.mbld_handled_id = rec.id;
+      this.record.hbl_handled_id = rec.id;
     }
 
     if (rec.controlname == "SALEMSAN") {
@@ -383,13 +475,13 @@ export class DockPageComponent implements OnInit {
 
   FindWeight(_type: string) {
     if (_type == "Kgs2Lbs")
-      this.record.mbld_lbs = this.gs.Convert_Weight("KG2LBS", this.record.mbld_weight, 3);
+      this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
     else if (_type == "Lbs2Kgs")
-      this.record.mbld_weight = this.gs.Convert_Weight("LBS2KG", this.record.mbld_lbs, 3);
+      this.record.hbl_weight = this.gs.Convert_Weight("LBS2KG", this.record.hbl_lbs, 3);
     else if (_type == "Cbm2Cft")
-      this.record.mbld_cft = this.gs.Convert_Weight("CBM2CFT", this.record.mbld_cbm, 3);
+      this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
     else if (_type == "Cft2Cbm")
-      this.record.mbld_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.mbld_cft, 3);
+      this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
   }
 
   Close() {
@@ -436,10 +528,6 @@ export class DockPageComponent implements OnInit {
       this.recorddet.push(Rec);
     }
   }
-
-
-
-
 
 
 }

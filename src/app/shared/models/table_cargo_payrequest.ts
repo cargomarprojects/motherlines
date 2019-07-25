@@ -20,6 +20,7 @@ export interface Table_Cargo_Payrequest {
     cp_selected:boolean;
 }
 
+
 export interface vm_Table_Cargo_Payrequest {
     mode: string;
     record: Table_Cargo_Payrequest;

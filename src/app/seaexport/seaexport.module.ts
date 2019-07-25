@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 
@@ -9,13 +8,11 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { SeaexpMasterComponent } from './master/seaexp-master.component';
 import { SeaExpMasterHeaderComponent } from './master/seaexp-master-header.component';
-
 import { SeaexpMasterEditComponent } from './master/edit/seaexp-master-edit.component';
 import { BookingComponent } from './booking/booking.component';
-
 import { MblPageComponent } from './mblpage/mblpage.component';
-
 import { DockPageComponent } from './dockpage/dockpage.component';
+import { HousePageComponent } from './housepage/housepage.component';
 
 
 @NgModule({
@@ -25,8 +22,8 @@ import { DockPageComponent } from './dockpage/dockpage.component';
     SeaexpMasterEditComponent,
     BookingComponent,
     MblPageComponent,
-    DockPageComponent
-
+    DockPageComponent,
+    HousePageComponent,
   ],
   imports: [
     SharedModule,    
