@@ -9,8 +9,8 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-loading-screen',
-  templateUrl: './loading-screen.component.html',
-  styleUrls: ['./loading-screen.component.css']
+  templateUrl: './loading-screen.component.html'
+  
 })
 export class LoadingScreenComponent implements OnInit {
 
