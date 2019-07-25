@@ -6,6 +6,9 @@ import { GlobalService } from '../../../core/services/global.service';
 import { seaexpMasterService } from '../../services/seaexp-master.service';
 import { User_Menu } from '../../../core/models/menum';
 import { Tbl_cargo_exp_masterm, Tbl_cargo_exp_container, vm_tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
+
+import {Tbl_cargo_exp_housem} from '../../models/Tbl_cargo_exp_housem';
+
 import { SearchTable } from '../../../shared/models/searchtable';
 
 @Component({
@@ -21,6 +24,8 @@ export class SeaexpMasterEditComponent implements OnInit {
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
 
   records: Tbl_cargo_exp_container[] = [];
+
+  hrecords: Tbl_cargo_exp_housem[] = [];
 
   // 24-05-2019 Created By Joy  
 
@@ -76,6 +81,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_exp_masterm>{};
       this.records = <Tbl_cargo_exp_container[]>[];
+      this.hrecords = <Tbl_cargo_exp_housem[]>[];      
       this.pkid = this.gs.getGuid();
       this.init();
     }
@@ -117,6 +123,7 @@ export class SeaexpMasterEditComponent implements OnInit {
       .subscribe(response => {
         this.record = <Tbl_cargo_exp_masterm>response.record;
         this.records = <Tbl_cargo_exp_container[]>response.records;
+        this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;        
         this.mode = 'EDIT';
         this.CheckData();
       }, error => {
@@ -481,6 +488,34 @@ export class SeaexpMasterEditComponent implements OnInit {
   }
 
 
+  hblid : string;
+  hblmode : string;
+
+
+  AddHouse() {
+    if (!this.gs.canAdd(this.gs.MENU_SI_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    this.hblid = "";
+    this.hblmode = "ADD";
+    this.BtnNavigation('HOUSE')
+  }
+
+  EditHouse(_record: Tbl_cargo_exp_housem) {
+
+    if (!this.gs.canEdit(this.gs.MENU_SE_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    this.hblid = _record.hbl_pkid;
+    this.hblmode = "EDIT";
+    this.BtnNavigation('HOUSE')
+  }
+
+
   BtnNavigation(action: string) {
 
     switch (action) {
@@ -492,6 +527,20 @@ export class SeaexpMasterEditComponent implements OnInit {
           origin: 'seaexp-master-page',
         };
         this.gs.Naviagete('Silver.SeaExport.Trans/BookingPage', JSON.stringify(prm));        
+        break;
+      }
+
+      case 'HOUSE': {
+        let prm = {
+          menuid: this.gs.MENU_SE_HOUSE,
+          parentid: this.pkid,
+          pkid: this.hblid,
+          refno: this.record.mbl_refno,
+          type: 'SE',
+          origin: 'seaexp-master-page',
+          mode: this.hblmode
+        };
+        this.gs.Naviagete('Silver.SeaExport/SeaExpHouseEditPage', JSON.stringify(prm));
         break;
       }
 

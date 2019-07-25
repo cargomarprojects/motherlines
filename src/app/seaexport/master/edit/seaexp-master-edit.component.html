@@ -379,6 +379,53 @@
 
       </div>
 
+
+      <div *ngIf="mode=='EDIT'" class="row">
+
+          <div class="col-md-12">
+            <div class="page-body table-responsive">
+
+              <div class="form-group row">
+                <div class="col-12">
+                  <button class="btn btn-primary btn-sm mr-1" (click)="AddHouse()">Add House</button>
+                </div>
+              </div>
+
+              <table class="table  table-hover table-sm">
+                <thead class="page-body-thead">
+                  <tr>
+                    <th>HOUSE</th>
+                    <th>SHIPPER</th>
+                    <th>CONSIGNEE</th>
+                    <th>PCS</th>
+                    <th>HANDLED-BY</th>
+                    <th>FREIGHT</th>
+                    <th>TERMS</th>
+                    <th>CREATED-BY</th>
+                    <th>DATE</th>
+                  </tr>
+                </thead>
+                <tbody class="page-body-tbody">
+                  <tr *ngFor="let rec of hrecords">
+                    <td (click)="EditHouse(rec)">{{rec.hbl_houseno}}</td>
+                    <td>{{rec.hbl_shipper_name}}</td>
+                    <td>{{rec.hbl_consignee_name}}</td>
+                    <td>{{rec.hbl_packages}}</td>
+                    <td>{{rec.hbl_handled_name}}</td>
+                    <td>{{rec.hbl_frt_status}}</td>
+                    <td>{{rec.hbl_ship_term}}</td>
+                    <td>{{rec.rec_created_by}}</td>
+                    <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        
+
+
     </div>
 
     <div class="col-md-2 testbox">
