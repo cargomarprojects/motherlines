@@ -6,7 +6,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { SearchTable } from '../../shared/models/searchtable';
 import { Table_Cargo_Payrequest, vm_Table_Cargo_Payrequest } from '../../shared/models/table_cargo_payrequest';
 import { PaymentReqService } from '../services/paymentreq.service';
-import { DateComponent } from '../../shared/Date/date.component';
+// import { DateComponent } from '../../shared/Date/date.component';
 
 @Component({
   selector: 'app-paymentreq',
@@ -21,7 +21,7 @@ export class PaymentReqComponent implements OnInit {
   @Input() public cp_mode: string = '';
 
   @ViewChild('paytype_needed') paytype_needed_field: ElementRef;
-  @ViewChild('payment_date') payment_date_field: DateComponent;
+  // @ViewChild('payment_date') payment_date_field: DateComponent;
 
   payrecord: Table_Cargo_Payrequest = <Table_Cargo_Payrequest>{};
   payrecords: Table_Cargo_Payrequest[] = [];
@@ -215,7 +215,7 @@ export class PaymentReqComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Payment Date cannot be blank";
       alert(this.errorMessage);
-      this.payment_date_field.Focus();
+      // this.payment_date_field.Focus();
       return bRet;
     }
 
