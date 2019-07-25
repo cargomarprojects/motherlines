@@ -621,7 +621,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <app-paymentreq [cp_ref_no]="record.mbl_refno" [cp_master_id]="pkid" [cp_source]="'SEA-MASTER'"
+        <app-paymentreq [cp_ref_no]="record.mbl_refno" [cp_master_id]="record.mbl_pkid" [cp_source]="'SEA-MASTER'"
           [cp_mode]="'SEA IMPORT'"> </app-paymentreq>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

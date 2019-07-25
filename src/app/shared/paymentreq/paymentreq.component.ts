@@ -13,7 +13,7 @@ import { PaymentReqService } from '../services/paymentreq.service';
 export class PaymentReqComponent implements OnInit {
   // Local Variables 
 
-  @Input() public cp_ref_no: string = 'TEST';
+  @Input() public cp_ref_no: string = '';
   @Input() public cp_master_id: string = '';
   @Input() public cp_source: string = '';
   @Input() public cp_mode: string = '';
@@ -38,13 +38,13 @@ export class PaymentReqComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.menuid = options.menuid;
-    this.cp_master_id = options.cp_master_id;
-    this.cp_source = options.cp_source;
-    this.cp_mode = options.cp_mode;
-    this.cp_ref_no = options.cp_ref_no;
-    this.mode = 'ADD';
+    // const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+    // this.menuid = options.menuid;
+    // this.cp_master_id = options.cp_master_id;
+    // this.cp_source = options.cp_source;
+    // this.cp_mode = options.cp_mode;
+    // this.cp_ref_no = options.cp_ref_no;
+    // this.mode = 'ADD';
     this.initPage();
     this.actionHandler();
   }
@@ -54,7 +54,7 @@ export class PaymentReqComponent implements OnInit {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.errorMessage = '';
     this.LoadCombo();
-  //  this.List('LOAD');
+    this.List('LOAD');
   }
 
   LoadCombo() {
@@ -70,36 +70,49 @@ export class PaymentReqComponent implements OnInit {
   EditRecord(_rec: Table_Cargo_Payrequest) {
     this.pkid = _rec.cp_pkid;
     this.mode = 'EDIT'
-    this.GetRecord();
+    this.actionHandler();
   }
 
   actionHandler() {
     this.errorMessage = '';
     if (this.mode == 'ADD') {
       this.payrecord = <Table_Cargo_Payrequest>{};
-      this.payrecords = <Table_Cargo_Payrequest[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
     if (this.mode == 'EDIT') {
-      this.GetRecord();
+      this.init();
+      this.Fill();
     }
   }
 
   init() {
+    this.payrecord.cp_paytype_needed = '';
+    this.payrecord.cp_spl_notes = '';
+    this.payrecord.cp_payment_date = '';
+    this.payrecord.cp_cust_name = '';
+    this.payrecord.cp_cust_id = '';
+    this.payrecord.cp_inv_no = '';
+    this.payrecord.cp_inv_id = '';
+  }
+  private Fill()
+  {
+      // CmbPayReq.SelectedValue = DetailRow.cp_paytype_needed;
+      // Txt_Remark1.Text = DetailRow.cp_spl_notes;
+      // Dt_Pay_date.SelectedDate = DetailRow.cp_payment_date;
 
-    // this.record.parentid = this.pkid;
-    // this.record.cargo_description = '';
-    // this.record.cargo_marks = '';
-    // this.record.cargo_packages = '';
-    // this.record.cargo_ctr = 1;
+      // Txt_Customer.Text = DetailRow.cp_cust_name;
+      // Txt_Customer.PKID = DetailRow.cp_cust_id;
+      // Txt_AP_No.Text = DetailRow.cp_inv_no;
+      // Txt_AP_No.Tag = DetailRow.cp_inv_id;
   }
 
   List(_type: string) {
 
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
-    SearchData.parentid = this.cp_master_id;
+    SearchData.pkid = this.cp_master_id;
+    SearchData.source = this.cp_source;
 
     this.mainService.List(SearchData)
       .subscribe(response => {
@@ -111,17 +124,17 @@ export class PaymentReqComponent implements OnInit {
   }
 
   GetRecord() {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
+    // this.errorMessage = '';
+    // var SearchData = this.gs.UserInfo;
+    // SearchData.pkid = this.pkid;
 
-    this.mainService.GetRecord(SearchData)
-      .subscribe(response => {
-        this.payrecord = <Table_Cargo_Payrequest>response.record;
-        this.mode = 'EDIT';
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
+    // this.mainService.GetRecord(SearchData)
+    //   .subscribe(response => {
+    //     this.payrecord = <Table_Cargo_Payrequest>response.record;
+    //     this.mode = 'EDIT';
+    //   }, error => {
+    //     this.errorMessage = this.gs.getError(error);
+    //   });
   }
 
 
@@ -132,7 +145,7 @@ export class PaymentReqComponent implements OnInit {
     const saveRecord = <vm_Table_Cargo_Payrequest>{};
     saveRecord.userinfo = this.gs.UserInfo;
     saveRecord.record = this.payrecord;
-    saveRecord.pkid = this.pkid;
+    saveRecord.mode = this.mode;
 
     this.mainService.Save(saveRecord)
       .subscribe(response => {

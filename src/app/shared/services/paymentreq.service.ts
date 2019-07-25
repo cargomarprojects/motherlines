@@ -16,10 +16,7 @@ export class PaymentReqService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/LoginService/PaymentReqPage/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/LoginService/PaymentReqPage/GetRecord', SearchData, this.gs.headerparam2('authorized'));
-    }
-
+  
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/LoginService/PaymentReqPage/Save', SearchData, this.gs.headerparam2('authorized'));
     }
