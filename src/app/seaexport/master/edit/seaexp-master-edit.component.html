@@ -1,6 +1,8 @@
 <div class="page-header">
   <div class="col">
-    <label>{{title}} ({{mode}})</label>
+    <label class="pr-1">{{title}} ({{mode}})</label>
+    <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>    
+    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
   </div>
 
 </div>
@@ -309,13 +311,7 @@
         <div class="col-md-12">
           <div class="page-body table-responsive">
 
-            <div class="form-group row">
-              <div class="col-12">
-                <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
-                <button class="btn btn-primary btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
-                <button class="btn btn-primary btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
-              </div>
-            </div>
+          
 
             <table class="table  table-hover table-sm">
               <thead class="page-body-thead">
@@ -369,6 +365,15 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="form-group row">
+                <div class="col-12 pl-1" >
+                  <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
+                  <button class="btn btn-success btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
+                  <button class="btn btn-success btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
+                </div>
+              </div>
+
           </div>
         </div>
 
@@ -378,72 +383,72 @@
 
     <div class="col-md-2 testbox">
 
-      <div class="col-md-12  px-2 mx-0 py-2 border">
+      <div class="col-md-12  p-1 border">
 
         <div class="form-group row">
-          <button class="col-12 btn btn-primary btn-sm" (click)="BtnNavigation('BOOKING')">Booking</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">House Maintenence</button>
+          <button class="col-12 btn btn-info btn-sm" (click)="BtnNavigation('BOOKING')">Booking</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('MBLPAGE')">MBL Instruction</button>
+          <button class=" col-12 btn btn-info btn-sm">House Maintenence</button>
+        </div>
+
+        <div class="form-group row">
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MBLPAGE')">MBL Instruction</button>
         </div>
 
         <div class="form-group row">
 
-          <button class=" col-12 btn btn-primary btn-sm">Dock Receipt</button>
+          <button class=" col-12 btn btn-info btn-sm">Dock Receipt</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Manifest</button>
+          <button class=" col-12 btn btn-info btn-sm">Manifest</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Container Dryage</button>
+          <button class=" col-12 btn btn-info btn-sm">Container Dryage</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('ARAP')">AR & AP</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">AR & AP</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Profit Report</button>
+          <button class=" col-12 btn btn-info btn-sm">Profit Report</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Shipment Label</button>
+          <button class=" col-12 btn btn-info btn-sm">Shipment Label</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Messenger Slip</button>
+          <button class=" col-12 btn btn-info btn-sm">Messenger Slip</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Manifest EDI</button>
+          <button class=" col-12 btn btn-info btn-sm">Manifest EDI</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Payment Request</button>
+          <button class=" col-12 btn btn-info btn-sm">Payment Request</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Attachments</button>
+          <button class=" col-12 btn btn-info btn-sm">Attachments</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Add To Follow Up</button>
+          <button class=" col-12 btn btn-info btn-sm">Add To Follow Up</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Internal Memo</button>
+          <button class=" col-12 btn btn-info btn-sm">Internal Memo</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Request For Approval</button>
+          <button class=" col-12 btn btn-info btn-sm">Request For Approval</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Certificate Of Origin</button>
+          <button class=" col-12 btn btn-info btn-sm">Certificate Of Origin</button>
         </div>
 
       </div>
@@ -463,8 +468,8 @@
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
           <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
-          <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
-          <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button>
+
+
         </div>
       </div>
     </div>
