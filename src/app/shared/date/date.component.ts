@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, SimpleChanges } from '@angular/core';
 
-
 @Component({
     selector: 'app-date',
     templateUrl: './date.component.html'
@@ -148,7 +147,5 @@ export class DateComponent {
             return false;
         }
     }
-
-
 
 }
