@@ -14,7 +14,7 @@ const routes: Routes = [
   { path : 'BookingPage', component : BookingComponent },
   { path : 'MBLPage', component : MblPageComponent },
   { path : 'DockPage', component : DockPageComponent },
-  { path : 'SeaExpHousePage', component : HousePageComponent },
+  { path : 'SeaExpHouseEditPage', component : HousePageComponent },
 ];
 
 

@@ -152,6 +152,7 @@ export class HousePageComponent implements OnInit {
         }
 
         this.record._hbl_is_cntrized = (this.record.hbl_is_cntrized == "Y") ? true : false;
+        this.record._hbl_is_arranged = (this.record.hbl_is_arranged == "Y") ? true : false;
         this.record._hbl_print_kgs = (this.record.hbl_print_kgs == "Y") ? true : false;
         this.record._hbl_print_lbs = (this.record.hbl_print_lbs == "Y") ? true : false;
 
@@ -385,6 +386,7 @@ export class HousePageComponent implements OnInit {
       return;
 
     this.record.hbl_is_cntrized = (this.record._hbl_is_cntrized) ? "Y" : "N";
+    this.record.hbl_is_arranged    = (this.record._hbl_is_arranged) ? "Y" : "N";
     this.record.hbl_print_kgs = (this.record._hbl_print_kgs) ? "Y" : "N";
     this.record.hbl_print_lbs = (this.record._hbl_print_lbs) ? "Y" : "N";
 
