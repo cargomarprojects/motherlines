@@ -460,34 +460,6 @@
       </div>
 
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm"></label>
-        <div class="col-8">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="record._mbld_print_kgs" />
-            <span>Print KGS</span>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm"></label>
-        <div class="col-8">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="record._mbld_print_lbs" />
-            <span>Print LBS</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm">Clean On Board</label>
-        <div class="col-8">
-          <InputBox [(inputModel)]="record.mbld_clean" [maxlength]="10" [uppercase]="true" #notify_add4>
-          </InputBox>
-        </div>
-      </div>
 
 
 
@@ -505,9 +477,9 @@
     <div class="col-md-4">
 
       <div class="form-group row">
-        <div class="col-8 pr-0">
-          <label class="col-3 pr-0 col-form-label col-form-label-sm">Marks & Nos</label>
-          <button class="col-3 btn btn-success btn-sm" (click)="LoadContainer()">Load Cntr</button>
+        <div class="col-8 px-0">
+          <label class="col-4 pr-0 col-form-label col-form-label-sm">Marks & Nos</label>
+          <button class="col-4 btn btn-success btn-sm" (click)="LoadContainer()">Load Cntr</button>
         </div>
         <div class="col-4 pl-0">
           <label class="col-5 pl-0 col-form-label col-form-label-sm">Pkgs</label>
@@ -736,8 +708,9 @@
 
 
       <div class="form-group row">
-        <div class="col-8 pr-0">
-          <label class="col-3 pr-0 col-form-label col-form-label-sm"></label>
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8 px-0">
+          <label class="col-8 col-form-label col-form-label-sm">Weight/Measurement</label>
         </div>
       </div>
 
@@ -784,6 +757,37 @@
           <span style="cursor:pointer" (click)="FindWeight('Cbm2Cft')"> <i class="fa fa-arrow-up"> </i> </span>
         </div>
       </div>
+
+
+      <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record._mbld_print_kgs" />
+              <span>Print KGS</span>
+            </div>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record._mbld_print_lbs" />
+              <span>Print LBS</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Clean On Board</label>
+          <div class="col-6">
+            <InputBox [(inputModel)]="record.mbld_clean" [maxlength]="10" [uppercase]="true" #notify_add4>
+            </InputBox>
+          </div>
+        </div>
+  
 
 
 
