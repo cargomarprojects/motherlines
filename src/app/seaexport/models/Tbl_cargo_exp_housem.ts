@@ -10,6 +10,7 @@ export interface vm_Tbl_cargo_exp_housem {
         IsPod : string;
         iStartNo : number;
         iStep  : number;
+        record : Tbl_cargo_exp_housem;
         cntrs: Tbl_cargo_exp_container[];
         records : Tbl_cargo_exp_desc[];
         userinfo: any
@@ -48,6 +49,9 @@ export interface Tbl_cargo_exp_housem {
 
     hbl_print_kgs: string;
     hbl_print_lbs: string;
+
+    _hbl_print_kgs: boolean;
+    _hbl_print_lbs: boolean;
 
 
     hbl_obl_telex: string;
@@ -116,6 +120,11 @@ export interface Tbl_cargo_exp_housem {
 
     hbl_is_arranged: string;
     hbl_is_cntrized: string;
+
+
+    _hbl_is_arranged: boolean;
+    _hbl_is_cntrized: boolean;
+
     hbl_goods_nature: string;
 
     hbl_charges1: string;

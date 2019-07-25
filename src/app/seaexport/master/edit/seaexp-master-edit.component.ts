@@ -543,7 +543,7 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.SeaExport/SeaExpHouseEditPage', JSON.stringify(prm));
         break;
       }
-
+      
       case 'MBLPAGE': {
         let prm = {
           menuid: this.gs.MENU_SE_MASTER_MBL_INSTRUCTION,
