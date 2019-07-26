@@ -377,7 +377,6 @@ export class HousePageComponent implements OnInit {
   }
 
 
-
   Save() {
 
     this.errorMessage = [];
@@ -404,7 +403,7 @@ export class HousePageComponent implements OnInit {
     this.mainService.Save(saverec).subscribe(response => {
 
       if (response.retvalue) {
-        this.refno= response.refno;
+        this.record.hbl_houseno= response.refno;
         this.mode = 'EDIT';
       }
 

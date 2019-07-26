@@ -188,6 +188,7 @@ export class GlobalService {
   public PARAM_COUNTRY: any = [];
   public PARAM_CURRENCY: any = [];
   public PARAM_HBL_FORMAT: any = [];
+  public PARAM_HBL_FORMAT_BLANK: any = [];
   public PARAM_HBL_FORMAT_DRAFT: any = [];
   public PARAM_HAWB_FORMAT: any = [];
   public PARAM_UNIT: any = [];

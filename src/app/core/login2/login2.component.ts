@@ -681,6 +681,7 @@ export class Login2Component implements OnInit {
         }).forEach(a => {
             this.GLOBALCONTANTS.PARAM_COUNTRY.push ({ "code": a.param_pkid, "name": a.param_name1 })
         });
+
         this.MainList.filter(a => a.param_type =='CURRENCY' ).sort( function(a,b) { 
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
@@ -691,6 +692,30 @@ export class Login2Component implements OnInit {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
             this.GLOBALCONTANTS.PARAM_UNIT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+        });
+
+        this.MainList.filter(a => a.param_type =='HBL-FORMAT').sort( function(a,b) { 
+            return b.param_name1 < a.param_name1 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.PARAM_HBL_FORMAT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+        });
+
+        this.MainList.filter(a => a.param_type =='HBL-FORMAT' && a.param_name6 =='BLANK' ).sort( function(a,b) { 
+            return b.param_name1 < a.param_name1 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.PARAM_HBL_FORMAT_BLANK.push ({ "code": a.param_pkid, "name": a.param_name1 })
+        });
+
+        this.MainList.filter(a => a.param_type =='HBL-FORMAT' && a.param_name6 =='DRAFT' ).sort( function(a,b) { 
+            return b.param_name1 < a.param_name1 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.PARAM_HBL_FORMAT_DRAFT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+        });
+
+        this.MainList.filter(a => a.param_type =='HAWB-FORMAT' ).sort( function(a,b) { 
+            return b.param_name1 < a.param_name1 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.PARAM_HAWB_FORMAT.push ({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
 

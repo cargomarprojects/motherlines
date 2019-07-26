@@ -1,5 +1,5 @@
 <div class="page-header">
-    <div class="row align-items-center justify-content-left p-1">
+  <div class="row align-items-center justify-content-left p-1">
     <label class="pr-1">{{title}} ({{mode}}) </label>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
   </div>
@@ -19,34 +19,34 @@
 
 <div class="page-body">
 
-    <div class="row">
-      
-        <div class="col-md-4">
-              <div class="form-group row">
-                  <label class="col-4 col-form-label col-form-label-sm">House#</label>
-                  <div class="col-8">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
-                      [(ngModel)]="record.hbl_houseno" [disabled]="true" maxlength="15" />
-                  </div>
-                </div>
-          </div>
-    
-          <div class="col-md-4">
-              <div class="form-group row">
-                  <label class="col-4 col-form-label col-form-label-sm">Ref#</label>
-                  <div class="col-8">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
-                      [(ngModel)]="record.mbl_refno" [disabled]="true" maxlength="15" />
-                  </div>
-                </div>
-          </div>
-    
-          <div class="col-md-4">
-          </div>
-    
-    
+  <div class="row">
+
+    <div class="col-md-4  px-0 mx-0">
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">House#</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
+            [(ngModel)]="record.hbl_houseno" [disabled]="true" maxlength="15" />
+        </div>
       </div>
-    
+    </div>
+
+    <div class="col-md-4  px-0 mx-0">
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Ref#</label>
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
+            [(ngModel)]="record.mbl_refno" [disabled]="true" maxlength="15" />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4  px-0 mx-0">
+    </div>
+
+
+  </div>
+
 
 
 </div>
@@ -57,7 +57,7 @@
   <div class="row">
 
 
-    <div class="col-md-4">
+    <div class="col-md-4  px-0 mx-0">
 
 
 
@@ -222,7 +222,7 @@
     </div>
 
 
-    <div class="col-md-4">
+    <div class="col-md-4  px-0 mx-0">
 
 
       <div class="form-group row">
@@ -340,12 +340,12 @@
       </div>
 
       <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm">Pofd</label>
-          <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_pofd_name" [maxlength]="60" [uppercase]="true" #pod>
-            </InputBox>
-          </div>
+        <label class="col-4 col-form-label col-form-label-sm">Pofd</label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.hbl_pofd_name" [maxlength]="60" [uppercase]="true" #pod>
+          </InputBox>
         </div>
+      </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Place Delivery</label>
@@ -360,7 +360,7 @@
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4  px-0 mx-0">
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Move Type</label>
@@ -371,33 +371,62 @@
       </div>
 
       <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm"></label>
-          <div class="col-8 ">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
-              <span>Is Containerized</span>
-            </div>
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8 ">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+            <span>Is Containerized</span>
           </div>
         </div>
-
-
-        <div class="form-group row">
-            <label class="col-4 col-form-label col-form-label-sm">Handled.By</label>
-            <div class="col-8">
-              <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
-                [displaycolumn]="'NAME'" [displaydata]="record.hbl_handled_name" (ValueChanged)="LovSelected($event)">
-              </app-autocomplete2>
-            </div>
-          </div>
-      
+      </div>
 
       <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm">Nature Of Goods</label>
-          <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_goods_nature" [maxlength]="100" [uppercase]="true" #commodity>
-            </InputBox>
-          </div>
+        <label class="col-4 col-form-label col-form-label-sm">Frt.Status</label>
+        <div class="col-8">
+          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status">
+            <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
+          </select>
         </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Nomination</label>
+        <div class="col-8">
+          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_bltype" #hbl_bltype>
+            <option *ngFor="let rec of gs.PARAM_NOMINATION" [value]="rec.code">{{rec.name}}</option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Handled.By</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+            [displaycolumn]="'NAME'" [displaydata]="record.hbl_handled_name" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Sales Rep.</label>
+        <div class="col-8">
+          <app-autocomplete2 [controlname]="'SMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+            [displaycolumn]="'NAME'" [displaydata]="record.hbl_salesman_name" (ValueChanged)="LovSelected($event)">
+          </app-autocomplete2>
+        </div>
+      </div>
+
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Nature Of Goods</label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.hbl_goods_nature" [maxlength]="100" [uppercase]="true" #commodity>
+          </InputBox>
+        </div>
+      </div>
 
 
       <div class="form-group row">
@@ -409,85 +438,56 @@
       </div>
 
       <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm"></label>
-          <div class="col-8 ">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_arranged" />
-              <span>As Arranged</span>
-            </div>
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8 ">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_arranged" />
+            <span>As Arranged</span>
           </div>
         </div>
-
-
-
-
+      </div>
 
 
       <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm">Remarks</label>
+        <label class="col-4 col-form-label col-form-label-sm">Obl/Telex</label>
         <div class="col-8">
-          <InputBox [(inputModel)]="record.hbl_remark1" [maxlength]="60" [uppercase]="true" #remark1>
+          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_obl_telex">
+            <option [value]="'N/A'">N/A</option>
+            <option [value]="'OBL ISSUED'">OBL ISSUES</option>
+            <option [value]="'TELEX RELEASE'">TELEX RELEASE</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">OBL SL#</label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.hbl_obl_slno" [maxlength]="10" [uppercase]="true" #commodity>
           </InputBox>
         </div>
       </div>
 
 
       <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <label class="col-4 col-form-label col-form-label-sm">Hbl Format</label>
         <div class="col-8">
-          <InputBox [(inputModel)]="record.hbl_remark2" [maxlength]="60" [uppercase]="true" #remark2>
-          </InputBox>
+          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_format_id" #hbl_bltype>
+            <option *ngFor="let rec of gs.PARAM_HBL_FORMAT_BLANK" [value]="rec.code">{{rec.name}}</option>
+          </select>
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <label class="col-4 col-form-label col-form-label-sm">Draft Format</label>
         <div class="col-8">
-          <InputBox [(inputModel)]="record.hbl_remark3" [maxlength]="60" [uppercase]="true" #remark3></InputBox>
-        </div>
-      </div>
-
-      <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm">By</label>
-          <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_by1" [maxlength]="60" [uppercase]="true" #remark1>
-            </InputBox>
-          </div>
-        </div>
-  
-  
-        <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm"></label>
-          <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_by2" [maxlength]="60" [uppercase]="true" #remark2>
-            </InputBox>
-          </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-4 col-form-label col-form-label-sm">Issued Place</label>
-            <div class="col-8">
-              <InputBox [(inputModel)]="record.hbl_issued_place" [maxlength]="60" [uppercase]="true" #remark2>
-              </InputBox>
-            </div>
-          </div>
-
-
-      <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm">Issue Date</label>
-        <div class="col-8">
-          <app-date [inputdate]="record.hbl_issued_date" (ValueChanged)="record.hbl_issues_date=$event"></app-date>
+          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_draft_format_id" #hbl_bltype>
+            <option *ngFor="let rec of gs.PARAM_HBL_FORMAT_DRAFT" [value]="rec.code">{{rec.name}}</option>
+          </select>
         </div>
       </div>
 
 
-      <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm">Originals</label>
-          <div class="col-8">
-            <InputBoxNumber [(inputModel)]="record.hbl_originals" [maxlength]="60"  [dec]="0" #remark2>
-            </InputBoxNumber>
-          </div>
-        </div>
+
 
 
 
@@ -505,72 +505,72 @@
 
   <div class="row">
 
-    <div class="col-md-12 mx-2">
+    <div class="col-md-12  px-0 mx-0">
 
-      
 
-        <div class="page-body table-responsive">
 
-          <table class="table  table-hover table-sm">
-            <thead class="page-body-thead">
-              <tr>
-                <th>CNTR.NO</th>
-                <th>TYPE</th>
-                <th>SEAL NO</th>
-                <th>PCS</th>
-                <th>PKGS</th>
-                <th>KGS</th>
-                <th>CBM</th>
-                <th>TARE-WT</th>
-              </tr>
-            </thead>
-            <tbody class="page-body-tbody">
-              <tr *ngFor="let rec of cntrs">
-                <td class="p-0">
-                  <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_no" maxlength="11"
-                    (blur)="onBlur('cntr_no',rec)" />
-                </td>
-                <td class="p-0">
-                  <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
-                    [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid" [displaydata]="rec.cntr_type"
-                    (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-                </td>
-                <td class="p-0">
-                  <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_sealno" maxlength="25"
-                    (blur)="onBlur('cntr_sealno',rec)" />
-                </td>
-                <td class="p-0">
-                  <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_pieces"
-                    (blur)="onBlur('cntr_pieces',rec)" />
-                </td>
-                <td class="p-0">
-                  <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_packages_uom"
-                    maxlength="4" (blur)="onBlur('cntr_packages_uom',rec)" />
-                </td>
-                <td class="p-0">
-                  <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_weight"
-                    (blur)="onBlur('cntr_weight',rec)" />
-                </td>
-                <td class="p-0">
-                  <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
-                    (blur)="onBlur('cntr_cbm',rec)" />
-                </td>
-                <td class="p-0">
-                  <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
-                    (blur)="onBlur('cntr_tare_weight',rec)" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="page-body table-responsive">
 
-          <div class="form-group row">
-            <div class="col-12 pl-1 pb-1">
-              <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
-            </div>
+        <table class="table  table-hover table-sm">
+          <thead class="page-body-thead">
+            <tr>
+              <th>CNTR.NO</th>
+              <th>TYPE</th>
+              <th>SEAL NO</th>
+              <th>PCS</th>
+              <th>UNIT</th>
+              <th>WEIGHT</th>
+              <th>CBM</th>
+              <th>TARE-WT</th>
+            </tr>
+          </thead>
+          <tbody class="page-body-tbody">
+            <tr *ngFor="let rec of cntrs">
+              <td class="p-0">
+                <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_no" maxlength="11"
+                  (blur)="onBlur('cntr_no',rec)" />
+              </td>
+              <td class="p-0">
+                <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
+                  [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid" [displaydata]="rec.cntr_type"
+                  (ValueChanged)="LovSelected($event)">
+                </app-autocomplete2>
+              </td>
+              <td class="p-0">
+                <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_sealno" maxlength="25"
+                  (blur)="onBlur('cntr_sealno',rec)" />
+              </td>
+              <td class="p-0">
+                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_pieces"
+                  (blur)="onBlur('cntr_pieces',rec)" />
+              </td>
+              <td class="p-0">
+                <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_packages_uom"
+                  maxlength="4" (blur)="onBlur('cntr_packages_uom',rec)" />
+              </td>
+              <td class="p-0">
+                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_weight"
+                  (blur)="onBlur('cntr_weight',rec)" />
+              </td>
+              <td class="p-0">
+                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
+                  (blur)="onBlur('cntr_cbm',rec)" />
+              </td>
+              <td class="p-0">
+                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
+                  (blur)="onBlur('cntr_tare_weight',rec)" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="form-group row">
+          <div class="col-12 pl-1 pb-1">
+            <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
           </div>
-
         </div>
+
+      </div>
 
 
     </div>
@@ -589,7 +589,7 @@
 <div class="page-body">
 
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4  px-0 mx-0">
 
       <div class="form-group row">
         <div class="col-8 px-0">
@@ -710,7 +710,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4  px-0 mx-0">
 
       <div class="form-group row">
         <label class="col-12 col-form-label col-form-label-sm">Description</label>
@@ -819,7 +819,7 @@
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4  px-0 mx-0">
 
 
       <div class="form-group row">
@@ -875,25 +875,51 @@
 
 
       <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm"></label>
-        <div class="col-8">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_print_kgs" />
-            <span>Print KGS</span>
-          </div>
+        <label class="col-4 col-form-label col-form-label-sm">Pcs</label>
+        <div class="col-6">
+          <InputBoxNumber [(inputModel)]="record.hbl_pcs" [maxlength]="15" [dec]="0"></InputBoxNumber>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Pkgs</label>
+        <div class="col-6">
+          <InputBoxNumber [(inputModel)]="record.hbl_packages" [maxlength]="15" [dec]="0"></InputBoxNumber>
+        </div>
+      </div>      
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Uom</label>
+        <div class="col-6">
+          <InputBox [(inputModel)]="record.hbl_uom" [maxlength]="4" [uppercase]="true" #notify_add4>
+          </InputBox>
         </div>
       </div>
 
 
+
+
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
-        <div class="col-8">
+        
+        
+        <div class="col-3">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_print_kgs" />
+            <span> Print KGS</span>
+          </div>
+        </div>
+
+        <div class="col-3">
           <div class="form-check">
             <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_print_lbs" />
             <span>Print LBS</span>
           </div>
         </div>
+
       </div>
+
 
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Clean On Board</label>
@@ -902,6 +928,76 @@
           </InputBox>
         </div>
       </div>
+
+
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Remarks</label>
+        <div class="col-6">
+          <InputBox [(inputModel)]="record.hbl_remark1" [maxlength]="60" [uppercase]="true" #remark1>
+          </InputBox>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-6">
+          <InputBox [(inputModel)]="record.hbl_remark2" [maxlength]="60" [uppercase]="true" #remark2>
+          </InputBox>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-6">
+          <InputBox [(inputModel)]="record.hbl_remark3" [maxlength]="60" [uppercase]="true" #remark3></InputBox>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">By</label>
+        <div class="col-6">
+          <InputBox [(inputModel)]="record.hbl_by1" [maxlength]="60" [uppercase]="true" #remark1>
+          </InputBox>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-6">
+          <InputBox [(inputModel)]="record.hbl_by2" [maxlength]="60" [uppercase]="true" #remark2>
+          </InputBox>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Issued Place</label>
+        <div class="col-6">
+          <InputBox [(inputModel)]="record.hbl_issued_place" [maxlength]="60" [uppercase]="true" #remark2>
+          </InputBox>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Issue Date</label>
+        <div class="col-6">
+          <app-date [inputdate]="record.hbl_issued_date" (ValueChanged)="record.hbl_issues_date=$event"></app-date>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Originals</label>
+        <div class="col-6">
+          <InputBoxNumber [(inputModel)]="record.hbl_originals" [maxlength]="60" [dec]="0" #remark2>
+          </InputBoxNumber>
+        </div>
+      </div>
+
 
 
 
@@ -917,9 +1013,9 @@
 
 
 <div class="page-footer">
-    <div class="row align-items-center justify-content-center p-1">
-        <button class="btn btn-primary btn-md mr-1" *ngIf="canSave" (click)="Save()">Save</button>
-      </div>
+  <div class="row align-items-center justify-content-center p-1">
+    <button class="btn btn-primary btn-md mr-1" *ngIf="canSave" (click)="Save()">Save</button>
+  </div>
 </div>
 
 <div>
