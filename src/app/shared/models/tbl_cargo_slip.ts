@@ -43,6 +43,12 @@ export interface Tbl_cargo_slip {
     rec_created_by: string;
     rec_created_date: string;
 
+    cs_is_drop_bool: boolean;
+    cs_is_pick_bool: boolean;
+    cs_is_receipt_bool: boolean;
+    cs_is_check_bool: boolean;
+    cs_is_bl_bool: boolean;
+    cs_is_oth_bool: boolean;
 }
 
 export interface vm_tbl_cargo_slip {
