@@ -20,7 +20,7 @@ export class InputBoxComponent {
 
     @Input() field: string;
     @Input() rec: any;
-    @Output() onBlur = new EventEmitter<{field : string , rec : any}>();
+    @Output() blur = new EventEmitter<{field : string , rec : any}>();
 
     @ViewChild('inputbox') private inputbox: ElementRef;
 
@@ -42,8 +42,10 @@ export class InputBoxComponent {
             }
         }
         this.inputModelChange.emit(this.inputModel);        
-        if ( this.onBlur)
-            this.onBlur.emit({ field: this.field,rec: this.rec});        
+        if ( this.blur)
+        {
+            this.blur.emit({ field: this.field,rec: this.rec});        
+        }
     }
 
     public focus() {

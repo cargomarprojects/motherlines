@@ -11,14 +11,18 @@ import {Tbl_cargo_exp_housem} from '../../models/Tbl_cargo_exp_housem';
 
 import { SearchTable } from '../../../shared/models/searchtable';
 
+import { InputBoxComponent } from '../../../shared/input/inputbox.component';
+import { InputBoxNumberComponent } from '../../../shared/inputnumber/inputboxnumber.component';
+
+
 @Component({
   selector: 'app-seaexp-master-edit',
   templateUrl: './seaexp-master-edit.component.html'
 })
 export class SeaexpMasterEditComponent implements OnInit {
 
-  @ViewChild('mbl_no') mbl_no_field: ElementRef;
-  @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
+  @ViewChild('mbl_no') mbl_no_field: InputBoxComponent;
+  @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: InputBoxComponent;
 
 
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
@@ -45,6 +49,10 @@ export class SeaexpMasterEditComponent implements OnInit {
 
 
   IsLocked: boolean = false;
+
+  hblid : string;
+  hblmode : string;
+
 
   constructor(
     private router: Router,
@@ -168,9 +176,9 @@ export class SeaexpMasterEditComponent implements OnInit {
         if (response.retvalue) {
           this.errorMessage = response.retstring;
           if (stype == 'BOOKING')
-            this.mbl_liner_bookingno_field.nativeElement.focus();
+            this.mbl_liner_bookingno_field.focus();''
           if (stype == 'MBL')
-            this.mbl_no_field.nativeElement.focus();
+            this.mbl_no_field.focus();
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -409,38 +417,39 @@ export class SeaexpMasterEditComponent implements OnInit {
 
     switch (field) {
       case 'mbl_no': {
-
-        this.IsBLDupliation('MBL', this.record.mbl_no);
         break;
       }
       case 'mbl_liner_bookingno': {
-
-        this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
         break;
       }
     }
   }
 
+  onBlur( data : {field: string, rec: any}) {
+    switch (data.field) {  
+      case 'mbl_no': {
+        this.IsBLDupliation('MBL', this.record.mbl_no);        
+        break;
+      }
+      case 'mbl_liner_bookingno': {
+        this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);        
+        break;
+      }
+      case  'cntr_sealno' : {
+         break;
+      }
 
-  onBlur(field: string, rec: Tbl_cargo_exp_container) {
+    }
+  }  
+
+  onBlur11(field: string, rec: Tbl_cargo_exp_container) {
     switch (field) {
       case 'mbl_refno': {
         this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
         break;
       }
-      case 'mbl_no': {
-        this.record.mbl_no = this.record.mbl_no.toUpperCase();
-        break;
-      }
 
-      case 'mbl_sub_houseno': {
-        this.record.mbl_sub_houseno = this.record.mbl_sub_houseno.toUpperCase();
-        break;
-      }
-      case 'mbl_liner_bookingno': {
-        this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
-        break;
-      }
+
       case 'mbl_por': {
         this.record.mbl_por = this.record.mbl_por.toUpperCase();
         break;
@@ -489,8 +498,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   }
 
 
-  hblid : string;
-  hblmode : string;
+
 
 
   AddHouse() {
