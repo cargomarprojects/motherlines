@@ -163,7 +163,7 @@ export class HousePageComponent implements OnInit {
   }
 
 
-  LoadMBL(){
+  LoadMbL(){
     this.LoadMblWeight();
     this.LoadMblDesc();
   }
