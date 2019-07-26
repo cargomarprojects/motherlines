@@ -45,10 +45,12 @@ export class MessengerSlipEditComponent implements OnInit {
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+  
     this.menuid = options.menuid;
-    this.mblid = options.mblid;
-    this.oprgrp = options.oprgrp;
-    this.refno = options.refno;
+    this.pkid = options.pkid;
+    this.mblid = options.mbl_pkid;
+    this.oprgrp = options.mbl_mode;
+    this.refno = options.mbl_refno;
     this.mode =  options.mode;
 
     this.initPage();
@@ -95,7 +97,7 @@ export class MessengerSlipEditComponent implements OnInit {
 
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.mblid;
+    SearchData.pkid = this.pkid;
     SearchData.MBL_ID = this.mblid;
     SearchData.DEFAULT_MESSENGER_ID = this.gs.MESSENGER_PKID;
     

@@ -719,16 +719,14 @@ export class SeaImpMasterEditComponent implements OnInit {
       }
       case 'MESSENGER-SLIP': {
         let prm = {
-          menuid: this.gs.MENU_SI_PAYMENT_REQUEST,
-          mblid: this.pkid,
-          mode: 'EDIT',
-          oprgrp: 'SEA IMPORT',
-          refno: this.record.mbl_refno,
-
+          menuid: this.gs.MENU_SI_MESSENGER_SLIP,
+          mbl_pkid: this.pkid,
+          mbl_mode: 'SEA IMPORT',
+          mbl_refno: this.record.mbl_refno,
           islocked: false,
           origin: 'seaimp-master-page'
         };
-        this.gs.Naviagete('Silver.Other.Trans/MessengerSlip', JSON.stringify(prm));
+        this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
         break;
       }
     }
