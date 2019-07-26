@@ -866,7 +866,9 @@ export class SeaImpHouseEditComponent implements OnInit {
         // };
         // mPage.Show();
 
-        this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
+       // this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
+
+     this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
     }
 

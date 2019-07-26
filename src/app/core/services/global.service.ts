@@ -535,24 +535,24 @@ export class GlobalService {
       return '';
   }
 
-  public isNull(iData : any ) : boolean {
-    if ( iData == null || iData == undefined)
-      return  true ;
+  public isNull(iData: any): boolean {
+    if (iData == null || iData == undefined)
+      return true;
     else
       return false;
   }
 
-  public isBlank(iData : any ) : boolean {
-    if ( iData == null || iData == undefined || iData == '')
-      return  true ;
-    else 
+  public isBlank(iData: any): boolean {
+    if (iData == null || iData == undefined || iData == '')
+      return true;
+    else
       return false;
   }
 
-  public isZero(iData : any ) : boolean {
-    if ( iData == null || iData == undefined || iData == 0)
-      return  true ;
-    else 
+  public isZero(iData: any): boolean {
+    if (iData == null || iData == undefined || iData == 0)
+      return true;
+    else
       return false;
   }
 
@@ -679,6 +679,27 @@ export class GlobalService {
     window.open(this.baseUrl + '/api/Admin/User/DownloadFile?' + body, "_blank");
   }
 
+  public ShowAccAlert(party_id: string) {
+    let SearchData = {
+      table: '',
+      pkid: '',
+      SPATH: ''
+    };
+
+    SearchData.table = 'ACCOUNTING-ALERT';
+    SearchData.pkid = party_id;
+    SearchData.SPATH = "..\\Files_Folder\\" + this.FILES_FOLDER + "\\xmlremarks\\";
+    this.SearchRecord(SearchData)
+      .subscribe(response => {
+        if (response.message.length > 0)
+          alert(response.message);
+      },
+        error => {
+          let err = this.getError(error);
+          alert(err);
+        });
+  }
+
 
   public roundNumber(_number: number, _precision: number) {
     var factor = Math.pow(10, _precision);
@@ -786,14 +807,13 @@ export class GlobalService {
     this.router.navigate([menu_route], { queryParams: { parameter: jsonstring }, replaceUrl: _replaceurl });
   }
 
-  public GetAttention(Attention:string)
-  {
-     let str:string = "";
-      if (Attention.toString().trim().length > 0)
-          str = "ATTN : " + Attention.toString();
-      return str;
+  public GetAttention(Attention: string) {
+    let str: string = "";
+    if (Attention.toString().trim().length > 0)
+      str = "ATTN : " + Attention.toString();
+    return str;
   }
-  
+
   public GetTelFax(Tel: string, Fax: string) {
     let str: string = "";
     if (Tel.toString().trim().length > 0)
@@ -806,26 +826,23 @@ export class GlobalService {
     return str;
   }
 
-  public Convert_Weight(sType:string, data:number, iDec:number)
-  {
-     let iData:number = 0;
-      try
-      {
-          if (sType == "KG2LBS")
-              iData = data * 2.2046;
-          if (sType == "CBM2CFT")
-              iData = data * 35.314;
-          if (sType == "LBS2KG")
-              iData = data / 2.2046;
-          if (sType == "CFT2CBM")
-              iData = data / 35.314;
-      }
-      catch (Exception)
-      {
-          iData = 0;
-      }
-      return this.roundNumber(iData, iDec);
+  public Convert_Weight(sType: string, data: number, iDec: number) {
+    let iData: number = 0;
+    try {
+      if (sType == "KG2LBS")
+        iData = data * 2.2046;
+      if (sType == "CBM2CFT")
+        iData = data * 35.314;
+      if (sType == "LBS2KG")
+        iData = data / 2.2046;
+      if (sType == "CFT2CBM")
+        iData = data / 35.314;
     }
+    catch (Exception) {
+      iData = 0;
+    }
+    return this.roundNumber(iData, iDec);
+  }
 
 
 
