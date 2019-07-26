@@ -24,5 +24,16 @@ export class HouseService {
     GetContainer(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Common/GetContainer', SearchData, this.gs.headerparam2('authorized'));
     }    
+
+
+    GetDesc(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Common/GetDesc', SearchData, this.gs.headerparam2('authorized'));
+    }    
+
+
+    GetMblWeight(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Common/GetMblWeight', SearchData, this.gs.headerparam2('authorized'));
+    }    
+
     
 }
