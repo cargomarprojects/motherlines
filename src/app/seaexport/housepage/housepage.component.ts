@@ -163,6 +163,63 @@ export class HousePageComponent implements OnInit {
   }
 
 
+  LoadMBL(){
+    this.LoadMblWeight();
+    this.LoadMblDesc();
+  }
+
+
+  LoadMblWeight(){
+
+    this.errorMessage = [];
+
+    let SearchData = {
+      pkid: this.parentid,
+    }
+    this.mainService.GetMblWeight(SearchData).subscribe(response => {
+      if ( response.record){
+        this.record.hbl_weight = response.record.mbld_weight;
+        this.record.hbl_lbs = response.record.mbld_lbs;
+        this.record.hbl_cbm = response.record.mbld_cbm;
+        this.record.hbl_cft = response.record.mbld_cft;
+      }
+    }, error => {
+      this.errorMessage.push(this.gs.getError(error));
+      alert(this.errorMessage[0]);
+    });
+
+
+  }
+
+
+  LoadMblDesc(){
+
+    this.errorMessage = [];
+
+    let SearchData = {
+      pkid: this.parentid,
+      desc_type: 'MBLDESC',
+    }
+    this.mainService.GetDesc(SearchData).subscribe(response => {
+
+
+      if (response.records != null) {
+        response.records.forEach(rec => {
+          this.ShowDesc(rec);
+        });
+      }
+
+
+    }, error => {
+      this.errorMessage.push(this.gs.getError(error));
+      alert(this.errorMessage[0]);
+    });
+
+
+  }
+
+
+
   LoadContainer() {
     this.errorMessage = [];
     let SearchData = {
