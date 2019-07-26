@@ -163,13 +163,13 @@ export class HousePageComponent implements OnInit {
   }
 
 
-  LoadMbL(){
-    this.LoadMblWeight();
-    this.LoadMblDesc();
+  LoadMBL(){
+    this.LoadMBLWeight();
+    this.LoadMBLDesc();
   }
 
 
-  LoadMblWeight(){
+  LoadMBLWeight(){
 
     this.errorMessage = [];
 
@@ -192,7 +192,7 @@ export class HousePageComponent implements OnInit {
   }
 
 
-  LoadMblDesc(){
+  LoadMBLDesc(){
 
     this.errorMessage = [];
 
