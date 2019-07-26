@@ -5,22 +5,22 @@ import { GlobalService } from '../../../core/services/global.service';
 import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 import { MessengerSlipService } from '../../services/messengerslip.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_tbl_cargo_slip,Tbl_cargo_slip } from '../../models/tbl_cargo_slip';
+import { vm_tbl_cargo_slip, Tbl_cargo_slip } from '../../models/tbl_cargo_slip';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
- 
+
 @Component({
   selector: 'app-messengerslip-edit',
   templateUrl: './messengerslip-edit.component.html'
 })
 export class MessengerSlipEditComponent implements OnInit {
 
-  @ViewChild('hbl_houseno') hbl_houseno_field: ElementRef;
-  @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
-  @ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
-  
+  // @ViewChild('hbl_houseno') hbl_houseno_field: ElementRef;
+  // @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
+  //@ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
+
   record: Tbl_cargo_slip = <Tbl_cargo_slip>{};
- 
+
   private mblid: string;
   private pkid: string;
   private menuid: string;
@@ -30,8 +30,9 @@ export class MessengerSlipEditComponent implements OnInit {
 
   private title: string;
   private isAdmin: boolean;
+  private oprgrp: string = "GENERAL";
+  private refno: string = "";
 
-  
   private IsLocked: boolean = false;
 
   constructor(
@@ -44,11 +45,14 @@ export class MessengerSlipEditComponent implements OnInit {
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
+  
     this.menuid = options.menuid;
-    this.mode = options.mode;
-    this.mblid = options.mblid;
-    
+    this.pkid = options.pkid;
+    this.mblid = options.mbl_pkid;
+    this.oprgrp = options.mbl_mode;
+    this.refno = options.mbl_refno;
+    this.mode =  options.mode;
+
     this.initPage();
     this.actionHandler();
   }
@@ -82,11 +86,11 @@ export class MessengerSlipEditComponent implements OnInit {
   }
 
   init() {
-    this.record.cs_mbl_id = this.pkid;
+    this.record.cs_refno = this.refno;
     this.record.cs_mbl_id = this.mblid;
-    
-      this.hbl_houseno_field.nativeElement.focus();
-    
+
+    //this.hbl_houseno_field.nativeElement.focus();
+
   }
 
   GetRecord() {
@@ -94,17 +98,20 @@ export class MessengerSlipEditComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
+    SearchData.MBL_ID = this.mblid;
+    SearchData.DEFAULT_MESSENGER_ID = this.gs.MESSENGER_PKID;
+    
 
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_cargo_slip>response.record;
         this.mode = 'EDIT';
-       this.hbl_houseno_field.nativeElement.focus();
+        //this.hbl_houseno_field.nativeElement.focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
- 
+
   CheckData() {
     /*
         if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
@@ -124,7 +131,7 @@ export class MessengerSlipEditComponent implements OnInit {
 
     if (!this.Allvalid())
       return;
-   
+
     const saveRecord = <vm_tbl_cargo_slip>{};
     saveRecord.record = this.record;
     saveRecord.mode = this.mode;
@@ -137,8 +144,8 @@ export class MessengerSlipEditComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-        //   if (this.mode == "ADD" && response.code != '')
-        //     this.record.mbl_refno = response.code;
+          //   if (this.mode == "ADD" && response.code != '')
+          //     this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
@@ -149,7 +156,7 @@ export class MessengerSlipEditComponent implements OnInit {
       });
   }
 
- 
+
   private Allvalid(): boolean {
 
     var bRet = true;
@@ -201,7 +208,6 @@ export class MessengerSlipEditComponent implements OnInit {
   onFocusout(field: string) {
     switch (field) {
       case 'mbl_liner_bookingno': {
-
         // this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
         // break;
       }
@@ -210,28 +216,28 @@ export class MessengerSlipEditComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-      case 'mbl_refno': {
-        // this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
+      case 'cs_remark': {
+        this.record.cs_remark = this.record.cs_remark.toUpperCase();
         break;
       }
-      
+
     }
   }
 
 
   BtnNavigation(action: string) {
     switch (action) {
-    //   case 'CUSTOMSHOLD': {
-    //     let prm = {
-    //       menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
-    //       pkid: this.pkid,
-    //       origin: 'seaimp-House-page',
-    //     };
-    //     this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
-    //     break;
-    //   }
-     
+      //   case 'CUSTOMSHOLD': {
+      //     let prm = {
+      //       menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
+      //       pkid: this.pkid,
+      //       origin: 'seaimp-House-page',
+      //     };
+      //     this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
+      //     break;
+      //   }
+
     }
   }
- 
+
 }

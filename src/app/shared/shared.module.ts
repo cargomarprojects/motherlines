@@ -56,7 +56,7 @@ import { InputBoxComponent } from './input/inputbox.component';
 import { InputBoxNumberComponent } from './inputnumber/inputboxnumber.component';
 import { SharedRoutingModule } from './shared-routing.module';
 import { MessengerSlipEditComponent } from './messengerslip/edit/messengerslip-edit.component';
-
+import { MessengerSlipListComponent } from './messengerslip/messengerslip-list.component';
 
 @NgModule({
   imports: [
@@ -94,6 +94,7 @@ import { MessengerSlipEditComponent } from './messengerslip/edit/messengerslip-e
     InputBoxComponent,
     InputBoxNumberComponent,
     MessengerSlipEditComponent,
+    MessengerSlipListComponent,
   ],
   exports: [
     CommonModule,
@@ -127,6 +128,7 @@ import { MessengerSlipEditComponent } from './messengerslip/edit/messengerslip-e
     InputBoxComponent,
     InputBoxNumberComponent,
     MessengerSlipEditComponent,
+    MessengerSlipListComponent,
   ],
   providers: [
     LovService,
