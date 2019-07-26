@@ -30,7 +30,7 @@ export class HousePageComponent implements OnInit {
   private menuid: string;
   private mode: string = "ADD";
 
-  
+
 
   private errorMessage: string[] = [];
 
@@ -51,13 +51,16 @@ export class HousePageComponent implements OnInit {
 
   DESC_TYPE: string = "SE-DESC";
 
-  canSave : boolean = false;
+  canSave: boolean = false;
 
-  private parentid : string ;
-  private mbl_refno : string ;
-  private type : string ;
+  is_locked: boolean = false;
+  is_stage_locked = false;
 
-  private refno : string ;
+  private parentid: string;
+  private mbl_refno: string;
+  private type: string;
+
+  private refno: string;
 
   constructor(
     private router: Router,
@@ -86,7 +89,7 @@ export class HousePageComponent implements OnInit {
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.canSave =  this.gs.canSave(this.menuid, this.mode);
+    this.canSave = this.gs.canSave(this.menuid, this.mode);
 
     this.errorMessage = [];
 
@@ -96,16 +99,136 @@ export class HousePageComponent implements OnInit {
 
     this.errorMessage = [];
     this.InitDesc();
-    if ( this.mode == 'ADD')
-    {
+
+    this.is_stage_locked = false;
+    this.is_locked = false;
+
+    if (this.mode == 'ADD') {
       this.pkid = this.gs.getGuid();
       this.record = <Tbl_cargo_exp_housem>{};
       this.cntrs = <Tbl_cargo_exp_container[]>[];
       this.records = <Tbl_cargo_exp_desc[]>[];
-
+      this.LoadData();
     }
-    if ( this.mode == 'EDIT')
+    if (this.mode == 'EDIT')
       this.GetRecord();
+
+  }
+
+  LoadData() {
+    this.record.hbl_is_cntrized = "N";
+    this.record._hbl_is_cntrized = false;
+
+    this.record.hbl_is_arranged = "Y";
+    this.record._hbl_is_arranged = false;
+
+    this.record.hbl_print_kgs = "Y";
+    this.record._hbl_print_kgs = false;
+
+    this.record.hbl_print_lbs = "N";
+    this.record._hbl_print_lbs = false;
+
+    this.record.hbl_charges1 = ""; this.record.hbl_charges2 = ""; this.record.hbl_charges3 = ""; this.record.hbl_charges4 = ""; this.record.hbl_charges5 = "";
+    this.record.hbl_pp1 = ""; this.record.hbl_pp2 = ""; this.record.hbl_pp3 = ""; this.record.hbl_pp4 = ""; this.record.hbl_pp5 = "";
+    this.record.hbl_cc1 = ""; this.record.hbl_cc2 = ""; this.record.hbl_cc3 = ""; this.record.hbl_cc4 = ""; this.record.hbl_cc5 = "";
+
+    if (this.mode == "ADD") {
+      this.record.hbl_mbl_id = this.parentid;
+      this.record.rec_created_id = this.gs.user_pkid;
+      this.record.hbl_frt_status = "";
+      this.record.hbl_obl_telex = "N/A";
+      this.record.hbl_bltype = "";
+      this.record.rec_created_by = this.gs.user_code;
+      this.record.rec_created_date = this.gs.defaultValues.today;
+      this.record.hbl_notify_name = "SAME AS CONSIGNEE";
+      this.record.hbl_shipment_stage = "NIL";
+
+      if (this.parentid != "")
+        this.LoadDefaultData();
+
+      if (this.gs.PARAM_HBL_FORMAT_BLANK.length > 0) {
+        this.record.hbl_format_id = this.gs.PARAM_HBL_FORMAT_BLANK[0].code;
+        /*
+        if (this.gs.DEFAULT_HBL_FORMAT.length > 0)
+          this.record.hbl_format_id = this.gs.DEFAULT_HBL_FORMAT;
+        */
+      }
+      if (this.gs.PARAM_HBL_FORMAT_DRAFT.length > 0) {
+        this.record.hbl_draft_format_id = this.gs.PARAM_HBL_FORMAT_DRAFT[0].code;
+        /*
+        if (this.gs.DEFAULT_HBL_DRAFTFORMAT.length > 0)
+          this.record.hbl_draft_format_id = this.gs.DEFAULT_HBL_DRAFTFORMAT;
+        */  
+      }
+    }
+
+  }
+
+  LoadDefaultData() {
+
+    this.errorMessage = [];
+    let SearchData = {
+      pkid: this.parentid
+    }
+    this.mainService.GetHouseDefaultRecord(SearchData).subscribe(
+      response => {
+        var rec = response.record;
+
+        this.record.mbl_refno = rec.mbl_refno;
+        this.record.hbl_agent_id = rec.mbl_agent_id;
+        this.record.hbl_agent_code = rec.mbl_agent_code;
+        this.record.hbl_agent_name = rec.mbl_agent_name;
+        this.record.hbl_pol_name = rec.mbl_pol_name;
+        this.record.hbl_pod_name = rec.mbl_pod_name;
+        this.record.hbl_pofd_id = rec.mbl_pofd_id;
+        this.record.hbl_pofd_code = rec.mbl_pofd_code;
+        this.record.hbl_pofd_name = rec.mbl_pofd_name;
+        this.record.hbl_pofd_eta = rec.mbl_pofd_eta;
+
+        this.record.mbl_no = rec.mbl_no;
+        this.record.hbl_vessel = rec.mbl_vessel;
+        this.record.hbl_voyage = rec.mbl_voyage;
+        this.record.hbl_handled_id = rec.mbl_handled_id;
+        this.record.hbl_handled_name = rec.mbl_handled_name;
+        this.record.hbl_by1 = rec.mbl_handled_name;
+
+        this.record.hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? "Y" : "N";
+        this.record._hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? true : false;
+
+        this.record.hbl_issued_date = rec.mbl_pol_etd;
+        this.record.hbl_salesman_id = rec.mbl_salesman_id;
+        this.record.hbl_salesman_name = rec.mbl_salesman_name;
+
+        this.record.hbl_shipment_stage = rec.mbl_shipment_stage;
+        if (rec.mbl_cntr_type == "FCL" || rec.mbl_cntr_type == "LCL") {
+          this.record.hbl_shipment_stage = rec.mbl_shipment_stage;
+          this.is_stage_locked = true;
+        }
+        if (rec.mbl_cntr_type == "FCL") {
+          this.record.desc1 = "SHIPPERS'S LOAD, COUNT, AND SEALED";
+          this.record.desc2 = "SAID TO CONTAIN";
+        }
+        else if (rec.mbl_cntr_type == "LCL" || rec.mbl_cntr_type == "CONSOLE") {
+          this.record.desc1 = "SAID TO CONTAIN";
+        }
+        this.ShipmentType = rec.mbl_cntr_type;
+        this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", rec.mbl_ref_date, rec.mbl_lock, rec.mbl_unlock_date);
+
+        this.cntrs = <Tbl_cargo_exp_container[]>response.cntrs;
+
+        this.cntrs.forEach(rec => {
+          rec.cntr_pkid = this.gs.getGuid();
+        });
+
+
+      },
+      error => {
+        this.errorMessage.push(this.gs.getError(error));
+        alert(this.errorMessage[0]);
+      }
+    );
+
+
 
   }
 
@@ -124,25 +247,13 @@ export class HousePageComponent implements OnInit {
 
 
         this.ShipmentType = this.record.mbl_cntr_type;
-        
-        /*
-        cmb_Frt_Status.SelectedValue = this.record.hbl_frt_status;
-        Cmb_Nomination.SelectedValue = this.record..hbl_bltype;
-        CmbHblFormat.SelectedValue = ParentRec.hbl_format_id;
-        CmbHblFormat_Draft.SelectedValue = ParentRec.hbl_draft_format_id;
+
+
+
         if (this.ShipmentType == "FCL" || this.ShipmentType == "LCL")
-        {
-            Cmb_Shpmnt_Stage.IsEnabled = false;
-        }
-        if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
-        {
-            IsLocked = true;
-            LBL_LOCK.Content = "LOCKED";
-            CmdSave.IsEnabled = false;
-        }
-        else
-            LBL_LOCK.Content = "UNLOCKED";
-        */
+          this.is_stage_locked = true;
+
+        this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
 
 
         if (this.records != null) {
@@ -163,13 +274,13 @@ export class HousePageComponent implements OnInit {
   }
 
 
-  LoadMBL(){
+  LoadMBL() {
     this.LoadMBLWeight();
     this.LoadMBLDesc();
   }
 
 
-  LoadMBLWeight(){
+  LoadMBLWeight() {
 
     this.errorMessage = [];
 
@@ -177,7 +288,7 @@ export class HousePageComponent implements OnInit {
       pkid: this.parentid,
     }
     this.mainService.GetMblWeight(SearchData).subscribe(response => {
-      if ( response.record){
+      if (response.record) {
         this.record.hbl_weight = response.record.mbld_weight;
         this.record.hbl_lbs = response.record.mbld_lbs;
         this.record.hbl_cbm = response.record.mbld_cbm;
@@ -192,7 +303,7 @@ export class HousePageComponent implements OnInit {
   }
 
 
-  LoadMBLDesc(){
+  LoadMBLDesc() {
 
     this.errorMessage = [];
 
@@ -201,7 +312,6 @@ export class HousePageComponent implements OnInit {
       desc_type: 'MBLDESC',
     }
     this.mainService.GetDesc(SearchData).subscribe(response => {
-
 
       if (response.records != null) {
         response.records.forEach(rec => {
@@ -442,7 +552,7 @@ export class HousePageComponent implements OnInit {
       return;
 
     this.record.hbl_is_cntrized = (this.record._hbl_is_cntrized) ? "Y" : "N";
-    this.record.hbl_is_arranged    = (this.record._hbl_is_arranged) ? "Y" : "N";
+    this.record.hbl_is_arranged = (this.record._hbl_is_arranged) ? "Y" : "N";
     this.record.hbl_print_kgs = (this.record._hbl_print_kgs) ? "Y" : "N";
     this.record.hbl_print_lbs = (this.record._hbl_print_lbs) ? "Y" : "N";
 
@@ -460,7 +570,7 @@ export class HousePageComponent implements OnInit {
     this.mainService.Save(saverec).subscribe(response => {
 
       if (response.retvalue) {
-        this.record.hbl_houseno= response.refno;
+        this.record.hbl_houseno = response.refno;
         this.mode = 'EDIT';
       }
 
@@ -471,11 +581,11 @@ export class HousePageComponent implements OnInit {
     }
     );
 
-    
+
 
   }
 
-  
+
 
   LovSelected(rec: SearchTable) {
 
@@ -489,6 +599,11 @@ export class HousePageComponent implements OnInit {
       this.record.hbl_shipper_add2 = rec.col2;
       this.record.hbl_shipper_add3 = rec.col3;
       this.record.hbl_shipper_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+      /*
+      if (rec.col9 == "Y"){
+        this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
+      }
+      */
     }
 
     if (rec.controlname == 'CONSIGNEE') {
@@ -499,6 +614,19 @@ export class HousePageComponent implements OnInit {
       this.record.hbl_consigned_to3 = rec.col2;
       this.record.hbl_consigned_to4 = rec.col3;
       this.record.hbl_consigned_to5 = this.gs.GetTelFax(rec.col6, rec.col7);
+
+      var sNom = rec.type;
+      if (sNom == "NOMINATION" || sNom == "MUTUAL")
+        this.record.hbl_bltype = sNom;
+      else
+        this.record.hbl_bltype = "FREEHAND";
+
+
+      /*
+if (rec.col9 == "Y"){
+this.SearchRecord("MsgAlertBox", this.record.hbl_consignee_id);
+}
+*/
 
     }
 
@@ -512,6 +640,13 @@ export class HousePageComponent implements OnInit {
       this.record.hbl_notify_add2 = rec.col2;
       this.record.hbl_notify_add3 = rec.col3;
       this.record.hbl_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+
+      /*
+if (rec.col9 == "Y"){
+  this.SearchRecord("MsgAlertBox", this.record.hbl_notify_id);
+}
+*/
+
     }
 
 
@@ -521,10 +656,11 @@ export class HousePageComponent implements OnInit {
 
     if (rec.controlname == "HANDLEDBY") {
       this.record.hbl_handled_id = rec.id;
+      this.record.hbl_by1 = rec.name;
     }
 
     if (rec.controlname == "SALEMSAN") {
-
+      this.record.hbl_salesman_id = rec.id;
     }
 
   }

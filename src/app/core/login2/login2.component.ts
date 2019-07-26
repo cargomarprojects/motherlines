@@ -516,9 +516,9 @@ export class Login2Component implements OnInit {
                     this.GLOBALCONTANTS.FY_START_MONTH = Rec.param_name3;
 
                 else if (Rec.param_name1 == "DEFAULT-HBL-FORMAT")
-                    this.GLOBALCONTANTS.DEFAULT_HBL_FORMAT = Rec.param_name3;
+                    this.GLOBALCONTANTS.DEFAULT_HBL_FORMAT = Rec.param_name2;
                 else if (Rec.param_name1 == "DEFAULT-HBL-DRAFT-FORMAT")
-                    this.GLOBALCONTANTS.DEFAULT_HBL_DRAFTFORMAT = Rec.param_name3;
+                    this.GLOBALCONTANTS.DEFAULT_HBL_DRAFTFORMAT = Rec.param_name2;
                 else if (Rec.param_name1 == "AC-REPORT-BASED-ON")
                     this.GLOBALCONTANTS.AC_REPORT_BASED_ON = Rec.param_name3;
                 else if (Rec.param_name1 == "FS-APP-FOLDER")
