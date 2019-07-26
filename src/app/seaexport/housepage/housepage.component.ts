@@ -158,7 +158,7 @@ export class HousePageComponent implements OnInit {
         /*
         if (this.gs.DEFAULT_HBL_DRAFTFORMAT.length > 0)
           this.record.hbl_draft_format_id = this.gs.DEFAULT_HBL_DRAFTFORMAT;
-        */  
+        */
       }
     }
 
@@ -581,10 +581,7 @@ export class HousePageComponent implements OnInit {
     }
     );
 
-
-
   }
-
 
 
   LovSelected(rec: SearchTable) {
@@ -599,11 +596,9 @@ export class HousePageComponent implements OnInit {
       this.record.hbl_shipper_add2 = rec.col2;
       this.record.hbl_shipper_add3 = rec.col3;
       this.record.hbl_shipper_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
-      /*
-      if (rec.col9 == "Y"){
-        this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
+      if (rec.col9 == "Y") {
+        this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
-      */
     }
 
     if (rec.controlname == 'CONSIGNEE') {
@@ -621,13 +616,9 @@ export class HousePageComponent implements OnInit {
       else
         this.record.hbl_bltype = "FREEHAND";
 
-
-      /*
-if (rec.col9 == "Y"){
-this.SearchRecord("MsgAlertBox", this.record.hbl_consignee_id);
-}
-*/
-
+      if (rec.col9 == "Y") {
+        this.gs.ShowAccAlert(this.record.hbl_consignee_id);
+      }
     }
 
     if (rec.controlname == "NOTIFY") {
@@ -640,13 +631,9 @@ this.SearchRecord("MsgAlertBox", this.record.hbl_consignee_id);
       this.record.hbl_notify_add2 = rec.col2;
       this.record.hbl_notify_add3 = rec.col3;
       this.record.hbl_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
-
-      /*
-if (rec.col9 == "Y"){
-  this.SearchRecord("MsgAlertBox", this.record.hbl_notify_id);
-}
-*/
-
+      if (rec.col9 == "Y") {
+        this.gs.ShowAccAlert(this.record.hbl_notify_id);
+      }
     }
 
 
@@ -661,6 +648,14 @@ if (rec.col9 == "Y"){
 
     if (rec.controlname == "SALEMSAN") {
       this.record.hbl_salesman_id = rec.id;
+    }
+
+    // Container
+    if (rec.controlname == "CONTAINER TYPE") {
+      this.cntrs.forEach(mrec => {
+        if (mrec.cntr_pkid == rec.uid) {
+        }
+      });
     }
 
   }
@@ -720,6 +715,22 @@ if (rec.col9 == "Y"){
       this.recorddet.push(Rec);
     }
   }
+
+  AddRow() {
+
+    var rec = <Tbl_cargo_exp_container>{};
+    rec.cntr_pkid = this.gs.getGuid();
+    rec.cntr_no = "",
+      rec.cntr_type = "",
+      rec.cntr_sealno = '';
+    rec.cntr_packages_uom = '';
+    rec.cntr_movement = "",
+      rec.cntr_weight = 0;
+    rec.cntr_pieces = 0;
+    rec.cntr_cbm = 0;
+    this.cntrs.push(rec);
+  }
+
 
 
 }

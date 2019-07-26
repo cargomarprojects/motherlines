@@ -348,6 +348,7 @@ export class SeaexpMasterEditComponent implements OnInit {
       rec.cntr_no = "",
       rec.cntr_type = "",
       rec.cntr_sealno ='';
+      rec.cntr_packages_uom ='';      
       rec.cntr_movement = "",
       rec.cntr_weight = 0;
     rec.cntr_pieces = 0;
@@ -398,7 +399,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (_Record.controlname == "CONTAINER TYPE") {
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
-
+          
         }
       });
     }
