@@ -21,7 +21,7 @@ export class MessengerSlipEditComponent implements OnInit {
 
   record: Tbl_cargo_slip = <Tbl_cargo_slip>{};
 
-  private mblid: string;
+  private mbl_pkid: string;
   private pkid: string;
   private menuid: string;
   private mode: string;
@@ -45,13 +45,13 @@ export class MessengerSlipEditComponent implements OnInit {
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-  
+
     this.menuid = options.menuid;
     this.pkid = options.pkid;
-    this.mblid = options.mbl_pkid;
+    this.mbl_pkid = options.mbl_pkid;
     this.oprgrp = options.mbl_mode;
     this.refno = options.mbl_refno;
-    this.mode =  options.mode;
+    this.mode = options.mode;
 
     this.initPage();
     this.actionHandler();
@@ -86,8 +86,52 @@ export class MessengerSlipEditComponent implements OnInit {
   }
 
   init() {
+    var curr_date = new Date();
+    var curr_hh = curr_date.getHours();
+
     this.record.cs_refno = this.refno;
-    this.record.cs_mbl_id = this.mblid;
+    this.record.cs_mbl_id = this.mbl_pkid;
+    this.record.cs_date = this.gs.defaultValues.today;
+    if (curr_hh >= 12)
+      this.record.cs_ampm = "PM";
+    else
+      this.record.cs_ampm = "AM";
+    this.record.cs_to_id = '';
+    this.record.cs_to_code = '';
+    this.record.cs_to_name = '';
+    this.record.cs_to_tel = '';
+    this.record.cs_to_fax = '';
+    this.record.cs_from_id = '';
+    this.record.cs_from_name = '';
+    this.record.cs_is_drop = 'N';
+    this.record.cs_is_pick = 'N';
+    this.record.cs_is_receipt = 'N';
+    this.record.cs_is_check = 'N';
+    this.record.cs_check_det = '';
+    this.record.cs_is_bl = 'N';
+    this.record.cs_bl_det = '';
+    this.record.cs_is_oth = 'N';
+    this.record.cs_oth_det = '';
+    this.record.cs_deliver_to_id = '';
+    this.record.cs_deliver_to_code = '';
+    this.record.cs_deliver_to_name = '';
+    this.record.cs_deliver_to_add1 = '';
+    this.record.cs_deliver_to_add2 = '';
+    this.record.cs_deliver_to_add3 = '';
+    this.record.cs_deliver_to_tel = '';
+    this.record.cs_deliver_to_attn = '';
+    this.record.cs_remark = '';
+
+    this.record.rec_created_by = this.gs.user_code;
+    this.record.rec_created_date = this.gs.defaultValues.today;
+
+    this.record.cs_is_drop_bool = false;
+    this.record.cs_is_pick_bool = false;
+    this.record.cs_is_receipt_bool = false;
+    this.record.cs_is_check_bool = false;
+    this.record.cs_is_bl_bool = false;
+    this.record.cs_is_oth_bool = false;
+
 
     //this.hbl_houseno_field.nativeElement.focus();
 
@@ -98,18 +142,34 @@ export class MessengerSlipEditComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
-    SearchData.MBL_ID = this.mblid;
+    SearchData.MBL_ID = this.mbl_pkid;
     SearchData.DEFAULT_MESSENGER_ID = this.gs.MESSENGER_PKID;
-    
 
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_cargo_slip>response.record;
         this.mode = 'EDIT';
+        this.record.cs_is_drop_bool = this.record.cs_is_drop == "Y" ? true : false;
+        this.record.cs_is_pick_bool = this.record.cs_is_pick == "Y" ? true : false;
+        this.record.cs_is_receipt_bool = this.record.cs_is_receipt == "Y" ? true : false;
+        this.record.cs_is_check_bool = this.record.cs_is_check == "Y" ? true : false;
+        this.record.cs_is_bl_bool = this.record.cs_is_bl == "Y" ? true : false;
+        this.record.cs_is_oth_bool = this.record.cs_is_oth == "Y" ? true : false;
+
         //this.hbl_houseno_field.nativeElement.focus();
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
+  }
+
+  ChkBLClick() {
+    if (this.mode == "ADD" && this.record.cs_mbl_no != null) {
+      if (this.record.cs_is_bl_bool == true)
+        this.record.cs_bl_det = this.record.cs_mbl_no;
+      else
+        this.record.cs_bl_det = "";
+    }
   }
 
   CheckData() {
@@ -131,7 +191,7 @@ export class MessengerSlipEditComponent implements OnInit {
 
     if (!this.Allvalid())
       return;
-
+    this.SaveParent();
     const saveRecord = <vm_tbl_cargo_slip>{};
     saveRecord.record = this.record;
     saveRecord.mode = this.mode;
@@ -144,8 +204,8 @@ export class MessengerSlipEditComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-          //   if (this.mode == "ADD" && response.code != '')
-          //     this.record.mbl_refno = response.code;
+          if (this.mode == "ADD" && response.code != '')
+            this.record.cs_refno = response.code;
           this.mode = 'EDIT';
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
@@ -156,20 +216,39 @@ export class MessengerSlipEditComponent implements OnInit {
       });
   }
 
-
+  private SaveParent() {
+    if (this.oprgrp == "GENERAL")
+      this.record.cs_mbl_id = this.pkid;
+    else
+      this.record.cs_mbl_id = this.mbl_pkid;
+    this.record.cs_mode = this.oprgrp;
+    this.record.cs_is_drop = this.record.cs_is_drop_bool == true ? "Y" : "N";
+    this.record.cs_is_pick = this.record.cs_is_pick_bool == true ? "Y" : "N";
+    this.record.cs_is_receipt = this.record.cs_is_receipt_bool == true ? "Y" : "N";
+    this.record.cs_is_check = this.record.cs_is_check_bool == true ? "Y" : "N";
+    this.record.cs_is_bl = this.record.cs_is_bl_bool == true ? "Y" : "N";
+    this.record.cs_is_oth = this.record.cs_is_oth_bool == true ? "Y" : "N";
+  }
   private Allvalid(): boolean {
 
     var bRet = true;
     this.errorMessage = "";
 
-    // if (this.gs.isBlank(this.record.hbl_houseno)) {
-    //   bRet = false;
-    //   this.errorMessage = "House BL# cannot be blank";
-    //   alert(this.errorMessage);
-    //   this.hbl_houseno_field.nativeElement.focus();
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.cs_date)) {
+      bRet = false;
+      this.errorMessage = "Date cannot be blank";
+      alert(this.errorMessage);
+      // this.hbl_houseno_field.nativeElement.focus();
+      return bRet;
+    }
 
+    if (this.record.cs_is_drop_bool == false && this.record.cs_is_pick_bool == false && this.record.cs_is_receipt_bool == false) {
+      bRet = false;
+      this.errorMessage = "Please Select Drop/ Pick Up/ Get Receipt";
+      alert(this.errorMessage);
+      // Chk_Is_Drop.Focus();
+      return bRet;
+    }
 
     return bRet;
   }
@@ -182,24 +261,58 @@ export class MessengerSlipEditComponent implements OnInit {
 
   LovSelected(_Record: SearchTable) {
 
-    // if (_Record.controlname == "SHIPPER") {
-    //   this.record.hbl_shipper_id = _Record.id;
-    //   this.record.hbl_shipper_code = _Record.code;
-    //   this.record.hbl_shipper_name = _Record.name;
-    //   if (_Record.col8 != "")
-    //     this.record.hbl_shipper_name = _Record.col8;
+    if (_Record.controlname == "TO-CODE") {
+      this.record.cs_to_id = _Record.id;
+      this.record.cs_to_code = _Record.code;
+      this.record.cs_to_name = _Record.name;
+      if (_Record.col8 != "")
+        this.record.cs_to_name = _Record.col8;
 
-    //   this.record.hbl_shipper_add1 = _Record.col1;
-    //   this.record.hbl_shipper_add2 = _Record.col2;
-    //   this.record.hbl_shipper_add3 = _Record.col3;
-    //   this.record.hbl_shipper_add4 = this.gs.GetAttention(_Record.col5.toString());
-    //   this.record.hbl_shipper_add5 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
-    //   if (_Record.col9 == "Y") {
-    //     this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
-    //   }
-    // }
+      this.record.cs_to_tel = _Record.col6;
+      this.record.cs_to_fax = _Record.col7;
+    }
+
+    if (_Record.controlname == "FROM-CODE") {
+      this.record.cs_from_id = _Record.id;
+      this.record.cs_from_name = _Record.name;
+      if (_Record.col8 != "")
+        this.record.cs_from_name = _Record.col8;
+    }
+    if (_Record.controlname == "DELIVER-TO") {
+      this.record.cs_deliver_to_id = _Record.id;
+      this.record.cs_deliver_to_name = _Record.name;
+      if (_Record.col8 != "")
+        this.record.cs_deliver_to_name = _Record.col8;
+      this.LoadDeliveryAddress();
+    }
+
+
   }
+  LoadDeliveryAddress() {
+    if (this.gs.isBlank(this.record.cs_deliver_to_id))
+      return;
 
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.record.cs_deliver_to_id;
+    this.mainService.LoadDeliveryAddress(SearchData)
+      .subscribe(response => {
+        let dRec: Tbl_cargo_slip = <Tbl_cargo_slip>{};
+        dRec = <Tbl_cargo_slip>response.record;
+
+        if (dRec != null) {
+          this.record.cs_deliver_to_add1 = dRec.cs_deliver_to_add1;
+          this.record.cs_deliver_to_add2 = dRec.cs_deliver_to_add2;
+          this.record.cs_deliver_to_add3 = dRec.cs_deliver_to_add3;
+          this.record.cs_deliver_to_attn = dRec.cs_deliver_to_attn;
+          this.record.cs_deliver_to_tel = dRec.cs_deliver_to_tel;
+        }
+
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+
+  }
   OnChange(field: string) {
     if (field == 'hbl_frt_status') {
     }

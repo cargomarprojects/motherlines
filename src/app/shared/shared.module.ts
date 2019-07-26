@@ -44,7 +44,7 @@ import { HistoryComponent } from './history/history.component';
 import { ApprovalComponent } from './approval/approval.component';
 
 import { PasteDataComponent } from './pastedata/pastedata.component';
-import { PaymentReqComponent } from './paymentreq/paymentreq.component';
+
 import { RateUpdateComponent } from './rateupdate/rateupdate.component';
 import { XmlomsComponent } from './xmloms/xmloms.component';
 import { AllReportComponent } from './allreport/allreport.component';
@@ -84,7 +84,6 @@ import { MessengerSlipListComponent } from './messengerslip/messengerslip-list.c
     OsRemSharedComponent,
     ApprovalComponent,
     PasteDataComponent,
-    PaymentReqComponent,
     RateUpdateComponent,
     XmlomsComponent,
     AllReportComponent,
@@ -118,7 +117,6 @@ import { MessengerSlipListComponent } from './messengerslip/messengerslip-list.c
     OsRemSharedComponent,
     ApprovalComponent,
     PasteDataComponent,
-    PaymentReqComponent,
     RateUpdateComponent,
     XmlomsComponent,
     AllReportComponent,

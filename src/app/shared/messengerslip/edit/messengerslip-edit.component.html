@@ -136,7 +136,7 @@
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-2">
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="record.cs_is_bl_bool" /><span>BL</span>
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record.cs_is_bl_bool" (click)="ChkBLClick()"/><span>BL</span>
           </div>
         </div>
         <div class="col-6">

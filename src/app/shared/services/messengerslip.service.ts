@@ -111,6 +111,10 @@ export class MessengerSlipService {
 
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/MessengerSlip/Save', SearchData, this.gs.headerparam2('authorized'));
+    } 
+    
+    LoadDeliveryAddress(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/MessengerSlip/LoadDeliveryAddress', SearchData, this.gs.headerparam2('authorized'));
     }  
 
 }
