@@ -1,8 +1,8 @@
 <div class="page-header">
   <div class="row align-items-center justify-content-left p-1">
-    <label class="pr-1"  >{{title}} ({{mode}}) </label>
-    <button class="btn btn-primary btn-sm mr-1"  (click)="Close()">Return</button>
-    <label class="text-danger"  *ngIf="is_locked" >LOCKED</label>
+    <label class="pr-1">{{title}} ({{mode}}) </label>
+    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    <label class="text-danger" *ngIf="is_locked">LOCKED</label>
   </div>
 </div>
 
@@ -47,7 +47,8 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Stage</label>
         <div class="col-8">
-          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage" [disabled]="is_stage_locked" >
+          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage"
+            [disabled]="is_stage_locked">
             <option *ngFor="let rec of gs.SHIPMENT_STAGE_OE" [value]="rec.code">{{rec.name}}</option>
           </select>
         </div>
@@ -530,9 +531,10 @@
           </thead>
           <tbody class="page-body-tbody">
             <tr *ngFor="let rec of cntrs">
+
               <td class="p-0">
-                <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_no" maxlength="11"
-                  (blur)="onBlur('cntr_no',rec)" />
+                <InputBox [(inputModel)]="rec.cntr_no" [field]="'cntr_no'" [maxlength]="11" [uppercase]="true"
+                  (blur)="onBlur($event)"></InputBox>
               </td>
               <td class="p-0">
                 <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
@@ -541,28 +543,28 @@
                 </app-autocomplete2>
               </td>
               <td class="p-0">
-                <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_sealno" maxlength="25"
-                  (blur)="onBlur('cntr_sealno',rec)" />
+                <InputBox [(inputModel)]="rec.cntr_sealno" [field]="'cntr_sealno'" [maxlength]="25" [uppercase]="true"
+                  (blur)="onBlur($event)"></InputBox>
               </td>
               <td class="p-0">
-                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_pieces"
-                  (blur)="onBlur('cntr_pieces',rec)" />
+                <InputBoxNumber [(inputModel)]="record.cntr_pieces" [field]="'cntr_pieces'" [dec]="0" [maxlength]="15"
+                  (blur)="onBlur($event)"></InputBoxNumber>
               </td>
               <td class="p-0">
-                <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_packages_uom"
-                  maxlength="4" (blur)="onBlur('cntr_packages_uom',rec)" />
+                <InputBox [(inputModel)]="rec.cntr_packages_uom" [field]="'cntr_packages_uom'" [maxlength]="4"
+                  [uppercase]="true" (blur)="onBlur($event)"></InputBox>
               </td>
               <td class="p-0">
-                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_weight"
-                  (blur)="onBlur('cntr_weight',rec)" />
+                <InputBoxNumber [(inputModel)]="record.cntr_weight" [field]="'cntr_weight'" [dec]="3" [maxlength]="15"
+                  (blur)="onBlur($event)"></InputBoxNumber>
               </td>
               <td class="p-0">
-                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
-                  (blur)="onBlur('cntr_cbm',rec)" />
+                <InputBoxNumber [(inputModel)]="record.cntr_cbm" [field]="'cntr_cbm'" [dec]="3" [maxlength]="15"
+                  (blur)="onBlur($event)"></InputBoxNumber>
               </td>
               <td class="p-0">
-                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
-                  (blur)="onBlur('cntr_tare_weight',rec)" />
+                <InputBoxNumber [(inputModel)]="record.cntr_tare_weight" [field]="'cntr_tare_weight'" [dec]="3"
+                  [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
               </td>
             </tr>
           </tbody>
