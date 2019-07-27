@@ -4,9 +4,9 @@ import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
 import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
-import { MessengerSlipService } from '../../services/messengerslip.service';
+import { MessengerSlipService } from '../../../other/services/messengerslip.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_tbl_cargo_slip, Tbl_cargo_slip } from '../../models/tbl_cargo_slip';
+import { vm_tbl_cargo_slip, Tbl_cargo_slip } from '../../../other/models/tbl_cargo_slip';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { DateComponent } from '../../../shared/Date/date.component';
@@ -18,7 +18,7 @@ import { DateComponent } from '../../../shared/Date/date.component';
 export class MessengerSlipEditComponent implements OnInit {
 
   @ViewChild('is_drop') is_drop_field: ElementRef;
-  @ViewChild('csdate') csdate_field: DateComponent;
+  @ViewChild(' csdate') csdate_field: DateComponent;
   @ViewChild('to_name') to_name_field: InputBoxComponent;
   @ViewChild('deliver_to_name') deliver_to_name_field: InputBoxComponent;
   

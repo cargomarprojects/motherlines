@@ -4,13 +4,18 @@ import { Routes, RouterModule } from '@angular/router';
 import { OthGeneralComponent } from './general/oth-general.component';
 import { OthGeneralEditComponent } from './general/edit/oth-general-edit.component';
 import { OthTrackingPageComponent } from './trackingpage/oth-trackingpage.component';
-import { MessengerSlipComponent } from '../businessmodule/messengerslip/messengerslip.component';
+import { MessengerSlipComponent } from './messengerslip/messengerslip.component';
+import { MessengerSlipEditComponent } from './messengerslip/edit/messengerslip-edit.component';
+import { MessengerSlipListComponent } from '../other/messengerslip/messengerslip-list.component';
+
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
   { path : 'OthGeneralEditPage', component : OthGeneralEditComponent },
   { path : 'TrackingPage', component : OthTrackingPageComponent },
-  { path : 'MessengerSlip', component : MessengerSlipComponent }
+  { path : 'MessengerSlip', component : MessengerSlipComponent },
+  { path : 'MessengerSlipEdit', component : MessengerSlipEditComponent },
+  { path : 'MessengerSlipList', component : MessengerSlipListComponent }
 ];
 
 @NgModule({

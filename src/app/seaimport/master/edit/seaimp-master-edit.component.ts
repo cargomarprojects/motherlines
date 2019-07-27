@@ -726,7 +726,7 @@ export class SeaImpMasterEditComponent implements OnInit {
           islocked: false,
           origin: 'seaimp-master-page'
         };
-        this.gs.Naviagete('Silver.BusinessModule/MessengerSlipList', JSON.stringify(prm));
+        this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
         break;
       }
     }
