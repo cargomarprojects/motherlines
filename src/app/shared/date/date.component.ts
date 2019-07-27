@@ -5,7 +5,6 @@ import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, 
     templateUrl: './date.component.html'
 })
 
-
 export class DateComponent {
     @Input()  public inputdate: string;
     @Output() ValueChanged = new EventEmitter<string>();
