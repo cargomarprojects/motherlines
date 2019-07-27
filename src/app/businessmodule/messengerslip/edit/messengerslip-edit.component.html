@@ -25,7 +25,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Date</label>
         <div class="col-8  input-group input-group-sm">
-          <app-date [inputdate]="record.cs_date" (ValueChanged)="record.cs_date=$event"></app-date>
+          <app-date [inputdate]="record.cs_date" (ValueChanged)="record.cs_date=$event" #csdate></app-date>
           <select class="form-control form-control-sm" [(ngModel)]="record.cs_ampm">
             <option [value]="'AM'">AM</option>
             <option [value]="'PM'">PM</option>
@@ -86,7 +86,7 @@
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="record.cs_is_drop_bool" />
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record.cs_is_drop_bool" #is_drop/>
             <span>Drop</span>
           </div>
         </div>

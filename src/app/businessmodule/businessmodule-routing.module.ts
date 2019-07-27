@@ -6,7 +6,7 @@ import { MessengerSlipListComponent } from './messengerslip/messengerslip-list.c
 
 const routes: Routes = [
   { path : 'PaymentRequestPage', component : PaymentReqComponent },
-  { path : 'MessengerSlip', component : MessengerSlipEditComponent },
+  { path : 'MessengerSlipEdit', component : MessengerSlipEditComponent },
   { path : 'MessengerSlipList', component : MessengerSlipListComponent }
 ];
 

@@ -3,11 +3,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
 import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
+import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 import { MessengerSlipService } from '../../services/messengerslip.service';
 import { User_Menu } from '../../../core/models/menum';
 import { vm_tbl_cargo_slip, Tbl_cargo_slip } from '../../models/tbl_cargo_slip';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { DateComponent } from '../../../shared/Date/date.component';
 
 @Component({
   selector: 'app-messengerslip-edit',
@@ -15,7 +17,11 @@ import { strictEqual } from 'assert';
 })
 export class MessengerSlipEditComponent implements OnInit {
 
-  // @ViewChild('hbl_houseno') hbl_houseno_field: ElementRef;
+  @ViewChild('is_drop') is_drop_field: ElementRef;
+  @ViewChild('csdate') csdate_field: DateComponent;
+  @ViewChild('to_name') to_name_field: InputBoxComponent;
+  @ViewChild('deliver_to_name') deliver_to_name_field: InputBoxComponent;
+  
   // @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
   //@ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
 
@@ -132,8 +138,7 @@ export class MessengerSlipEditComponent implements OnInit {
     this.record.cs_is_bl_bool = false;
     this.record.cs_is_oth_bool = false;
 
-
-    //this.hbl_houseno_field.nativeElement.focus();
+    this.csdate_field.Focus();
 
   }
 
@@ -210,6 +215,7 @@ export class MessengerSlipEditComponent implements OnInit {
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
         }
+        this.csdate_field.Focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
@@ -238,7 +244,7 @@ export class MessengerSlipEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Date cannot be blank";
       alert(this.errorMessage);
-      // this.hbl_houseno_field.nativeElement.focus();
+      this.csdate_field.Focus();
       return bRet;
     }
 
@@ -246,7 +252,7 @@ export class MessengerSlipEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Please Select Drop/ Pick Up/ Get Receipt";
       alert(this.errorMessage);
-      // Chk_Is_Drop.Focus();
+      this.is_drop_field.nativeElement.focus();
       return bRet;
     }
 
@@ -270,6 +276,7 @@ export class MessengerSlipEditComponent implements OnInit {
 
       this.record.cs_to_tel = _Record.col6;
       this.record.cs_to_fax = _Record.col7;
+      this.to_name_field.focus();
     }
 
     if (_Record.controlname == "FROM-CODE") {
@@ -277,6 +284,7 @@ export class MessengerSlipEditComponent implements OnInit {
       this.record.cs_from_name = _Record.name;
       if (_Record.col8 != "")
         this.record.cs_from_name = _Record.col8;
+      this.is_drop_field.nativeElement.focus();
     }
     if (_Record.controlname == "DELIVER-TO") {
       this.record.cs_deliver_to_id = _Record.id;
@@ -286,8 +294,8 @@ export class MessengerSlipEditComponent implements OnInit {
       this.LoadDeliveryAddress();
     }
 
-
   }
+
   LoadDeliveryAddress() {
     if (this.gs.isBlank(this.record.cs_deliver_to_id))
       return;
@@ -307,6 +315,8 @@ export class MessengerSlipEditComponent implements OnInit {
           this.record.cs_deliver_to_attn = dRec.cs_deliver_to_attn;
           this.record.cs_deliver_to_tel = dRec.cs_deliver_to_tel;
         }
+
+        this.deliver_to_name_field.focus();
 
       }, error => {
         this.errorMessage = this.gs.getError(error);
