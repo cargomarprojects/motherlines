@@ -81,7 +81,7 @@ export class MessengerSlipListComponent implements OnInit {
       mbl_mode:this.mbl_mode
        
     };
-    this.gs.Naviagete('Silver.Other.Trans/MessengerSlip', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.BusinessModule/MessengerSlip', JSON.stringify(parameter));
 
   }
 
@@ -99,7 +99,7 @@ export class MessengerSlipListComponent implements OnInit {
       mbl_refno : this.mbl_refno,
       mbl_mode:this.mbl_mode
     };
-    this.gs.Naviagete('Silver.Other.Trans/MessengerSlip', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.BusinessModule/MessengerSlip', JSON.stringify(parameter));
   }
 
   Close() {

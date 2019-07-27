@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'Silver.Other.Trans', loadChildren: './other/other.module#OtherModule' }, 
   { path: 'Silver.USAccounts.Trans', loadChildren: './usaccounts/usaccounts.module#USAccountsModule' }, 
   { path: 'Silver.Library', loadChildren: './shared/shared.module#SharedModule' }, 
-  { path: 'Silver.General', loadChildren: './businessmodule/businessmodule.module#BusinessmoduleModule' }, 
+  { path: 'Silver.BusinessModule', loadChildren: './businessmodule/businessmodule.module#BusinessmoduleModule' }, 
 
   { path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule' },
   { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },  
