@@ -57,7 +57,7 @@ export class MessengerSlipListComponent implements OnInit {
     var SearchData = this.gs.UserInfo;
     SearchData.mbl_pkid = this.mbl_pkid;
    
-    this.mainservice.List(SearchData).subscribe(response => {
+    this.mainservice.GeneralList(SearchData).subscribe(response => {
       this.records = response.list;
       
     }, error => {

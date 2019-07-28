@@ -26,7 +26,7 @@ export class MessengerSlipService {
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
-    
+
     public initlialized: boolean;
 
     constructor(
@@ -70,13 +70,12 @@ export class MessengerSlipService {
         var SearchData = this.gs.UserInfo;
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
-        SearchData.pkid = this.id;
-        SearchData.TYPE = this.param_type;
+        SearchData.MBLID = '';
+        SearchData.OPERATION_MODE = 'GENERAL';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
-        SearchData.PARENT_ID = this.record.searchQuery.mblid;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -95,26 +94,29 @@ export class MessengerSlipService {
         }, error => {
             this.record = <MessengerSlipModel>{
                 records: [],
-              errormessage: this.gs.getError(error),
+                errormessage: this.gs.getError(error),
             };
             this.mdata$.next(this.record);
         });
     }
 
+    GeneralList(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/MessengerSlip/GeneralList', SearchData, this.gs.headerparam2('authorized'));
+    }
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/MessengerSlip/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/MessengerSlip/GetRecord', SearchData, this.gs.headerparam2('authorized'));
-    }  
+    }
 
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/MessengerSlip/Save', SearchData, this.gs.headerparam2('authorized'));
-    } 
-    
+    }
+
     LoadDeliveryAddress(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/MessengerSlip/LoadDeliveryAddress', SearchData, this.gs.headerparam2('authorized'));
-    }  
+    }
 
 }
