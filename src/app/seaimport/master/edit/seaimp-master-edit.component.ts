@@ -729,6 +729,19 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
         break;
       }
+      case 'FOLLOWUP': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER,
+          cp_master_id: this.pkid,
+          cp_source: 'SEA-MASTER',
+          cp_mode: 'SEA IMPORT',
+          cp_ref_no: this.record.mbl_refno,
+          islocked: false,
+          origin: 'seaimp-master-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
+        break;
+      }
     }
   }
 
