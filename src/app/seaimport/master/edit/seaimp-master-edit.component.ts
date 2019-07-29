@@ -732,10 +732,9 @@ export class SeaImpMasterEditComponent implements OnInit {
       case 'FOLLOWUP': {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER,
-          cp_master_id: this.pkid,
-          cp_source: 'SEA-MASTER',
-          cp_mode: 'SEA IMPORT',
-          cp_ref_no: this.record.mbl_refno,
+          master_id: this.pkid,
+          master_refno: this.record.mbl_refno,
+          master_refdate: this.record.mbl_ref_date,
           islocked: false,
           origin: 'seaimp-master-page'
         };

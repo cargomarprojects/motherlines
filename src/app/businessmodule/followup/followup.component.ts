@@ -18,28 +18,24 @@ export class FollowupComponent implements OnInit {
   //@ViewChild('mbl_no') mbl_no_field: ElementRef;
   records: Table_Cargo_Followup[] = [];
   record: Table_Cargo_Followup = <Table_Cargo_Followup>{};
- 
   // 15-07-2019 Created By Ajith  
 
-  private pkid: string;
-  private parentType: string;
-  private paramType: string;
   private menuid: string;
-  private refno: string;
-  private hideTracking: string = 'N';
-  private oprgrp: string = '';
+  private cf_masterid: string;
+  private cf_refno: string;
+  private cf_refdate: string;
+  private pkid: string;
   private mode: string;
   private title: string = '';
   private isAdmin: boolean;
   private errorMessage: string;
   private selectedRowIndex: number = -1;
   IsLocked: boolean = false;
-  private Memo_Mode: string = "ADD";
-  private Memo_Id: string = "";
-  private lblSaveMemo: string = "Save";
+  private lblSave: string = "Save";
   private cmbNotes: string = "";
   private FollowupList: any[] = [];
-
+  private UserList: any[] = [];
+  private UsrDeleteId = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -50,14 +46,10 @@ export class FollowupComponent implements OnInit {
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
     this.menuid = options.menuid;
-    this.parentType = options.parentType;
-    this.paramType = options.paramType;
-    this.hideTracking = options.hideTracking;
-    this.oprgrp = options.oprgrp;
-    this.refno = options.refno;
-    // this.mode = 'ADD';
+    this.cf_masterid = options.master_id;
+    this.cf_refno = options.master_refno;
+    this.cf_refdate = options.master_refdate;
     this.initPage();
     this.actionHandler();
   }
@@ -70,42 +62,20 @@ export class FollowupComponent implements OnInit {
   }
 
   LoadCombo() {
-  this.SearchRecord('loadcombo');
+    this.SearchRecord('loadcombo');
   }
 
-  // NewRecord() {
-  //   this.mode = 'ADD'
-  //   this.actionHandler();
-  // }
-
   actionHandler() {
-    // this.errorMessage = '';
-    // if (this.mode == 'ADD') {
-    //   this.record = <Tbl_cargo_imp_desc>{};
-    //   this.init();
-    // }
-    // if (this.mode == 'EDIT') {
-    //   this.GetRecord();
-    // }
-
     this.GetRecord();
   }
 
   init() {
-
-    // this.record.parentid = this.pkid;
-    // this.record.cargo_description = '';
-    // this.record.cargo_marks = '';
-    // this.record.cargo_packages = '';
-    // this.record.cargo_ctr = 1;
   }
 
   GetRecord() {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-    SearchData.parentType = this.parentType;
-    SearchData.paramType = this.paramType;
+    SearchData.pkid = this.cf_masterid;
 
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
@@ -131,7 +101,94 @@ export class FollowupComponent implements OnInit {
     */
   }
 
+  OnChange(field: string) {
+    if (field == 'cmbNotes') {
+      this.record.cf_remarks = this.cmbNotes;
+    }
+    if (field == 'cf_assigned_id') {
+      var REC = this.UserList.find(rec => rec.pkid == this.record.cf_assigned_id);
+      if (REC != null) {
+        this.record.cf_assigned_code = REC.code;
+        this.record.cf_assigned_name = REC.name;
+      }
+    }
+  }
 
+  onBlur(field: string, _rec: Table_Cargo_Followup = null) {
+    switch (field) {
+      case 'remarks': {
+        _rec.cf_remarks = _rec.cf_remarks.toUpperCase();
+        break;
+      }
+
+    }
+  }
+
+  SetRowIndex(_indx: number) {
+    this.selectedRowIndex = _indx;
+  }
+
+
+  private NewRecord() {
+
+    // if (CmbList != null && UsrDeleteRec != null)
+    // {
+    //     CmbList.Remove(UsrDeleteRec);
+    //     UsrDeleteRec = null;
+    // }
+
+    if (this.UserList != null && this.UsrDeleteId != '') {
+      this.UserList.splice(this.UserList.findIndex(rec => rec.pkid == this.UsrDeleteId), 1);
+      this.UsrDeleteId = '';
+    }
+
+    this.mode = "ADD";
+    this.pkid = this.gs.getGuid();
+    this.record = <Table_Cargo_Followup>{};
+    this.record.cf_pkid = this.pkid;
+    this.record.cf_master_id = this.cf_masterid;
+    this.record.cf_user_id = this.gs.user_pkid;
+    this.record.rec_created_by = this.gs.user_code;
+    this.record.cf_followup_date = this.gs.defaultValues.today;
+    this.record.cf_assigned_id = this.gs.user_pkid;
+    this.record.cf_assigned_code = this.gs.user_code;
+    this.record.cf_assigned_name = this.gs.user_name;
+    this.record.cf_remarks = '';
+    this.lblSave = "Save";
+    //Txtmemo.Focus();
+  }
+
+  private EditRow(_rec: Table_Cargo_Followup) {
+
+    if (this.UserList != null) {
+      let bFind: boolean = false;
+      this.UserList.forEach(Rec => {
+        if (Rec.pkid == _rec.cf_assigned_id)
+          bFind = true;
+      })
+
+      if (bFind == false) {
+        
+        this.UsrDeleteId = _rec.cf_assigned_id;
+
+        var UsrDeleteRec = <any>{};
+        UsrDeleteRec.pkid = _rec.cf_assigned_id;
+        UsrDeleteRec.code = _rec.cf_assigned_code;
+        UsrDeleteRec.name = "";
+        this.UserList.push(UsrDeleteRec);
+      }
+    }
+
+    this.mode = "EDIT";
+    this.pkid = _rec.cf_pkid.toString();
+    this.record.cf_pkid = this.pkid;
+    this.record.cf_followup_date = _rec.cf_followup_date;
+    this.record.cf_remarks = _rec.cf_remarks.toString();
+    this.record.cf_assigned_id = _rec.cf_assigned_id;
+    this.record.cf_assigned_code = _rec.cf_assigned_code;
+    this.lblSave = "Update";
+    this.cmbNotes = '';
+  }
 
   Save() {
 
@@ -142,7 +199,8 @@ export class FollowupComponent implements OnInit {
     saveRecord.userinfo = this.gs.UserInfo;
     saveRecord.record = this.record;
     saveRecord.pkid = this.pkid;
-     
+    saveRecord.mode = this.mode;
+
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
@@ -150,8 +208,22 @@ export class FollowupComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          if (this.mode == "ADD") {
+            this.records.push(this.record);
+            // Grid_Memo.ScrollIntoView(memo_Record, Grid_Memo.Columns[0]);
+            //Grid_Memo.Focus();
+          } else {
+            if (this.records != null) {
+              var REC = this.records.find(rec => rec.cf_pkid == this.pkid);
+              if (REC != null) {
+                REC.cf_followup_date = this.record.cf_followup_date;
+                REC.cf_remarks = this.record.cf_remarks;
+              }
+            }
+          }
+          this.NewRecord();
+          // this.errorMessage = 'Save Complete';
+          // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -163,13 +235,19 @@ export class FollowupComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
-    if (this.pkid == "") {
+    if (this.gs.isBlank(this.record.cf_master_id)) {
       bRet = false;
       this.errorMessage = "Invalid ID";
       alert(this.errorMessage);
       return bRet;
     }
 
+    if (this.gs.isBlank(this.record.cf_assigned_id)) {
+      bRet = false;
+      this.errorMessage = "Assigned To has to be selected";
+      alert(this.errorMessage);
+      return bRet;
+    }
     return bRet;
   }
 
@@ -177,113 +255,10 @@ export class FollowupComponent implements OnInit {
   Close() {
     this.location.back();
   }
-  OnChange(field: string) {
-    if (field == 'cmbNotes') {
-      this.record.cf_remarks = this.cmbNotes;
-    }
-  }
 
-  onBlur(field: string, _rec: Table_Cargo_Followup = null) {
-    switch (field) {
-      case 'remarks': {
-        _rec.cf_remarks = _rec.cf_remarks.toUpperCase();
-        break;
-      }
-      
-    }
-  }
-
-  AddRow() {
-    var rec = <Table_Cargo_Followup>{};
-    // rec.parentid = this.pkid;
-    // rec.cargo_marks = "",
-    //   rec.cargo_description = "",
-    //   rec.cargo_ctr = this.findNextCtr();
-
-    // this.descrecords.push(rec);
-  }
-
-  //   findNextCtr() {
-  //     let max: number = 16;
-  //     this.trackrecords.forEach(Rec => {
-  //       max = Rec.cargo_ctr > max ? Rec.cargo_ctr : max;
-  //     })
-  //     return max + 1;
-  //   }
-
-
-  SetRowIndex(_indx: number) {
-    this.selectedRowIndex = _indx;
-  }
-
-  
   RemoveRow(_rec: Table_Cargo_Followup) {
-
+    this.records.splice(this.records.findIndex(rec => rec.cf_pkid == _rec.cf_pkid), 1);
   }
-  //   RemoveRow(_rec: Tbl_cargo_imp_desc) {
-  //     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
-  //   }
-
-  private NewRecord() {
-    this.Memo_Mode = "ADD";
-    this.Memo_Id = this.gs.getGuid();
-    this.record = <Table_Cargo_Followup>{};
-    this.record.rec_created_by = this.gs.user_code;
-    // this.trackmemorecord.param_id = this.Memo_Id;
-    // this.trackmemorecord.date = this.gs.defaultValues.today;
-    // this.trackmemorecord.remarks = ''
-    this.lblSaveMemo = "Save";
-    //Txtmemo.Focus();
-  }
-  private EditRow(_rec: Table_Cargo_Followup) {
-    //Dt_Date.IsEnabled = false;
-    this.Memo_Id = _rec.cf_pkid.toString();
-    this.Memo_Mode = "EDIT";
-   // this.trackmemorecord.param_id = this.Memo_Id;
-    this.record.cf_followup_date   = _rec.cf_followup_date;
-    this.record.cf_remarks = _rec.cf_remarks.toString();
-    this.lblSaveMemo = "Update";
-  }
-
-//   SaveMemo() 
-//   {
-//     const saveRecord = <vm_Tbl_Cargo_Tracking_Status>{};
-//     saveRecord.userinfo = this.gs.UserInfo;
-//     saveRecord.memorecord = this.trackmemorecord;
-//     saveRecord.pkid = this.pkid;
-//     saveRecord.memoPkid = this.Memo_Id;
-//     saveRecord.memoMode = this.Memo_Mode;
-//     saveRecord.parentType = this.parentType;
-  
-//     this.mainService.SaveMemo(saveRecord)
-//       .subscribe(response => {
-//         if (response.retvalue == false) {
-//           this.errorMessage = response.error;
-//           alert(this.errorMessage);
-//         }
-//         else {
-
-//           if (this.Memo_Mode == "ADD") {
-//             this.trackmemorecords.push(this.trackmemorecord);
-//             // Grid_Memo.ScrollIntoView(memo_Record, Grid_Memo.Columns[0]);
-//             //Grid_Memo.Focus();
-//           } else {
-//             if (this.trackmemorecords != null) {
-//               var REC = this.trackmemorecords.find(rec => rec.param_id == this.Memo_Id);
-//               if (REC != null)
-//                 REC.remarks = this.trackmemorecord.remarks;
-//             }
-//           }
-
-//           this.NewRecord();
-//           // this.errorMessage = 'Save Complete';
-//           // alert(this.errorMessage);
-//         }
-//       }, error => {
-//         this.errorMessage = this.gs.getError(error);
-//         alert(this.errorMessage);
-//       });
-//   }
 
 
   SearchRecord(controlname: string) {
@@ -299,7 +274,8 @@ export class FollowupComponent implements OnInit {
     }
     this.gs.SearchRecord(SearchData)
       .subscribe(response => {
-        this.FollowupList = response.memolist;
+        this.FollowupList = response.followuplist;
+        this.UserList = response.userlist;
       },
         error => {
           this.errorMessage = this.gs.getError(error);

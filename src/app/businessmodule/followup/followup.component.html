@@ -11,63 +11,71 @@
     </div>
 </div>
 <div class="page-body">
+        <div class="col-md-12">
     <div class="row">
-        <div class="col-md-4 testbox  px-0 mx-0">
+        <div class="col-md-6 testbox  px-0 mx-0">
             <div class="form-group row">
-                <label class="col-4 col-form-label col-form-label-sm">Ref#</label>
-                <div class="col-8">
-                    <InputBox [(inputModel)]="REF_NO" [disabled]="true" maxlength="25" #refno></InputBox>
+                <label class="col-2 col-form-label col-form-label-sm">Ref#</label>
+                <div class="col-4">
+                    <InputBox [(inputModel)]="cf_refno" [disabled]="true" maxlength="25" #refno></InputBox>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 testbox  px-0 mx-0">
             <div class="form-group row">
-                <label class="col-4 col-form-label col-form-label-sm">Date</label>
-                <div class="col-8">
-                    <app-date [inputdate]="REF_DATE" (ValueChanged)="REF_DATE=$event" #refdate></app-date>
+                    <label class="col-2 col-form-label col-form-label-sm">RefDate</label>
+                    <div class="col-4">
+                        <app-date [inputdate]="cf_refdate" (ValueChanged)="cf_refdate=$event" [disabled]="true" #refdate></app-date>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
+</div>
 <div class="page-body">
-    <div class="row">
+  
         <div class="col-md-12">
-            <div class="row pt-2">
+            <div class="row">
                 <!-- First row -->
-                <div class="col-md-12 px-0 mx-0">
-                    <div class="row">
+                <!-- <div class="col-md-12 px-0 mx-0">
+                    <div class="row"> -->
                         <div class="col-md-6 testbox  px-0 mx-0">
                             <div class="form-group row">
-                                <label class="col-1 col-form-label col-form-label-sm">Follow up Date</label>
-                                <div class="col-9">
-                                    <app-date disabled [inputdate]="record.cf_followup_date"
+                                <label class="col-2 col-form-label col-form-label-sm">FollowupDate</label>
+                                <div class="col-8">
+                                    <app-date [inputdate]="record.cf_followup_date"
                                         (ValueChanged)="record.cf_followup_date=$event">
                                     </app-date>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-1 col-form-label col-form-label-sm">Notes</label>
-                                <div class="col-9">
+                                <label class="col-2 col-form-label col-form-label-sm"></label>
+                                <div class="col-8">
                                     <select class="form-control form-control-sm" [(ngModel)]="cmbNotes"
                                         (change)="OnChange('cmbNotes')">
-                                        <option *ngFor="let rec of FollowupList" [value]="rec.name">{{rec.name}}</option>
+                                        <option *ngFor="let rec of FollowupList" [value]="rec.name">{{rec.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-1 col-form-label col-form-label-sm"></label>
-                                <div class="col-9">
+                                <label class="col-2 col-form-label col-form-label-sm">Notes</label>
+                                <div class="col-8">
                                     <textarea rows="5" class="form-control form-control-sm"
-                                        [(ngModel)]="record.cf_remarks" (blur)="onBlur('cf_remarks','')"
-                                        required maxlength="500"></textarea>
+                                        [(ngModel)]="record.cf_remarks" (blur)="onBlur('cf_remarks','')" required
+                                        maxlength="500"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="offset-1 col-9 col-form-label col-form-label-sm"> </label>
+                                    <label class="col-2 col-form-label col-form-label-sm">AssignedTo</label>
+                                    <div class="col-8">
+                                            <select class="form-control form-control-sm" [(ngModel)]="record.cf_assigned_id"
+                                                (change)="OnChange('cf_assigned_id')">
+                                                <option *ngFor="let rec of UserList" [value]="rec.pkid">{{rec.name}}
+                                                </option>
+                                            </select>
+                                        </div>
                                 <div class="col-2 p-0">
                                     <button class="btn btn-primary btn-sm mr-1"
-                                        (click)="SaveMemo()">{{lblSaveMemo}}</button>
+                                        (click)="Save()">{{lblSave}}</button>
                                     <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
                                 </div>
                                 <!-- <div class="col-1">
@@ -75,10 +83,8 @@
                                 </div> -->
                             </div>
                         </div>
-                    </div>
-                    <hr>
-                </div>
-                <hr>
+                    <!-- </div>
+                </div> -->
                 <!-- Second row -->
                 <div class="col-md-12 px-0 mx-0">
                     <div class="row">
@@ -98,14 +104,14 @@
                                         <tbody class="page-body-tbody">
                                             <tr *ngFor="let rec of records; let i = index"
                                                 [class.active]="i == selectedRowIndex" (click)="SetRowIndex(i)">
-                                                <td class="p-0">{{rec.rec_created_by}} </td>
+                                                <td class="p-0" (click)="EditRow(rec)">{{rec.rec_created_by}} </td>
                                                 <td class="p-0">{{rec.cf_assigned_code}}</td>
                                                 <td class="p-0">{{rec.cf_followup_date | date : gs.FRONTEND_DATEFORMAT}}
                                                 </td>
-                                                <td class="p-0" (blur)="onBlur('remarks',rec)" (click)="EditRow(rec)">
-                                                    {{rec.remarks}}</td>
-                                              
-                                                <td  class="p-0" align='center'><i class="fa fa-trash  fa-lg pointer"
+                                                <td class="p-0" (blur)="onBlur('cf_remarks',rec)">
+                                                    {{rec.cf_remarks}}</td>
+
+                                                <td class="p-0" align='center'><i class="fa fa-trash  fa-lg pointer"
                                                         aria-hidden="true" (click)="RemoveRow(rec)"></i></td>
                                             </tr>
                                         </tbody>
@@ -118,5 +124,5 @@
                 </div>
             </div>
         </div>
-    </div>
+
 </div>
