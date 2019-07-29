@@ -19,8 +19,7 @@ export class SearchTable {
     col7: string;
     col8: string;
     col9: string;
-
-
+    
 
     constructor(_controlname: string = '',
         _type: string = '',

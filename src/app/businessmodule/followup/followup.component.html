@@ -69,7 +69,7 @@
                                     <div class="col-8">
                                             <select class="form-control form-control-sm" [(ngModel)]="record.cf_assigned_id"
                                                 (change)="OnChange('cf_assigned_id')">
-                                                <option *ngFor="let rec of UserList" [value]="rec.pkid">{{rec.name}}
+                                                <option *ngFor="let rec of UserList" [value]="rec.id">{{rec.code}}
                                                 </option>
                                             </select>
                                         </div>

@@ -22,5 +22,7 @@ export class FollowupService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/LoginService/FollowupPage/Save', SearchData, this.gs.headerparam2('authorized'));
     }
     
-
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/LoginService/FollowupPage/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
 }

@@ -8,6 +8,7 @@ import { User_Menu } from '../../core/models/menum';
 import { Table_Cargo_Followup, vm_Table_Cargo_Followup } from '../models/table_cargo_followup';
 import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { AnyFn } from '@ngrx/store/src/selector';
 
 @Component({
   selector: 'app-followup',
@@ -106,7 +107,7 @@ export class FollowupComponent implements OnInit {
       this.record.cf_remarks = this.cmbNotes;
     }
     if (field == 'cf_assigned_id') {
-      var REC = this.UserList.find(rec => rec.pkid == this.record.cf_assigned_id);
+      var REC = this.UserList.find(rec => rec.id == this.record.cf_assigned_id);
       if (REC != null) {
         this.record.cf_assigned_code = REC.code;
         this.record.cf_assigned_name = REC.name;
@@ -138,7 +139,7 @@ export class FollowupComponent implements OnInit {
     // }
 
     if (this.UserList != null && this.UsrDeleteId != '') {
-      this.UserList.splice(this.UserList.findIndex(rec => rec.pkid == this.UsrDeleteId), 1);
+      this.UserList.splice(this.UserList.findIndex(rec => rec.id == this.UsrDeleteId), 1);
       this.UsrDeleteId = '';
     }
 
@@ -163,16 +164,16 @@ export class FollowupComponent implements OnInit {
     if (this.UserList != null) {
       let bFind: boolean = false;
       this.UserList.forEach(Rec => {
-        if (Rec.pkid == _rec.cf_assigned_id)
+        if (Rec.id == _rec.cf_assigned_id)
           bFind = true;
       })
 
       if (bFind == false) {
-        
+
         this.UsrDeleteId = _rec.cf_assigned_id;
 
-        var UsrDeleteRec = <any>{};
-        UsrDeleteRec.pkid = _rec.cf_assigned_id;
+        var UsrDeleteRec = <SearchTable>{};
+        UsrDeleteRec.id = _rec.cf_assigned_id;
         UsrDeleteRec.code = _rec.cf_assigned_code;
         UsrDeleteRec.name = "";
         this.UserList.push(UsrDeleteRec);
@@ -257,7 +258,29 @@ export class FollowupComponent implements OnInit {
   }
 
   RemoveRow(_rec: Table_Cargo_Followup) {
-    this.records.splice(this.records.findIndex(rec => rec.cf_pkid == _rec.cf_pkid), 1);
+
+    this.errorMessage = '';
+     if (!confirm("DELETE "+_rec.cf_remarks)) {
+      return;
+    }
+
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = _rec.cf_pkid;
+    SearchData.remarks = _rec.cf_remarks;
+
+    this.mainService.DeleteRecord(SearchData)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+          this.records.splice(this.records.findIndex(rec => rec.cf_pkid == _rec.cf_pkid), 1);
+          this.NewRecord();
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
   }
 
 
