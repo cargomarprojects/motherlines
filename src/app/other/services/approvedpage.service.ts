@@ -115,8 +115,6 @@ export class ApprovedPageService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/ApprovedPage/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    LoadDeliveryAddress(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/ApprovedPage/LoadDeliveryAddress', SearchData, this.gs.headerparam2('authorized'));
-    }
+    
 
 }

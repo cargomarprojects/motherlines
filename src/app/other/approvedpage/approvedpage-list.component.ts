@@ -106,6 +106,8 @@ export class ApprovedPageListComponent implements OnInit {
     this.location.back();
   }
 
+  AttachRow(_rec:Tbl_Cargo_Approved){
 
+  }
 
 }
