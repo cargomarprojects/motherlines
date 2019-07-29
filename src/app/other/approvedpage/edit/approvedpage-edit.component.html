@@ -1,0 +1,36 @@
+<div class="page-header">
+        <div class="col">
+          <label>Messenger Slip ({{mode}})</label>
+          <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+        </div>
+      </div>
+      
+      <div *ngIf="errorMessage">
+        <div class="alert alert-primary">
+          {{errorMessage}}
+        </div>
+      </div>
+      
+      <div class="page-body">
+        <div class="row">
+          <div class="col-md-4 testbox  px-0 mx-0">
+            <div class="form-group row">
+              <label class="col-4 col-form-label col-form-label-sm">Req#</label>
+              <div class="col-8">
+                <InputBox [(inputModel)]="record.ca_req_no" [disabled]="true" maxlength="25" #req_no></InputBox>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 testbox  px-0 mx-0">
+            <div class="form-group row">
+              <label class="col-4 col-form-label col-form-label-sm">Type</label>
+              <div class="col-8">
+                <select class="form-control form-control-sm" [(ngModel)]="record.ca_type">
+                  <option [value]="'AM'">AM</option>
+                  <option [value]="'PM'">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

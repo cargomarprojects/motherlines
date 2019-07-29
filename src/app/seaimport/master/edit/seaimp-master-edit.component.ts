@@ -741,6 +741,18 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
         break;
       }
+      case 'REQUEST-APPROVAL': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_REQUEST_APPROVAL,
+          mbl_pkid: this.pkid,
+          mbl_mode: 'SEA IMPORT',
+          mbl_refno: this.record.mbl_refno,
+          islocked: false,
+          origin: 'seaimp-master-page'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
+        break;
+      }
     }
   }
 

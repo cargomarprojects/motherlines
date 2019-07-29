@@ -8,6 +8,8 @@ import { MessengerSlipComponent } from './messengerslip/messengerslip.component'
 import { MessengerSlipEditComponent } from './messengerslip/edit/messengerslip-edit.component';
 import { MessengerSlipListComponent } from '../other/messengerslip/messengerslip-list.component';
 
+import {ApprovedPageEditComponent } from './approvedpage/edit/approvedpage-edit.component';
+import {ApprovedPageListComponent } from './approvedpage/approvedpage-list.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -15,7 +17,9 @@ const routes: Routes = [
   { path : 'TrackingPage', component : OthTrackingPageComponent },
   { path : 'MessengerSlip', component : MessengerSlipComponent },
   { path : 'MessengerSlipEdit', component : MessengerSlipEditComponent },
-  { path : 'MessengerSlipList', component : MessengerSlipListComponent }
+  { path : 'MessengerSlipList', component : MessengerSlipListComponent },
+  { path : 'ApprovedPageEdit', component : ApprovedPageEditComponent },
+  { path : 'ApprovedPageList', component : ApprovedPageListComponent }
 ];
 
 @NgModule({

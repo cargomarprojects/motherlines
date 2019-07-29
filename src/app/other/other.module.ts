@@ -19,6 +19,8 @@ import { MessengerSlipListComponent } from '../other/messengerslip/messengerslip
 import { MessengerSlipHeaderComponent } from '../other/messengerslip/messengerslip-header.component';
 import { MessengerSlipComponent } from '../other/messengerslip/messengerslip.component';
 
+import {ApprovedPageEditComponent } from './approvedpage/edit/approvedpage-edit.component';
+import {ApprovedPageListComponent } from './approvedpage/approvedpage-list.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { MessengerSlipComponent } from '../other/messengerslip/messengerslip.com
     MessengerSlipEditComponent,
     MessengerSlipListComponent,
     MessengerSlipHeaderComponent,
-    MessengerSlipComponent
+    MessengerSlipComponent,
+    ApprovedPageEditComponent,
+    ApprovedPageListComponent
   ],
   imports: [
     SharedModule,    
