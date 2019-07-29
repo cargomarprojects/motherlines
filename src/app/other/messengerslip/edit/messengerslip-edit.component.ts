@@ -9,7 +9,7 @@ import { User_Menu } from '../../../core/models/menum';
 import { vm_tbl_cargo_slip, Tbl_cargo_slip } from '../../../other/models/tbl_cargo_slip';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
-import { DateComponent } from '../../../shared/Date/date.component';
+//import { DateComponent } from '../../../shared/Date/date.component';
 
 @Component({
   selector: 'app-messengerslip-edit',
@@ -18,7 +18,7 @@ import { DateComponent } from '../../../shared/Date/date.component';
 export class MessengerSlipEditComponent implements OnInit {
 
   @ViewChild('is_drop') is_drop_field: ElementRef;
-  @ViewChild(' csdate') csdate_field: DateComponent;
+ // @ViewChild(' csdate') csdate_field: DateComponent;
   @ViewChild('to_name') to_name_field: InputBoxComponent;
   @ViewChild('deliver_to_name') deliver_to_name_field: InputBoxComponent;
   
@@ -138,7 +138,7 @@ export class MessengerSlipEditComponent implements OnInit {
     this.record.cs_is_bl_bool = false;
     this.record.cs_is_oth_bool = false;
 
-    this.csdate_field.Focus();
+   // this.csdate_field.Focus();
 
   }
 
@@ -215,7 +215,7 @@ export class MessengerSlipEditComponent implements OnInit {
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
         }
-        this.csdate_field.Focus();
+      //  this.csdate_field.Focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
@@ -244,7 +244,7 @@ export class MessengerSlipEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Date cannot be blank";
       alert(this.errorMessage);
-      this.csdate_field.Focus();
+     // this.csdate_field.Focus();
       return bRet;
     }
 

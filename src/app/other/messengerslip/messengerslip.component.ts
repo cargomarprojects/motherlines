@@ -70,7 +70,7 @@ export class MessengerSlipComponent implements OnInit {
       mbl_mode:'GENERAL',
       origin: 'messengerslip-general-page'
     };
-    this.gs.Naviagete('Silver.Other.Trans/MessengerSlip', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
 
   }
   
@@ -89,7 +89,7 @@ export class MessengerSlipComponent implements OnInit {
         mbl_mode:'GENERAL',
         origin: 'messengerslip-general-page',
       };
-      this.gs.Naviagete('Silver.Other.Trans/MessengerSlip', JSON.stringify(parameter));
+      this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
   }
 
   Close() {
