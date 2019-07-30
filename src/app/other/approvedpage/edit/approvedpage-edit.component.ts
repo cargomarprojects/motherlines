@@ -419,4 +419,34 @@ export class ApprovedPageEditComponent implements OnInit {
   rdBtnChecked(_select: string) {
     this.rdBtnChked = _select;
   }
+
+  SaveApproved() {
+     
+    const saveRecord = <vm_tbl_cargo_approved>{};
+    saveRecord.record = this.record;
+    saveRecord.mode = this.mode;
+    saveRecord.userinfo = this.gs.UserInfo;
+
+    this.mainService.Save(saveRecord)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+          if (this.mode == "ADD" && response.code != '') {
+            this.record.ca_req_no = response.code;
+            this.record.ca_req_no_str = this.record.ca_req_no.toString().padStart(6, '0');
+          }
+
+          this.mode = 'EDIT';
+          this.errorMessage = 'Save Complete';
+          alert(this.errorMessage);
+        }
+        //  this.csdate_field.Focus();
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+        alert(this.errorMessage);
+      });
+  }
 }

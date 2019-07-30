@@ -59,7 +59,7 @@ export class ApprovedPageListComponent implements OnInit {
   List(action: string = '') {
     var SearchData = this.gs.UserInfo;
     SearchData.mbl_pkid = this.mbl_pkid;
-
+    SearchData.ISADMIN = this.isAdmin == true ? 'Y' : 'N';
     this.mainservice.GeneralList(SearchData).subscribe(response => {
       this.records = response.list;
 

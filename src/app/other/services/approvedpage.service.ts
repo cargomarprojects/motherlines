@@ -34,13 +34,14 @@ export class ApprovedPageService {
         private gs: GlobalService
     ) { }
 
-    public init(params: any) {
+    public ij
+    init(params: any) {
         if (this.initlialized)
             return;
 
         this.id = params.id;
-        this.menuid = params.id;
-        this.param_type = params.param_type;
+        this.menuid = params.menuid;
+        this.param_type = params.menu_param;
         this.record = <ApprovedPageModel>{
             errormessage: '',
             records: [],
