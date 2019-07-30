@@ -44,7 +44,7 @@ export class ApprovedPageEditComponent implements OnInit {
   private title: string;
   private isAdmin: boolean;
   private oprgrp: string = "GENERAL";
-
+  private rdBtnChked: string = "";
 
   private IsLocked: boolean = false;
   private RdbApproved: boolean = false;
@@ -355,7 +355,7 @@ export class ApprovedPageEditComponent implements OnInit {
     // }
 
   }
-  
+
   OnChange(field: string) {
     if (field == 'hbl_frt_status') {
     }
@@ -416,5 +416,7 @@ export class ApprovedPageEditComponent implements OnInit {
     this.record.ca_inv_id = _rec.ca_inv_id;
     this.record.ca_customer_name = _rec.ca_customer_name;
   }
-
+  rdBtnChecked(_select: string) {
+    this.rdBtnChked = _select;
+  }
 }

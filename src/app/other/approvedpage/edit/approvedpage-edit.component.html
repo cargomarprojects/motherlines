@@ -141,7 +141,7 @@
     </div>
     <div class="col-md-6 testbox  px-0 mx-0 border">
       <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <label class="col-4 col-form-label col-form-label-sm">Approved Status</label>
         <div class="col-8">
           <div class="page-body table-responsive">
             <table class="table  table-hover table-sm">
@@ -167,7 +167,7 @@
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
           <div class="form-check">
-            <input type="radio" class="form-check-input" name="rdaprvd" id="rd1" value="opt1" ><span>Approved</span>
+            <input type="radio" class="form-check-input" name="rdAproved"   value="Approved" (click)="rdBtnChecked('APPROVED')"><span>Approved</span>
           </div>
         </div>
       </div>
@@ -175,7 +175,7 @@
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
           <div class="form-check">
-            <input type="radio" class="form-check-input" name="rdaprvd"  id="rd1" value="opt1" ><span>Not Approved</span>
+            <input type="radio" class="form-check-input" name="rdAproved"    value="NotApproved" (click)="rdBtnChecked('NOT-APPROVED')" ><span>Not Approved</span>
           </div>
         </div>
       </div>
