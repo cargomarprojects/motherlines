@@ -14,7 +14,7 @@
 <div class="page-body">
   <div class="row">
     <div class="col-md-10">
-      <div class="row pt-2">
+      <div class="row border">
         <!-- First row -->
         <div class="col-md-12 px-0 mx-0">
           <div class="row">
@@ -45,21 +45,23 @@
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Stage</label>
                 <div class="col-9">
-                  <select [disabled]="record.mbl_cntr_type == 'FCL' || record.mbl_cntr_type == 'LCL'" id="Cmb_Shpmnt_Stage" class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage" #hbl_shipment_stage>
+                  <select [disabled]="record.mbl_cntr_type == 'FCL' || record.mbl_cntr_type == 'LCL'"
+                    id="Cmb_Shpmnt_Stage" class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage"
+                    #hbl_shipment_stage>
                     <option *ngFor="let rec of gs.SHIPMENT_STAGE_OI" [value]="rec.code">{{rec.name}}</option>
                   </select>
                 </div>
               </div>
             </div>
           </div>
-          <hr>
+
         </div>
 
 
         <!-- Second row -->
         <div class="col-md-12 px-0 mx-0">
 
-          <div class="row">
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
 
               <div class="form-group row">
@@ -133,7 +135,7 @@
                 <label class="col-3 col-form-label col-form-label-sm">Address</label>
                 <div class="col-9">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_consignee_add1')"
-                    [(ngModel)]="record.hbl_consignee_add1" maxlength="60" #hbl_consignee_add1/>
+                    [(ngModel)]="record.hbl_consignee_add1" maxlength="60" #hbl_consignee_add1 />
                 </div>
               </div>
               <div class="form-group row">
@@ -266,8 +268,7 @@
             </div>
           </div>
 
-          <hr>
-          <div class="row">
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
 
               <div class="form-group row">
@@ -376,13 +377,13 @@
                 <div class="col-4 input-group input-group-sm">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_weight')"
                     [(ngModel)]="record.hbl_weight" maxlength="15" #hbl_weight />
-                  <button class="btn btn-primary btn-sm" (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
+                  <button class="btn btn-success btn-sm" (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
                 </div>
                 <label class="col-1 col-form-label col-form-label-sm">LBS</label>
                 <div class="col-4 input-group input-group-sm">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_lbs')"
                     [(ngModel)]="record.hbl_lbs" maxlength="15" #hbl_lbs />
-                  <button class="btn btn-primary btn-sm" (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button>
+                  <button class="btn btn-success btn-sm" (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button>
                 </div>
               </div>
               <div class="form-group row">
@@ -390,27 +391,28 @@
                 <div class="col-4 input-group input-group-sm">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_cbm')"
                     [(ngModel)]="record.hbl_cbm" maxlength="15" #hbl_cbm />
-                  <button class="btn btn-primary btn-sm" (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
+                  <button class="btn btn-success btn-sm" (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                 </div>
                 <label class="col-1 col-form-label col-form-label-sm">CFT</label>
                 <div class="col-4 input-group input-group-sm">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_cft')"
-                    [(ngModel)]="record.hbl_cft" maxlength="15" #hbl_cft/>
-                  <button class="btn btn-primary btn-sm" (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button>
+                    [(ngModel)]="record.hbl_cft" maxlength="15" #hbl_cft />
+                  <button class="btn btn-success btn-sm" (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Description</label>
                 <div class="col-9">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_commodity')"
-                    [(ngModel)]="record.hbl_commodity" maxlength="15" #hbl_commodity/>
+                    [(ngModel)]="record.hbl_commodity" maxlength="15" #hbl_commodity />
                 </div>
               </div>
 
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
                 <div class="col-9">
-                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status" (change)="OnChange('hbl_frt_status')" #hbl_frt_status>
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status"
+                    (change)="OnChange('hbl_frt_status')" #hbl_frt_status>
                     <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
                   </select>
                 </div>
@@ -444,8 +446,8 @@
             </div>
 
           </div>
-          <hr>
-          <div class="row">
+
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">AMS.File#</label>
@@ -466,7 +468,7 @@
                 <div class="col-9 input-group input-group-sm">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_isf_no')"
                     [(ngModel)]="record.hbl_isf_no" maxlength="20" />
-                  <button class="btn btn-primary btn-sm" (click)="ISFUpload()"><span>Upload</span> </button>
+                  <button class="btn btn-success btn-sm" (click)="ISFUpload()"><span>Upload</span> </button>
                 </div>
               </div>
               <div class="form-group row">
@@ -499,7 +501,8 @@
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Telex Released</label>
                 <div class="col-9">
-                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_telex_released" (change)="OnChange('hbl_telex_released')">
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_telex_released"
+                    (change)="OnChange('hbl_telex_released')">
                     <option *ngFor="let rec of TelexRlsList" [value]="rec.name">{{rec.name}}</option>
                   </select>
                 </div>
@@ -527,14 +530,14 @@
                 <div class="col-9 input-group input-group-sm">
                   <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_book_slno')"
                     [(ngModel)]="record.hbl_book_slno" maxlength="15" />
-                  <button class="btn btn-primary btn-sm" (click)="ISFUpload()"><span>Booking</span> </button>
+                  <button class="btn btn-success btn-sm" (click)="ISFUpload()"><span>Booking</span> </button>
                 </div>
               </div>
 
             </div>
           </div>
-          <hr>
-          <div class="row">
+
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm"></label>
@@ -586,7 +589,7 @@
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm"></label>
                 <div class="col-9">
-                  <button class="btn btn-primary btn-sm" (click)="OHBLUpload()"><span>Upload OHBL Or Telex RLS
+                  <button class="btn btn-success btn-sm" (click)="OHBLUpload()"><span>Upload OHBL Or Telex RLS
                       Copy</span> </button>
                 </div>
               </div>
@@ -594,9 +597,9 @@
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Paid.Status</label>
                 <div class="col-9">
-                    <select class="form-control form-control-sm" [(ngModel)]="record.hbl_paid_status">
-                        <option *ngFor="let rec of PaidStatusList" [value]="rec.name">{{rec.name}}</option>
-                      </select>
+                  <select class="form-control form-control-sm" [(ngModel)]="record.hbl_paid_status">
+                    <option *ngFor="let rec of PaidStatusList" [value]="rec.name">{{rec.name}}</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group row">
@@ -622,18 +625,10 @@
               </div>
             </div>
           </div>
-          <hr>
-          <div class="row">
-            <div class="col-md-12">
+
+          <div class="row border">
+            <div class="col-md-12  px-0 mx-0">
               <div class="page-body table-responsive">
-
-                <div class="form-group row">
-                  <div class="col-12">
-                    <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
-                    <button class="btn btn-primary btn-sm mr-1" (click)="FindTotalWeight()">Find Total</button>
-                  </div>
-                </div>
-
                 <table class="table  table-hover table-sm">
                   <thead class="page-body-thead">
                     <tr>
@@ -678,32 +673,39 @@
                         <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_weight"
                           (blur)="onBlur('cntr_weight',rec)" />
                       </td>
-                      <td  class="p-0" *ngIf="this.gs.BRANCH_REGION != 'USA'">
+                      <td class="p-0" *ngIf="this.gs.BRANCH_REGION != 'USA'">
                         <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
                           (blur)="onBlur('cntr_tare_weight',rec)" />
                       </td>
-                      <td  class="p-0">
+                      <td class="p-0">
                         <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
                           (blur)="onBlur('cntr_cbm',rec)" />
                       </td>
-                      <td  class="p-0">
+                      <td class="p-0">
                         <app-date [inputdate]="rec.cntr_pick_date" (ValueChanged)="rec.cntr_pick_date=$event">
                         </app-date>
                       </td>
-                      <td  class="p-0">
+                      <td class="p-0">
                         <app-date [inputdate]="rec.cntr_return_date" (ValueChanged)="rec.cntr_return_date=$event">
                         </app-date>
                       </td>
-                      <td align='center'><i class="fa fa-trash  fa-lg pointer" aria-hidden="true" (click)="RemoveRow(rec)" ></i></td>
+                      <td align='center'><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
+                          (click)="RemoveRow(rec)"></i></td>
                     </tr>
                   </tbody>
                 </table>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
+                    <button class="btn btn-success btn-sm mr-1" (click)="FindTotalWeight()">Find Total</button>
+                  </div>
+                </div>
               </div>
             </div>
 
           </div>
-          <hr>
-          <div class="row">
+
+          <div class="row border">
             <div class="col-md-6  testbox  px-0 mx-0">
               <div class="form-group row">
                 <label class="offset-3 col-9 col-form-label col-form-label-sm">Marks & Nos</label>
@@ -942,8 +944,8 @@
             </div>
           </div>
 
-          <hr>
-          <div class="row">
+
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Remarks</label>
@@ -996,8 +998,8 @@
             </div>
           </div>
 
-          <hr>
-          <div class="row">
+
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Devan.Instructns</label>
@@ -1035,17 +1037,19 @@
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">PickUp.Date</label>
                 <div class="col-3">
-                  <app-date [inputdate]="record.hbl_pickup_date" (ValueChanged)="record.hbl_pickup_date=$event"></app-date>
+                  <app-date [inputdate]="record.hbl_pickup_date" (ValueChanged)="record.hbl_pickup_date=$event">
+                  </app-date>
                 </div>
                 <label class="col-3 col-form-label col-form-label-sm">Empty.Return.Date</label>
                 <div class="col-3">
-                  <app-date [inputdate]="record.hbl_empty_ret_date" (ValueChanged)="record.hbl_empty_ret_date=$event"></app-date>
+                  <app-date [inputdate]="record.hbl_empty_ret_date" (ValueChanged)="record.hbl_empty_ret_date=$event">
+                  </app-date>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm"></label>
                 <div class="col-9">
-                  <button class=" col-12 btn btn-primary btn-sm">Update E/R & P/U</button>
+                  <button class=" col-12 btn btn-success btn-sm">Update E/R & P/U</button>
                 </div>
               </div>
             </div>
@@ -1055,45 +1059,46 @@
 
       </div>
     </div>
-    <div class="col-md-2 testbox">
+    <div class="col-md-2 p-1 testbox">
 
-      <div class="col-md-12  px-0 mx-0 py-2">
+      <div class="col-md-12p-2 border">
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Invoice</button>
+          <button class=" col-12 btn btn-info btn-sm">Invoice</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Arrival Notice</button>
+          <button class=" col-12 btn btn-info btn-sm">Arrival Notice</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
 
-          <button class=" col-12 btn btn-primary btn-sm">Pre-Advice</button>
+          <button class=" col-12 btn btn-info btn-sm">Pre-Advice</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Turnover Letter</button>
+          <button class=" col-12 btn btn-info btn-sm">Turnover Letter</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('CARGOPICKUP')">Delivery Order</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CARGOPICKUP')">Delivery Order</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('CUSTOMSHOLD')">US Custom Hold</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CUSTOMSHOLD')">US Custom Hold</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Devan/Instructions</button>
+          <button class=" col-12 btn btn-info btn-sm">Devan/Instructions</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('SHIPMOVEMENT')">House Internal Memo</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('SHIPMOVEMENT')">House Internal
+            Memo</button>
         </div>
 
         <div *ngIf="mode=='EDIT'" class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('RIDERPAGE')">Rider Page</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('RIDERPAGE')">Rider Page</button>
         </div>
 
       </div>
@@ -1105,17 +1110,11 @@
 
 
 <div class="page-footer">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="form-group row">
-        <label class="col-4 col-form-label col-form-label-sm"></label>
-        <div class="col-8">
-          <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
-          <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
-            <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button> -->
-        </div>
-      </div>
-    </div>
+  <div class="row row justify-content-center p-1">
+
+    <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+
+
   </div>
 </div>
 

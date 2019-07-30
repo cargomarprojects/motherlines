@@ -16,13 +16,13 @@
 
   <div class="row">
 
-    <div class="col-md-10">
+    <div class="col-md-10 p-1">
 
-      <div class="row pt-2">
+      <div class="row border">
 
         <!-- First row -->
         <div class="col-md-12 px-0 mx-0">
-          <div class="row">
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
 
               <div class="form-group row">
@@ -58,13 +58,13 @@
               </div>
             </div>
           </div>
-          <hr>
+
         </div>
 
 
         <!-- Second row -->
         <div class="col-md-12 px-0 mx-0">
-          <div class="row">
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
 
               <div class="form-group row">
@@ -290,8 +290,8 @@
             </div>
 
           </div>
-          <hr>
-          <div class="row">
+
+          <div class="row border">
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Cargo Location</label>
@@ -304,7 +304,7 @@
               </div>
               <div class="form-group row">
                 <!-- <label class="col-3 col-form-label col-form-label-sm"></label> -->
-                <button class=" col-3 btn btn-primary btn-sm">Cpoy to All House</button>
+                <button class=" col-3 btn btn-success btn-sm">Cpoy to All House</button>
                 <div class="col-9">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locname')"
                     [(ngModel)]="record.mbl_cargo_locname" maxlength="60" />
@@ -341,7 +341,7 @@
             </div>
             <div class="col-md-6 testbox  px-0 mx-0">
               <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Devanning Location</label>
+                <label class="col-3 col-form-label col-form-label-sm">Devan.Location</label>
                 <div class="col-9">
                   <app-autocomplete2 [controlname]="'DEVAN-LOC'" [tabletype]="'MASTER'" [subtype]="'LOCATION'"
                     [displaycolumn]="'NAME'" [displaydata]="record.mbl_devan_loccode"
@@ -387,22 +387,9 @@
             </div>
           </div>
 
-          <hr>
-
-          <div class="row">
-
-            <div class="col-md-12">
+          <div class="row border">
+            <div class="col-md-12  px-0 mx-0">
               <div class="page-body table-responsive">
-
-                <div class="form-group row">
-                  <div class="col-12">
-                    <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
-                    <button class="btn btn-primary btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
-                    <button class="btn btn-primary btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
-                    <button class="btn btn-primary btn-sm mr-1" (click)="UpdatePuEr()">Update P/U & E/R</button>
-                  </div>
-                </div>
-
                 <table class="table  table-hover table-sm">
                   <thead class="page-body-thead">
                     <tr>
@@ -415,8 +402,8 @@
                       <th *ngIf="this.gs.BRANCH_REGION != 'USA'">TARE-WT</th>
                       <th>CBM</th>
                       <th>PICKUP</th>
-                      <th>EMPTY RETURN</th>
-                      <th>CNTR MOVEMENT</th>
+                      <th>EMPTY.RETURN</th>
+                      <th>MOVEMENT</th>
                     </tr>
                   </thead>
                   <tbody class="page-body-tbody">
@@ -469,23 +456,24 @@
                     </tr>
                   </tbody>
                 </table>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
+                    <button class="btn btn-success btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
+                    <button class="btn btn-success btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
+                    <button class="btn btn-success btn-sm mr-1" (click)="UpdatePuEr()">Update P/U & E/R</button>
+                  </div>
+                </div>
               </div>
             </div>
 
           </div>
 
-          <hr>
-          <div *ngIf="mode=='EDIT'" class="row">
 
-            <div class="col-md-12">
+          <div *ngIf="mode=='EDIT'" class="row border">
+
+            <div class="col-md-12   px-0 mx-0">
               <div class="page-body table-responsive">
-
-                <div class="form-group row">
-                  <div class="col-12">
-                    <button class="btn btn-primary btn-sm mr-1" (click)="AddHouse()">Add House</button>
-                  </div>
-                </div>
-
                 <table class="table  table-hover table-sm">
                   <thead class="page-body-thead">
                     <tr>
@@ -514,6 +502,11 @@
                     </tr>
                   </tbody>
                 </table>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <button class="btn btn-success btn-sm mr-1" (click)="AddHouse()">Add House</button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -523,64 +516,65 @@
 
       </div>
     </div>
-    <div class="col-md-2 testbox">
+    <div class="col-md-2 p-1 testbox">
 
-      <div class="col-md-12  px-0 mx-0 py-2">
+      <div class="col-md-12 p-2 border">
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">House Maintenence</button>
+          <button class=" col-12 btn btn-info btn-sm">House Maintenence</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">POD</button>
+          <button class=" col-12 btn btn-info btn-sm">POD</button>
         </div>
 
         <div class="form-group row">
 
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('DEVAN-INSTRUCTION')">Devanning
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('DEVAN-INSTRUCTION')">Devanning
             Instruction</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('ARAP')">AR & AP</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">AR & AP</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Profit Report</button>
+          <button class=" col-12 btn btn-info btn-sm">Profit Report</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Shipment Label</button>
+          <button class=" col-12 btn btn-info btn-sm">Shipment Label</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('MESSENGER-SLIP')">Messenger Slip</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MESSENGER-SLIP')">Messenger Slip</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
             Request</button>
 
-          <!-- <button class=" col-12 btn btn-primary btn-sm" (click)="showPayReq=true" data-toggle="modal" data-target="#paymentreq">Payment
+          <!-- <button class=" col-12 btn btn-info btn-sm" (click)="showPayReq=true" data-toggle="modal" data-target="#paymentreq">Payment
             Request</button> -->
 
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Attachments</button>
+          <button class=" col-12 btn btn-info btn-sm">Attachments</button>
         </div>
 
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm" (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Internal Memo</button>
+          <button class=" col-12 btn btn-info btn-sm">Internal Memo</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm"  (click)="BtnNavigation('REQUEST-APPROVAL')">Request For Approval</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('REQUEST-APPROVAL')">Request For
+            Approval</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-primary btn-sm">Delivery Order</button>
+          <button class=" col-12 btn btn-info btn-sm">Delivery Order</button>
         </div>
 
       </div>
@@ -593,17 +587,17 @@
 
 
 <div class="page-footer">
-  <div class="row">
-    <div class="col-md-4">
+  <div class="row justify-content-center p-1w">
+    <!-- <div class="col-md-4">
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
-        <div class="col-8">
-          <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+        <div class="col-8"> -->
+          <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
           <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
           <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button> -->
-        </div>
+        <!-- </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
