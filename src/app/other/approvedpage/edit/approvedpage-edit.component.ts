@@ -47,6 +47,8 @@ export class ApprovedPageEditComponent implements OnInit {
 
 
   private IsLocked: boolean = false;
+  private RdbApproved: boolean = false;
+  private RdbNotApproved: boolean = false;
 
   constructor(
     private router: Router,
@@ -76,6 +78,7 @@ export class ApprovedPageEditComponent implements OnInit {
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = '';
     this.LoadCombo();
+    this.GetHblInvList();
   }
 
   LoadCombo() {
@@ -113,7 +116,13 @@ export class ApprovedPageEditComponent implements OnInit {
     this.record.ca_type = "RELEASE WITHOUT OBL";
     this.record.ca_doc_type = this.doc_type;
     this.record.ca_is_ar_issued_bool = false;
-    this.record.ca_req_no_str='';
+    this.record.ca_req_no_str = '';
+    this.invrecords.forEach(Rec => {
+      Rec.ca_inv_selected = false;
+    })
+    this.hblrecords.forEach(Rec => {
+      Rec.ca_hbl_selected = false;
+    })
     // this.csdate_field.Focus();
   }
 
@@ -130,6 +139,20 @@ export class ApprovedPageEditComponent implements OnInit {
         this.record.ca_is_ar_issued_bool = this.record.ca_is_ar_issued == "Y" ? true : false;
         this.record.ca_req_no_str = this.record.ca_req_no.toString().padStart(6, '0');
 
+        this.hblrecords.forEach(Rec => {
+          if (this.record.ca_hbl_no == Rec.ca_hbl_no)
+            Rec.ca_hbl_selected = true;
+          else
+            Rec.ca_hbl_selected = false;
+        })
+
+        this.invrecords.forEach(Rec => {
+          if (this.record.ca_inv_no == Rec.ca_inv_no)
+            Rec.ca_inv_selected = true;
+          else
+            Rec.ca_inv_selected = false;
+        })
+
         //this.hbl_houseno_field.nativeElement.focus();
 
       }, error => {
@@ -137,14 +160,19 @@ export class ApprovedPageEditComponent implements OnInit {
       });
   }
 
-  ChkBLClick() {
-    // if (this.mode == "ADD" && this.record.cs_mbl_no != null) {
-    //   if (this.record.cs_is_bl_bool == true)
-    //     this.record.cs_bl_det = this.record.cs_mbl_no;
-    //   else
-    //     this.record.cs_bl_det = "";
-    // }
+  GetHblInvList() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.mbl_pkid = this.mbl_pkid;
+    this.mainService.GetHblInvList(SearchData)
+      .subscribe(response => {
+        this.hblrecords = <Tbl_Cargo_Approved[]>response.hblrecords;
+        this.invrecords = <Tbl_Cargo_Approved[]>response.invrecords;
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
   }
+
 
   CheckData() {
     /*
@@ -195,38 +223,98 @@ export class ApprovedPageEditComponent implements OnInit {
   }
 
   private SaveParent() {
-    // if (this.oprgrp == "GENERAL")
-    //   this.record.cs_mbl_id = this.pkid;
-    // else
-    //   this.record.cs_mbl_id = this.mbl_pkid;
-    // this.record.cs_mode = this.oprgrp;
-    // this.record.cs_is_drop = this.record.cs_is_drop_bool == true ? "Y" : "N";
-    // this.record.cs_is_pick = this.record.cs_is_pick_bool == true ? "Y" : "N";
-    // this.record.cs_is_receipt = this.record.cs_is_receipt_bool == true ? "Y" : "N";
-    // this.record.cs_is_check = this.record.cs_is_check_bool == true ? "Y" : "N";
-    // this.record.cs_is_bl = this.record.cs_is_bl_bool == true ? "Y" : "N";
-    // this.record.cs_is_oth = this.record.cs_is_oth_bool == true ? "Y" : "N";
+    this.record.ca_ref_id = this.mbl_pkid;
+    this.record.ca_user_id = this.gs.user_pkid;
+    this.record.ca_doc_type = this.doc_type;
+    this.record.ca_mode = this.record.ca_doc_type;
+    this.record.ca_is_ar_issued = this.record.ca_is_ar_issued_bool == true ? "Y" : "N";
   }
+
   private Allvalid(): boolean {
 
     var bRet = true;
     this.errorMessage = "";
 
-    // if (this.gs.isBlank(this.record.cs_date)) {
-    //   bRet = false;
-    //   this.errorMessage = "Date cannot be blank";
-    //   alert(this.errorMessage);
-    //  // this.csdate_field.Focus();
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.ca_type)) {
+      bRet = false;
+      this.errorMessage = "Type Cannot be blank";
+      alert(this.errorMessage);
+      // Cmb_Type.Focus();
+      return bRet;
+    }
 
-    // if (this.record.cs_is_drop_bool == false && this.record.cs_is_pick_bool == false && this.record.cs_is_receipt_bool == false) {
-    //   bRet = false;
-    //   this.errorMessage = "Please Select Drop/ Pick Up/ Get Receipt";
-    //   alert(this.errorMessage);
-    //   this.is_drop_field.nativeElement.focus();
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.ca_ref_no)) {
+      bRet = false;
+      this.errorMessage = "Reference # cannot be blank";
+      alert(this.errorMessage);
+      //Txt_refno.Focus();
+      return bRet;
+    }
+
+    if (this.gs.isBlank(this.record.ca_ref_id)) {
+      bRet = false;
+      this.errorMessage = "Invalid Reference #";
+      alert(this.errorMessage);
+      // Txt_refno.Focus();
+      return bRet;
+    }
+
+    if (this.record.ca_type == "RELEASE WITHOUT OBL" || this.record.ca_type == "RELEASE WITHOUT OBL & PAYMENT") {
+      if (this.gs.isBlank(this.record.ca_hbl_no)) {
+        bRet = false;
+        this.errorMessage = "House # cannot be blank";
+        alert(this.errorMessage);
+        //Txt_House.Focus();
+        return bRet;
+      }
+      if (this.gs.isBlank(this.record.ca_hbl_id)) {
+        bRet = false;
+        this.errorMessage = "Invalid House #";
+        alert(this.errorMessage);
+        // Txt_House.Focus();
+        return bRet;
+      }
+    }
+
+    if (this.record.ca_type == "RELEASE WITHOUT PAYMENT" || this.record.ca_type == "RELEASE WITHOUT OBL & PAYMENT") {
+      if (this.gs.isBlank(this.record.ca_inv_no)) {
+        if (this.record.ca_is_ar_issued_bool == false) {
+          bRet = false;
+          this.errorMessage = "Invoice # cannot be blank";
+          alert(this.errorMessage);
+          //Txt_invoice.Focus();
+          return bRet;
+        }
+      }
+
+      if (this.gs.isBlank(this.record.ca_inv_id)) {
+        if (this.record.ca_is_ar_issued_bool == false) {
+          bRet = false;
+          this.errorMessage = "Invalid Invoice #";
+          alert(this.errorMessage);
+          //Txt_invoice.Focus();
+          return bRet;
+        }
+      }
+    }
+
+    if (!this.gs.isBlank(this.record.ca_hbl_no) && this.gs.isBlank(this.record.ca_hbl_id)) {
+      bRet = false;
+      this.errorMessage = "Invalid House #";
+      alert(this.errorMessage);
+      // Txt_House.Focus();
+      return bRet;
+    }
+
+    if (!this.gs.isBlank(this.record.ca_inv_no) && this.gs.isBlank(this.record.ca_inv_id)) {
+      if (this.record.ca_is_ar_issued_bool == false) {
+        bRet = false;
+        this.errorMessage = "Invalid Invoice #";
+        alert(this.errorMessage);
+        //Txt_invoice.Focus();
+        return bRet;
+      }
+    }
 
     return bRet;
   }
@@ -267,34 +355,7 @@ export class ApprovedPageEditComponent implements OnInit {
     // }
 
   }
-
-  LoadDeliveryAddress() {
-    // if (this.gs.isBlank(this.record.cs_deliver_to_id))
-    //   return;
-
-    // this.errorMessage = '';
-    // var SearchData = this.gs.UserInfo;
-    // SearchData.pkid = this.record.cs_deliver_to_id;
-    // this.mainService.LoadDeliveryAddress(SearchData)
-    //   .subscribe(response => {
-    //     let dRec: Tbl_cargo_slip = <Tbl_cargo_slip>{};
-    //     dRec = <Tbl_cargo_slip>response.record;
-
-    //     if (dRec != null) {
-    //       this.record.cs_deliver_to_add1 = dRec.cs_deliver_to_add1;
-    //       this.record.cs_deliver_to_add2 = dRec.cs_deliver_to_add2;
-    //       this.record.cs_deliver_to_add3 = dRec.cs_deliver_to_add3;
-    //       this.record.cs_deliver_to_attn = dRec.cs_deliver_to_attn;
-    //       this.record.cs_deliver_to_tel = dRec.cs_deliver_to_tel;
-    //     }
-
-    //     this.deliver_to_name_field.focus();
-
-    //   }, error => {
-    //     this.errorMessage = this.gs.getError(error);
-    //   });
-
-  }
+  
   OnChange(field: string) {
     if (field == 'hbl_frt_status') {
     }
@@ -311,10 +372,10 @@ export class ApprovedPageEditComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-      //   case 'cs_remark': {
-      //     this.record.cs_remark = this.record.cs_remark.toUpperCase();
-      //     break;
-      //   }
+      case 'ca_remarks': {
+        this.record.ca_remarks = this.record.ca_remarks.toUpperCase();
+        break;
+      }
 
     }
   }
