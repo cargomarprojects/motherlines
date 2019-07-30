@@ -37,11 +37,15 @@ export interface Tbl_Cargo_Approved {
     ca_is_hide: string;
     ca_hide_status: string;
     ca_req_no: number;
+    ca_req_no_str: string;
     ca_reqno: string;
     ca_is_ar_issued: string;
+    ca_is_ar_issued_bool:boolean;
     rec_files_attached: string;
     ca_cad_pkid: string;
-
+    ca_hbl_selected:boolean;
+    ca_inv_selected:boolean;
+    
 }
 export interface Tbl_Cargo_Approvedd {
     cad_pkid: string;

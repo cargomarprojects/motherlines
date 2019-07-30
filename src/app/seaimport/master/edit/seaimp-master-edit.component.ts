@@ -745,8 +745,9 @@ export class SeaImpMasterEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER_REQUEST_APPROVAL,
           mbl_pkid: this.pkid,
-          mbl_mode: 'SEA IMPORT',
           mbl_refno: this.record.mbl_refno,
+          doc_type: 'SEA IMPORT',
+          req_type: 'REQUEST',
           islocked: false,
           origin: 'seaimp-master-page'
         };

@@ -17,8 +17,10 @@ export class ApprovedPageListComponent implements OnInit {
   private errormessage: string;
   private mbl_pkid: string;
   private mbl_refno: string;
-  private mbl_mode:string; 
-  
+  private mbl_mode: string;
+  private doc_type: string;
+  private req_type: string;
+
   private menuid: string;
   private title: string;
   private isAdmin: boolean;
@@ -26,7 +28,7 @@ export class ApprovedPageListComponent implements OnInit {
   private canEdit: boolean;
   private canSave: boolean;
 
- 
+
   records: Tbl_Cargo_Approved[]
 
   constructor(
@@ -37,12 +39,13 @@ export class ApprovedPageListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-   
+
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.menuid = options.menuid;
     this.mbl_pkid = options.mbl_pkid;
     this.mbl_refno = options.mbl_refno;
-    this.mbl_mode = options.mbl_mode;
+    this.doc_type = options.doc_type;
+    this.req_type = options.req_type;
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
@@ -51,20 +54,20 @@ export class ApprovedPageListComponent implements OnInit {
 
     this.List('SCREEN');
   }
- 
+
 
   List(action: string = '') {
     var SearchData = this.gs.UserInfo;
     SearchData.mbl_pkid = this.mbl_pkid;
-   
+
     this.mainservice.GeneralList(SearchData).subscribe(response => {
       this.records = response.list;
-      
+
     }, error => {
       this.errormessage = this.gs.getError(error)
     });
   }
-  
+
 
   NewRecord() {
     if (!this.canAdd) {
@@ -76,10 +79,10 @@ export class ApprovedPageListComponent implements OnInit {
       menuid: this.menuid,
       pkid: '',
       mode: 'ADD',
-      mbl_pkid : this.mbl_pkid,
-      mbl_refno : this.mbl_refno,
-      mbl_mode:this.mbl_mode
-       
+      mbl_pkid: this.mbl_pkid,
+      mbl_refno: this.mbl_refno,
+      doc_type: this.doc_type,
+      req_type: this.req_type
     };
     this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
 
@@ -93,11 +96,12 @@ export class ApprovedPageListComponent implements OnInit {
 
     let parameter = {
       menuid: this.menuid,
-      pkid: _record.ca_cad_pkid,
+      pkid: _record.ca_pkid,
       mode: 'EDIT',
-      mbl_pkid : this.mbl_pkid,
-      mbl_refno : this.mbl_refno,
-      mbl_mode:this.mbl_mode
+      mbl_pkid: this.mbl_pkid,
+      mbl_refno: this.mbl_refno,
+      doc_type: this.doc_type,
+      req_type: this.req_type
     };
     this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
   }
@@ -106,7 +110,7 @@ export class ApprovedPageListComponent implements OnInit {
     this.location.back();
   }
 
-  AttachRow(_rec:Tbl_Cargo_Approved){
+  AttachRow(_rec: Tbl_Cargo_Approved) {
 
   }
 

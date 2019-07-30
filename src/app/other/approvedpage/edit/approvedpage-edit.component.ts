@@ -6,9 +6,10 @@ import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomple
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 import { ApprovedPageService } from '../../../other/services/approvedpage.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_tbl_cargo_approved , Tbl_Cargo_Approved } from '../../../other/models/tbl_cargo_approved';
+import { vm_tbl_cargo_approved, Tbl_Cargo_Approved } from '../../../other/models/tbl_cargo_approved';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { Table_Cargo_Payrequest } from 'src/app/businessmodule/models/table_cargo_payrequest';
 //import { DateComponent } from '../../../shared/Date/date.component';
 
 @Component({
@@ -18,16 +19,22 @@ import { strictEqual } from 'assert';
 export class ApprovedPageEditComponent implements OnInit {
 
   @ViewChild('is_drop') is_drop_field: ElementRef;
- // @ViewChild(' csdate') csdate_field: DateComponent;
+  // @ViewChild(' csdate') csdate_field: DateComponent;
   @ViewChild('to_name') to_name_field: InputBoxComponent;
   @ViewChild('deliver_to_name') deliver_to_name_field: InputBoxComponent;
-  
+
   // @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
   //@ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
 
   record: Tbl_Cargo_Approved = <Tbl_Cargo_Approved>{};
+  hblrecords: Tbl_Cargo_Approved[] = [];
+  invrecords: Tbl_Cargo_Approved[] = [];
 
   private mbl_pkid: string;
+  private mbl_refno: string;
+  private doc_type: string;
+  private req_type: string;
+
   private pkid: string;
   private menuid: string;
   private mode: string;
@@ -37,7 +44,7 @@ export class ApprovedPageEditComponent implements OnInit {
   private title: string;
   private isAdmin: boolean;
   private oprgrp: string = "GENERAL";
-  private refno: string = "";
+
 
   private IsLocked: boolean = false;
 
@@ -55,8 +62,9 @@ export class ApprovedPageEditComponent implements OnInit {
     this.menuid = options.menuid;
     this.pkid = options.pkid;
     this.mbl_pkid = options.mbl_pkid;
-    this.oprgrp = options.mbl_mode;
-    this.refno = options.mbl_refno;
+    this.mbl_refno = options.mbl_refno;
+    this.doc_type = options.doc_type;
+    this.req_type = options.req_type;
     this.mode = options.mode;
 
     this.initPage();
@@ -92,54 +100,21 @@ export class ApprovedPageEditComponent implements OnInit {
   }
 
   init() {
-    var curr_date = new Date();
-    var curr_hh = curr_date.getHours();
 
-    // this.record.cs_refno = this.refno;
-    // this.record.cs_mbl_id = this.mbl_pkid;
-    // this.record.cs_date = this.gs.defaultValues.today;
-    // if (curr_hh >= 12)
-    //   this.record.cs_ampm = "PM";
-    // else
-    //   this.record.cs_ampm = "AM";
-    // this.record.cs_to_id = '';
-    // this.record.cs_to_code = '';
-    // this.record.cs_to_name = '';
-    // this.record.cs_to_tel = '';
-    // this.record.cs_to_fax = '';
-    // this.record.cs_from_id = '';
-    // this.record.cs_from_name = '';
-    // this.record.cs_is_drop = 'N';
-    // this.record.cs_is_pick = 'N';
-    // this.record.cs_is_receipt = 'N';
-    // this.record.cs_is_check = 'N';
-    // this.record.cs_check_det = '';
-    // this.record.cs_is_bl = 'N';
-    // this.record.cs_bl_det = '';
-    // this.record.cs_is_oth = 'N';
-    // this.record.cs_oth_det = '';
-    // this.record.cs_deliver_to_id = '';
-    // this.record.cs_deliver_to_code = '';
-    // this.record.cs_deliver_to_name = '';
-    // this.record.cs_deliver_to_add1 = '';
-    // this.record.cs_deliver_to_add2 = '';
-    // this.record.cs_deliver_to_add3 = '';
-    // this.record.cs_deliver_to_tel = '';
-    // this.record.cs_deliver_to_attn = '';
-    // this.record.cs_remark = '';
-
-    // this.record.rec_created_by = this.gs.user_code;
-    // this.record.rec_created_date = this.gs.defaultValues.today;
-
-    // this.record.cs_is_drop_bool = false;
-    // this.record.cs_is_pick_bool = false;
-    // this.record.cs_is_receipt_bool = false;
-    // this.record.cs_is_check_bool = false;
-    // this.record.cs_is_bl_bool = false;
-    // this.record.cs_is_oth_bool = false;
-
-   // this.csdate_field.Focus();
-
+    this.record.ca_pkid = this.pkid;
+    this.record.ca_date = this.gs.defaultValues.today;
+    this.record.ca_user_name = this.gs.user_name;
+    this.record.rec_created_date = this.gs.defaultValues.today;
+    this.record.rec_created_by = this.gs.user_code;
+    this.record.ca_is_approved = "N";
+    this.record.ca_is_ar_issued = "N";
+    this.record.ca_ref_id = this.mbl_pkid;
+    this.record.ca_ref_no = this.mbl_refno;
+    this.record.ca_type = "RELEASE WITHOUT OBL";
+    this.record.ca_doc_type = this.doc_type;
+    this.record.ca_is_ar_issued_bool = false;
+    this.record.ca_req_no_str='';
+    // this.csdate_field.Focus();
   }
 
   GetRecord() {
@@ -147,19 +122,13 @@ export class ApprovedPageEditComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
-    SearchData.MBL_ID = this.mbl_pkid;
-    SearchData.DEFAULT_MESSENGER_ID = this.gs.MESSENGER_PKID;
 
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_Cargo_Approved>response.record;
         this.mode = 'EDIT';
-        // this.record.cs_is_drop_bool = this.record.cs_is_drop == "Y" ? true : false;
-        // this.record.cs_is_pick_bool = this.record.cs_is_pick == "Y" ? true : false;
-        // this.record.cs_is_receipt_bool = this.record.cs_is_receipt == "Y" ? true : false;
-        // this.record.cs_is_check_bool = this.record.cs_is_check == "Y" ? true : false;
-        // this.record.cs_is_bl_bool = this.record.cs_is_bl == "Y" ? true : false;
-        // this.record.cs_is_oth_bool = this.record.cs_is_oth == "Y" ? true : false;
+        this.record.ca_is_ar_issued_bool = this.record.ca_is_ar_issued == "Y" ? true : false;
+        this.record.ca_req_no_str = this.record.ca_req_no.toString().padStart(6, '0');
 
         //this.hbl_houseno_field.nativeElement.focus();
 
@@ -209,13 +178,16 @@ export class ApprovedPageEditComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-        //   if (this.mode == "ADD" && response.code != '')
-        //     this.record.cs_refno = response.code;
+          if (this.mode == "ADD" && response.code != '') {
+            this.record.ca_req_no = response.code;
+            this.record.ca_req_no_str = this.record.ca_req_no.toString().padStart(6, '0');
+          }
+
           this.mode = 'EDIT';
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
         }
-      //  this.csdate_field.Focus();
+        //  this.csdate_field.Focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
@@ -339,10 +311,10 @@ export class ApprovedPageEditComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-    //   case 'cs_remark': {
-    //     this.record.cs_remark = this.record.cs_remark.toUpperCase();
-    //     break;
-    //   }
+      //   case 'cs_remark': {
+      //     this.record.cs_remark = this.record.cs_remark.toUpperCase();
+      //     break;
+      //   }
 
     }
   }
@@ -361,6 +333,27 @@ export class ApprovedPageEditComponent implements OnInit {
       //   }
 
     }
+  }
+
+  SelectHouse(_rec: Tbl_Cargo_Approved) {
+    this.hblrecords.forEach(Rec => {
+      if (Rec.ca_hbl_no != _rec.ca_hbl_no)
+        Rec.ca_hbl_selected = false;
+    })
+    this.record.ca_hbl_no = _rec.ca_hbl_no;
+    this.record.ca_hbl_id = _rec.ca_hbl_id;
+    this.record.ca_consignee_id = _rec.ca_consignee_id;
+    this.record.ca_consignee_name = _rec.ca_consignee_name;
+  }
+
+  SelectInvoice(_rec: Tbl_Cargo_Approved) {
+    this.invrecords.forEach(Rec => {
+      if (Rec.ca_inv_no != _rec.ca_inv_no)
+        Rec.ca_inv_selected = false;
+    })
+    this.record.ca_inv_no = _rec.ca_inv_no;
+    this.record.ca_inv_id = _rec.ca_inv_id;
+    this.record.ca_customer_name = _rec.ca_customer_name;
   }
 
 }

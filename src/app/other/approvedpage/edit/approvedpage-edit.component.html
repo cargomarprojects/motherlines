@@ -1,36 +1,146 @@
 <div class="page-header">
-        <div class="col">
-          <label>Messenger Slip ({{mode}})</label>
-          <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+  <div class="col">
+    <label>Request for Approval ({{mode}})</label>
+    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+  </div>
+</div>
+
+<div *ngIf="errorMessage">
+  <div class="alert alert-primary">
+    {{errorMessage}}
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row">
+    <div class="col-md-6 testbox  px-0 mx-0">
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Req#</label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.ca_req_no_str" [disabled]="true" maxlength="60" #req_no_str></InputBox>
         </div>
       </div>
-      
-      <div *ngIf="errorMessage">
-        <div class="alert alert-primary">
-          {{errorMessage}}
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Type</label>
+        <div class="col-8">
+          <select class="form-control form-control-sm" [(ngModel)]="record.ca_type">
+            <option [value]="'RELEASE WITHOUT OBL'">RELEASE WITHOUT OBL</option>
+            <option [value]="'RELEASE WITHOUT PAYMENT'">RELEASE WITHOUT PAYMENT</option>
+            <option [value]="'RELEASE WITHOUT OBL & PAYMENT'">RELEASE WITHOUT OBL & PAYMENT</option>
+          </select>
         </div>
       </div>
-      
-      <div class="page-body">
-        <div class="row">
-          <div class="col-md-4 testbox  px-0 mx-0">
-            <div class="form-group row">
-              <label class="col-4 col-form-label col-form-label-sm">Req#</label>
-              <div class="col-8">
-                <InputBox [(inputModel)]="record.ca_req_no" [disabled]="true" maxlength="25" #req_no></InputBox>
-              </div>
-            </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Ref#</label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.ca_ref_no" maxlength="50" #ref_no></InputBox>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">House#</label>
+        <div class="col-8">
+          <div class="page-body table-responsive">
+            <table class="table  table-hover table-sm">
+              <thead class="page-body-thead">
+                <tr>
+                  <th>HOUSE-NO</th>
+                  <th>CONSIGNEE</th>
+                </tr>
+              </thead>
+              <tbody class="page-body-tbody">
+                <tr *ngFor="let rec of hblrecords">
+                  <td (click)="SelectHouse(rec)">
+                    <div class="form-check"> <input type="checkbox" class="form-check-input"
+                        [(ngModel)]="rec.ca_hbl_selected"><span>{{rec.ca_hbl_no}}</span></div>
+                  </td>
+                  <td>{{rec.ca_consignee_name}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="col-md-4 testbox  px-0 mx-0">
-            <div class="form-group row">
-              <label class="col-4 col-form-label col-form-label-sm">Type</label>
-              <div class="col-8">
-                <select class="form-control form-control-sm" [(ngModel)]="record.ca_type">
-                  <option [value]="'AM'">AM</option>
-                  <option [value]="'PM'">PM</option>
-                </select>
-              </div>
-            </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Consignee</label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.ca_consignee_name" maxlength="60" #consignee_name></InputBox>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Invoice#</label>
+        <div class="col-8">
+          <div class="page-body table-responsive">
+            <table class="table  table-hover table-sm">
+              <thead class="page-body-thead">
+                <tr>
+                  <th>INVOICE-NO</th>
+                  <th>CUSTOMER</th>
+                  <th class='text-center'>AMT</th>
+                </tr>
+              </thead>
+              <tbody class="page-body-tbody">
+                <tr *ngFor="let rec of records">
+                  <td (click)="SelectInvoice(rec)">
+                    <div class="form-check"> <input type="checkbox" class="form-check-input"
+                        [(ngModel)]="rec.ca_inv_selected"><span>{{rec.ca_inv_no}}</span></div>
+                  </td>
+                  <td>{{rec.ca_customer_name}}</td>
+                  <td class='text-center'>{{rec.ca_inv_amt | number : '1.2-2'}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="record.ca_is_ar_issued_bool"><span>A/R has not been issued
+              yet.</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Remarks</label>
+        <div class="col-8">
+          <textarea rows="3" class="form-control form-control-sm" [(ngModel)]="record.ca_remarks"
+            (blur)="onBlur('ca_remarks','')" required maxlength="100"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">OBL Received Date</label>
+        <div class="col-8">
+          <app-date [inputdate]="record.ca_obl_recvd_date" (ValueChanged)="record.ca_obl_recvd_date=$event"
+            #obl_recvd_date>
+          </app-date>
+        </div>
+      </div>
+
+      <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Payment Received Date</label>
+          <div class="col-8">
+            <app-date [inputdate]="record.ca_payment_recvd_date" (ValueChanged)="record.ca_payment_recvd_date=$event"
+              #payment_recvd_date>
+            </app-date>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+            <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
+            <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
