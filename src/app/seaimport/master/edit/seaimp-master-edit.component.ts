@@ -754,6 +754,29 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
         break;
       }
+      case 'INERNALMEMO': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_INTERNAL_MEMO,
+          refno: "REF : " + this.record.mbl_refno ,
+          pkid: this.pkid,
+          origin: 'seaimp-master-page',
+          oprgrp: 'SEA IMPORT',
+          parentType: 'SEAIMP-CNTR',
+          paramType: 'CNTR-MOVE-STATUS',
+          hideTracking: 'Y'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+        break;
+      }
+      case 'CARGOPICKUP': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_DELIVERY_ORDER,
+          pkid: this.pkid,
+          origin: 'seaimp-master-page',
+        };
+        this.gs.Naviagete('Silver.SeaImport/CargoPickupPage', JSON.stringify(prm));
+        break;
+      }
     }
   }
 
@@ -774,5 +797,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
     }
   }
-
+  RemoveRow(_rec: Tbl_cargo_imp_container) {
+    this.records.splice(this.records.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
+  }
 }

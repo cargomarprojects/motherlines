@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
 import { InputBoxComponent } from '../../shared/input/inputbox.component';
-import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
+//import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 import { DevanService } from '../services/devan.service';
 import { User_Menu } from '../../core/models/menum';
 import { Tbl_Cargo_Imp_Devan_Instruction, vm_Tbl_Cargo_Imp_Devan_Instruction } from '../models/tbl_cargo_Imp_devan_instruction';
@@ -16,7 +16,7 @@ import { strictEqual } from 'assert';
 })
 export class DevanComponent implements OnInit {
 
-    @ViewChild('request_to_code') request_to_code_ctrl: AutoComplete2Component;
+   // @ViewChild('request_to_code') request_to_code_ctrl: AutoComplete2Component;
     @ViewChild('request_to_name') request_to_name_ctrl: InputBoxComponent;
     @ViewChild('cargo_loc_name') cargo_loc_name_ctrl: InputBoxComponent;
     record: Tbl_Cargo_Imp_Devan_Instruction = <Tbl_Cargo_Imp_Devan_Instruction>{};
@@ -100,7 +100,7 @@ export class DevanComponent implements OnInit {
         this.record.di_cargo_loc_addr4 = '';
         this.record.di_is_devan_sent = false;
         this.record.di_devan_date = '';
-        this.request_to_code_ctrl.Focus();
+       // this.request_to_code_ctrl.Focus();
 
     }
 
@@ -112,7 +112,7 @@ export class DevanComponent implements OnInit {
             .subscribe(response => {
                 this.mode = response.mode;
                 this.record = <Tbl_Cargo_Imp_Devan_Instruction>response.record;
-                this.request_to_code_ctrl.Focus();
+               // this.request_to_code_ctrl.Focus();
                 // if (this.mode == 'ADD')
                 //     this.actionHandler();
                 // else {
@@ -178,7 +178,7 @@ export class DevanComponent implements OnInit {
           bRet = false;
           this.errorMessage = "Request To cannot be empty";
           alert(this.errorMessage);
-          this.request_to_code_ctrl.Focus();
+        //  this.request_to_code_ctrl.Focus();
           return bRet;
         }
         

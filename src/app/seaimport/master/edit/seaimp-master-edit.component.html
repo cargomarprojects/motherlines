@@ -304,7 +304,7 @@
               </div>
               <div class="form-group row">
                 <!-- <label class="col-3 col-form-label col-form-label-sm"></label> -->
-                <button class=" col-3 btn btn-success btn-sm">Cpoy to All House</button>
+                <button class=" col-3 btn btn-success btn-sm">Copy to All House</button>
                 <div class="col-9">
                   <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locname')"
                     [(ngModel)]="record.mbl_cargo_locname" maxlength="60" />
@@ -403,63 +403,64 @@
                       <th>CBM</th>
                       <th>PICKUP</th>
                       <th>EMPTY.RETURN</th>
-                      <th>MOVEMENT</th>
+                      <th class='text-center'>MOVEMENT</th>
+                      <th class='text-center'>REMOVE</th>
                     </tr>
                   </thead>
                   <tbody class="page-body-tbody">
                     <tr *ngFor="let rec of records">
-                      <td>
+                      <td class="p-0">
                         <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_no" maxlength="11"
                           (blur)="onBlur('cntr_no',rec)" />
                       </td>
-                      <td>
+                      <td class="p-0">
                         <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'"
                           [tabletype]="'PARAM'" [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid"
                           [displaydata]="rec.cntr_type" (ValueChanged)="LovSelected($event)">
                         </app-autocomplete2>
                       </td>
-                      <td>
+                      <td class="p-0">
                         <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_sealno"
                           maxlength="25" (blur)="onBlur('cntr_sealno',rec)" />
                       </td>
-                      <td>
+                      <td class="p-0">
                         <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_pieces"
                           (blur)="onBlur('cntr_pieces',rec)" />
                       </td>
-                      <td>
+                      <td class="p-0">
                         <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_packages_uom"
                           maxlength="4" (blur)="onBlur('cntr_packages_uom',rec)" />
                       </td>
-                      <td>
+                      <td class="p-0">
                         <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_weight"
                           (blur)="onBlur('cntr_weight',rec)" />
                       </td>
-                      <td *ngIf="this.gs.BRANCH_REGION != 'USA'">
+                      <td class="p-0" *ngIf="this.gs.BRANCH_REGION != 'USA'">
                         <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_tare_weight"
                           (blur)="onBlur('cntr_tare_weight',rec)" />
                       </td>
-                      <td>
+                      <td class="p-0">
                         <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
                           (blur)="onBlur('cntr_cbm',rec)" />
                       </td>
-                      <td>
+                      <td class="p-0">
                         <app-date [inputdate]="rec.cntr_pick_date" (ValueChanged)="rec.cntr_pick_date=$event">
                         </app-date>
                       </td>
-                      <td>
+                      <td class="p-0">
                         <app-date [inputdate]="rec.cntr_return_date" (ValueChanged)="rec.cntr_return_date=$event">
                         </app-date>
                       </td>
-                      <td><i class="fa fa-truck  fa-lg pointer" aria-hidden="true" (click)="ShowCntrMovement(rec)"></i>
+                      <td class="p-0 text-center"><i class="fa fa-truck  fa-lg pointer" aria-hidden="true" (click)="ShowCntrMovement(rec)"></i>
                       </td>
-
+                      <td class="p-0 text-center"><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
+                        (click)="RemoveRow(rec)"></i></td>
                     </tr>
                   </tbody>
                 </table>
                 <div class="form-group row">
                   <div class="col-12">
                     <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
-                    <button class="btn btn-success btn-sm mr-1" (click)="RemoveRow()">Remove Cntr</button>
                     <button class="btn btn-success btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
                     <button class="btn btn-success btn-sm mr-1" (click)="UpdatePuEr()">Update P/U & E/R</button>
                   </div>
@@ -516,13 +517,13 @@
 
       </div>
     </div>
-    <div class="col-md-2 p-1 testbox">
+    <div *ngIf="mode=='EDIT'" class="col-md-2 p-1 testbox">
 
       <div class="col-md-12 p-2 border">
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <button class=" col-12 btn btn-info btn-sm">House Maintenence</button>
-        </div>
+        </div> -->
 
         <div class="form-group row">
           <button class=" col-12 btn btn-info btn-sm">POD</button>
@@ -567,14 +568,14 @@
           <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Internal Memo</button>
+          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
         </div>
         <div class="form-group row">
           <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('REQUEST-APPROVAL')">Request For
             Approval</button>
         </div>
         <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Delivery Order</button>
+          <button class=" col-12 btn btn-info btn-sm"  (click)="BtnNavigation('CARGOPICKUP')">Delivery Order</button>
         </div>
 
       </div>
@@ -587,7 +588,7 @@
 
 
 <div class="page-footer">
-  <div class="row justify-content-center p-1w">
+  <div class="row justify-content-center p-1">
     <!-- <div class="col-md-4">
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
