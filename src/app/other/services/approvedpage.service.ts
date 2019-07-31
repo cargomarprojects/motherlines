@@ -121,6 +121,10 @@ export class ApprovedPageService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/ApprovedPage/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    Savedet(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/ApprovedPage/Savedet', SearchData, this.gs.headerparam2('authorized'));
+    }
+
     GetHblInvList(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/ApprovedPage/GetHblInvList', SearchData, this.gs.headerparam2('authorized'));
     }

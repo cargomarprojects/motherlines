@@ -138,7 +138,8 @@
       </div>
 
     </div>
-    <div class="col-md-6 testbox  px-0 mx-0 border">
+
+    <div *ngIf="req_type=='APPROVED'" class="col-md-6 testbox  px-0 mx-0 border">
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Approved Status</label>
         <div class="col-8">
@@ -152,10 +153,10 @@
                 </tr>
               </thead>
               <tbody class="page-body-tbody">
-                <tr *ngFor="let rec of hblrecords">
-                  <td>{{rec.ca_hbl_no}}</td>
-                  <td>{{rec.ca_consignee_name}}</td>
-                  <td>{{rec.ca_consignee_name}}</td>
+                <tr *ngFor="let rec of detrecords">
+                  <td>{{rec.cad_approvedby_name}}</td>
+                  <td>{{rec.cad_approved_date | date : gs.date_display_fmt_with_time }}</td>
+                  <td>{{rec.cad_is_approved}}</td>
                 </tr>
               </tbody>
             </table>
@@ -174,7 +175,7 @@
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
           <div class="form-check">
-            <input type="radio" class="form-check-input" name="rdAproved"    value="NotApproved" (click)="rdBtnChecked('NOT-APPROVED')" ><span>Not Approved</span>
+            <input type="radio" class="form-check-input" name="rdAproved"    value="NotApproved" (click)="rdBtnChecked('NOT APPROVED')" ><span>Not Approved</span>
           </div>
         </div>
       </div>

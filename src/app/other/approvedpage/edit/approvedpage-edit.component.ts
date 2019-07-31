@@ -6,7 +6,7 @@ import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomple
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 import { ApprovedPageService } from '../../../other/services/approvedpage.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_tbl_cargo_approved, Tbl_Cargo_Approved } from '../../../other/models/tbl_cargo_approved';
+import { vm_tbl_cargo_approved, Tbl_Cargo_Approved, Tbl_Cargo_Approvedd } from '../../../other/models/tbl_cargo_approved';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Table_Cargo_Payrequest } from 'src/app/businessmodule/models/table_cargo_payrequest';
@@ -27,8 +27,11 @@ export class ApprovedPageEditComponent implements OnInit {
   //@ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
 
   record: Tbl_Cargo_Approved = <Tbl_Cargo_Approved>{};
+  detrecord: Tbl_Cargo_Approvedd = <Tbl_Cargo_Approvedd>{};
   hblrecords: Tbl_Cargo_Approved[] = [];
   invrecords: Tbl_Cargo_Approved[] = [];
+  detrecords: Tbl_Cargo_Approvedd[] = [];
+
 
   private mbl_pkid: string;
   private mbl_refno: string;
@@ -44,7 +47,7 @@ export class ApprovedPageEditComponent implements OnInit {
   private title: string;
   private isAdmin: boolean;
   private oprgrp: string = "GENERAL";
-  private rdBtnChked: string = "";
+  private rdBtnChkedValue: string = "";
 
   private IsLocked: boolean = false;
   private RdbApproved: boolean = false;
@@ -135,6 +138,7 @@ export class ApprovedPageEditComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_Cargo_Approved>response.record;
+        this.detrecords = <Tbl_Cargo_Approvedd[]>response.detrecords;
         this.mode = 'EDIT';
         this.record.ca_is_ar_issued_bool = this.record.ca_is_ar_issued == "Y" ? true : false;
         this.record.ca_req_no_str = this.record.ca_req_no.toString().padStart(6, '0');
@@ -152,6 +156,11 @@ export class ApprovedPageEditComponent implements OnInit {
           else
             Rec.ca_inv_selected = false;
         })
+
+        // if (REQ_TYPE == "APPROVED")
+        // Dispatcher.BeginInvoke(() => { RB_Approved.Focus(); });
+        // else
+        // Dispatcher.BeginInvoke(() => { Cmb_Type.Focus(); });
 
         //this.hbl_houseno_field.nativeElement.focus();
 
@@ -417,29 +426,30 @@ export class ApprovedPageEditComponent implements OnInit {
     this.record.ca_customer_name = _rec.ca_customer_name;
   }
   rdBtnChecked(_select: string) {
-    this.rdBtnChked = _select;
+    this.rdBtnChkedValue = _select;
   }
 
   SaveApproved() {
+    this.SaveParentDet();
 
+    if (!this.AllvalidDet())
+      return;
+    
     const saveRecord = <vm_tbl_cargo_approved>{};
-    saveRecord.record = this.record;
-    saveRecord.mode = this.mode;
+    saveRecord.detrecord = this.detrecord;
+    saveRecord.mode = 'ADD';
     saveRecord.userinfo = this.gs.UserInfo;
 
-    this.mainService.Save(saveRecord)
+    this.mainService.Savedet(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
           this.errorMessage = response.error;
           alert(this.errorMessage);
         }
         else {
-          if (this.mode == "ADD" && response.code != '') {
-            this.record.ca_req_no = response.code;
-            this.record.ca_req_no_str = this.record.ca_req_no.toString().padStart(6, '0');
-          }
-
-          this.mode = 'EDIT';
+          if (this.detrecords == null || this.detrecords == undefined)
+            this.detrecords = <Tbl_Cargo_Approvedd[]>[];
+          this.detrecords.push(response.record);
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
         }
@@ -448,5 +458,45 @@ export class ApprovedPageEditComponent implements OnInit {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
       });
+  }
+
+  private SaveParentDet() {
+    this.detrecord = <Tbl_Cargo_Approvedd>{};
+    this.detrecord.cad_pkid = this.gs.getGuid();
+    this.detrecord.cad_parent_id = this.pkid;
+    this.detrecord.cad_approved_date = this.gs.defaultValues.today;
+    this.detrecord.cad_approvedby_id = this.gs.user_pkid;
+    this.detrecord.cad_approvedby_name = this.gs.user_name;
+    this.detrecord.cad_is_approved = this.rdBtnChkedValue;
+  }
+  private AllvalidDet(): boolean {
+
+    var bRet = true;
+    this.errorMessage = "";
+
+    if (this.gs.isBlank(this.detrecord.cad_parent_id)||this.gs.isBlank(this.detrecord.cad_approvedby_id)) {
+      bRet = false;
+      this.errorMessage = "Invalid ID.";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+    if (this.gs.isBlank(this.rdBtnChkedValue)) {
+      bRet = false;
+      this.errorMessage = "Please Select Approved or Not Approved.";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+    this.detrecords.forEach(Rec => {
+      if (Rec.cad_approvedby_id == this.gs.user_pkid && Rec.cad_is_approved == this.rdBtnChkedValue) {
+        bRet = false;
+        this.errorMessage = "Duplicate Record";
+        alert(this.errorMessage); 
+        // RB_Approved.Focus();
+        return bRet;
+      }
+    })
+    return bRet;
   }
 }

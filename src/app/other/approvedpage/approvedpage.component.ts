@@ -88,10 +88,10 @@ export class ApprovedPageComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: _record.ca_pkid,
       mode: 'EDIT',
-      mbl_pkid: '',
-      mbl_refno: '',
-      mbl_mode: 'GENERAL',
-      origin: 'approvedpage',
+      mbl_pkid: _record.ca_ref_id,
+      mbl_refno: _record.ca_ref_no,
+      doc_type: _record.ca_doc_type,
+      req_type: this.mainservice.param_type
     };
     this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
   }

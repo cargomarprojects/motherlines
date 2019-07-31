@@ -1,16 +1,6 @@
 import { PageQuery } from '../../shared/models/pageQuery';
 
-// export interface SearchQuery {
-//     searchString : string ;
-//     fromDate: string;
-//     toDate: string;
-//     sortParameter: string;
-//     isHidden: boolean;
-//     caType: string;
-//     userName: string;
-//     userId: string;
-// }
-
+ 
 export interface Tbl_Cargo_Approved {
 
     ca_pkid: string;
@@ -66,6 +56,7 @@ export interface Tbl_Cargo_Approvedd {
 export interface vm_tbl_cargo_approved {
     mode: string;
     record: Tbl_Cargo_Approved;
+    detrecord: Tbl_Cargo_Approvedd;
     userinfo: any,
     filter: any;
 }
