@@ -34,18 +34,18 @@ export class ApprovedPageService {
         private gs: GlobalService
     ) { }
 
-    public ij
-    init(params: any) {
+
+    public init(params: any) {
         if (this.initlialized)
             return;
 
         this.id = params.id;
         this.menuid = params.menuid;
         this.param_type = params.menu_param;
-        this.record = <ApprovedPageModel>{
+        this.record = <ApprovedPageModel><unknown>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.defaultValues.lastmonthdate, todate: this.gs.defaultValues.today, mblid: '' },
+            searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.defaultValues.lastmonthdate, toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userId: '' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -71,15 +71,20 @@ export class ApprovedPageService {
         var SearchData = this.gs.UserInfo;
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
-        SearchData.MBLID = '';
-        SearchData.OPERATION_MODE = 'GENERAL';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
-        SearchData.SDATE = this.record.searchQuery.fromdate;
-        SearchData.EDATE = this.record.searchQuery.todate;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
+        SearchData.STYPE = this.record.searchQuery.caType;
+        SearchData.CODE = this.record.searchQuery.searchString;
+        SearchData.REQ_TYPE = this.param_type;
+        SearchData.ISADMIN = this.isAdmin ? 'Y' : 'N';
+        SearchData.IS_HIDDEN = this.record.searchQuery.isHidden ? 'Y' : 'N';
+        SearchData.SORT = this.record.searchQuery.sortParameter;
+        SearchData.SDATE = this.record.searchQuery.fromDate;
+        SearchData.EDATE = this.record.searchQuery.toDate;
+        SearchData.REQUEST_ID = this.record.searchQuery.userId;
+        SearchData.MBLID = '';
 
         if (type == 'PAGE') {
             SearchData.action = this.record.pageQuery.action;

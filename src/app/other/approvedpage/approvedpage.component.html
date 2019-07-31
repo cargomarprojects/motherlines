@@ -1,7 +1,6 @@
 <div class="page-header">
     <div class="col">
         <label class="mr-1">{{mainservice.title}}</label>
-        <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         <i *ngIf="loading" class="fa fa-spinner"></i>
     </div>
@@ -40,7 +39,7 @@
             </tr>
         </thead>
         <tbody class="page-body-tbody">
-            <tr *ngFor="let rec of records">
+            <tr *ngFor="let rec of records$ | async">
                 <td (click)="edit(rec)">{{rec.ca_reqno}}</td>
                 <td>{{rec.ca_user_name}}</td>
                 <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT}}</td>

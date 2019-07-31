@@ -1,8 +1,15 @@
 import { PageQuery } from '../../shared/models/pageQuery';
 
-export interface SearchQuery {
-    searchString: string;
-}
+// export interface SearchQuery {
+//     searchString : string ;
+//     fromDate: string;
+//     toDate: string;
+//     sortParameter: string;
+//     isHidden: boolean;
+//     caType: string;
+//     userName: string;
+//     userId: string;
+// }
 
 export interface Tbl_Cargo_Approved {
 
@@ -40,12 +47,12 @@ export interface Tbl_Cargo_Approved {
     ca_req_no_str: string;
     ca_reqno: string;
     ca_is_ar_issued: string;
-    ca_is_ar_issued_bool:boolean;
+    ca_is_ar_issued_bool: boolean;
     rec_files_attached: string;
     ca_cad_pkid: string;
-    ca_hbl_selected:boolean;
-    ca_inv_selected:boolean;
-    
+    ca_hbl_selected: boolean;
+    ca_inv_selected: boolean;
+
 }
 export interface Tbl_Cargo_Approvedd {
     cad_pkid: string;
@@ -65,9 +72,13 @@ export interface vm_tbl_cargo_approved {
 
 export interface SearchQuery {
     searchString: string;
-    fromdate: string;
-    todate: string;
-    mblid: string;
+    fromDate: string;
+    toDate: string;
+    sortParameter: string;
+    isHidden: boolean;
+    caType: string;
+    userName: string;
+    userId: string;
 }
 
 export interface ApprovedPageModel {

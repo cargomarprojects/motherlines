@@ -20,11 +20,11 @@ import { ApprovedPageService } from '../services/approvedpage.service';
 export class ApprovedPageComponent implements OnInit {
 
   // 02-07-2019 Created By Ajith  
- 
-  errorMessage$ : Observable<string> ;
-  records$ :  Observable<Tbl_Cargo_Approved[]>;
-  pageQuery$ : Observable<PageQuery>;
-  searchQuery$ : Observable<SearchQuery>;
+
+  errorMessage$: Observable<string>;
+  records$: Observable<Tbl_Cargo_Approved[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,20 +39,20 @@ export class ApprovedPageComponent implements OnInit {
   }
 
   initPage() {
-    
+
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
-    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
+    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
 
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions,  'SEARCH');
+    this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
-    this.mainservice.Search(actions,'PAGE');
+    this.mainservice.Search(actions, 'PAGE');
   }
 
   NewRecord() {
@@ -65,36 +65,40 @@ export class ApprovedPageComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: '',
       mode: 'ADD',
-      mbl_pkid : '',
-      mbl_refno : '',
-      mbl_mode:'GENERAL',
+      mbl_pkid: '',
+      mbl_refno: '',
+      mbl_mode: 'GENERAL',
       origin: 'approved-page'
     };
     this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
 
   }
-  
+
   edit(_record: Tbl_Cargo_Approved) {
+
+    if (this.mainservice.param_type == "APPROVED REPORT" || this.mainservice.param_type == "REQUEST REPORT")
+      return;
+
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')
       return;
     }
 
     let parameter = {
-        menuid: this.mainservice.menuid,
-        pkid: _record.ca_pkid,
-        mode: 'EDIT',
-        mbl_pkid : '',
-        mbl_refno : '',
-        mbl_mode:'GENERAL',
-        origin: 'approvedpage',
-      };
-      this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
+      menuid: this.mainservice.menuid,
+      pkid: _record.ca_pkid,
+      mode: 'EDIT',
+      mbl_pkid: '',
+      mbl_refno: '',
+      mbl_mode: 'GENERAL',
+      origin: 'approvedpage',
+    };
+    this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
   }
 
   Close() {
     this.location.back();
   }
 
- 
+
 }

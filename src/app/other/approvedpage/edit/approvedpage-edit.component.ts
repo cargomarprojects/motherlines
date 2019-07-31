@@ -33,7 +33,7 @@ export class ApprovedPageEditComponent implements OnInit {
   private mbl_pkid: string;
   private mbl_refno: string;
   private doc_type: string;
-  private req_type: string;
+  private req_type: string = "REQUEST";
 
   private pkid: string;
   private menuid: string;
@@ -421,7 +421,7 @@ export class ApprovedPageEditComponent implements OnInit {
   }
 
   SaveApproved() {
-     
+
     const saveRecord = <vm_tbl_cargo_approved>{};
     saveRecord.record = this.record;
     saveRecord.mode = this.mode;
