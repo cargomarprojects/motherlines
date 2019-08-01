@@ -18,6 +18,8 @@ import { SeaImpUsCustomsHoldComponent } from './uscustomshold/seaimp-uscustomsho
 import { SeaImpCargoPickupComponent } from './cargopickup/seaimp-cargopickup.component';
 import { SeaImpRiderPageComponent } from './riderpage/seaimp-riderpage.component';
 import { DevanComponent } from './devan/devan.component';
+import { CopyCntrPageComponent } from './copycntrpage/copycntrpage.component';
+
 @NgModule({
   declarations: [
     SeaImpMasterComponent,
@@ -29,7 +31,8 @@ import { DevanComponent } from './devan/devan.component';
     SeaImpUsCustomsHoldComponent,
     SeaImpCargoPickupComponent,
     SeaImpRiderPageComponent,
-    DevanComponent
+    DevanComponent,
+    CopyCntrPageComponent
   ],
   imports: [
     SharedModule,    

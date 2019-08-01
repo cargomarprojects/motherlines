@@ -148,6 +148,7 @@ export interface Tbl_cargo_imp_housem {
     hbl_custom_reles_status: string;
     hbl_is_delivery: string;
     hbl_paid_remarks: string;
+    hbl_checked:boolean;
 
     hbl_cargo_marks1:string;
     hbl_cargo_marks2:string;
@@ -231,10 +232,12 @@ export interface Tbl_cargo_imp_desc {
 }
 
 export interface vm_tbl_cargo_imp_housem {
+    pkid: string;
     mode: string;
     record: Tbl_cargo_imp_housem;
     cntrs: Tbl_cargo_imp_container[];
     desc: Tbl_cargo_imp_desc[];
+    hbls: Tbl_cargo_imp_housem[];
     userinfo: any,
     filter: any;
 }

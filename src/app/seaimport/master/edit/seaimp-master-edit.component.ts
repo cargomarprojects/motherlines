@@ -609,6 +609,47 @@ export class SeaImpMasterEditComponent implements OnInit {
         break;
       }
 
+      case 'mbl_cargo_locname': {
+        this.record.mbl_cargo_locname = this.record.mbl_cargo_locname.toUpperCase();
+        break;
+      }
+      case 'mbl_cargo_locaddr1': {
+        this.record.mbl_cargo_locaddr1 = this.record.mbl_cargo_locaddr1.toUpperCase();
+        break;
+      }
+      case 'mbl_cargo_locaddr2': {
+        this.record.mbl_cargo_locaddr2 = this.record.mbl_cargo_locaddr2.toUpperCase();
+        break;
+      }
+      case 'mbl_cargo_locaddr3': {
+        this.record.mbl_cargo_locaddr3 = this.record.mbl_cargo_locaddr3.toUpperCase();
+        break;
+      }
+      case 'mbl_cargo_locaddr4': {
+        this.record.mbl_cargo_locaddr4 = this.record.mbl_cargo_locaddr4.toUpperCase();
+        break;
+      }
+      case 'mbl_devan_locname': {
+        this.record.mbl_devan_locname = this.record.mbl_devan_locname.toUpperCase();
+        break;
+      }
+      case 'mbl_devan_locaddr1': {
+        this.record.mbl_devan_locaddr1 = this.record.mbl_devan_locaddr1.toUpperCase();
+        break;
+      }
+      case 'mbl_devan_locaddr2': {
+        this.record.mbl_devan_locaddr2 = this.record.mbl_devan_locaddr2.toUpperCase();
+        break;
+      }
+      case 'mbl_devan_locaddr3': {
+        this.record.mbl_devan_locaddr3 = this.record.mbl_devan_locaddr3.toUpperCase();
+        break;
+      }
+      case 'mbl_devan_locaddr4': {
+        this.record.mbl_devan_locaddr4 = this.record.mbl_devan_locaddr4.toUpperCase();
+        break;
+      }
+
       case 'cntr_no': {
         rec.cntr_no = rec.cntr_no.toUpperCase();
         break;
@@ -757,7 +798,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       case 'INERNALMEMO': {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER_INTERNAL_MEMO,
-          refno: "REF : " + this.record.mbl_refno ,
+          refno: "REF : " + this.record.mbl_refno,
           pkid: this.pkid,
           origin: 'seaimp-master-page',
           oprgrp: 'SEA IMPORT',
@@ -775,6 +816,15 @@ export class SeaImpMasterEditComponent implements OnInit {
           origin: 'seaimp-master-page',
         };
         this.gs.Naviagete('Silver.SeaImport/CargoPickupPage', JSON.stringify(prm));
+        break;
+      }
+      case 'COPY-CNTR': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER,
+          pkid: this.pkid,
+          origin: 'seaimp-master-page',
+        };
+        this.gs.Naviagete('Silver.SeaImport/CopyCntrPage', JSON.stringify(prm));
         break;
       }
     }
@@ -799,5 +849,66 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
   RemoveRow(_rec: Tbl_cargo_imp_container) {
     this.records.splice(this.records.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
+  }
+
+  CopyLoc2House() {
+    this.errorMessage = '';
+    if (this.mode != 'EDIT') {
+      this.errorMessage = 'Please Save and Continue...';
+      return;
+    }
+
+    if (!confirm("Copy To House...")) {
+      return;
+    }
+
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+    this.mainService.CopyLoc2House(SearchData)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+
+          this.errorMessage = 'Copy Complete';
+          alert(this.errorMessage);
+        }
+
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+
+  }
+
+  UpdatePuEr() {
+    
+    this.errorMessage = '';
+    if (this.mode != 'EDIT') {
+      this.errorMessage = 'Please Save and Continue...';
+      return;
+    }
+
+    if (!confirm("Update P/U. & E/R.")) {
+      return;
+    }
+
+    const updateRecord = <vm_tbl_cargo_imp_masterm>{};
+    updateRecord.cntrs = this.records;
+    updateRecord.userinfo = this.gs.UserInfo;
+    this.mainService.UpdatePuEr(updateRecord)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+          this.errorMessage = 'Update P/U. & E/R. Complete';
+          alert(this.errorMessage);
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
   }
 }

@@ -8,6 +8,7 @@ import { SeaImpUsCustomsHoldComponent } from './uscustomshold/seaimp-uscustomsho
 import { SeaImpCargoPickupComponent } from './cargopickup/seaimp-cargopickup.component';
 import { SeaImpRiderPageComponent } from './riderpage/seaimp-riderpage.component';
 import { DevanComponent } from './devan/devan.component';
+import { CopyCntrPageComponent } from './copycntrpage/copycntrpage.component';
 
 const routes: Routes = [
   { path : 'SeaImpMasterPage', component : SeaImpMasterComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path : 'USCustomsHoldPage', component : SeaImpUsCustomsHoldComponent },
   { path : 'CargoPickupPage', component : SeaImpCargoPickupComponent }  ,
   { path : 'RiderPage', component : SeaImpRiderPageComponent }  ,
-  { path : 'DevanInstructionPage', component : DevanComponent } 
+  { path : 'DevanInstructionPage', component : DevanComponent } ,
+  { path : 'CopyCntrPage', component : CopyCntrPageComponent }
 ];
 
 

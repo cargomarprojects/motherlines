@@ -144,7 +144,7 @@ export interface Tbl_cargo_imp_housem {
 export interface vm_tbl_cargo_imp_masterm {
     mode: string;
     record: Tbl_cargo_imp_masterm;
-    cntrs: Tbl_cargo_imp_container[];
+    cntrs: Tbl_cargo_imp_container[]; 
     userinfo: any,
     filter: any;
 }
