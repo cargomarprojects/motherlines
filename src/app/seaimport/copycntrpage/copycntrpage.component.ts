@@ -29,6 +29,7 @@ export class CopyCntrPageComponent implements OnInit {
   private chkallselected_hbl: boolean = false;
   private selectdeselect_hbl: boolean = false;
   private errorMessage: string;
+  private mbl_cntr_type: string;
 
   IsLocked: boolean = false;
 
@@ -44,6 +45,7 @@ export class CopyCntrPageComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.mbl_cntr_type = options.mbl_cntr_type;
     this.initPage();
     this.actionHandler();
   }
@@ -79,6 +81,7 @@ export class CopyCntrPageComponent implements OnInit {
 
   Save() {
 
+    this.SaveParent();
     if (!this.Allvalid())
       return;
 
@@ -105,6 +108,23 @@ export class CopyCntrPageComponent implements OnInit {
       });
   }
 
+  private SaveParent() {
+    let iCtr: number = 0;
+    this.cntrrecords.forEach(Rec => {
+      iCtr++;
+      Rec.cntr_hblid = this.pkid.toString();
+      Rec.cntr_catg = "M";
+      Rec.cntr_order = iCtr;
+      Rec.cntr_weight_uom = "";
+      Rec.cntr_packages = 0;
+      Rec.cntr_yn = Rec.cntr_selected ? "Y" : "N";
+    })
+
+    this.hblrecords.forEach(Rec => {
+      Rec.hbl_yn = Rec.hbl_checked ? "Y" : "N";
+    })
+  }
+
   private Allvalid(): boolean {
 
     var bRet = true;
@@ -121,6 +141,29 @@ export class CopyCntrPageComponent implements OnInit {
     //   alert(this.errorMessage);
     //   return bRet;
     // }
+
+
+    this.cntrrecords.forEach(Rec => {
+
+      if (Rec.cntr_no.length != 11) {
+        bRet = false;
+        this.errorMessage = "Container( " + Rec.cntr_no + " ) Invalid"
+        return bRet;
+      }
+      if (Rec.cntr_type.length <= 0) {
+        bRet = false;
+        this.errorMessage = "Container( " + Rec.cntr_no + " ) type has to be selected"
+        return bRet;
+      }
+      if (Rec.cntr_type == "LCL" || this.mbl_cntr_type.trim() == "LCL") {
+        if (Rec.cntr_cbm <= 0) {
+          bRet = false;
+          this.errorMessage = "Container( " + Rec.cntr_no + " ) CBM cannot be zero"
+          return bRet;
+        }
+      }
+    })
+
     return bRet;
   }
 
@@ -157,7 +200,7 @@ export class CopyCntrPageComponent implements OnInit {
   }
 
 
-  onBlur(field: string) {
+  onBlur(field: string, rec: Tbl_cargo_imp_container = null) {
     switch (field) {
       //   case 'cust_title': {
       //     this.record.cust_title = this.record.cust_title.toUpperCase();
@@ -183,6 +226,44 @@ export class CopyCntrPageComponent implements OnInit {
       //     rec.cntr_pieces = this.gs.roundNumber(rec.cntr_pieces, 0);
       //     break;
       //   }
+
+
+      case 'cntr_no': {
+        rec.cntr_no = rec.cntr_no.toUpperCase();
+        break;
+      }
+      case 'cntr_type': {
+        rec.cntr_type = rec.cntr_type.toUpperCase();
+        break;
+      }
+      case 'cntr_sealno': {
+        rec.cntr_sealno = rec.cntr_sealno.toUpperCase();
+        break;
+      }
+      case 'cntr_pieces': {
+        rec.cntr_pieces = this.gs.roundNumber(rec.cntr_pieces, 0);
+        break;
+      }
+      case 'cntr_weight_uom': {
+        rec.cntr_weight_uom = rec.cntr_weight_uom.toUpperCase();
+        break;
+      }
+      case 'cntr_packages_uom': {
+        rec.cntr_packages_uom = rec.cntr_packages_uom.toUpperCase();
+        break;
+      }
+      case 'cntr_weight': {
+        rec.cntr_weight = this.gs.roundNumber(rec.cntr_weight, 3);
+        break;
+      }
+      case 'cntr_cbm': {
+        rec.cntr_cbm = this.gs.roundNumber(rec.cntr_cbm, 3);
+        break;
+      }
+      case 'cntr_tare_weight': {
+        rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
+        break;
+      }
     }
   }
 

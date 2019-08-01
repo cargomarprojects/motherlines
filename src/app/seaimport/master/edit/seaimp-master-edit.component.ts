@@ -739,7 +739,7 @@ export class SeaImpMasterEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION,
           pkid: this.pkid,
-          refno: this.record.mbl_refno,
+          mbl_refno: this.record.mbl_refno,
           origin: 'seaimp-master-page'
         };
         this.gs.Naviagete('Silver.SeaImport/DevanInstructionPage', JSON.stringify(prm));
@@ -822,6 +822,7 @@ export class SeaImpMasterEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER,
           pkid: this.pkid,
+          mbl_cntr_type:this.record.mbl_cntr_type,
           origin: 'seaimp-master-page',
         };
         this.gs.Naviagete('Silver.SeaImport/CopyCntrPage', JSON.stringify(prm));

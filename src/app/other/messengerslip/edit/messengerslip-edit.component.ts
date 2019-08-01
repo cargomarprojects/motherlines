@@ -18,10 +18,10 @@ import { strictEqual } from 'assert';
 export class MessengerSlipEditComponent implements OnInit {
 
   @ViewChild('is_drop') is_drop_field: ElementRef;
- // @ViewChild(' csdate') csdate_field: DateComponent;
+  // @ViewChild(' csdate') csdate_field: DateComponent;
   @ViewChild('to_name') to_name_field: InputBoxComponent;
   @ViewChild('deliver_to_name') deliver_to_name_field: InputBoxComponent;
-  
+
   // @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
   //@ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
 
@@ -80,35 +80,44 @@ export class MessengerSlipEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
-    if (this.mode == 'ADD') {
-      this.record = <Tbl_cargo_slip>{};
-      this.pkid = this.gs.getGuid();
-      this.init();
-    }
-    if (this.mode == 'EDIT') {
-      this.GetRecord();
-    }
+    // this.errorMessage = '';
+    // if (this.mode == 'ADD') {
+    //   this.record = <Tbl_cargo_slip>{};
+    //   this.pkid = this.gs.getGuid();
+    // }
+    this.GetRecord();
   }
 
   init() {
     var curr_date = new Date();
     var curr_hh = curr_date.getHours();
 
+    if (this.mode == "ADD") {
+      this.pkid = this.gs.getGuid();
+      this.record.cs_pkid = this.pkid;
+    }
     this.record.cs_refno = this.refno;
+    this.record.cs_mode = this.mode;
     this.record.cs_mbl_id = this.mbl_pkid;
     this.record.cs_date = this.gs.defaultValues.today;
     if (curr_hh >= 12)
       this.record.cs_ampm = "PM";
     else
       this.record.cs_ampm = "AM";
-    this.record.cs_to_id = '';
-    this.record.cs_to_code = '';
-    this.record.cs_to_name = '';
-    this.record.cs_to_tel = '';
-    this.record.cs_to_fax = '';
-    this.record.cs_from_id = '';
-    this.record.cs_from_name = '';
+
+    if (this.gs.MESSENGER_PKID == null || this.gs.MESSENGER_PKID == '') {
+      this.record.cs_to_id = '';
+      this.record.cs_to_code = '';
+      this.record.cs_to_name = '';
+      this.record.cs_to_tel = '';
+      this.record.cs_to_fax = '';
+    }
+    
+    if (this.record.cs_mbl_id == undefined || this.record.cs_mbl_id == '' || this.record.cs_mbl_id == null) {
+      this.record.cs_from_id = '';
+      this.record.cs_from_name = '';
+      this.record.cs_mbl_no = '';
+    }
     this.record.cs_is_drop = 'N';
     this.record.cs_is_pick = 'N';
     this.record.cs_is_receipt = 'N';
@@ -138,7 +147,22 @@ export class MessengerSlipEditComponent implements OnInit {
     this.record.cs_is_bl_bool = false;
     this.record.cs_is_oth_bool = false;
 
-   // this.csdate_field.Focus();
+    // if (this.record.cs_mbl_id) {
+    //   this.record.cs_from_id = _rec.cs_from_id;
+    //   this.record.cs_from_name = _rec.cs_from_name;
+    //   this.record.cs_mbl_no = _rec.cs_mbl_no;
+    // }
+
+    // if (this.gs.MESSENGER_PKID) {
+    //   this.record.cs_to_id = _rec.cs_to_id;
+    //   this.record.cs_to_code = _rec.cs_to_code;
+    //   this.record.cs_to_name = _rec.cs_to_name;
+    //   this.record.cs_to_tel = _rec.cs_to_tel;
+    //   this.record.cs_to_fax = _rec.cs_to_fax;
+    // }
+
+
+    // this.csdate_field.Focus();
 
   }
 
@@ -153,14 +177,25 @@ export class MessengerSlipEditComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_cargo_slip>response.record;
-        this.mode = 'EDIT';
-        this.record.cs_is_drop_bool = this.record.cs_is_drop == "Y" ? true : false;
-        this.record.cs_is_pick_bool = this.record.cs_is_pick == "Y" ? true : false;
-        this.record.cs_is_receipt_bool = this.record.cs_is_receipt == "Y" ? true : false;
-        this.record.cs_is_check_bool = this.record.cs_is_check == "Y" ? true : false;
-        this.record.cs_is_bl_bool = this.record.cs_is_bl == "Y" ? true : false;
-        this.record.cs_is_oth_bool = this.record.cs_is_oth == "Y" ? true : false;
+        if (this.record == undefined || this.record == null)
+          this.mode = 'ADD';
+        else if (this.record.cs_pkid == null)
+          this.mode = 'ADD';
+        else if (this.record.cs_pkid.length <= 0)
+          this.mode = 'ADD';
+        else
+          this.mode = 'EDIT';
 
+        if (this.mode == 'ADD')
+          this.init();
+        else {
+          this.record.cs_is_drop_bool = this.record.cs_is_drop == "Y" ? true : false;
+          this.record.cs_is_pick_bool = this.record.cs_is_pick == "Y" ? true : false;
+          this.record.cs_is_receipt_bool = this.record.cs_is_receipt == "Y" ? true : false;
+          this.record.cs_is_check_bool = this.record.cs_is_check == "Y" ? true : false;
+          this.record.cs_is_bl_bool = this.record.cs_is_bl == "Y" ? true : false;
+          this.record.cs_is_oth_bool = this.record.cs_is_oth == "Y" ? true : false;
+        }
         //this.hbl_houseno_field.nativeElement.focus();
 
       }, error => {
@@ -215,7 +250,7 @@ export class MessengerSlipEditComponent implements OnInit {
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
         }
-      //  this.csdate_field.Focus();
+        //  this.csdate_field.Focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
@@ -244,7 +279,7 @@ export class MessengerSlipEditComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Date cannot be blank";
       alert(this.errorMessage);
-     // this.csdate_field.Focus();
+      // this.csdate_field.Focus();
       return bRet;
     }
 

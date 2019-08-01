@@ -16,7 +16,7 @@ import { strictEqual } from 'assert';
 })
 export class DevanComponent implements OnInit {
 
-   // @ViewChild('request_to_code') request_to_code_ctrl: AutoComplete2Component;
+    // @ViewChild('request_to_code') request_to_code_ctrl: AutoComplete2Component;
     @ViewChild('request_to_name') request_to_name_ctrl: InputBoxComponent;
     @ViewChild('cargo_loc_name') cargo_loc_name_ctrl: InputBoxComponent;
     record: Tbl_Cargo_Imp_Devan_Instruction = <Tbl_Cargo_Imp_Devan_Instruction>{};
@@ -28,7 +28,8 @@ export class DevanComponent implements OnInit {
     private mode: string;
     private title: string = '';
     private isAdmin: boolean;
-    
+    private mbl_refno: string = "";
+
     private errorMessage: string;
 
     IsLocked: boolean = false;
@@ -45,7 +46,8 @@ export class DevanComponent implements OnInit {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
         this.pkid = options.pkid;
         this.menuid = options.menuid;
-        //this.mode = 'EDIT';
+        this.mbl_refno = options.mbl_refno;
+        this.mode = 'EDIT';
         this.initPage();
         this.actionHandler();
     }
@@ -68,15 +70,13 @@ export class DevanComponent implements OnInit {
 
     actionHandler() {
         this.errorMessage = '';
-        // if (this.mode == 'ADD') {
-        //     this.record = <Tbl_Cargo_Imp_Devan_Instruction>{};
-        //     this.init();
-        // }
-        // if (this.mode == 'EDIT') {
-        //     this.GetRecord();
-        // }
-
-        this.GetRecord();
+        if (this.mode == 'ADD') {
+            this.record = <Tbl_Cargo_Imp_Devan_Instruction>{};
+            this.init();
+        }
+        if (this.mode == 'EDIT') {
+            this.GetRecord();
+        }
     }
 
     init() {
@@ -100,7 +100,7 @@ export class DevanComponent implements OnInit {
         this.record.di_cargo_loc_addr4 = '';
         this.record.di_is_devan_sent = false;
         this.record.di_devan_date = '';
-       // this.request_to_code_ctrl.Focus();
+        // this.request_to_code_ctrl.Focus();
 
     }
 
@@ -111,16 +111,13 @@ export class DevanComponent implements OnInit {
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
                 this.mode = response.mode;
-                this.record = <Tbl_Cargo_Imp_Devan_Instruction>response.record;
-               // this.request_to_code_ctrl.Focus();
-                // if (this.mode == 'ADD')
-                //     this.actionHandler();
-                // else {
-                //     this.record = <Tbl_Cargo_Imp_Devan_Instruction>response.record;
-                //     this.request_to_code_ctrl.nativeElement.Focus();
-
-                //     this.CheckData();
-                // }
+                if (this.mode == 'ADD') {
+                    this.actionHandler();
+                }
+                else {
+                    this.record = <Tbl_Cargo_Imp_Devan_Instruction>response.record;
+                    this.CheckData();
+                }
             }, error => {
                 this.errorMessage = this.gs.getError(error);
             });
@@ -147,7 +144,7 @@ export class DevanComponent implements OnInit {
 
         if (!this.Allvalid())
             return;
- 
+
         const saveRecord = <vm_Tbl_Cargo_Imp_Devan_Instruction>{};
         saveRecord.record = this.record;
         saveRecord.pkid = this.pkid;
@@ -174,14 +171,14 @@ export class DevanComponent implements OnInit {
 
         var bRet = true;
         this.errorMessage = "";
-        if ( this.gs.isBlank(this.record.di_request_to_id)) {
-          bRet = false;
-          this.errorMessage = "Request To cannot be empty";
-          alert(this.errorMessage);
-        //  this.request_to_code_ctrl.Focus();
-          return bRet;
+        if (this.gs.isBlank(this.record.di_request_to_id)) {
+            bRet = false;
+            this.errorMessage = "Request To cannot be empty";
+            alert(this.errorMessage);
+            //  this.request_to_code_ctrl.Focus();
+            return bRet;
         }
-        
+
         return bRet;
     }
 
@@ -192,7 +189,7 @@ export class DevanComponent implements OnInit {
 
 
     LovSelected(_Record: SearchTable) {
-         
+
         if (_Record.controlname == "REQUEST-TO") {
             this.record.di_request_to_id = _Record.id;
             this.record.di_request_to_code = _Record.code;
@@ -208,13 +205,13 @@ export class DevanComponent implements OnInit {
             //  Dispatcher.BeginInvoke(() => { Txt_Request_To_Name.Focus(); });
 
         }
-        if (_Record.controlname == "CARGO-LOC")  {
+        if (_Record.controlname == "CARGO-LOC") {
 
             this.record.di_cargo_loc_id = _Record.id;
             this.record.di_cargo_loc_code = _Record.code;
             this.record.di_cargo_loc_name = _Record.name.toString();
             if (_Record.col8.toString() != "")
-            this.record.di_cargo_loc_name = _Record.col8.toString();
+                this.record.di_cargo_loc_name = _Record.col8.toString();
             this.record.di_cargo_loc_addr1 = _Record.col1.toString();
             this.record.di_cargo_loc_addr2 = _Record.col2.toString();
             this.record.di_cargo_loc_addr3 = this.gs.GetAttention(_Record.col5.toString());

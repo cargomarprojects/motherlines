@@ -17,10 +17,9 @@
             <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Ref#</label>
                 <div class="col-10">
-                    <InputBox [(ngModel)]="record.di_mbl_refno" [disabled]="true"  maxlength="25" #mbl_refno ></InputBox>
+                    <InputBox [(inputModel)]="mbl_refno" [disabled]="true" maxlength="25"></InputBox>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -31,8 +30,9 @@
             <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Request To.</label>
                 <div class="col-10">
-                    <app-autocomplete2 #request_to_code [controlname]="'REQUEST-TO'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
-                        [displaydata]="record.di_request_to_code" (ValueChanged)="LovSelected($event)"> 
+                    <app-autocomplete2 #request_to_code [controlname]="'REQUEST-TO'" [tabletype]="'MASTER'"
+                        [displaycolumn]="'CODE'" [displaydata]="record.di_request_to_code"
+                        (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
                 </div>
             </div>
@@ -122,48 +122,57 @@
 </div>
 
 <div class="page-body">
-        <div class="row">
-            <div class="col-md-12">
-                 
-                <div class="form-group row">
-                    <label class="col-1 col-form-label col-form-label-sm">Remarks</label>
-                    <div class="col-11">
-                        <InputBox [(inputModel)]="record.di_remark1" [maxlength]="500" [uppercase]="true"
-                            #remark1></InputBox>
-                    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">Remarks</label>
+                <div class="col-10">
+                    <InputBox [(inputModel)]="record.di_remark1" [maxlength]="500" [uppercase]="true" #remark1>
+                    </InputBox>
                 </div>
-                <div class="form-group row">
-                    <label class="col-1 col-form-label col-form-label-sm"></label>
-                    <div class="col-11">
-                        <InputBox [(inputModel)]="record.di_remark2" [maxlength]="500" [uppercase]="true"
-                            #remark2></InputBox>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                    <InputBox [(inputModel)]="record.di_remark2" [maxlength]="500" [uppercase]="true" #remark2>
+                    </InputBox>
                 </div>
-                <div class="form-group row">
-                    <label class="col-1 col-form-label col-form-label-sm"></label>
-                    <div class="col-11">
-                        <InputBox [(inputModel)]="record.di_remark3" [maxlength]="500" [uppercase]="true"
-                            #remark3></InputBox>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                    <InputBox [(inputModel)]="record.di_remark3" [maxlength]="500" [uppercase]="true" #remark3>
+                    </InputBox>
                 </div>
-                <div class="form-group row">
-                    <label class="col-1 col-form-label col-form-label-sm"></label>
-                    <div class="col-11">
-                            <input type="checkbox" [(ngModel)]="record.di_is_devan_sent" />
-                            <span>Devanning Instruction Sent</span>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm"></label>
+                <div class="col-10">
+                    <input type="checkbox" [(ngModel)]="record.di_is_devan_sent" />
+                    <span>Devanning Instruction Sent</span>
                 </div>
-                <div class="form-group row">
-                    <label class="col-1 col-form-label col-form-label-sm">Date</label>
-                    <div class="col-3">
-                            <app-date [inputdate]="record.di_devan_date" (ValueChanged)="record.di_devan_date=$event"></app-date>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">Date</label>
+                <div class="col-4">
+                    <app-date [inputdate]="record.di_devan_date" (ValueChanged)="record.di_devan_date=$event">
+                    </app-date>
                 </div>
             </div>
         </div>
     </div>
-    
+</div>
+
 <div class="page-footer">
+    <div class="row row justify-content-center p-1">
+        <button class="btn btn-primary btn-md" (click)="Save()">Save</button>
+        <button class="btn btn-primary btn-md">Print</button>
+    </div>
+</div>
+
+
+<!-- <div class="page-footer">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group row">
@@ -175,6 +184,4 @@
             </div>
         </div>
     </div>
-</div>
-
- 
+</div> -->
