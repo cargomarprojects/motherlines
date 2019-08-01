@@ -52,6 +52,7 @@ export interface Tbl_cargo_slip {
 }
 
 export interface vm_tbl_cargo_slip {
+    pkid: string;
     mode: string;
     record: Tbl_cargo_slip;
     userinfo: any,

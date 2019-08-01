@@ -80,11 +80,6 @@ export class MessengerSlipEditComponent implements OnInit {
   }
 
   actionHandler() {
-    // this.errorMessage = '';
-    // if (this.mode == 'ADD') {
-    //   this.record = <Tbl_cargo_slip>{};
-    //   this.pkid = this.gs.getGuid();
-    // }
     this.GetRecord();
   }
 
@@ -92,12 +87,12 @@ export class MessengerSlipEditComponent implements OnInit {
     var curr_date = new Date();
     var curr_hh = curr_date.getHours();
 
-    if (this.mode == "ADD") {
+    if (this.mode == "ADD") 
       this.pkid = this.gs.getGuid();
-      this.record.cs_pkid = this.pkid;
-    }
+      
+    this.record.cs_pkid = this.pkid;
     this.record.cs_refno = this.refno;
-    this.record.cs_mode = this.mode;
+    this.record.cs_mode = this.oprgrp;
     this.record.cs_mbl_id = this.mbl_pkid;
     this.record.cs_date = this.gs.defaultValues.today;
     if (curr_hh >= 12)
@@ -234,6 +229,7 @@ export class MessengerSlipEditComponent implements OnInit {
     this.SaveParent();
     const saveRecord = <vm_tbl_cargo_slip>{};
     saveRecord.record = this.record;
+    saveRecord.pkid = this.pkid;
     saveRecord.mode = this.mode;
     saveRecord.userinfo = this.gs.UserInfo;
 
@@ -263,6 +259,7 @@ export class MessengerSlipEditComponent implements OnInit {
     else
       this.record.cs_mbl_id = this.mbl_pkid;
     this.record.cs_mode = this.oprgrp;
+    this.record.cs_pkid = this.pkid;
     this.record.cs_is_drop = this.record.cs_is_drop_bool == true ? "Y" : "N";
     this.record.cs_is_pick = this.record.cs_is_pick_bool == true ? "Y" : "N";
     this.record.cs_is_receipt = this.record.cs_is_receipt_bool == true ? "Y" : "N";
@@ -274,6 +271,14 @@ export class MessengerSlipEditComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
+
+    if (this.gs.isBlank(this.pkid)) {
+      bRet = false;
+      this.errorMessage = "Invalid ID";
+      alert(this.errorMessage);
+      // this.csdate_field.Focus();
+      return bRet;
+    }
 
     if (this.gs.isBlank(this.record.cs_date)) {
       bRet = false;
