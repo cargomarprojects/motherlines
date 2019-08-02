@@ -1726,11 +1726,12 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
 
-  GetArrivalNotice() {
+  GetArrivalNotice(_type:string) {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
-
+    SearchData.type =_type;
+                                
     this.mainService.GetArrivalNotice(SearchData)
       .subscribe(response => {
         

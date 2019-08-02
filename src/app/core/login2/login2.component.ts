@@ -79,7 +79,7 @@ export class Login2Component implements OnInit {
                 this.GLOBALCONTANTS.SetupCompanyList(response.companylist);
 
                 response.companylist.forEach(a => {
-                    if ( this.Company_Id == '' )
+                    if (this.Company_Id == '')
                         this.Company_Id = a.comp_pkid;
                 })
 
@@ -212,7 +212,7 @@ export class Login2Component implements OnInit {
                 });
 
                 this.GLOBALCONTANTS.Save2LocalStorage();
-                
+
                 this.loading = false;
             }, error => {
                 this.loading = false;
@@ -523,8 +523,10 @@ export class Login2Component implements OnInit {
                     this.GLOBALCONTANTS.AC_REPORT_BASED_ON = Rec.param_name3;
                 else if (Rec.param_name1 == "FS-APP-FOLDER")
                     this.GLOBALCONTANTS.FS_APP_FOLDER = Rec.param_name3;
-                else if (Rec.param_name1 == "GLOBAL-FTP-FOLDER")
+                else if (Rec.param_name1 == "GLOBAL-FTP-FOLDER") {
                     this.GLOBALCONTANTS.GLOBAL_FTP_FOLDER = Rec.param_name3;
+                    this.GLOBALCONTANTS.GLOBAL_REPORT_FOLDER = Rec.param_name3 + "//reports";
+                }
                 else if (Rec.param_name1 == "SEA-IMP-OVERRIDE-POD-ETA")
                     this.GLOBALCONTANTS.SEA_IMP_OVERRIDE_POD_ETA = Rec.param_name3;
                 else if (Rec.param_name1 == "AIR-IMP-OVERRIDE-POD-ETA")
@@ -578,162 +580,162 @@ export class Login2Component implements OnInit {
         this.GLOBALCONTANTS.SHIPMENT_STAGE_OT = [{ "code": "NIL", "name": "NIL" }];
 
 
-        
-        this.MainList.filter(a => a.param_code =='OI').sort( function(a,b) { 
+
+        this.MainList.filter(a => a.param_code == 'OI').sort(function (a, b) {
             return b.param_name4 < a.param_name4 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.SHIPMENT_STAGE_OI.push ({ "code": a.param_name4, "name": a.param_name3 })
+            this.GLOBALCONTANTS.SHIPMENT_STAGE_OI.push({ "code": a.param_name4, "name": a.param_name3 })
         });
 
 
-        this.MainList.filter(a => a.param_code =='OE').sort( function(a,b) { 
+        this.MainList.filter(a => a.param_code == 'OE').sort(function (a, b) {
             return b.param_name4 < a.param_name4 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.SHIPMENT_STAGE_OE.push ({ "code": a.param_name4, "name": a.param_name3 })
+            this.GLOBALCONTANTS.SHIPMENT_STAGE_OE.push({ "code": a.param_name4, "name": a.param_name3 })
         });
 
-        this.MainList.filter(a => a.param_code =='AI').sort( function(a,b) { 
+        this.MainList.filter(a => a.param_code == 'AI').sort(function (a, b) {
             return b.param_name4 < a.param_name4 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.SHIPMENT_STAGE_AI.push ({ "code": a.param_name4, "name": a.param_name3 })
+            this.GLOBALCONTANTS.SHIPMENT_STAGE_AI.push({ "code": a.param_name4, "name": a.param_name3 })
         });
 
-        this.MainList.filter(a => a.param_code =='AE').sort( function(a,b) { 
+        this.MainList.filter(a => a.param_code == 'AE').sort(function (a, b) {
             return b.param_name4 < a.param_name4 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.SHIPMENT_STAGE_AE.push ({ "code": a.param_name4, "name": a.param_name3 })
-        });
-
-
-        this.MainList.filter(a => a.param_code =='OT').sort( function(a,b) { 
-            return b.param_name4 < a.param_name4 ? 1 : -1;
-        }).forEach(a => {
-            this.GLOBALCONTANTS.SHIPMENT_STAGE_OT.push ({ "code": a.param_name4, "name": a.param_name3 })
+            this.GLOBALCONTANTS.SHIPMENT_STAGE_AE.push({ "code": a.param_name4, "name": a.param_name3 })
         });
 
 
-        this.MainList.filter(a => a.param_type == 'GLOBAL SETTINGS' && a.param_name1 == 'INVOICE_STAGE').sort( function(a,b) { 
+        this.MainList.filter(a => a.param_code == 'OT').sort(function (a, b) {
             return b.param_name4 < a.param_name4 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.INVOICE_STAGE.push ({ "code": a.param_code, "name": a.param_name2 + "," + a.param_name3 })            
+            this.GLOBALCONTANTS.SHIPMENT_STAGE_OT.push({ "code": a.param_name4, "name": a.param_name3 })
         });
 
 
-        this.MainList.filter(a => a.param_type =='JOB-TYPE' &&  a.param_name2 =='SEA IMPORT' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'GLOBAL SETTINGS' && a.param_name1 == 'INVOICE_STAGE').sort(function (a, b) {
+            return b.param_name4 < a.param_name4 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.INVOICE_STAGE.push({ "code": a.param_code, "name": a.param_name2 + "," + a.param_name3 })
+        });
+
+
+        this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'SEA IMPORT').sort(function (a, b) {
             return b.param_name3 < a.param_name3 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.JOB_TYPE_OI.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.JOB_TYPE_OI.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
 
-        this.MainList.filter(a => a.param_type =='JOB-TYPE' &&  a.param_name2 =='SEA EXPORT' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'SEA EXPORT').sort(function (a, b) {
             return b.param_name3 < a.param_name3 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.JOB_TYPE_OE.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.JOB_TYPE_OE.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
 
-        this.MainList.filter(a => a.param_type =='JOB-TYPE' &&  a.param_name2 =='AIR EXPORT' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'AIR EXPORT').sort(function (a, b) {
             return b.param_name3 < a.param_name3 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.JOB_TYPE_AE.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.JOB_TYPE_AE.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='JOB-TYPE' &&  a.param_name2 =='AIR IMPORT' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'AIR IMPORT').sort(function (a, b) {
             return b.param_name3 < a.param_name3 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.JOB_TYPE_AI.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.JOB_TYPE_AI.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='JOB-TYPE' &&  a.param_name2 =='OTHERS' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'OTHERS').sort(function (a, b) {
             return b.param_name3 < a.param_name3 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.JOB_TYPE_OT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.JOB_TYPE_OT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
 
-        this.MainList.filter(a => a.param_type =='FREIGHT STATUS' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'FREIGHT STATUS').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_FREIGHT_STATUS.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_FREIGHT_STATUS.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
-        
-        this.MainList.filter(a => a.param_type =='CARGO MOVEMENT' ).sort( function(a,b) { 
+
+        this.MainList.filter(a => a.param_type == 'CARGO MOVEMENT').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_CARGO_MOVEMENT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_CARGO_MOVEMENT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='CONTAINER TYPE' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'CONTAINER TYPE').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_CONTAINER_TYPE.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_CONTAINER_TYPE.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='NOMINATION' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'NOMINATION').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_NOMINATION.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_NOMINATION.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='COUNTRY' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'COUNTRY').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_COUNTRY.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_COUNTRY.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='CURRENCY' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'CURRENCY').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-        this.GLOBALCONTANTS.PARAM_CURRENCY.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_CURRENCY.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
-        
-        this.MainList.filter(a => a.param_type =='UNIT' ).sort( function(a,b) { 
+
+        this.MainList.filter(a => a.param_type == 'UNIT').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_UNIT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_UNIT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='HBL-FORMAT').sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'HBL-FORMAT').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_HBL_FORMAT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_HBL_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='HBL-FORMAT' && a.param_name6 =='BLANK' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'HBL-FORMAT' && a.param_name6 == 'BLANK').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_HBL_FORMAT_BLANK.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_HBL_FORMAT_BLANK.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='HBL-FORMAT' && a.param_name6 =='DRAFT' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'HBL-FORMAT' && a.param_name6 == 'DRAFT').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_HBL_FORMAT_DRAFT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_HBL_FORMAT_DRAFT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-        this.MainList.filter(a => a.param_type =='HAWB-FORMAT' ).sort( function(a,b) { 
+        this.MainList.filter(a => a.param_type == 'HAWB-FORMAT').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
         }).forEach(a => {
-            this.GLOBALCONTANTS.PARAM_HAWB_FORMAT.push ({ "code": a.param_pkid, "name": a.param_name1 })
+            this.GLOBALCONTANTS.PARAM_HAWB_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
 
 
-/*      public PARAM_FREIGHT_STATUS : any = [];
-        public PARAM_CARGO_MOVEMENT : any = [];
-        public PARAM_CONTAINER_TYPE : any = [];
-        public PARAM_NOMINATION : any = [];
-        public PARAM_COUNTRY : any = [];
-        public PARAM_CURRENCY : any = [];
-        public PARAM_HBL_FORMAT : any = [];
-        public PARAM_HBL_FORMAT_DRAFT : any = [];
-        public PARAM_HAWB_FORMAT : any = [];
-        public PARAM_UNIT : any = [];
-        public PARAM_CUSTOMER_GROUP : any = [];
-        public PARAM_FORM_CATEGORIES : any = [];
- */
-        
+        /*      public PARAM_FREIGHT_STATUS : any = [];
+                public PARAM_CARGO_MOVEMENT : any = [];
+                public PARAM_CONTAINER_TYPE : any = [];
+                public PARAM_NOMINATION : any = [];
+                public PARAM_COUNTRY : any = [];
+                public PARAM_CURRENCY : any = [];
+                public PARAM_HBL_FORMAT : any = [];
+                public PARAM_HBL_FORMAT_DRAFT : any = [];
+                public PARAM_HAWB_FORMAT : any = [];
+                public PARAM_UNIT : any = [];
+                public PARAM_CUSTOMER_GROUP : any = [];
+                public PARAM_FORM_CATEGORIES : any = [];
+         */
+
 
 
     }
