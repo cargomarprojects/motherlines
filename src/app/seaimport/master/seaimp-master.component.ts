@@ -70,7 +70,6 @@ export class SeaImpMasterComponent implements OnInit {
       mode: 'ADD'
     };
     this.gs.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(parameter));
-
   }
   
   edit(_record: Tbl_cargo_imp_masterm) {

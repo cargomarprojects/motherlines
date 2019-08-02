@@ -62,7 +62,7 @@ export class GlobalService {
 
   public FS_APP_FOLDER = "";
   public GLOBAL_FTP_FOLDER = "";
-
+  public GLOBAL_REPORT_FOLDER = "D://motherlines.us//ftp//reports";
 
   public SEARCH_DATE_DIFF = 60;
 
@@ -490,6 +490,21 @@ export class GlobalService {
       "~MACADDRESS": this.MACADDRESS,
       "~ALLOW_LOGIN_FROM_MULTIPLE_SYSTEM": this.ALLOW_LOGIN_FROM_MULTIPLE_SYSTEM,
       "~GENERAL_BRANCH_CODE": this.GENERAL_BRANCH_CODE,
+      "~ADDRESS_LINE1": this.ADDRESS_LINE1,
+      "~ADDRESS_LINE2": this.ADDRESS_LINE2,
+      "~ADDRESS_LINE3": this.ADDRESS_LINE3,
+      "~ADDRESS_LINE4": this.ADDRESS_LINE4,
+      "~ADDRESS_LINE5": this.ADDRESS_LINE5,
+      "~user_name": this.user_name,
+      "~company_code": this.company_code,
+      "~DOC_FOOTER1": this.DOC_FOOTER1,
+      "~DOC_FOOTER2": this.DOC_FOOTER2,
+      "~date_display_fmt": this.date_display_fmt,
+      "~BOE_IMPORT_REQUIRED": this.BOE_IMPORT_REQUIRED,
+      "~FRONTEND_DATEFORMAT": this.FRONTEND_DATEFORMAT,
+      "~PRINT_FIRMCODE": this.PRINT_FIRMCODE,
+      "~WWW_ROOT": this.WWW_ROOT,
+      "~GLOBAL_REPORT_FOLDER": this.GLOBAL_REPORT_FOLDER
     }
 
   }
@@ -676,7 +691,7 @@ export class GlobalService {
 
   public DownloadFile(report_folder: string, filename: string, filetype: string, filedisplayname: string = 'N') {
     let body = 'report_folder=' + report_folder + '&filename=' + filename + '&filetype=' + filetype + '&filedisplayname=' + filedisplayname;
-    window.open(this.baseUrl + '/api/Admin/User/DownloadFile?' + body, "_blank");
+    window.open(this.baseUrl + '/api/Master/Param/DownloadFile?' + body, "_blank");
   }
 
   public ShowAccAlert(party_id: string) {

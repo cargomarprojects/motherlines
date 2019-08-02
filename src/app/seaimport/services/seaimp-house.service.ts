@@ -129,5 +129,7 @@ export class SeaImpHouseService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/LoadCha', SearchData, this.gs.headerparam2('authorized'));
     }
 
-
+    GetArrivalNotice(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/GetArrivalNotice', SearchData, this.gs.headerparam2('authorized'));
+    }
 }

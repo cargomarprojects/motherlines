@@ -1725,4 +1725,26 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.cntrrecords.splice(this.cntrrecords.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
 
+
+  GetArrivalNotice() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+
+    this.mainService.GetArrivalNotice(SearchData)
+      .subscribe(response => {
+        
+        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+
+        
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
+
+  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+  }
+
+
 }
