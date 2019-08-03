@@ -720,8 +720,6 @@ export class Login2Component implements OnInit {
             this.GLOBALCONTANTS.PARAM_HAWB_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
-
-
         /*      public PARAM_FREIGHT_STATUS : any = [];
                 public PARAM_CARGO_MOVEMENT : any = [];
                 public PARAM_CONTAINER_TYPE : any = [];
@@ -735,7 +733,6 @@ export class Login2Component implements OnInit {
                 public PARAM_CUSTOMER_GROUP : any = [];
                 public PARAM_FORM_CATEGORIES : any = [];
          */
-
 
 
     }

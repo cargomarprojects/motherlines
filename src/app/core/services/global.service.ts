@@ -1143,7 +1143,6 @@ export class GlobalService {
     sessionStorage.setItem('company_code', this.company_code);
     sessionStorage.setItem('BRANCH_REGION', this.BRANCH_REGION);
 
-
     sessionStorage.setItem('isloginsuccess', JSON.stringify(this.IsLoginSuccess));
     sessionStorage.setItem('isauthenticated', JSON.stringify(this.IsAuthenticated));
     sessionStorage.setItem('globaldata', JSON.stringify(this.globalData));
@@ -1154,6 +1153,22 @@ export class GlobalService {
     sessionStorage.setItem('menulist', JSON.stringify(this.MenuList));
     sessionStorage.setItem('companylist', JSON.stringify(this.CompanyList));
     sessionStorage.setItem('yearlist', JSON.stringify(this.YearList));
+
+    sessionStorage.setItem('ADDRESS_LINE1', JSON.stringify(this.ADDRESS_LINE1));
+    sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify( this.ADDRESS_LINE2));
+    sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify( this.ADDRESS_LINE3));
+    sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify( this.ADDRESS_LINE4));
+    sessionStorage.setItem('ADDRESS_LINE5', JSON.stringify( this.ADDRESS_LINE5));
+    sessionStorage.setItem('user_name', JSON.stringify( this.user_name));
+    sessionStorage.setItem('DOC_FOOTER1', JSON.stringify( this.DOC_FOOTER1));
+    sessionStorage.setItem('DOC_FOOTER2', JSON.stringify( this.DOC_FOOTER2));
+    sessionStorage.setItem('date_display_fmt', JSON.stringify( this.date_display_fmt));
+    sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify( this.BOE_IMPORT_REQUIRED));
+    sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify( this.FRONTEND_DATEFORMAT));
+    sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify( this.PRINT_FIRMCODE));
+    sessionStorage.setItem('WWW_ROOT', JSON.stringify( this.WWW_ROOT));
+    sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify( this.GLOBAL_REPORT_FOLDER));
+
   }
 
 
