@@ -525,7 +525,7 @@ export class Login2Component implements OnInit {
                     this.GLOBALCONTANTS.FS_APP_FOLDER = Rec.param_name3;
                 else if (Rec.param_name1 == "GLOBAL-FTP-FOLDER") {
                     this.GLOBALCONTANTS.GLOBAL_FTP_FOLDER = Rec.param_name3;
-                    this.GLOBALCONTANTS.GLOBAL_REPORT_FOLDER = Rec.param_name3 + "//reports";
+                    this.GLOBALCONTANTS.GLOBAL_REPORT_FOLDER = Rec.param_name3 + "\\reports";
                 }
                 else if (Rec.param_name1 == "SEA-IMP-OVERRIDE-POD-ETA")
                     this.GLOBALCONTANTS.SEA_IMP_OVERRIDE_POD_ETA = Rec.param_name3;
