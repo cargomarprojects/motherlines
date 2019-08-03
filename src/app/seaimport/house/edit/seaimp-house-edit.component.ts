@@ -1747,5 +1747,34 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }
 
+  GetPreAlert() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+        
+    this.mainService.GetPreAlertReport(SearchData)
+      .subscribe(response => {
+        
+        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
 
+        
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
+  GetTurnOver() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+        
+    this.mainService.GetTurnOverReport(SearchData)
+      .subscribe(response => {
+        
+        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+
+        
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
 }
