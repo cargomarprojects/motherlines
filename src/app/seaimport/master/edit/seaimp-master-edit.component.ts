@@ -29,8 +29,8 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   private pkid: string;
   private menuid: string;
-  private hblid: string = '';
-  private hblmode: string = '';
+  private hbl_pkid: string = '';
+  private hbl_mode: string = '';
 
   private mode: string;
 
@@ -690,8 +690,8 @@ export class SeaImpMasterEditComponent implements OnInit {
       return;
     }
 
-    this.hblid = "";
-    this.hblmode = "ADD";
+    this.hbl_pkid = "";
+    this.hbl_mode = "ADD";
     this.BtnNavigation('HOUSE')
   }
 
@@ -702,8 +702,8 @@ export class SeaImpMasterEditComponent implements OnInit {
       return;
     }
 
-    this.hblid = _record.hbl_pkid;
-    this.hblmode = "EDIT";
+    this.hbl_pkid = _record.hbl_pkid;
+    this.hbl_mode = "EDIT";
     this.BtnNavigation('HOUSE')
   }
 
@@ -726,11 +726,11 @@ export class SeaImpMasterEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE,
           parentid: this.pkid,
-          pkid: this.hblid,
+          pkid: this.hbl_pkid,
           refno: this.record.mbl_refno,
           type: 'SI',
           origin: 'seaimp-master-page',
-          mode: this.hblmode
+          mode: this.hbl_mode
         };
         this.gs.Naviagete('Silver.SeaImport/SeaImpHouseEditPage', JSON.stringify(prm));
         break;

@@ -26,7 +26,9 @@ export class AirImpMasterEditComponent implements OnInit {
   */
   private pkid: string="";
   private menuid: string;
-
+  private hbl_pkid: string = '';
+  private hbl_mode: string = '';
+  
   private mode: string;
 
   private errorMessage: string;
@@ -472,6 +474,29 @@ export class AirImpMasterEditComponent implements OnInit {
       }
 
     }
+  }
+
+  AddHouse() {
+    if (!this.gs.canAdd(this.gs.MENU_SI_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    // this.hblid = "";
+    // this.hblmode = "ADD";
+    // this.BtnNavigation('HOUSE')
+  }
+
+  EditHouse(_record: Tbl_cargo_imp_housem) {
+
+    if (!this.gs.canEdit(this.gs.MENU_SI_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    // this.hblid = _record.hbl_pkid;
+    // this.hblmode = "EDIT";
+    // this.BtnNavigation('HOUSE')
   }
 
 

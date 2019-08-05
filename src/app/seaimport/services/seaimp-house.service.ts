@@ -80,7 +80,7 @@ export class SeaImpHouseService {
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
         SearchData.OVERRIDE_POD_ETA = this.gs.SEA_IMP_OVERRIDE_POD_ETA;
-        SearchData.PARENT_ID = this.record.searchQuery.mblid;
+        SearchData.PARENT_ID = '';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
