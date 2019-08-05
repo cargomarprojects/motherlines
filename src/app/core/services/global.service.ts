@@ -614,7 +614,13 @@ export class GlobalService {
     return bret;
   }
 
-
+  public canPrint(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_print == "Y");
+    if (itm)
+      bret = true;
+    return bret;
+  }
 
   public IsAdmin(menuid: string): boolean {
     var bret1: boolean;

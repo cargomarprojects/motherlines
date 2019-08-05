@@ -131,4 +131,8 @@ export class SeaImpMasterService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/Master/UpdatePuEr', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    GetPODSeaImpRpt(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/Master/GetPODSeaImpRpt', SearchData, this.gs.headerparam2('authorized'));
+    }
+
 }
