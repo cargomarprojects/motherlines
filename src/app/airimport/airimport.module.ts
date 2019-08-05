@@ -9,12 +9,18 @@ import { EffectsModule } from '@ngrx/effects';
 import { AirImpMasterComponent } from './master/airimp-master.component';
 import { AirImpMasterHeaderComponent } from './master/airimp-master-header.component';
 import { AirImpMasterEditComponent } from './master/edit/airimp-master-edit.component';
+import { AirImpHouseComponent } from './house/airimp-house.component';
+import { AirImpHouseHeaderComponent } from './house/airimp-house-header.component';
+import { AirImpHouseEditComponent } from './house/edit/airimp-house-edit.component';
 
 @NgModule({
   declarations: [
     AirImpMasterComponent,
     AirImpMasterHeaderComponent,
     AirImpMasterEditComponent,
+    AirImpHouseComponent,
+    AirImpHouseHeaderComponent,
+    AirImpHouseEditComponent
   ],
   imports: [
     SharedModule,    

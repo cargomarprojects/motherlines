@@ -1,13 +1,13 @@
- import { Component, OnInit, Input, Output, EventEmitter,SimpleChange, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 
 import { SearchQuery } from '../models/tbl_cargo_imp_housem';
 
 @Component({
-  selector: 'app-seaimp-house-header',
-  templateUrl: './seaimp-house-header.component.html',
+  selector: 'app-airimp-house-header',
+  templateUrl: './airimp-house-header.component.html',
   changeDetection : ChangeDetectionStrategy.OnPush
 })
-export class SeaImpHouseHeaderComponent implements OnInit {
+export class AirImpHouseHeaderComponent implements OnInit {
   // Call By Value using Input Parameters
   searchQuery : SearchQuery;
   @Input() set _query( value : SearchQuery){

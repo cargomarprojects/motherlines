@@ -477,27 +477,149 @@ export class AirImpMasterEditComponent implements OnInit {
   }
 
   AddHouse() {
-    if (!this.gs.canAdd(this.gs.MENU_SI_HOUSE)) {
+    if (!this.gs.canAdd(this.gs.MENU_AI_HOUSE)) {
       alert('Insufficient User Rights')
       return;
     }
 
-    // this.hblid = "";
-    // this.hblmode = "ADD";
-    // this.BtnNavigation('HOUSE')
+    this.hbl_pkid = "";
+    this.hbl_mode = "ADD";
+    this.BtnNavigation('HOUSE')
   }
 
   EditHouse(_record: Tbl_cargo_imp_housem) {
 
-    if (!this.gs.canEdit(this.gs.MENU_SI_HOUSE)) {
+    if (!this.gs.canEdit(this.gs.MENU_AI_HOUSE)) {
       alert('Insufficient User Rights')
       return;
     }
 
-    // this.hblid = _record.hbl_pkid;
-    // this.hblmode = "EDIT";
-    // this.BtnNavigation('HOUSE')
+    this.hbl_pkid = _record.hbl_pkid;
+    this.hbl_mode = "EDIT";
+    this.BtnNavigation('HOUSE')
   }
 
+  BtnNavigation(action: string) {
+
+    switch (action) {
+      case 'ARAP': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_ARAP,
+          pkid: this.pkid,
+          refno: this.record.mbl_refno,
+          type: 'SI',
+          origin: 'seaimp-master-page',
+        };
+        this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
+        break;
+      }
+      case 'HOUSE': {
+        let prm = {
+          menuid: this.gs.MENU_AI_HOUSE,
+          parentid: this.pkid,
+          pkid: this.hbl_pkid,
+          refno: this.record.mbl_refno,
+          type: 'AI',
+          origin: 'airimp-master-page',
+          mode: this.hbl_mode
+        };
+        this.gs.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(prm));
+        break;
+      }
+      case 'DEVAN-INSTRUCTION': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION,
+          pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          origin: 'seaimp-master-page'
+        };
+        this.gs.Naviagete('Silver.SeaImport/DevanInstructionPage', JSON.stringify(prm));
+        break;
+      }
+      case 'PAYMENT-REQUEST': {
+        let prm = {
+          menuid: this.gs.MENU_SI_PAYMENT_REQUEST,
+          cp_master_id: this.pkid,
+          cp_source: 'SEA-MASTER',
+          cp_mode: 'SEA IMPORT',
+          cp_ref_no: this.record.mbl_refno,
+          islocked: false,
+          origin: 'seaimp-master-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
+        break;
+      }
+      case 'MESSENGER-SLIP': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MESSENGER_SLIP,
+          mbl_pkid: this.pkid,
+          mbl_mode: 'SEA IMPORT',
+          mbl_refno: this.record.mbl_refno,
+          islocked: false,
+          origin: 'seaimp-master-page'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
+        break;
+      }
+      case 'FOLLOWUP': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER,
+          master_id: this.pkid,
+          master_refno: this.record.mbl_refno,
+          master_refdate: this.record.mbl_ref_date,
+          islocked: false,
+          origin: 'seaimp-master-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
+        break;
+      }
+      case 'REQUEST-APPROVAL': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_REQUEST_APPROVAL,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          doc_type: 'SEA IMPORT',
+          req_type: 'REQUEST',
+          islocked: false,
+          origin: 'seaimp-master-page'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
+        break;
+      }
+      case 'INERNALMEMO': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_INTERNAL_MEMO,
+          refno: "REF : " + this.record.mbl_refno,
+          pkid: this.pkid,
+          origin: 'seaimp-master-page',
+          oprgrp: 'SEA IMPORT',
+          parentType: 'SEAIMP-CNTR',
+          paramType: 'CNTR-MOVE-STATUS',
+          hideTracking: 'Y'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+        break;
+      }
+      case 'CARGOPICKUP': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_DELIVERY_ORDER,
+          pkid: this.pkid,
+          origin: 'seaimp-master-page',
+        };
+        this.gs.Naviagete('Silver.SeaImport/CargoPickupPage', JSON.stringify(prm));
+        break;
+      }
+      case 'COPY-CNTR': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER,
+          pkid: this.pkid,
+          
+          origin: 'seaimp-master-page',
+        };
+        this.gs.Naviagete('Silver.SeaImport/CopyCntrPage', JSON.stringify(prm));
+        break;
+      }
+    }
+  }
 
 }

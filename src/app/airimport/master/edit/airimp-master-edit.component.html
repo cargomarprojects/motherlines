@@ -300,7 +300,7 @@
                             </thead>
                             <tbody class="page-body-tbody">
                                 <tr *ngFor="let rec of hrecords">
-                                    <td>{{rec.hbl_houseno}}</td>
+                                    <td (click)="EditHouse(rec)">{{rec.hbl_houseno}}</td>
                                     <td>{{rec.hbl_shipper_name}}</td>
                                     <td>{{rec.hbl_consignee_name}}</td>
                                     <td>{{rec.hbl_packages}}</td>

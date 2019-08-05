@@ -1,0 +1,134 @@
+<div class="page-header">
+    <div class="col">
+        <label>{{title}} ({{mode}})</label>
+        <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    </div>
+</div>
+
+<div *ngIf="errorMessage">
+    <div class="alert alert-primary">
+        {{errorMessage}}
+    </div>
+</div>
+
+
+<div class="page-body">
+    <div class="row">
+        <div class="col-md-10">
+                <div class="col-md-12 px-0 mx-0">
+                        <div class="row ">
+                          <div class="col-md-6 testbox  px-0 mx-0">
+                            <div class="form-group row">
+                              <label class="col-3 col-form-label col-form-label-sm">Hbl#</label>
+                              <div class="col-9">
+                                <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_houseno')" #hbl_houseno
+                                  (focusout)="onFocusout('hbl_houseno')" [(ngModel)]="record.hbl_houseno" maxlength="60" />
+                              </div>
+                            </div>
+              
+                            <div class="form-group row">
+                              <label class="col-3 col-form-label col-form-label-sm">Date</label>
+                              <div class="col-9">
+                                <app-date [inputdate]="record.hbl_date" (ValueChanged)="record.hbl_date=$event"></app-date>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 testbox  px-0 mx-0">
+                            <div class="form-group row">
+                              <label class="col-3 col-form-label col-form-label-sm">Ref#</label>
+                              <div class="col-9">
+                                <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_refno')"
+                                  [(ngModel)]="record.mbl_refno" [disabled]="true" maxlength="60" />
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-3 col-form-label col-form-label-sm">Stage</label>
+                              <div class="col-9">
+                                <select
+                                  id="Cmb_Shpmnt_Stage" class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage"
+                                  #hbl_shipment_stage>
+                                  <option *ngFor="let rec of gs.SHIPMENT_STAGE_OI" [value]="rec.code">{{rec.name}}</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+              
+                      </div>
+
+
+
+
+
+        </div>
+        <div class="col-md-2 p-1 testbox">
+
+            <div class="col-md-12p-2 border">
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm">Invoice</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm" (click)="GetArrivalNotice('Arrival Notice')">Arrival
+                        Notice</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm" (click)="GetArrivalNotice('Freight Invoice')">Arrival
+                        Notice(Frt Invoice)</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm" (click)="GetPreAlert()">Pre-Advice</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm" (click)="GetTurnOver()">Turnover Letter</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CARGOPICKUP')">Delivery
+                        Order</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CUSTOMSHOLD')">US Custom
+                        Hold</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm">Devan/Instructions</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('SHIPMOVEMENT')">House Internal
+                        Memo</button>
+                </div>
+
+                <div *ngIf="mode=='EDIT'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('RIDERPAGE')">Rider Page</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<div class="page-footer">
+    <div class="row row justify-content-center p-1">
+        <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+    </div>
+</div>
+
+<div>
+    <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}}
+        /
+        {{record.rec_created_date}} </label>
+</div>
