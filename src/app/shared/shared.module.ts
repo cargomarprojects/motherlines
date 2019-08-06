@@ -54,6 +54,7 @@ import { Page2Component } from './page2/page2.component';
 
 import { InputBoxComponent } from './input/inputbox.component';
 import { InputBoxNumberComponent } from './inputnumber/inputboxnumber.component';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   imports: [
@@ -88,6 +89,7 @@ import { InputBoxNumberComponent } from './inputnumber/inputboxnumber.component'
     Page2Component,
     InputBoxComponent,
     InputBoxNumberComponent,
+    ReportComponent,
   ],
   exports: [
     CommonModule,
@@ -119,6 +121,7 @@ import { InputBoxNumberComponent } from './inputnumber/inputboxnumber.component'
     Page2Component,
     InputBoxComponent,
     InputBoxNumberComponent,
+    ReportComponent,
   ],
   providers: [
     LovService,

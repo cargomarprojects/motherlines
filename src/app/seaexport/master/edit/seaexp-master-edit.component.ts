@@ -12,6 +12,7 @@ import {Tbl_cargo_exp_housem} from '../../models/Tbl_cargo_exp_housem';
 import { SearchTable } from '../../../shared/models/searchtable';
 
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
+
 import { InputBoxNumberComponent } from '../../../shared/inputnumber/inputboxnumber.component';
 
 
@@ -24,6 +25,10 @@ export class SeaexpMasterEditComponent implements OnInit {
   @ViewChild('mbl_no') mbl_no_field: InputBoxComponent;
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: InputBoxComponent;
 
+  tab : string = 'main';
+
+  manifest_url : string = '';
+  manifest_searchdata : any = {} ;
 
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
 
@@ -586,9 +591,104 @@ export class SeaexpMasterEditComponent implements OnInit {
         break;
       }
 
-     
-    }
 
+      case 'PAYMENT-REQUEST': {
+        let prm = {
+          menuid: this.gs.MENU_SE_PAYMENT_REQUEST,
+          cp_master_id: this.pkid,
+          cp_source: 'SEA-MASTER',
+          cp_mode: 'SEA EXPORT',
+          cp_ref_no: this.record.mbl_refno,
+          islocked: false,
+          origin: 'seaexp-master-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
+        break;
+      }
+      case 'MESSENGER-SLIP': {
+        let prm = {
+          menuid: this.gs.MENU_SE_MESSENGER_SLIP,
+          mbl_pkid: this.pkid,
+          mbl_mode: 'SEA EXPORT',
+          mbl_refno: this.record.mbl_refno,
+          islocked: false,
+          origin: 'seaexp-master-page'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
+        break;
+      }
+      case 'FOLLOWUP': {
+        let prm = {
+          menuid: this.gs.MENU_SE_MASTER,
+          master_id: this.pkid,
+          master_refno: this.record.mbl_refno,
+          master_refdate: this.record.mbl_ref_date,
+          islocked: false,
+          origin: 'seaexp-master-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
+        break;
+      }
+      case 'REQUEST-APPROVAL': {
+        let prm = {
+          menuid: this.gs.MENU_SE_MASTER_REQUEST_APPROVAL,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          doc_type: 'SEA EXPORT',
+          req_type: 'REQUEST',
+          islocked: false,
+          origin: 'seaexp-master-page'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
+        break;
+      }
+      case 'INERNALMEMO': {
+        let prm = {
+          menuid: this.gs.MENU_SI_MASTER_INTERNAL_MEMO,
+          refno: "REF : " + this.record.mbl_refno,
+          pkid: this.pkid,
+          origin: 'seaexp-master-page',
+          oprgrp: 'SEA EXPORT',
+          parentType: 'SEAEXP-CNTR',
+          paramType: 'CNTR-MOVE-STATUS',
+          hideTracking: 'Y'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+        break;
+      }
+    }
+  }
+
+  getManiFestReport() {
+    
+    this.manifest_url = '/api/SeaExport/Master/SeaExportManifest';
+    this.manifest_searchdata = this.gs.UserInfo;
+    this.manifest_searchdata.pkid = this.pkid;
+    this.tab = 'manifest';
+  }
+
+  callbackevent( event : any ){
+    this.tab = 'main';
+  }
+
+  getManiFestReport1() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    
+    SearchData.pkid = this.pkid;
+        
+    this.mainService.getManiFestReport(SearchData)
+      .subscribe(response => {
+        
+        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+        
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
+  
+  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }
 
 

@@ -1,380 +1,399 @@
-<div class="page-header">
-  <div class="row  align-items-center justify-content-left p-1">
-    <label class="mr-3">{{title}} ({{mode}})</label>
-    <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>    
-    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+
+<div *ngIf="tab=='main'">
+
+  <div class="page-header">
+    <div class="row  align-items-center justify-content-left p-1">
+      <label class="mr-3">{{title}} ({{mode}})</label>
+      <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
+      <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    </div>
+
   </div>
 
-</div>
-
-<div *ngIf="errorMessage">
-  <div class="alert alert-primary">
-    {{errorMessage}}
+  <div *ngIf="errorMessage">
+    <div class="alert alert-primary">
+      {{errorMessage}}
+    </div>
   </div>
-</div>
 
-<div class="page-body">
+  <div class="page-body">
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-md-10 p-1">
+      <div class="col-md-10 p-1">
 
-      <div class="row border">
+        <div class="row border">
 
-        <!-- First row -->
-        <div class="col-md-12 px-0 mx-0">
-          <div class="row">
-            <div class="col-md-6 testbox  px-0 mx-0">
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Ref#</label>
-                <div class="col-9">
-                    <InputBox [(inputModel)]="record.mbl_refno" [maxlength]="15" [uppercase]="true" [disabled]='true' >  </InputBox>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Ref Date</label>
-                <div class="col-9">
-                  <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="sdate=$event"></app-date>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 testbox  px-0 mx-0">
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Job Type</label>
-                <div class="col-9">
-                  <select class="form-control form-control-sm" [(ngModel)]="record.mbl_jobtype_id">
-                    <option *ngFor="let rec of gs.JOB_TYPE_OE" [value]="rec.code">{{rec.name}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Stage</label>
-                <div class="col-9">
-                  <select class="form-control form-control-sm" [(ngModel)]="record.mbl_shipment_stage">
-                    <option *ngFor="let rec of gs.SHIPMENT_STAGE_OE" [value]="rec.code">{{rec.name}}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <hr>
-
-        <!-- Second row -->
-        <div class="col-md-12 px-0 mx-0">
-          <div class="row">
-            <div class="col-md-6 testbox  px-0 mx-0">
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Mbl#</label>
-                <div class="col-9">
-                    <InputBox [(inputModel)]="record.mbl_no" [field]="'mbl_no'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)" #mbl_no></InputBox>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Sub-House</label>
-                <div class="col-9">
-                    <InputBox [(inputModel)]="record.mbl_sub_houseno" [field]="'mbl_sub_houseno'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)"></InputBox>
-                </div>
-              </div>
-
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Booking No</label>
-                <div class="col-9">
-                    <InputBox [(inputModel)]="record.mbl_liner_bookingno" [field]="'mbl_liner_bookingno'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)" #mbl_liner_bookingno></InputBox>                    
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Master Agent</label>
-                <div class="col-9">
-                  <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
-                    [displaydata]="record.mbl_agent_name" (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-                </div>
-              </div>
-
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Carrier</label>
-                <div class="col-9">
-
-                  <app-autocomplete2 [controlname]="'CARRIER'" [tabletype]="'SEA CARRIER'" [displaycolumn]="'NAME'"
-                    [displaydata]="record.mbl_liner_name" (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Handled.By</label>
-                <div class="col-9">
-
-                  <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
-                    [displaycolumn]="'NAME'" [displaydata]="record.mbl_handled_name"
-                    (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-
-
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
-                <div class="col-9">
-
-                  <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
-                    [displaycolumn]="'NAME'" [displaydata]="record.mbl_salesman_name"
-                    (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-
-
-
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
-                <div class="col-9">
-                  <select class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
-                    <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Shipping Term</label>
-                <div class="col-9">
-                  <select class="form-control form-control-sm" [(ngModel)]="record.mbl_ship_term_id">
-                    <option *ngFor="let rec of gs.PARAM_CARGO_MOVEMENT" [value]="rec.code">{{rec.name}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Shipping Type</label>
-                <div class="col-9">
-                  <select class="form-control form-control-sm" [(ngModel)]="record.mbl_cntr_type">
-                    <option [value]="'FCL'">FCL</option>
-                    <option [value]="'LCL'">LCL</option>
-                    <option [value]="'CONSOLE'">CONSOLE</option>
-                    <option [value]="'OTHERS'">OTEHRS</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm"></label>
-                <div class="col-9">
-                  <input type="checkbox" [(ngModel)]="record.mbl_direct_bool" />
-                  <span>Direct Shipment</span>
-                </div>
-              </div>
-
-
-
-            </div>
-            <div class="col-md-6 testbox  px-0 mx-0">
-
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Place.Receipt</label>
-                <div class="col-9">
-                    <InputBox [(inputModel)]="record.mbl_por" [field]="'mbl_por'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)" ></InputBox>
-                </div>
-              </div>
-
-
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Pol</label>
-                <div class="col-9">
-
-                  <app-autocomplete2 [controlname]="'POL'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
-                    [displaydata]="record.mbl_pol_name" (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
-                <div class="col-9">
-                  <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
-                </div>
-              </div>
-
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Port.Discharge</label>
-                <div class="col-9">
-
-                  <app-autocomplete2 [controlname]="'POD'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
-                    [displaydata]="record.mbl_pod_name" (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-
-
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
-                <div class="col-9">
-                  <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
-                </div>
-              </div>
-
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Port.Final</label>
-                <div class="col-9">
-                  <app-autocomplete2 [controlname]="'POFD'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
-                    [displaydata]="record.mbl_pofd_name" (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-
-
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Final.ETA</label>
-                <div class="col-9">
-                  <app-date [inputdate]="record.mbl_pofd_eta" (ValueChanged)="sdate=$event"></app-date>
-                </div>
-              </div>
-
-
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Dest.Country</label>
-                <div class="col-9">
-
-                  <app-autocomplete2 [controlname]="'COUNTRY'" [tabletype]="'PARAM'" [subtype]="'COUNTRY'"
-                    [displaycolumn]="'NAME'" [displaydata]="record.mbl_country_name"
-                    (ValueChanged)="LovSelected($event)">
-                  </app-autocomplete2>
-
-                </div>
-              </div>
-
-              <div>
+          <!-- First row -->
+          <div class="col-md-12 px-0 mx-0">
+            <div class="row">
+              <div class="col-md-6 testbox  px-0 mx-0">
 
                 <div class="form-group row">
-
-                  <label class="col-3 col-form-label col-form-label-sm">Vessel</label>
-                  <div class="col-4 pr-0">
-
-                    
-                      <InputBox [(inputModel)]="record.mbl_vessel" [field]="'mbl_vessel'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)" ></InputBox>                      
-
+                  <label class="col-3 col-form-label col-form-label-sm">Ref#</label>
+                  <div class="col-9">
+                    <InputBox [(inputModel)]="record.mbl_refno" [maxlength]="15" [uppercase]="true" [disabled]='true'>
+                    </InputBox>
                   </div>
-                  <label class="col-2 col-form-label col-form-label-sm pr-0">Voyage</label>
-                  <div class="col-3 pl-0">
-                      <InputBox [(inputModel)]="record.mbl_voyage" [field]="'mbl_voyage'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)" ></InputBox>                      
-
+                </div>
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Ref Date</label>
+                  <div class="col-9">
+                    <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="sdate=$event"></app-date>
                   </div>
-
-                </div>
-
-              </div>
-
-
-
-
-              <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Book.SL#</label>
-                <div class="col-4 pr-0">
-
-                    <InputBoxNumber [(inputModel)]="record.mbl_booking_slno" [field]="'mbl_booking_slno'" [dec]="0" [maxlength]="15" (blur)="onBlur($event)" ></InputBoxNumber>                      
-
-
-                </div>
-                <label class="col-2 col-form-label col-form-label-sm">Rotation#</label>
-                <div class="col-3 pl-0">
-                  
-
-                    <InputBoxNumber [(inputModel)]="record.mbl_rotation_no" [field]="'mbl_rotation_no'" [dec]="0" [maxlength]="15" (blur)="onBlur($event)" ></InputBoxNumber>                      
-
-
                 </div>
               </div>
-
+              <div class="col-md-6 testbox  px-0 mx-0">
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Job Type</label>
+                  <div class="col-9">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_jobtype_id">
+                      <option *ngFor="let rec of gs.JOB_TYPE_OE" [value]="rec.code">{{rec.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Stage</label>
+                  <div class="col-9">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_shipment_stage">
+                      <option *ngFor="let rec of gs.SHIPMENT_STAGE_OE" [value]="rec.code">{{rec.name}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
+          <hr>
 
-      <div class="row">
+          <!-- Second row -->
+          <div class="col-md-12 px-0 mx-0">
+            <div class="row">
+              <div class="col-md-6 testbox  px-0 mx-0">
 
-        <div class="col-md-12  px-0 mx-0">
-          <div class="page-body table-responsive">
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Mbl#</label>
+                  <div class="col-9">
+                    <InputBox [(inputModel)]="record.mbl_no" [field]="'mbl_no'" [maxlength]="60" [uppercase]="true"
+                      (blur)="onBlur($event)" #mbl_no></InputBox>
+                  </div>
+                </div>
 
-          
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Sub-House</label>
+                  <div class="col-9">
+                    <InputBox [(inputModel)]="record.mbl_sub_houseno" [field]="'mbl_sub_houseno'" [maxlength]="60"
+                      [uppercase]="true" (blur)="onBlur($event)"></InputBox>
+                  </div>
+                </div>
 
-            <table class="table  table-hover table-sm">
-              <thead class="page-body-thead">
-                <tr>
-                  <th>CNTR.NO</th>
-                  <th>TYPE</th>
-                  <th>SEAL NO</th>
-                  <th>PCS</th>
-                  <th>UNIT</th>
-                  <th>WEIGHT</th>
-                  <th>CBM</th>
-                  <th>TARE-WT</th>
-                </tr>
-              </thead>
-              <tbody class="page-body-tbody">
-                <tr *ngFor="let rec of records">
-                  <td  class="p-0">
-                      <InputBox [(inputModel)]="rec.cntr_no" [field]="'cntr_no'" [maxlength]="11"  [uppercase]="true" (blur)="onBlur($event)" ></InputBox>                      
-                  </td>
-                  <td  class="p-0">
-                    <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
-                      [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid" [displaydata]="rec.cntr_type"
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Booking No</label>
+                  <div class="col-9">
+                    <InputBox [(inputModel)]="record.mbl_liner_bookingno" [field]="'mbl_liner_bookingno'"
+                      [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)" #mbl_liner_bookingno></InputBox>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Master Agent</label>
+                  <div class="col-9">
+                    <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+                      [displaydata]="record.mbl_agent_name" (ValueChanged)="LovSelected($event)">
+                    </app-autocomplete2>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Carrier</label>
+                  <div class="col-9">
+
+                    <app-autocomplete2 [controlname]="'CARRIER'" [tabletype]="'SEA CARRIER'" [displaycolumn]="'NAME'"
+                      [displaydata]="record.mbl_liner_name" (ValueChanged)="LovSelected($event)">
+                    </app-autocomplete2>
+
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Handled.By</label>
+                  <div class="col-9">
+
+                    <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                      [displaycolumn]="'NAME'" [displaydata]="record.mbl_handled_name"
                       (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
-                  </td>
-                  <td  class="p-0">
-                      <InputBox [(inputModel)]="rec.cntr_sealno" [field]="'cntr_sealno'" [maxlength]="25"  [uppercase]="true" (blur)="onBlur($event)" ></InputBox>                      
-                  </td>
-                  <td  class="p-0">
-                      <InputBoxNumber [(inputModel)]="record.cntr_pieces" [field]="'cntr_pieces'" [dec]="0" [maxlength]="15" (blur)="onBlur($event)" ></InputBoxNumber>                      
-                  </td>
-                  <td  class="p-0">
-                      <InputBox [(inputModel)]="rec.cntr_packages_uom" [field]="'cntr_packages_uom'" [maxlength]="4"  [uppercase]="true" (blur)="onBlur($event)" ></InputBox>                      
-                  </td>
-                  <td  class="p-0">
-                      <InputBoxNumber [(inputModel)]="record.cntr_weight" [field]="'cntr_weight'" [dec]="3" [maxlength]="15" (blur)="onBlur($event)" ></InputBoxNumber>                      
-                  </td>
-                  <td  class="p-0">
-                      <InputBoxNumber [(inputModel)]="record.cntr_cbm" [field]="'cntr_cbm'" [dec]="3" [maxlength]="15" (blur)="onBlur($event)" ></InputBoxNumber>                      
-                  </td>
-                  <td  class="p-0">
-                      <InputBoxNumber [(inputModel)]="record.cntr_tare_weight" [field]="'cntr_tare_weight'" [dec]="3" [maxlength]="15" (blur)="onBlur($event)" ></InputBoxNumber>                      
-                  </td>
-                </tr>
-              </tbody>
-            </table>
 
-            <div class="form-group row">
-                <div class="col-12 pl-1 pb-1" >
+
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
+                  <div class="col-9">
+
+                    <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                      [displaycolumn]="'NAME'" [displaydata]="record.mbl_salesman_name"
+                      (ValueChanged)="LovSelected($event)">
+                    </app-autocomplete2>
+
+
+
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
+                  <div class="col-9">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
+                      <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Shipping Term</label>
+                  <div class="col-9">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_ship_term_id">
+                      <option *ngFor="let rec of gs.PARAM_CARGO_MOVEMENT" [value]="rec.code">{{rec.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Shipping Type</label>
+                  <div class="col-9">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_cntr_type">
+                      <option [value]="'FCL'">FCL</option>
+                      <option [value]="'LCL'">LCL</option>
+                      <option [value]="'CONSOLE'">CONSOLE</option>
+                      <option [value]="'OTHERS'">OTEHRS</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm"></label>
+                  <div class="col-9">
+                    <input type="checkbox" [(ngModel)]="record.mbl_direct_bool" />
+                    <span>Direct Shipment</span>
+                  </div>
+                </div>
+
+
+
+              </div>
+              <div class="col-md-6 testbox  px-0 mx-0">
+
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Place.Receipt</label>
+                  <div class="col-9">
+                    <InputBox [(inputModel)]="record.mbl_por" [field]="'mbl_por'" [maxlength]="60" [uppercase]="true"
+                      (blur)="onBlur($event)"></InputBox>
+                  </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Pol</label>
+                  <div class="col-9">
+
+                    <app-autocomplete2 [controlname]="'POL'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
+                      [displaydata]="record.mbl_pol_name" (ValueChanged)="LovSelected($event)">
+                    </app-autocomplete2>
+
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
+                  <div class="col-9">
+                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Port.Discharge</label>
+                  <div class="col-9">
+
+                    <app-autocomplete2 [controlname]="'POD'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
+                      [displaydata]="record.mbl_pod_name" (ValueChanged)="LovSelected($event)">
+                    </app-autocomplete2>
+
+
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
+                  <div class="col-9">
+                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Port.Final</label>
+                  <div class="col-9">
+                    <app-autocomplete2 [controlname]="'POFD'" [tabletype]="'SEA PORT'" [displaycolumn]="'NAME'"
+                      [displaydata]="record.mbl_pofd_name" (ValueChanged)="LovSelected($event)">
+                    </app-autocomplete2>
+
+
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Final.ETA</label>
+                  <div class="col-9">
+                    <app-date [inputdate]="record.mbl_pofd_eta" (ValueChanged)="sdate=$event"></app-date>
+                  </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Dest.Country</label>
+                  <div class="col-9">
+
+                    <app-autocomplete2 [controlname]="'COUNTRY'" [tabletype]="'PARAM'" [subtype]="'COUNTRY'"
+                      [displaycolumn]="'NAME'" [displaydata]="record.mbl_country_name"
+                      (ValueChanged)="LovSelected($event)">
+                    </app-autocomplete2>
+
+                  </div>
+                </div>
+
+                <div>
+
+                  <div class="form-group row">
+
+                    <label class="col-3 col-form-label col-form-label-sm">Vessel</label>
+                    <div class="col-4 pr-0">
+
+
+                      <InputBox [(inputModel)]="record.mbl_vessel" [field]="'mbl_vessel'" [maxlength]="60"
+                        [uppercase]="true" (blur)="onBlur($event)"></InputBox>
+
+                    </div>
+                    <label class="col-2 col-form-label col-form-label-sm pr-0">Voyage</label>
+                    <div class="col-3 pl-0">
+                      <InputBox [(inputModel)]="record.mbl_voyage" [field]="'mbl_voyage'" [maxlength]="60"
+                        [uppercase]="true" (blur)="onBlur($event)"></InputBox>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+
+
+                <div class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">Book.SL#</label>
+                  <div class="col-4 pr-0">
+
+                    <InputBoxNumber [(inputModel)]="record.mbl_booking_slno" [field]="'mbl_booking_slno'" [dec]="0"
+                      [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
+
+
+                  </div>
+                  <label class="col-2 col-form-label col-form-label-sm">Rotation#</label>
+                  <div class="col-3 pl-0">
+
+
+                    <InputBoxNumber [(inputModel)]="record.mbl_rotation_no" [field]="'mbl_rotation_no'" [dec]="0"
+                      [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
+
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-12  px-0 mx-0">
+            <div class="page-body table-responsive">
+
+
+
+              <table class="table  table-hover table-sm">
+                <thead class="page-body-thead">
+                  <tr>
+                    <th>CNTR.NO</th>
+                    <th>TYPE</th>
+                    <th>SEAL NO</th>
+                    <th>PCS</th>
+                    <th>UNIT</th>
+                    <th>WEIGHT</th>
+                    <th>CBM</th>
+                    <th>TARE-WT</th>
+                  </tr>
+                </thead>
+                <tbody class="page-body-tbody">
+                  <tr *ngFor="let rec of records">
+                    <td class="p-0">
+                      <InputBox [(inputModel)]="rec.cntr_no" [field]="'cntr_no'" [maxlength]="11" [uppercase]="true"
+                        (blur)="onBlur($event)"></InputBox>
+                    </td>
+                    <td class="p-0">
+                      <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
+                        [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid" [displaydata]="rec.cntr_type"
+                        (ValueChanged)="LovSelected($event)">
+                      </app-autocomplete2>
+                    </td>
+                    <td class="p-0">
+                      <InputBox [(inputModel)]="rec.cntr_sealno" [field]="'cntr_sealno'" [maxlength]="25"
+                        [uppercase]="true" (blur)="onBlur($event)"></InputBox>
+                    </td>
+                    <td class="p-0">
+                      <InputBoxNumber [(inputModel)]="record.cntr_pieces" [field]="'cntr_pieces'" [dec]="0"
+                        [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
+                    </td>
+                    <td class="p-0">
+                      <InputBox [(inputModel)]="rec.cntr_packages_uom" [field]="'cntr_packages_uom'" [maxlength]="4"
+                        [uppercase]="true" (blur)="onBlur($event)"></InputBox>
+                    </td>
+                    <td class="p-0">
+                      <InputBoxNumber [(inputModel)]="record.cntr_weight" [field]="'cntr_weight'" [dec]="3"
+                        [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
+                    </td>
+                    <td class="p-0">
+                      <InputBoxNumber [(inputModel)]="record.cntr_cbm" [field]="'cntr_cbm'" [dec]="3" [maxlength]="15"
+                        (blur)="onBlur($event)"></InputBoxNumber>
+                    </td>
+                    <td class="p-0">
+                      <InputBoxNumber [(inputModel)]="record.cntr_tare_weight" [field]="'cntr_tare_weight'" [dec]="3"
+                        [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="form-group row">
+                <div class="col-12 pl-1 pb-1">
                   <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
                   <button class="btn btn-success btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
                 </div>
               </div>
 
+            </div>
           </div>
+
         </div>
 
-      </div>
+        <hr>
 
-      <hr>
-
-      <div *ngIf="mode=='EDIT'" class="row">
+        <div *ngIf="mode=='EDIT'" class="row">
 
           <div class="col-md-12  px-0 mx-0">
             <div class="page-body table-responsive">
@@ -420,89 +439,99 @@
           </div>
 
         </div>
-        
 
 
-    </div>
-
-    <div class="col-md-2 p-1 testbox">
-
-      <div class="col-md-12 p-2 border">
-
-        <div class="form-group row">
-          <button class="col-12 btn btn-info btn-sm" (click)="BtnNavigation('BOOKING')">Booking</button>
-        </div>
-
-
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MBLPAGE')">MBL Instruction</button>
-        </div>
-
-        <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('DOCKPAGE')">Dock Receipt</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Manifest</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">AR & AP</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Profit Report</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Shipment Label</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Messenger Slip</button>
-        </div>
-
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Payment Request</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Attachments</button>
-        </div>
-
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Add To Follow Up</button>
-        </div>
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Internal Memo</button>
-        </div>
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Request For Approval</button>
-        </div>
-        <div class="form-group row">
-          <button class=" col-12 btn btn-info btn-sm">Certificate Of Origin</button>
-        </div>
 
       </div>
 
+      <div class="col-md-2 p-1 testbox">
+
+        <div class="col-md-12 p-2 border">
+
+          <div class="form-group row">
+            <button class="col-12 btn btn-info btn-sm" (click)="BtnNavigation('BOOKING')">Booking</button>
+          </div>
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MBLPAGE')">MBL Instruction</button>
+          </div>
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('DOCKPAGE')">Dock Receipt</button>
+          </div>
+
+          <div class="form-group row">
+
+            <button class=" col-12 btn btn-info btn-sm" (click)="getManiFestReport()">Manifest</button>
+
+          </div>
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">AR & AP</button>
+          </div>
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm">Profit Report</button>
+          </div>
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm">Shipment Label</button>
+          </div>
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MESSENGER-SLIP')">Messenger
+              Slip</button>
+          </div>
+
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
+              Request</button>
+          </div>
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm">Attachments</button>
+          </div>
+
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
+          </div>
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
+          </div>
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('REQUEST-APPROVAL')">Request For
+              Approval</button>
+          </div>
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm">Certificate Of Origin</button>
+          </div>
+
+        </div>
+
+
+      </div>
 
     </div>
 
   </div>
 
-</div>
 
-
-<div class="page-footer">
-  <div class="row justify-content-center p-1">
+  <div class="page-footer">
+    <div class="row justify-content-center p-1">
       <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
 
+    </div>
   </div>
+
+  <div>
+    <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}}
+      /
+      {{record.rec_created_date}} </label>
+  </div>
+
 </div>
 
-<div>
-  <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}} /
-    {{record.rec_created_date}} </label>
+<div *ngIf="tab=='manifest'">
+  <app-report [url]='manifest_url' [serachdata]='manifest_searchdata' (callbackevent)="callbackevent($event)"></app-report>
 </div>

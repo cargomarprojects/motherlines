@@ -927,6 +927,7 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.errorMessage = this.gs.getError(error);
       });
   }
+  
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }

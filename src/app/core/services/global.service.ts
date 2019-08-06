@@ -687,6 +687,11 @@ export class GlobalService {
   }
 
 
+  public makecall( url : string , SearchData: any) {
+    return this.http2.post<any>(this.baseUrl +  url , SearchData, this.headerparam2('authorized'));
+  }
+
+
   public SendEmail(SearchData: any) {
     return this.http2.post<any>(this.baseUrl + "/api/Email/Common", SearchData, this.headerparam2('authorized'));
   }

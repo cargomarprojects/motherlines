@@ -122,5 +122,9 @@ export class seaexpMasterService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Master/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    getManiFestReport(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Master/SeaExportManifest', SearchData, this.gs.headerparam2('authorized'));
+    }
+
 
 }
