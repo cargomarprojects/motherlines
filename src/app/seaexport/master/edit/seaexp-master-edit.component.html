@@ -533,5 +533,5 @@
 </div>
 
 <div *ngIf="tab=='manifest'">
-  <app-report [url]='manifest_url' [serachdata]='manifest_searchdata' (callbackevent)="callbackevent($event)"></app-report>
+  <app-report [title]="'Ocean Export Manifest'" [url]="manifest_url" [searchdata]="manifest_searchdata" (callbackevent)="callbackevent($event)"></app-report>
 </div>

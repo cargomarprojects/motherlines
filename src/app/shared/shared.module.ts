@@ -1,8 +1,10 @@
+
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -60,6 +62,7 @@ import { ReportComponent } from './report/report.component';
   imports: [
     CommonModule,
     FormsModule,
+    PdfViewerModule,
     HttpClientModule,
     NgbModule
   ],

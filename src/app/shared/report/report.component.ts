@@ -8,6 +8,13 @@ import { GlobalService } from '../../core/services/global.service';
 })
 export class ReportComponent implements OnInit {
 
+  private errorMessage : string = '';
+
+  private _title: string;
+  @Input() set title(value: string) {
+    this._title = value;
+  }
+
   private _url: string;
   @Input() set url(value: string) {
     this._url = value;
@@ -45,12 +52,13 @@ export class ReportComponent implements OnInit {
 
       },
       error =>{
-        alert( this.gs.getError(error));
+        this.errorMessage = this.gs.getError(error);
+        alert( );
       }
     );
   }
 
-  return(){
+  Close(){
     if ( this.callbackevent)
       this.callbackevent.emit({action : 'CLOSE', source :'MANIFEST'});
   }

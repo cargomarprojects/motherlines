@@ -1,15 +1,17 @@
+<div class="page-header">
+  <div class="row  align-items-center justify-content-left p-1">
+    <label class="mr-3">{{_title}}</label>
+    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+  </div>
 
-<p>
-  report works!
-</p>
+</div>
 
+<div *ngIf="errorMessage">
+  <div class="alert alert-primary">
+    {{errorMessage}}
+  </div>
+</div>
 
-<button class="btn btn-primary btn-sm" (click)="return()" > Return </button>>
-
-{{filename}}
-
-<iframe>
-
-
-  
-</iframe>
+<div class="page-body">
+  {{filename}}
+</div>
