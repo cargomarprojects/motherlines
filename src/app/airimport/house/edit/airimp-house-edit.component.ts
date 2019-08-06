@@ -241,15 +241,15 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_agent_id = this.mblrecord.mbl_agent_id;
       this.record.hbl_agent_code = this.mblrecord.mbl_agent_code;
       this.record.hbl_agent_name = this.mblrecord.mbl_agent_name;
-     
-     
+
+
       this.record.hbl_pod_code = this.mblrecord.mbl_pod_code;
       this.record.hbl_pod_name = this.mblrecord.mbl_pod_name;
       this.record.hbl_pod_eta = this.mblrecord.mbl_pod_eta;
-     
+
       this.record.mbl_no = this.mblrecord.mbl_no;
       this.record.hbl_vessel = this.mblrecord.mbl_vessel;
-     
+
       this.record.hbl_handled_id = this.mblrecord.mbl_handled_id;
       this.record.hbl_handled_name = this.mblrecord.mbl_handled_name;
       this.record.hbl_salesman_id = this.mblrecord.mbl_salesman_id;
@@ -417,7 +417,7 @@ export class AirImpHouseEditComponent implements OnInit {
     this.mainService.LoadMasterData(SearchData)
       .subscribe(response => {
         this.mblrecord = <Tbl_cargo_imp_masterm>response.record;
-       this.init();
+        this.init();
 
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -458,7 +458,7 @@ export class AirImpHouseEditComponent implements OnInit {
 
     if (!this.Allvalid())
       return;
-     
+
     //this.SaveDescList();
     const saveRecord = <vm_tbl_cargo_imp_housem>{};
     saveRecord.record = this.record;
@@ -492,7 +492,7 @@ export class AirImpHouseEditComponent implements OnInit {
     // let icntr_weight: number = 0;
     // let icntr_cbm: number = 0;
 
-    
+
     // if (sUnit != "")
     //   this.record.hbl_uom = sUnit;
 
@@ -680,7 +680,7 @@ export class AirImpHouseEditComponent implements OnInit {
       this.hbl_frt_status_field.nativeElement.focus();
       return bRet;
     }
-    
+
     if (this.gs.isBlank(this.record.hbl_bltype)) {
       bRet = false;
       this.errorMessage = "Nomination Type can't be blank";
@@ -691,7 +691,7 @@ export class AirImpHouseEditComponent implements OnInit {
 
 
     //decimal iWt = 0;
-    
+
     if (this.gs.isBlank(this.record.hbl_handled_id)) {
       bRet = false;
       this.errorMessage = "Handled By cannot be blank";
@@ -718,7 +718,7 @@ export class AirImpHouseEditComponent implements OnInit {
   }
 
 
-  
+
   LovSelected(_Record: SearchTable) {
 
     if (_Record.controlname == "SHIPPER") {
@@ -743,9 +743,9 @@ export class AirImpHouseEditComponent implements OnInit {
         // };
         // mPage.Show();
 
-       // this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
+        // this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
 
-     this.gs.ShowAccAlert(this.record.hbl_shipper_id);
+        this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
     }
 
@@ -806,7 +806,7 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_location_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
     }
 
-     
+
 
     if (_Record.controlname == "AGENT") {
       this.record.hbl_agent_id = _Record.id;
@@ -830,7 +830,7 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_careof_id = _Record.id;
       this.record.hbl_careof_name = _Record.name;
     }
-    
+
   }
 
   OnChange(field: string) {
@@ -843,22 +843,22 @@ export class AirImpHouseEditComponent implements OnInit {
         if (sWord.length <= 0)
           return;
 
-       // this.record.hbl_cargo_description7 = sWord;
+        // this.record.hbl_cargo_description7 = sWord;
       }
     }
     if (field == 'hbl_telex_released') {
-    //   if (this.record.hbl_telex_released.toString() == "YES")
-    //     this.record.hbl_bl_req = "* ORIGINAL B/L SURRENDERED";
-    //   else {
-    //     if (this.gs.BRANCH_REGION == "USA") {
-    //       if (this.record.hbl_telex_released.toString() == "NO - REQUIRED")
-    //         this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
-    //       else
-    //         this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L RECEIVED";
-    //     }
-    //     else
-    //       this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
-    //   }
+      //   if (this.record.hbl_telex_released.toString() == "YES")
+      //     this.record.hbl_bl_req = "* ORIGINAL B/L SURRENDERED";
+      //   else {
+      //     if (this.gs.BRANCH_REGION == "USA") {
+      //       if (this.record.hbl_telex_released.toString() == "NO - REQUIRED")
+      //         this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
+      //       else
+      //         this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L RECEIVED";
+      //     }
+      //     else
+      //       this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
+      //   }
     }
   }
 
@@ -903,7 +903,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record.hbl_frt_status = this.record.hbl_frt_status.toUpperCase();
         break;
       }
-       
+
       case 'hbl_it_no': {
         this.record.hbl_it_no = this.record.hbl_it_no.toUpperCase();
         break;
@@ -986,7 +986,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record.hbl_location_add5 = this.record.hbl_location_add5.toUpperCase();
         break;
       }
-      
+
       case 'hbl_agent_name': {
         this.record.hbl_agent_name = this.record.hbl_agent_name.toUpperCase();
         break;
@@ -1051,7 +1051,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record.hbl_pono = this.record.hbl_pono.toUpperCase();
         break;
       }
-      
+
       case 'hbl_remark1': {
         this.record.hbl_remark1 = this.record.hbl_remark1.toUpperCase();
         break;
@@ -1064,7 +1064,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record.hbl_remark3 = this.record.hbl_remark3.toUpperCase();
         break;
       }
-      
+
       case 'hbl_salesman_name': {
         this.record.hbl_salesman_name = this.record.hbl_salesman_name.toUpperCase();
         break;
@@ -1113,7 +1113,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record.hbl_pod_name = this.record.hbl_pod_name.toUpperCase();
         break;
       }
-     
+
       case 'hbl_careof_name': {
         this.record.hbl_careof_name = this.record.hbl_careof_name.toUpperCase();
         break;
@@ -1130,7 +1130,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record.hbl_paid_status = this.record.hbl_paid_status.toUpperCase();
         break;
       }
-      
+
       case 'hbl_cargo_release_status': {
         this.record.hbl_cargo_release_status = this.record.hbl_cargo_release_status.toUpperCase();
         break;
@@ -1151,7 +1151,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record.hbl_paid_remarks = this.record.hbl_paid_remarks.toUpperCase();
         break;
       }
-     
+
     }
   }
 
@@ -1216,6 +1216,10 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
     else if (_type == "Cft2Cbm")
       this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
+    else if (_type == "Chwt2Lbs")
+      this.record.hbl_chwt_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_chwt, 3);
+    else if (_type == "Lbs2Chwt")
+      this.record.hbl_chwt = this.gs.Convert_Weight("LBS2KG", this.record.hbl_chwt_lbs, 3);
   }
 
   AddHouse() {
@@ -1305,19 +1309,19 @@ export class AirImpHouseEditComponent implements OnInit {
       });
   }
 
-   
-  GetArrivalNotice(_type:string) {
+
+  GetArrivalNotice(_type: string) {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
-    SearchData.type =_type;
-                                
+    SearchData.type = _type;
+
     this.mainService.GetArrivalNotice(SearchData)
       .subscribe(response => {
-        
+
         this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
 
-        
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -1331,13 +1335,13 @@ export class AirImpHouseEditComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
-        
+
     this.mainService.GetPreAlertReport(SearchData)
       .subscribe(response => {
-        
+
         this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
 
-        
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -1346,13 +1350,13 @@ export class AirImpHouseEditComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
-        
+
     this.mainService.GetTurnOverReport(SearchData)
       .subscribe(response => {
-        
+
         this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
 
-        
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
