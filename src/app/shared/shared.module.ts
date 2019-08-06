@@ -4,16 +4,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
-
 import { HttpClientModule } from '@angular/common/http';
-
 
 import { LovService } from './services/lov.service';
 import { GenerateDocService } from './services/generatedoc.service';
 import { GenService } from './services/gen.services';
 
-import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+
 
 import { AutoCompleteComponent } from './autocomplete/autocomplete.component';
 
@@ -62,7 +59,6 @@ import { ReportComponent } from './report/report.component';
   imports: [
     CommonModule,
     FormsModule,
-    PdfJsViewerModule,
     HttpClientModule,
     NgbModule
   ],
