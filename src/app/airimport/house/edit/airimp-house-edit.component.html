@@ -375,7 +375,7 @@
               <app-date [inputdate]="record.hbl_pickup_date" (ValueChanged)="hbl_pickup_date=$event"></app-date>
             </div>
           </div>
-          <div class="form-group row">
+          <div *ngIf="gs.BOE_IMPORT_REQUIRED=='Y'" class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm">BOE#</label>
             <div class="col-9">
               <InputBox [(inputModel)]="record.hbl_boeno" [maxlength]="60" [uppercase]="true"  
@@ -441,22 +441,13 @@
           </div>
         </div>
         <div class="col-md-6 testbox  px-0 mx-0">
-
-          <!-- <div class="form-group row">
-            <label class="col-3 col-form-label col-form-label-sm"></label>
-            <div class="col-9">
-              <button class="btn btn-success btn-sm" (click)="OHBLUpload()"><span>Upload OHBL Or Telex RLS
-                  Copy</span> </button>
-            </div>
-          </div> -->
-
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm">Paid.Status</label>
             <div class="col-9  input-group input-group-sm">
               <select class="form-control form-control-sm" [(ngModel)]="record.hbl_paid_status">
                 <option *ngFor="let rec of PaidStatusList" [value]="rec.name">{{rec.name}}</option>
               </select>
-              <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc9>
+              <InputBox [(inputModel)]="record.hbl_paid_remarks" [maxlength]="60" [uppercase]="true" #paid_remarks>
               </InputBox>
             </div>
           </div>
@@ -475,12 +466,9 @@
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm"></label>
             <div class="col-9">
-              <div class="form-check"> <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_is_pl" />
+              <div class="form-check"> <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_is_itshipment" />
               <span>IT Shipment</span></div>
             </div>
-           
-            <!-- <div class="form-check"> <input type="checkbox" class="form-check-input" [(ngModel)]="rec.cp_selected"><span>{{rec.cp_inv_no}}</span></div> -->
-
           </div>
         </div>
       </div>
@@ -489,81 +477,63 @@
         <div class="col-md-12">
           <div class="form-group row">
             <label class="col-2  pl-0  pr-0 col-form-label col-form-label-sm">IT#</label>
-            <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">IT.Date </label>
+            <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">IT.Date</label>
             <label class="col-4 pl-0  pr-0 col-form-label col-form-label-sm">IT.Port</label>
             <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">Pcs</label>
             <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">Wt</label>
           </div>
           <div class="form-group row">
             <div class="col-2  pl-0  pr-0">
-              <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc1')"
-                [(ngModel)]="record.pick_desc1" maxlength="100" /> -->
-              <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
+              <InputBox [(inputModel)]="record.hbl_it_no" [maxlength]="60" [uppercase]="true" #it_no>
               </InputBox>
             </div>
             <div class="col-2 pl-0  pr-0">
-              <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
+              <app-date [inputdate]="record.hbl_it_date" (ValueChanged)="record.hbl_it_date=$event" #it_date ></app-date>
             </div>
             <div class="col-4 pl-0  pr-0">
-              <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom1')"
-                [(ngModel)]="record.pick_uom1" maxlength="10" /> -->
-              <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
+              <InputBox [(inputModel)]="record.hbl_it_port" [maxlength]="60" [uppercase]="true" #it_port></InputBox>
             </div>
             <div class="col-2 pl-0  pr-0">
-              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_wt1')"
-                [(ngModel)]="record.pick_wt1" maxlength="15" />
+                <InputBoxNumber [(inputModel)]="record.hbl_it_pcs" [maxlength]="15" [dec]="0" #it_pcs></InputBoxNumber>
             </div>
             <div class="col-2 pl-0  pr-0">
-              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_cbm_cft1')"
-                [(ngModel)]="record.pick_cbm_cft1" maxlength="15" />
+                <InputBoxNumber [(inputModel)]="record.hbl_it_wt" [maxlength]="15" [dec]="3" #it_wt></InputBoxNumber>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-2  pl-0  pr-0">
-              <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc2')"
-                [(ngModel)]="record.pick_desc2" maxlength="100" /> -->
-              <InputBox [(inputModel)]="record.pick_desc2" [maxlength]="100" [uppercase]="true" #pick_desc2>
+              <InputBox [(inputModel)]="record.hbl_it_no2" [maxlength]="60" [uppercase]="true" #it_no2>
               </InputBox>
             </div>
             <div class="col-2 pl-0  pr-0">
-              <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
+              <app-date [inputdate]="record.hbl_it_date2" (ValueChanged)="record.hbl_it_date2=$event" #it_date2 ></app-date>
             </div>
             <div class="col-4 pl-0  pr-0">
-              <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom2')"
-                [(ngModel)]="record.pick_uom2" maxlength="10" /> -->
-              <InputBox [(inputModel)]="record.pick_uom2" [maxlength]="10" [uppercase]="true" #pick_uom2></InputBox>
+              <InputBox [(inputModel)]="record.hbl_it_port2" [maxlength]="60" [uppercase]="true" #it_port2></InputBox>
             </div>
             <div class="col-2 pl-0  pr-0">
-              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_wt2')"
-                [(ngModel)]="record.pick_wt2" maxlength="15" />
+                <InputBoxNumber [(inputModel)]="record.hbl_it_pcs2" [maxlength]="15" [dec]="0" #it_pcs2></InputBoxNumber>
             </div>
-            <div class="col-2 pl-0 pr-0">
-              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_cbm_cft2')"
-                [(ngModel)]="record.pick_cbm_cft2" maxlength="15" />
+            <div class="col-2 pl-0  pr-0">
+                <InputBoxNumber [(inputModel)]="record.hbl_it_wt2" [maxlength]="15" [dec]="3" #it_wt2></InputBoxNumber>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-2  pl-0  pr-0">
-              <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc3')"
-                [(ngModel)]="record.pick_desc3" maxlength="100" /> -->
-              <InputBox [(inputModel)]="record.pick_desc3" [maxlength]="100" [uppercase]="true" #pick_desc3>
+              <InputBox [(inputModel)]="record.hbl_it_no3" [maxlength]="60" [uppercase]="true" #it_no3>
               </InputBox>
             </div>
-            <div class="col-2 pl-0 pr-0">
-              <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
+            <div class="col-2 pl-0  pr-0">
+              <app-date [inputdate]="record.hbl_it_date3" (ValueChanged)="record.hbl_it_date3=$event" #it_date3 ></app-date>
             </div>
             <div class="col-4 pl-0  pr-0">
-              <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_uom3')"
-                [(ngModel)]="record.pick_uom3" maxlength="10" /> -->
-              <InputBox [(inputModel)]="record.pick_uom3" [maxlength]="10" [uppercase]="true" #pick_uom3></InputBox>
+              <InputBox [(inputModel)]="record.hbl_it_port3" [maxlength]="60" [uppercase]="true" #it_port3></InputBox>
             </div>
             <div class="col-2 pl-0  pr-0">
-              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_wt3')"
-                [(ngModel)]="record.pick_wt3" maxlength="15" />
+                <InputBoxNumber [(inputModel)]="record.hbl_it_pcs3" [maxlength]="15" [dec]="0" #it_pcs3></InputBoxNumber>
             </div>
-            <div class="col-2 pl-0 pr-0">
-              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_cbm_cft3')"
-                [(ngModel)]="record.pick_cbm_cft3" maxlength="15" />
+            <div class="col-2 pl-0  pr-0">
+                <InputBoxNumber [(inputModel)]="record.hbl_it_wt3" [maxlength]="15" [dec]="3" #it_wt3></InputBoxNumber>
             </div>
           </div>
         </div>
@@ -573,8 +543,8 @@
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm">Remarks</label>
             <div class="col-9">
-              <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_place_final')"
-                [(ngModel)]="record.hbl_place_final" maxlength="60" />
+                <InputBox [(inputModel)]="record.hbl_remark1" [maxlength]="80" [uppercase]="true" #remark1>
+                </InputBox>
             </div>
           </div>
 
@@ -582,16 +552,16 @@
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm"></label>
             <div class="col-9">
-              <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_place_final')"
-                [(ngModel)]="record.hbl_place_final" maxlength="60" />
+              <InputBox [(inputModel)]="record.hbl_remark2" [maxlength]="80" [uppercase]="true" #remark2>
+              </InputBox>
             </div>
           </div>
          
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm"></label>
             <div class="col-9">
-              <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_place_final')"
-                [(ngModel)]="record.hbl_place_final" maxlength="60" />
+              <InputBox [(inputModel)]="record.hbl_remark3" [maxlength]="80" [uppercase]="true" #remark3>
+              </InputBox>
             </div>
           </div>
         </div>
@@ -602,7 +572,7 @@
 
               <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
                 [displaycolumn]="'NAME'" [displaydata]="record.hbl_handled_name"
-                (ValueChanged)="LovSelected($event)" #hbl_handled_name>
+                (ValueChanged)="LovSelected($event)" #handled_name>
               </app-autocomplete2>
 
 
@@ -623,14 +593,14 @@
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm">Last Free Date</label>
             <div class="col-9">
-              <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
+              <app-date [inputdate]="record.hbl_lfd_date" (ValueChanged)="record.hbl_lfd_date=$event"></app-date>
             </div>
           </div>
 
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm">Actual Delivery Date</label>
             <div class="col-9">
-              <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
+              <app-date [inputdate]="record.hbl_delivery_date" (ValueChanged)="record.hbl_delivery_date=$event"></app-date>
             </div>
           </div>
         </div>
@@ -638,52 +608,52 @@
 
     </div>
   </div>
-  <div class="col-md-2 p-1 testbox">
+  <div *ngIf="mode=='EDIT'" class="col-md-2 p-1 testbox">
 
     <div class="col-md-12 p-2 border">
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div  class="form-group row">
         <button class=" col-12 btn btn-info btn-sm">Invoice</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div class="form-group row">
         <button class=" col-12 btn btn-info btn-sm" (click)="GetArrivalNotice('Arrival Notice')">Arrival
           Notice</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div  class="form-group row">
         <button class=" col-12 btn btn-info btn-sm" (click)="GetArrivalNotice('Freight Invoice')">Arrival
           Notice(Frt Invoice)</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div class="form-group row">
         <button class=" col-12 btn btn-info btn-sm" (click)="GetPreAlert()">Pre-Advice</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div  class="form-group row">
         <button class=" col-12 btn btn-info btn-sm" (click)="GetTurnOver()">Turnover Letter</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div  class="form-group row">
         <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CARGOPICKUP')">Delivery
           Order</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div class="form-group row">
         <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CUSTOMSHOLD')">US Custom
           Hold</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div class="form-group row">
         <button class=" col-12 btn btn-info btn-sm">Devan/Instructions</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div class="form-group row">
         <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('SHIPMOVEMENT')">House Internal
           Memo</button>
       </div>
 
-      <div *ngIf="mode=='EDIT'" class="form-group row">
+      <div  class="form-group row">
         <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('RIDERPAGE')">Rider Page</button>
       </div>
 

@@ -622,4 +622,33 @@ export class AirImpMasterEditComponent implements OnInit {
     }
   }
 
+  CopyLoc2House() {
+    this.errorMessage = '';
+    if (this.mode != 'EDIT') {
+      this.errorMessage = 'Please Save and Continue...';
+      return;
+    }
+
+    if (!confirm("Copy To House...")) {
+      return;
+    }
+
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+    this.mainService.CopyLoc2House(SearchData)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+          this.errorMessage = 'Copy Complete';
+          alert(this.errorMessage);
+        }
+
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+
+  }
 }
