@@ -5,6 +5,7 @@ import { AirImpMasterComponent } from './master/airimp-master.component';
 import { AirImpMasterEditComponent } from './master/edit/airimp-master-edit.component';
 import { AirImpHouseComponent } from './house/airimp-house.component';
 import { AirImpHouseEditComponent } from './house/edit/airimp-house-edit.component';
+import { AirImpCargoPickupComponent } from './cargopickup/airimp-cargopickup.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path : 'AirImpMasterEditPage', component : AirImpMasterEditComponent },
   { path : 'AirImpHousePage', component : AirImpHouseComponent },
   { path : 'AirImpHouseEditPage', component : AirImpHouseEditComponent },
+  { path : 'AirCargoPickupPage', component : AirImpCargoPickupComponent }  ,
 ];
 
 

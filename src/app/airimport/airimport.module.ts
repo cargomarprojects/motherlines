@@ -12,6 +12,7 @@ import { AirImpMasterEditComponent } from './master/edit/airimp-master-edit.comp
 import { AirImpHouseComponent } from './house/airimp-house.component';
 import { AirImpHouseHeaderComponent } from './house/airimp-house-header.component';
 import { AirImpHouseEditComponent } from './house/edit/airimp-house-edit.component';
+import { AirImpCargoPickupComponent } from './cargopickup/airimp-cargopickup.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AirImpHouseEditComponent } from './house/edit/airimp-house-edit.compone
     AirImpMasterEditComponent,
     AirImpHouseComponent,
     AirImpHouseHeaderComponent,
-    AirImpHouseEditComponent
+    AirImpHouseEditComponent,
+    AirImpCargoPickupComponent
   ],
   imports: [
     SharedModule,    

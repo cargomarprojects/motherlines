@@ -1225,11 +1225,11 @@ export class AirImpHouseEditComponent implements OnInit {
       }
       case 'CARGOPICKUP': {
         let prm = {
-          menuid: this.gs.MENU_SI_HOUSE_DELIVERY_ORDER,
+          menuid: this.gs.MENU_AI_HOUSE_DELIVERY_ORDER,
           pkid: this.pkid,
-          origin: 'seaimp-House-page',
+          origin: 'airimp-House-page',
         };
-        this.gs.Naviagete('Silver.SeaImport/CargoPickupPage', JSON.stringify(prm));
+        this.gs.Naviagete('Silver.AirImport.Trans/AirCargoPickupPage', JSON.stringify(prm));
         break;
       }
       case 'RIDERPAGE': {
