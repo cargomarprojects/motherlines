@@ -133,10 +133,15 @@ export class AirImpHouseService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetArrivalNotice', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    GetPreAlertReport(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetPreAlertReport', SearchData, this.gs.headerparam2('authorized'));
+    GetReleaseOrder(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetReleaseOrder', SearchData, this.gs.headerparam2('authorized'));
     }
-    GetTurnOverReport(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetTurnOverReport', SearchData, this.gs.headerparam2('authorized'));
+
+    GetAuthorityEntry(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetAuthorityEntry', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    GetShipmentNotRelease(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetShipmentNotRelease', SearchData, this.gs.headerparam2('authorized'));
     }
 }

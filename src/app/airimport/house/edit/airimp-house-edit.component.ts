@@ -1246,12 +1246,12 @@ export class AirImpHouseEditComponent implements OnInit {
       }
       case 'SHIPMOVEMENT': {
         let prm = {
-          menuid: this.gs.MENU_SI_SHIPMENT_MOVEMENT,
+          menuid: this.gs.MENU_AI_SHIPMENT_MOVEMENT,
           refno: "REF : " + this.record.mbl_refno + "  HBL : " + this.record.hbl_houseno,
           pkid: this.pkid,
-          origin: 'seaimp-House-page',
-          oprgrp: 'SEA IMPORT',
-          parentType: 'SEAIMP-SHIP',
+          origin: 'airimp-House-page',
+          oprgrp: 'AIR IMPORT',
+          parentType: 'AIRIMP-SHIP',
           paramType: 'SHIP-MOVE-STATUS',
           hideTracking: 'Y'
         };
@@ -1386,12 +1386,12 @@ export class AirImpHouseEditComponent implements OnInit {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }
 
-  GetPreAlert() {
+  GetReleaseOrder() {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
-    this.mainService.GetPreAlertReport(SearchData)
+    this.mainService.GetReleaseOrder(SearchData)
       .subscribe(response => {
 
         this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
@@ -1401,18 +1401,34 @@ export class AirImpHouseEditComponent implements OnInit {
         this.errorMessage = this.gs.getError(error);
       });
   }
-  GetTurnOver() {
+
+
+  GetAuthorityEntry() {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
-    this.mainService.GetTurnOverReport(SearchData)
+    this.mainService.GetAuthorityEntry(SearchData)
       .subscribe(response => {
 
         this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
 
+     }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
 
-      }, error => {
+  GetShipmentNotRelease() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+
+    this.mainService.GetShipmentNotRelease(SearchData)
+      .subscribe(response => {
+
+        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+
+     }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
