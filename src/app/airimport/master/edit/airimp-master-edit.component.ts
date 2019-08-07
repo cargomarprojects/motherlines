@@ -651,4 +651,23 @@ export class AirImpMasterEditComponent implements OnInit {
       });
 
   }
+
+  GetPODAirImpRpt() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+        
+    this.mainService.GetPODAirImpRpt(SearchData)
+      .subscribe(response => {
+        
+        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+        
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
+  
+  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+  }
 }

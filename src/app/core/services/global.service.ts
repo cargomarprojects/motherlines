@@ -504,7 +504,8 @@ export class GlobalService {
       "~FRONTEND_DATEFORMAT": this.FRONTEND_DATEFORMAT,
       "~PRINT_FIRMCODE": this.PRINT_FIRMCODE,
       "~WWW_ROOT": this.WWW_ROOT,
-      "~GLOBAL_REPORT_FOLDER": this.GLOBAL_REPORT_FOLDER
+      "~GLOBAL_REPORT_FOLDER": this.GLOBAL_REPORT_FOLDER,
+      "~AIRPORTDISPLAYCOLUMN": this.AIRPORTDISPLAYCOLUMN
     }
 
   }
@@ -1179,6 +1180,7 @@ export class GlobalService {
     sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify( this.PRINT_FIRMCODE));
     sessionStorage.setItem('WWW_ROOT', JSON.stringify( this.WWW_ROOT));
     sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify( this.GLOBAL_REPORT_FOLDER));
+    sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify( this.AIRPORTDISPLAYCOLUMN));
 
   }
 
