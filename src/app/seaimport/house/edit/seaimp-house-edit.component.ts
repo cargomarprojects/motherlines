@@ -44,6 +44,13 @@ export class SeaImpHouseEditComponent implements OnInit {
   descrecords: Tbl_cargo_imp_desc[] = [];
 
   // 24-05-2019 Created By Joy  
+  
+  tab : string = 'main';
+  report_title : string = '';
+  report_url : string = '';
+  report_searchdata : any = {} ;
+  report_menuid : string = '';
+   
 
   private parentid: string;
   private pkid: string;
@@ -1619,9 +1626,50 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
       }
+      case 'ARRIVAL-NOTICE': {
+        this.report_title = 'ARRIVAL NOTICE';
+        this.report_url = '/api/SeaImport/House/GetArrivalNotice';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.type = 'ARRIVAL NOTICE';
+        this.report_menuid = this.gs.MENU_SI_HOUSE_ARRIVAL_NOTICE ;
+        this.tab = 'report';
+        break;
+      }
+      case 'FREIGHT-INVOICE': {
+        this.report_title = 'ARRIVAL NOTICE Freight Invoice';
+        this.report_url = '/api/SeaImport/House/GetArrivalNotice';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.type = 'FREIGHT INVOICE';
+        this.report_menuid = this.gs.MENU_SI_HOUSE_ARRIVAL_NOTICE ;
+        this.tab = 'report';
+        break;
+      }
+      case 'PRE-ADVISE': {
+        this.report_title = 'PRE-ADVISE';
+        this.report_url = '/api/SeaImport/House/GetPreAlertReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_SI_HOUSE_PRE_ADVISE ;
+        this.tab = 'report';
+        break;
+      }
+      case 'TURNOVER-LETTER': {
+        this.report_title = 'TURNOVER LETTER';
+        this.report_url = '/api/SeaImport/House/GetTurnOverReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_SI_HOUSE_TURNOVER_LETTER ;
+        this.tab = 'report';
+        break;
+      }
     }
   }
 
+  callbackevent( event : any ){
+    this.tab = 'main';
+  }
 
   FindWeight(_type: string) {
     if (_type == "Kgs2Lbs")
@@ -1725,7 +1773,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.cntrrecords.splice(this.cntrrecords.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
 
-
+/*
   GetArrivalNotice(_type:string) {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
@@ -1776,5 +1824,5 @@ export class SeaImpHouseEditComponent implements OnInit {
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
-  }
+  }*/
 }

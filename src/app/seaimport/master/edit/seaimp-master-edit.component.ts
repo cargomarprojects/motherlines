@@ -23,7 +23,11 @@ export class SeaImpMasterEditComponent implements OnInit {
   records: Tbl_cargo_imp_container[] = [];
 
   // 24-05-2019 Created By Joy  
-
+  tab : string = 'main';
+  report_title : string = '';
+  report_url : string = '';
+  report_searchdata : any = {} ;
+  report_menuid : string = '';
 
   showPayReq: boolean = false;
 
@@ -828,7 +832,19 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.SeaImport/CopyCntrPage', JSON.stringify(prm));
         break;
       }
+      case 'POD': {
+        this.report_title = 'POD';
+        this.report_url = '/api/SeaImport/Master/GetPODSeaImpRpt';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_SI_MASTER_POD ;
+        this.tab = 'report';
+        break;
+      }
     }
+  }
+  callbackevent( event : any ){
+    this.tab = 'main';
   }
 
 
@@ -912,7 +928,7 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.errorMessage = this.gs.getError(error);
       });
   }
-
+/*
   GetPODSeaImpRpt() {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
@@ -931,5 +947,5 @@ export class SeaImpMasterEditComponent implements OnInit {
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }
-
+*/
 }
