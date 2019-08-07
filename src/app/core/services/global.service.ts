@@ -507,7 +507,8 @@ export class GlobalService {
       "~FRONTEND_DATEFORMAT": this.FRONTEND_DATEFORMAT,
       "~PRINT_FIRMCODE": this.PRINT_FIRMCODE,
       "~WWW_ROOT": this.WWW_ROOT,
-      "~GLOBAL_REPORT_FOLDER": this.GLOBAL_REPORT_FOLDER
+      "~GLOBAL_REPORT_FOLDER": this.GLOBAL_REPORT_FOLDER,
+      "~AIRPORTDISPLAYCOLUMN": this.AIRPORTDISPLAYCOLUMN
     }
 
   }
@@ -1201,6 +1202,7 @@ export class GlobalService {
     sessionStorage.setItem('yearlist', JSON.stringify(this.YearList));
 
     sessionStorage.setItem('ADDRESS_LINE1', JSON.stringify(this.ADDRESS_LINE1));
+<<<<<<< HEAD
     sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify(this.ADDRESS_LINE2));
     sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify(this.ADDRESS_LINE3));
     sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify(this.ADDRESS_LINE4));
@@ -1214,6 +1216,22 @@ export class GlobalService {
     sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
     sessionStorage.setItem('WWW_ROOT', JSON.stringify(this.WWW_ROOT));
     sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
+=======
+    sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify( this.ADDRESS_LINE2));
+    sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify( this.ADDRESS_LINE3));
+    sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify( this.ADDRESS_LINE4));
+    sessionStorage.setItem('ADDRESS_LINE5', JSON.stringify( this.ADDRESS_LINE5));
+    sessionStorage.setItem('user_name', JSON.stringify( this.user_name));
+    sessionStorage.setItem('DOC_FOOTER1', JSON.stringify( this.DOC_FOOTER1));
+    sessionStorage.setItem('DOC_FOOTER2', JSON.stringify( this.DOC_FOOTER2));
+    sessionStorage.setItem('date_display_fmt', JSON.stringify( this.date_display_fmt));
+    sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify( this.BOE_IMPORT_REQUIRED));
+    sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify( this.FRONTEND_DATEFORMAT));
+    sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify( this.PRINT_FIRMCODE));
+    sessionStorage.setItem('WWW_ROOT', JSON.stringify( this.WWW_ROOT));
+    sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify( this.GLOBAL_REPORT_FOLDER));
+    sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify( this.AIRPORTDISPLAYCOLUMN));
+>>>>>>> 6e3ba2b4f62d22e1145ac81de911323bc32cb3b7
 
   }
 
