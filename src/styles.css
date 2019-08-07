@@ -31,8 +31,9 @@
     background-color: cornflowerblue;
   }
   
-  html {
+  html  {
     zoom: .9;
+    height:100%;
   }
   
   body {
@@ -41,6 +42,7 @@
     padding-right: 3px;
     /* font-family: Arial; */
     font-family: 'roboto' ;
+    height:100%;
     
   }
   
@@ -49,6 +51,7 @@
     padding: 0;
     top: 0;
     left: 0;
+    height:100%;
   }
   
   .row {

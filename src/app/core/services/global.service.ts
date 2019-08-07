@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { UUID } from 'angular2-uuid';
 
 import { Router } from '@angular/router';
@@ -622,6 +625,33 @@ export class GlobalService {
     return bret;
   }
 
+  public canDownload(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_print == "Y");
+    if (itm)
+      bret = true;
+    return bret;
+  }
+
+
+  public canEmail(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_email == "Y");
+    if (itm)
+      bret = true;
+    return bret;
+  }
+
+  public canExel(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_print == "Y");
+    if (itm)
+      bret = true;
+    return bret;
+  }
+
+
+
   public IsAdmin(menuid: string): boolean {
     var bret1: boolean;
     var bret2: boolean;
@@ -687,8 +717,13 @@ export class GlobalService {
   }
 
 
-  public makecall( url : string , SearchData: any) {
-    return this.http2.post<any>(this.baseUrl +  url , SearchData, this.headerparam2('authorized'));
+  public makecall(url: string, SearchData: any) {
+    return this.http2.post<any>(this.baseUrl + url, SearchData, this.headerparam2('authorized'));
+  }
+
+  public getFile(report_folder: string, filename: string, filetype: string, filedisplayname: string = 'N') {
+    let body = 'report_folder=' + report_folder + '&filename=' + filename + '&filetype=' + filetype + '&filedisplayname=' + filedisplayname;
+    return this.http2.get(this.baseUrl + '/api/Master/Param/DownloadFile?' + body, { responseType: 'blob' })
   }
 
 
@@ -1166,19 +1201,19 @@ export class GlobalService {
     sessionStorage.setItem('yearlist', JSON.stringify(this.YearList));
 
     sessionStorage.setItem('ADDRESS_LINE1', JSON.stringify(this.ADDRESS_LINE1));
-    sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify( this.ADDRESS_LINE2));
-    sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify( this.ADDRESS_LINE3));
-    sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify( this.ADDRESS_LINE4));
-    sessionStorage.setItem('ADDRESS_LINE5', JSON.stringify( this.ADDRESS_LINE5));
-    sessionStorage.setItem('user_name', JSON.stringify( this.user_name));
-    sessionStorage.setItem('DOC_FOOTER1', JSON.stringify( this.DOC_FOOTER1));
-    sessionStorage.setItem('DOC_FOOTER2', JSON.stringify( this.DOC_FOOTER2));
-    sessionStorage.setItem('date_display_fmt', JSON.stringify( this.date_display_fmt));
-    sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify( this.BOE_IMPORT_REQUIRED));
-    sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify( this.FRONTEND_DATEFORMAT));
-    sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify( this.PRINT_FIRMCODE));
-    sessionStorage.setItem('WWW_ROOT', JSON.stringify( this.WWW_ROOT));
-    sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify( this.GLOBAL_REPORT_FOLDER));
+    sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify(this.ADDRESS_LINE2));
+    sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify(this.ADDRESS_LINE3));
+    sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify(this.ADDRESS_LINE4));
+    sessionStorage.setItem('ADDRESS_LINE5', JSON.stringify(this.ADDRESS_LINE5));
+    sessionStorage.setItem('user_name', JSON.stringify(this.user_name));
+    sessionStorage.setItem('DOC_FOOTER1', JSON.stringify(this.DOC_FOOTER1));
+    sessionStorage.setItem('DOC_FOOTER2', JSON.stringify(this.DOC_FOOTER2));
+    sessionStorage.setItem('date_display_fmt', JSON.stringify(this.date_display_fmt));
+    sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify(this.BOE_IMPORT_REQUIRED));
+    sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify(this.FRONTEND_DATEFORMAT));
+    sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
+    sessionStorage.setItem('WWW_ROOT', JSON.stringify(this.WWW_ROOT));
+    sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
 
   }
 

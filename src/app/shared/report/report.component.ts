@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input,Output, EventEmitter, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from '../../core/services/global.service';
 
@@ -9,6 +9,19 @@ import { GlobalService } from '../../core/services/global.service';
 export class ReportComponent implements OnInit {
 
   private errorMessage : string = '';
+
+  private canPrint : boolean = false;
+  private canDownload : boolean = false;
+  private canExcel : boolean = false;
+  private canEmail : boolean = false;
+
+  @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+
+  private _menuid: string;
+  @Input() set menuid(value: string) {
+    this._menuid = value;
+  }
+
 
   private _title: string;
   @Input() set title(value: string) {
@@ -35,6 +48,11 @@ export class ReportComponent implements OnInit {
 
   ngOnInit() {
 
+    this.canPrint = this.gs.canPrint(this._menuid);
+    this.canDownload = this.gs.canDownload(this._menuid);
+    this.canExcel = this.gs.canExel(this._menuid);
+    this.canEmail = this.gs.canEmail(this._menuid);
+
     this.loaddata();
   }
 
@@ -49,7 +67,7 @@ export class ReportComponent implements OnInit {
         this.filename = response.filename;
         this.filetype  = response.filetype; 
         this.filedisplayname =  response.filedisplayname;
-
+        this.AutoLoad();
       },
       error =>{
         this.errorMessage = this.gs.getError(error);
@@ -64,5 +82,21 @@ export class ReportComponent implements OnInit {
   }
   
   
+  AutoLoad(){
 
+    this.gs.getFile(this.gs.GLOBAL_REPORT_FOLDER, this.filename, this.filetype, this.filedisplayname).subscribe( response =>{
+
+      this.pdfViewerAutoLoad.pdfSrc = response;
+      this.pdfViewerAutoLoad.refresh(); 
+
+    }, error =>{
+      this.errorMessage = this.gs.getError( error);
+      alert(this.errorMessage);
+    });
+
+  }
+
+  report ( action : string  ) {
+
+  }
 }

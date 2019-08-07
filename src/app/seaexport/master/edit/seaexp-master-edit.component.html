@@ -462,7 +462,7 @@
 
           <div class="form-group row">
 
-            <button class=" col-12 btn btn-info btn-sm" (click)="getManiFestReport()">Manifest</button>
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MANIFEST')">Manifest</button>
 
           </div>
 
@@ -533,5 +533,5 @@
 </div>
 
 <div *ngIf="tab=='manifest'">
-  <app-report [title]="'Ocean Export Manifest'" [url]="manifest_url" [searchdata]="manifest_searchdata" (callbackevent)="callbackevent($event)"></app-report>
+  <app-report [title]="'Ocean Export Manifest'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
 </div>

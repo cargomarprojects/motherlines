@@ -27,8 +27,9 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   tab : string = 'main';
 
-  manifest_url : string = '';
-  manifest_searchdata : any = {} ;
+  report_url : string = '';
+  report_searchdata : any = {} ;
+  report_menuid : string = '';
 
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
 
@@ -644,7 +645,7 @@ export class SeaexpMasterEditComponent implements OnInit {
       }
       case 'INERNALMEMO': {
         let prm = {
-          menuid: this.gs.MENU_SI_MASTER_INTERNAL_MEMO,
+          menuid: this.gs.MENU_SE_MASTER_INTERNAL_MEMO,
           refno: "REF : " + this.record.mbl_refno,
           pkid: this.pkid,
           origin: 'seaexp-master-page',
@@ -656,15 +657,15 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
       }
-    }
-  }
+      case 'MANIFEST': {
+        this.report_url = '/api/SeaExport/Master/SeaExportManifest';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_SE_MASTER_MANIFEST ;
+        this.tab = 'manifest';
+      }
 
-  getManiFestReport() {
-    
-    this.manifest_url = '/api/SeaExport/Master/SeaExportManifest';
-    this.manifest_searchdata = this.gs.UserInfo;
-    this.manifest_searchdata.pkid = this.pkid;
-    this.tab = 'manifest';
+    }
   }
 
   callbackevent( event : any ){
