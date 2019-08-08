@@ -1,0 +1,78 @@
+<div class="page-header">
+    <div class="row align-items-center justify-content-left p-1">
+      <label class="pr-1">{{title}} ({{mode}}) </label>
+      <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+      <label class="text-danger" *ngIf="is_locked">LOCKED</label>
+    </div>
+  </div>
+  
+  <div *ngIf="errorMessage.length >0">
+    <div class="alert alert-success">
+      <a (click)="errorMessage=[]" class="close" aria-label="close">&times;</a>
+      <ul>
+        <li *ngFor="let str of errorMessage">
+          <p class="h4"> {{str}}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  
+  <div class="page-body">
+  
+    <div class="row">
+  
+      <div class="col-md-4  px-0 mx-0">
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">House#</label>
+          <div class="col-8">
+            <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
+              [(ngModel)]="record.hbl_houseno" [disabled]="true" maxlength="15" />
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4  px-0 mx-0">
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Ref#</label>
+          <div class="col-8">
+            <input class="form-control form-control-sm" type="text" (blur)="onBlur('book_refno')" [disabled]="true"
+              [(ngModel)]="record.mbl_refno" [disabled]="true" maxlength="15" />
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4  px-0 mx-0">
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Stage</label>
+          <div class="col-8">
+            <select class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage"
+              [disabled]="is_stage_locked">
+              <option *ngFor="let rec of gs.SHIPMENT_STAGE_OE" [value]="rec.code">{{rec.name}}</option>
+            </select>
+          </div>
+        </div>
+  
+      </div>
+  
+  
+    </div>
+  
+  
+  
+  </div>
+  
+  
+  
+  
+  <div class="page-footer">
+    <div class="row align-items-center justify-content-center p-1">
+      <button class="btn btn-primary btn-md mr-1" *ngIf="canSave && !is_locked" (click)="Save()">Save</button>
+    </div>
+  </div>
+  
+  <div>
+    <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}} /
+      {{record.rec_created_date}} </label>
+  </div>

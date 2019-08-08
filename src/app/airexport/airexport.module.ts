@@ -11,6 +11,7 @@ import { AirExpMasterHeaderComponent } from './master/airexp-master-header.compo
 import { AirExpMasterEditComponent } from './master/edit/airexp-master-edit.component';
 import { AirExpHouseComponent } from './house/airexp-house.component';
 import { AirExpHouseHeaderComponent } from './house/airexp-house-header.component';
+import { AirExpHouseEditComponent } from './house/edit/airexp-house-edit.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AirExpHouseHeaderComponent } from './house/airexp-house-header.componen
     AirExpMasterEditComponent,
     AirExpHouseComponent,
     AirExpHouseHeaderComponent,
+    AirExpHouseEditComponent,
   ],
   imports: [
     SharedModule,    
