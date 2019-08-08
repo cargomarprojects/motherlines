@@ -21,12 +21,7 @@
         </div>
         <div class="col-md-3">
           <div class="form-group row">
-            <div class="col-4">
-              <select class="form-control form-control-sm" [(ngModel)]="searchQuery.searchtype">
-                <option [value]="'REFNO'">Ref No:</option>
-                <option [value]="'CONSIGNEE'">Consignee:</option>
-              </select>
-            </div>
+            <label class="col-4 col-form-label col-form-label-sm">Ref#/Hbl#</label>
             <div class="col-8">
               <input class="form-control form-control-sm" type="text" [(ngModel)]="searchQuery.searchString" />
             </div>

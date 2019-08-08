@@ -24,8 +24,16 @@ export class AirExpMasterEditComponent implements OnInit {
   /*
     01-07-2019 Created By Ajith  
   */
+ tab : string = 'main';
+ report_title : string = '';
+ report_url : string = '';
+ report_searchdata : any = {} ;
+ report_menuid : string = '';
+
   private pkid: string="";
   private menuid: string;
+  private hbl_pkid: string = '';
+  private hbl_mode: string = '';
 
   private mode: string;
 
@@ -472,6 +480,137 @@ export class AirExpMasterEditComponent implements OnInit {
       }
 
     }
+  }
+
+  AddHouse() {
+    if (!this.gs.canAdd(this.gs.MENU_AE_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    this.hbl_pkid = "";
+    this.hbl_mode = "ADD";
+    this.BtnNavigation('HOUSE')
+  }
+
+  EditHouse(_record: Tbl_cargo_exp_housem) {
+
+    if (!this.gs.canEdit(this.gs.MENU_AE_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    this.hbl_pkid = _record.hbl_pkid;
+    this.hbl_mode = "EDIT";
+    this.BtnNavigation('HOUSE')
+  }
+
+  BtnNavigation(action: string) {
+
+    switch (action) {
+      case 'ARAP': {
+        let prm = {
+          menuid: this.gs.MENU_AI_MASTER_ARAP,
+          pkid: this.pkid,
+          refno: this.record.mbl_refno,
+          type: 'AI',
+          origin: 'airimp-master-page',
+        };
+        this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
+        break;
+      }
+      case 'HOUSE': {
+        let prm = {
+          menuid: this.gs.MENU_AE_HOUSE,
+          parentid: this.pkid,
+          pkid: this.hbl_pkid,
+          refno: this.record.mbl_refno,
+          type: 'AE',
+          origin: 'airexp-master-page',
+          mode: this.hbl_mode
+        };
+        this.gs.Naviagete('Silver.AirExport.Trans/AirExpHouseEditPage', JSON.stringify(prm));
+        break;
+      }
+       
+      case 'PAYMENT-REQUEST': {
+        let prm = {
+          menuid: this.gs.MENU_AI_PAYMENT_REQUEST,
+          cp_master_id: this.pkid,
+          cp_source: 'AIR-MASTER',
+          cp_mode: 'AIR IMPORT',
+          cp_ref_no: this.record.mbl_refno,
+          islocked: false,
+          origin: 'airimp-master-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
+        break;
+      }
+      case 'MESSENGER-SLIP': {
+        let prm = {
+          menuid: this.gs.MENU_AI_MESSENGER_SLIP,
+          mbl_pkid: this.pkid,
+          mbl_mode: 'AIR IMPORT',
+          mbl_refno: this.record.mbl_refno,
+          islocked: false,
+          origin: 'airimp-master-page'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
+        break;
+      }
+      case 'FOLLOWUP': {
+        let prm = {
+          menuid: this.gs.MENU_AI_MASTER,
+          master_id: this.pkid,
+          master_refno: this.record.mbl_refno,
+          master_refdate: this.record.mbl_ref_date,
+          islocked: false,
+          origin: 'airimp-master-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
+        break;
+      }
+      case 'REQUEST-APPROVAL': {
+        let prm = {
+          menuid: this.gs.MENU_AI_MASTER_REQUEST_APPROVAL,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          doc_type: 'AIR IMPORT',
+          req_type: 'REQUEST',
+          islocked: false,
+          origin: 'airimp-master-page'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
+        break;
+      }
+      case 'INERNALMEMO': {
+        let prm = {
+          menuid: this.gs.MENU_AI_MASTER_INTERNAL_MEMO,
+          refno: "REF : " + this.record.mbl_refno,
+          pkid: this.pkid,
+          origin: 'airimp-master-page',
+          oprgrp: 'AIR IMPORT',
+          parentType: 'AIRIMP-CNTR',
+          paramType: 'CNTR-MOVE-STATUS',
+          hideTracking: 'Y'
+        };
+        this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+        break;
+      }
+      case 'POD': {
+        this.report_title = 'POD';
+        this.report_url = '/api/AirImport/Master/GetPODAirImpRpt';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_AI_MASTER_POD ;
+        this.tab = 'report';
+        break;
+      }
+    }
+  }
+
+  callbackevent( event : any ){
+    this.tab = 'main';
   }
 
 

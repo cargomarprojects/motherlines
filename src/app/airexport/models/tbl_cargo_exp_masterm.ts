@@ -1,9 +1,6 @@
 import { PageQuery } from '../../shared/models/pageQuery';
 
-export interface SearchQuery {
-    searchString: string;
-}
-
+ 
 export interface Tbl_cargo_exp_masterm {
     mbl_pkid: string;
     mbl_cfno: number;
