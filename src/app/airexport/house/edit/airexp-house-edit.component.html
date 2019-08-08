@@ -49,7 +49,7 @@
           <div class="col-8">
             <select class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage"
               [disabled]="is_stage_locked">
-              <option *ngFor="let rec of gs.SHIPMENT_STAGE_OE" [value]="rec.code">{{rec.name}}</option>
+              <option *ngFor="let rec of gs.SHIPMENT_STAGE_AE" [value]="rec.code">{{rec.name}}</option>
             </select>
           </div>
         </div>
@@ -63,6 +63,440 @@
   
   </div>
   
+  <div class="page-body">
+
+
+    <div class="row">
+  
+  
+      <div class="col-md-4  px-0 mx-0">
+  
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Shipper</label>
+          <div class="col-8">
+            <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+              [displaydata]="record.hbl_shipper_code" (ValueChanged)="LovSelected($event)">
+            </app-autocomplete2>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Name</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_shipper_name" [maxlength]="60" [uppercase]="true" #shipper_name>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_shipper_add1" [maxlength]="60" [uppercase]="true" #shipper_add1>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_shipper_add2" [maxlength]="60" [uppercase]="true">
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+  
+            <InputBox [(inputModel)]="record.hbl_shipper_add3" [maxlength]="60" [uppercase]="true" #shipper_add3>
+            </InputBox>
+  
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_shipper_add4" [maxlength]="120" [uppercase]="true" #shipper_add4>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Consignee</label>
+          <div class="col-8">
+            <app-autocomplete2 [controlname]="'CONSIGNEE'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+              [displaydata]="record.hbl_consignee_code" (ValueChanged)="LovSelected($event)">
+            </app-autocomplete2>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Name</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_consigned_to1" [maxlength]="60" [uppercase]="true" #consigned_to1>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_consigned_to2" [maxlength]="60" [uppercase]="true" #consigned_to2>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_consigned_to3" [maxlength]="60" [uppercase]="true" #consigned_to3>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_consigned_to4" [maxlength]="120" [uppercase]="true" #consigned_to4>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_consigned_to5" [maxlength]="120" [uppercase]="true" #consigned_to5>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+  
+        <!-- <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Accounting</label>
+          <div class="col-8">
+            <app-autocomplete2 [controlname]="'NOTIFY'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+              [displaydata]="record.hbl_notify_code" (ValueChanged)="LovSelected($event)">
+            </app-autocomplete2>
+          </div>
+        </div> -->
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Accounting</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_notify_name" [maxlength]="60" [uppercase]="true" #notify_name>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Information</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_notify_add1" [maxlength]="60" [uppercase]="true" #notify_add1>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_notify_add2" [maxlength]="60" [uppercase]="true" #notify_add2>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_notify_add3" [maxlength]="60" [uppercase]="true" #notify_add3>
+            </InputBox>
+          </div>
+        </div>
+  
+        <!-- <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_notify_add4" [maxlength]="120" [uppercase]="true" #notify_add4>
+            </InputBox>
+          </div>
+        </div> -->
+  
+  
+  
+      </div>
+  
+  
+      <div class="col-md-4  px-0 mx-0">
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Issued By</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_exp_ref1" [maxlength]="60" [uppercase]="true" #exp_ref1>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_exp_ref2" [maxlength]="60" [uppercase]="true" #exp_ref2>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_exp_ref3" [maxlength]="60" [uppercase]="true" #exp_ref3>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Issuing Agent</label>
+          <div class="col-8">
+            <!-- <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+              [displaydata]="record.hbl_agent_name" (ValueChanged)="LovSelected($event)">
+            </app-autocomplete2> -->
+            <InputBox [(inputModel)]="record.hbl_origin" [maxlength]="60" [uppercase]="true" #origin2>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_origin" [maxlength]="60" [uppercase]="true" #origin>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Place Of Delivery</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_rout1" [maxlength]="60" [uppercase]="true" #rout1>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">IATA</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_rout2" [maxlength]="60" [uppercase]="true" #rout2>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Account#</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_rout3" [maxlength]="60" [uppercase]="true" #rout3>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Frt.Status</label>
+          <div class="col-8">
+            <select class="form-control form-control-sm" [(ngModel)]="record.hbl_frt_status">
+              <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Other Charges/PC</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_pre_carriage" [maxlength]="60" [uppercase]="true" #pre_carriage>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Value For Carriage</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_place_receipt" [maxlength]="60" [uppercase]="true" #place_receipt>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Value For Customs</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_pol_name" [maxlength]="60" [uppercase]="true" #pol>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Insurance Amt</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_pod_name" [maxlength]="60" [uppercase]="true" #pod>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">AES#</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_pofd_name" [maxlength]="60" [uppercase]="true" #pod>
+            </InputBox>
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">L/C#</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_place_delivery" [maxlength]="60" [uppercase]="true" #place_delivery>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+  
+  
+      </div>
+  
+      <div class="col-md-4  px-0 mx-0">
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Nomination</label>
+          <div class="col-8">
+            <select class="form-control form-control-sm" [(ngModel)]="record.hbl_bltype" #hbl_bltype>
+              <option *ngFor="let rec of gs.PARAM_NOMINATION" [value]="rec.code">{{rec.name}}</option>
+            </select>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Handled.By</label>
+          <div class="col-8">
+            <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+              [displaycolumn]="'NAME'" [displaydata]="record.hbl_handled_name" (ValueChanged)="LovSelected($event)">
+            </app-autocomplete2>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Sales Rep.</label>
+          <div class="col-8">
+            <app-autocomplete2 [controlname]="'SMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+              [displaycolumn]="'NAME'" [displaydata]="record.hbl_salesman_name" (ValueChanged)="LovSelected($event)">
+            </app-autocomplete2>
+          </div>
+        </div>
+  
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Nature Of Goods</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_goods_nature" [maxlength]="100" [uppercase]="true" #commodity8>
+            </InputBox>
+          </div>
+        </div>
+  
+  
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Commodity</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_commodity" [maxlength]="100" [uppercase]="true" #commodity7>
+            </InputBox>
+          </div>
+        </div>
+   
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Hbl Format</label>
+          <div class="col-8">
+            <select class="form-control form-control-sm" [(ngModel)]="record.hbl_format_id" #hbl_bltype>
+              <option *ngFor="let rec of gs.PARAM_HBL_FORMAT_BLANK" [value]="rec.code">{{rec.name}}</option>
+            </select>
+          </div>
+        </div>
+       
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Handling Info</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_goods_nature" [maxlength]="100" [uppercase]="true" #commodity6>
+            </InputBox>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_goods_nature" [maxlength]="100" [uppercase]="true" #commodity5>
+            </InputBox>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_goods_nature" [maxlength]="100" [uppercase]="true" #commodity1>
+            </InputBox>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Departure</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_goods_nature" [maxlength]="100" [uppercase]="true" #commodity2>
+            </InputBox>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Destination</label>
+          <div class="col-8">
+            <InputBox [(inputModel)]="record.hbl_goods_nature" [maxlength]="100" [uppercase]="true" #commodity3>
+            </InputBox>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8 ">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+              <span>As Arranged (SHIPPER)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm"></label>
+          <div class="col-8 ">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+              <span>As Arranged (CONSIGNEE)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+  
+    </div>
+  </div>
   
   
   
