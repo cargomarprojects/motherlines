@@ -24,6 +24,13 @@ export class AirImpMasterEditComponent implements OnInit {
   /*
     01-07-2019 Created By Ajith  
   */
+
+ tab : string = 'main';
+ report_title : string = '';
+ report_url : string = '';
+ report_searchdata : any = {} ;
+ report_menuid : string = '';
+
   private pkid: string="";
   private menuid: string;
   private hbl_pkid: string = '';
@@ -591,9 +598,21 @@ export class AirImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
       }
+      case 'POD': {
+        this.report_title = 'POD';
+        this.report_url = '/api/AirImport/Master/GetPODAirImpRpt';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_AI_MASTER_POD ;
+        this.tab = 'report';
+        break;
+      }
     }
   }
 
+  callbackevent( event : any ){
+    this.tab = 'main';
+  }
   CopyLoc2House() {
     this.errorMessage = '';
     if (this.mode != 'EDIT') {

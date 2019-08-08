@@ -46,6 +46,12 @@ export class AirImpHouseEditComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
 
+  tab : string = 'main';
+  report_title : string = '';
+  report_url : string = '';
+  report_searchdata : any = {} ;
+  report_menuid : string = '';
+
   private parentid: string;
   private pkid: string;
   private menuid: string;
@@ -1258,9 +1264,59 @@ export class AirImpHouseEditComponent implements OnInit {
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
       }
+      case 'ARRIVAL-NOTICE': {
+        this.report_title = 'ARRIVAL NOTICE';
+        this.report_url = '/api/AirImport/House/GetArrivalNotice';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.type = 'ARRIVAL-NOTICE';
+        this.report_menuid = this.gs.MENU_AI_HOUSE_ARRIVAL_NOTICE ;
+        this.tab = 'report';
+        break;
+      }
+      case 'FREIGHT-INVOICE': {
+        this.report_title = 'ARRIVAL NOTICE INVOICE';
+        this.report_url = '/api/AirImport/House/GetArrivalNotice';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.type = 'FREIGHT-INVOICE';
+        this.report_menuid = this.gs.MENU_AI_HOUSE_ARRIVAL_NOTICE ;
+        this.tab = 'report';
+        break;
+      }
+      case 'RELEASE-ORDER': {
+        this.report_title = 'RELEASE ORDER';
+        this.report_url = '/api/AirImport/House/GetReleaseOrder';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_AI_HOUSE_RELEASE_ORDER ;
+        this.tab = 'report';
+        break;
+      }
+      case 'AUTHORITY-ENTRY': {
+        this.report_title = 'AUTHORITY TO MAKE ENTRY';
+        this.report_url = '/api/AirImport/House/GetAuthorityEntry';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_AI_HOUSE_AUTH_MAKE_ENTRY ;
+        this.tab = 'report';
+        break;
+      }
+      case 'NOT-RELEASE-LETTER': {
+        this.report_title = 'NOT RELEASE LETTER';
+        this.report_url = '/api/AirImport/House/GetShipmentNotRelease';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_AI_HOUSE_NOT_RELEASE_LETTER ;
+        this.tab = 'report';
+        break;
+      }
+
     }
   }
-
+  callbackevent( event : any ){
+    this.tab = 'main';
+  }
 
   FindWeight(_type: string) {
     if (_type == "Kgs2Lbs")
@@ -1364,7 +1420,7 @@ export class AirImpHouseEditComponent implements OnInit {
       });
   }
 
-
+/*
   GetArrivalNotice(_type: string) {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
@@ -1431,5 +1487,5 @@ export class AirImpHouseEditComponent implements OnInit {
      }, error => {
         this.errorMessage = this.gs.getError(error);
       });
-  }
+  }*/
 }

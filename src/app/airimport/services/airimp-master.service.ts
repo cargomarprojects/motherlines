@@ -126,5 +126,5 @@ export class AirImpMasterService {
     CopyLoc2House(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/Master/CopyLoc2House', SearchData, this.gs.headerparam2('authorized'));
     }
-    
+
 }

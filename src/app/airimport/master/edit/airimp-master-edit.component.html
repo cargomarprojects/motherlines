@@ -1,3 +1,4 @@
+<div *ngIf="tab=='main'">
 <div class="page-header">
     <div class="col">
         <label>{{title}} ({{mode}})</label>
@@ -335,7 +336,7 @@
                 </div> -->
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-info btn-sm">POD</button>
+                    <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('POD')">POD</button>
                 </div>
 
 
@@ -392,3 +393,7 @@
         /
         {{record.rec_created_date}} </label>
 </div>
+</div>
+<div *ngIf="tab=='report'">
+    <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+  </div>

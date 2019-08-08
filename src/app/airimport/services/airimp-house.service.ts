@@ -129,19 +129,19 @@ export class AirImpHouseService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/LoadCha', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    GetArrivalNotice(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetArrivalNotice', SearchData, this.gs.headerparam2('authorized'));
-    }
+    // GetArrivalNotice(SearchData: any) {
+    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetArrivalNotice', SearchData, this.gs.headerparam2('authorized'));
+    // }
 
-    GetReleaseOrder(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetReleaseOrder', SearchData, this.gs.headerparam2('authorized'));
-    }
+    // GetReleaseOrder(SearchData: any) {
+    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetReleaseOrder', SearchData, this.gs.headerparam2('authorized'));
+    // }
 
-    GetAuthorityEntry(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetAuthorityEntry', SearchData, this.gs.headerparam2('authorized'));
-    }
+    // GetAuthorityEntry(SearchData: any) {
+    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetAuthorityEntry', SearchData, this.gs.headerparam2('authorized'));
+    // }
 
-    GetShipmentNotRelease(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetShipmentNotRelease', SearchData, this.gs.headerparam2('authorized'));
-    }
+    // GetShipmentNotRelease(SearchData: any) {
+    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetShipmentNotRelease', SearchData, this.gs.headerparam2('authorized'));
+    // }
 }

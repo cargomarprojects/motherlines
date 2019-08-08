@@ -1,3 +1,4 @@
+<div *ngIf="tab=='main'">
 <div class="page-header">
   <div class="col">
     <label>{{title}} ({{mode}})</label>
@@ -617,17 +618,17 @@
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" (click)="GetArrivalNotice('Arrival Notice')">Arrival
+        <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('ARRIVAL-NOTICE')">Arrival
           Notice</button>
       </div>
 
       <div  class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" (click)="GetArrivalNotice('Freight Invoice')">Arrival
+        <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('FREIGHT-INVOICE')">Arrival
           Notice(Invoice)</button>
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" (click)="GetReleaseOrder()">Release Order</button>
+        <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('RELEASE-ORDER')">Release Order</button>
       </div>
  
       <div  class="form-group row">
@@ -636,11 +637,11 @@
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" (click)="GetAuthorityEntry()">Auth. To Make Entry</button>
+        <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('AUTHORITY-ENTRY')">Auth. To Make Entry</button>
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" (click)="GetShipmentNotRelease()">Not Release Letter</button>
+        <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('NOT-RELEASE-LETTER')">Not Release Letter</button>
       </div>
 
       <div class="form-group row">
@@ -656,10 +657,6 @@
 </div>
 </div>
 
-
-
-
-
 <div class="page-footer">
   <div class="row row justify-content-center p-1">
     <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
@@ -670,4 +667,9 @@
   <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}}
     /
     {{record.rec_created_date}} </label>
+</div>
+
+</div>
+<div *ngIf="tab=='report'">
+  <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
 </div>

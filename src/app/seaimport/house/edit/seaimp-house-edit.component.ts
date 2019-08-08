@@ -1637,7 +1637,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         break;
       }
       case 'FREIGHT-INVOICE': {
-        this.report_title = 'ARRIVAL NOTICE Freight Invoice';
+        this.report_title = 'ARRIVAL NOTICE FREIGHT INVOICE';
         this.report_url = '/api/SeaImport/House/GetArrivalNotice';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;

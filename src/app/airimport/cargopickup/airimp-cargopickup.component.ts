@@ -188,6 +188,7 @@ export class AirImpCargoPickupComponent implements OnInit {
           this.record.IS_CPU = (str.includes("CPU")) ? true : false;
           this.record.IS_DDU = (str.includes("DDU")) ? true : false;
           this.record.IS_FRT_OTH = (str.includes("Others")) ? true : false;
+          this.record.freightothers ='';
           if (this.record.IS_FRT_OTH) {
             sData = str.split(':');
             this.record.freightothers = sData[1];
@@ -200,6 +201,7 @@ export class AirImpCargoPickupComponent implements OnInit {
           this.record.IS_PktList = (str.includes("PLST")) ? true : false;
           this.record.IS_ExDeclaration = (str.includes("EDEC")) ? true : false;
           this.record.IS_Export_OTH = (str.includes("OTH")) ? true : false;
+          this.record.exportothers = '';
           if (this.record.IS_Export_OTH) {
             sData = str.split(':');
             this.record.exportothers = sData[1];
