@@ -503,17 +503,17 @@
 
 
       <div class="form-group row">
-        <label class="col-1  pr-0 col-form-label col-form-label-sm">PCS</label>
+        <label class="col-2  pr-0 col-form-label col-form-label-sm">PCS</label>
         <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">GR.WT</label>
         <label class="col-1 pl-0  pr-0 col-form-label col-form-label-sm">KG/LB</label>
         <label class="col-1 pl-0  pr-0 col-form-label col-form-label-sm">CLASS</label>
         <label class="col-1 pl-0  pr-0 col-form-label col-form-label-sm">COMM</label>
         <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">CH.WT</label>
-        <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">RATE</label>
+        <label class="col-1 pl-0  pr-0 col-form-label col-form-label-sm">RATE</label>
         <label class="col-2 pl-0   col-form-label col-form-label-sm">TOTAL</label>
       </div>
       <div class="form-group row">
-        <div class="col-1    pr-0">
+        <div class="col-2    pr-0">
           <!-- <input class="form-control form-control-sm" type="text" (blur)="onBlur('pick_desc1')"
                   [(ngModel)]="record.pick_desc1" maxlength="100" /> -->
           <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
@@ -541,7 +541,7 @@
 
           <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
         </div>
-        <div class="col-2 pl-0  pr-0">
+        <div class="col-1 pl-0  pr-0">
           <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_wt1')"
             [(ngModel)]="record.pick_wt1" maxlength="15" />
         </div>
@@ -560,9 +560,8 @@
 <div class="page-body">
   <div class="row">
     <div class="col-md-8  px-0 mx-0">
-
       <div class="form-group row">
-        <label class="col-12  pr-0 col-form-label col-form-label-sm"></label>
+        <label class="col-12  pr-0 col-form-label col-form-label-sm">Descriptions</label>
       </div>
       <div class="form-group row">
         <div class="col-12">
@@ -642,23 +641,179 @@
                 [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
       
             </div>
-            <div class="col-2 pl-0  pr-0">
+            <div class="col-2 pl-0">
               <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
             </div>
-            <div class="col-1 pl-0  pr-0">
-                <div class="form-check">
-                    <input type="checkbox" class="checkbox-inline pr-10" [(ngModel)]="record._hbl_is_cntrized" />
-                    <input type="checkbox" class="checkbox-inline" [(ngModel)]="record._hbl_is_cntrized2" />
-                  </div>
-            </div>
-            <div class="col-1 pl-0 ">
-                <div class="form-check">
+            <div class="col-2 pl-0">
+                <div class="form-check form-check-inline">
                     <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
-                     
                   </div>
-            </div>
-          
+                  <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized2" />
+                  </div>
+            </div>       
           </div>
+          <div class="form-group row">
+            <div class="col-6    pr-0">
+              <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
+              </InputBox>
+            </div>
+            <div class="col-2 pl-0  pr-0">
+              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
+                [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
+      
+            </div>
+            <div class="col-2 pl-0">
+              <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
+            </div>
+            <div class="col-2 pl-0">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized2" />
+                  </div>
+            </div>       
+          </div>
+          <div class="form-group row">
+            <div class="col-6    pr-0">
+              <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
+              </InputBox>
+            </div>
+            <div class="col-2 pl-0  pr-0">
+              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
+                [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
+      
+            </div>
+            <div class="col-2 pl-0">
+              <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
+            </div>
+            <div class="col-2 pl-0">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized2" />
+                  </div>
+            </div>       
+          </div>
+          <div class="form-group row">
+            <div class="col-6    pr-0">
+              <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
+              </InputBox>
+            </div>
+            <div class="col-2 pl-0  pr-0">
+              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
+                [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
+      
+            </div>
+            <div class="col-2 pl-0">
+              <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
+            </div>
+            <div class="col-2 pl-0">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized2" />
+                  </div>
+            </div>       
+          </div>
+          <div class="form-group row">
+            <div class="col-6    pr-0">
+              <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
+              </InputBox>
+            </div>
+            <div class="col-2 pl-0  pr-0">
+              <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
+                [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
+      
+            </div>
+            <div class="col-2 pl-0">
+              <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
+            </div>
+            <div class="col-2 pl-0">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized2" />
+                  </div>
+            </div>       
+          </div>
+
+          <div class="form-group row">
+            <label class="col-6  pr-0 col-form-label col-form-label-sm">Other Charges To Carrier</label>
+            <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">Rate</label>
+            <label class="col-2 pl-0  pr-0 col-form-label col-form-label-sm">Total</label>
+            <label class="col-2 pl-0   col-form-label col-form-label-sm">Print.S/C</label>
+          </div>
+          <div class="form-group row">
+              <div class="col-6    pr-0">
+                <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
+                </InputBox>
+              </div>
+              <div class="col-2 pl-0  pr-0">
+                <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
+                  [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
+        
+              </div>
+              <div class="col-2 pl-0">
+                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
+              </div>
+              <div class="col-2 pl-0">
+                  <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized2" />
+                    </div>
+              </div>       
+            </div>
+            <div class="form-group row">
+              <div class="col-6    pr-0">
+                <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
+                </InputBox>
+              </div>
+              <div class="col-2 pl-0  pr-0">
+                <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
+                  [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
+        
+              </div>
+              <div class="col-2 pl-0">
+                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
+              </div>
+              <div class="col-2 pl-0">
+                  <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized2" />
+                    </div>
+              </div>       
+            </div>
+            <div class="form-group row">
+              <div class="col-6    pr-0">
+                <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true" #pick_desc1>
+                </InputBox>
+              </div>
+              <div class="col-2 pl-0  pr-0">
+                <input class="form-control form-control-sm" type="number" (blur)="onBlur('pick_tot_piece1')"
+                  [(ngModel)]="record.pick_tot_piece1" maxlength="15" />
+        
+              </div>
+              <div class="col-2 pl-0">
+                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true" #pick_uom1></InputBox>
+              </div>
+              <div class="col-2 pl-0">
+                  <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized2" />
+                    </div>
+              </div>       
+            </div>
 
 
     </div>
@@ -775,6 +930,90 @@
     </div>
 
 
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="row">
+    <div class="col-md-4  px-0 mx-0">
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Remarks</label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.hbl_notify_name" [maxlength]="60" [uppercase]="true" #notify_name>
+          </InputBox>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.hbl_notify_add1" [maxlength]="60" [uppercase]="true" #notify_add1>
+          </InputBox>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm"></label>
+        <div class="col-8">
+          <InputBox [(inputModel)]="record.hbl_notify_add2" [maxlength]="60" [uppercase]="true" #notify_add2>
+          </InputBox>
+        </div>
+      </div>  
+     </div>
+    <div class="col-md-4  px-0 mx-0">
+
+        <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm">Agent For Shipper</label>
+            <div class="col-8">
+              <InputBox [(inputModel)]="record.hbl_notify_name" [maxlength]="60" [uppercase]="true" #notify_name>
+              </InputBox>
+            </div>
+          </div>
+          <div class="form-group row">
+              <label class="col-4 col-form-label col-form-label-sm"></label>
+              <div class="col-8">
+                <InputBox [(inputModel)]="record.hbl_notify_name" [maxlength]="60" [uppercase]="true" #notify_name>
+                </InputBox>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Agent For Carrier</label>
+                <div class="col-8">
+                  <InputBox [(inputModel)]="record.hbl_notify_name" [maxlength]="60" [uppercase]="true" #notify_name>
+                  </InputBox>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-4 col-form-label col-form-label-sm"></label>
+                  <div class="col-8">
+                    <InputBox [(inputModel)]="record.hbl_notify_name" [maxlength]="60" [uppercase]="true" #notify_name>
+                    </InputBox>
+                  </div>
+                </div>
+    </div>
+
+    <div class="col-md-4  px-0 mx-0">
+        <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm">Issued Date</label>
+            <div class="col-8">
+              <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="record.mbl_ref_date=$event"></app-date>
+            </div>
+          </div>
+
+          <div class="form-group row">
+              <label class="col-4 col-form-label col-form-label-sm">Issued By</label>
+              <div class="col-8">
+                  <InputBox [(inputModel)]="record.hbl_notify_name" [maxlength]="60" [uppercase]="true" #notify_name>
+                  </InputBox>
+              </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Actual Delivery Date</label>
+                <div class="col-8">
+                  <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="record.mbl_ref_date=$event"></app-date>
+                </div>
+              </div>
+
+    </div>
   </div>
 </div>
 <div class="page-footer">
