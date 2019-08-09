@@ -48,7 +48,7 @@ export class AirExpHouseService {
         this.record = <AirExpHouseModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.defaultValues.today, todate: this.gs.defaultValues.today, searchtype: 'REFNO' },
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: '', todate: this.gs.defaultValues.today, searchtype: 'REFNO' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -123,5 +123,10 @@ export class AirExpHouseService {
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/Save', SearchData, this.gs.headerparam2('authorized'));
     }
+
+    LoadMasterData(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/LoadMasterData', SearchData, this.gs.headerparam2('authorized'));
+    }
+    
 
 }

@@ -10,8 +10,9 @@ import { GlobalService } from '../../../core/services/global.service';
 import { User_Menu } from '../../../core/models/menum';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { AirExpHouseService } from '../../services/airexp-house.service';
-import { Tbl_cargo_exp_housem, vm_tbl_cargo_exp_housem } from '../../models/Tbl_cargo_exp_housem';
+import { Tbl_cargo_exp_housem, vm_tbl_cargo_exp_housem, Tbl_desc } from '../../models/Tbl_cargo_exp_housem';
 import { Tbl_cargo_exp_desc } from '../../models/Tbl_cargo_exp_desc';
+import { Tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
 
 @Component({
   selector: 'app-airexp-house-edit',
@@ -23,16 +24,14 @@ export class AirExpHouseEditComponent implements OnInit {
   private pkid: string;
   private menuid: string;
   private mode: string = "ADD";
-
-
-
   private errorMessage: string[] = [];
 
   private title: string;
   private isAdmin: boolean;
 
   record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
-   
+  recorddet: Tbl_desc = <Tbl_desc>{};
+
   ShipmentType: string = '';
 
   @ViewChild('hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
@@ -95,29 +94,254 @@ export class AirExpHouseEditComponent implements OnInit {
     if (this.mode == 'ADD') {
       this.pkid = this.gs.getGuid();
       this.record = <Tbl_cargo_exp_housem>{};
+      this.InitRecord();
       this.LoadData();
     }
     if (this.mode == 'EDIT')
       this.GetRecord();
 
   }
+  InitRecord() {
+    this.record.hbl_houseno = "";
+    this.record.hbl_date = "";
+    this.record.hbl_bltype = "";
+    this.record.hbl_frt_status = "";
+    this.record.hbl_consignee_id = "";
+    this.record.hbl_consignee_code = "";
+    this.record.hbl_consignee_name = "";
+    this.record.hbl_shipper_id = "";
+    this.record.hbl_shipper_code = "";
+    this.record.hbl_shipper_name = "";
+    this.record.hbl_shipper_add1 = "";
+    this.record.hbl_shipper_add2 = "";
+    this.record.hbl_shipper_add3 = "";
+    this.record.hbl_shipper_add4 = "";
+    this.record.hbl_agent_id = "";
+    this.record.hbl_agent_name = "";
+    this.record.hbl_agent_city = "";
+    this.record.hbl_agent_code = "";
+    this.record.hbl_cha_id = "";
+    this.record.hbl_cha_name = "";
+    this.record.hbl_cha_code = "";
+    this.record.hbl_asarranged_shipper = "";
+    this.record.hbl_asarranged_consignee = "";
+    this.record.hbl_asarranged_shipper_b = false;
+    this.record.hbl_asarranged_consignee_b = false;
+    this.record.hbl_commodity = "";
+    this.record.hbl_uom = "";
+    this.record.hbl_pcs = 0;
+    this.record.hbl_packages = 0;
+    this.record.hbl_weight = 0;
+    this.record.hbl_lbs = 0;
+    this.record.hbl_cbm = 0;
+    this.record.hbl_cft = 0;
+    this.record.hbl_remark1 = "";
+    this.record.hbl_remark2 = "";
+    this.record.hbl_remark3 = "";
+    this.record.hbl_salesman_id = "";
+    this.record.hbl_salesman_code = "";
+    this.record.hbl_salesman_name = "";
+    this.record.hbl_handled_id = "";
+    this.record.hbl_handled_code = "";
+    this.record.hbl_handled_name = "";
+    this.record.rec_created_by = "";
+    this.record.rec_created_date = "";
+    this.record.rec_created_email = "";
+    this.record.hbl_consigned_to1 = "";
+    this.record.hbl_consigned_to2 = "";
+    this.record.hbl_consigned_to3 = "";
+    this.record.hbl_consigned_to4 = "";
+    this.record.hbl_consigned_to5 = "";
+    this.record.hbl_consigned_to6 = "";
+    this.record.hbl_notify_id = "";
+    this.record.hbl_notify_code = "";
+    this.record.hbl_notify_name = "";
+    this.record.hbl_notify_add1 = "";
+    this.record.hbl_notify_add2 = "";
+    this.record.hbl_notify_add3 = "";
+    this.record.hbl_exp_ref1 = "";
+    this.record.hbl_exp_ref2 = "";
+    this.record.hbl_exp_ref3 = "";
+    this.record.hbl_exp_ref4 = "";
+    this.record.hbl_rout1 = "";
+    this.record.hbl_rout2 = "";
+    this.record.hbl_rout3 = "";
+    this.record.hbl_rout4 = "";
+    this.record.hbl_goods_nature = "";
+    this.record.hbl_place_delivery = "";
+    this.record.hbl_pol_name = "";
+    this.record.hbl_pod_name = "";
+    this.record.hbl_by1 = "";
+    this.record.hbl_by2 = "";
+    this.record.hbl_by1_carrier = "";
+    this.record.hbl_by2_carrier = "";
+    this.record.hbl_weight_unit = "";
+    this.record.hbl_chwt = 0;
+    this.record.hbl_chwt_lbs = 0;
+    this.record.hbl_rate = 0;
+    this.record.hbl_total = 0;
+    this.record.hbl_iata = "";
+    this.record.hbl_accno = "";
+    this.record.hbl_oc_status = "";
+    this.record.hbl_carriage_value = "";
+    this.record.hbl_customs_value = "";
+    this.record.hbl_ins_amt = "";
+    this.record.hbl_class = "";
+    this.record.hbl_comm = "";
+    this.record.hbl_aesno = "";
+    this.record.hbl_lcno = "";
+    this.record.hbl_issued_by = "";
+    this.record.hbl_issued_date = "";
+    this.record.mbl_lock = "";
+    this.record.mbl_unlock_date = "";
+    this.record.mbl_ref_date = "";
+    this.record.hbl_format_id = "";
+    this.record.hbl_shipment_stage = "";
+    this.record.hbl_charges1 = "";
+    this.record.hbl_porc1 = "";
+    this.record.hbl_rate1 = "";
+    this.record.hbl_total1 = "";
+    this.record.hbl_print_shpr1 = "";
+    this.record.hbl_print_cons1 = "";
+    this.record.hbl_print_shpr1_b = false;
+    this.record.hbl_print_cons1_b = false;
+    this.record.hbl_pp1 = "";
+    this.record.hbl_cc1 = "";
+    this.record.hbl_charges2 = "";
+    this.record.hbl_porc2 = "";
+    this.record.hbl_rate2 = "";
+    this.record.hbl_total2 = "";
+    this.record.hbl_print_shpr2 = "";
+    this.record.hbl_print_cons2 = "";
+    this.record.hbl_print_shpr2_b = false;
+    this.record.hbl_print_cons2_b = false;
+    this.record.hbl_pp2 = "";
+    this.record.hbl_cc2 = "";
+    this.record.hbl_charges3 = "";
+    this.record.hbl_porc3 = "";
+    this.record.hbl_rate3 = "";
+    this.record.hbl_total3 = "";
+    this.record.hbl_print_shpr3 = "";
+    this.record.hbl_print_cons3 = "";
+    this.record.hbl_print_shpr3_b = false;
+    this.record.hbl_print_cons3_b = false;
+    this.record.hbl_pp3 = "";
+    this.record.hbl_cc3 = "";
+    this.record.hbl_charges4 = "";
+    this.record.hbl_porc4 = "";
+    this.record.hbl_rate4 = "";
+    this.record.hbl_total4 = "";
+    this.record.hbl_print_shpr4 = "";
+    this.record.hbl_print_cons4 = "";
+    this.record.hbl_print_shpr4_b = false;
+    this.record.hbl_print_cons4_b = false;
+    this.record.hbl_pp4 = "";
+    this.record.hbl_cc4 = "";
+    this.record.hbl_charges5 = "";
+    this.record.hbl_porc5 = "";
+    this.record.hbl_rate5 = "";
+    this.record.hbl_total5 = "";
+    this.record.hbl_print_shpr5 = "";
+    this.record.hbl_print_cons5 = "";
+    this.record.hbl_print_shpr5_b = false;
+    this.record.hbl_print_cons5_b = false;
+    this.record.hbl_pp5 = "";
+    this.record.hbl_cc5 = "";
+    this.record.hbl_charges1_carrier = "";
+    this.record.hbl_porc1_carrier = "";
+    this.record.hbl_rate1_carrier = "";
+    this.record.hbl_total1_carrier = "";
+    this.record.hbl_print_shpr1_carrier = "";
+    this.record.hbl_print_cons1_carrier = "";
+    this.record.hbl_print_shpr1_carrier_b = false;
+    this.record.hbl_print_cons1_carrier_b = false;
+    this.record.hbl_pp1_carrier = "";
+    this.record.hbl_cc1_carrier = "";
+    this.record.hbl_charges2_carrier = "";
+    this.record.hbl_porc2_carrier = "";
+    this.record.hbl_rate2_carrier = "";
+    this.record.hbl_total2_carrier = "";
+    this.record.hbl_print_shpr2_carrier = "";
+    this.record.hbl_print_cons2_carrier = "";
+    this.record.hbl_print_shpr2_carrier_b = false;
+    this.record.hbl_print_cons2_carrier_b = false;
+    this.record.hbl_pp2_carrier = "";
+    this.record.hbl_cc2_carrier = "";
+    this.record.hbl_charges3_carrier = "";
+    this.record.hbl_porc3_carrier = "";
+    this.record.hbl_rate3_carrier = "";
+    this.record.hbl_total3_carrier = "";
+    this.record.hbl_print_shpr3_carrier = "";
+    this.record.hbl_print_cons3_carrier = "";
+    this.record.hbl_print_shpr3_carrier_b = false;
+    this.record.hbl_print_cons3_carrier_b = false;
+    this.record.hbl_pp3_carrier = "";
+    this.record.hbl_cc3_carrier = "";
 
+
+
+
+  }
   LoadData() {
-    // this.record.hbl_is_cntrized = "N";
-    // this.record._hbl_is_cntrized = false;
 
-    // this.record.hbl_is_arranged = "Y";
-    // this.record._hbl_is_arranged = false;
+    if (this.mode == "ADD") {
+      this.record.hbl_asarranged_shipper = "N";
+      this.record.hbl_asarranged_consignee = "N";
+      this.record.hbl_print_shpr1 = "N";
+      this.record.hbl_print_shpr2 = "N";
+      this.record.hbl_print_shpr3 = "N";
+      this.record.hbl_print_shpr4 = "N";
+      this.record.hbl_print_shpr5 = "N";
+      this.record.hbl_print_cons1 = "N";
+      this.record.hbl_print_cons2 = "N";
+      this.record.hbl_print_cons3 = "N";
+      this.record.hbl_print_cons4 = "N";
+      this.record.hbl_print_cons5 = "N";
+      this.record.hbl_print_shpr1_carrier = "N";
+      this.record.hbl_print_shpr2_carrier = "N";
+      this.record.hbl_print_shpr3_carrier = "N";
+      this.record.hbl_print_cons1_carrier = "N";
+      this.record.hbl_print_cons2_carrier = "N";
+      this.record.hbl_print_cons3_carrier = "N";
 
-    // this.record.hbl_print_kgs = "Y";
-    // this.record._hbl_print_kgs = false;
+      this.record.hbl_asarranged_shipper_b = false;
+      this.record.hbl_asarranged_consignee_b = false;
+      this.record.hbl_print_shpr1_b = false;
+      this.record.hbl_print_shpr2_b = false;
+      this.record.hbl_print_shpr3_b = false;
+      this.record.hbl_print_shpr4_b = false;
+      this.record.hbl_print_shpr5_b = false;
+      this.record.hbl_print_cons1_b = false;
+      this.record.hbl_print_cons2_b = false;
+      this.record.hbl_print_cons3_b = false;
+      this.record.hbl_print_cons4_b = false;
+      this.record.hbl_print_cons5_b = false;
+      this.record.hbl_print_shpr1_carrier_b = false;
+      this.record.hbl_print_shpr2_carrier_b = false;
+      this.record.hbl_print_shpr3_carrier_b = false;
+      this.record.hbl_print_cons1_carrier_b = false;
+      this.record.hbl_print_cons2_carrier_b = false;
+      this.record.hbl_print_cons3_carrier_b = false;
 
-    // this.record.hbl_print_lbs = "N";
-    // this.record._hbl_print_lbs = false;
+      this.record.hbl_frt_status = "";
+      this.record.hbl_bltype = "";
+      this.record.hbl_shipment_stage = "NIL";
 
-    // this.record.hbl_charges1 = ""; this.record.hbl_charges2 = ""; this.record.hbl_charges3 = ""; this.record.hbl_charges4 = ""; this.record.hbl_charges5 = "";
-    // this.record.hbl_pp1 = ""; this.record.hbl_pp2 = ""; this.record.hbl_pp3 = ""; this.record.hbl_pp4 = ""; this.record.hbl_pp5 = "";
-    // this.record.hbl_cc1 = ""; this.record.hbl_cc2 = ""; this.record.hbl_cc3 = ""; this.record.hbl_cc4 = ""; this.record.hbl_cc5 = "";
+
+      this.record.hbl_date = this.gs.defaultValues.today;
+      this.record.rec_created_by = this.gs.user_code;
+      this.record.rec_created_date = this.gs.defaultValues.today;
+
+
+      if (this.parentid.trim() != "")
+        this.LoadMasterData();
+
+      if (this.gs.PARAM_HAWB_FORMAT != null) {
+        if (this.gs.PARAM_HAWB_FORMAT.length > 0)
+          this.record.hbl_format_id = this.gs.PARAM_HAWB_FORMAT[0].code;
+      }
+
+    }
 
     // if (this.mode == "ADD") {
     //   this.record.hbl_mbl_id = this.parentid;
@@ -149,6 +373,74 @@ export class AirExpHouseEditComponent implements OnInit {
     //   }
     // }
 
+  }
+
+  LoadMasterData() {
+    this.errorMessage = [];
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.parentid;
+    this.mainService.LoadMasterData(SearchData)
+      .subscribe(response => {
+        var masRec = <Tbl_cargo_exp_masterm>response.record;
+
+        if (masRec != null) {
+          this.record.mbl_refno = masRec.mbl_refno;
+
+          this.record.mbl_no = masRec.mbl_no;
+          this.record.hbl_vessel = masRec.mbl_vessel;
+          this.record.hbl_voyage = masRec.mbl_voyage;
+
+
+          this.record.hbl_handled_id = masRec.mbl_handled_id;
+          this.record.hbl_handled_name = masRec.mbl_handled_name;
+
+          this.record.hbl_salesman_id = masRec.mbl_salesman_id;
+          this.record.hbl_salesman_name = masRec.mbl_salesman_name;
+
+          this.record.hbl_pol_name = this.gs.GetAirportCode(masRec.mbl_pol_code, masRec.mbl_pol_name, masRec.mbl_pol_cntry_code);
+          this.record.hbl_pod_name = this.gs.GetAirportCode(masRec.mbl_pod_code, masRec.mbl_pod_name, masRec.mbl_pod_cntry_code);
+
+          this.record.hbl_weight_unit = "KG";
+          this.record.hbl_uom = "CTN";
+
+
+          this.record.hbl_carriage_value = "NVD";
+          this.record.hbl_customs_value = "NCV";
+          this.record.hbl_ins_amt = "NIL";
+
+          this.record.hbl_iata = this.gs.HBL_IATA;
+
+          this.record.hbl_rout3 = "PLEASE CONTACT WITH CONSIGNEE UPON SHIPMENT ARRIVAL.";
+
+          this.record.hbl_exp_ref1 = this.gs.ISSUE_AGENT_NAME;
+          this.record.hbl_exp_ref2 = this.gs.ISSUE_AGENT_ADDRESS;
+          this.record.hbl_exp_ref3 = this.gs.ISSUE_AGENT_CITY;
+
+
+          this.record.hbl_issued_by = masRec.mbl_handled_name;
+
+
+          this.record.hbl_by1_carrier = this.gs.ADDRESS_LINE1 + " AS AGENT FOR";
+
+          this.record.hbl_by2_carrier = masRec.mbl_liner_name;
+
+          this.record.hbl_agent_name = this.gs.ISSUE_AGENT_NAME;
+          this.record.hbl_agent_city = this.gs.ISSUE_AGENT_CITY;
+
+          this.record.hbl_issued_date = masRec.mbl_pol_etd;
+
+          this.is_locked = this.gs.IsShipmentClosed("AIR EXPORT", masRec.mbl_ref_date, masRec.mbl_lock, masRec.mbl_unlock_date);
+
+          // if (Lib.IsShipmentClosed("AIR EXPORT", (DateTime)masRec.mbl_ref_date, masRec.mbl_lock,masRec.mbl_unlock_date))
+          // {
+          //     LBL_LOCK.Content = "LOCKED";
+          //     CmdSave.IsEnabled = false;
+          // }
+        }
+
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
   }
 
   LoadDefaultData() {
@@ -417,24 +709,24 @@ export class AirExpHouseEditComponent implements OnInit {
   }
 
   InitDesc() {
-    // this.record.mark1 = ""; this.record.pkg1 = ""; this.record.desc1 = "";
-    // this.record.mark2 = ""; this.record.pkg2 = ""; this.record.desc2 = "";
-    // this.record.mark3 = ""; this.record.pkg3 = ""; this.record.desc3 = "";
-    // this.record.mark4 = ""; this.record.desc4 = "";
-    // this.record.mark5 = ""; this.record.desc5 = "";
-    // this.record.mark6 = ""; this.record.desc6 = "";
-    // this.record.mark7 = ""; this.record.desc7 = "";
-    // this.record.mark8 = ""; this.record.desc8 = "";
-    // this.record.mark9 = ""; this.record.desc9 = "";
-    // this.record.mark10 = ""; this.record.desc10 = "";
-    // this.record.mark11 = ""; this.record.desc11 = "";
-    // this.record.mark12 = ""; this.record.desc12 = "";
-    // this.record.mark13 = ""; this.record.desc13 = "";
-    // this.record.mark14 = ""; this.record.desc14 = "";
-    // this.record.mark15 = ""; this.record.desc15 = "";
-    // this.record.mark16 = ""; this.record.desc16 = "";
-    // this.record.mark17 = ""; this.record.desc17 = "";
 
+    this.recorddet.mark1 = ""; this.recorddet.desc1 = "";
+    this.recorddet.mark2 = ""; this.recorddet.desc2 = "";
+    this.recorddet.mark3 = ""; this.recorddet.desc3 = "";
+    this.recorddet.mark4 = ""; this.recorddet.desc4 = "";
+    this.recorddet.mark5 = ""; this.recorddet.desc5 = "";
+    this.recorddet.mark6 = ""; this.recorddet.desc6 = "";
+    this.recorddet.mark7 = ""; this.recorddet.desc7 = "";
+    this.recorddet.mark8 = ""; this.recorddet.desc8 = "";
+    this.recorddet.mark9 = ""; this.recorddet.desc9 = "";
+    this.recorddet.mark10 = ""; this.recorddet.desc10 = "";
+    this.recorddet.desc11 = "";
+    this.recorddet.desc12 = "";
+    this.recorddet.desc13 = "";
+    this.recorddet.desc14 = "";
+    this.recorddet.desc15 = "";
+    this.recorddet.desc16 = "";
+    this.recorddet.desc17 = "";
   }
 
 
@@ -616,7 +908,7 @@ export class AirExpHouseEditComponent implements OnInit {
       this.record.hbl_notify_add1 = rec.col1;
       this.record.hbl_notify_add2 = rec.col2;
       this.record.hbl_notify_add3 = rec.col3;
-     // this.record.hbl_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+      // this.record.hbl_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_notify_id);
       }
@@ -691,14 +983,14 @@ export class AirExpHouseEditComponent implements OnInit {
 
   SaveDesc(iCtr: number, M1: string, P1: string, D1: string) {
     if (M1.length > 0 || P1.length > 0 || D1.length > 0) {
-    //   var Rec: Tbl_cargo_exp_desc = <Tbl_cargo_exp_desc>{};
-    //   Rec.parentid = this.pkid;
-    //   Rec.parent_type = this.DESC_TYPE;
-    //   Rec.cargo_ctr = iCtr;
-    //   Rec.cargo_marks = M1;
-    //   Rec.cargo_packages = P1;
-    //   Rec.cargo_description = D1;
-    //   this.recorddet.push(Rec);
+      //   var Rec: Tbl_cargo_exp_desc = <Tbl_cargo_exp_desc>{};
+      //   Rec.parentid = this.pkid;
+      //   Rec.parent_type = this.DESC_TYPE;
+      //   Rec.cargo_ctr = iCtr;
+      //   Rec.cargo_marks = M1;
+      //   Rec.cargo_packages = P1;
+      //   Rec.cargo_description = D1;
+      //   this.recorddet.push(Rec);
     }
   }
 

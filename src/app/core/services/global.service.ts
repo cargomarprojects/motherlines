@@ -967,9 +967,25 @@ export class GlobalService {
     return bRet;
   }
 
+  public GetAirportCode(PortCode:string,PortName:string, CountryCode:string)
+  {
+     let str:string = "";
 
-
-
+      if (this.AIRPORTDISPLAYCOLUMN == "CODE")
+      {
+          if (PortCode.toString().trim().length > 0)
+              str = PortCode.toString();
+          if (CountryCode.toString().trim().length > 0)
+          {
+              if (str.trim() != "")
+                  str += ", ";
+              str += CountryCode.toString();
+          }
+      }
+      else
+          str = PortName;
+      return str;
+    }
 
 
 

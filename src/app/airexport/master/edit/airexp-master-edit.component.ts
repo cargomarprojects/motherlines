@@ -525,7 +525,7 @@ export class AirExpMasterEditComponent implements OnInit {
           parentid: this.pkid,
           pkid: this.hbl_pkid,
           refno: this.record.mbl_refno,
-          type: 'AE',
+          type: 'AIR EXPORT',
           origin: 'airexp-master-page',
           mode: this.hbl_mode
         };

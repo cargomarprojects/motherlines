@@ -25,7 +25,7 @@ export interface Tbl_cargo_exp_masterm {
 
     mbl_direct: string;
     mbl_direct_bool: boolean;
-
+     
     mbl_pol_cntry_code: string;
     mbl_pod_cntry_code: string;
 

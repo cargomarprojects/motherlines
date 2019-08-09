@@ -48,7 +48,7 @@ export class AirExpMasterService {
         this.record = <AirExpMasterModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.defaultValues.today, todate: this.gs.defaultValues.today, searchtype: 'REFNO' },
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: '', todate: this.gs.defaultValues.today, searchtype: 'REFNO' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 

@@ -8,7 +8,6 @@ export interface SearchQuery {
 
 export interface Tbl_cargo_exp_masterm {
     mbl_pkid: string;
-
     mbl_cfno: number;
     mbl_refno: string;
     mbl_ref_date: string;
@@ -29,7 +28,7 @@ export interface Tbl_cargo_exp_masterm {
 
     mbl_direct: string;
     mbl_direct_bool: boolean;
-
+    
     mbl_liner_id: string;
     mbl_liner_name: string;
     mbl_liner_code: string;
