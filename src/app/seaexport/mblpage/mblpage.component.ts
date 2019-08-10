@@ -524,7 +524,8 @@ export class MblPageComponent implements OnInit {
     this.report_url = '/api/SeaExport/Mblpage/MblReport';
     this.report_searchdata = this.gs.UserInfo;
     this.report_searchdata.pkid = this.pkid;
-    this.report_menuid = this.gs.MENU_SE_BOOKING;
+    this.report_searchdata.dock_type = _type;
+    this.report_menuid = this.gs.MENU_SE_MASTER_MBL_INSTRUCTION;
     this.tab = 'report';
     
   }

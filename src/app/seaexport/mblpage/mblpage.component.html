@@ -799,6 +799,9 @@
 
 
 
+  
+
+
   <div class="page-footer">
     <div class="row">
       <div class="col-md-4">
@@ -807,8 +810,8 @@
           <div class="col-8">
             <button class="btn btn-primary btn-sm mr-1" *ngIf="canSave" (click)="Save()">Save</button>
             <button class="btn btn-primary btn-sm mr-1" *ngIf="canPrint && mode =='EDIT'"
-              (click)="Print('MBLDOCK')">Print</button>
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="canPrint && mode =='EDIT'" (click)="Print('DOCK')">Dock
+              (click)="Print('')">Print</button>
+            <button class="btn btn-primary btn-sm mr-1" *ngIf="canPrint && mode =='EDIT'" (click)="Print('MBLDOCK')">Dock
               Receipt</button>
           </div>
         </div>
