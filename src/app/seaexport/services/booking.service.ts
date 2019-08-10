@@ -20,6 +20,10 @@ export class BookingService {
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Booking/Save', SearchData, this.gs.headerparam2('authorized'));
     }
+    
+    BookingReport(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Booking/BookingReport', SearchData, this.gs.headerparam2('authorized'));
+    }
 
 
     

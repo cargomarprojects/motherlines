@@ -35,6 +35,12 @@ export class MblPageComponent implements OnInit {
   private title: string;
   private isAdmin: boolean;
 
+
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+  tab: string = 'main';
+
   record: Tbl_cargo_exp_mbldet = <Tbl_cargo_exp_mbldet>{};
   records: Tbl_cargo_exp_desc[] = [];
 
@@ -50,6 +56,7 @@ export class MblPageComponent implements OnInit {
   DESC_TYPE: string = "MBLDESC";
 
   canSave : boolean = false;
+  canPrint : boolean = false;
 
   constructor(
     private router: Router,
@@ -123,6 +130,7 @@ export class MblPageComponent implements OnInit {
         }
 
         this.canSave =  this.gs.canSave(this.menuid, this.mode);
+        this.canPrint =  this.gs.canPrint(this.menuid);
 
         this.InitDesc();
 
@@ -510,6 +518,20 @@ export class MblPageComponent implements OnInit {
     }
   }
 
+
+  Print (_type : string ){
+   
+    this.report_url = '/api/SeaExport/Mblpage/MblReport';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.pkid;
+    this.report_menuid = this.gs.MENU_SE_BOOKING;
+    this.tab = 'report';
+    
+  }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
 
 
 

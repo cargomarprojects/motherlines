@@ -24,5 +24,9 @@ export class MbldService {
     GetContainer(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Common/GetContainer', SearchData, this.gs.headerparam2('authorized'));
     }    
+
+    MblReport(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Mblpage/MblReport', SearchData, this.gs.headerparam2('authorized'));
+    }
     
 }

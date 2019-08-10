@@ -1,4 +1,4 @@
-import { Component, OnInit ,ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -30,11 +30,17 @@ export class BookingComponent implements OnInit {
   private title: string;
   private isAdmin: boolean;
 
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+  tab: string = 'main';
+
+
   record: Tbl_cargo_exp_bookingm = <Tbl_cargo_exp_bookingm>{};
 
 
   @ViewChild('book_shipper_name') book_shipper_name_ctrl: InputBoxComponent;
-  
+
 
   constructor(
     private router: Router,
@@ -92,60 +98,53 @@ export class BookingComponent implements OnInit {
   }
 
 
-  Allvalid()
-  {
-      let  bRet = true;
-      if ( this.gs.isBlank( this.record.book_date)  )
-      {
-          this.errorMessage= "Date cannot be empty";
-          return false;
-      }
+  Allvalid() {
+    let bRet = true;
+    if (this.gs.isBlank(this.record.book_date)) {
+      this.errorMessage = "Date cannot be empty";
+      return false;
+    }
 
-      if ( this.gs.isBlank( this.record.book_refno)  )
-      {
-          this.errorMessage= "Ref# cannot be empty";
-          return false;
-      }
+    if (this.gs.isBlank(this.record.book_refno)) {
+      this.errorMessage = "Ref# cannot be empty";
+      return false;
+    }
 
-      if ( this.gs.isBlank( this.record.book_shipper_id)  )
-      {
-          this.errorMessage= "Shipper Code Cannot Be Emppy";
-          return false;
-      }
+    if (this.gs.isBlank(this.record.book_shipper_id)) {
+      this.errorMessage = "Shipper Code Cannot Be Emppy";
+      return false;
+    }
 
 
-      if ( this.gs.isBlank( this.record.book_shipper_name)  )
-      {
-          this.errorMessage= "Shipper Name Cannot Be Emppy";
-          return false;
-      }
+    if (this.gs.isBlank(this.record.book_shipper_name)) {
+      this.errorMessage = "Shipper Name Cannot Be Emppy";
+      return false;
+    }
 
 
-      if ( this.gs.isBlank( this.record.book_shipper_add1)  )
-      {
-          this.errorMessage= "Shipper Address1 Cannot Be Emppy";
-          return false;
-      }
+    if (this.gs.isBlank(this.record.book_shipper_add1)) {
+      this.errorMessage = "Shipper Address1 Cannot Be Emppy";
+      return false;
+    }
 
-      if ( this.gs.isBlank( this.record.book_handled_id)  )
-      {
-          this.errorMessage= "Handled By Cannot Be Emppy";
-          return false;
-      }
+    if (this.gs.isBlank(this.record.book_handled_id)) {
+      this.errorMessage = "Handled By Cannot Be Emppy";
+      return false;
+    }
 
-      return bRet;
+    return bRet;
   }
 
-  onBlur( field : string){
+  onBlur(field: string) {
 
   }
 
-  
+
 
   Save() {
 
-    if ( !this.Allvalid())
-      return ;
+    if (!this.Allvalid())
+      return;
 
     const saverec = <vm_Tbl_cargo_exp_bookingm>{};
     saverec.mode = this.mode;
@@ -234,8 +233,25 @@ export class BookingComponent implements OnInit {
       this.record.book_salesman_id = rec.id;
     }
 
+
+
   }
 
+
+
+
+  Print() {
+
+    this.report_url = '/api/SeaExport/Booking/BookingReport';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.pkid;
+    this.report_menuid = this.gs.MENU_SE_BOOKING;
+    this.tab = 'report';
+  }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
 
 
 
