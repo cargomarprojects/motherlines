@@ -1,3 +1,4 @@
+<div *ngIf="tab=='main'">
 <div class="page-header">
   <div class="row align-items-center justify-content-left p-1">
     <label class="pr-1">{{title}} ({{mode}}) </label>
@@ -917,6 +918,19 @@
         </div>
       </div>
 
+      <div *ngIf="mode=='EDIT'" class="form-group row">
+        <label class="col-4 col-form-label col-form-label-sm">Print Type</label>
+        <div class="col-8 input-group input-group-sm">
+            <select class="form-control form-control-sm mr-1" [(ngModel)]="Client_Category">
+              <option [value]="'CNEE'">CONSIGNEE</option>
+              <option [value]="'CNOR'">CONSIGNOR</option>
+              <option [value]="'SHPR'">SHIPPER</option>
+            </select>
+            <button class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('FULL-FORMAT')">HAWB</button>
+            <button class="btn btn-success btn-sm mr-1" (click)="AddHouse()">BLANK HAWB</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -925,8 +939,11 @@
     <button class="btn btn-primary btn-md mr-1" *ngIf="canSave && !is_locked" (click)="Save()">Save</button>
   </div>
 </div>
-
 <div>
   <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}} /
     {{record.rec_created_date}} </label>
+</div>
+</div>
+<div *ngIf="tab=='report'">
+  <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
 </div>

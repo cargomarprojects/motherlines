@@ -253,9 +253,9 @@ export interface Tbl_desc {
 export interface vm_tbl_cargo_exp_housem {
     mode: string;
     pkid: string;
-    HousePrefix : string;
-    IsPoL : string; 
-    IsPod : string;
+    housePrefix : string;
+    isPol : string; 
+    isPod : string;
     iStartNo : number;
     iStep  : number;
     record: Tbl_cargo_exp_housem;
