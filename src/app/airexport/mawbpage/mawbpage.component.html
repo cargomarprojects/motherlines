@@ -1,0 +1,18 @@
+<div class="page-header">
+    <div class="col">
+      <label class="pr-1">{{title}} ({{mode}}) </label>
+      <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    </div>
+  
+  </div>
+  
+  <div *ngIf="errorMessage.length >0">
+    <div class="alert alert-success">
+      <a (click)="errorMessage=[]" class="close" aria-label="close">&times;</a>
+      <ul>
+        <li *ngFor="let str of errorMessage">
+          <p class="h4"> {{str}}</p>
+        </li>
+      </ul>
+    </div>
+  </div>

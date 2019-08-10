@@ -606,6 +606,16 @@ export class AirExpMasterEditComponent implements OnInit {
         this.tab = 'report';
         break;
       }
+
+      case 'MAWBPAGE': {
+        let prm = {
+          menuid: this.gs.MENU_AE_MASTER_PRINT_MAWB,
+          pkid:  this.pkid,
+          origin: 'airexp-master-page',
+        };
+        this.gs.Naviagete('Silver.AirExport.Trans/MawbPage', JSON.stringify(prm));        
+        break;
+      }
     }
   }
 

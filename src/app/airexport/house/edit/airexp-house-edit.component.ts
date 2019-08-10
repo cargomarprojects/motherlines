@@ -866,11 +866,15 @@ export class AirExpHouseEditComponent implements OnInit {
       }
       case 'BLANK-FORMAT': {
         this.report_title = 'HOUSE PRINT';
-        this.report_url = '/api/AirImport/House/GetArrivalNotice';
+        this.report_url = '/api/AirExport/House/GetHAWBBlankReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_searchdata.type = 'FREIGHT-INVOICE';
-        this.report_menuid = this.gs.MENU_AI_HOUSE_ARRIVAL_NOTICE;
+        this.report_searchdata.invoketype = this.Client_Category;
+        this.report_searchdata.desc_type = this.DESC_TYPE;
+        if (this.Client_Category == "SHPR" || this.Client_Category == "CNOR")
+          this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_SHIPPER;
+        else
+          this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_CONSIGNEE;
         this.tab = 'report';
         break;
       }
