@@ -855,7 +855,7 @@ export class AirExpHouseEditComponent implements OnInit {
         this.report_url = '/api/AirExport/House/GetHAWBReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_searchdata.invoketype = 'FULL-FORMAT';
+        this.report_searchdata.invoketype = this.Client_Category;
         this.report_searchdata.desc_type = this.DESC_TYPE;
         if (this.Client_Category == "SHPR" || this.Client_Category == "CNOR")
           this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_SHIPPER;
@@ -865,7 +865,7 @@ export class AirExpHouseEditComponent implements OnInit {
         break;
       }
       case 'BLANK-FORMAT': {
-        this.report_title = 'ARRIVAL NOTICE INVOICE';
+        this.report_title = 'HOUSE PRINT';
         this.report_url = '/api/AirImport/House/GetArrivalNotice';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
