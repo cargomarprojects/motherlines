@@ -508,7 +508,8 @@ export class GlobalService {
       "~PRINT_FIRMCODE": this.PRINT_FIRMCODE,
       "~WWW_ROOT": this.WWW_ROOT,
       "~GLOBAL_REPORT_FOLDER": this.GLOBAL_REPORT_FOLDER,
-      "~AIRPORTDISPLAYCOLUMN": this.AIRPORTDISPLAYCOLUMN
+      "~AIRPORTDISPLAYCOLUMN": this.AIRPORTDISPLAYCOLUMN,
+      "~BRANCH_REGION": this.BRANCH_REGION
     }
 
   }
@@ -1245,6 +1246,7 @@ export class GlobalService {
     sessionStorage.setItem('WWW_ROOT', JSON.stringify( this.WWW_ROOT));
     sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify( this.GLOBAL_REPORT_FOLDER));
     sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify( this.AIRPORTDISPLAYCOLUMN));
+    sessionStorage.setItem('BRANCH_REGION', JSON.stringify( this.BRANCH_REGION));
 
   }
 
