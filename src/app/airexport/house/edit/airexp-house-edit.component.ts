@@ -41,7 +41,7 @@ export class AirExpHouseEditComponent implements OnInit {
 
   IsPol = this.gs.AIR_EXPORT_HOUSE_INCR_BY
   IsPod = this.gs.AIR_EXPORT_HOUSE_PREFIX_POD.toString();
- o = 
+  
   
   
   DESC_TYPE: string = "AE-DESC";
@@ -49,7 +49,8 @@ export class AirExpHouseEditComponent implements OnInit {
   iStep: number = 0;
   canSave: boolean = false;
 
-  iStep=AIR_EXPORT_HOUSE_STARTING_NO.toString();
+ // iStep=this.gs.AIR_EXPORT_HOUSE_STARTING_NO.toString();
+ 
 
   is_locked: boolean = false;
   is_stage_locked = false;
@@ -875,8 +876,8 @@ export class AirExpHouseEditComponent implements OnInit {
 
     this.IsPol = this.gs.AIR_EXPORT_HOUSE_INCR_BY
     this.IsPod = this.gs.AIR_EXPORT_HOUSE_PREFIX_POD.toString();
-    this.iStartNo = this.gs.AIR_EXPORT_HOUSE_STARTING_NO.toString();
-    this.iStep = this.gs.AIR_EXPORT_HOUSE_INCR_BY.toString();
+    this.iStartNo = +this.gs.AIR_EXPORT_HOUSE_STARTING_NO.toString();
+    this.iStep = +this.gs.AIR_EXPORT_HOUSE_INCR_BY.toString();
 
 
     saverec.mode = this.mode;
