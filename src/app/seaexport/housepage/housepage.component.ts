@@ -563,6 +563,16 @@ export class HousePageComponent implements OnInit {
 
     saverec.mode = this.mode;
     saverec.pkid = this.pkid;
+    saverec.HousePrefix=this.gs.AIR_EXPORT_HOUSE_PREFIX;
+    saverec.IsPoL=this.gs.AIR_EXPORT_HOUSE_PREFIX_POL.toString();
+    saverec.IsPod=this.gs.AIR_EXPORT_HOUSE_PREFIX_POL.toString();
+
+ IsPol = 
+ IsPod = GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX_POD.ToString();
+ iStartNo = Lib.Convert2Integer(GLOBALCONTANTS.AIR_EXPORT_HOUSE_STARTING_NO.ToString());
+ iStep = Lib.Convert2Integer(GLOBALCONTANTS.AIR_EXPORT_HOUSE_INCR_BY.ToString()); 
+
+    GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX, IsPol,IsPod,iStartNo,iStep
     saverec.record = this.record;
     saverec.records = this.recorddet;
     saverec.userinfo = this.gs.UserInfo;

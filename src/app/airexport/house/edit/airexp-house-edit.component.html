@@ -47,8 +47,8 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Stage</label>
         <div class="col-8">
-          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage"
-            [disabled]="is_stage_locked">
+          <select class="form-control form-control-sm" [(ngModel)]="record.hbl_shipment_stage" 
+            [disabled]="is_stage_locked" #shipment_stage>
             <option *ngFor="let rec of gs.SHIPMENT_STAGE_AE" [value]="rec.code">{{rec.name}}</option>
           </select>
         </div>

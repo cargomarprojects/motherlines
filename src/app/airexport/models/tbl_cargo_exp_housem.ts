@@ -1,4 +1,5 @@
 import { PageQuery } from '../../shared/models/pageQuery';
+import { Tbl_cargo_exp_desc } from '../../airexport/models/Tbl_cargo_exp_desc';
 
 export interface Tbl_cargo_exp_housem {
     hbl_pkid: string;
@@ -251,7 +252,14 @@ export interface Tbl_desc {
 
 export interface vm_tbl_cargo_exp_housem {
     mode: string;
+    pkid: string;
+    HousePrefix : string;
+    IsPoL : string; 
+    IsPod : string;
+    iStartNo : number;
+    iStep  : number;
     record: Tbl_cargo_exp_housem;
+    records : Tbl_cargo_exp_desc[];
     userinfo: any,
     filter: any;
 }
