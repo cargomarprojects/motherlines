@@ -26,6 +26,11 @@ export class MawbPageComponent implements OnInit {
   private menuid: string;
   private mode: string = "ADD";
 
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
 
   private errorMessage: string[] = [];
 
