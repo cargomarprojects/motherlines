@@ -13,7 +13,7 @@ import { AirExpHouseComponent } from './house/airexp-house.component';
 import { AirExpHouseHeaderComponent } from './house/airexp-house-header.component';
 import { AirExpHouseEditComponent } from './house/edit/airexp-house-edit.component';
 import { MawbPageComponent } from './mawbpage/mawbpage.component';
-
+import { ManifestPageComponent } from './manifestpage/manifestpage.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +24,7 @@ import { MawbPageComponent } from './mawbpage/mawbpage.component';
     AirExpHouseHeaderComponent,
     AirExpHouseEditComponent,
     MawbPageComponent,
+    ManifestPageComponent
   ],
   imports: [
     SharedModule,    

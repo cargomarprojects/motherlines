@@ -616,6 +616,18 @@ export class AirExpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.AirExport.Trans/MawbPage', JSON.stringify(prm));        
         break;
       }
+
+      case 'MANIFESTPAGE': {
+        let prm = {
+          menuid: this.gs.MENU_AE_MASTER_MANIFEST,
+          pkid:  this.pkid,
+          mbl_no: this.record.mbl_no,
+          mbl_refno: this.record.mbl_refno,
+          origin: 'airexp-master-page',
+        };
+        this.gs.Naviagete('Silver.AirExport.Trans/ManifestPage', JSON.stringify(prm));        
+        break;
+      }
     }
   }
 
