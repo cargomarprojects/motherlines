@@ -138,6 +138,18 @@ export interface Tbl_cargo_exp_mbldet {
     mbld_print_cons4: string;
     mbld_print_cons5: string;
 
+    mbld_print_shpr1_b: boolean;
+    mbld_print_shpr2_b: boolean;
+    mbld_print_shpr3_b: boolean;
+    mbld_print_shpr4_b: boolean;
+    mbld_print_shpr5_b: boolean;
+    mbld_print_cons1_b: boolean;
+    mbld_print_cons2_b: boolean;
+    mbld_print_cons3_b: boolean;
+    mbld_print_cons4_b: boolean;
+    mbld_print_cons5_b: boolean;
+
+
     mbld_pp1: string;
     mbld_pp2: string;
     mbld_pp3: string;
@@ -190,8 +202,24 @@ export interface Tbl_cargo_exp_mbldet {
     mbld_print_cons3_carrier: string;
     mbld_print_cons4_carrier: string;
 
+
+    mbld_print_shpr1_carrier_b: boolean;
+    mbld_print_shpr2_carrier_b: boolean;
+    mbld_print_shpr3_carrier_b: boolean;
+ mbld_print_shpr4_carrier_b: boolean;
+
+    mbld_print_cons1_carrier_b: boolean;
+    mbld_print_cons2_carrier_b: boolean;
+    mbld_print_cons3_carrier_b: boolean;
+ mbld_print_cons4_carrier_b: boolean;
+
+
     mbld_asarranged_shipper: string;
     mbld_asarranged_consignee: string;
+
+    
+ mbld_asarranged_shipper_b: boolean;
+ mbld_asarranged_consignee_b: boolean;
 
     mbld_by1: string;
     mbld_by2: string;
@@ -243,4 +271,38 @@ export interface Tbl_cargo_exp_mbldet {
     rec_created_id: string;
     rec_created_email: string;
 
+}
+
+export interface Tbl_desc {
+    mark1 : string ;
+    mark2 : string ;
+    mark3 : string ;
+    mark4 : string ;
+    mark5 : string ;
+    mark6 : string ;
+    mark7 : string ;
+    mark8 : string ;
+    mark9 : string ;
+    mark10 : string ;
+       
+  
+    desc1 : string ;
+    desc2 : string ;
+    desc3 : string ;
+    desc4 : string ;
+  
+    desc5 : string ;
+    desc6 : string ;
+    desc7 : string ;
+    desc8 : string ;
+    desc9 : string ;
+    desc10 : string ;
+  
+    desc11 : string ;
+    desc12 : string ;
+    desc13 : string ;
+    desc14 : string ;
+    desc15 : string ;
+    desc16 : string ;
+    desc17 : string ;
 }

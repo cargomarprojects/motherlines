@@ -1246,7 +1246,7 @@ export class GlobalService {
     sessionStorage.setItem('WWW_ROOT', JSON.stringify( this.WWW_ROOT));
     sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify( this.GLOBAL_REPORT_FOLDER));
     sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify( this.AIRPORTDISPLAYCOLUMN));
-    sessionStorage.setItem('BRANCH_REGION', JSON.stringify( this.BRANCH_REGION));
+    
 
   }
 

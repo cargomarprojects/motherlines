@@ -781,7 +781,7 @@ export class AirExpHouseEditComponent implements OnInit {
       this.record.hbl_shipper_add3 = rec.col3;
       this.record.hbl_shipper_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
       this.record.hbl_by1 = this.gs.ADDRESS_LINE1 + " AS AGENT FOR ";     //Agnt_for_Shipper                  
-      this.record.hbl_by1 = this.record.hbl_shipper_name;     //Agnt_for_Shipper2  
+      this.record.hbl_by2 = this.record.hbl_shipper_name;     //Agnt_for_Shipper2  
 
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_shipper_id);

@@ -102,6 +102,7 @@ export interface Tbl_cargo_exp_housem {
     hbl_print_cons4: string;
     hbl_print_cons5: string;
 
+    
     hbl_print_shpr1_b: boolean;
     hbl_print_shpr2_b: boolean;
     hbl_print_shpr3_b: boolean;
