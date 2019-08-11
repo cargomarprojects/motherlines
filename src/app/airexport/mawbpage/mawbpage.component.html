@@ -266,7 +266,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Value For Carriage</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_carriage_value" [maxlength]="3" [uppercase]="true" #carriage_value>
+            <InputBox [(inputModel)]="record.mbld_carriage_value" [maxlength]="3" [uppercase]="true" #carriage_value>
             </InputBox>
           </div>
         </div>
@@ -275,24 +275,16 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Value For Customs</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_customs_value" [maxlength]="3" [uppercase]="true" #customs_value>
+            <InputBox [(inputModel)]="record.mbld_customs_value" [maxlength]="3" [uppercase]="true" #customs_value>
             </InputBox>
           </div>
         </div>
-
-
-        <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm">Insurance Amt</label>
-          <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_ins_amt" [maxlength]="30" [uppercase]="true" #ins_amt>
-            </InputBox>
-          </div>
-        </div>
+       
 
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">AES#</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_aesno" [maxlength]="30" [uppercase]="true" #aesno>
+            <InputBox [(inputModel)]="record.mbld_aesno" [maxlength]="30" [uppercase]="true" #aesno>
             </InputBox>
           </div>
         </div>
@@ -300,17 +292,24 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Commodity</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_commodity" [maxlength]="60" [uppercase]="true" #commodity7>
+            <InputBox [(inputModel)]="record.mbld_commodity" [maxlength]="60" [uppercase]="true" #commodity7>
             </InputBox>
           </div>
         </div>
 
+        <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm">Insurance Amt</label>
+            <div class="col-8">
+              <InputBox [(inputModel)]="record.mbld_ins_amt" [maxlength]="30" [uppercase]="true" #ins_amt>
+              </InputBox>
+            </div>
+          </div>
 
 
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Handling Info</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_rout1" [maxlength]="60" [uppercase]="true" #rout1>
+            <InputBox [(inputModel)]="record.mbld_rout1" [maxlength]="60" [uppercase]="true" #rout1>
             </InputBox>
           </div>
         </div>
@@ -318,7 +317,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_rout2" [maxlength]="60" [uppercase]="true" #rout2>
+            <InputBox [(inputModel)]="record.mbld_rout2" [maxlength]="60" [uppercase]="true" #rout2>
             </InputBox>
           </div>
         </div>
@@ -326,7 +325,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_rout3" [maxlength]="60" [uppercase]="true" #rout3>
+            <InputBox [(inputModel)]="record.mbld_rout3" [maxlength]="60" [uppercase]="true" #rout3>
             </InputBox>
           </div>
         </div>
@@ -334,7 +333,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Departure</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_pol_name" [maxlength]="60" [uppercase]="true" #pol_name>
+            <InputBox [(inputModel)]="record.mbld_pol_name" [maxlength]="60" [uppercase]="true" #pol_name>
             </InputBox>
           </div>
         </div>
@@ -342,7 +341,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Destination</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_pod_name" [maxlength]="60" [uppercase]="true" #pod_name>
+            <InputBox [(inputModel)]="record.mbld_pod_name" [maxlength]="60" [uppercase]="true" #pod_name>
             </InputBox>
           </div>
         </div>
@@ -351,7 +350,7 @@
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8 ">
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_asarranged_shipper_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_asarranged_shipper_b" />
               <span>As Arranged (SHIPPER)</span>
             </div>
           </div>
@@ -361,7 +360,7 @@
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8 ">
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_asarranged_consignee_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_asarranged_consignee_b" />
               <span>As Arranged (CONSIGNEE)</span>
             </div>
           </div>
@@ -387,29 +386,29 @@
         </div>
         <div class="form-group row">
           <div class="col-2    pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_packages" [maxlength]="15" [dec]="0" #packages></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_pcs" [maxlength]="15" [dec]="0" #packages></InputBoxNumber>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_weight" [maxlength]="15" [dec]="3" #weight></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_weight" [maxlength]="15" [dec]="3" #weight></InputBoxNumber>
           </div>
           <div class="col-1 pl-0  pr-0">
-            <InputBox [(inputModel)]="record.hbl_weight_unit" [maxlength]="2" [uppercase]="true" #weight_unit>
+            <InputBox [(inputModel)]="record.mbld_weight_unit" [maxlength]="2" [uppercase]="true" #weight_unit>
             </InputBox>
           </div>
           <div class="col-1 pl-0  pr-0">
-            <InputBox [(inputModel)]="record.hbl_class" [maxlength]="1" [uppercase]="true" #class></InputBox>
+            <InputBox [(inputModel)]="record.mbld_class" [maxlength]="1" [uppercase]="true" #class></InputBox>
           </div>
           <div class="col-1 pl-0  pr-0">
-            <InputBox [(inputModel)]="record.hbl_comm" [maxlength]="4" [uppercase]="true" #comm></InputBox>
+            <InputBox [(inputModel)]="record.mbld_comm" [maxlength]="4" [uppercase]="true" #comm></InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_chwt" [maxlength]="15" [dec]="3" #chwt></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_chwt" [maxlength]="15" [dec]="3" #chwt></InputBoxNumber>
           </div>
           <div class="col-1 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate" [maxlength]="15" [dec]="2" #rate></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate" [maxlength]="15" [dec]="2" #rate></InputBoxNumber>
           </div>
           <div class="col-2 pl-0  ">
-            <InputBoxNumber [(inputModel)]="record.hbl_total" [maxlength]="15" [dec]="2" #total></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_total" [maxlength]="15" [dec]="2" #total></InputBoxNumber>
           </div>
         </div>
       </div>
@@ -482,101 +481,101 @@
         </div>
         <div class="form-group row">
           <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges1" [maxlength]="25" [uppercase]="true" #charges1>
+            <InputBox [(inputModel)]="record.mbld_charges1" [maxlength]="25" [uppercase]="true" #charges1>
             </InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate1" [maxlength]="15" [dec]="2" #rate1></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate1" [maxlength]="15" [dec]="2" #rate1></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total1" [maxlength]="15" [dec]="2" #total1></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_total1" [maxlength]="15" [dec]="2" #total1></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr1_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr1_b" />
             </div>
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons1_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons1_b" />
             </div>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges2" [maxlength]="25" [uppercase]="true" #charges2>
+            <InputBox [(inputModel)]="record.mbld_charges2" [maxlength]="25" [uppercase]="true" #charges2>
             </InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate2" [maxlength]="15" [dec]="2" #rate2></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate2" [maxlength]="15" [dec]="2" #rate2></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total2" [maxlength]="15" [dec]="2" #total2></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_total2" [maxlength]="15" [dec]="2" #total2></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr2_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr2_b" />
             </div>
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons2_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons2_b" />
             </div>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges3" [maxlength]="25" [uppercase]="true" #charges3>
+            <InputBox [(inputModel)]="record.mbld_charges3" [maxlength]="25" [uppercase]="true" #charges3>
             </InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate3" [maxlength]="15" [dec]="2" #rate3></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate3" [maxlength]="15" [dec]="2" #rate3></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total3" [maxlength]="15" [dec]="2" #total3></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_total3" [maxlength]="15" [dec]="2" #total3></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr3_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr3_b" />
             </div>
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons3_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons3_b" />
             </div>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges4" [maxlength]="25" [uppercase]="true" #charges4>
+            <InputBox [(inputModel)]="record.mbld_charges4" [maxlength]="25" [uppercase]="true" #charges4>
             </InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate4" [maxlength]="15" [dec]="2" #rate4></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate4" [maxlength]="15" [dec]="2" #rate4></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total4" [maxlength]="15" [dec]="2" #total4></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_total4" [maxlength]="15" [dec]="2" #total4></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr4_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr4_b" />
             </div>
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons4_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons4_b" />
             </div>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges5" [maxlength]="25" [uppercase]="true" #charges5>
+            <InputBox [(inputModel)]="record.mbld_charges5" [maxlength]="25" [uppercase]="true" #charges5>
             </InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate5" [maxlength]="15" [dec]="2" #rate5></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate5" [maxlength]="15" [dec]="2" #rate5></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total5" [maxlength]="15" [dec]="2" #total5></InputBoxNumber>
+            <InputBoxNumber [(inputModel)]="record.mbld_total5" [maxlength]="15" [dec]="2" #total5></InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr5_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr5_b" />
             </div>
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons5_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons5_b" />
             </div>
           </div>
         </div>
@@ -589,93 +588,93 @@
         </div>
         <div class="form-group row">
           <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges1_carrier" [maxlength]="25" [uppercase]="true"
+            <InputBox [(inputModel)]="record.mbld_charges1_carrier" [maxlength]="25" [uppercase]="true"
               #charges1_carrier>
             </InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate1_carrier" [maxlength]="15" [dec]="2" #rate1_carrier>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate1_carrier" [maxlength]="15" [dec]="2" #rate1_carrier>
             </InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total1_carrier" [maxlength]="15" [dec]="2" #total1_carrier>
+            <InputBoxNumber [(inputModel)]="record.mbld_total1_carrier" [maxlength]="15" [dec]="2" #total1_carrier>
             </InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr1_carrier_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr1_carrier_b" />
             </div>
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons1_carrier_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons1_carrier_b" />
             </div>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges2_carrier" [maxlength]="25" [uppercase]="true"
+            <InputBox [(inputModel)]="record.mbld_charges2_carrier" [maxlength]="25" [uppercase]="true"
               #charges2_carrier>
             </InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate2_carrier" [maxlength]="15" [dec]="2" #rate2_carrier>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate2_carrier" [maxlength]="15" [dec]="2" #rate2_carrier>
             </InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total2_carrier" [maxlength]="15" [dec]="2" #total2_carrier>
+            <InputBoxNumber [(inputModel)]="record.mbld_total2_carrier" [maxlength]="15" [dec]="2" #total2_carrier>
             </InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr2_carrier_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr2_carrier_b" />
             </div>
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons2_carrier_b" />
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges3_carrier" [maxlength]="25" [uppercase]="true"
-              #charges3_carrier>
-            </InputBox>
-          </div>
-          <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate3_carrier" [maxlength]="15" [dec]="2" #rate3_carrier>
-            </InputBoxNumber>
-          </div>
-          <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total3_carrier" [maxlength]="15" [dec]="2" #total3_carrier>
-            </InputBoxNumber>
-          </div>
-          <div class="col-2 pl-0">
-            <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr3_carrier_b" />
-            </div>
-            <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons3_carrier_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons2_carrier_b" />
             </div>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-6    pr-0">
-            <InputBox [(inputModel)]="record.hbl_charges3_carrier" [maxlength]="25" [uppercase]="true"
+            <InputBox [(inputModel)]="record.mbld_charges3_carrier" [maxlength]="25" [uppercase]="true"
               #charges3_carrier>
             </InputBox>
           </div>
           <div class="col-2 pl-0  pr-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_rate3_carrier" [maxlength]="15" [dec]="2" #rate3_carrier>
+            <InputBoxNumber [(inputModel)]="record.mbld_rate3_carrier" [maxlength]="15" [dec]="2" #rate3_carrier>
             </InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
-            <InputBoxNumber [(inputModel)]="record.hbl_total3_carrier" [maxlength]="15" [dec]="2" #total3_carrier>
+            <InputBoxNumber [(inputModel)]="record.mbld_total3_carrier" [maxlength]="15" [dec]="2" #total3_carrier>
             </InputBoxNumber>
           </div>
           <div class="col-2 pl-0">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_shpr3_carrier_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr3_carrier_b" />
             </div>
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" [(ngModel)]="record.hbl_print_cons3_carrier_b" />
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons3_carrier_b" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-6    pr-0">
+            <InputBox [(inputModel)]="record.mbld_charges4_carrier" [maxlength]="25" [uppercase]="true"
+              #charges3_carrier>
+            </InputBox>
+          </div>
+          <div class="col-2 pl-0  pr-0">
+            <InputBoxNumber [(inputModel)]="record.mbld_rate4_carrier" [maxlength]="15" [dec]="2" #rate3_carrier>
+            </InputBoxNumber>
+          </div>
+          <div class="col-2 pl-0">
+            <InputBoxNumber [(inputModel)]="record.mbld_total4_carrier" [maxlength]="15" [dec]="2" #total3_carrier>
+            </InputBoxNumber>
+          </div>
+          <div class="col-2 pl-0">
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_shpr4_carrier_b" />
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="record.mbld_print_cons4_carrier_b" />
             </div>
           </div>
         </div>
@@ -787,21 +786,21 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Remarks</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_remark1" [maxlength]="60" [uppercase]="true" #remark1>
+            <InputBox [(inputModel)]="record.mbld_remark1" [maxlength]="60" [uppercase]="true" #remark1>
             </InputBox>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_remark2" [maxlength]="60" [uppercase]="true" #remark2>
+            <InputBox [(inputModel)]="record.mbld_remark2" [maxlength]="60" [uppercase]="true" #remark2>
             </InputBox>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_remark3" [maxlength]="60" [uppercase]="true" #remark3>
+            <InputBox [(inputModel)]="record.mbld_remark3" [maxlength]="60" [uppercase]="true" #remark3>
             </InputBox>
           </div>
         </div>
@@ -811,28 +810,28 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Agent For Shipper</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_by1" [maxlength]="60" [uppercase]="true" #by1>
+            <InputBox [(inputModel)]="record.mbld_by1" [maxlength]="60" [uppercase]="true" #by1>
             </InputBox>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_by2" [maxlength]="60" [uppercase]="true" #by2>
+            <InputBox [(inputModel)]="record.mbld_by2" [maxlength]="60" [uppercase]="true" #by2>
             </InputBox>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Agent For Carrier</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_by1_carrier" [maxlength]="60" [uppercase]="true" #by1_carrier>
+            <InputBox [(inputModel)]="record.mbld_by1_carrier" [maxlength]="60" [uppercase]="true" #by1_carrier>
             </InputBox>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_by2_carrier" [maxlength]="60" [uppercase]="true" #by2_carrier>
+            <InputBox [(inputModel)]="record.mbld_by2_carrier" [maxlength]="60" [uppercase]="true" #by2_carrier>
             </InputBox>
           </div>
         </div>
@@ -842,14 +841,14 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Issued Date</label>
           <div class="col-8">
-            <app-date [inputdate]="record.hbl_issued_date" (ValueChanged)="record.hbl_issued_date=$event"></app-date>
+            <app-date [inputdate]="record.mbld_issued_date" (ValueChanged)="record.hbl_issued_date=$event"></app-date>
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Issued By</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.hbl_issued_by" [maxlength]="20" [uppercase]="true" #issued_by>
+            <InputBox [(inputModel)]="record.mbld_issued_by" [maxlength]="20" [uppercase]="true" #issued_by>
             </InputBox>
           </div>
         </div>
@@ -862,8 +861,7 @@
               <option [value]="'CNOR'">CONSIGNOR</option>
               <option [value]="'SHPR'">SHIPPER</option>
             </select>
-            <button class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('FULL-FORMAT')">HAWB</button>
-            <button class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('BLANK-FORMAT')">BLANK HAWB</button>
+            <button class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('FULL-FORMAT')">Print</button>
           </div>
         </div>
 
