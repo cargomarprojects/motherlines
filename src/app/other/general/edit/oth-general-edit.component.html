@@ -1,9 +1,10 @@
 <div class="page-header">
-    <div class="col">
-        <label>{{title}} ({{mode}})</label>
+    <div class="row  align-items-center justify-content-left p-1">
+      <label class="mr-3">{{title}} ({{mode}})</label>
+      <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
+      <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
     </div>
-
-</div>
+  </div>
 
 <div *ngIf="errorMessage">
     <div class="alert alert-primary">
@@ -15,9 +16,9 @@
 
     <div class="row">
 
-        <div class="col-md-10">
+        <div class="col-md-10  p-1">
 
-            <div class="row pt-2">
+            <div class="row border">
 
                 <!-- First row -->
                 <div class="col-md-12 px-0 mx-0">
@@ -61,13 +62,13 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
+                   
                 </div>
 
 
                 <!-- Second row -->
                 <div class="col-md-12 px-0 mx-0">
-                    <div class="row">
+                    <div class="row border">
                         <div class="col-md-6 testbox  px-0 mx-0">
 
                             <div class="form-group row">
@@ -230,8 +231,8 @@
                         </div>
 
                     </div>
-                    <hr>
-                    <div class="row">
+                     
+                    <div class="row border">
                         <div class="col-md-6 testbox  px-0 mx-0">
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm">Hbl#</label>
@@ -385,7 +386,7 @@
                                         (blur)="onBlur('hbl_weight')" [(ngModel)]="record.hbl_weight" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"
+                                    <button class="btn btn-success btn-sm"
                                         (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">LBS</label>
@@ -394,7 +395,7 @@
                                         [(ngModel)]="record.hbl_lbs" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"
+                                    <button class="btn btn-success btn-sm"
                                         (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button>
                                 </div>
                             </div>
@@ -405,7 +406,7 @@
                                         [(ngModel)]="record.hbl_cbm" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"
+                                    <button class="btn btn-success btn-sm"
                                         (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">CFT</label>
@@ -414,7 +415,7 @@
                                         [(ngModel)]="record.hbl_cft" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"
+                                    <button class="btn btn-success btn-sm"
                                         (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button>
                                 </div>
                             </div>
@@ -425,7 +426,7 @@
                                         (blur)="onBlur('hbl_chwt')" [(ngModel)]="record.hbl_chwt" maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm"
+                                    <button class="btn btn-success btn-sm"
                                         (click)="FindWeight('Chwt2Lbs')"><span>&gt;</span></button>
                                 </div>
                                 <label class="col-1 col-form-label col-form-label-sm">LBS</label>
@@ -435,14 +436,14 @@
                                         maxlength="15" />
                                 </div>
                                 <div class="col-1 pl-0">
-                                    <button class="btn btn-primary btn-sm" (click)="FindWeight('Lbs2Chwt')"><span>
+                                    <button class="btn btn-success btn-sm" (click)="FindWeight('Lbs2Chwt')"><span>
                                             &lt;</span> </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
+                     
+                    <div class="row border">
                         <div class="col-md-6 testbox  px-0 mx-0">
                             <div class="form-group row">
                                 <label class="col-3 col-form-label col-form-label-sm"></label>
@@ -533,19 +534,9 @@
 
                     <div class="row">
 
-                        <div class="col-md-12">
+                        <div class="col-md-12 px-0 mx-0">
                             <div class="page-body table-responsive">
-
-                                <div class="form-group row">
-                                    <div class="col-12">
-                                        <button class="btn btn-primary btn-sm mr-1" (click)="AddRow()">Add
-                                            Cntr</button>
-                                        <button class="btn btn-primary btn-sm mr-1" (click)="RemoveRow()">Remove
-                                            Cntr</button>
-                                    </div>
-                                </div>
-
-                                <table class="table  table-hover table-sm">
+                  <table class="table  table-hover table-sm">
                                     <thead class="page-body-thead">
                                         <tr>
                                             <th>CNTR.NO</th>
@@ -598,6 +589,11 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="form-group row">
+                                    <div class="col-12 pl-1 pb-1">
+                                      <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
+                                    </div>
+                                  </div>
                             </div>
                         </div>
 
@@ -607,48 +603,48 @@
 
             </div>
         </div>
-        <div class="col-md-2 testbox">
+        <div class="col-md-2  p-1 testbox">
 
-            <div class="col-md-12  px-0 mx-0 py-2">
+            <div class="col-md-12  p-2 border">
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm" (click)= "BtnNavigation('TRACKING')" >Delivery Order</button>
+                    <button class=" col-12 btn btn-info btn-sm" (click)= "BtnNavigation('TRACKING')" >Delivery Order</button>
                 </div>
 
 
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">AR & AP</button>
+                    <button class=" col-12 btn btn-info btn-sm">AR & AP</button>
                 </div>
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">Profit Report</button>
+                    <button class=" col-12 btn btn-info btn-sm">Profit Report</button>
                 </div>
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">Shipment Label</button>
+                    <button class=" col-12 btn btn-info btn-sm">Shipment Label</button>
                 </div>
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">Messenger Slip</button>
+                    <button class=" col-12 btn btn-info btn-sm">Messenger Slip</button>
                 </div>
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">Payment Request</button>
+                    <button class=" col-12 btn btn-info btn-sm">Payment Request</button>
                 </div>
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">Attachments</button>
+                    <button class=" col-12 btn btn-info btn-sm">Attachments</button>
                 </div>
 
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">Add To Follow Up</button>
+                    <button class=" col-12 btn btn-info btn-sm">Add To Follow Up</button>
                 </div>
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">Internal Memo</button>
+                    <button class=" col-12 btn btn-info btn-sm">Internal Memo</button>
                 </div>
                 <div class="form-group row">
-                    <button class=" col-12 btn btn-primary btn-sm">Request For Approval</button>
+                    <button class=" col-12 btn btn-info btn-sm">Request For Approval</button>
                 </div>
 
             </div>
@@ -668,9 +664,9 @@
                 <div class="col-8">
                     <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)"
                         (click)="Save()">Save</button>
-                    <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)"
+                    <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)"
                         (click)="NewRecord()">New</button>
-                    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button>
+                    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button> -->
                 </div>
             </div>
         </div>
