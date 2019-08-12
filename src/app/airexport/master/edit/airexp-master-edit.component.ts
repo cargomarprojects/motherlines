@@ -535,10 +535,10 @@ export class AirExpMasterEditComponent implements OnInit {
        
       case 'PAYMENT-REQUEST': {
         let prm = {
-          menuid: this.gs.MENU_AI_PAYMENT_REQUEST,
+          menuid: this.gs.MENU_AE_PAYMENT_REQUEST,
           cp_master_id: this.pkid,
           cp_source: 'AIR-MASTER',
-          cp_mode: 'AIR IMPORT',
+          cp_mode: 'AIR EXPORT',
           cp_ref_no: this.record.mbl_refno,
           islocked: false,
           origin: 'airimp-master-page'
@@ -548,9 +548,9 @@ export class AirExpMasterEditComponent implements OnInit {
       }
       case 'MESSENGER-SLIP': {
         let prm = {
-          menuid: this.gs.MENU_AI_MESSENGER_SLIP,
+          menuid: this.gs.MENU_AE_MESSENGER_SLIP,
           mbl_pkid: this.pkid,
-          mbl_mode: 'AIR IMPORT',
+          mbl_mode: 'AIR EXPORT',
           mbl_refno: this.record.mbl_refno,
           islocked: false,
           origin: 'airimp-master-page'
@@ -560,7 +560,7 @@ export class AirExpMasterEditComponent implements OnInit {
       }
       case 'FOLLOWUP': {
         let prm = {
-          menuid: this.gs.MENU_AI_MASTER,
+          menuid: this.gs.MENU_AE_MASTER,
           master_id: this.pkid,
           master_refno: this.record.mbl_refno,
           master_refdate: this.record.mbl_ref_date,
@@ -572,10 +572,10 @@ export class AirExpMasterEditComponent implements OnInit {
       }
       case 'REQUEST-APPROVAL': {
         let prm = {
-          menuid: this.gs.MENU_AI_MASTER_REQUEST_APPROVAL,
+          menuid: this.gs.MENU_AE_MASTER_REQUEST_APPROVAL,
           mbl_pkid: this.pkid,
           mbl_refno: this.record.mbl_refno,
-          doc_type: 'AIR IMPORT',
+          doc_type: 'AIR EXPORT',
           req_type: 'REQUEST',
           islocked: false,
           origin: 'airimp-master-page'
@@ -585,27 +585,27 @@ export class AirExpMasterEditComponent implements OnInit {
       }
       case 'INERNALMEMO': {
         let prm = {
-          menuid: this.gs.MENU_AI_MASTER_INTERNAL_MEMO,
+          menuid: this.gs.MENU_AE_MASTER_INTERNAL_MEMO,
           refno: "REF : " + this.record.mbl_refno,
           pkid: this.pkid,
           origin: 'airimp-master-page',
-          oprgrp: 'AIR IMPORT',
-          parentType: 'AIRIMP-CNTR',
-          paramType: 'CNTR-MOVE-STATUS',
+          oprgrp: 'AIR EXPORT',
+          parentType: 'AIREXP-CNTR',
+          paramType: 'AIREXP-CNTR-MOVE-STATUS',
           hideTracking: 'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
       }
-      case 'POD': {
-        this.report_title = 'POD';
-        this.report_url = '/api/AirImport/Master/GetPODAirImpRpt';
-        this.report_searchdata = this.gs.UserInfo;
-        this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_AI_MASTER_POD ;
-        this.tab = 'report';
-        break;
-      }
+      // case 'POD': {
+      //   this.report_title = 'POD';
+      //   this.report_url = '/api/AirImport/Master/GetPODAirImpRpt';
+      //   this.report_searchdata = this.gs.UserInfo;
+      //   this.report_searchdata.pkid = this.pkid;
+      //   this.report_menuid = this.gs.MENU_AI_MASTER_POD ;
+      //   this.tab = 'report';
+      //   break;
+      // }
 
       case 'MAWBPAGE': {
         let prm = {

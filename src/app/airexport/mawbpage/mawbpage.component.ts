@@ -14,6 +14,7 @@ import { MawbPageService } from '../services/mawbpage.service';
 
 import { Tbl_cargo_exp_mbldet, vm_Tbl_cargo_exp_mbldet, Tbl_desc } from '../models/tbl_cargo_exp_mbldet';
 import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-mawbpage',
@@ -583,5 +584,58 @@ export class MawbPageComponent implements OnInit {
 
   Close() {
     this.location.back();
+  }
+
+  private FindTotal()
+  {
+      let nTot:number =  this.record.mbld_rate * this.record.mbld_chwt;
+     this.record.mbld_total = this.gs.roundNumber(nTot, 2);
+  }
+
+  private  FindOther()
+  {
+      let nAmt:number = 0;
+
+      if (+this.record.mbld_rate1 > 0)
+      {
+          nAmt = +this.record.mbld_rate1 * this.record.mbld_chwt; this.record.mbld_total1 = this.gs.roundNumber(nAmt, 2).toString();
+      }
+
+      if (+this.record.mbld_rate2 > 0)
+      {
+          nAmt = +this.record.mbld_rate2 * this.record.mbld_chwt; this.record.mbld_total2 = this.gs.roundNumber(nAmt, 2).toString();
+      }
+
+      if (+this.record.mbld_rate3 > 0)
+      {
+          nAmt = +this.record.mbld_rate3 * this.record.mbld_chwt; this.record.mbld_total3 = this.gs.roundNumber(nAmt, 2).toString();
+      }
+      if (+this.record.mbld_rate4 > 0)
+      {
+          nAmt = +this.record.mbld_rate4 * this.record.mbld_chwt; this.record.mbld_total4 = this.gs.roundNumber(nAmt, 2).toString();
+      }
+      if (+this.record.mbld_rate5 > 0)
+      {
+          nAmt = +this.record.mbld_rate5 * this.record.mbld_chwt; this.record.mbld_total5 = this.gs.roundNumber(nAmt, 2).toString();
+      }
+
+      if (+this.record.mbld_rate1_carrier > 0)
+      {
+          nAmt = +this.record.mbld_rate1_carrier * this.record.mbld_chwt; this.record.mbld_total1_carrier = this.gs.roundNumber(nAmt, 2).toString();
+      }
+
+      if (+this.record.mbld_rate2_carrier > 0)
+      {
+          nAmt = +this.record.mbld_rate2_carrier * this.record.mbld_chwt; this.record.mbld_total2_carrier = this.gs.roundNumber(nAmt, 2).toString();
+      }
+      if (+this.record.mbld_rate3_carrier > 0)
+      {
+          nAmt = +this.record.mbld_rate3_carrier * this.record.mbld_chwt; this.record.mbld_total3_carrier = this.gs.roundNumber(nAmt, 2).toString();
+      }
+      if (+this.record.mbld_rate4_carrier > 0)
+      {
+          nAmt = +this.record.mbld_rate4_carrier * this.record.mbld_chwt; this.record.mbld_total4_carrier = this.gs.roundNumber(nAmt, 2).toString();
+      }
+      
   }
 }

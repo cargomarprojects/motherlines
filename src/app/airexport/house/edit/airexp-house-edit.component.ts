@@ -851,7 +851,7 @@ export class AirExpHouseEditComponent implements OnInit {
     switch (action) {
 
       case 'FULL-FORMAT': {
-        this.report_title = 'HOUSE PRINT';
+        this.report_title = 'House Print';
         this.report_url = '/api/AirExport/House/GetHAWBReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
@@ -865,7 +865,7 @@ export class AirExpHouseEditComponent implements OnInit {
         break;
       }
       case 'BLANK-FORMAT': {
-        this.report_title = 'HOUSE PRINT';
+        this.report_title = 'House Print';
         this.report_url = '/api/AirExport/House/GetHAWBBlankReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;

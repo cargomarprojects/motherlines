@@ -21,6 +21,8 @@ export class MawbPageService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/MawbPage/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
-      
+    GetManifestRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/MawbPage/GetManifestRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
     
 }

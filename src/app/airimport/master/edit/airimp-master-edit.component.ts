@@ -592,7 +592,7 @@ export class AirImpMasterEditComponent implements OnInit {
           origin: 'airimp-master-page',
           oprgrp: 'AIR IMPORT',
           parentType: 'AIRIMP-CNTR',
-          paramType: 'CNTR-MOVE-STATUS',
+          paramType: 'AIRIMP-CNTR-MOVE-STATUS',
           hideTracking: 'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
