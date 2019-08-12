@@ -29,6 +29,7 @@ export class AirExpHouseEditComponent implements OnInit {
 
   private title: string;
   private isAdmin: boolean;
+  bValueChanged: boolean = false;
 
   record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
   recorddet: Tbl_desc = <Tbl_desc>{};
@@ -653,9 +654,86 @@ export class AirExpHouseEditComponent implements OnInit {
     return bret;
   }
 
-  onBlur(field: string) {
+  onChange(field: string) {
+
+    if (field == 'hbl_rate' || field == 'hbl_chwt' || field == 'hbl_rate1' || field == 'hbl_rate2' ||
+      field == 'hbl_rate3' || field == 'hbl_rate4' || field == 'hbl_rate5' || field == 'hbl_rate1_carrier' || field == 'hbl_rate2_carrier'
+      || field == 'hbl_rate3_carrier' || field == 'hbl_rate4_carrier')
+      this.bValueChanged = true;
 
   }
+
+  onFocus(field: string) {
+
+    if (field == 'hbl_rate' || field == 'hbl_chwt' || field == 'hbl_rate1' || field == 'hbl_rate2' ||
+      field == 'hbl_rate3' || field == 'hbl_rate4' || field == 'hbl_rate5' || field == 'hbl_rate1_carrier' || field == 'hbl_rate2_carrier'
+      || field == 'hbl_rate3_carrier' || field == 'hbl_rate4_carrier')
+      this.bValueChanged = false;
+
+  }
+
+  onBlur(field: string) {
+
+    switch (field) {
+      case 'hbl_rate': {
+        this.record.hbl_rate = this.gs.roundNumber(this.record.hbl_rate, 2);
+        this.FindTotal();
+        break;
+      }
+      case 'hbl_chwt': {
+        this.record.hbl_chwt = this.gs.roundNumber(this.record.hbl_chwt, 3);
+        this.FindTotal();
+        this.FindOther("");
+        break;
+      }
+      case 'hbl_rate1': {
+        this.record.hbl_rate1 = this.gs.roundNumber(+this.record.hbl_rate1, 2).toString();
+        this.FindOther("A1");
+        break;
+      }
+      case 'hbl_rate2': {
+        this.record.hbl_rate2 = this.gs.roundNumber(+this.record.hbl_rate2, 2).toString();
+        this.FindOther("A2");
+        break;
+      }
+      case 'hbl_rate3': {
+        this.record.hbl_rate3 = this.gs.roundNumber(+this.record.hbl_rate3, 2).toString();
+        this.FindOther("A3");
+        break;
+      }
+      case 'hbl_rate4': {
+        this.record.hbl_rate4 = this.gs.roundNumber(+this.record.hbl_rate4, 2).toString();
+        this.FindOther("A4");
+        break;
+      }
+      case 'hbl_rate5': {
+        this.record.hbl_rate5 = this.gs.roundNumber(+this.record.hbl_rate5, 2).toString();
+        this.FindOther("A5");
+        break;
+      }
+
+      case 'hbl_rate1_carrier': {
+        this.record.hbl_rate1_carrier = this.gs.roundNumber(+this.record.hbl_rate1_carrier, 2).toString();
+        this.FindOther("C1");
+        break;
+      }
+
+      case 'hbl_rate2_carrier': {
+        this.record.hbl_rate2_carrier = this.gs.roundNumber(+this.record.hbl_rate2_carrier, 2).toString();
+        this.FindOther("C2");
+        break;
+      }
+
+      case 'hbl_rate3_carrier': {
+        this.record.hbl_rate3_carrier = this.gs.roundNumber(+this.record.hbl_rate3_carrier, 2).toString();
+        this.FindOther("C3");
+        break;
+      }
+       
+    }
+
+  }
+
 
 
   Save() {
@@ -889,4 +967,48 @@ export class AirExpHouseEditComponent implements OnInit {
     this.location.back();
   }
 
+  private FindTotal() {
+    if (!this.bValueChanged)
+      return;
+
+    let nTot: number = this.record.hbl_rate * this.record.hbl_chwt;
+    this.record.hbl_total = this.gs.roundNumber(nTot, 2);
+  }
+
+  private FindOther(_type: string = "") {
+    if (!this.bValueChanged)
+      return;
+
+    let nAmt: number = 0;
+
+    if (+this.record.hbl_rate1 > 0 && (_type == "A1" || _type == "")) {
+      nAmt = +this.record.hbl_rate1 * this.record.hbl_chwt; this.record.hbl_total1 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.hbl_rate2 > 0 && (_type == "A2" || _type == "")) {
+      nAmt = +this.record.hbl_rate2 * this.record.hbl_chwt; this.record.hbl_total2 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.hbl_rate3 > 0 && (_type == "A3" || _type == "")) {
+      nAmt = +this.record.hbl_rate3 * this.record.hbl_chwt; this.record.hbl_total3 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.hbl_rate4 > 0 && (_type == "A4" || _type == "")) {
+      nAmt = +this.record.hbl_rate4 * this.record.hbl_chwt; this.record.hbl_total4 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.hbl_rate5 > 0 && (_type == "A5" || _type == "")) {
+      nAmt = +this.record.hbl_rate5 * this.record.hbl_chwt; this.record.hbl_total5 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.hbl_rate1_carrier > 0 && (_type == "C1" || _type == "")) {
+      nAmt = +this.record.hbl_rate1_carrier * this.record.hbl_chwt; this.record.hbl_total1_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.hbl_rate2_carrier > 0 && (_type == "C2" || _type == "")) {
+      nAmt = +this.record.hbl_rate2_carrier * this.record.hbl_chwt; this.record.hbl_total2_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.hbl_rate3_carrier > 0 && (_type == "C3" || _type == "")) {
+      nAmt = +this.record.hbl_rate3_carrier * this.record.hbl_chwt; this.record.hbl_total3_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+  }
 }

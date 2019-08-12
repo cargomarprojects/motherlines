@@ -486,10 +486,14 @@
           <InputBox [(inputModel)]="record.hbl_comm" [maxlength]="4" [uppercase]="true" #comm></InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_chwt" [maxlength]="15" [dec]="3" #chwt></InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_chwt" [maxlength]="15" [dec]="3" #chwt></InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_chwt"
+                    (blur)="onBlur('hbl_chwt')" (change)="onChange('hbl_chwt')"  (focus)="onFocus('hbl_chwt')"  required maxlength="15" />
         </div>
         <div class="col-1 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate" [maxlength]="15" [dec]="2" #rate></InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate" [maxlength]="15" [dec]="2" #rate></InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate"
+          (blur)="onBlur('hbl_rate')" (change)="onChange('hbl_rate')"  (focus)="onFocus('hbl_rate')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0  ">
           <InputBoxNumber [(inputModel)]="record.hbl_total" [maxlength]="15" [dec]="2" #total></InputBoxNumber>
@@ -569,7 +573,9 @@
           </InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate1" [maxlength]="15" [dec]="2" #rate1></InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate1" [maxlength]="15" [dec]="2" #rate1></InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate1"
+          (blur)="onBlur('hbl_rate1')" (change)="onChange('hbl_rate1')"  (focus)="onFocus('hbl_rate1')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0">
           <InputBoxNumber [(inputModel)]="record.hbl_total1" [maxlength]="15" [dec]="2" #total1></InputBoxNumber>
@@ -589,7 +595,9 @@
           </InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate2" [maxlength]="15" [dec]="2" #rate2></InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate2" [maxlength]="15" [dec]="2" #rate2></InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate2"
+          (blur)="onBlur('hbl_rate2')" (change)="onChange('hbl_rate2')"  (focus)="onFocus('hbl_rate2')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0">
           <InputBoxNumber [(inputModel)]="record.hbl_total2" [maxlength]="15" [dec]="2" #total2></InputBoxNumber>
@@ -609,7 +617,9 @@
           </InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate3" [maxlength]="15" [dec]="2" #rate3></InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate3" [maxlength]="15" [dec]="2" #rate3></InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate3"
+          (blur)="onBlur('hbl_rate3')" (change)="onChange('hbl_rate3')"  (focus)="onFocus('hbl_rate3')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0">
           <InputBoxNumber [(inputModel)]="record.hbl_total3" [maxlength]="15" [dec]="2" #total3></InputBoxNumber>
@@ -629,7 +639,9 @@
           </InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate4" [maxlength]="15" [dec]="2" #rate4></InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate4" [maxlength]="15" [dec]="2" #rate4></InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate4"
+          (blur)="onBlur('hbl_rate4')" (change)="onChange('hbl_rate4')"  (focus)="onFocus('hbl_rate4')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0">
           <InputBoxNumber [(inputModel)]="record.hbl_total4" [maxlength]="15" [dec]="2" #total4></InputBoxNumber>
@@ -649,7 +661,9 @@
           </InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate5" [maxlength]="15" [dec]="2" #rate5></InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate5" [maxlength]="15" [dec]="2" #rate5></InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate5"
+          (blur)="onBlur('hbl_rate5')" (change)="onChange('hbl_rate5')"  (focus)="onFocus('hbl_rate5')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0">
           <InputBoxNumber [(inputModel)]="record.hbl_total5" [maxlength]="15" [dec]="2" #total5></InputBoxNumber>
@@ -676,8 +690,10 @@
           </InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate1_carrier" [maxlength]="15" [dec]="2" #rate1_carrier>
-          </InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate1_carrier" [maxlength]="15" [dec]="2" #rate1_carrier>
+          </InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate1_carrier"
+          (blur)="onBlur('hbl_rate1_carrier')" (change)="onChange('hbl_rate1_carrier')"  (focus)="onFocus('hbl_rate1_carrier')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0">
           <InputBoxNumber [(inputModel)]="record.hbl_total1_carrier" [maxlength]="15" [dec]="2" #total1_carrier>
@@ -698,8 +714,10 @@
           </InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate2_carrier" [maxlength]="15" [dec]="2" #rate2_carrier>
-          </InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate2_carrier" [maxlength]="15" [dec]="2" #rate2_carrier>
+          </InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate2_carrier"
+          (blur)="onBlur('hbl_rate2_carrier')" (change)="onChange('hbl_rate2_carrier')"  (focus)="onFocus('hbl_rate2_carrier')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0">
           <InputBoxNumber [(inputModel)]="record.hbl_total2_carrier" [maxlength]="15" [dec]="2" #total2_carrier>
@@ -720,8 +738,10 @@
           </InputBox>
         </div>
         <div class="col-2 pl-0  pr-0">
-          <InputBoxNumber [(inputModel)]="record.hbl_rate3_carrier" [maxlength]="15" [dec]="2" #rate3_carrier>
-          </InputBoxNumber>
+          <!-- <InputBoxNumber [(inputModel)]="record.hbl_rate3_carrier" [maxlength]="15" [dec]="2" #rate3_carrier>
+          </InputBoxNumber> -->
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="record.hbl_rate3_carrier"
+          (blur)="onBlur('hbl_rate3_carrier')" (change)="onChange('hbl_rate3_carrier')"  (focus)="onFocus('hbl_rate3_carrier')"  required maxlength="15" />
         </div>
         <div class="col-2 pl-0">
           <InputBoxNumber [(inputModel)]="record.hbl_total3_carrier" [maxlength]="15" [dec]="2" #total3_carrier>

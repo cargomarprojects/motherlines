@@ -32,7 +32,9 @@ export class MawbPageComponent implements OnInit {
   report_url: string = '';
   report_searchdata: any = {};
   report_menuid: string = '';
-  Client_Category:string="SHPR";
+  Client_Category: string = "SHPR";
+  bValueChanged: boolean = false;
+
   private errorMessage: string[] = [];
 
   private title: string;
@@ -410,11 +412,91 @@ export class MawbPageComponent implements OnInit {
     return bret;
   }
 
-  onBlur(field: string) {
+
+  onChange(field: string) {
+
+    if (field == 'mbld_rate' || field == 'mbld_chwt' || field == 'mbld_rate1' || field == 'mbld_rate2' ||
+      field == 'mbld_rate3' || field == 'mbld_rate4' || field == 'mbld_rate5' || field == 'mbld_rate1_carrier' || field == 'mbld_rate2_carrier'
+      || field == 'mbld_rate3_carrier' || field == 'mbld_rate4_carrier')
+      this.bValueChanged = true;
 
   }
 
+  onFocus(field: string) {
 
+    if (field == 'mbld_rate' || field == 'mbld_chwt' || field == 'mbld_rate1' || field == 'mbld_rate2' ||
+      field == 'mbld_rate3' || field == 'mbld_rate4' || field == 'mbld_rate5' || field == 'mbld_rate1_carrier' || field == 'mbld_rate2_carrier'
+      || field == 'mbld_rate3_carrier' || field == 'mbld_rate4_carrier')
+      this.bValueChanged = false;
+
+  }
+
+  onBlur(field: string) {
+
+    switch (field) {
+      case 'mbld_rate': {
+        this.record.mbld_rate = this.gs.roundNumber(this.record.mbld_rate, 2);
+        this.FindTotal();
+        break;
+      }
+      case 'mbld_chwt': {
+        this.record.mbld_chwt = this.gs.roundNumber(this.record.mbld_chwt, 3);
+        this.FindTotal();
+        this.FindOther("");
+        break;
+      }
+      case 'mbld_rate1': {
+        this.record.mbld_rate1 = this.gs.roundNumber(+this.record.mbld_rate1, 2).toString();
+        this.FindOther("A1");
+        break;
+      }
+      case 'mbld_rate2': {
+        this.record.mbld_rate2 = this.gs.roundNumber(+this.record.mbld_rate2, 2).toString();
+        this.FindOther("A2");
+        break;
+      }
+      case 'mbld_rate3': {
+        this.record.mbld_rate3 = this.gs.roundNumber(+this.record.mbld_rate3, 2).toString();
+        this.FindOther("A3");
+        break;
+      }
+      case 'mbld_rate4': {
+        this.record.mbld_rate4 = this.gs.roundNumber(+this.record.mbld_rate4, 2).toString();
+        this.FindOther("A4");
+        break;
+      }
+      case 'mbld_rate5': {
+        this.record.mbld_rate5 = this.gs.roundNumber(+this.record.mbld_rate5, 2).toString();
+        this.FindOther("A5");
+        break;
+      }
+
+      case 'mbld_rate1_carrier': {
+        this.record.mbld_rate1_carrier = this.gs.roundNumber(+this.record.mbld_rate1_carrier, 2).toString();
+        this.FindOther("C1");
+        break;
+      }
+
+      case 'mbld_rate2_carrier': {
+        this.record.mbld_rate2_carrier = this.gs.roundNumber(+this.record.mbld_rate2_carrier, 2).toString();
+        this.FindOther("C2");
+        break;
+      }
+
+      case 'mbld_rate3_carrier': {
+        this.record.mbld_rate3_carrier = this.gs.roundNumber(+this.record.mbld_rate3_carrier, 2).toString();
+        this.FindOther("C3");
+        break;
+      }
+
+      case 'mbld_rate4_carrier': {
+        this.record.mbld_rate4_carrier = this.gs.roundNumber(+this.record.mbld_rate4_carrier, 2).toString();
+        this.FindOther("C4");
+        break;
+      }
+    }
+
+  }
 
   Save() {
 
@@ -570,11 +652,11 @@ export class MawbPageComponent implements OnInit {
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.invoketype = this.Client_Category;
         this.report_searchdata.desc_type = this.DESC_TYPE;
-          this.report_menuid = this.gs.MENU_AE_MASTER_PRINT_MAWB; 
+        this.report_menuid = this.gs.MENU_AE_MASTER_PRINT_MAWB;
         this.tab = 'report';
         break;
       }
-      
+
 
     }
   }
@@ -586,56 +668,51 @@ export class MawbPageComponent implements OnInit {
     this.location.back();
   }
 
-  private FindTotal()
-  {
-      let nTot:number =  this.record.mbld_rate * this.record.mbld_chwt;
-     this.record.mbld_total = this.gs.roundNumber(nTot, 2);
+  private FindTotal() {
+    if (!this.bValueChanged)
+      return;
+
+    let nTot: number = this.record.mbld_rate * this.record.mbld_chwt;
+    this.record.mbld_total = this.gs.roundNumber(nTot, 2);
   }
 
-  private  FindOther()
-  {
-      let nAmt:number = 0;
+  private FindOther(_type: string = "") {
+    if (!this.bValueChanged)
+      return;
 
-      if (+this.record.mbld_rate1 > 0)
-      {
-          nAmt = +this.record.mbld_rate1 * this.record.mbld_chwt; this.record.mbld_total1 = this.gs.roundNumber(nAmt, 2).toString();
-      }
+    let nAmt: number = 0;
 
-      if (+this.record.mbld_rate2 > 0)
-      {
-          nAmt = +this.record.mbld_rate2 * this.record.mbld_chwt; this.record.mbld_total2 = this.gs.roundNumber(nAmt, 2).toString();
-      }
+    if (+this.record.mbld_rate1 > 0 && (_type == "A1" || _type == "")) {
+      nAmt = +this.record.mbld_rate1 * this.record.mbld_chwt; this.record.mbld_total1 = this.gs.roundNumber(nAmt, 2).toString();
+    }
 
-      if (+this.record.mbld_rate3 > 0)
-      {
-          nAmt = +this.record.mbld_rate3 * this.record.mbld_chwt; this.record.mbld_total3 = this.gs.roundNumber(nAmt, 2).toString();
-      }
-      if (+this.record.mbld_rate4 > 0)
-      {
-          nAmt = +this.record.mbld_rate4 * this.record.mbld_chwt; this.record.mbld_total4 = this.gs.roundNumber(nAmt, 2).toString();
-      }
-      if (+this.record.mbld_rate5 > 0)
-      {
-          nAmt = +this.record.mbld_rate5 * this.record.mbld_chwt; this.record.mbld_total5 = this.gs.roundNumber(nAmt, 2).toString();
-      }
+    if (+this.record.mbld_rate2 > 0 && (_type == "A2" || _type == "")) {
+      nAmt = +this.record.mbld_rate2 * this.record.mbld_chwt; this.record.mbld_total2 = this.gs.roundNumber(nAmt, 2).toString();
+    }
 
-      if (+this.record.mbld_rate1_carrier > 0)
-      {
-          nAmt = +this.record.mbld_rate1_carrier * this.record.mbld_chwt; this.record.mbld_total1_carrier = this.gs.roundNumber(nAmt, 2).toString();
-      }
+    if (+this.record.mbld_rate3 > 0 && (_type == "A3" || _type == "")) {
+      nAmt = +this.record.mbld_rate3 * this.record.mbld_chwt; this.record.mbld_total3 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.mbld_rate4 > 0 && (_type == "A4" || _type == "")) {
+      nAmt = +this.record.mbld_rate4 * this.record.mbld_chwt; this.record.mbld_total4 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.mbld_rate5 > 0 && (_type == "A5" || _type == "")) {
+      nAmt = +this.record.mbld_rate5 * this.record.mbld_chwt; this.record.mbld_total5 = this.gs.roundNumber(nAmt, 2).toString();
+    }
 
-      if (+this.record.mbld_rate2_carrier > 0)
-      {
-          nAmt = +this.record.mbld_rate2_carrier * this.record.mbld_chwt; this.record.mbld_total2_carrier = this.gs.roundNumber(nAmt, 2).toString();
-      }
-      if (+this.record.mbld_rate3_carrier > 0)
-      {
-          nAmt = +this.record.mbld_rate3_carrier * this.record.mbld_chwt; this.record.mbld_total3_carrier = this.gs.roundNumber(nAmt, 2).toString();
-      }
-      if (+this.record.mbld_rate4_carrier > 0)
-      {
-          nAmt = +this.record.mbld_rate4_carrier * this.record.mbld_chwt; this.record.mbld_total4_carrier = this.gs.roundNumber(nAmt, 2).toString();
-      }
-      
+    if (+this.record.mbld_rate1_carrier > 0 && (_type == "C1" || _type == "")) {
+      nAmt = +this.record.mbld_rate1_carrier * this.record.mbld_chwt; this.record.mbld_total1_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.mbld_rate2_carrier > 0 && (_type == "C2" || _type == "")) {
+      nAmt = +this.record.mbld_rate2_carrier * this.record.mbld_chwt; this.record.mbld_total2_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.mbld_rate3_carrier > 0 && (_type == "C3" || _type == "")) {
+      nAmt = +this.record.mbld_rate3_carrier * this.record.mbld_chwt; this.record.mbld_total3_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.mbld_rate4_carrier > 0 && (_type == "C4" || _type == "")) {
+      nAmt = +this.record.mbld_rate4_carrier * this.record.mbld_chwt; this.record.mbld_total4_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
   }
 }
