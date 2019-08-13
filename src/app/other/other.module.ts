@@ -26,6 +26,7 @@ import { ApprovedPageComponent } from '../other/approvedpage/approvedpage.compon
 
 import { DeliveryOrderHeaderComponent } from '../other/deliveryorder/deliveryorder-header.component';
 import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.component';
+import { DeliveryOrderListComponent } from '../other/deliveryorder/deliveryorder-list.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.com
     ApprovedPageHeaderComponent,
     ApprovedPageComponent,
     DeliveryOrderHeaderComponent,
-    DeliveryOrderComponent
+    DeliveryOrderComponent,
+    DeliveryOrderListComponent
   ],
   imports: [
     SharedModule,    

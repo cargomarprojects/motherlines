@@ -10,12 +10,6 @@
 <div *ngIf="errorMessage$ | async" class="alert alert-danger">
     {{errorMessage}}
 </div>
-
-<app-deliveryorder-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-</app-deliveryorder-header>
-
-<App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-
 <div class="page-body table-responsive">
     <table class="table  table-hover table-sm">
         <thead class="page-body-thead">
@@ -44,6 +38,4 @@
 </div>
 
 
-<App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 
-<br />

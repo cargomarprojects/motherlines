@@ -739,13 +739,23 @@ export class OthGeneralEditComponent implements OnInit {
     BtnNavigation(action: string) {
 
       switch (action) {
-        case 'TRACKING': {
+        // case 'TRACKING': {
+        //   let prm = {
+        //     menuid: this.gs.MENU_OT_MASTER_INTERNAL_MEMO,
+        //     pkid: this.pkid,
+        //     origin: 'other-page',
+        //   };
+        //   this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+        //   break;
+        // }
+        case 'DELIVERY-ORDER': {
           let prm = {
-            menuid: this.gs.MENU_OT_MASTER_INTERNAL_MEMO,
-            pkid: this.pkid,
-            origin: 'other-page',
+            menuid: this.gs.MENU_OT_OPERATION_DELIVERY_ORDER,
+            parentid: this.pkid,
+            islocked: false,
+            origin: 'other-page'
           };
-          this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+          this.gs.Naviagete('Silver.Other.Trans/DeliveryOrderList', JSON.stringify(prm));
           break;
         }
 
