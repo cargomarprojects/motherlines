@@ -356,8 +356,10 @@ export class OthGeneralEditComponent implements OnInit {
     // this.record.mbl_cntr_desc = sCntrType;
   }
   private SaveContainer() {
-    if (this.records == null)
+    if (this.records == null) {
+      this.records = <Tbl_cargo_container[]>[];
       return;
+    }
     let iCtr: number = 0;
     this.records.forEach(Rec => {
       iCtr++;
@@ -428,327 +430,329 @@ export class OthGeneralEditComponent implements OnInit {
 
 
   AddRow() {
-    var rec = <Tbl_cargo_container>{};
-    rec.cntr_pkid = this.gs.getGuid();
-    rec.cntr_hblid = this.pkid.toString();
-    rec.cntr_catg = "M";
-    rec.cntr_no = "",
-      rec.cntr_type = "",
-      rec.cntr_sealno = '';
-    rec.cntr_pieces = 0;
-    rec.cntr_packages_uom = '';
-    rec.cntr_packages = 0;
-    rec.cntr_weight = 0;
-    //  rec.cntr_tare_weight = 0;
-    rec.cntr_cbm = 0;
-    // rec.cntr_pick_date = '';
-    // rec.cntr_return_date = '';
-    rec.cntr_weight_uom = '';
-    rec.cntr_order = 1;
-    this.records.push(rec);
-  }
+    if (this.records == null) 
+      this.records = <Tbl_cargo_container[]>[];
 
-
-  LovSelected(_Record: SearchTable) {
-
-    if (_Record.controlname == "AGENT") {
-      this.record.mbl_agent_id = _Record.id;
-      this.record.mbl_agent_name = _Record.name;
-    }
-    if (_Record.controlname == "CARRIER") {
-      this.record.mbl_liner_id = _Record.id;
-      this.record.mbl_liner_name = _Record.name;
-    }
-    if (_Record.controlname == "HANDLEDBY") {
-      this.record.mbl_handled_id = _Record.id;
-      this.record.mbl_handled_name = _Record.name;
-    }
-    if (_Record.controlname == "SALESMAN") {
-      this.record.mbl_salesman_id = _Record.id;
-      this.record.mbl_salesman_name = _Record.name;
-    }
-    if (_Record.controlname == "POL") {
-      this.record.mbl_pol_id = _Record.id;
-      this.record.mbl_pol_name = _Record.name;
+      var rec = <Tbl_cargo_container>{};
+      rec.cntr_pkid = this.gs.getGuid();
+      rec.cntr_hblid = this.pkid.toString();
+      rec.cntr_catg = "M";
+      rec.cntr_no = "",
+        rec.cntr_type = "",
+        rec.cntr_sealno = '';
+      rec.cntr_pieces = 0;
+      rec.cntr_packages_uom = '';
+      rec.cntr_packages = 0;
+      rec.cntr_weight = 0;
+      //  rec.cntr_tare_weight = 0;
+      rec.cntr_cbm = 0;
+      // rec.cntr_pick_date = '';
+      // rec.cntr_return_date = '';
+      rec.cntr_weight_uom = '';
+      rec.cntr_order = 1;
+      this.records.push(rec);
     }
 
-    if (_Record.controlname == "POD") {
-      this.record.mbl_pod_id = _Record.id;
-      this.record.mbl_pod_name = _Record.name;
-    }
 
-    if (_Record.controlname == "POFD") {
-      this.record.mbl_pofd_id = _Record.id;
-      this.record.mbl_pofd_name = _Record.name;
-    }
+    LovSelected(_Record: SearchTable) {
 
-    if (_Record.controlname == "COUNTRY") {
-      this.record.mbl_country_id = _Record.id;
-      this.record.mbl_country_name = _Record.name;
-    }
-
-    if (_Record.controlname == "SHIPPER") {
-
-      this.record.hbl_shipper_id = _Record.id;
-      this.record.hbl_shipper_code = _Record.code;
-      this.record.hbl_shipper_name = _Record.name;
-      if (_Record.col8 != "")
-        this.record.hbl_shipper_name = _Record.col8;
-
-      this.record.hbl_shipper_add1 = _Record.col1;
-      this.record.hbl_shipper_add2 = _Record.col2;
-      this.record.hbl_shipper_add3 = _Record.col3;
-      this.record.hbl_shipper_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
-      if (_Record.col9 == "Y") {
-
-        // MsgAlertBox mPage = new MsgAlertBox();
-        // mPage.PKID = Txt_Shipper_Code.PKID;
-        // mPage.SOURCE = "ACCOUNTING-ALERT";
-        // mPage.parentpage += delegate(object sender2, string objectName2)
-        // {
-        //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
-        // };
-        // mPage.Show();
+      if (_Record.controlname == "AGENT") {
+        this.record.mbl_agent_id = _Record.id;
+        this.record.mbl_agent_name = _Record.name;
       }
-    }
-
-    if (_Record.controlname == "CONSIGNEE") {
-      this.record.hbl_consignee_id = _Record.id;
-      this.record.hbl_consignee_code = _Record.code;
-      this.record.hbl_consignee_name = _Record.name;
-      if (_Record.col8 != "")
-        this.record.hbl_consignee_name = _Record.col8;
-
-      this.record.hbl_consignee_add1 = _Record.col1;
-      this.record.hbl_consignee_add2 = _Record.col2;
-      this.record.hbl_consignee_add3 = this.gs.GetAttention(_Record.col5);
-      this.record.hbl_consignee_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
-      if (_Record.col9 == "Y") {
-        // MsgAlertBox mPage = new MsgAlertBox();
-        // mPage.PKID = Txt_Shipper_Code.PKID;
-        // mPage.SOURCE = "ACCOUNTING-ALERT";
-        // mPage.parentpage += delegate(object sender2, string objectName2)
-        // {
-        //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
-        // };
-        // mPage.Show();
+      if (_Record.controlname == "CARRIER") {
+        this.record.mbl_liner_id = _Record.id;
+        this.record.mbl_liner_name = _Record.name;
       }
-    }
+      if (_Record.controlname == "HANDLEDBY") {
+        this.record.mbl_handled_id = _Record.id;
+        this.record.mbl_handled_name = _Record.name;
+      }
+      if (_Record.controlname == "SALESMAN") {
+        this.record.mbl_salesman_id = _Record.id;
+        this.record.mbl_salesman_name = _Record.name;
+      }
+      if (_Record.controlname == "POL") {
+        this.record.mbl_pol_id = _Record.id;
+        this.record.mbl_pol_name = _Record.name;
+      }
 
+      if (_Record.controlname == "POD") {
+        this.record.mbl_pod_id = _Record.id;
+        this.record.mbl_pod_name = _Record.name;
+      }
 
-    // Container
-    if (_Record.controlname == "CONTAINER TYPE") {
-      this.records.forEach(rec => {
-        if (rec.cntr_pkid == _Record.uid) {
-          rec.cntr_type = _Record.code;
+      if (_Record.controlname == "POFD") {
+        this.record.mbl_pofd_id = _Record.id;
+        this.record.mbl_pofd_name = _Record.name;
+      }
+
+      if (_Record.controlname == "COUNTRY") {
+        this.record.mbl_country_id = _Record.id;
+        this.record.mbl_country_name = _Record.name;
+      }
+
+      if (_Record.controlname == "SHIPPER") {
+
+        this.record.hbl_shipper_id = _Record.id;
+        this.record.hbl_shipper_code = _Record.code;
+        this.record.hbl_shipper_name = _Record.name;
+        if (_Record.col8 != "")
+          this.record.hbl_shipper_name = _Record.col8;
+
+        this.record.hbl_shipper_add1 = _Record.col1;
+        this.record.hbl_shipper_add2 = _Record.col2;
+        this.record.hbl_shipper_add3 = _Record.col3;
+        this.record.hbl_shipper_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+        if (_Record.col9 == "Y") {
+
+          // MsgAlertBox mPage = new MsgAlertBox();
+          // mPage.PKID = Txt_Shipper_Code.PKID;
+          // mPage.SOURCE = "ACCOUNTING-ALERT";
+          // mPage.parentpage += delegate(object sender2, string objectName2)
+          // {
+          //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
+          // };
+          // mPage.Show();
         }
-      });
+      }
+
+      if (_Record.controlname == "CONSIGNEE") {
+        this.record.hbl_consignee_id = _Record.id;
+        this.record.hbl_consignee_code = _Record.code;
+        this.record.hbl_consignee_name = _Record.name;
+        if (_Record.col8 != "")
+          this.record.hbl_consignee_name = _Record.col8;
+
+        this.record.hbl_consignee_add1 = _Record.col1;
+        this.record.hbl_consignee_add2 = _Record.col2;
+        this.record.hbl_consignee_add3 = this.gs.GetAttention(_Record.col5);
+        this.record.hbl_consignee_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+        if (_Record.col9 == "Y") {
+          // MsgAlertBox mPage = new MsgAlertBox();
+          // mPage.PKID = Txt_Shipper_Code.PKID;
+          // mPage.SOURCE = "ACCOUNTING-ALERT";
+          // mPage.parentpage += delegate(object sender2, string objectName2)
+          // {
+          //     Dispatcher.BeginInvoke(() => { Txt_Shipper_Name.Focus(); });
+          // };
+          // mPage.Show();
+        }
+      }
+
+
+      // Container
+      if (_Record.controlname == "CONTAINER TYPE") {
+        this.records.forEach(rec => {
+          if (rec.cntr_pkid == _Record.uid) {
+            rec.cntr_type = _Record.code;
+          }
+        });
+      }
+    }
+
+    onFocusout(field: string) {
+
+      switch (field) {
+        case 'mbl_no': {
+
+          this.IsBLDupliation('MBL', this.record.mbl_no);
+          break;
+        }
+        case 'mbl_liner_bookingno': {
+
+          // this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
+          // break;
+        }
+      }
+    }
+
+
+    onBlur(field: string, rec: Tbl_cargo_container = null) {
+      switch (field) {
+        case 'mbl_refno': {
+          this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
+          break;
+        }
+        case 'mbl_no': {
+          this.record.mbl_no = this.record.mbl_no.toUpperCase();
+          break;
+        }
+
+        case 'hbl_houseno': {
+          this.record.hbl_houseno = this.record.hbl_houseno.toUpperCase();
+          break;
+        }
+        case 'hbl_shipper_name': {
+          this.record.hbl_shipper_name = this.record.hbl_shipper_name.toUpperCase();
+          break;
+        }
+
+        case 'hbl_shipper_add1': {
+          this.record.hbl_shipper_add1 = this.record.hbl_shipper_add1.toUpperCase();
+          break;
+        }
+        case 'hbl_shipper_add2': {
+          this.record.hbl_shipper_add2 = this.record.hbl_shipper_add2.toUpperCase();
+          break;
+        }
+        case 'hbl_shipper_add3': {
+          this.record.hbl_shipper_add3 = this.record.hbl_shipper_add3.toUpperCase();
+          break;
+        }
+        case 'hbl_shipper_add4': {
+          this.record.hbl_shipper_add4 = this.record.hbl_shipper_add4.toUpperCase();
+          break;
+        }
+
+        case 'hbl_consignee_name': {
+          this.record.hbl_consignee_name = this.record.hbl_consignee_name.toUpperCase();
+          break;
+        }
+
+        case 'hbl_consignee_add1': {
+          this.record.hbl_consignee_add1 = this.record.hbl_consignee_add1.toUpperCase();
+          break;
+        }
+        case 'hbl_consignee_add2': {
+          this.record.hbl_consignee_add2 = this.record.hbl_consignee_add2.toUpperCase();
+          break;
+        }
+        case 'hbl_consignee_add3': {
+          this.record.hbl_consignee_add3 = this.record.hbl_consignee_add3.toUpperCase();
+          break;
+        }
+        case 'hbl_consignee_add4': {
+          this.record.hbl_consignee_add4 = this.record.hbl_consignee_add4.toUpperCase();
+          break;
+        }
+        case 'hbl_commodity': {
+          this.record.hbl_commodity = this.record.hbl_commodity.toUpperCase();
+          break;
+        }
+        case 'hbl_isf_no': {
+          this.record.hbl_isf_no = this.record.hbl_isf_no.toUpperCase();
+          break;
+        }
+
+        case 'hbl_packages': {
+          this.record.hbl_packages = this.gs.roundNumber(this.record.hbl_packages, 0);
+          break;
+        }
+
+        case 'hbl_weight': {
+          this.record.hbl_weight = this.gs.roundNumber(this.record.hbl_weight, 3);
+          break;
+        }
+        case 'hbl_lbs': {
+          this.record.hbl_lbs = this.gs.roundNumber(this.record.hbl_lbs, 3);
+          break;
+        }
+        case 'hbl_cbm': {
+          this.record.hbl_cbm = this.gs.roundNumber(this.record.hbl_cbm, 3);
+          break;
+        }
+        case 'hbl_cft': {
+          this.record.hbl_cft = this.gs.roundNumber(this.record.hbl_cft, 3);
+          break;
+        }
+        case 'hbl_chwt': {
+          this.record.hbl_chwt = this.gs.roundNumber(this.record.hbl_chwt, 3);
+          break;
+        }
+        case 'hbl_chwt_lbs': {
+          this.record.hbl_chwt_lbs = this.gs.roundNumber(this.record.hbl_chwt_lbs, 3);
+          break;
+        }
+
+        case 'hbl_it_no': {
+          this.record.hbl_it_no = this.record.hbl_it_no.toUpperCase();
+          break;
+        }
+        case 'hbl_it_port': {
+          this.record.hbl_it_port = this.record.hbl_it_port.toUpperCase();
+          break;
+        }
+
+        case 'mbl_place_delivery': {
+          this.record.mbl_place_delivery = this.record.mbl_place_delivery.toUpperCase();
+          break;
+        }
+        case 'mbl_vessel': {
+          this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
+          break;
+        }
+        case 'mbl_voyage': {
+          this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
+          break;
+        }
+
+        case 'cntr_no': {
+          rec.cntr_no = rec.cntr_no.toUpperCase();
+          break;
+        }
+        case 'cntr_type': {
+          rec.cntr_type = rec.cntr_type.toUpperCase();
+          break;
+        }
+        case 'cntr_sealno': {
+          rec.cntr_sealno = rec.cntr_sealno.toUpperCase();
+          break;
+        }
+        case 'cntr_pieces': {
+          rec.cntr_pieces = this.gs.roundNumber(rec.cntr_pieces, 0);
+          break;
+        }
+        case 'cntr_packages_uom': {
+          break;
+        }
+        case 'cntr_weight': {
+          rec.cntr_weight = this.gs.roundNumber(rec.cntr_weight, 3);
+          break;
+        }
+        case 'cntr_cbm': {
+          rec.cntr_cbm = this.gs.roundNumber(rec.cntr_cbm, 3);
+          break;
+        }
+        //   case 'cntr_tare_weight': {
+        //     rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
+        //     break;
+        //   }
+      }
+    }
+
+    FindWeight(_type: string) {
+      if (_type == "Kgs2Lbs")
+        this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
+      else if (_type == "Lbs2Kgs")
+        this.record.hbl_weight = this.gs.Convert_Weight("LBS2KG", this.record.hbl_lbs, 3);
+      else if (_type == "Cbm2Cft")
+        this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
+      else if (_type == "Cft2Cbm")
+        this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
+      else if (_type == "Chwt2Lbs")
+        this.record.hbl_chwt_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_chwt, 3);
+      else if (_type == "Lbs2Chwt")
+        this.record.hbl_chwt = this.gs.Convert_Weight("LBS2KG", this.record.hbl_chwt_lbs, 3);
+    }
+
+    BtnNavigation(action: string) {
+
+      switch (action) {
+        case 'TRACKING': {
+          let prm = {
+            menuid: this.gs.MENU_OT_MASTER_INTERNAL_MEMO,
+            pkid: this.pkid,
+            origin: 'other-page',
+          };
+          this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
+          break;
+        }
+
+      }
+    }
+
+    RemoveRow(_rec: Tbl_cargo_container) {
+      this.records.splice(this.records.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
     }
   }
-
-  onFocusout(field: string) {
-
-    switch (field) {
-      case 'mbl_no': {
-
-        this.IsBLDupliation('MBL', this.record.mbl_no);
-        break;
-      }
-      case 'mbl_liner_bookingno': {
-
-        // this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
-        // break;
-      }
-    }
-  }
-
-
-  onBlur(field: string, rec: Tbl_cargo_container = null) {
-    switch (field) {
-      case 'mbl_refno': {
-        this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
-        break;
-      }
-      case 'mbl_no': {
-        this.record.mbl_no = this.record.mbl_no.toUpperCase();
-        break;
-      }
-
-      case 'hbl_houseno': {
-        this.record.hbl_houseno = this.record.hbl_houseno.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_name': {
-        this.record.hbl_shipper_name = this.record.hbl_shipper_name.toUpperCase();
-        break;
-      }
-
-      case 'hbl_shipper_add1': {
-        this.record.hbl_shipper_add1 = this.record.hbl_shipper_add1.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_add2': {
-        this.record.hbl_shipper_add2 = this.record.hbl_shipper_add2.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_add3': {
-        this.record.hbl_shipper_add3 = this.record.hbl_shipper_add3.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_add4': {
-        this.record.hbl_shipper_add4 = this.record.hbl_shipper_add4.toUpperCase();
-        break;
-      }
-
-      case 'hbl_consignee_name': {
-        this.record.hbl_consignee_name = this.record.hbl_consignee_name.toUpperCase();
-        break;
-      }
-
-      case 'hbl_consignee_add1': {
-        this.record.hbl_consignee_add1 = this.record.hbl_consignee_add1.toUpperCase();
-        break;
-      }
-      case 'hbl_consignee_add2': {
-        this.record.hbl_consignee_add2 = this.record.hbl_consignee_add2.toUpperCase();
-        break;
-      }
-      case 'hbl_consignee_add3': {
-        this.record.hbl_consignee_add3 = this.record.hbl_consignee_add3.toUpperCase();
-        break;
-      }
-      case 'hbl_consignee_add4': {
-        this.record.hbl_consignee_add4 = this.record.hbl_consignee_add4.toUpperCase();
-        break;
-      }
-      case 'hbl_commodity': {
-        this.record.hbl_commodity = this.record.hbl_commodity.toUpperCase();
-        break;
-      }
-      case 'hbl_isf_no': {
-        this.record.hbl_isf_no = this.record.hbl_isf_no.toUpperCase();
-        break;
-      }
-
-      case 'hbl_packages': {
-        this.record.hbl_packages = this.gs.roundNumber(this.record.hbl_packages, 0);
-        break;
-      }
-
-      case 'hbl_weight': {
-        this.record.hbl_weight = this.gs.roundNumber(this.record.hbl_weight, 3);
-        break;
-      }
-      case 'hbl_lbs': {
-        this.record.hbl_lbs = this.gs.roundNumber(this.record.hbl_lbs, 3);
-        break;
-      }
-      case 'hbl_cbm': {
-        this.record.hbl_cbm = this.gs.roundNumber(this.record.hbl_cbm, 3);
-        break;
-      }
-      case 'hbl_cft': {
-        this.record.hbl_cft = this.gs.roundNumber(this.record.hbl_cft, 3);
-        break;
-      }
-      case 'hbl_chwt': {
-        this.record.hbl_chwt = this.gs.roundNumber(this.record.hbl_chwt, 3);
-        break;
-      }
-      case 'hbl_chwt_lbs': {
-        this.record.hbl_chwt_lbs = this.gs.roundNumber(this.record.hbl_chwt_lbs, 3);
-        break;
-      }
-
-      case 'hbl_it_no': {
-        this.record.hbl_it_no = this.record.hbl_it_no.toUpperCase();
-        break;
-      }
-      case 'hbl_it_port': {
-        this.record.hbl_it_port = this.record.hbl_it_port.toUpperCase();
-        break;
-      }
-
-      case 'mbl_place_delivery': {
-        this.record.mbl_place_delivery = this.record.mbl_place_delivery.toUpperCase();
-        break;
-      }
-      case 'mbl_vessel': {
-        this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
-        break;
-      }
-      case 'mbl_voyage': {
-        this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
-        break;
-      }
-
-      case 'cntr_no': {
-        rec.cntr_no = rec.cntr_no.toUpperCase();
-        break;
-      }
-      case 'cntr_type': {
-        rec.cntr_type = rec.cntr_type.toUpperCase();
-        break;
-      }
-      case 'cntr_sealno': {
-        rec.cntr_sealno = rec.cntr_sealno.toUpperCase();
-        break;
-      }
-      case 'cntr_pieces': {
-        rec.cntr_pieces = this.gs.roundNumber(rec.cntr_pieces, 0);
-        break;
-      }
-      case 'cntr_packages_uom': {
-        break;
-      }
-      case 'cntr_weight': {
-        rec.cntr_weight = this.gs.roundNumber(rec.cntr_weight, 3);
-        break;
-      }
-      case 'cntr_cbm': {
-        rec.cntr_cbm = this.gs.roundNumber(rec.cntr_cbm, 3);
-        break;
-      }
-      //   case 'cntr_tare_weight': {
-      //     rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
-      //     break;
-      //   }
-    }
-  }
-
-  FindWeight(_type: string) {
-    if (_type == "Kgs2Lbs")
-      this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
-    else if (_type == "Lbs2Kgs")
-      this.record.hbl_weight = this.gs.Convert_Weight("LBS2KG", this.record.hbl_lbs, 3);
-    else if (_type == "Cbm2Cft")
-      this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
-    else if (_type == "Cft2Cbm")
-      this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
-    else if (_type == "Chwt2Lbs")
-      this.record.hbl_chwt_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_chwt, 3);
-    else if (_type == "Lbs2Chwt")
-      this.record.hbl_chwt = this.gs.Convert_Weight("LBS2KG", this.record.hbl_chwt_lbs, 3);
-  }
-
-  AddHouse() {
-  }
-  ShowCntrMovement() {
-  }
-
-  BtnNavigation(action: string) {
-
-    switch (action) {
-      case 'TRACKING': {
-        let prm = {
-          menuid: this.gs.MENU_OT_MASTER_INTERNAL_MEMO,
-          pkid: this.pkid,
-          origin: 'other-page',
-        };
-        this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
-        break;
-      }
-     
-    }
-  }
-}
