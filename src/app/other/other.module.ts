@@ -24,6 +24,9 @@ import {ApprovedPageListComponent } from './approvedpage/approvedpage-list.compo
 import { ApprovedPageHeaderComponent } from '../other/approvedpage/approvedpage-header.component';
 import { ApprovedPageComponent } from '../other/approvedpage/approvedpage.component';
 
+import { DeliveryOrderHeaderComponent } from '../other/deliveryorder/deliveryorder-header.component';
+import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.component';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { ApprovedPageComponent } from '../other/approvedpage/approvedpage.compon
     ApprovedPageEditComponent,
     ApprovedPageListComponent,
     ApprovedPageHeaderComponent,
-    ApprovedPageComponent
+    ApprovedPageComponent,
+    DeliveryOrderHeaderComponent,
+    DeliveryOrderComponent
   ],
   imports: [
     SharedModule,    

@@ -11,6 +11,7 @@ import { MessengerSlipListComponent } from '../other/messengerslip/messengerslip
 import {ApprovedPageEditComponent } from './approvedpage/edit/approvedpage-edit.component';
 import {ApprovedPageListComponent } from './approvedpage/approvedpage-list.component';
 import { ApprovedPageComponent } from '../other/approvedpage/approvedpage.component';
+import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path : 'MessengerSlipList', component : MessengerSlipListComponent },
   { path : 'ApprovedPageEdit', component : ApprovedPageEditComponent },
   { path : 'ApprovedPageList', component : ApprovedPageListComponent },
-  { path : 'ApprovedPage', component : ApprovedPageComponent }
+  { path : 'ApprovedPage', component : ApprovedPageComponent },
+  { path : 'DeliveryOrderPage', component : DeliveryOrderComponent }
 ];
 
 @NgModule({
