@@ -42,7 +42,7 @@ export class HousePageComponent implements OnInit {
 
   recorddet: Tbl_cargo_exp_desc[] = [];
 
-  cntrs: Tbl_cargo_container[] = [];
+  cntrs: Tbl_cargo_exp_container[] = [];
 
   ShipmentType: string = '';
 
