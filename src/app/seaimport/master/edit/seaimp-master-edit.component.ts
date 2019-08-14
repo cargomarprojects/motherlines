@@ -23,35 +23,31 @@ export class SeaImpMasterEditComponent implements OnInit {
   records: Tbl_cargo_imp_container[] = [];
 
   // 24-05-2019 Created By Joy  
-  tab : string = 'main';
-  report_title : string = '';
-  report_url : string = '';
-  report_searchdata : any = {} ;
-  report_menuid : string = '';
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
 
   showPayReq: boolean = false;
-
   private pkid: string;
   private menuid: string;
   private hbl_pkid: string = '';
   private hbl_mode: string = '';
-
   private mode: string;
 
-  private errorMessage: string;
-
+  // private errorMessage: string;
+  private errorMessage: string[] = [];
   private closeCaption: string = 'Return';
 
   private title: string;
   private isAdmin: boolean;
 
   private cmbList = {};
-
   MblStatusList: any[] = [];
   BlStatusList: any[] = [];
-
-  IsLocked: boolean = false;
-
+   
+  is_locked: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -73,7 +69,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage = '';
+    this.errorMessage = [];
     this.LoadCombo();
   }
 
@@ -100,7 +96,8 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
+    this.errorMessage = [];
+    this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_imp_masterm>{};
       this.records = <Tbl_cargo_imp_container[]>[];
@@ -171,7 +168,7 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
@@ -181,27 +178,12 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.records = <Tbl_cargo_imp_container[]>response.records;
         this.hrecords = <Tbl_cargo_imp_housem[]>response.hrecords;
         this.mode = 'EDIT';
-        this.CheckData();
+        this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
+
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
-
-  CheckData() {
-    /*
-        if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
-        {
-            IsLocked = true;
-            LBL_LOCK.Content = "LOCKED";
-            CmdSave.IsEnabled = false;
-            CmdCopyCntr.IsEnabled = false;
-        }
-        else
-            LBL_LOCK.Content = "UNLOCKED";
-    
-    */
-  }
-
 
   IsBLDupliation(stype: string, no: string) {
 
@@ -210,7 +192,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     if (no == '')
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.blno = no;
@@ -222,12 +204,12 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.mainService.Isblnoduplication(SearchData)
       .subscribe(response => {
         if (response.retvalue) {
-          this.errorMessage = response.retstring;
+          this.errorMessage.push(response.retstring);
           if (stype == 'MBL')
             this.mbl_no_field.nativeElement.focus();
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
@@ -248,18 +230,18 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
+          this.errorMessage.push(response.error);
           alert(this.errorMessage);
         }
         else {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          this.errorMessage = 'Save Complete';
+          this.errorMessage.push('Save Complete');
           alert(this.errorMessage);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
         alert(this.errorMessage);
       });
   }
@@ -333,129 +315,110 @@ export class SeaImpMasterEditComponent implements OnInit {
   private Allvalid(): boolean {
 
     var bRet = true;
-    this.errorMessage = "";
+    this.errorMessage = [];
+
     if (this.record.mbl_no == "") {
       bRet = false;
-      this.errorMessage = "Master BL# cannot be blank";
-      return bRet;
+      this.errorMessage.push("Master BL# cannot be blank");;
     }
     if (this.record.mbl_ref_date == "") {
       bRet = false;
-      this.errorMessage = "Ref Date cannot be blank";
-      return bRet;
+      this.errorMessage.push("Ref Date cannot be blank");;
     }
     if (this.gs.JOB_TYPE_OI.length > 0 && this.record.mbl_jobtype_id == "") {
       bRet = false;
-      this.errorMessage = "Job Type cannot be blank";
-      return bRet;
+      this.errorMessage.push("Job Type cannot be blank");;
     }
     if (this.record.mbl_shipment_stage == "") {
       bRet = false;
-      this.errorMessage = "Shipment Stage cannot be blank";
-      return bRet;
+      this.errorMessage.push("Shipment Stage cannot be blank");;
     }
     if (this.record.mbl_agent_id == "") {
       bRet = false;
-      this.errorMessage = "Master Agent cannot be blank"
-      return bRet;
+      this.errorMessage.push("Master Agent cannot be blank");
     }
     if (this.record.mbl_liner_id == "") {
       bRet = false;
-      this.errorMessage = "Carrier cannot be blank"
-      return bRet;
+      this.errorMessage.push("Carrier cannot be blank");
     }
 
     if (this.record.mbl_handled_id == "") {
       bRet = false;
-      this.errorMessage = "A/N Handled By cannot be blank"
-      return bRet;
+      this.errorMessage.push("A/N Handled By cannot be blank");
     }
 
     if (this.record.mbl_frt_status == "") {
       bRet = false;
-      this.errorMessage = "Freight status cannot be blank"
-      return bRet;
+      this.errorMessage.push("Freight status cannot be blank");
     }
 
     if (this.record.mbl_ship_term_id == "") {
       bRet = false;
-      this.errorMessage = "Shipping Term cannot be blank"
-      return bRet;
+      this.errorMessage.push("Shipping Term cannot be blank");
     }
     if (this.record.mbl_cntr_type == "") {
       bRet = false;
-      this.errorMessage = "Container Type cannot be blank"
-      return bRet;
+      this.errorMessage.push("Container Type cannot be blank");
     }
     if (this.record.mbl_pol_id == "") {
       bRet = false;
-      this.errorMessage = "Port of Loading cannot be blank"
-      return bRet;
+      this.errorMessage.push("Port of Loading cannot be blank");
     }
     if (this.record.mbl_pol_etd == "") {
       bRet = false;
-      this.errorMessage = "ETD cannot be blank"
-      return bRet;
+      this.errorMessage.push("ETD cannot be blank");
     }
     if (this.record.mbl_pod_id == "") {
       bRet = false;
-      this.errorMessage = "Port of Discharge cannot be blank"
-      return bRet;
+      this.errorMessage.push("Port of Discharge cannot be blank");
     }
     if (this.record.mbl_pod_eta == "") {
       bRet = false;
-      this.errorMessage = "ETA cannot be blank"
-      return bRet;
+      this.errorMessage.push("ETA cannot be blank");
     }
 
     if (this.record.mbl_country_id == "") {
       bRet = false;
-      this.errorMessage = "Country Cannot be blank"
-      return bRet;
+      this.errorMessage.push("Country Cannot be blank");
     }
 
     if (this.record.mbl_vessel == "") {
       bRet = false;
-      this.errorMessage = "Vessel cannot be blank"
-      return bRet;
+      this.errorMessage.push("Vessel cannot be blank");
     }
     if (this.record.mbl_voyage == "") {
       bRet = false;
-      this.errorMessage = "Voyage cannot be blank"
-      return bRet;
+      this.errorMessage.push("Voyage cannot be blank");
     }
 
     if (this.record.mbl_status.toString().trim() == "OMBL SENT TO CARRIER") {
       if (this.record.mbl_ombl_sent_on.toString().trim() == "") {
         bRet = false;
-        this.errorMessage = "OMBL Sent Date cannot be blank"
-        return bRet;
+        this.errorMessage.push("OMBL Sent Date cannot be blank");
       }
     }
 
     if (this.record.mbl_cntr_type != "OTHERS") {
-
       this.records.forEach(Rec => {
-
         if (Rec.cntr_no.length != 11) {
           bRet = false;
-          this.errorMessage = "Container( " + Rec.cntr_no + " ) Invalid"
-          return bRet;
+          this.errorMessage.push("Container( " + Rec.cntr_no + " ) Invalid");
         }
         if (Rec.cntr_type.length <= 0) {
           bRet = false;
-          this.errorMessage = "Container( " + Rec.cntr_no + " ) type has to be selected"
-          return bRet;
+          this.errorMessage.push("Container( " + Rec.cntr_no + " ) type has to be selected");
         }
         if (Rec.cntr_type == "LCL") {
           if (Rec.cntr_cbm <= 0) {
             bRet = false;
-            this.errorMessage = "Container( " + Rec.cntr_no + " ) CBM cannot be zero"
-            return bRet;
+            this.errorMessage.push("Container( " + Rec.cntr_no + " ) CBM cannot be zero");
           }
         }
       })
     }
+    if (!bRet)
+      alert('Error While Saving');
+
     return bRet;
   }
 
@@ -826,7 +789,7 @@ export class SeaImpMasterEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER,
           pkid: this.pkid,
-          mbl_cntr_type:this.record.mbl_cntr_type,
+          mbl_cntr_type: this.record.mbl_cntr_type,
           origin: 'seaimp-master-page',
         };
         this.gs.Naviagete('Silver.SeaImport/CopyCntrPage', JSON.stringify(prm));
@@ -837,13 +800,13 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.report_url = '/api/SeaImport/Master/GetPODSeaImpRpt';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_SI_MASTER_POD ;
+        this.report_menuid = this.gs.MENU_SI_MASTER_POD;
         this.tab = 'report';
         break;
       }
     }
   }
-  callbackevent( event : any ){
+  callbackevent(event: any) {
     this.tab = 'main';
   }
 
@@ -869,9 +832,9 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
   CopyLoc2House() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     if (this.mode != 'EDIT') {
-      this.errorMessage = 'Please Save and Continue...';
+      this.errorMessage.push('Please Save and Continue...');
       return;
     }
 
@@ -884,26 +847,26 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.mainService.CopyLoc2House(SearchData)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
+          this.errorMessage.push(response.error);
           alert(this.errorMessage);
         }
         else {
 
-          this.errorMessage = 'Copy Complete';
+          this.errorMessage.push('Copy Complete');
           alert(this.errorMessage);
         }
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
 
   UpdatePuEr() {
-    
-    this.errorMessage = '';
+
+    this.errorMessage = [];
     if (this.mode != 'EDIT') {
-      this.errorMessage = 'Please Save and Continue...';
+      this.errorMessage.push('Please Save and Continue...');
       return;
     }
 
@@ -917,35 +880,35 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.mainService.UpdatePuEr(updateRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
+          this.errorMessage.push(response.error);
           alert(this.errorMessage);
         }
         else {
-          this.errorMessage = 'Update P/U. & E/R. Complete';
+          this.errorMessage.push('Update P/U. & E/R. Complete');
           alert(this.errorMessage);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
-/*
-  GetPODSeaImpRpt() {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-        
-    this.mainService.GetPODSeaImpRpt(SearchData)
-      .subscribe(response => {
-        
-        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-        
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-  }
-  
-  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
-    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
-  }
-*/
+  /*
+    GetPODSeaImpRpt() {
+      this.errorMessage = '';
+      var SearchData = this.gs.UserInfo;
+      SearchData.pkid = this.pkid;
+          
+      this.mainService.GetPODSeaImpRpt(SearchData)
+        .subscribe(response => {
+          
+          this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+          
+        }, error => {
+          this.errorMessage = this.gs.getError(error);
+        });
+    }
+    
+    Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+      this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+    }
+  */
 }

@@ -56,22 +56,22 @@ export class AirExpHouseComponent implements OnInit {
     this.mainservice.Search(actions,'PAGE');
   }
 
-  NewRecord() {
-    if (!this.mainservice.canAdd) {
-      alert('Insufficient User Rights')
-      return;
-    }
+  // NewRecord() {
+  //   if (!this.mainservice.canAdd) {
+  //     alert('Insufficient User Rights')
+  //     return;
+  //   }
 
-    let parameter = {
-      menuid: this.mainservice.menuid,
-      pkid: '',
-      type: this.mainservice.param_type,
-      origin: 'airexp-house-page',
-      mode: 'ADD'
-    };
-    this.gs.Naviagete('Silver.AirExport.Trans/AirExpHouseEditPage', JSON.stringify(parameter));
+  //   let parameter = {
+  //     menuid: this.mainservice.menuid,
+  //     pkid: '',
+  //     type: this.mainservice.param_type,
+  //     origin: 'airexp-house-page',
+  //     mode: 'ADD'
+  //   };
+  //   this.gs.Naviagete('Silver.AirExport.Trans/AirExpHouseEditPage', JSON.stringify(parameter));
 
-  }
+  // }
   edit(_record: Tbl_cargo_exp_housem) {
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')
@@ -81,7 +81,9 @@ export class AirExpHouseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.hbl_pkid,
+      parentid :_record.hbl_mbl_id,
       type: '',
+      refno: '',
       origin: 'airexp-house-page',
       mode: 'EDIT'
     };
