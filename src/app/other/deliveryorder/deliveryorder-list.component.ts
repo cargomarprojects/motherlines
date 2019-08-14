@@ -53,7 +53,7 @@ export class DeliveryOrderListComponent implements OnInit {
     var SearchData = this.gs.UserInfo;
     SearchData.parentid = this.parentid;
     
-    this.mainservice.GeneralListt(SearchData).subscribe(response => {
+    this.mainservice.GeneralList(SearchData).subscribe(response => {
       this.records = response.list;
       
     }, error => {
