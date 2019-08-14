@@ -158,7 +158,7 @@ export interface Tbl_cargo_container {
     cntr_weight: number;
     rec_year: number;
     cntr_yn: string;
-
+    cntr_selected:boolean;
 }
 
 export interface vm_tbl_cargo_general {

@@ -115,4 +115,8 @@ export class DeliveryOrderService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/DeliveryOrder/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    LoadDefaultData(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/DeliveryOrder/LoadDefaultData', SearchData, this.gs.headerparam2('authorized'));
+    }
+    
 }

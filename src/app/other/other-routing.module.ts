@@ -13,6 +13,7 @@ import {ApprovedPageListComponent } from './approvedpage/approvedpage-list.compo
 import { ApprovedPageComponent } from '../other/approvedpage/approvedpage.component';
 import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.component';
 import { DeliveryOrderListComponent } from '../other/deliveryorder/deliveryorder-list.component';
+import { DeliveryOrderEditComponent } from './deliveryorder/edit/deliveryorder-edit.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path : 'ApprovedPageList', component : ApprovedPageListComponent },
   { path : 'ApprovedPage', component : ApprovedPageComponent },
   { path : 'DeliveryOrderPage', component : DeliveryOrderComponent },
-  { path : 'DeliveryOrderList', component : DeliveryOrderListComponent }
+  { path : 'DeliveryOrderList', component : DeliveryOrderListComponent },
+  { path : 'DeliveryOrderEdit', component : DeliveryOrderEditComponent }
 ];
 
 @NgModule({

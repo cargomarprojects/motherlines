@@ -84,10 +84,35 @@ export interface Tbl_cargo_imp_pickup {
 
 }
 
+export interface Tbl_cargo_imp_container {
+    cntr_pkid: string;
+    cntr_hblid: string;
+    cntr_catg: string;
+    cntr_order: number;
+    cntr_no: string;
+    cntr_type: string;
+    cntr_sealno: string;
+    cntr_movement: string;
+    cntr_pieces: number;
+    cntr_packages_uom: string;
+    cntr_packages: number;
+    cntr_cbm: number;
+    cntr_teu: number;
+    cntr_weight_uom: string;
+    cntr_weight: number;
+    rec_year: number;
+    cntr_yn: string;
+    cntr_tare_weight: number;
+    cntr_pick_date: string;
+    cntr_return_date: string;
+    cntr_selected:boolean;
+}
 export interface vm_tbl_cargo_imp_pickup {
     pkid: string;
     mode: string;
+    category:string;
     record: Tbl_cargo_imp_pickup;
+    cntrs: Tbl_cargo_imp_container[];
     userinfo: any,
     filter: any;
 }
