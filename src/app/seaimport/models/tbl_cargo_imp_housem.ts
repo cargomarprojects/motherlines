@@ -150,6 +150,9 @@ export interface Tbl_cargo_imp_housem {
     hbl_paid_remarks: string;
     hbl_checked:boolean;
 
+}
+export interface Tbl_desc {
+   
     hbl_cargo_marks1:string;
     hbl_cargo_marks2:string;
     hbl_cargo_marks3:string;
@@ -186,7 +189,6 @@ export interface Tbl_cargo_imp_housem {
     hbl_cargo_description16:string;
     hbl_cargo_description17:string;
 }
-
 export interface Tbl_cargo_imp_container {
     cntr_pkid: string;
     cntr_hblid: string;

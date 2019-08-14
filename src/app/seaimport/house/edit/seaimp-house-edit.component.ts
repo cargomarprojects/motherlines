@@ -5,7 +5,7 @@ import { GlobalService } from '../../../core/services/global.service';
 import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 import { SeaImpHouseService } from '../../services/seaimp-house.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem, Table_Address } from '../../models/tbl_cargo_imp_housem';
+import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem, Table_Address, Tbl_desc } from '../../models/tbl_cargo_imp_housem';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
@@ -40,17 +40,18 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   mblrecord: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   record: Tbl_cargo_imp_housem = <Tbl_cargo_imp_housem>{};
+  recorddet: Tbl_desc = <Tbl_desc>{};
   cntrrecords: Tbl_cargo_imp_container[] = [];
   descrecords: Tbl_cargo_imp_desc[] = [];
 
   // 24-05-2019 Created By Joy  
-  
-  tab : string = 'main';
-  report_title : string = '';
-  report_url : string = '';
-  report_searchdata : any = {} ;
-  report_menuid : string = '';
-   
+
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+
 
   private parentid: string;
   private pkid: string;
@@ -59,7 +60,8 @@ export class SeaImpHouseEditComponent implements OnInit {
   private mode: string;
 
   private ShipmentType: string;
-  private errorMessage: string;
+  //private errorMessage: string;
+  private errorMessage: string[] = [];
 
   private closeCaption: string = 'Return';
 
@@ -71,7 +73,7 @@ export class SeaImpHouseEditComponent implements OnInit {
   TelexRlsList: any[] = [];
   PaidStatusList: any[] = [];
 
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
 
   constructor(
     private router: Router,
@@ -95,7 +97,7 @@ export class SeaImpHouseEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage = '';
+    this.errorMessage = [];
     this.LoadCombo();
   }
 
@@ -136,20 +138,23 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
+    this.errorMessage = [];
+    this.is_locked = false;
+    this.initDesc();
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_imp_housem>{};
       this.cntrrecords = <Tbl_cargo_imp_container[]>[];
       this.descrecords = <Tbl_cargo_imp_desc[]>[];
       this.pkid = this.gs.getGuid();
-      this.LoadMasterData();
+      this.InitRecord();
+      this.LoadData();
     }
     if (this.mode == 'EDIT') {
       this.GetRecord();
     }
   }
 
-  init() {
+  InitRecord() {
     this.record.hbl_pkid = this.pkid;
     this.record.hbl_mbl_id = '';
     this.record.mbl_no = '';
@@ -269,67 +274,39 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.record.hbl_custom_reles_status = 'NA';
     this.record.hbl_is_delivery = 'NA';
     this.record.hbl_paid_remarks = '';
-    this.initDesc();
-    this.record.hbl_cargo_description9 = "QUANTITY/QUALITY AS PER SHIPPER'S DECLARATION";
-    this.record.hbl_cargo_description10 = "CARRIER NOT RESPONSIBLE FOR PACKING OF CARGO";
+    this.recorddet.hbl_cargo_description9 = "QUANTITY/QUALITY AS PER SHIPPER'S DECLARATION";
+    this.recorddet.hbl_cargo_description10 = "CARRIER NOT RESPONSIBLE FOR PACKING OF CARGO";
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
-    if (this.mblrecord != null) {
-      this.record.mbl_refno = this.mblrecord.mbl_refno;
-      this.record.hbl_location_id = this.mblrecord.mbl_cargo_loc_id;
-      this.record.hbl_location_code = this.mblrecord.mbl_cargo_loccode;
-      this.record.hbl_location_name = this.mblrecord.mbl_cargo_locname;
-      this.record.hbl_location_add1 = this.mblrecord.mbl_cargo_locaddr1;
-      this.record.hbl_location_add2 = this.mblrecord.mbl_cargo_locaddr2;
-      this.record.hbl_location_add3 = this.mblrecord.mbl_cargo_locaddr3;
-      this.record.hbl_location_add4 = this.mblrecord.mbl_cargo_locaddr4;
-      this.record.hbl_agent_id = this.mblrecord.mbl_agent_id;
-      this.record.hbl_agent_code = this.mblrecord.mbl_agent_code;
-      this.record.hbl_agent_name = this.mblrecord.mbl_agent_name;
-      this.record.hbl_it_no = this.mblrecord.mbl_it_no;
-      this.record.hbl_it_port = this.mblrecord.mbl_it_port;
-      this.record.hbl_it_date = this.mblrecord.mbl_it_date;
-      this.record.hbl_pod_id = this.mblrecord.mbl_pod_id;
-      this.record.hbl_pod_code = this.mblrecord.mbl_pod_code;
-      this.record.hbl_pod_name = this.mblrecord.mbl_pod_name;
-      this.record.hbl_pod_eta = this.mblrecord.mbl_pod_eta;
-      this.record.hbl_pld_eta = this.mblrecord.mbl_pofd_eta;
-      this.record.mbl_no = this.mblrecord.mbl_no;
-      this.record.hbl_vessel = this.mblrecord.mbl_vessel;
-      this.record.hbl_voyage = this.mblrecord.mbl_voyage;
-      this.record.hbl_handled_id = this.mblrecord.mbl_handled_id;
-      this.record.hbl_handled_name = this.mblrecord.mbl_handled_name;
-      this.record.hbl_salesman_id = this.mblrecord.mbl_salesman_id;
-      this.record.hbl_salesman_name = this.mblrecord.mbl_salesman_name;
 
-      this.record.hbl_frt_status = "";
-      this.record.hbl_ship_term_id = "";
-      this.record.hbl_ship_term = "";
-      this.record.hbl_place_delivery = this.mblrecord.mbl_place_delivery;
-      this.ShipmentType = this.mblrecord.mbl_cntr_type;
-      this.record.hbl_shipment_stage = this.mblrecord.mbl_shipment_stage;
-      /*
-       if (this.ShipmentType.trim() == "FCL" || this.ShipmentType.trim() == "LCL")
-       {
-           Cmb_Shpmnt_Stage.IsEnabled = false;
-       }
-   */
+  }
 
-      // if (Lib.IsShipmentClosed("SEA IMPORT", (DateTime)ParentMasRec.mbl_ref_date, ParentMasRec.mbl_lock,ParentMasRec.mbl_unlock_date))
-      // {
-      //     LBL_LOCK.Content = "LOCKED";
-      //     CmdSave.IsEnabled = false;
-      // }
+  LoadData() {
+    this.record.hbl_pkid = this.pkid;
+    if (this.gs.BRANCH_REGION == "USA")
+      this.record.hbl_telex_released = "NO - REQUIRED";
+    else
+      this.record.hbl_telex_released = "NO";
+    this.record.hbl_bl_req = "* ENDORSED ORIGINAL B/L REQUIRED";
+    this.record.hbl_paid_status = 'NIL';
+    this.record.hbl_bl_status = 'NIL';
+    this.record.hbl_cargo_release_status = 'NIL';
+    this.record.hbl_shipment_stage = 'NIL';
+    this.record.hbl_is_itshipment = false;
+    this.record.hbl_custom_reles_status = 'NA';
+    this.record.hbl_is_delivery = 'NA';
+    this.recorddet.hbl_cargo_description9 = "QUANTITY/QUALITY AS PER SHIPPER'S DECLARATION";
+    this.recorddet.hbl_cargo_description10 = "CARRIER NOT RESPONSIBLE FOR PACKING OF CARGO";
+    this.record.rec_created_by = this.gs.user_code;
+    this.record.rec_created_date = this.gs.defaultValues.today;
 
-      if (this.ShipmentType != "CONSOLE")
-        this.FindTotalWeight();
-      this.hbl_houseno_field.nativeElement.focus();
-    }
+    if (this.parentid.trim() != "")
+      this.LoadMasterData();
   }
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
@@ -350,129 +327,113 @@ export class SeaImpHouseEditComponent implements OnInit {
 
         this.ShipmentType = this.record.mbl_cntr_type;
 
-        // if (this.ShipmentType.trim() == "FCL" || this.ShipmentType.trim() == "LCL") {
-        //   Cmb_Shpmnt_Stage.IsEnabled = false;
-        // }
         this.initDesc();
         this.descrecords.forEach(Rec => {
           this.ShowDesc(Rec);
         })
 
-        this.CheckData();
+        this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
 
         this.hbl_houseno_field.nativeElement.focus();
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
   private initDesc() {
-    this.record.hbl_cargo_marks1 = '';
-    this.record.hbl_cargo_marks2 = '';
-    this.record.hbl_cargo_marks3 = '';
-    this.record.hbl_cargo_marks4 = '';
-    this.record.hbl_cargo_marks5 = '';
-    this.record.hbl_cargo_marks6 = '';
-    this.record.hbl_cargo_marks7 = '';
-    this.record.hbl_cargo_marks8 = '';
-    this.record.hbl_cargo_marks9 = '';
-    this.record.hbl_cargo_marks10 = '';
-    this.record.hbl_cargo_marks11 = '';
-    this.record.hbl_cargo_marks12 = '';
-    this.record.hbl_cargo_marks13 = '';
-    this.record.hbl_cargo_marks14 = '';
-    this.record.hbl_cargo_marks15 = '';
-    this.record.hbl_cargo_marks16 = '';
-    this.record.hbl_cargo_marks17 = '';
+    this.recorddet.hbl_cargo_marks1 = '';
+    this.recorddet.hbl_cargo_marks2 = '';
+    this.recorddet.hbl_cargo_marks3 = '';
+    this.recorddet.hbl_cargo_marks4 = '';
+    this.recorddet.hbl_cargo_marks5 = '';
+    this.recorddet.hbl_cargo_marks6 = '';
+    this.recorddet.hbl_cargo_marks7 = '';
+    this.recorddet.hbl_cargo_marks8 = '';
+    this.recorddet.hbl_cargo_marks9 = '';
+    this.recorddet.hbl_cargo_marks10 = '';
+    this.recorddet.hbl_cargo_marks11 = '';
+    this.recorddet.hbl_cargo_marks12 = '';
+    this.recorddet.hbl_cargo_marks13 = '';
+    this.recorddet.hbl_cargo_marks14 = '';
+    this.recorddet.hbl_cargo_marks15 = '';
+    this.recorddet.hbl_cargo_marks16 = '';
+    this.recorddet.hbl_cargo_marks17 = '';
 
-    this.record.hbl_cargo_description1 = '';
-    this.record.hbl_cargo_description2 = '';
-    this.record.hbl_cargo_description3 = '';
-    this.record.hbl_cargo_description4 = '';
-    this.record.hbl_cargo_description5 = '';
-    this.record.hbl_cargo_description6 = '';
-    this.record.hbl_cargo_description7 = '';
-    this.record.hbl_cargo_description8 = '';
-    this.record.hbl_cargo_description9 = '';
-    this.record.hbl_cargo_description10 = '';
-    this.record.hbl_cargo_description11 = '';
-    this.record.hbl_cargo_description12 = '';
-    this.record.hbl_cargo_description13 = '';
-    this.record.hbl_cargo_description14 = '';
-    this.record.hbl_cargo_description15 = '';
-    this.record.hbl_cargo_description16 = '';
-    this.record.hbl_cargo_description17 = '';
+    this.recorddet.hbl_cargo_description1 = '';
+    this.recorddet.hbl_cargo_description2 = '';
+    this.recorddet.hbl_cargo_description3 = '';
+    this.recorddet.hbl_cargo_description4 = '';
+    this.recorddet.hbl_cargo_description5 = '';
+    this.recorddet.hbl_cargo_description6 = '';
+    this.recorddet.hbl_cargo_description7 = '';
+    this.recorddet.hbl_cargo_description8 = '';
+    this.recorddet.hbl_cargo_description9 = '';
+    this.recorddet.hbl_cargo_description10 = '';
+    this.recorddet.hbl_cargo_description11 = '';
+    this.recorddet.hbl_cargo_description12 = '';
+    this.recorddet.hbl_cargo_description13 = '';
+    this.recorddet.hbl_cargo_description14 = '';
+    this.recorddet.hbl_cargo_description15 = '';
+    this.recorddet.hbl_cargo_description16 = '';
+    this.recorddet.hbl_cargo_description17 = '';
   }
   private ShowDesc(_Record: Tbl_cargo_imp_desc) {
+
     if (_Record.cargo_ctr == 1) {
-      this.record.hbl_cargo_marks1 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description1 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks1 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description1 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 2) {
-      this.record.hbl_cargo_marks2 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description2 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks2 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description2 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 3) {
-      this.record.hbl_cargo_marks3 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description3 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks3 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description3 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 4) {
-      this.record.hbl_cargo_marks4 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description4 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks4 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description4 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 5) {
-      this.record.hbl_cargo_marks5 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description5 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks5 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description5 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 6) {
-      this.record.hbl_cargo_marks6 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description6 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks6 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description6 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 7) {
-      this.record.hbl_cargo_marks7 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description7 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks7 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description7 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 8) {
-      this.record.hbl_cargo_marks8 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description8 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks8 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description8 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 9) {
-      this.record.hbl_cargo_marks9 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description9 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks9 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description9 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 10) {
-      this.record.hbl_cargo_marks10 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description10 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks10 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description10 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 11) {
-      this.record.hbl_cargo_marks11 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description11 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks11 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description11 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 12) {
-      this.record.hbl_cargo_marks12 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description12 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks12 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description12 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 13) {
-      this.record.hbl_cargo_marks13 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description13 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks13 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description13 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 14) {
-      this.record.hbl_cargo_marks14 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description14 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks14 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description14 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 15) {
-      this.record.hbl_cargo_marks15 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description15 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks15 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description15 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 16) {
-      this.record.hbl_cargo_marks16 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description16 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks16 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description16 = _Record.cargo_description.toString();
     }
     else if (_Record.cargo_ctr == 17) {
-      this.record.hbl_cargo_marks17 = _Record.cargo_marks.toString(); this.record.hbl_cargo_description17 = _Record.cargo_description.toString();
+      this.recorddet.hbl_cargo_marks17 = _Record.cargo_marks.toString(); this.recorddet.hbl_cargo_description17 = _Record.cargo_description.toString();
     }
 
-  }
-  CheckData() {
-    /*
-        if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
-        {
-            IsLocked = true;
-            LBL_LOCK.Content = "LOCKED";
-            CmdSave.IsEnabled = false;
-            CmdCopyCntr.IsEnabled = false;
-        }
-        else
-            LBL_LOCK.Content = "UNLOCKED";
-    
-    */
   }
 
   LoadMasterData() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.parentid;
     this.mainService.LoadMasterData(SearchData)
@@ -485,10 +446,51 @@ export class SeaImpHouseEditComponent implements OnInit {
           Rec.cntr_catg = "H";
         })
         this.cntrrecords = <Tbl_cargo_imp_container[]>mcntrrecords;
-        this.init();
+
+        if (this.mblrecord != null) {
+          this.record.mbl_refno = this.mblrecord.mbl_refno;
+          this.record.hbl_location_id = this.mblrecord.mbl_cargo_loc_id;
+          this.record.hbl_location_code = this.mblrecord.mbl_cargo_loccode;
+          this.record.hbl_location_name = this.mblrecord.mbl_cargo_locname;
+          this.record.hbl_location_add1 = this.mblrecord.mbl_cargo_locaddr1;
+          this.record.hbl_location_add2 = this.mblrecord.mbl_cargo_locaddr2;
+          this.record.hbl_location_add3 = this.mblrecord.mbl_cargo_locaddr3;
+          this.record.hbl_location_add4 = this.mblrecord.mbl_cargo_locaddr4;
+          this.record.hbl_agent_id = this.mblrecord.mbl_agent_id;
+          this.record.hbl_agent_code = this.mblrecord.mbl_agent_code;
+          this.record.hbl_agent_name = this.mblrecord.mbl_agent_name;
+          this.record.hbl_it_no = this.mblrecord.mbl_it_no;
+          this.record.hbl_it_port = this.mblrecord.mbl_it_port;
+          this.record.hbl_it_date = this.mblrecord.mbl_it_date;
+          this.record.hbl_pod_id = this.mblrecord.mbl_pod_id;
+          this.record.hbl_pod_code = this.mblrecord.mbl_pod_code;
+          this.record.hbl_pod_name = this.mblrecord.mbl_pod_name;
+          this.record.hbl_pod_eta = this.mblrecord.mbl_pod_eta;
+          this.record.hbl_pld_eta = this.mblrecord.mbl_pofd_eta;
+          this.record.mbl_no = this.mblrecord.mbl_no;
+          this.record.hbl_vessel = this.mblrecord.mbl_vessel;
+          this.record.hbl_voyage = this.mblrecord.mbl_voyage;
+          this.record.hbl_handled_id = this.mblrecord.mbl_handled_id;
+          this.record.hbl_handled_name = this.mblrecord.mbl_handled_name;
+          this.record.hbl_salesman_id = this.mblrecord.mbl_salesman_id;
+          this.record.hbl_salesman_name = this.mblrecord.mbl_salesman_name;
+
+          this.record.hbl_frt_status = "";
+          this.record.hbl_ship_term_id = "";
+          this.record.hbl_ship_term = "";
+          this.record.hbl_place_delivery = this.mblrecord.mbl_place_delivery;
+          this.ShipmentType = this.mblrecord.mbl_cntr_type;
+          this.record.hbl_shipment_stage = this.mblrecord.mbl_shipment_stage;
+
+          this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.mblrecord.mbl_ref_date, this.mblrecord.mbl_lock, this.mblrecord.mbl_unlock_date);
+
+          if (this.ShipmentType != "CONSOLE")
+            this.FindTotalWeight();
+          this.hbl_houseno_field.nativeElement.focus();
+        }
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
@@ -499,7 +501,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (no == '')
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.blno = no;
@@ -511,12 +513,12 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.mainService.Isblnoduplication(SearchData)
       .subscribe(response => {
         if (response.retvalue) {
-          this.errorMessage = response.retstring;
+          this.errorMessage.push(response.retstring);
           if (stype == 'HBL')
             this.hbl_houseno_field.nativeElement.focus();
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
@@ -538,18 +540,18 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
+          this.errorMessage.push(response.error);
           alert(this.errorMessage);
         }
         else {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          this.errorMessage = 'Save Complete';
+          this.errorMessage.push('Save Complete');
           alert(this.errorMessage);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
         alert(this.errorMessage);
       });
   }
@@ -596,23 +598,23 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
   private SaveDescList() {
     this.descrecords = <Tbl_cargo_imp_desc[]>[];
-    this.SaveDesc(1, this.record.hbl_cargo_marks1, "", this.record.hbl_cargo_description1);
-    this.SaveDesc(2, this.record.hbl_cargo_marks2, "", this.record.hbl_cargo_description2);
-    this.SaveDesc(3, this.record.hbl_cargo_marks3, "", this.record.hbl_cargo_description3);
-    this.SaveDesc(4, this.record.hbl_cargo_marks4, "", this.record.hbl_cargo_description4);
-    this.SaveDesc(5, this.record.hbl_cargo_marks5, "", this.record.hbl_cargo_description5);
-    this.SaveDesc(6, this.record.hbl_cargo_marks6, "", this.record.hbl_cargo_description6);
-    this.SaveDesc(7, this.record.hbl_cargo_marks7, "", this.record.hbl_cargo_description7);
-    this.SaveDesc(8, this.record.hbl_cargo_marks8, "", this.record.hbl_cargo_description8);
-    this.SaveDesc(9, this.record.hbl_cargo_marks9, "", this.record.hbl_cargo_description9);
-    this.SaveDesc(10, this.record.hbl_cargo_marks10, "", this.record.hbl_cargo_description10);
-    this.SaveDesc(11, this.record.hbl_cargo_marks11, "", this.record.hbl_cargo_description11);
-    this.SaveDesc(12, this.record.hbl_cargo_marks12, "", this.record.hbl_cargo_description12);
-    this.SaveDesc(13, this.record.hbl_cargo_marks13, "", this.record.hbl_cargo_description13);
-    this.SaveDesc(14, this.record.hbl_cargo_marks14, "", this.record.hbl_cargo_description14);
-    this.SaveDesc(15, this.record.hbl_cargo_marks15, "", this.record.hbl_cargo_description15);
-    this.SaveDesc(16, this.record.hbl_cargo_marks16, "", this.record.hbl_cargo_description16);
-    this.SaveDesc(17, this.record.hbl_cargo_marks17, "", this.record.hbl_cargo_description17);
+    this.SaveDesc(1, this.recorddet.hbl_cargo_marks1, "", this.recorddet.hbl_cargo_description1);
+    this.SaveDesc(2, this.recorddet.hbl_cargo_marks2, "", this.recorddet.hbl_cargo_description2);
+    this.SaveDesc(3, this.recorddet.hbl_cargo_marks3, "", this.recorddet.hbl_cargo_description3);
+    this.SaveDesc(4, this.recorddet.hbl_cargo_marks4, "", this.recorddet.hbl_cargo_description4);
+    this.SaveDesc(5, this.recorddet.hbl_cargo_marks5, "", this.recorddet.hbl_cargo_description5);
+    this.SaveDesc(6, this.recorddet.hbl_cargo_marks6, "", this.recorddet.hbl_cargo_description6);
+    this.SaveDesc(7, this.recorddet.hbl_cargo_marks7, "", this.recorddet.hbl_cargo_description7);
+    this.SaveDesc(8, this.recorddet.hbl_cargo_marks8, "", this.recorddet.hbl_cargo_description8);
+    this.SaveDesc(9, this.recorddet.hbl_cargo_marks9, "", this.recorddet.hbl_cargo_description9);
+    this.SaveDesc(10, this.recorddet.hbl_cargo_marks10, "", this.recorddet.hbl_cargo_description10);
+    this.SaveDesc(11, this.recorddet.hbl_cargo_marks11, "", this.recorddet.hbl_cargo_description11);
+    this.SaveDesc(12, this.recorddet.hbl_cargo_marks12, "", this.recorddet.hbl_cargo_description12);
+    this.SaveDesc(13, this.recorddet.hbl_cargo_marks13, "", this.recorddet.hbl_cargo_description13);
+    this.SaveDesc(14, this.recorddet.hbl_cargo_marks14, "", this.recorddet.hbl_cargo_description14);
+    this.SaveDesc(15, this.recorddet.hbl_cargo_marks15, "", this.recorddet.hbl_cargo_description15);
+    this.SaveDesc(16, this.recorddet.hbl_cargo_marks16, "", this.recorddet.hbl_cargo_description16);
+    this.SaveDesc(17, this.recorddet.hbl_cargo_marks17, "", this.recorddet.hbl_cargo_description17);
   }
   private SaveDesc(iCtr: number, M1: string, P1: string, D1: string) {
     if (M1.length > 0 || P1.length > 0 || D1.length > 0) {
@@ -629,157 +631,101 @@ export class SeaImpHouseEditComponent implements OnInit {
   private Allvalid(): boolean {
 
     var bRet = true;
-    this.errorMessage = "";
+    this.errorMessage = [];
 
     if (this.gs.isBlank(this.parentid)) {
+      this.errorMessage.push("Invalid MBL ID");
       bRet = false;
-      this.errorMessage = "Invalid MBL ID";
-      alert(this.errorMessage);
-      return bRet;
     }
 
     if (this.gs.isBlank(this.record.hbl_houseno)) {
+      this.errorMessage.push("House BL# cannot be blank");
       bRet = false;
-      this.errorMessage = "House BL# cannot be blank";
-      alert(this.errorMessage);
-      this.hbl_houseno_field.nativeElement.focus();
-      return bRet;
     }
 
     if (!this.hbl_shipment_stage_field.nativeElement.disabled) {
       if (this.gs.isBlank(this.record.hbl_shipment_stage)) {
+        this.errorMessage.push("Shipment Stage cannot be blank");
         bRet = false;
-        this.errorMessage = "Shipment Stage cannot be blank";
-        alert(this.errorMessage);
-        this.hbl_shipment_stage_field.nativeElement.focus();
-        return bRet;
       }
     }
 
     if (this.gs.isBlank(this.record.hbl_shipper_id)) {
+      this.errorMessage.push("Shipper Code can't be blank");
       bRet = false;
-      this.errorMessage = "Shipper Code can't be blank";
-      alert(this.errorMessage);
-      this.hbl_shipper_code_field.Focus();
-      return bRet;
     }
     if (this.gs.isBlank(this.record.hbl_shipper_add1)) {
+      this.errorMessage.push("Shipper Address can't be blank");
       bRet = false;
-      this.errorMessage = "Shipper Address can't be blank";
-      alert(this.errorMessage);
-      this.hbl_shipper_add1_field.nativeElement.focus();
-      return bRet;
     }
     if (this.gs.isBlank(this.record.hbl_consignee_code)) {
+      this.errorMessage.push("Consignee Code can't be blank");
       bRet = false;
-      this.errorMessage = "Consignee Code can't be blank";
-      alert(this.errorMessage);
-      this.hbl_consignee_code_field.Focus();
-      return bRet;
     }
     if (this.gs.isBlank(this.record.hbl_consignee_add1)) {
+      this.errorMessage.push("Consignee Address can't be blank");
       bRet = false;
-      this.errorMessage = "Consignee Address can't be blank";
-      alert(this.errorMessage);
-      this.hbl_consignee_add1_field.nativeElement.focus();
-      return bRet;
     }
 
     if (this.gs.isBlank(this.record.hbl_agent_id)) {
+      this.errorMessage.push("Agent can't be blank");
       bRet = false;
-      this.errorMessage = "Agent can't be blank";
-      alert(this.errorMessage);
-      this.hbl_agent_name_field.Focus();
-      return bRet;
     }
 
     if (!this.gs.isBlank(this.record.hbl_cha_code)) {
       if (this.gs.isBlank(this.record.hbl_cha_id)) {
+        this.errorMessage.push("Invalid CHB");
         bRet = false;
-        this.errorMessage = "Invalid CHB";
-        alert(this.errorMessage);
-        this.hbl_cha_code_field.Focus();
-        return bRet;
       }
     }
 
 
     if (this.gs.isZero(this.record.hbl_packages)) {
+      this.errorMessage.push("No. of packages can't be blank");
       bRet = false;
-      this.errorMessage = "No. of packages can't be blank";
-      alert(this.errorMessage);
-      this.hbl_packages_field.nativeElement.focus();
-      return bRet;
     }
     if (this.gs.isBlank(this.record.hbl_uom)) {
+      this.errorMessage.push("Unit of packages can't be blank");
       bRet = false;
-      this.errorMessage = "Unit of packages can't be blank";
-      alert(this.errorMessage);
-      this.hbl_uom_field.nativeElement.focus();
-      return bRet;
     }
     if (this.gs.isZero(this.record.hbl_weight)) {
+      this.errorMessage.push("Weight can't be blank");
       bRet = false;
-      this.errorMessage = "Weight can't be blank";
-      alert(this.errorMessage);
-      this.hbl_weight_field.nativeElement.focus();
-      return bRet;
     }
 
     if (this.gs.isZero(this.record.hbl_cbm) && this.ShipmentType != "FCL") {
+      this.errorMessage.push("CBM can't be blank");
       bRet = false;
-      this.errorMessage = "CBM can't be blank";
-      alert(this.errorMessage);
-      this.hbl_cbm_field.nativeElement.focus();
-      return bRet;
     }
     if (this.gs.BRANCH_REGION == "USA") {
       if (this.gs.isZero(this.record.hbl_lbs)) {
+        this.errorMessage.push("LBS can't be blank");
         bRet = false;
-        this.errorMessage = "LBS can't be blank";
-        alert(this.errorMessage);
-        this.hbl_lbs_field.nativeElement.focus();
-        return bRet;
       }
       if (this.gs.isZero(this.record.hbl_cft) && this.ShipmentType != "FCL") {
+        this.errorMessage.push("CFT can't be blank");
         bRet = false;
-        this.errorMessage = "CFT can't be blank";
-        alert(this.errorMessage);
-        this.hbl_cft_field.nativeElement.focus();
-        return bRet;
       }
     }
 
     if (this.gs.OPTIONAL_DESCRIPTION == "N") {
       if (this.gs.isBlank(this.record.hbl_commodity)) {
+        this.errorMessage.push("Goods description can't be blank");
         bRet = false;
-        this.errorMessage = "Goods description can't be blank";
-        alert(this.errorMessage);
-        this.hbl_commodity_field.nativeElement.focus();
-        return bRet;
       }
     }
 
     if (this.gs.isBlank(this.record.hbl_frt_status)) {
+      this.errorMessage.push("Freight Status can't be blank");
       bRet = false;
-      this.errorMessage = "Freight Status can't be blank";
-      alert(this.errorMessage);
-      this.hbl_frt_status_field.nativeElement.focus();
-      return bRet;
     }
     if (this.gs.isBlank(this.record.hbl_ship_term_id)) {
+      this.errorMessage.push("Terms can't be blank");
       bRet = false;
-      this.errorMessage = "Terms can't be blank";
-      alert(this.errorMessage);
-      this.hbl_ship_term_id_field.nativeElement.focus();
-      return bRet;
     }
     if (this.gs.isBlank(this.record.hbl_bltype)) {
+      this.errorMessage.push("Nomination Type can't be blank");
       bRet = false;
-      this.errorMessage = "Nomination Type can't be blank";
-      alert(this.errorMessage);
-      this.hbl_bltype_field.nativeElement.focus();
-      return bRet;
     }
 
 
@@ -787,36 +733,34 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.cntrrecords.forEach(Rec => {
 
       if (Rec.cntr_no.toString().trim().length < 11) {
+        this.errorMessage.push("Container( " + Rec.cntr_no.toString() + " ) Invalid ");
         bRet = false;
-        this.errorMessage = "Container( " + Rec.cntr_no.toString() + " ) Invalid ";
-        alert(this.errorMessage);
-        return bRet;
       }
       if (Rec.cntr_type.toString().trim().length <= 0) {
+        this.errorMessage.push("Container( " + Rec.cntr_no.toString() + " ) container type has to be select");
         bRet = false;
-        this.errorMessage = "Container( " + Rec.cntr_no.toString() + " ) container type has to be select";
-        alert(this.errorMessage);
-        return bRet;
       }
 
     })
 
     if (this.gs.isBlank(this.record.hbl_handled_id)) {
+      this.errorMessage.push("Handled By cannot be blank");
       bRet = false;
-      this.errorMessage = "Handled By cannot be blank";
-      alert(this.errorMessage);
-      this.hbl_handled_name_field.Focus();
-      return bRet;
     }
+    
+    
     /*
     if (Txt_Salesman.TxtLovBox.Text.Trim().Length <= 0)
     {
-        bRet = false;
+        
         MessageBox.Show("Sales By can't be blank", "Save", MessageBoxButton.OK);
         Txt_Salesman.Focus();
-        return bRet;
+        bRet = false;
     }
     */
+
+   if (!bRet)
+   alert('Error While Saving');
 
     return bRet;
   }
@@ -873,9 +817,9 @@ export class SeaImpHouseEditComponent implements OnInit {
         // };
         // mPage.Show();
 
-       // this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
+        // this.SearchRecord("MsgAlertBox", this.record.hbl_shipper_id);
 
-     this.gs.ShowAccAlert(this.record.hbl_shipper_id);
+        this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
     }
 
@@ -1004,7 +948,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         if (sWord.length <= 0)
           return;
 
-        this.record.hbl_cargo_description7 = sWord;
+        this.recorddet.hbl_cargo_description7 = sWord;
       }
     }
     if (field == 'hbl_telex_released') {
@@ -1410,137 +1354,138 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.record.hbl_paid_remarks = this.record.hbl_paid_remarks.toUpperCase();
         break;
       }
+
       case 'hbl_cargo_marks1': {
-        this.record.hbl_cargo_marks1 = this.record.hbl_cargo_marks1.toUpperCase();
+        this.recorddet.hbl_cargo_marks1 = this.recorddet.hbl_cargo_marks1.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks2': {
-        this.record.hbl_cargo_marks2 = this.record.hbl_cargo_marks2.toUpperCase();
+        this.recorddet.hbl_cargo_marks2 = this.recorddet.hbl_cargo_marks2.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks3': {
-        this.record.hbl_cargo_marks3 = this.record.hbl_cargo_marks3.toUpperCase();
+        this.recorddet.hbl_cargo_marks3 = this.recorddet.hbl_cargo_marks3.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks4': {
-        this.record.hbl_cargo_marks4 = this.record.hbl_cargo_marks4.toUpperCase();
+        this.recorddet.hbl_cargo_marks4 = this.recorddet.hbl_cargo_marks4.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks5': {
-        this.record.hbl_cargo_marks5 = this.record.hbl_cargo_marks5.toUpperCase();
+        this.recorddet.hbl_cargo_marks5 = this.recorddet.hbl_cargo_marks5.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks6': {
-        this.record.hbl_cargo_marks6 = this.record.hbl_cargo_marks6.toUpperCase();
+        this.recorddet.hbl_cargo_marks6 = this.recorddet.hbl_cargo_marks6.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks7': {
-        this.record.hbl_cargo_marks7 = this.record.hbl_cargo_marks7.toUpperCase();
+        this.recorddet.hbl_cargo_marks7 = this.recorddet.hbl_cargo_marks7.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks8': {
-        this.record.hbl_cargo_marks8 = this.record.hbl_cargo_marks8.toUpperCase();
+        this.recorddet.hbl_cargo_marks8 = this.recorddet.hbl_cargo_marks8.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks9': {
-        this.record.hbl_cargo_marks9 = this.record.hbl_cargo_marks9.toUpperCase();
+        this.recorddet.hbl_cargo_marks9 = this.recorddet.hbl_cargo_marks9.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks10': {
-        this.record.hbl_cargo_marks10 = this.record.hbl_cargo_marks10.toUpperCase();
+        this.recorddet.hbl_cargo_marks10 = this.recorddet.hbl_cargo_marks10.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks11': {
-        this.record.hbl_cargo_marks11 = this.record.hbl_cargo_marks11.toUpperCase();
+        this.recorddet.hbl_cargo_marks11 = this.recorddet.hbl_cargo_marks11.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks12': {
-        this.record.hbl_cargo_marks12 = this.record.hbl_cargo_marks12.toUpperCase();
+        this.recorddet.hbl_cargo_marks12 = this.recorddet.hbl_cargo_marks12.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks13': {
-        this.record.hbl_cargo_marks13 = this.record.hbl_cargo_marks13.toUpperCase();
+        this.recorddet.hbl_cargo_marks13 = this.recorddet.hbl_cargo_marks13.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks14': {
-        this.record.hbl_cargo_marks14 = this.record.hbl_cargo_marks14.toUpperCase();
+        this.recorddet.hbl_cargo_marks14 = this.recorddet.hbl_cargo_marks14.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks15': {
-        this.record.hbl_cargo_marks15 = this.record.hbl_cargo_marks15.toUpperCase();
+        this.recorddet.hbl_cargo_marks15 = this.recorddet.hbl_cargo_marks15.toUpperCase();
         break;
       }
       case 'hbl_cargo_marks16': {
-        this.record.hbl_cargo_marks16 = this.record.hbl_cargo_marks16.toUpperCase();
+        this.recorddet.hbl_cargo_marks16 = this.recorddet.hbl_cargo_marks16.toUpperCase();
         break;
       }
       case 'hbl_cargo_description1': {
-        this.record.hbl_cargo_description1 = this.record.hbl_cargo_description1.toUpperCase();
+        this.recorddet.hbl_cargo_description1 = this.recorddet.hbl_cargo_description1.toUpperCase();
         break;
       }
       case 'hbl_cargo_description2': {
-        this.record.hbl_cargo_description2 = this.record.hbl_cargo_description2.toUpperCase();
+        this.recorddet.hbl_cargo_description2 = this.recorddet.hbl_cargo_description2.toUpperCase();
         break;
       }
       case 'hbl_cargo_description3': {
-        this.record.hbl_cargo_description3 = this.record.hbl_cargo_description3.toUpperCase();
+        this.recorddet.hbl_cargo_description3 = this.recorddet.hbl_cargo_description3.toUpperCase();
         break;
       }
       case 'hbl_cargo_description4': {
-        this.record.hbl_cargo_description4 = this.record.hbl_cargo_description4.toUpperCase();
+        this.recorddet.hbl_cargo_description4 = this.recorddet.hbl_cargo_description4.toUpperCase();
         break;
       }
       case 'hbl_cargo_description5': {
-        this.record.hbl_cargo_description5 = this.record.hbl_cargo_description5.toUpperCase();
+        this.recorddet.hbl_cargo_description5 = this.recorddet.hbl_cargo_description5.toUpperCase();
         break;
       }
       case 'hbl_cargo_description6': {
-        this.record.hbl_cargo_description6 = this.record.hbl_cargo_description6.toUpperCase();
+        this.recorddet.hbl_cargo_description6 = this.recorddet.hbl_cargo_description6.toUpperCase();
         break;
       }
       case 'hbl_cargo_description7': {
-        this.record.hbl_cargo_description7 = this.record.hbl_cargo_description7.toUpperCase();
+        this.recorddet.hbl_cargo_description7 = this.recorddet.hbl_cargo_description7.toUpperCase();
         break;
       }
       case 'hbl_cargo_description8': {
-        this.record.hbl_cargo_description8 = this.record.hbl_cargo_description8.toUpperCase();
+        this.recorddet.hbl_cargo_description8 = this.recorddet.hbl_cargo_description8.toUpperCase();
         break;
       }
       case 'hbl_cargo_description9': {
-        this.record.hbl_cargo_description9 = this.record.hbl_cargo_description9.toUpperCase();
+        this.recorddet.hbl_cargo_description9 = this.recorddet.hbl_cargo_description9.toUpperCase();
         break;
       }
       case 'hbl_cargo_description10': {
-        this.record.hbl_cargo_description10 = this.record.hbl_cargo_description10.toUpperCase();
+        this.recorddet.hbl_cargo_description10 = this.recorddet.hbl_cargo_description10.toUpperCase();
         break;
       }
       case 'hbl_cargo_description11': {
-        this.record.hbl_cargo_description11 = this.record.hbl_cargo_description11.toUpperCase();
+        this.recorddet.hbl_cargo_description11 = this.recorddet.hbl_cargo_description11.toUpperCase();
 
         break;
       }
       case 'hbl_cargo_description12': {
-        this.record.hbl_cargo_description12 = this.record.hbl_cargo_description12.toUpperCase();
+        this.recorddet.hbl_cargo_description12 = this.recorddet.hbl_cargo_description12.toUpperCase();
         break;
       }
       case 'hbl_cargo_description13': {
-        this.record.hbl_cargo_description13 = this.record.hbl_cargo_description13.toUpperCase();
+        this.recorddet.hbl_cargo_description13 = this.recorddet.hbl_cargo_description13.toUpperCase();
         break;
       }
       case 'hbl_cargo_description14': {
-        this.record.hbl_cargo_description14 = this.record.hbl_cargo_description14.toUpperCase();
+        this.recorddet.hbl_cargo_description14 = this.recorddet.hbl_cargo_description14.toUpperCase();
         break;
       }
       case 'hbl_cargo_description15': {
-        this.record.hbl_cargo_description15 = this.record.hbl_cargo_description15.toUpperCase();
+        this.recorddet.hbl_cargo_description15 = this.recorddet.hbl_cargo_description15.toUpperCase();
         break;
       }
       case 'hbl_cargo_description16': {
-        this.record.hbl_cargo_description16 = this.record.hbl_cargo_description16.toUpperCase();
+        this.recorddet.hbl_cargo_description16 = this.recorddet.hbl_cargo_description16.toUpperCase();
         break;
       }
       case 'hbl_cargo_description17': {
-        this.record.hbl_cargo_description17 = this.record.hbl_cargo_description17.toUpperCase();
+        this.recorddet.hbl_cargo_description17 = this.recorddet.hbl_cargo_description17.toUpperCase();
         break;
       }
 
@@ -1632,7 +1577,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.type = 'ARRIVAL NOTICE';
-        this.report_menuid = this.gs.MENU_SI_HOUSE_ARRIVAL_NOTICE ;
+        this.report_menuid = this.gs.MENU_SI_HOUSE_ARRIVAL_NOTICE;
         this.tab = 'report';
         break;
       }
@@ -1642,7 +1587,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.type = 'FREIGHT INVOICE';
-        this.report_menuid = this.gs.MENU_SI_HOUSE_ARRIVAL_NOTICE ;
+        this.report_menuid = this.gs.MENU_SI_HOUSE_ARRIVAL_NOTICE;
         this.tab = 'report';
         break;
       }
@@ -1651,7 +1596,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.report_url = '/api/SeaImport/House/GetPreAlertReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_SI_HOUSE_PRE_ADVISE ;
+        this.report_menuid = this.gs.MENU_SI_HOUSE_PRE_ADVISE;
         this.tab = 'report';
         break;
       }
@@ -1660,14 +1605,14 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.report_url = '/api/SeaImport/House/GetTurnOverReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_SI_HOUSE_TURNOVER_LETTER ;
+        this.report_menuid = this.gs.MENU_SI_HOUSE_TURNOVER_LETTER;
         this.tab = 'report';
         break;
       }
     }
   }
 
-  callbackevent( event : any ){
+  callbackevent(event: any) {
     this.tab = 'main';
   }
 
@@ -1681,13 +1626,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     else if (_type == "Cft2Cbm")
       this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
   }
-
-  AddHouse() {
-
-  }
-  ShowCntrMovement() {
-  }
-
+ 
 
   ISFUpload() {
 
@@ -1698,7 +1637,7 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
 
   SearchRecord(controlname: string, _id: string = "", _type: string = "") {
-    this.errorMessage = '';
+    this.errorMessage = [];
     let SearchData = {
       table: '',
       pkid: '',
@@ -1721,7 +1660,7 @@ export class SeaImpHouseEditComponent implements OnInit {
           this.LoadCHA();
       },
         error => {
-          this.errorMessage = this.gs.getError(error);
+          this.errorMessage.push(this.gs.getError(error));
           alert(this.errorMessage);
         });
   }
@@ -1743,7 +1682,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (this.gs.isBlank(this.record.hbl_consignee_id))
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.record.hbl_consignee_id;
     this.mainService.LoadCha(SearchData)
@@ -1765,64 +1704,64 @@ export class SeaImpHouseEditComponent implements OnInit {
         }
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
   RemoveRow(_rec: Tbl_cargo_imp_container) {
     this.cntrrecords.splice(this.cntrrecords.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
+  /*
+    GetArrivalNotice(_type:string) {
+      this.errorMessage = '';
+      var SearchData = this.gs.UserInfo;
+      SearchData.pkid = this.pkid;
+      SearchData.type =_type;
+                                  
+      this.mainService.GetArrivalNotice(SearchData)
+        .subscribe(response => {
+          
+          this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+  
+          
+        }, error => {
+          this.errorMessage = this.gs.getError(error);
+        });
+    }
+  
+    Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+      this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+    }
+  
+    GetPreAlert() {
+      this.errorMessage = '';
+      var SearchData = this.gs.UserInfo;
+      SearchData.pkid = this.pkid;
+          
+      this.mainService.GetPreAlertReport(SearchData)
+        .subscribe(response => {
+          
+          this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+  
+          
+        }, error => {
+          this.errorMessage = this.gs.getError(error);
+        });
+    }
+    GetTurnOver() {
+      this.errorMessage = '';
+      var SearchData = this.gs.UserInfo;
+      SearchData.pkid = this.pkid;
+          
+      this.mainService.GetTurnOverReport(SearchData)
+        .subscribe(response => {
+          
+          this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+  
+          
+        }, error => {
+          this.errorMessage = this.gs.getError(error);
+        });
+    }*/
 
-/*
-  GetArrivalNotice(_type:string) {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-    SearchData.type =_type;
-                                
-    this.mainService.GetArrivalNotice(SearchData)
-      .subscribe(response => {
-        
-        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-
-        
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-  }
-
-  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
-    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
-  }
-
-  GetPreAlert() {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-        
-    this.mainService.GetPreAlertReport(SearchData)
-      .subscribe(response => {
-        
-        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-
-        
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-  }
-  GetTurnOver() {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-        
-    this.mainService.GetTurnOverReport(SearchData)
-      .subscribe(response => {
-        
-        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-
-        
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-  }*/
 }
