@@ -63,12 +63,11 @@ export class DeliveryOrderComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: '',
       mode: 'ADD',
-      mbl_pkid : '',
-      mbl_refno : '',
-      mbl_mode:'GENERAL',
-      origin: 'oth-deliveryorder-page'
+      parentid : '',
+      pickCategory : 'GENERAL',
+      origin: 'oth-deliveryorder-page',
     };
-    this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/DeliveryOrderEdit', JSON.stringify(parameter));
 
   }
   
@@ -82,12 +81,11 @@ export class DeliveryOrderComponent implements OnInit {
         menuid: this.mainservice.menuid,
         pkid: _record.pick_pkid,
         mode: 'EDIT',
-        mbl_pkid : '',
-        mbl_refno : '',
-        mbl_mode:'GENERAL',
+        parentid : _record.pick_parentid,
+        pickCategory : 'GENERAL',
         origin: 'oth-deliveryorder-page',
       };
-      this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
+      this.gs.Naviagete('Silver.Other.Trans/DeliveryOrderEdit', JSON.stringify(parameter));
   }
 
   Close() {

@@ -16,7 +16,8 @@ export class DeliveryOrderListComponent implements OnInit {
 
   private errormessage: string;
   private parentid: string;
-  
+  private pickCategory: string;
+
   private menuid: string;
   private title: string;
   private isAdmin: boolean;
@@ -39,7 +40,7 @@ export class DeliveryOrderListComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.menuid = options.menuid;
     this.parentid = options.parentid;
-
+    this.pickCategory = options.pickCategory;
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
     this.canAdd = this.gs.canAdd(this.menuid);
@@ -72,7 +73,9 @@ export class DeliveryOrderListComponent implements OnInit {
       menuid: this.menuid,
       pkid: '',
       mode: 'ADD',
-      parentid : this.parentid
+      parentid : this.parentid,
+      pickCategory : this.pickCategory,
+      origin: 'oth-deliveryorder-page'
     };
     this.gs.Naviagete('Silver.Other.Trans/DeliveryOrderEdit', JSON.stringify(parameter));
 
@@ -88,7 +91,9 @@ export class DeliveryOrderListComponent implements OnInit {
       menuid: this.menuid,
       pkid: _record.pick_pkid,
       mode: 'EDIT',
-      parentid : this.parentid
+      parentid : _record.pick_parentid,
+      pickCategory : this.pickCategory,
+      origin: 'oth-deliveryorder-page',
     };
     this.gs.Naviagete('Silver.Other.Trans/DeliveryOrderEdit', JSON.stringify(parameter));
   }

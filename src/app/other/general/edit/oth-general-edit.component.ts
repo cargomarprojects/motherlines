@@ -739,23 +739,92 @@ export class OthGeneralEditComponent implements OnInit {
     BtnNavigation(action: string) {
 
       switch (action) {
-        // case 'TRACKING': {
-        //   let prm = {
-        //     menuid: this.gs.MENU_OT_MASTER_INTERNAL_MEMO,
-        //     pkid: this.pkid,
-        //     origin: 'other-page',
-        //   };
-        //   this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
-        //   break;
-        // }
         case 'DELIVERY-ORDER': {
           let prm = {
             menuid: this.gs.MENU_OT_OPERATION_DELIVERY_ORDER,
             parentid: this.pkid,
+            pickCategory:'OTHERS',
             islocked: false,
-            origin: 'other-page'
+            origin: 'other-general-page'
           };
           this.gs.Naviagete('Silver.Other.Trans/DeliveryOrderList', JSON.stringify(prm));
+          break;
+        }
+
+        case 'ARAP': {
+          let prm = {
+            menuid: this.gs.MENU_OT_OPERATION_ARAP,
+            pkid: this.pkid,
+            refno: this.record.mbl_refno,
+            type: 'OT',
+            origin: 'other-general-page',
+          };
+          this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
+          break;
+        }
+                
+        case 'PAYMENT-REQUEST': {
+          let prm = {
+            menuid: this.gs.MENU_OT_PAYMENT_REQUEST,
+            cp_master_id: this.pkid,
+            cp_source: 'OTHER OPERATION',
+            cp_mode: 'OTHERS',
+            cp_ref_no: this.record.mbl_refno,
+            islocked: false,
+            origin: 'other-general-page'
+          };
+          this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
+          break;
+        }
+        case 'MESSENGER-SLIP': {
+          let prm = {
+            menuid: this.gs.MENU_OT_MESSENGER_SLIP,
+            mbl_pkid: this.pkid,
+            mbl_mode: 'OTHERS',
+            mbl_refno: this.record.mbl_refno,
+            islocked: false,
+            origin: 'other-general-page'
+          };
+          this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
+          break;
+        }
+        case 'FOLLOWUP': {
+          let prm = {
+            menuid: this.gs.MENU_OT_OPERATION,
+            master_id: this.pkid,
+            master_refno: this.record.mbl_refno,
+            master_refdate: this.record.mbl_ref_date,
+            islocked: false,
+            origin: 'other-general-page'
+          };
+          this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
+          break;
+        }
+        case 'REQUEST-APPROVAL': {
+          let prm = {
+            menuid: this.gs.MENU_OT_MASTER_REQUEST_APPROVAL,
+            mbl_pkid: this.pkid,
+            mbl_refno: this.record.mbl_refno,
+            doc_type: 'OTHERS',
+            req_type: 'REQUEST',
+            islocked: false,
+            origin: 'other-general-page'
+          };
+          this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
+          break;
+        }
+        case 'INERNALMEMO': {
+          let prm = {
+            menuid: this.gs.MENU_OT_MASTER_INTERNAL_MEMO,
+            refno: "REF : " + this.record.mbl_refno,
+            pkid: this.pkid,
+            origin: 'other-general-page',
+            oprgrp: 'OTHERS',
+            parentType: 'OTH-CNTR',
+            paramType: 'OTH-CNTR-MOVE-STATUS',
+            hideTracking: 'Y'
+          };
+          this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
           break;
         }
 
