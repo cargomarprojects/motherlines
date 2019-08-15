@@ -47,7 +47,8 @@ export class DeliveryOrderEditComponent implements OnInit {
 
 
   private parentid: string = '';
-  private pick_category: string;
+  private pickCategory: string;
+  private deliveryCntrsToPrint: string = '';
   private mbl_refno: string;
   private type: string;
 
@@ -66,7 +67,7 @@ export class DeliveryOrderEditComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.menuid = options.menuid;
     this.parentid = options.parentid;
-    this.pick_category = options.pickCategory;
+    this.pickCategory = options.pickCategory;
     this.pkid = options.pkid;
     this.mode = options.mode;
 
@@ -287,7 +288,7 @@ export class DeliveryOrderEditComponent implements OnInit {
       bret = false;
     }
 
-    if (this.pick_category == "OTHERS" || this.pick_category == "EXTRA") {
+    if (this.pickCategory == "OTHERS" || this.pickCategory == "EXTRA") {
       if (this.gs.isBlank(this.record.pick_truk_code) || this.gs.isBlank(this.record.pick_truk_id)) {
         this.errorMessage.push("Trucker Code cannot be empty");
         bret = false;
@@ -626,7 +627,7 @@ export class DeliveryOrderEditComponent implements OnInit {
     const saveRecord = <vm_tbl_cargo_imp_pickup>{};
     saveRecord.record = this.record;
     saveRecord.pkid = this.pkid;
-    saveRecord.category = this.pick_category;
+    saveRecord.category = this.pickCategory;
     saveRecord.mode = this.mode;
     saveRecord.userinfo = this.gs.UserInfo;
 
@@ -762,20 +763,18 @@ export class DeliveryOrderEditComponent implements OnInit {
 
     switch (action) {
 
-      // case 'FULL-FORMAT': {
-      //     this.report_title = 'House Print';
-      //     this.report_url = '/api/AirExport/House/GetHAWBReport';
-      //     this.report_searchdata = this.gs.UserInfo;
-      //     this.report_searchdata.pkid = this.pkid;
-      //     this.report_searchdata.invoketype = this.Client_Category;
-      //     this.report_searchdata.desc_type = this.DESC_TYPE;
-      //     if (this.Client_Category == "SHPR" || this.Client_Category == "CNOR")
-      //         this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_SHIPPER;
-      //     else
-      //         this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_CONSIGNEE;
-      //     this.tab = 'report';
-      //     break;
-      // }
+      case 'DELIVERYORDER-PRINT': {
+        this.report_title = 'Delivery Order';
+        this.report_url = '/api/Other/DeliveryOrder/GetDeliveryOrderReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.parentid = this.parentid;
+        this.report_searchdata.pickcategory = this.pickCategory;
+        this.report_searchdata.cntrstoprint = this.deliveryCntrsToPrint;
+        this.report_menuid = this.gs.MENU_OT_PICKUP_DELIVERY_ORDER;
+        this.tab = 'report';
+        break;
+      }
       // case 'BLANK-FORMAT': {
       //     this.report_title = 'House Print';
       //     this.report_url = '/api/AirExport/House/GetHAWBBlankReport';
@@ -801,5 +800,18 @@ export class DeliveryOrderEditComponent implements OnInit {
     this.location.back();
   }
 
+  printDeliveryOrder() {
+    this.deliveryCntrsToPrint = "";
+    if (this.pickCategory == "OTHERS") {
+      for (let rec of this.cntrrecords) {
+        if (rec.cntr_selected) {
+          if (this.deliveryCntrsToPrint.trim() != "")
+            this.deliveryCntrsToPrint += ",";
+          this.deliveryCntrsToPrint += rec.cntr_no.toString();
+        }
+      }
+    }
+    this.BtnNavigation('DELIVERYORDER-PRINT');
+  }
 
 }
