@@ -19,7 +19,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
   //   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
 
   record: Tbl_cargo_general = <Tbl_cargo_general>{};
-  records: Tbl_cargo_container[] = [];
+  HblList: Tbl_cargo_general[] = [];
 
   // 24-05-2019 Created By Joy  
 
@@ -42,7 +42,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
 
   refnoDisabled: boolean = false;
   refnoMaxLength: Number = 8;
-  refnoFormat: string = 'RefNo Format -  GEYYYYMM'
+  refnoFormat: string = 'Format -  GEYYYYMM'
   IsLocked: boolean = false;
 
   constructor(
@@ -68,7 +68,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
 
-    this.refnoFormat = "RefNo Format -  " + this.EXPTYPE.trim() + "YYYYMM";
+    this.refnoFormat = "Format - " + this.EXPTYPE.trim() + "YYYYMM";
     this.refnoMaxLength = 8;
     this.refnoDisabled = false;
     if (this.EXPTYPE.trim() == "PS" || this.EXPTYPE.trim() == "FA") {
@@ -108,7 +108,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     this.errorMessage = '';
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_general>{};
-      this.records = <Tbl_cargo_container[]>[];
+     // this.records = <Tbl_cargo_container[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
@@ -161,34 +161,107 @@ export class OthGeneralExpenseEditComponent implements OnInit {
   }
 
 
-  IsBLDupliation(stype: string, no: string) {
+  IsBLDupliation(no: string) {
 
-    if (no == null)
+    if (this.gs.isBlank(no))
       return;
-    if (no == '')
-      return;
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.pkid;
+    SearchData.blno = no;
+    SearchData.stype = this.EXPTYPE;
+    SearchData.company_code = this.gs.company_code;
+    SearchData.branch_code = this.gs.branch_code;
+    SearchData.mode = this.mode;
 
-    // this.errorMessage = '';
-    // var SearchData = this.gs.UserInfo;
-    // SearchData.pkid = this.pkid;
-    // SearchData.blno = no;
-    // SearchData.stype = stype;
-    // SearchData.company_code = this.gs.company_code;
-    // SearchData.branch_code = this.gs.branch_code;
-    // SearchData.mode = this.mode;
-
-    // this.mainService.Isblnoduplication(SearchData)
-    //   .subscribe(response => {
-    //     if (response.retvalue) {
-    //       this.errorMessage = response.retstring;
-    //       if (stype == 'MBL')
-    //         this.mbl_no_field.nativeElement.focus();
-    //     }
-    //   }, error => {
-    //     this.errorMessage = this.gs.getError(error);
-    //   });
+    this.mainService.Isblnoduplication(SearchData)
+      .subscribe(response => {
+        if (response.retvalue) {
+          this.errorMessage = response.retstring;
+          alert(this.errorMessage);
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
 
   }
+
+
+  GetFALockDetails(orgrefno: string) {
+    this.FALockStatus = "";
+    if (this.gs.isBlank(orgrefno) || this.EXPTYPE != 'FA')
+      return;
+    if (this.mode != "ADD")
+      return;
+
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.orgrefno = orgrefno;
+    this.mainService.GetFALockDetails(SearchData)
+      .subscribe(response => {
+        if (response.retvalue) {
+
+          if (response.RefnoFA.trim().length > 0) {
+
+            this.FALockStatus = response.RefnoFA;
+            if (response.IsLockRefnoFA) {
+              this.FALockStatus += " (LOCKED)";
+              // CmdSave.IsEnabled = true;
+            }
+            else {
+              this.FALockStatus += " (UNLOCKED)";
+              // CmdSave.IsEnabled = false;
+            }
+          }
+
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+
+  }
+
+  GetHouseDetails(orgrefno: string) {
+    this.FALockStatus = "";
+    if (this.EXPTYPE != 'FA')
+      return;
+
+     if(this.gs.isBlank(orgrefno))
+     {
+       this.errorMessage="Master Reference# Cannot be blank";
+       return;
+     }
+
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.company_code = this.gs.company_code;
+    SearchData.branch_code = this.gs.branch_code;
+    SearchData.orgrefno = orgrefno;
+    this.mainService.GetHouseDetails(SearchData)
+      .subscribe(response => {
+        if (response.retvalue) {
+
+          if (response.RefnoFA.trim().length > 0) {
+
+            this.FALockStatus = response.RefnoFA;
+            if (response.IsLockRefnoFA) {
+              this.FALockStatus += " (LOCKED)";
+              // CmdSave.IsEnabled = true;
+            }
+            else {
+              this.FALockStatus += " (UNLOCKED)";
+              // CmdSave.IsEnabled = false;
+            }
+          }
+
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+
+  }
+
+
 
 
   Save() {
@@ -247,40 +320,39 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     //   }
 
     // Container
-    if (_Record.controlname == "CONTAINER TYPE") {
-      this.records.forEach(rec => {
-        if (rec.cntr_pkid == _Record.uid) {
-          rec.cntr_type = _Record.code;
-        }
-      });
-    }
+    // if (_Record.controlname == "CONTAINER TYPE") {
+    //   this.records.forEach(rec => {
+    //     if (rec.cntr_pkid == _Record.uid) {
+    //       rec.cntr_type = _Record.code;
+    //     }
+    //   });
+    // }
   }
 
   onFocusout(field: string) {
 
     switch (field) {
-      case 'mbl_no': {
-
-        this.IsBLDupliation('MBL', this.record.mbl_no);
+      case 'mbl_cargo_loc_name': {
+          this.GetFALockDetails(this.record.mbl_cargo_loc_name);//Mbl_NO
         break;
       }
-      case 'mbl_liner_bookingno': {
+      case 'mbl_refno': {
 
-        // this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
-        // break;
+        this.IsBLDupliation(this.record.mbl_refno);
+        break;
       }
     }
   }
 
 
-  onBlur(field: string, rec: Tbl_cargo_container = null) {
+  onBlur(field: string) {
     switch (field) {
       case 'mbl_refno': {
         this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
         break;
       }
-      case 'mbl_no': {
-        this.record.mbl_no = this.record.mbl_no.toUpperCase();
+      case 'mbl_cargo_loc_name': {
+        this.record.mbl_cargo_loc_name = this.record.mbl_cargo_loc_name.toUpperCase();
         break;
       }
     }

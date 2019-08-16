@@ -118,5 +118,18 @@ export class OthGeneralExpenseService {
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/GeneralExpense/Save', SearchData, this.gs.headerparam2('authorized'));
     }
+    
+    Isblnoduplication(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/GeneralExpense/Isblnoduplication', SearchData, this.gs.headerparam2('authorized'));
+    }
+    
+    
+    GetFALockDetails(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/GeneralExpense/GetFALockDetails', SearchData, this.gs.headerparam2('authorized'));
+    }
 
+    GetHouseDetails(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/GeneralExpense/GetHouseDetails', SearchData, this.gs.headerparam2('authorized'));
+    }
+    
 }

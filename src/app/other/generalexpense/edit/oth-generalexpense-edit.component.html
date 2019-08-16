@@ -14,18 +14,20 @@
 
 <div class="page-body">
     <div class="row">
-        <div class="col-md-4  p-1 testbox">
+        <div class="col-md-6  p-1 testbox">
             <div class="col-md-12 p-2 border">
                 <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm">Ref#</label>
                     <div class="col-6">
-                        <InputBox [(inputModel)]="record.mbl_refno" [maxlength]="refnoMaxLength" [disabled]="refnoDisabled" [uppercase]="true" #refno>
-                        </InputBox>
+                        <!-- <InputBox [(inputModel)]="record.mbl_refno" [maxlength]="refnoMaxLength" [disabled]="refnoDisabled" [uppercase]="true" #refno>
+                        </InputBox> -->
+                        <input class="form-control form-control-sm" type="text" [maxlength]="refnoMaxLength" [disabled]="refnoDisabled"  (blur)="onBlur('mbl_refno')"
+                                        #mbl_refno (focusout)="onFocusout('mbl_refno')" [(ngModel)]="record.mbl_refno" />
                     </div>
                     <label class="col-4 col-form-label col-form-label-sm p-1">{{refnoFormat}}</label>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2 col-form-label col-form-label-sm">Ref Date</label>
+                    <label class="col-2 col-form-label col-form-label-sm">RefDate</label>
                     <div class="col-6">
                         <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="mbl_ref_date=$event">
                         </app-date>
@@ -35,9 +37,12 @@
                 <div *ngIf="EXPTYPE=='FA'" class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm">MasterRef#</label>
                     <div class="col-6">
-                        <InputBox [(inputModel)]="record.mbl_cargo_loc_name" [maxlength]="15" [uppercase]="true"
+                        <!-- <InputBox [(inputModel)]="record.mbl_cargo_loc_name" [maxlength]="15" [disabled]="mode=='EDIT'" [uppercase]="true"
                             #cargo_loc_name>
-                        </InputBox>
+                        </InputBox> -->
+                        <input class="form-control form-control-sm" type="text" [disabled]="mode=='EDIT'"  (blur)="onBlur('mbl_cargo_loc_name')"
+                        #cargo_loc_name (focusout)="onFocusout('mbl_cargo_loc_name')" [(ngModel)]="record.mbl_cargo_loc_name"
+                        maxlength="15" />
                     </div>
                     <label class="col-4 text-danger col-form-label col-form-label-sm p-1"> {{FALockStatus}}</label>
                 </div>
@@ -45,18 +50,15 @@
                 <div *ngIf="EXPTYPE=='FA'" class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm"></label>
                     <div class="col-6 ">
-                        <button class="btn btn-success btn-sm mr-1">Fill HBL#</button>
+                        <button class="btn btn-success btn-sm mr-1" (click)="GetHouseDetails(record.mbl_devan_loc_id)">Fill HBL#</button>
                     </div>
                 </div>
                 <div *ngIf="EXPTYPE=='FA'" class="form-group row">
-                    <label class="col-2 col-form-label col-form-label-sm"></label>
+                    <label class="col-2 col-form-label col-form-label-sm">HBL#</label>
                     <div class="col-6 ">
-                        <select class="form-control form-control-sm" [(ngModel)]="record.mbl_devan_loc_name">
-                            <option [value]="'NA'">NA</option>
-                            <option [value]="'PENDING'">PENDING</option>
-                            <option [value]="'EXAM'">EXAM</option>
-                            <option [value]="'COMPLETE'">COMPLETE</option>
-                        </select>
+                        <select class="form-control form-control-sm" [(ngModel)]="record.mbl_devan_loc_id" #bltype>
+                            <option *ngFor="let rec of HblList" [value]="rec.hbl_pkid">{{rec.hbl_houseno}}</option>
+                          </select>
                     </div>
                 </div>
                 <div class="form-group row">
