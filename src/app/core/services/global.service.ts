@@ -627,6 +627,14 @@ export class GlobalService {
     return bret;
   }
 
+  public screenExists(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_add == "Y" || f.rights_edit == "Y" || f.rights_view == "Y"||f.rights_print == "Y"||f.rights_delete == "Y"));
+    if (itm)
+      bret = true;
+    return bret;
+  }
+
   public canDownload(menuid: string): boolean {
     var bret: boolean = false;
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_print == "Y");
