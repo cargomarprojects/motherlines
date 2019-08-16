@@ -1,0 +1,100 @@
+<div class="page-header">
+    <div class="row  align-items-center justify-content-left p-1">
+        <label class="mr-3">{{title}} ({{mode}})</label>
+        <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
+        <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    </div>
+</div>
+
+<div *ngIf="errorMessage">
+    <div class="alert alert-primary">
+        {{errorMessage}}
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="row">
+        <div class="col-md-4  p-1 testbox">
+            <div class="col-md-12 p-2 border">
+                <div class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm">Ref#</label>
+                    <div class="col-6">
+                        <InputBox [(inputModel)]="record.mbl_refno" [maxlength]="refnoMaxLength" [disabled]="refnoDisabled" [uppercase]="true" #refno>
+                        </InputBox>
+                    </div>
+                    <label class="col-4 col-form-label col-form-label-sm p-1">{{refnoFormat}}</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm">Ref Date</label>
+                    <div class="col-6">
+                        <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="mbl_ref_date=$event">
+                        </app-date>
+                    </div>
+                </div>
+
+                <div *ngIf="EXPTYPE=='FA'" class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm">MasterRef#</label>
+                    <div class="col-6">
+                        <InputBox [(inputModel)]="record.mbl_cargo_loc_name" [maxlength]="15" [uppercase]="true"
+                            #cargo_loc_name>
+                        </InputBox>
+                    </div>
+                    <label class="col-4 text-danger col-form-label col-form-label-sm p-1"> {{FALockStatus}}</label>
+                </div>
+
+                <div *ngIf="EXPTYPE=='FA'" class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm"></label>
+                    <div class="col-6 ">
+                        <button class="btn btn-success btn-sm mr-1">Fill HBL#</button>
+                    </div>
+                </div>
+                <div *ngIf="EXPTYPE=='FA'" class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm"></label>
+                    <div class="col-6 ">
+                        <select class="form-control form-control-sm" [(ngModel)]="record.mbl_devan_loc_name">
+                            <option [value]="'NA'">NA</option>
+                            <option [value]="'PENDING'">PENDING</option>
+                            <option [value]="'EXAM'">EXAM</option>
+                            <option [value]="'COMPLETE'">COMPLETE</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm">Remarks</label>
+                    <div class="col-10">
+                        <InputBox [(inputModel)]="record.mbl_remarks" [maxlength]="50" [uppercase]="true" #remarks>
+                        </InputBox>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-2  p-1 testbox">
+            <div class="col-md-12 p-2 border">
+                <div class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm">AR & AP</button>
+                </div>
+
+                <div class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm">Profit Report</button>
+                </div>
+                <div  *ngIf="gs.PAYROLL_ENABLED == 'Y' && EXPTYPE == 'PR'" class="form-group row">
+                    <button class=" col-12 btn btn-info btn-sm">Payroll</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-footer">
+    <div class="row justify-content-center p-1">
+        <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+    </div>
+</div>
+
+<div>
+    <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY:
+        {{record.rec_created_by}}
+        /
+        {{record.rec_created_date}} </label>
+</div>

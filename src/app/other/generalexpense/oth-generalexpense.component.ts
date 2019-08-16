@@ -20,7 +20,8 @@ import { OthGeneralExpenseService } from '../services/oth-generalexpense.service
 export class OthGeneralExpenseComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
- 
+  sub: any;
+
   errorMessage$ : Observable<string> ;
   records$ :  Observable<Tbl_cargo_general[]>;
   pageQuery$ : Observable<PageQuery>;
@@ -31,10 +32,27 @@ export class OthGeneralExpenseComponent implements OnInit {
     private location: Location,
     public gs: GlobalService,
     public mainservice: OthGeneralExpenseService
-  ) { }
+  ) {
+
+    // this.sub = this.route.queryParams.subscribe(params => {
+    //   if (params["parameter"] != "") {
+    //     this.mainservice.menuid = params.menuid;
+    //     this.mainservice.param_type = params.menu_param;
+    //    this.mainservice.Search('SCREEN');
+    //   }
+     
+    // });
+   }
 
   ngOnInit() {
-    this.mainservice.init(this.route.snapshot.queryParams);
+   // this.mainservice.init(this.route.snapshot.queryParams);
+    this.sub = this.route.queryParams.subscribe(params => {
+      if (params["parameter"] != "") {
+        this.mainservice.init(params);
+       this.mainservice.Search('SCREEN');
+      }
+    });
+   
     this.initPage();
   }
 
@@ -45,6 +63,7 @@ export class OthGeneralExpenseComponent implements OnInit {
     this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
 
+     
   }
 
   searchEvents(actions: any) {
@@ -64,11 +83,11 @@ export class OthGeneralExpenseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: '',
-      type: this.mainservice.param_type,
+      exptype: this.mainservice.param_type,
       origin: 'oth-general-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.Other.Trans/OthGeneralEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_cargo_general) {
@@ -80,16 +99,19 @@ export class OthGeneralExpenseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.mbl_pkid,
-      type: '',
+      exptype: this.mainservice.param_type,
       origin: 'oth-general-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.Other.Trans/OthGeneralEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(parameter));
   }
 
   Close() {
     this.location.back();
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
  
 }

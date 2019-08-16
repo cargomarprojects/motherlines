@@ -43,8 +43,8 @@ export class OthGeneralExpenseService {
             return;
 
         this.id = params.id;
-        this.menuid = params.id;
-        this.param_type = params.param_type;
+        this.menuid = params.menuid;
+        this.param_type = params.menu_param;
 
         this.record = <OthGeneralModel>{
             errormessage : '',
@@ -61,7 +61,7 @@ export class OthGeneralExpenseService {
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
         
-        this.initlialized = true;
+        this.initlialized = false;
 
     }
 
@@ -78,7 +78,7 @@ export class OthGeneralExpenseService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        SearchData.TYPE = this.param_type;
+        SearchData.EXPTYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.SDATE = this.record.searchQuery.fromdate;

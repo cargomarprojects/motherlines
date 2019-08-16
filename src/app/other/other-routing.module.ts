@@ -15,6 +15,7 @@ import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.com
 import { DeliveryOrderListComponent } from '../other/deliveryorder/deliveryorder-list.component';
 import { DeliveryOrderEditComponent } from './deliveryorder/edit/deliveryorder-edit.component';
 import { OthGeneralExpenseComponent } from './generalexpense/oth-generalexpense.component';
+import { OthGeneralExpenseEditComponent } from './generalexpense/edit/oth-generalexpense-edit.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path : 'DeliveryOrderPage', component : DeliveryOrderComponent },
   { path : 'DeliveryOrderList', component : DeliveryOrderListComponent },
   { path : 'DeliveryOrderEdit', component : DeliveryOrderEditComponent },
-  { path : 'GeneralExpensePage', component : OthGeneralExpenseComponent }
+  { path : 'GeneralExpensePage', component : OthGeneralExpenseComponent },
+  { path : 'OthGeneralExpenseEditPage', component : OthGeneralExpenseEditComponent }
 ];
 
 @NgModule({
