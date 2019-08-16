@@ -29,6 +29,10 @@ import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.com
 import { DeliveryOrderListComponent } from '../other/deliveryorder/deliveryorder-list.component';
 import { DeliveryOrderEditComponent } from './deliveryorder/edit/deliveryorder-edit.component';
 
+import { OthGeneralExpenseComponent } from './generalexpense/oth-generalexpense.component';
+import { OthGeneralExpenseHeaderComponent } from './generalexpense/oth-generalexpense-header.component';
+
+
 @NgModule({
   declarations: [
     OthGeneralComponent,
@@ -46,7 +50,9 @@ import { DeliveryOrderEditComponent } from './deliveryorder/edit/deliveryorder-e
     DeliveryOrderHeaderComponent,
     DeliveryOrderComponent,
     DeliveryOrderListComponent,
-    DeliveryOrderEditComponent
+    DeliveryOrderEditComponent,
+    OthGeneralExpenseComponent,
+    OthGeneralExpenseHeaderComponent
   ],
   imports: [
     SharedModule,    
