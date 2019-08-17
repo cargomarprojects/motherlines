@@ -8,6 +8,7 @@ import { User_Menu } from '../../../core/models/menum';
 import { Tbl_cargo_general, Tbl_cargo_container, vm_tbl_cargo_general } from '../../models/tbl_cargo_general';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { Tbl_cargo_obl_released } from '../../models/tbl_cargo_obl_released';
 
 @Component({
   selector: 'app-oth-generalexpense-edit',
@@ -19,7 +20,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
   //   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
 
   record: Tbl_cargo_general = <Tbl_cargo_general>{};
-  HblList: Tbl_cargo_general[] = [];
+  private HouseList: Tbl_cargo_obl_released[] = [];
 
   // 24-05-2019 Created By Joy  
 
@@ -28,7 +29,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
 
   private mode: string;
   private FALockStatus: string = "";
-  private errorMessage: string;
+  private errorMessage: string[] = [];
 
   private closeCaption: string = 'Return';
 
@@ -78,7 +79,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
         this.refnoDisabled = true;
     }
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     this.LoadCombo();
   }
 
@@ -105,10 +106,10 @@ export class OthGeneralExpenseEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_general>{};
-     // this.records = <Tbl_cargo_container[]>[];
+      // this.records = <Tbl_cargo_container[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
@@ -119,19 +120,20 @@ export class OthGeneralExpenseEditComponent implements OnInit {
 
   init() {
     this.record.mbl_pkid = this.pkid;
-    this.record.mbl_no = '';
-    this.record.mbl_cfno = 0;
     this.record.mbl_refno = '';
     this.record.mbl_ref_date = this.gs.defaultValues.today;
-    this.record.mbl_frt_status = '';
-    this.record.mbl_handled_name = '';
+    this.record.mbl_remarks = '';
+    this.record.mbl_cargo_loc_id = '';
+    this.record.mbl_cargo_loc_name = '';
+    this.record.mbl_devan_loc_id = '';
+    this.record.mbl_devan_loc_name = '';
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
   }
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
@@ -139,9 +141,18 @@ export class OthGeneralExpenseEditComponent implements OnInit {
       .subscribe(response => {
         this.record = <Tbl_cargo_general>response.record;
         this.mode = 'EDIT';
-        this.CheckData();
+
+        this.HouseList = <Tbl_cargo_obl_released[]>[];
+        if (!this.gs.isBlank(this.record.mbl_devan_loc_id)) {
+          var rec = <Tbl_cargo_obl_released>{};
+          rec.obl_mbl_id = this.record.mbl_cargo_loc_id;
+          rec.obl_hbl_id = this.record.mbl_devan_loc_id;
+          rec.obl_houseno = this.record.mbl_devan_loc_name;
+          this.HouseList.push(rec);
+        }
+
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
@@ -165,7 +176,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
 
     if (this.gs.isBlank(no))
       return;
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.blno = no;
@@ -177,11 +188,11 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     this.mainService.Isblnoduplication(SearchData)
       .subscribe(response => {
         if (response.retvalue) {
-          this.errorMessage = response.retstring;
+          this.errorMessage.push(response.retstring);
           alert(this.errorMessage);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
@@ -194,7 +205,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     if (this.mode != "ADD")
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.orgrefno = orgrefno;
     this.mainService.GetFALockDetails(SearchData)
@@ -216,7 +227,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
 
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
@@ -226,37 +237,28 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     if (this.EXPTYPE != 'FA')
       return;
 
-     if(this.gs.isBlank(orgrefno))
-     {
-       this.errorMessage="Master Reference# Cannot be blank";
-       return;
-     }
+    if (this.gs.isBlank(orgrefno)) {
+      this.errorMessage.push("Master Reference# Cannot be blank");
+      return;
+    }
 
-    this.errorMessage = '';
+    this.record.mbl_cargo_loc_id = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.company_code = this.gs.company_code;
     SearchData.branch_code = this.gs.branch_code;
     SearchData.orgrefno = orgrefno;
     this.mainService.GetHouseDetails(SearchData)
       .subscribe(response => {
-        if (response.retvalue) {
+        this.HouseList = <Tbl_cargo_obl_released[]>response.list;
 
-          if (response.RefnoFA.trim().length > 0) {
+        this.HouseList.forEach(rec => {
+          if (!this.gs.isBlank(rec.obl_mbl_id))
+            this.record.mbl_cargo_loc_id = rec.obl_mbl_id;
+        });
 
-            this.FALockStatus = response.RefnoFA;
-            if (response.IsLockRefnoFA) {
-              this.FALockStatus += " (LOCKED)";
-              // CmdSave.IsEnabled = true;
-            }
-            else {
-              this.FALockStatus += " (UNLOCKED)";
-              // CmdSave.IsEnabled = false;
-            }
-          }
-
-        }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
@@ -269,6 +271,8 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
+    this.SaveParent();
+
     const saveRecord = <vm_tbl_cargo_general>{};
     saveRecord.record = this.record;
     saveRecord.mode = this.mode;
@@ -277,32 +281,74 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
+          this.errorMessage.push(response.error);
           alert(this.errorMessage);
         }
         else {
-          if (this.mode == "ADD" && response.code != '')
+          if (this.mode == "ADD" && response.code != '' && this.EXPTYPE.trim() == "FA")
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          this.errorMessage = 'Save Complete';
+          this.errorMessage.push('Save Complete');
           alert(this.errorMessage);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
         alert(this.errorMessage);
       });
   }
 
 
+  private SaveParent() {
+    if (this.mode == "ADD") {
+      this.record.rec_created_id = this.gs.user_pkid;
+    }
+    this.record.rec_created_date = this.gs.defaultValues.today;
+
+    if (!this.gs.isBlank(this.record.mbl_devan_loc_id) && this.HouseList != null) {
+      var REC = this.HouseList.find(rec => rec.obl_hbl_id == this.record.mbl_devan_loc_id);
+      if (REC != null) {
+        this.record.mbl_devan_loc_name = REC.obl_houseno;
+      }
+    }
+
+  }
+
   private Allvalid(): boolean {
 
     var bRet = true;
-    this.errorMessage = "";
-    if (this.record.mbl_ref_date == "") {
+    this.errorMessage = [];
+    if (this.gs.isBlank(this.record.mbl_ref_date)) {
+      this.errorMessage.push("Ref Date cannot be blank");
       bRet = false;
-      this.errorMessage = "Ref Date cannot be blank";
-      return bRet;
     }
+
+    if (this.gs.isBlank(this.record.mbl_refno) && this.EXPTYPE != 'FA') {
+      this.errorMessage.push("Ref Number cannot be blank");
+      bRet = false;
+    }
+
+    if (this.EXPTYPE.trim() == "FA" && this.gs.isBlank(this.record.mbl_cargo_loc_name)) {
+      this.errorMessage.push("Master Reference Number cannot be blank");
+      bRet = false;
+    }
+
+    if (this.EXPTYPE.trim() == "GE" || this.EXPTYPE.trim() == "CM" || this.EXPTYPE.trim() == "PR") {
+      this.record.mbl_refno = this.record.mbl_refno.trim();
+      let RefNo = this.record.mbl_refno;
+      if (RefNo.length != 8) {
+
+        this.errorMessage.push("RefNo Should be at least 8 Characters");
+        bRet = false;
+      }
+      if (RefNo.substring(0, 2) != this.EXPTYPE.trim()) {
+        this.errorMessage.push("RefNo Should start with " + this.EXPTYPE.trim());
+        bRet = false;
+      }
+    }
+
+
+    if (!bRet)
+      alert('Error While Saving');
 
     return bRet;
   }
@@ -333,7 +379,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
 
     switch (field) {
       case 'mbl_cargo_loc_name': {
-          this.GetFALockDetails(this.record.mbl_cargo_loc_name);//Mbl_NO
+        this.GetFALockDetails(this.record.mbl_cargo_loc_name);//mbl_cargo_loc_name refer Mbl_NO
         break;
       }
       case 'mbl_refno': {
@@ -374,17 +420,28 @@ export class OthGeneralExpenseEditComponent implements OnInit {
       //   break;
       // }
 
-      // case 'ARAP': {
-      //   let prm = {
-      //     menuid: this.gs.MENU_OT_OPERATION_ARAP,
-      //     pkid: this.pkid,
-      //     refno: this.record.mbl_refno,
-      //     type: 'OT',
-      //     origin: 'other-general-page',
-      //   };
-      //   this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
-      //   break;
-      // }
+      case 'ARAP': {
+
+        let sid = this.gs.MENU_GENERAL_EXPENSE_ARAP;
+        if (this.EXPTYPE.trim() == "PR")
+          sid = this.gs.MENU_PAYROLL_EXPENSE_ARAP;
+        if (this.EXPTYPE.trim() == "CM")
+          sid = this.gs.MENU_1099_EXPENSE_ARAP;
+        if (this.EXPTYPE.trim() == "PS")
+          sid = this.gs.MENU_INTERNAL_PAYMENT_SETTLEMENT_ARAP;
+        if (this.EXPTYPE.trim() == "FA")
+          sid = this.gs.MENU_FILE_ADJUSTMENT_ARAP;
+
+        let prm = {
+          menuid: sid,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          mbl_type: this.EXPTYPE,
+          origin: 'other-generalexpense-page',
+        };
+        this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
+        break;
+      }
 
 
 
