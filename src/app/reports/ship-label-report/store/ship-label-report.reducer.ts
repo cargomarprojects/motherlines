@@ -17,6 +17,7 @@ export const initialState: ReportState = {
     from_date :'',
     to_date :'',
     group :'',
+    mbl_pkid:'',
     page_rows :0,
     page_count :0,
     page_current : 0,
