@@ -795,6 +795,16 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.SeaImport/CopyCntrPage', JSON.stringify(prm));
         break;
       }
+      case 'SHIP-LABEL': {
+        let parameter = {
+          id:this.gs.MENU_SHIPMENT_LABEL,
+          menuid: this.gs.MENU_SHIPMENT_LABEL,
+          mbl_pkid: this.pkid,
+          origin: 'seaimp-master-page',
+        };
+        this.gs.Naviagete('Silver.Reports.General/ShipLabelPage', JSON.stringify(parameter));
+        break;
+      }
       case 'POD': {
         this.report_title = 'POD';
         this.report_url = '/api/SeaImport/Master/GetPODSeaImpRpt';

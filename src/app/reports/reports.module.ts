@@ -8,12 +8,15 @@ import { TeuReportComponent } from './teu-report/teu-report.component';
 import { TonReportComponent } from './ton-report/ton-report.component';
 import { ProfitReportComponent } from './profit-report/profit-report.component';
 import { ProfitReportHouseComponent } from './profit-report-house/profit-report-house.component';
+import { ShipLabelReportComponent } from './ship-label-report/ship-label-report.component';
 
 import { ShipHandReportReducer } from './ship-hand-report/store/ship-hand-report.reducer';
 import { TeuReportReducer } from './teu-report/store/teu-report.reducer';
 import { TonReportReducer } from './ton-report/store/ton-report.reducer';
 import { ProfitReportReducer } from './profit-report/store/profit-report.reducer';
 import { ProfitReportHouseReducer } from './profit-report-house/store/profit-report-house.reducer';
+import { ShipLabelReportReducer } from './ship-label-report/store/ship-label-report.reducer';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { ProfitReportHouseReducer } from './profit-report-house/store/profit-rep
     TonReportComponent,
     ProfitReportComponent,
     ProfitReportHouseComponent,
+    ShipLabelReportComponent
   ],
   imports: [
     SharedModule,
@@ -30,7 +34,8 @@ import { ProfitReportHouseReducer } from './profit-report-house/store/profit-rep
     StoreModule.forFeature('TeuReport',TeuReportReducer ),        
     StoreModule.forFeature('TonReport',TonReportReducer ),        
     StoreModule.forFeature('ProfitReport',ProfitReportReducer ),        
-    StoreModule.forFeature('ProfitReportHouse',ProfitReportHouseReducer ),        
+    StoreModule.forFeature('ProfitReportHouse',ProfitReportHouseReducer ), 
+    StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer )       
   ],
   providers: [
   ]
