@@ -46,7 +46,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   private cmbList = {};
   MblStatusList: any[] = [];
   BlStatusList: any[] = [];
-   
+
   is_locked: boolean = false;
   constructor(
     private router: Router,
@@ -797,7 +797,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       }
       case 'SHIP-LABEL': {
         let parameter = {
-          id:this.gs.MENU_SHIPMENT_LABEL,
+          id: this.gs.MENU_SHIPMENT_LABEL,
           menuid: this.gs.MENU_SHIPMENT_LABEL,
           mbl_pkid: this.pkid,
           origin: 'seaimp-master-page',
@@ -811,6 +811,19 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_menuid = this.gs.MENU_SI_MASTER_POD;
+        this.tab = 'report';
+        break;
+      }
+      case 'SHIP-LABEL-PRINT': {
+        this.report_title = 'Shipment Label';
+        this.report_menuid = this.gs.MENU_SHIPMENT_LABEL;
+        this.report_url = '/api/Report/ShipmentLabelReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.outputformat = 'PRINT';
+        this.report_searchdata.pkid = this.gs.getGuid();
+        this.report_searchdata.action = 'NEW';
+        this.report_searchdata.MODE = 'SEA IMPORT';
+        this.report_searchdata.MBL_PKID = this.pkid;
         this.tab = 'report';
         break;
       }

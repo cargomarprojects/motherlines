@@ -25,6 +25,12 @@ export class OthGeneralEditComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
 
+  tab : string = 'main';
+ report_title : string = '';
+ report_url : string = '';
+ report_searchdata : any = {} ;
+ report_menuid : string = '';
+
   private pkid: string;
   private menuid: string;
 
@@ -827,10 +833,26 @@ export class OthGeneralEditComponent implements OnInit {
           this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
           break;
         }
+        case 'SHIP-LABEL-PRINT': {
+          this.report_title = 'Shipment Label';
+          this.report_menuid = this.gs.MENU_SHIPMENT_LABEL;
+          this.report_url = '/api/Report/ShipmentLabelReport';
+          this.report_searchdata = this.gs.UserInfo;
+          this.report_searchdata.outputformat = 'PRINT';
+          this.report_searchdata.pkid = this.gs.getGuid();
+          this.report_searchdata.action = 'NEW';
+          this.report_searchdata.MODE = 'OTHERS';
+          this.report_searchdata.MBL_PKID = this.pkid;
+          this.tab = 'report';
+          break;
+        }
 
       }
     }
-
+    callbackevent( event : any ){
+      this.tab = 'main';
+    }
+    
     RemoveRow(_rec: Tbl_cargo_container) {
       this.records.splice(this.records.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
     }

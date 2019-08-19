@@ -607,6 +607,19 @@ export class AirImpMasterEditComponent implements OnInit {
         this.tab = 'report';
         break;
       }
+      case 'SHIP-LABEL-PRINT': {
+        this.report_title = 'Shipment Label';
+        this.report_menuid = this.gs.MENU_SHIPMENT_LABEL;
+        this.report_url = '/api/Report/ShipmentLabelReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.outputformat = 'PRINT';
+        this.report_searchdata.pkid = this.gs.getGuid();
+        this.report_searchdata.action = 'NEW';
+        this.report_searchdata.MODE = 'AIR IMPORT';
+        this.report_searchdata.MBL_PKID = this.pkid;
+        this.tab = 'report';
+        break;
+      }
     }
   }
 

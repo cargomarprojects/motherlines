@@ -227,7 +227,7 @@ export class ShipLabelReportComponent implements OnInit {
                 this.report_title = 'Shipment Label';
                 this.report_url = '/api/Report/ShipmentLabelReport';
                 this.report_searchdata = this.gs.UserInfo;
-                this.SearchData.outputformat = 'PRINT';
+                this.report_searchdata.outputformat = 'PRINT';
                 this.report_searchdata.pkid = this.urlid;
                 this.report_searchdata.action = 'NEW';
                 this.report_searchdata.page_count = this.page_count;
