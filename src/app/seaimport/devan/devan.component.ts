@@ -23,6 +23,12 @@ export class DevanComponent implements OnInit {
 
     // 15-07-2019 Created By Ajith  
 
+    tab: string = 'main';
+    report_title: string = '';
+    report_url: string = '';
+    report_searchdata: any = {};
+    report_menuid: string = '';
+
     private pkid: string;
     private menuid: string;
     private mode: string;
@@ -260,6 +266,20 @@ export class DevanComponent implements OnInit {
             //     break;
             //   }
         }
+    }
+
+    printDevan() {
+        this.report_title = 'Ocean Export Manifest';
+        this.report_url = '/api/SeaExport/Master/SeaExportManifest';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_SE_MASTER_MANIFEST;
+        this.tab = 'report';
+
+    }
+
+    callbackevent(event: any) {
+        this.tab = 'main';
     }
 
 }
