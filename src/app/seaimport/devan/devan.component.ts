@@ -269,13 +269,12 @@ export class DevanComponent implements OnInit {
     }
 
     printDevan() {
-        this.report_title = 'Ocean Export Manifest';
-        this.report_url = '/api/SeaExport/Master/SeaExportManifest';
+        this.report_title = 'Devanning Instruction';
+        this.report_url = '/api/SeaImport/DevanPage/GetDevanInstructionReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_SE_MASTER_MANIFEST;
+        this.report_menuid = this.gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION ;
         this.tab = 'report';
-
     }
 
     callbackevent(event: any) {
