@@ -20,6 +20,7 @@ export const initialState: ReportState = {
     to_date: '',
     group: '',
     mbl_pkid: '',
+    mbl_ids:'',
     page_rows: 0,
     page_count: 0,
     page_current: 0,
@@ -54,7 +55,22 @@ export function ShipLabelReportReducer(state: ReportState[] = [initialState], ac
             };
             return [...state.filter( rec2 => rec2.urlid != action.payload.id),record];
 
-        }        
+        }  
+        // case myActions.ActionTypes.SELECTEDIDS: {
+        //     const rec =  {...state.find( rec1 => rec1.urlid == action.payload.id)};
+        //     const record = {...rec,  
+        //         records : rec.records.map ( r1 => { 
+
+        //             return r1.lblm_yn_b==true?...r1, r1.lblm_mbl_pkid:"";
+                        
+                        
+                        
+                    
+                    
+        //         })
+        //     };
+        //     return [...state.filter( rec2 => rec2.urlid != action.payload.id),record];
+        //}      
         default:
             return state;
     }

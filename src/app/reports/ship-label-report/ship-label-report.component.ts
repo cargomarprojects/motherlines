@@ -96,6 +96,8 @@ export class ShipLabelReportComponent implements OnInit {
                 this.to_date = rec.to_date;
                 this.group = rec.group;
                 this.mbl_pkid = rec.mbl_pkid;
+                this.mbl_ids = rec.mbl_ids;
+                
                 this.page_rows = rec.page_rows;
                 this.page_count = rec.page_count;
                 this.page_current = rec.page_current;
@@ -121,6 +123,7 @@ export class ShipLabelReportComponent implements OnInit {
                 this.to_date = this.gs.defaultValues.today;
                 this.group = 'OCEAN EXPORT';
                 this.mbl_pkid = this.mbl_pkid;
+                this.mbl_ids='';
                 this.SearchData = this.gs.UserInfo;
             }
             // this.MainList.forEach(Rec => {
@@ -178,6 +181,7 @@ export class ShipLabelReportComponent implements OnInit {
                         to_date: this.SearchData.EDATE,
                         group: this.SearchData.MODE,
                         mbl_pkid: this.SearchData.MBL_PKID,
+                        mbl_ids:'',
                         page_rows: response.page_rows,
                         page_count: response.page_count,
                         page_current: response.page_current,

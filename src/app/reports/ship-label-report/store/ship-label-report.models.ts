@@ -10,7 +10,8 @@ export interface ReportState {
     to_date: string;
     group: string;
     mbl_pkid: string;
-    
+    mbl_ids: string;
+
     page_rows: number;
     page_count: number;
     page_current: number;
