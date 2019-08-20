@@ -230,10 +230,6 @@ export class ShipLabelReportComponent implements OnInit {
                 this.report_searchdata.outputformat = 'PRINT';
                 this.report_searchdata.pkid = this.urlid;
                 this.report_searchdata.action = 'NEW';
-                this.report_searchdata.page_count = this.page_count;
-                this.report_searchdata.page_current = this.page_current;
-                this.report_searchdata.page_rows = this.page_rows;
-                this.report_searchdata.page_rowcount = this.page_rowcount;
                 this.report_searchdata.SDATE = this.from_date;
                 this.report_searchdata.EDATE = this.to_date;
                 this.report_searchdata.COMP_CODE = this.gs.branch_codes;
