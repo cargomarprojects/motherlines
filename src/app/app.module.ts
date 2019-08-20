@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { storeFreeze } from 'ngrx-store-freeze';
+
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -47,7 +49,9 @@ import { LoadingScreenComponent } from './core/loading-screen/loading-screen.com
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({serializer: CustomSerializer}),    
-    environment.production ? [] : StoreDevtoolsModule.instrument(),            
+    environment.production ? [] : StoreDevtoolsModule.instrument(), 
+    environment.production ? [] : [storeFreeze], 
+
   ],
   providers: [
     InterceptorServiceProvider
