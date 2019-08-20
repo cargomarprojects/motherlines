@@ -6,6 +6,7 @@ export enum ActionTypes {
   ADD = '[Ship-Label-Report] Add Report',
   UPDATE = '[Ship-Label-Report] Update Report',
   DELETE = '[Ship-Label-Report] Delete Report',
+  SELECTDESELECT = '[Ship-Label-Report] SelectDeselect Report',
 }
 
 export class Add implements Action {
@@ -23,4 +24,9 @@ export class Delete implements Action {
   constructor(public payload : { id: string}) { }
 }
 
-export type Actions = Add | Update | Delete;
+export class SelectDeselect implements Action {
+  readonly type = ActionTypes.SELECTDESELECT;
+  constructor(public payload : { id: string, selectyn :boolean }){ }
+}
+
+export type Actions = Add | Update | Delete | SelectDeselect;
