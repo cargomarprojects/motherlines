@@ -5,6 +5,7 @@ import { AppState } from '../../../reducer';
 import * as myActions from './ship-label-report.actions';
 import { ReportState } from './ship-label-report.models';
 import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
+import { isNgTemplate } from '@angular/compiler';
 
 export interface AppState extends AppState {
     'ShipLabelReport': ReportState
@@ -39,6 +40,7 @@ export function ShipLabelReportReducer(state: ReportState[] = [initialState], ac
             return [...state.filter(rec => rec.urlid != action.payload.id), record ];
         }
         case myActions.ActionTypes.SINGLESELECTDESELECT: {
+            
         }        
         default:
             return state;
