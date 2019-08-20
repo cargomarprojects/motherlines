@@ -4,6 +4,7 @@ import { AppState } from '../../../reducer';
 
 import * as myActions from './ship-label-report.actions';
 import { ReportState } from './ship-label-report.models';
+import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
 
 export interface AppState extends AppState {
     'ShipLabelReport': ReportState
@@ -34,12 +35,11 @@ export function ShipLabelReportReducer(state: ReportState[] = [initialState], ac
         case myActions.ActionTypes.DELETE:
             return [...state.filter(rec => rec.urlid != action.payload.id)];
         case myActions.ActionTypes.SELECTDESELECT: {
-            const record = state.find(rec => rec.urlid == action.payload.id);
-            record.records.forEach ( rec =>{
-                rec.lblm_yn_b = !rec.lblm_yn_b;
-            });
+            var record = {...state.find(rec => rec.urlid == action.payload.id)};
             return [...state.filter(rec => rec.urlid != action.payload.id), record ];
         }
+        case myActions.ActionTypes.SINGLESELECTDESELECT: {
+        }        
         default:
             return state;
     }
@@ -51,6 +51,8 @@ export const getState = (urlid: string) => createSelector(
     getReducer,
     (state: ReportState[]) => state.find(rec => rec.urlid == urlid)
 );
+
+
 
 
 

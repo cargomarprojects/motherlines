@@ -216,7 +216,12 @@ export class ShipLabelReportComponent implements OnInit {
         //     Rec.lblm_yn_b = this.selectdeselect;
         //     this.chkallselected = this.selectdeselect;
         // })
-        this.store.dispatch(new myActions.SelectDeselect({ id: this.urlid, selectyn:this.selectdeselect }));
+        this.store.dispatch(new myActions.SelectDeselect({ id: this.urlid }));
+    }
+
+    SelectDeselect2(rec : TBL_LABELM) {
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid : this.urlid,  id: rec.lblm_mbl_pkid }));
+        
     }
 
     BtnNavigation(action: string) {

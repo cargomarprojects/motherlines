@@ -50,7 +50,7 @@ import { LoadingScreenComponent } from './core/loading-screen/loading-screen.com
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({serializer: CustomSerializer}),    
     environment.production ? [] : StoreDevtoolsModule.instrument(), 
-    environment.production ? [] : [storeFreeze], 
+    
 
   ],
   providers: [
