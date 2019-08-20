@@ -26,7 +26,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: InputBoxComponent;
 
   tab : string = 'main';
-
+  report_title : string = '';
   report_url : string = '';
   report_searchdata : any = {} ;
   report_menuid : string = '';
@@ -658,11 +658,27 @@ export class SeaexpMasterEditComponent implements OnInit {
         break;
       }
       case 'MANIFEST': {
+        this.report_title = 'Ocean Export Manifest';
         this.report_url = '/api/SeaExport/Master/SeaExportManifest';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_menuid = this.gs.MENU_SE_MASTER_MANIFEST ;
-        this.tab = 'manifest';
+       // this.tab = 'manifest';
+        this.tab = 'report';
+        break;
+      }
+      case 'SHIP-LABEL-PRINT': {
+        this.report_title = 'Shipment Label';
+        this.report_menuid = this.gs.MENU_SHIPMENT_LABEL;
+        this.report_url = '/api/Report/ShipmentLabelReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.outputformat = 'PRINT';
+        this.report_searchdata.pkid = this.gs.getGuid();
+        this.report_searchdata.action = 'NEW';
+        this.report_searchdata.MODE = 'SEA EXPORT';
+        this.report_searchdata.MBL_PKID = this.pkid;
+        this.tab = 'report';
+        break;
       }
 
     }

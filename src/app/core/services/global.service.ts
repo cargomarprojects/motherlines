@@ -509,9 +509,8 @@ export class GlobalService {
       "~WWW_ROOT": this.WWW_ROOT,
       "~GLOBAL_REPORT_FOLDER": this.GLOBAL_REPORT_FOLDER,
       "~AIRPORTDISPLAYCOLUMN": this.AIRPORTDISPLAYCOLUMN,
-      "~SHOW_CTPAT_LOGO": this.SHOW_CTPAT_LOGO,
-      "~HBL_INSTR1": this.HBL_INSTR1,
-      "~HBL_INSTR2": this.HBL_INSTR2,
+      "~BRANCH_REGION": this.BRANCH_REGION,
+      "~FILES_FOLDER": this.FILES_FOLDER
     }
 
   }
@@ -624,6 +623,14 @@ export class GlobalService {
   public canPrint(menuid: string): boolean {
     var bret: boolean = false;
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_print == "Y");
+    if (itm)
+      bret = true;
+    return bret;
+  }
+
+  public screenExists(menuid: string): boolean {
+    var bret: boolean = false;
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_add == "Y" || f.rights_edit == "Y" || f.rights_view == "Y"||f.rights_print == "Y"||f.rights_delete == "Y"));
     if (itm)
       bret = true;
     return bret;
@@ -1248,8 +1255,7 @@ export class GlobalService {
     sessionStorage.setItem('WWW_ROOT', JSON.stringify( this.WWW_ROOT));
     sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify( this.GLOBAL_REPORT_FOLDER));
     sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify( this.AIRPORTDISPLAYCOLUMN));
-    sessionStorage.setItem('SHOW_CTPAT_LOGO', JSON.stringify( this.SHOW_CTPAT_LOGO));
-    
+    sessionStorage.setItem('FILES_FOLDER', JSON.stringify( this.FILES_FOLDER));
 
   }
 

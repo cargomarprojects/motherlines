@@ -1,6 +1,6 @@
 <div class="page-header">
-    <div class="col">
-        <label class="mr-1">{{mainservice.title}}</label>
+    <div class="row align-items-center justify-content-left p-1">
+        <label class="mr-3">{{mainservice.title}}</label>
         <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         <i *ngIf="loading" class="fa fa-spinner"></i>

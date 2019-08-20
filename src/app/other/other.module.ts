@@ -24,6 +24,14 @@ import {ApprovedPageListComponent } from './approvedpage/approvedpage-list.compo
 import { ApprovedPageHeaderComponent } from '../other/approvedpage/approvedpage-header.component';
 import { ApprovedPageComponent } from '../other/approvedpage/approvedpage.component';
 
+import { DeliveryOrderHeaderComponent } from '../other/deliveryorder/deliveryorder-header.component';
+import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.component';
+import { DeliveryOrderListComponent } from '../other/deliveryorder/deliveryorder-list.component';
+import { DeliveryOrderEditComponent } from './deliveryorder/edit/deliveryorder-edit.component';
+
+import { OthGeneralExpenseComponent } from './generalexpense/oth-generalexpense.component';
+import { OthGeneralExpenseHeaderComponent } from './generalexpense/oth-generalexpense-header.component';
+import { OthGeneralExpenseEditComponent } from './generalexpense/edit/oth-generalexpense-edit.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +46,14 @@ import { ApprovedPageComponent } from '../other/approvedpage/approvedpage.compon
     ApprovedPageEditComponent,
     ApprovedPageListComponent,
     ApprovedPageHeaderComponent,
-    ApprovedPageComponent
+    ApprovedPageComponent,
+    DeliveryOrderHeaderComponent,
+    DeliveryOrderComponent,
+    DeliveryOrderListComponent,
+    DeliveryOrderEditComponent,
+    OthGeneralExpenseComponent,
+    OthGeneralExpenseHeaderComponent,
+    OthGeneralExpenseEditComponent
   ],
   imports: [
     SharedModule,    

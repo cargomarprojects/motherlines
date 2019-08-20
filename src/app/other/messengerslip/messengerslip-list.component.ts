@@ -105,7 +105,4 @@ export class MessengerSlipListComponent implements OnInit {
   Close() {
     this.location.back();
   }
-
-
-
 }

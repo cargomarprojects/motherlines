@@ -21,7 +21,6 @@ import { NgModel } from '@angular/forms';
 })
 export class AirExpHouseEditComponent implements OnInit {
 
-
   @ViewChild('shipment_stage') shipment_stage_ctrl: ElementRef;
   private pkid: string;
   private menuid: string;
@@ -30,6 +29,7 @@ export class AirExpHouseEditComponent implements OnInit {
 
   private title: string;
   private isAdmin: boolean;
+  bValueChanged: boolean = false;
 
   record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
   recorddet: Tbl_desc = <Tbl_desc>{};
@@ -39,19 +39,18 @@ export class AirExpHouseEditComponent implements OnInit {
 
   @ViewChild('hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
 
-  IsPol = this.gs.AIR_EXPORT_HOUSE_INCR_BY
-  IsPod = this.gs.AIR_EXPORT_HOUSE_PREFIX_POD.toString();
-  
-  
-  
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+
+
   DESC_TYPE: string = "AE-DESC";
   iStartNo: number = 0;
   iStep: number = 0;
   canSave: boolean = false;
-
- // iStep=this.gs.AIR_EXPORT_HOUSE_STARTING_NO.toString();
- 
-
+  Client_Category: string = "SHPR";
   is_locked: boolean = false;
   is_stage_locked = false;
 
@@ -289,9 +288,6 @@ export class AirExpHouseEditComponent implements OnInit {
     this.record.hbl_pp3_carrier = "";
     this.record.hbl_cc3_carrier = "";
 
-
-
-
   }
   LoadData() {
 
@@ -353,37 +349,6 @@ export class AirExpHouseEditComponent implements OnInit {
       }
 
     }
-
-    // if (this.mode == "ADD") {
-    //   this.record.hbl_mbl_id = this.parentid;
-    //   this.record.rec_created_id = this.gs.user_pkid;
-    //   this.record.hbl_frt_status = "";
-    //   //this.record.hbl_obl_telex = "N/A";
-    //   this.record.hbl_bltype = "";
-    //   this.record.rec_created_by = this.gs.user_code;
-    //   this.record.rec_created_date = this.gs.defaultValues.today;
-    //   this.record.hbl_notify_name = "SAME AS CONSIGNEE";
-    //   this.record.hbl_shipment_stage = "NIL";
-
-    //   if (this.parentid != "")
-    //     this.LoadDefaultData();
-
-    //   if (this.gs.PARAM_HBL_FORMAT_BLANK.length > 0) {
-    //     this.record.hbl_format_id = this.gs.PARAM_HBL_FORMAT_BLANK[0].code;
-    //     /*
-    //     if (this.gs.DEFAULT_HBL_FORMAT.length > 0)
-    //       this.record.hbl_format_id = this.gs.DEFAULT_HBL_FORMAT;
-    //     */
-    //   }
-    //   if (this.gs.PARAM_HBL_FORMAT_DRAFT.length > 0) {
-    //     this.record.hbl_draft_format_id = this.gs.PARAM_HBL_FORMAT_DRAFT[0].code;
-    //     /*
-    //     if (this.gs.DEFAULT_HBL_DRAFTFORMAT.length > 0)
-    //       this.record.hbl_draft_format_id = this.gs.DEFAULT_HBL_DRAFTFORMAT;
-    //     */
-    //   }
-    // }
-
   }
 
   LoadMasterData() {
@@ -450,75 +415,9 @@ export class AirExpHouseEditComponent implements OnInit {
         }
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
+        alert(this.errorMessage[0]);
       });
-  }
-
-  LoadDefaultData() {
-    // this.errorMessage = [];
-    // let SearchData = {
-    //   pkid: this.parentid
-    // }
-    // this.mainService.GetHouseDefaultRecord(SearchData).subscribe(
-    //   response => {
-    //     var rec = response.record;
-
-    //     this.record.mbl_refno = rec.mbl_refno;
-    //     this.record.hbl_agent_id = rec.mbl_agent_id;
-    //     this.record.hbl_agent_code = rec.mbl_agent_code;
-    //     this.record.hbl_agent_name = rec.mbl_agent_name;
-    //     this.record.hbl_pol_name = rec.mbl_pol_name;
-    //     this.record.hbl_pod_name = rec.mbl_pod_name;
-    //     this.record.hbl_pofd_id = rec.mbl_pofd_id;
-    //     this.record.hbl_pofd_code = rec.mbl_pofd_code;
-    //     this.record.hbl_pofd_name = rec.mbl_pofd_name;
-    //     this.record.hbl_pofd_eta = rec.mbl_pofd_eta;
-
-    //     this.record.mbl_no = rec.mbl_no;
-    //     this.record.hbl_vessel = rec.mbl_vessel;
-    //     this.record.hbl_voyage = rec.mbl_voyage;
-    //     this.record.hbl_handled_id = rec.mbl_handled_id;
-    //     this.record.hbl_handled_name = rec.mbl_handled_name;
-    //     this.record.hbl_by1 = rec.mbl_handled_name;
-
-    //     this.record.hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? "Y" : "N";
-    //     this.record._hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? true : false;
-
-    //     this.record.hbl_issued_date = rec.mbl_pol_etd;
-    //     this.record.hbl_salesman_id = rec.mbl_salesman_id;
-    //     this.record.hbl_salesman_name = rec.mbl_salesman_name;
-
-    //     this.record.hbl_shipment_stage = rec.mbl_shipment_stage;
-    //     if (rec.mbl_cntr_type == "FCL" || rec.mbl_cntr_type == "LCL") {
-    //       this.record.hbl_shipment_stage = rec.mbl_shipment_stage;
-    //       this.is_stage_locked = true;
-    //     }
-    //     if (rec.mbl_cntr_type == "FCL") {
-    //       this.record.desc1 = "SHIPPERS'S LOAD, COUNT, AND SEALED";
-    //       this.record.desc2 = "SAID TO CONTAIN";
-    //     }
-    //     else if (rec.mbl_cntr_type == "LCL" || rec.mbl_cntr_type == "CONSOLE") {
-    //       this.record.desc1 = "SAID TO CONTAIN";
-    //     }
-    //     this.ShipmentType = rec.mbl_cntr_type;
-    //     this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", rec.mbl_ref_date, rec.mbl_lock, rec.mbl_unlock_date);
-
-    //     this.cntrs = <Tbl_cargo_exp_container[]>response.cntrs;
-
-    //     this.cntrs.forEach(rec => {
-    //       rec.cntr_pkid = this.gs.getGuid();
-    //     });
-
-
-    //   },
-    //   error => {
-    //     this.errorMessage.push(this.gs.getError(error));
-    //     alert(this.errorMessage[0]);
-    //   }
-    // );
-
-
-
   }
 
   GetRecord() {
@@ -565,108 +464,6 @@ export class AirExpHouseEditComponent implements OnInit {
       });
   }
 
-
-  LoadMBL() {
-    this.LoadMBLWeight();
-    this.LoadMBLDesc();
-  }
-
-
-  LoadMBLWeight() {
-
-    // this.errorMessage = [];
-
-    // let SearchData = {
-    //   pkid: this.parentid,
-    // }
-    // this.mainService.GetMblWeight(SearchData).subscribe(response => {
-    //   if (response.record) {
-    //     this.record.hbl_weight = response.record.mbld_weight;
-    //     this.record.hbl_lbs = response.record.mbld_lbs;
-    //     this.record.hbl_cbm = response.record.mbld_cbm;
-    //     this.record.hbl_cft = response.record.mbld_cft;
-    //   }
-    // }, error => {
-    //   this.errorMessage.push(this.gs.getError(error));
-    //   alert(this.errorMessage[0]);
-    // });
-
-
-  }
-
-
-  LoadMBLDesc() {
-
-    // this.errorMessage = [];
-
-    // let SearchData = {
-    //   pkid: this.parentid,
-    //   desc_type: 'MBLDESC',
-    // }
-    // this.mainService.GetDesc(SearchData).subscribe(response => {
-
-    //   if (response.records != null) {
-    //     response.records.forEach(rec => {
-    //       this.ShowDesc(rec);
-    //     });
-    //   }
-
-
-    // }, error => {
-    //   this.errorMessage.push(this.gs.getError(error));
-    //   alert(this.errorMessage[0]);
-    // });
-
-
-  }
-
-
-
-  LoadContainer() {
-    // this.errorMessage = [];
-    // let SearchData = {
-    //   pkid: this.pkid,
-    // }
-    // this.mainService.GetContainer(SearchData).subscribe(response => {
-    //   this.cntrs = response.records;
-    //   this.showContainer();
-    // }, error => {
-    //   this.errorMessage.push(this.gs.getError(error));
-    //   alert(this.errorMessage[0]);
-    // });
-  }
-
-  GetCntrInfo(CntrNo: string, CntrSealNo: string) {
-    if (CntrSealNo.length > 0)
-      CntrNo += "/ " + CntrSealNo;
-    return CntrNo;
-  }
-
-  showContainer() {
-    // this.record.mark6 = "CONTAINER NO./ SEAL NO.";
-    // if (this.cntrs.length > 0)
-    //   this.record.mark7 = this.GetCntrInfo(this.cntrs[0].cntr_no, this.cntrs[0].cntr_sealno);
-    // if (this.cntrs.length > 1)
-    //   this.record.mark8 = this.GetCntrInfo(this.cntrs[1].cntr_no, this.cntrs[1].cntr_sealno);
-    // if (this.cntrs.length > 2)
-    //   this.record.mark9 = this.GetCntrInfo(this.cntrs[2].cntr_no, this.cntrs[2].cntr_sealno);
-    // if (this.cntrs.length > 3)
-    //   this.record.mark10 = this.GetCntrInfo(this.cntrs[10].cntr_no, this.cntrs[10].cntr_sealno);
-    // if (this.cntrs.length > 4)
-    //   this.record.mark11 = this.GetCntrInfo(this.cntrs[11].cntr_no, this.cntrs[11].cntr_sealno);
-    // if (this.cntrs.length > 5)
-    //   this.record.mark12 = this.GetCntrInfo(this.cntrs[12].cntr_no, this.cntrs[12].cntr_sealno);
-    // if (this.cntrs.length > 6)
-    //   this.record.mark13 = this.GetCntrInfo(this.cntrs[13].cntr_no, this.cntrs[13].cntr_sealno);
-    // if (this.cntrs.length > 7)
-    //   this.record.mark14 = this.GetCntrInfo(this.cntrs[14].cntr_no, this.cntrs[14].cntr_sealno);
-    // if (this.cntrs.length > 8)
-    //   this.record.mark15 = this.GetCntrInfo(this.cntrs[15].cntr_no, this.cntrs[15].cntr_sealno);
-    // if (this.cntrs.length > 9)
-    //   this.record.mark16 = this.GetCntrInfo(this.cntrs[16].cntr_no, this.cntrs[16].cntr_sealno);
-    // if (this.cntrs.length > 10)
-    //   this.record.mark17 = this.GetCntrInfo(this.cntrs[17].cntr_no, this.cntrs[17].cntr_sealno);
-  }
 
   ShowDesc(Rec: Tbl_cargo_exp_desc) {
     if (Rec.cargo_ctr == 1) {
@@ -857,14 +654,93 @@ export class AirExpHouseEditComponent implements OnInit {
     return bret;
   }
 
-  onBlur(field: string) {
+  onChange(field: string) {
+
+    if (field == 'hbl_rate' || field == 'hbl_chwt' || field == 'hbl_rate1' || field == 'hbl_rate2' ||
+      field == 'hbl_rate3' || field == 'hbl_rate4' || field == 'hbl_rate5' || field == 'hbl_rate1_carrier' || field == 'hbl_rate2_carrier'
+      || field == 'hbl_rate3_carrier' || field == 'hbl_rate4_carrier')
+      this.bValueChanged = true;
 
   }
+
+  onFocus(field: string) {
+
+    if (field == 'hbl_rate' || field == 'hbl_chwt' || field == 'hbl_rate1' || field == 'hbl_rate2' ||
+      field == 'hbl_rate3' || field == 'hbl_rate4' || field == 'hbl_rate5' || field == 'hbl_rate1_carrier' || field == 'hbl_rate2_carrier'
+      || field == 'hbl_rate3_carrier' || field == 'hbl_rate4_carrier')
+      this.bValueChanged = false;
+
+  }
+
+  onBlur(field: string) {
+
+    switch (field) {
+      case 'hbl_rate': {
+        this.record.hbl_rate = this.gs.roundNumber(this.record.hbl_rate, 2);
+        this.FindTotal();
+        break;
+      }
+      case 'hbl_chwt': {
+        this.record.hbl_chwt = this.gs.roundNumber(this.record.hbl_chwt, 3);
+        this.FindTotal();
+        this.FindOther("");
+        break;
+      }
+      case 'hbl_rate1': {
+        this.record.hbl_rate1 = this.gs.roundNumber(+this.record.hbl_rate1, 2).toString();
+        this.FindOther("A1");
+        break;
+      }
+      case 'hbl_rate2': {
+        this.record.hbl_rate2 = this.gs.roundNumber(+this.record.hbl_rate2, 2).toString();
+        this.FindOther("A2");
+        break;
+      }
+      case 'hbl_rate3': {
+        this.record.hbl_rate3 = this.gs.roundNumber(+this.record.hbl_rate3, 2).toString();
+        this.FindOther("A3");
+        break;
+      }
+      case 'hbl_rate4': {
+        this.record.hbl_rate4 = this.gs.roundNumber(+this.record.hbl_rate4, 2).toString();
+        this.FindOther("A4");
+        break;
+      }
+      case 'hbl_rate5': {
+        this.record.hbl_rate5 = this.gs.roundNumber(+this.record.hbl_rate5, 2).toString();
+        this.FindOther("A5");
+        break;
+      }
+
+      case 'hbl_rate1_carrier': {
+        this.record.hbl_rate1_carrier = this.gs.roundNumber(+this.record.hbl_rate1_carrier, 2).toString();
+        this.FindOther("C1");
+        break;
+      }
+
+      case 'hbl_rate2_carrier': {
+        this.record.hbl_rate2_carrier = this.gs.roundNumber(+this.record.hbl_rate2_carrier, 2).toString();
+        this.FindOther("C2");
+        break;
+      }
+
+      case 'hbl_rate3_carrier': {
+        this.record.hbl_rate3_carrier = this.gs.roundNumber(+this.record.hbl_rate3_carrier, 2).toString();
+        this.FindOther("C3");
+        break;
+      }
+       
+    }
+
+  }
+
 
 
   Save() {
 
     this.errorMessage = [];
+    this.iStartNo = +this.gs.AIR_EXPORT_HOUSE_STARTING_NO.toString();
+    this.iStep = +this.gs.AIR_EXPORT_HOUSE_INCR_BY.toString();
 
     if (!this.Allvalid())
       return;
@@ -874,30 +750,27 @@ export class AirExpHouseEditComponent implements OnInit {
 
     const saverec = <vm_tbl_cargo_exp_housem>{};
 
-    this.IsPol = this.gs.AIR_EXPORT_HOUSE_INCR_BY
-    this.IsPod = this.gs.AIR_EXPORT_HOUSE_PREFIX_POD.toString();
-    this.iStartNo = +this.gs.AIR_EXPORT_HOUSE_STARTING_NO.toString();
-    this.iStep = +this.gs.AIR_EXPORT_HOUSE_INCR_BY.toString();
-
-
     saverec.mode = this.mode;
     saverec.pkid = this.pkid;
     saverec.record = this.record;
     saverec.records = this.records;
     saverec.userinfo = this.gs.UserInfo;
+    saverec.isPol = this.gs.AIR_EXPORT_HOUSE_PREFIX_POL.toString();
+    saverec.isPod = this.gs.AIR_EXPORT_HOUSE_PREFIX_POD.toString();
+    saverec.iStartNo = this.iStartNo;
+    saverec.iStep = this.iStep;
+    saverec.housePrefix = this.gs.AIR_EXPORT_HOUSE_PREFIX;
 
     this.mainService.Save(saverec).subscribe(response => {
 
       if (response.retvalue) {
-        this.record.hbl_houseno = response.refno;
+        if (this.mode == "ADD")
+          this.record.hbl_houseno = response.refno;
         this.mode = 'EDIT';
       }
-
-
     }, error => {
       this.errorMessage.push(this.gs.getError(error));
       alert(this.errorMessage[0]);
-
     }
     );
 
@@ -985,6 +858,9 @@ export class AirExpHouseEditComponent implements OnInit {
       this.record.hbl_shipper_add2 = rec.col2;
       this.record.hbl_shipper_add3 = rec.col3;
       this.record.hbl_shipper_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+      this.record.hbl_by1 = this.gs.ADDRESS_LINE1 + " AS AGENT FOR ";     //Agnt_for_Shipper                  
+      this.record.hbl_by2 = this.record.hbl_shipper_name;     //Agnt_for_Shipper2  
+
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
@@ -998,7 +874,7 @@ export class AirExpHouseEditComponent implements OnInit {
       this.record.hbl_consigned_to3 = rec.col2;
       this.record.hbl_consigned_to4 = rec.col3;
       this.record.hbl_consigned_to5 = this.gs.GetTelFax(rec.col6, rec.col7);
-
+      this.record.hbl_consigned_to6 = this.gs.GetAttention(rec.col5);
       var sNom = rec.type;
       if (sNom == "NOMINATION" || sNom == "MUTUAL")
         this.record.hbl_bltype = sNom;
@@ -1010,29 +886,29 @@ export class AirExpHouseEditComponent implements OnInit {
       }
     }
 
-    if (rec.controlname == "NOTIFY") {
-      this.record.hbl_notify_id = rec.id;
-      this.record.hbl_notify_code = rec.code;
-      this.record.hbl_notify_name = rec.name;
-      if (rec.col8 != "")
-        this.record.hbl_notify_name = rec.col8;
-      this.record.hbl_notify_add1 = rec.col1;
-      this.record.hbl_notify_add2 = rec.col2;
-      this.record.hbl_notify_add3 = rec.col3;
-      // this.record.hbl_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
-      if (rec.col9 == "Y") {
-        this.gs.ShowAccAlert(this.record.hbl_notify_id);
-      }
-    }
+    // if (rec.controlname == "NOTIFY") {
+    //   this.record.hbl_notify_id = rec.id;
+    //   this.record.hbl_notify_code = rec.code;
+    //   this.record.hbl_notify_name = rec.name;
+    //   if (rec.col8 != "")
+    //     this.record.hbl_notify_name = rec.col8;
+    //   this.record.hbl_notify_add1 = rec.col1;
+    //   this.record.hbl_notify_add2 = rec.col2;
+    //   this.record.hbl_notify_add3 = rec.col3;
+    //   // this.record.hbl_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+    //   if (rec.col9 == "Y") {
+    //     this.gs.ShowAccAlert(this.record.hbl_notify_id);
+    //   }
+    // }
 
 
-    if (rec.controlname == "AGENT") {
-      this.record.hbl_agent_id = rec.id;
-    }
+    // if (rec.controlname == "AGENT") {
+    //   this.record.hbl_agent_id = rec.id;
+    // }
 
     if (rec.controlname == "HANDLEDBY") {
       this.record.hbl_handled_id = rec.id;
-      this.record.hbl_by1 = rec.name;
+      this.record.hbl_issued_by = rec.name;
     }
 
     if (rec.controlname == "SALEMSAN") {
@@ -1048,40 +924,91 @@ export class AirExpHouseEditComponent implements OnInit {
     // }
 
   }
+  BtnNavigation(action: string) {
 
-  FindWeight(_type: string) {
-    if (_type == "Kgs2Lbs")
-      this.record.hbl_lbs = this.gs.Convert_Weight("KG2LBS", this.record.hbl_weight, 3);
-    else if (_type == "Lbs2Kgs")
-      this.record.hbl_weight = this.gs.Convert_Weight("LBS2KG", this.record.hbl_lbs, 3);
-    else if (_type == "Cbm2Cft")
-      this.record.hbl_cft = this.gs.Convert_Weight("CBM2CFT", this.record.hbl_cbm, 3);
-    else if (_type == "Cft2Cbm")
-      this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
+    switch (action) {
+
+      case 'FULL-FORMAT': {
+        this.report_title = 'House Print';
+        this.report_url = '/api/AirExport/House/GetHAWBReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.invoketype = this.Client_Category;
+        this.report_searchdata.desc_type = this.DESC_TYPE;
+        if (this.Client_Category == "SHPR" || this.Client_Category == "CNOR")
+          this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_SHIPPER;
+        else
+          this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_CONSIGNEE;
+        this.tab = 'report';
+        break;
+      }
+      case 'BLANK-FORMAT': {
+        this.report_title = 'House Print';
+        this.report_url = '/api/AirExport/House/GetHAWBBlankReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.invoketype = this.Client_Category;
+        this.report_searchdata.desc_type = this.DESC_TYPE;
+        if (this.Client_Category == "SHPR" || this.Client_Category == "CNOR")
+          this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_SHIPPER;
+        else
+          this.report_menuid = this.gs.MENU_AE_HOUSE_HAWB_CONSIGNEE;
+        this.tab = 'report';
+        break;
+      }
+
+    }
+  }
+  callbackevent(event: any) {
+    this.tab = 'main';
   }
 
   Close() {
     this.location.back();
   }
 
+  private FindTotal() {
+    if (!this.bValueChanged)
+      return;
 
-
-
-  AddRow() {
-
-    // var rec = <Tbl_cargo_exp_container>{};
-    // rec.cntr_pkid = this.gs.getGuid();
-    // rec.cntr_no = "",
-    //   rec.cntr_type = "",
-    //   rec.cntr_sealno = '';
-    // rec.cntr_packages_uom = '';
-    // rec.cntr_movement = "",
-    //   rec.cntr_weight = 0;
-    // rec.cntr_pieces = 0;
-    // rec.cntr_cbm = 0;
-    // this.cntrs.push(rec);
+    let nTot: number = this.record.hbl_rate * this.record.hbl_chwt;
+    this.record.hbl_total = this.gs.roundNumber(nTot, 2);
   }
 
+  private FindOther(_type: string = "") {
+    if (!this.bValueChanged)
+      return;
 
+    let nAmt: number = 0;
 
+    if (+this.record.hbl_rate1 > 0 && (_type == "A1" || _type == "")) {
+      nAmt = +this.record.hbl_rate1 * this.record.hbl_chwt; this.record.hbl_total1 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.hbl_rate2 > 0 && (_type == "A2" || _type == "")) {
+      nAmt = +this.record.hbl_rate2 * this.record.hbl_chwt; this.record.hbl_total2 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.hbl_rate3 > 0 && (_type == "A3" || _type == "")) {
+      nAmt = +this.record.hbl_rate3 * this.record.hbl_chwt; this.record.hbl_total3 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.hbl_rate4 > 0 && (_type == "A4" || _type == "")) {
+      nAmt = +this.record.hbl_rate4 * this.record.hbl_chwt; this.record.hbl_total4 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.hbl_rate5 > 0 && (_type == "A5" || _type == "")) {
+      nAmt = +this.record.hbl_rate5 * this.record.hbl_chwt; this.record.hbl_total5 = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.hbl_rate1_carrier > 0 && (_type == "C1" || _type == "")) {
+      nAmt = +this.record.hbl_rate1_carrier * this.record.hbl_chwt; this.record.hbl_total1_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+    if (+this.record.hbl_rate2_carrier > 0 && (_type == "C2" || _type == "")) {
+      nAmt = +this.record.hbl_rate2_carrier * this.record.hbl_chwt; this.record.hbl_total2_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+    if (+this.record.hbl_rate3_carrier > 0 && (_type == "C3" || _type == "")) {
+      nAmt = +this.record.hbl_rate3_carrier * this.record.hbl_chwt; this.record.hbl_total3_carrier = this.gs.roundNumber(nAmt, 2).toString();
+    }
+
+  }
 }

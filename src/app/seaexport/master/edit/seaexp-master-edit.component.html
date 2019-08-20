@@ -475,7 +475,7 @@
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm">Shipment Label</button>
+            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('SHIP-LABEL-PRINT')">Shipment Label</button>
           </div>
 
           <div class="form-group row">
@@ -532,6 +532,6 @@
 
 </div>
 
-<div *ngIf="tab=='manifest'">
-  <app-report [title]="'Ocean Export Manifest'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+<div  *ngIf="tab=='report'">
+  <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
 </div>

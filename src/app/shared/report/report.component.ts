@@ -71,7 +71,7 @@ export class ReportComponent implements OnInit {
       },
       error =>{
         this.errorMessage = this.gs.getError(error);
-        alert( );
+        alert( this.errorMessage );
       }
     );
   }

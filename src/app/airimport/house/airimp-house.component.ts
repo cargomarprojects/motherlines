@@ -53,27 +53,27 @@ export class AirImpHouseComponent implements OnInit {
     this.mainservice.Search(actions,'PAGE');
   }
 
-  NewRecord() {
+  // NewRecord() {
 
 
-    let parameter = {
-      menuid: this.mainservice.menuid,
-      pkid: '',
-      parentid :'',
-      type: this.mainservice.param_type,
-      origin: 'airimp-house-page',
-      mode: 'ADD'
-    };
-    this.gs.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(parameter));
+  //   let parameter = {
+  //     menuid: this.mainservice.menuid,
+  //     pkid: '',
+  //     parentid :'',
+  //     type: this.mainservice.param_type,
+  //     origin: 'airimp-house-page',
+  //     mode: 'ADD'
+  //   };
+  //   this.gs.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(parameter));
 
-  }
+  // }
   edit(_record: Tbl_cargo_imp_housem) {
 
 
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.hbl_pkid,
-      parentid :'',
+      parentid :_record.hbl_mbl_id,
       type: '',
       origin: 'airimp-house-page',
       mode: 'EDIT'

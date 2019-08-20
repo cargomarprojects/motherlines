@@ -5,7 +5,7 @@ import { GlobalService } from '../../../core/services/global.service';
 
 import { AirExpMasterService } from '../../services/airexp-master.service';
 import { User_Menu } from '../../../core/models/menum';
-import { Tbl_cargo_exp_masterm,Tbl_cargo_exp_housem, vm_tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
+import { Tbl_cargo_exp_masterm, Tbl_cargo_exp_housem, vm_tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { isNumber } from 'util';
 import { flatMap } from 'rxjs/operators';
@@ -24,13 +24,13 @@ export class AirExpMasterEditComponent implements OnInit {
   /*
     01-07-2019 Created By Ajith  
   */
- tab : string = 'main';
- report_title : string = '';
- report_url : string = '';
- report_searchdata : any = {} ;
- report_menuid : string = '';
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
 
-  private pkid: string="";
+  private pkid: string = "";
   private menuid: string;
   private hbl_pkid: string = '';
   private hbl_mode: string = '';
@@ -359,7 +359,7 @@ export class AirExpMasterEditComponent implements OnInit {
   }
 
   IsValidAWB(Awb: string) {
-    let strnum:string ="0123456789";
+    let strnum: string = "0123456789";
     let i: number = 0;//"".indexOf(snum)<0
     let strChar: string = '';
     Awb = Awb.trim();
@@ -367,7 +367,7 @@ export class AirExpMasterEditComponent implements OnInit {
       return false;
     for (i = 0; i < Awb.length; i++) {
       strChar = Awb.substr(i, 1);
-      if (strnum.indexOf(strChar)<0)
+      if (strnum.indexOf(strChar) < 0)
         return false;
     }
     return true;
@@ -532,13 +532,13 @@ export class AirExpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.AirExport.Trans/AirExpHouseEditPage', JSON.stringify(prm));
         break;
       }
-       
+
       case 'PAYMENT-REQUEST': {
         let prm = {
-          menuid: this.gs.MENU_AI_PAYMENT_REQUEST,
+          menuid: this.gs.MENU_AE_PAYMENT_REQUEST,
           cp_master_id: this.pkid,
           cp_source: 'AIR-MASTER',
-          cp_mode: 'AIR IMPORT',
+          cp_mode: 'AIR EXPORT',
           cp_ref_no: this.record.mbl_refno,
           islocked: false,
           origin: 'airimp-master-page'
@@ -548,9 +548,9 @@ export class AirExpMasterEditComponent implements OnInit {
       }
       case 'MESSENGER-SLIP': {
         let prm = {
-          menuid: this.gs.MENU_AI_MESSENGER_SLIP,
+          menuid: this.gs.MENU_AE_MESSENGER_SLIP,
           mbl_pkid: this.pkid,
-          mbl_mode: 'AIR IMPORT',
+          mbl_mode: 'AIR EXPORT',
           mbl_refno: this.record.mbl_refno,
           islocked: false,
           origin: 'airimp-master-page'
@@ -560,7 +560,7 @@ export class AirExpMasterEditComponent implements OnInit {
       }
       case 'FOLLOWUP': {
         let prm = {
-          menuid: this.gs.MENU_AI_MASTER,
+          menuid: this.gs.MENU_AE_MASTER,
           master_id: this.pkid,
           master_refno: this.record.mbl_refno,
           master_refdate: this.record.mbl_ref_date,
@@ -572,10 +572,10 @@ export class AirExpMasterEditComponent implements OnInit {
       }
       case 'REQUEST-APPROVAL': {
         let prm = {
-          menuid: this.gs.MENU_AI_MASTER_REQUEST_APPROVAL,
+          menuid: this.gs.MENU_AE_MASTER_REQUEST_APPROVAL,
           mbl_pkid: this.pkid,
           mbl_refno: this.record.mbl_refno,
-          doc_type: 'AIR IMPORT',
+          doc_type: 'AIR EXPORT',
           req_type: 'REQUEST',
           islocked: false,
           origin: 'airimp-master-page'
@@ -585,31 +585,66 @@ export class AirExpMasterEditComponent implements OnInit {
       }
       case 'INERNALMEMO': {
         let prm = {
-          menuid: this.gs.MENU_AI_MASTER_INTERNAL_MEMO,
+          menuid: this.gs.MENU_AE_MASTER_INTERNAL_MEMO,
           refno: "REF : " + this.record.mbl_refno,
           pkid: this.pkid,
           origin: 'airimp-master-page',
-          oprgrp: 'AIR IMPORT',
-          parentType: 'AIRIMP-CNTR',
-          paramType: 'CNTR-MOVE-STATUS',
+          oprgrp: 'AIR EXPORT',
+          parentType: 'AIREXP-CNTR',
+          paramType: 'AIREXP-CNTR-MOVE-STATUS',
           hideTracking: 'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
       }
-      case 'POD': {
-        this.report_title = 'POD';
-        this.report_url = '/api/AirImport/Master/GetPODAirImpRpt';
+      // case 'POD': {
+      //   this.report_title = 'POD';
+      //   this.report_url = '/api/AirImport/Master/GetPODAirImpRpt';
+      //   this.report_searchdata = this.gs.UserInfo;
+      //   this.report_searchdata.pkid = this.pkid;
+      //   this.report_menuid = this.gs.MENU_AI_MASTER_POD ;
+      //   this.tab = 'report';
+      //   break;
+      // }
+
+      case 'MAWBPAGE': {
+        let prm = {
+          menuid: this.gs.MENU_AE_MASTER_PRINT_MAWB,
+          pkid: this.pkid,
+          origin: 'airexp-master-page',
+        };
+        this.gs.Naviagete('Silver.AirExport.Trans/MawbPage', JSON.stringify(prm));
+        break;
+      }
+
+      case 'MANIFESTPAGE': {
+        let prm = {
+          menuid: this.gs.MENU_AE_MASTER_MANIFEST,
+          pkid: this.pkid,
+          mbl_no: this.record.mbl_no,
+          mbl_refno: this.record.mbl_refno,
+          origin: 'airexp-master-page',
+        };
+        this.gs.Naviagete('Silver.AirExport.Trans/ManifestPage', JSON.stringify(prm));
+        break;
+      }
+      case 'SHIP-LABEL-PRINT': {
+        this.report_title = 'Shipment Label';
+        this.report_menuid = this.gs.MENU_SHIPMENT_LABEL;
+        this.report_url = '/api/Report/ShipmentLabelReport';
         this.report_searchdata = this.gs.UserInfo;
-        this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_AI_MASTER_POD ;
+        this.report_searchdata.outputformat = 'PRINT';
+        this.report_searchdata.pkid = this.gs.getGuid();
+        this.report_searchdata.action = 'NEW';
+        this.report_searchdata.MODE = 'AIR EXPORT';
+        this.report_searchdata.MBL_PKID = this.pkid;
         this.tab = 'report';
         break;
       }
     }
   }
 
-  callbackevent( event : any ){
+  callbackevent(event: any) {
     this.tab = 'main';
   }
 

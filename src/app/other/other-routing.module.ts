@@ -11,6 +11,11 @@ import { MessengerSlipListComponent } from '../other/messengerslip/messengerslip
 import {ApprovedPageEditComponent } from './approvedpage/edit/approvedpage-edit.component';
 import {ApprovedPageListComponent } from './approvedpage/approvedpage-list.component';
 import { ApprovedPageComponent } from '../other/approvedpage/approvedpage.component';
+import { DeliveryOrderComponent } from '../other/deliveryorder/deliveryorder.component';
+import { DeliveryOrderListComponent } from '../other/deliveryorder/deliveryorder-list.component';
+import { DeliveryOrderEditComponent } from './deliveryorder/edit/deliveryorder-edit.component';
+import { OthGeneralExpenseComponent } from './generalexpense/oth-generalexpense.component';
+import { OthGeneralExpenseEditComponent } from './generalexpense/edit/oth-generalexpense-edit.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -21,7 +26,12 @@ const routes: Routes = [
   { path : 'MessengerSlipList', component : MessengerSlipListComponent },
   { path : 'ApprovedPageEdit', component : ApprovedPageEditComponent },
   { path : 'ApprovedPageList', component : ApprovedPageListComponent },
-  { path : 'ApprovedPage', component : ApprovedPageComponent }
+  { path : 'ApprovedPage', component : ApprovedPageComponent },
+  { path : 'DeliveryOrderPage', component : DeliveryOrderComponent },
+  { path : 'DeliveryOrderList', component : DeliveryOrderListComponent },
+  { path : 'DeliveryOrderEdit', component : DeliveryOrderEditComponent },
+  { path : 'GeneralExpensePage', component : OthGeneralExpenseComponent },
+  { path : 'OthGeneralExpenseEditPage', component : OthGeneralExpenseEditComponent }
 ];
 
 @NgModule({

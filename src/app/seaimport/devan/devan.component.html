@@ -1,6 +1,7 @@
+<div *ngIf="tab=='main'">
 <div class="page-header">
-    <div class="col">
-        <label>Devanning Instruction</label>
+    <div class="row  align-items-center justify-content-left p-1">
+        <label class="mr-3">Devanning Instruction</label>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
     </div>
 </div>
@@ -166,22 +167,14 @@
 
 <div class="page-footer">
     <div class="row row justify-content-center p-1">
-        <button class="btn btn-primary btn-md" (click)="Save()">Save</button>
-        <button class="btn btn-primary btn-md">Print</button>
+        <button class="btn btn-primary btn-md mr-1" (click)="Save()">Save</button>
+        <button class="btn btn-primary btn-md mr-1" (click)="printDevan()">Print</button>
     </div>
 </div>
+</div>
 
-
-<!-- <div class="page-footer">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group row">
-                <label class="col-4 col-form-label col-form-label-sm"></label>
-                <div class="col-8">
-                    <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
-                    <button class="btn btn-primary btn-sm mr-1">Print</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
+<div  *ngIf="tab=='report'">
+    <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+  </div>
+  
+ 

@@ -592,7 +592,7 @@ export class AirImpMasterEditComponent implements OnInit {
           origin: 'airimp-master-page',
           oprgrp: 'AIR IMPORT',
           parentType: 'AIRIMP-CNTR',
-          paramType: 'CNTR-MOVE-STATUS',
+          paramType: 'AIRIMP-CNTR-MOVE-STATUS',
           hideTracking: 'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
@@ -604,6 +604,19 @@ export class AirImpMasterEditComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_menuid = this.gs.MENU_AI_MASTER_POD ;
+        this.tab = 'report';
+        break;
+      }
+      case 'SHIP-LABEL-PRINT': {
+        this.report_title = 'Shipment Label';
+        this.report_menuid = this.gs.MENU_SHIPMENT_LABEL;
+        this.report_url = '/api/Report/ShipmentLabelReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.outputformat = 'PRINT';
+        this.report_searchdata.pkid = this.gs.getGuid();
+        this.report_searchdata.action = 'NEW';
+        this.report_searchdata.MODE = 'AIR IMPORT';
+        this.report_searchdata.MBL_PKID = this.pkid;
         this.tab = 'report';
         break;
       }
