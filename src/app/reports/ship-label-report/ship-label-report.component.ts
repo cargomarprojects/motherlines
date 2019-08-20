@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
@@ -22,6 +22,8 @@ import { map, tap, filter } from 'rxjs/operators';
 export class ShipLabelReportComponent implements OnInit {
 
     title: string = 'Shipment Label Report ';
+
+    @ViewChild('chkbox')  mChkBox : ElementRef ;
 
     tab: string = 'main';
     report_title: string = '';
@@ -216,11 +218,11 @@ export class ShipLabelReportComponent implements OnInit {
         //     Rec.lblm_yn_b = this.selectdeselect;
         //     this.chkallselected = this.selectdeselect;
         // })
-        this.store.dispatch(new myActions.SelectDeselect({ id: this.urlid }));
+        this.store.dispatch(new myActions.SelectDeselect({ id: this.urlid, flag : this.selectdeselect }));
     }
 
     SelectDeselect2(rec : TBL_LABELM) {
-        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid : this.urlid,  id: rec.lblm_mbl_pkid }));
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid : this.urlid,  id: rec.lblm_mbl_pkid, flag : this.mChkBox.nativeElement.checked }));
         
     }
 

@@ -36,11 +36,24 @@ export function ShipLabelReportReducer(state: ReportState[] = [initialState], ac
         case myActions.ActionTypes.DELETE:
             return [...state.filter(rec => rec.urlid != action.payload.id)];
         case myActions.ActionTypes.SELECTDESELECT: {
-            var record = {...state.find(rec => rec.urlid == action.payload.id)};
-            return [...state.filter(rec => rec.urlid != action.payload.id), record ];
+            const rec =  {...state.find( rec1 => rec1.urlid == action.payload.id)};
+            const record = {...rec,  
+                records : rec.records.map ( r1 => { 
+                    return { ...r1,  lblm_yn_b: action.payload.flag } 
+                })
+            };
+            return [...state.filter( rec2 => rec2.urlid != action.payload.id),record];
         }
         case myActions.ActionTypes.SINGLESELECTDESELECT: {
-            
+
+            const rec =  {...state.find( rec1 => rec1.urlid == action.payload.urlid)};
+            const record = {...rec,  
+                records : rec.records.map  ( r1 => { 
+                    return r1.lblm_mbl_pkid == action.payload.id ? { ...r1,  lblm_yn_b: action.payload.flag } : r1
+                })
+            };
+            return [...state.filter( rec2 => rec2.urlid != action.payload.id),record];
+
         }        
         default:
             return state;

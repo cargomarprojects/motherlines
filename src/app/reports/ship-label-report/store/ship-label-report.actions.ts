@@ -27,12 +27,12 @@ export class Delete implements Action {
 
 export class SelectDeselect implements Action {
   readonly type = ActionTypes.SELECTDESELECT;
-  constructor(public payload : { id: string}){ }
+  constructor(public payload : { id: string, flag : boolean}){ }
 }
 
 export class SingleSelectDeselect implements Action {
   readonly type = ActionTypes.SINGLESELECTDESELECT;
-  constructor(public payload : { urlid : string, id: string}){ }
+  constructor(public payload : { urlid : string, id: string, flag: boolean }){ }
 }
 
 export type Actions = Add | Update | Delete | SelectDeselect | SingleSelectDeselect;
