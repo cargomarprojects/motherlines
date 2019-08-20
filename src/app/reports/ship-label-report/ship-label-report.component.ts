@@ -211,12 +211,12 @@ export class ShipLabelReportComponent implements OnInit {
     }
 
     SelectDeselect() {
-        this.selectdeselect = !this.selectdeselect;
-        this.MainList.forEach(Rec => {
-            Rec.lblm_yn_b = this.selectdeselect;
-            this.chkallselected = this.selectdeselect;
-        })
-
+         this.selectdeselect = !this.selectdeselect;
+        // this.MainList.forEach(Rec => {
+        //     Rec.lblm_yn_b = this.selectdeselect;
+        //     this.chkallselected = this.selectdeselect;
+        // })
+        this.store.dispatch(new myActions.SelectDeselect({ id: this.urlid, selectyn:this.selectdeselect }));
     }
 
     BtnNavigation(action: string) {

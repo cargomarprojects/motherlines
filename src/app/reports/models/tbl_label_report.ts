@@ -18,7 +18,7 @@ export class TBL_LABELM {
     lblm_tot_container: number;
     lblm_tot_rows: number;
     lblm_yn: string;
-    lblm_yn_b: Boolean;
+    lblm_yn_b: boolean;
 }
 
 export class TBL_LABELD {
