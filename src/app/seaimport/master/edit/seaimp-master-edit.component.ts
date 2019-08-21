@@ -827,6 +827,19 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.tab = 'report';
         break;
       }
+      case 'ATTACHMENT': {
+        // this.report_title = 'Shipment Label';
+        // this.report_menuid = this.gs.MENU_SHIPMENT_LABEL;
+        // this.report_url = '/api/Report/ShipmentLabelReport';
+        // this.report_searchdata = this.gs.UserInfo;
+        // this.report_searchdata.outputformat = 'PRINT';
+        // this.report_searchdata.pkid = this.gs.getGuid();
+        // this.report_searchdata.action = 'NEW';
+        // this.report_searchdata.MODE = 'SEA IMPORT';
+        // this.report_searchdata.MBL_PKID = this.pkid;
+        this.tab = 'attachment';
+        break;
+      }
     }
   }
   callbackevent(event: any) {
