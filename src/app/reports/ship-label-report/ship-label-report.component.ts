@@ -268,6 +268,21 @@ export class ShipLabelReportComponent implements OnInit {
                 this.mbl_ids += rec.lblm_mbl_pkid.toString();
             }
         }
+
+        if ( this.MainList == null)
+        {
+            this.errorMessage="No List Found", "Print";
+            alert(this.errorMessage);
+            return;
+        }
+         
+        if (this.gs.isBlank(this.mbl_ids))
+        {
+            this.errorMessage ="No Rows Selected";
+            alert(this.errorMessage);
+            return;
+        }
+
         this.BtnNavigation('SHIP-LABEL-PRINT');
     }
 
