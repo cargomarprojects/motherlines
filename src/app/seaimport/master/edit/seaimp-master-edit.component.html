@@ -644,5 +644,21 @@
     (callbackevent)="callbackevent($event)"></app-report>
 </div>
 <div *ngIf="tab=='attachment'">
-  <app-fileupload   (callbackevent)="callbackevent($event)"></app-fileupload>
+  <app-fileupload  [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid" [type]="attach_type" [typelist]="attach_typelist" [tablename]="attach_tablename"
+  [tablepkcolumn]="attach_tablepkcolumn" [refno]="attach_refno" [customername]="attach_customername" [updatecolumn]="attach_updatecolumn" 
+  [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath" [filespath2]="attach_filespath2" 
+  (callbackevent)="callbackevent($event)"></app-fileupload>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Output, ViewChild,EventEmitter, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from '../../core/services/global.service';
 import { LovService } from '../services/lov.service';
@@ -8,19 +8,27 @@ import { Table_Mast_Files } from '../models/table_mast_files';
   selector: 'app-fileupload',
   templateUrl: './fileupload.component.html'
 })
-export class FileUploadComponent  implements OnInit  {
+export class FileUploadComponent implements OnInit {
 
-  private Files_Parent_Id: string;
+   
+
+  private Doc_title: string = "";
+  @Input() set title(value: string) {
+    this.Doc_title = value;
+  }
+
+
+  private Files_Parent_Id: string = "";
   @Input() set parentid(value: string) {
     this.Files_Parent_Id = value;
   }
 
-  private Files_Sub_Id: string;
+  private Files_Sub_Id: string = "";
   @Input() set subid(value: string) {
     this.Files_Sub_Id = value;
   }
 
-  private Files_Type: string;
+  private Files_Type: string = "";
   @Input() set type(value: string) {
     this.Files_Type = value;
   }
@@ -30,34 +38,34 @@ export class FileUploadComponent  implements OnInit  {
     this.Files_TypeList = value;
   }
 
-  private table_name: string;
+  private table_name: string = "";
   @Input() set tablename(value: string) {
     this.table_name = value;
   }
 
-  private table_pk_column: string;
+  private table_pk_column: string = "";
   @Input() set tablepkcolumn(value: string) {
     this.table_pk_column = value;
   }
 
-  private Files_Ref_No: string;
+  private Files_Ref_No: string = "";
   @Input() set refno(value: string) {
     this.Files_Ref_No = value;
   }
- 
-   
-  private Customer_Name: string;
+
+
+  private Customer_Name: string = "";
   @Input() set customername(value: string) {
     this.Customer_Name = value;
   }
 
-  private UpdateColumn: string="REC_FILES_ATTACHED";
+  private UpdateColumn: string = "REC_FILES_ATTACHED";
   @Input() set updatecolumn(value: string) {
     this.UpdateColumn = value;
   }
-  
-   
-  private VIEW_ONLY_SOURCE: string;
+
+
+  private VIEW_ONLY_SOURCE: string = "";
   @Input() set viewonlysource(value: string) {
     this.VIEW_ONLY_SOURCE = value;
   }
@@ -67,25 +75,24 @@ export class FileUploadComponent  implements OnInit  {
     this.VIEW_ONLY_ID = value;
   }
 
-  private FILES_PATH1: string;
+  private FILES_PATH1: string = "";
   @Input() set filespath(value: string) {
     this.FILES_PATH1 = value;
   }
 
-  private FILES_PATH2: string;
+  private FILES_PATH2: string = "";
   @Input() set filespath2(value: string) {
     this.FILES_PATH2 = value;
   }
 
   @Output() callbackevent = new EventEmitter<any>();
 
-  fileName:string = "";
-  fileRefno:string = "";
-  fileDocType:string = "";
+  fileName: string = "";
+  fileRefno: string = "";
+  fileDocType: string = "";
 
-  title = 'Documents';
-
-  private errorMessage : string = '';
+   
+  private errorMessage: string = '';
 
   loading = false;
   myFiles: string[] = [];
@@ -105,9 +112,10 @@ export class FileUploadComponent  implements OnInit  {
   filesSelected: boolean = false;;
 
   ngOnInit() {
+    this.fileDocType=this.Files_Type;
     this.List();
   }
- 
+
 
   getFileDetails(e: any) {
     //console.log (e.target.files);
@@ -187,8 +195,11 @@ export class FileUploadComponent  implements OnInit  {
   List() {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
-   // SearchData.pkid = this.cf_masterid;
-
+    SearchData.PKID = this.Files_Parent_Id;
+    SearchData.FILES_TYPE = this.Files_Type;
+    SearchData.FILES_SUB_ID = this.Files_Type;
+    SearchData.VIEW_ONLY_SOURCE = this.Files_Type;
+    SearchData.VIEW_ONLY_ID = this.Files_Type;
     this.lovService.DocumentList(SearchData)
       .subscribe(response => {
         this.RecordList = <Table_Mast_Files[]>response.records;
@@ -196,7 +207,7 @@ export class FileUploadComponent  implements OnInit  {
         this.errorMessage = this.gs.getError(error);
       });
   }
- 
+
 
   ShowFile(filename: string) {
     this.Downloadfile(filename, "", filename);
@@ -206,8 +217,7 @@ export class FileUploadComponent  implements OnInit  {
     this.gs.DownloadFile(this.gs.globalVariables.report_folder, filename, filetype, filedisplayname);
   }
 
-  RemoveRow(_rec:Table_Mast_Files)
-  {
+  RemoveRow(_rec: Table_Mast_Files) {
 
   }
 
@@ -239,9 +249,9 @@ export class FileUploadComponent  implements OnInit  {
     //     });
   }
 
-  Close(){
-    if ( this.callbackevent)
-      this.callbackevent.emit({action : 'CLOSE', source :''});
+  Close() {
+    if (this.callbackevent)
+      this.callbackevent.emit({ action: 'CLOSE', source: '' });
   }
 
 }

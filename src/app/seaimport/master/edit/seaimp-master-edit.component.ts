@@ -29,6 +29,22 @@ export class SeaImpMasterEditComponent implements OnInit {
   report_searchdata: any = {};
   report_menuid: string = '';
 
+  attach_title: string = '';
+  attach_parentid: string = '';
+  attach_subid: string = '';
+  attach_type: string = '';
+  attach_typelist: any = {};
+  attach_tablename: string = '';
+  attach_tablepkcolumn: string = '';
+  attach_refno: string = '';
+  attach_customername: string = '';
+  attach_updatecolumn: string = '';
+  attach_viewonlysource: string = '';
+  attach_viewonlyid: string = '';
+  attach_filespath: string = '';
+  attach_filespath2: string = '';
+
+
   showPayReq: boolean = false;
   private pkid: string;
   private menuid: string;
@@ -828,15 +844,22 @@ export class SeaImpMasterEditComponent implements OnInit {
         break;
       }
       case 'ATTACHMENT': {
-        // this.report_title = 'Shipment Label';
-        // this.report_menuid = this.gs.MENU_SHIPMENT_LABEL;
-        // this.report_url = '/api/Report/ShipmentLabelReport';
-        // this.report_searchdata = this.gs.UserInfo;
-        // this.report_searchdata.outputformat = 'PRINT';
-        // this.report_searchdata.pkid = this.gs.getGuid();
-        // this.report_searchdata.action = 'NEW';
-        // this.report_searchdata.MODE = 'SEA IMPORT';
-        // this.report_searchdata.MBL_PKID = this.pkid;
+        let TypeList: any[] = [];
+        TypeList = [{ "code": "EMAIL", "name": "E-MAIL" }, { "code": "HOUSEBL", "name": "HOUSE B/L" }, { "code": "MASTER", "name": "MASTER" }, { "code": "PAYMENT SETTLEMENT", "name": "OTHERS" }];
+        this.attach_title = 'Documents';
+        this.attach_parentid = this.pkid;
+        this.attach_subid = '';
+        this.attach_type = 'PAYMENT SETTLEMENT';
+        this.attach_typelist = TypeList;
+        this.attach_tablename = 'cargo_masterm';
+        this.attach_tablepkcolumn = 'mbl_pkid';
+        this.attach_refno = this.record.mbl_refno;
+        this.attach_customername = '';
+        this.attach_updatecolumn = 'REC_FILES_ATTACHED';
+        this.attach_viewonlysource = '';
+        this.attach_viewonlyid = '';
+        this.attach_filespath = '';
+        this.attach_filespath2 = '';
         this.tab = 'attachment';
         break;
       }
@@ -948,3 +971,6 @@ export class SeaImpMasterEditComponent implements OnInit {
     }
   */
 }
+
+
+

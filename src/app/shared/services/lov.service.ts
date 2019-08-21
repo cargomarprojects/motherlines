@@ -21,7 +21,7 @@ export class LovService {
 
 
     DocumentList(SearchData: any) {
-      return this.http2.post<any>(this.gs.baseUrl + '/api/General/DocumentList', SearchData, this.gs.headerparam2('authorized'));
+      return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/DocumentList', SearchData, this.gs.headerparam2('authorized'));
     }
 
     LoadDefault(SearchData: any) {
