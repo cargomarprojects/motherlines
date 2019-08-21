@@ -259,8 +259,8 @@ export class ShipLabelReportComponent implements OnInit {
     }
 
     printShipLabels() {
+        
         this.mbl_ids = "";
-
         for (let rec of this.MainList) {
             if (rec.lblm_yn_b) {
                 if (this.mbl_ids.trim() != "")
