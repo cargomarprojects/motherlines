@@ -91,6 +91,11 @@ export class FileUploadComponent implements OnInit {
   txt_fileRefno: string = "";
   txt_fileDocType: string = "";
   
+  private fileName: string = "";
+  private fileDesc: string = "";
+  private fileSize: number = 0;
+  private fileCreateDate: string = "";
+
   canupload:boolean = true;
 
   private errorMessage: string = '';
@@ -125,11 +130,9 @@ export class FileUploadComponent implements OnInit {
     let mFiles = <Table_Mast_Files>{};
 
     let fileExtn: string = "";
-    let fileName: string = "";
-    let fileDesc: string = "";
+   
     let DefaultFilename: string = "";
-    let fileSize: number = 0;
-    let fileCreateDate: string = "";
+   
     let strDfname: string = "";
 
     let isValidFile = true;
@@ -140,11 +143,11 @@ export class FileUploadComponent implements OnInit {
 
       fileExtn = this.getExtension(e.target.files[i].name);
 
-      fileName = this.gs.getGuid().toString().replace("-", "") + fileExtn;
-      fileName = fileName.toUpperCase();
-      fileDesc = e.target.files[i].name;
-      fileDesc = fileDesc.toUpperCase();
-      fileSize =  e.target.files[i].size;
+      this.fileName = this.gs.getGuid().toString().replace("-", "") + fileExtn;
+      this.fileName = this.fileName.toUpperCase();
+      this.fileDesc = e.target.files[i].name;
+      this.fileDesc = this.fileDesc.toUpperCase();
+      this.fileSize =  e.target.files[i].size;
 
       if (DefaultFilename.trim() != "")
           strDfname = DefaultFilename + fileExtn.toUpperCase();
@@ -154,33 +157,33 @@ export class FileUploadComponent implements OnInit {
           strDfname = DefaultFilename + fileExtn.toUpperCase();
       }
 
-      if (fileDesc.length > 50)
-          fileDesc = fileDesc.substring(0, 50 - fileExtn.length) + fileExtn.toUpperCase();
-      fileDesc = this.gs.ProperFileName(fileDesc);
+      if (this.fileDesc.length > 50)
+      this.fileDesc = this.fileDesc.substring(0, 50 - fileExtn.length) + fileExtn.toUpperCase();
+      this.fileDesc = this.gs.ProperFileName(this.fileDesc);
 
       this.txt_fileName  = strDfname;
       if ( this.txt_fileName.trim().length <= 0)
-      this.txt_fileName = fileDesc;
+      this.txt_fileName = this.fileDesc;
       this.txt_fileName = this.gs.ProperFileName(this.txt_fileName);
 
-      fileCreateDate = this.gs.defaultValues.today;
+      this.fileCreateDate = this.gs.defaultValues.today;
 
-      if (fileName.indexOf('&') >= 0)
+      if (this.fileName.indexOf('&') >= 0)
         isValidFile = false;
-      if (fileName.indexOf('%') >= 0)
+      if (this.fileName.indexOf('%') >= 0)
         isValidFile = false;
-      if (fileName.indexOf('#') >= 0)
+      if (this.fileName.indexOf('#') >= 0)
         isValidFile = false;
       this.myFiles.push(e.target.files[i]);
 
-      mFiles = <Table_Mast_Files>{};
-      mFiles.file_id = fileName;
-      mFiles.file_desc = fileDesc;
-      mFiles.files_strfile = "";
-      mFiles.files_created_date = fileCreateDate;
-      mFiles.files_size = fileSize;
-      //mFiles.files_sizewithunit = GetFsize(file.Length);
-      this.MultiFilesList.push(mFiles);
+      // mFiles = <Table_Mast_Files>{};
+      // mFiles.file_id = fileName;
+      // mFiles.file_desc = fileDesc;
+      // mFiles.files_strfile = "";
+      // mFiles.files_created_date = fileCreateDate;
+      // mFiles.files_size = fileSize;
+      // //mFiles.files_sizewithunit = GetFsize(file.Length);
+      // this.MultiFilesList.push(mFiles);
 
     }
 
@@ -210,19 +213,37 @@ export class FileUploadComponent implements OnInit {
     }
 
 
+    let s1 = this.gs.WWW_FILES_URL;
+    let s2 = this.gs.WWW_ROOT;
+    let s3 = this.gs.WWW_ROOT_FILE_FOLDER;
+
 
     this.loading = true;
 
     let frmData: FormData = new FormData();
 
+    if (this.FILES_PATH1 == "")
+    {
+        this.FILES_PATH1 = "../Files_Folder";
+        this.FILES_PATH2 = "/" + this.gs.FILES_FOLDER + "/Files/";
+    }
 
-    // frmData.append("COMPCODE", this.gs.globalVariables.comp_code);
-    // frmData.append("BRANCHCODE", this.gs.globalVariables.branch_code);
-    // frmData.append("PARENTID", this.pkid);
-    // frmData.append("GROUPID", this.groupid);
-    // frmData.append("TYPE", this.type);
-    // frmData.append("CATGID", this.catg_id);
-    // frmData.append("CREATEDBY", this.gs.globalVariables.user_code);
+     frmData.append("files_id", this.fileName);
+     frmData.append("files_path", this.FILES_PATH1);
+     frmData.append("files_path2", this.FILES_PATH2);
+     frmData.append("files_create_folder", "N");
+     frmData.append("files_type", this.Files_Type);
+     frmData.append("table_name", this.table_name);
+     frmData.append("table_pk_column", this.table_pk_column);
+     frmData.append("files_parent_id", this.Files_Parent_Id);
+     frmData.append("files_sub_id", this.Files_Sub_Id);
+     frmData.append("comp_code", this.gs.company_code);
+     frmData.append("branch_code", this.gs.branch_code);
+     frmData.append("files_created_date", this.fileCreateDate);
+     frmData.append("files_ref_no", this.txt_fileRefno);
+     frmData.append("updatecolumn", this.updatecolumn);
+     frmData.append("files_size", this.fileSize.toString());
+     frmData.append("files_desc", this.fileDesc);
 
 
     for (var i = 0; i < this.myFiles.length; i++) {
