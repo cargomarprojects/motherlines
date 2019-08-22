@@ -997,14 +997,30 @@ export class GlobalService {
       return str;
     }
 
-
-
-
-
-
-
-
-
+    public ProperFileName(str:string)
+    {
+        let sRet:string = str;
+        try
+        {
+            sRet = sRet.replace("\\", "");
+            sRet = sRet.replace("/", "");
+            sRet = sRet.replace(":", "");
+            sRet = sRet.replace("*", "");
+            sRet = sRet.replace("?", "");
+            sRet = sRet.replace("<", "");
+            sRet = sRet.replace(">", "");
+            sRet = sRet.replace("|", "");
+            sRet = sRet.replace("'", "");
+            sRet = sRet.replace("#", "");
+            sRet = sRet.replace("&", "");
+            sRet = sRet.replace("%", "");
+        }
+        catch (Exception)
+        {
+        }
+        return sRet;
+    
+    }
 
   // MENU CONSTANTS
 

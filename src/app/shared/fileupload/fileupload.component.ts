@@ -10,7 +10,7 @@ import { Table_Mast_Files } from '../models/table_mast_files';
 })
 export class FileUploadComponent implements OnInit {
 
-   
+
 
   private Doc_title: string = "";
   @Input() set title(value: string) {
@@ -87,11 +87,12 @@ export class FileUploadComponent implements OnInit {
 
   @Output() callbackevent = new EventEmitter<any>();
 
-  fileName: string = "";
-  fileRefno: string = "";
-  fileDocType: string = "";
+  txt_fileName: string = "";
+  txt_fileRefno: string = "";
+  txt_fileDocType: string = "";
+  
+  canupload:boolean = true;
 
-   
   private errorMessage: string = '';
 
   loading = false;
@@ -109,30 +110,78 @@ export class FileUploadComponent implements OnInit {
   @ViewChild('fileinput') private fileinput: ElementRef;
 
   RecordList: Table_Mast_Files[] = [];
+  MultiFilesList: Table_Mast_Files[] = [];
   filesSelected: boolean = false;;
 
   ngOnInit() {
-    this.fileDocType=this.Files_Type;
+    this.txt_fileDocType = this.Files_Type;
     this.List();
   }
 
 
   getFileDetails(e: any) {
-    //console.log (e.target.files);
+
+    this.MultiFilesList = <Table_Mast_Files[]>[];
+    let mFiles = <Table_Mast_Files>{};
+
+    let fileExtn: string = "";
+    let fileName: string = "";
+    let fileDesc: string = "";
+    let DefaultFilename: string = "";
+    let fileSize: number = 0;
+    let fileCreateDate: string = "";
+    let strDfname: string = "";
+
     let isValidFile = true;
-    let fname: string = '';
     this.filesSelected = false;
     this.myFiles = [];
     for (var i = 0; i < e.target.files.length; i++) {
       this.filesSelected = true;
-      fname = e.target.files[i].name;
-      if (fname.indexOf('&') >= 0)
+
+      fileExtn = this.getExtension(e.target.files[i].name);
+
+      fileName = this.gs.getGuid().toString().replace("-", "") + fileExtn;
+      fileName = fileName.toUpperCase();
+      fileDesc = e.target.files[i].name;
+      fileDesc = fileDesc.toUpperCase();
+      fileSize =  e.target.files[i].size;
+
+      if (DefaultFilename.trim() != "")
+          strDfname = DefaultFilename + fileExtn.toUpperCase();
+      if (strDfname.length > 50)
+      {
+          DefaultFilename = DefaultFilename.substring(0, 50 - fileExtn.length);
+          strDfname = DefaultFilename + fileExtn.toUpperCase();
+      }
+
+      if (fileDesc.length > 50)
+          fileDesc = fileDesc.substring(0, 50 - fileExtn.length) + fileExtn.toUpperCase();
+      fileDesc = this.gs.ProperFileName(fileDesc);
+
+      this.txt_fileName  = strDfname;
+      if ( this.txt_fileName.trim().length <= 0)
+      this.txt_fileName = fileDesc;
+      this.txt_fileName = this.gs.ProperFileName(this.txt_fileName);
+
+      fileCreateDate = this.gs.defaultValues.today;
+
+      if (fileName.indexOf('&') >= 0)
         isValidFile = false;
-      if (fname.indexOf('%') >= 0)
+      if (fileName.indexOf('%') >= 0)
         isValidFile = false;
-      if (fname.indexOf('#') >= 0)
+      if (fileName.indexOf('#') >= 0)
         isValidFile = false;
       this.myFiles.push(e.target.files[i]);
+
+      mFiles = <Table_Mast_Files>{};
+      mFiles.file_id = fileName;
+      mFiles.file_desc = fileDesc;
+      mFiles.files_strfile = "";
+      mFiles.files_created_date = fileCreateDate;
+      mFiles.files_size = fileSize;
+      //mFiles.files_sizewithunit = GetFsize(file.Length);
+      this.MultiFilesList.push(mFiles);
+
     }
 
     if (!isValidFile) {
@@ -141,6 +190,11 @@ export class FileUploadComponent implements OnInit {
     }
   }
 
+
+  getExtension(_fName: string) {
+    var temparr = _fName.split('.');
+    return "." + temparr[temparr.length - 1].toString();
+  }
 
   uploadFiles() {
 
@@ -154,6 +208,8 @@ export class FileUploadComponent implements OnInit {
       alert('No File Selected');
       return;
     }
+
+
 
     this.loading = true;
 
@@ -189,7 +245,19 @@ export class FileUploadComponent implements OnInit {
       );
   }
 
-
+// GetSpaceTrim(str: string) {
+//     let num: number;
+//     let strTrim = {
+//       newstr: ''
+//     };
+//     if (str.trim() != "") {
+//       var temparr = str.split(' ');
+//       for (num = 0; num < temparr.length; num++) {
+//         strTrim.newstr = strTrim.newstr.concat(temparr[num]);
+//       }
+//     }
+//     return strTrim;
+//   }
 
 
   List() {
@@ -197,17 +265,82 @@ export class FileUploadComponent implements OnInit {
     var SearchData = this.gs.UserInfo;
     SearchData.PKID = this.Files_Parent_Id;
     SearchData.FILES_TYPE = this.Files_Type;
-    SearchData.FILES_SUB_ID = this.Files_Type;
-    SearchData.VIEW_ONLY_SOURCE = this.Files_Type;
-    SearchData.VIEW_ONLY_ID = this.Files_Type;
+    SearchData.FILES_SUB_ID = this.Files_Sub_Id;
+    SearchData.VIEW_ONLY_SOURCE = this.VIEW_ONLY_SOURCE
+    SearchData.VIEW_ONLY_ID = this.VIEW_ONLY_ID;
     this.lovService.DocumentList(SearchData)
       .subscribe(response => {
-        this.RecordList = <Table_Mast_Files[]>response.records;
+        this.RecordList = <Table_Mast_Files[]>response.list;
+
+        this.RecordList.forEach(Rec => {
+          Rec.file_uri = this.gs.WWW_FILES_URL + "/" + Rec.file_id;
+          if (Rec.files_type == "XML-EDI") {
+            Rec.file_uri = this.gs.WWW_ROOT_FILE_FOLDER + "/../" + Rec.files_path + Rec.file_id;
+          }
+          Rec.files_type = this.GetFileType(Rec.files_type); //in database filestype  store code but the list wants to shows name, so to retreive name this fn is used;
+        })
+
+        if (this.Files_Type == "PAYMENT SETTLEMENT")
+          this.ReLoadDocType(response.tothouse);
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
+  GetFileType(_scode: string) {
+    let str = "";
+    this.Files_TypeList.forEach(Rec => {
+      if (Rec.code == _scode)
+        str = Rec.name;
+    })
+    return str;
+  }
+  ReLoadDocType(_tothbl: number) {
+    let fTypeList = this.Files_TypeList;
 
+    this.Files_TypeList = new Array<any>();
+    let newRec = {
+      code: "EMAIL",
+      name: "E-MAIL"
+    };
+    this.Files_TypeList.push(newRec);
+
+    for (let j = 1; j <= _tothbl; j++) {
+      let str = "HOUSE" + j.toString();
+      if (this.GetFileType(str) == "") {
+        newRec = {
+          code: str,
+          name: str
+        };
+        this.Files_TypeList.push(newRec);
+      }
+    }
+
+    fTypeList.forEach(Rec => {
+      if (this.GetFileType(Rec.code) == "") {
+        newRec = {
+          code: Rec.code,
+          name: Rec.name
+        };
+        this.Files_TypeList.push(newRec);
+      }
+    })
+
+  }
+
+
+  // IsTypeListContainsCode(_scode:string)
+  // {
+  //   let bRet:boolean =false;
+
+  //   this.Files_TypeList.forEach(Rec => {
+  //     if (Rec.code == _scode)
+  //       return Rec.name;
+  //   })
+
+  //   return bRet;
+
+  // }
 
   ShowFile(filename: string) {
     this.Downloadfile(filename, "", filename);
@@ -254,4 +387,16 @@ export class FileUploadComponent implements OnInit {
       this.callbackevent.emit({ action: 'CLOSE', source: '' });
   }
 
+  onBlur(field: string) {
+    switch (field) {
+      case 'txt_fileName': {
+        this.txt_fileName = this.txt_fileName.toUpperCase();
+        break;
+      }
+      case 'txt_fileRefno': {
+        this.txt_fileRefno = this.txt_fileRefno.toUpperCase();
+        break;
+      }
+    }
+  }
 }
