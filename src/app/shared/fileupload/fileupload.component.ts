@@ -120,6 +120,7 @@ export class FileUploadComponent implements OnInit {
 
   ngOnInit() {
     this.txt_fileDocType = this.Files_Type;
+    this.txt_fileRefno = this.Files_Ref_No;
     this.List();
   }
 
