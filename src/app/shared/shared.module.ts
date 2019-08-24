@@ -30,7 +30,7 @@ import { ErrorMessageComponent } from './error/errorMessage';
 
 import { FileUploadComponent } from './fileupload/fileupload.component';
 
-
+import { FileUploadEditComponent } from './fileupload/fileupload-edit.component';
 
 import { ClipBoardComponent } from './clipboarddata/clipboard.component';
 
@@ -90,6 +90,7 @@ import { ReportComponent } from './report/report.component';
     InputBoxComponent,
     InputBoxNumberComponent,
     ReportComponent,
+    FileUploadEditComponent,
   ],
   exports: [
     CommonModule,
@@ -122,6 +123,7 @@ import { ReportComponent } from './report/report.component';
     InputBoxComponent,
     InputBoxNumberComponent,
     ReportComponent,
+    FileUploadEditComponent,
   ],
   providers: [
     LovService,
