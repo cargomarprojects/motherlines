@@ -4,17 +4,31 @@
     margin-top: 5px; /* Add a Top margin to avoid content overlay */
 }
 
-html  {
-  height:100%;
-}
-body {
+
+html, body {
   margin: 0px;
   padding-left: 3px;
   padding-right: 3px;
   font-family: 'roboto' ;
-  font-size : 12px;
+  font-size : 14px;
   height:100%;
 }
+
+.page-body-thead {
+  font-size: 11px; 
+  cursor: pointer;
+  background-color: steelblue;
+  color: white;
+}
+
+.page-body-tbody {
+  /* 
+  font-size: 14px; 
+  */
+  cursor: pointer;
+}
+
+
 container {
   margin: 0;
   padding: 0;
@@ -367,18 +381,7 @@ hr {
     max-width: 1200px !important;
 }
   
-.page-body-thead {
-    font-size: 12px;
-    cursor: pointer;
-    background-color: steelblue;
-    color: white;
-   
-}
-  
-.page-body-tbody {
-    font-size: 12px;
-    cursor: pointer;
-}
+
   
 .undline {
     text-decoration: underline;
