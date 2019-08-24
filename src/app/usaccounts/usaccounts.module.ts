@@ -4,11 +4,13 @@ import { SharedModule } from '../shared/shared.module';
 import { USAccountsRoutingModule } from './usaccounts-routing.module';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceEditComponent } from './invoice/edit/invoice-edit.component';
+import { ProfitReportComponent } from './profitreport/profitreport.component';
 
 @NgModule({
   declarations: [
   InvoiceComponent,
-  InvoiceEditComponent
+  InvoiceEditComponent,
+  ProfitReportComponent
 ],
   imports: [
     SharedModule,

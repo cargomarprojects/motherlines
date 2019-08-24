@@ -38,4 +38,9 @@ export class invoiceService {
     }
 
 
+    ProfitReport(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/USAccounts/Invoice/ProfitReport', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+
 }

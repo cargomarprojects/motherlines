@@ -579,7 +579,6 @@ export class SeaexpMasterEditComponent implements OnInit {
         break;
       }      
 
-
       case 'ARAP': {
         let prm = {
           menuid: this.gs.MENU_SE_MASTER_ARAP,
@@ -591,6 +590,18 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
         break;
       }
+      
+      case 'PROFITREPORT': {
+        let prm = {
+          menuid: this.gs.MENU_SE_MASTER_PROFIT_REPORT,
+          mbl_pkid:  this.pkid, 
+          mbl_refno : this.record.mbl_refno,
+          mbl_type: 'OE',
+          origin: 'seaexp-master-page',
+        };
+        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));        
+        break;
+      }      
 
 
       case 'PAYMENT-REQUEST': {
