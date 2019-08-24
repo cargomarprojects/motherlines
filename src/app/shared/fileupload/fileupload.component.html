@@ -105,7 +105,7 @@
         <tbody class="page-body-tbody">
           <tr *ngFor="let rec of RecordList">
             <td><i class="fa fa-download fa-lg pointer" aria-hidden="true"
-              (click)="RemoveRow(rec)"></i></td>
+              (click)="ShowFile(rec)"></i></td>
             <td class="p-0">{{rec.files_type}}</td>
             <td class="p-0">{{rec.file_desc}}</td>
             <td class="p-0">{{rec.files_sizewithunit}}</td>
@@ -114,7 +114,7 @@
             <td><i class="fa fa-trash fa-lg pointer" aria-hidden="true"
               (click)="RemoveRow(rec)"></i></td>
             <td><i class="fa fa-paper-plane fa-lg pointer" aria-hidden="true"
-              (click)="RemoveRow(rec)"></i></td>
+              (click)="Sendmail(rec)"></i></td>
           </tr>
         </tbody>
       </table>

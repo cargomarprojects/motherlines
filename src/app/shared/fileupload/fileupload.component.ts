@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { GlobalService } from '../../core/services/global.service';
 import { LovService } from '../services/lov.service';
 import { Table_Mast_Files } from '../models/table_mast_files';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-fileupload',
@@ -85,18 +86,23 @@ export class FileUploadComponent implements OnInit {
     this.FILES_PATH2 = value;
   }
 
+  private canupload: boolean = true;
+  @Input() set isviewonly(value: boolean) {
+    this.canupload = value;
+  }
+
   @Output() callbackevent = new EventEmitter<any>();
 
   txt_fileName: string = "";
   txt_fileRefno: string = "";
   txt_fileDocType: string = "";
-  
+
   private fileName: string = "";
   private fileDesc: string = "";
   private fileSize: number = 0;
   private fileCreateDate: string = "";
 
-  canupload:boolean = true;
+  
 
   private errorMessage: string = '';
 
@@ -131,9 +137,9 @@ export class FileUploadComponent implements OnInit {
     let mFiles = <Table_Mast_Files>{};
 
     let fileExtn: string = "";
-   
+
     let DefaultFilename: string = "";
-   
+
     let strDfname: string = "";
 
     let isValidFile = true;
@@ -148,50 +154,27 @@ export class FileUploadComponent implements OnInit {
       this.fileName = this.fileName.toUpperCase();
       this.fileDesc = e.target.files[i].name;
       this.fileDesc = this.fileDesc.toUpperCase();
-      this.fileSize =  e.target.files[i].size;
+      this.fileSize = e.target.files[i].size;
 
       if (DefaultFilename.trim() != "")
-          strDfname = DefaultFilename + fileExtn.toUpperCase();
-      if (strDfname.length > 50)
-      {
-          DefaultFilename = DefaultFilename.substring(0, 50 - fileExtn.length);
-          strDfname = DefaultFilename + fileExtn.toUpperCase();
+        strDfname = DefaultFilename + fileExtn.toUpperCase();
+      if (strDfname.length > 50) {
+        DefaultFilename = DefaultFilename.substring(0, 50 - fileExtn.length);
+        strDfname = DefaultFilename + fileExtn.toUpperCase();
       }
 
       if (this.fileDesc.length > 50)
-      this.fileDesc = this.fileDesc.substring(0, 50 - fileExtn.length) + fileExtn.toUpperCase();
-      this.fileDesc = this.gs.ProperFileName(this.fileDesc);
-
-      this.txt_fileName  = strDfname;
-      if ( this.txt_fileName.trim().length <= 0)
-      this.txt_fileName = this.fileDesc;
+        this.fileDesc = this.fileDesc.substring(0, 50 - fileExtn.length) + fileExtn.toUpperCase();
+       
+      this.txt_fileName = strDfname;
+      if (this.txt_fileName.trim().length <= 0)
+        this.txt_fileName = this.fileDesc;
       this.txt_fileName = this.gs.ProperFileName(this.txt_fileName);
 
       this.fileCreateDate = this.gs.defaultValues.today;
-
-      if (this.fileName.indexOf('&') >= 0)
-        isValidFile = false;
-      if (this.fileName.indexOf('%') >= 0)
-        isValidFile = false;
-      if (this.fileName.indexOf('#') >= 0)
-        isValidFile = false;
       this.myFiles.push(e.target.files[i]);
-
-      // mFiles = <Table_Mast_Files>{};
-      // mFiles.file_id = fileName;
-      // mFiles.file_desc = fileDesc;
-      // mFiles.files_strfile = "";
-      // mFiles.files_created_date = fileCreateDate;
-      // mFiles.files_size = fileSize;
-      // //mFiles.files_sizewithunit = GetFsize(file.Length);
-      // this.MultiFilesList.push(mFiles);
-
     }
 
-    if (!isValidFile) {
-      this.filesSelected = false;
-      alert('Invalid File Name - &%#');
-    }
   }
 
 
@@ -202,49 +185,51 @@ export class FileUploadComponent implements OnInit {
 
   uploadFiles() {
 
-
-    // if (this.catg_id == '') {
-    //   alert('Pls Select Category');
-    //   return;
-    // }
-
     if (!this.filesSelected) {
       alert('No File Selected');
       return;
     }
 
+    if (this.gs.isBlank(this.txt_fileName)) {
+      alert("File Name cannot be Empty");
+      return;
+    }
 
-    let s1 = this.gs.WWW_FILES_URL;
-    let s2 = this.gs.WWW_ROOT;
-    let s3 = this.gs.WWW_ROOT_FILE_FOLDER;
+    if (this.gs.isBlank(this.txt_fileDocType)) {
+      alert("Doc. Type cannot be Empty");
+      return;
+    }
 
+
+    this.Files_Type = this.txt_fileDocType;
+    this.fileDesc = this.gs.ProperFileName(this.txt_fileName);
 
     this.loading = true;
 
     let frmData: FormData = new FormData();
 
-    if (this.FILES_PATH1 == "")
-    {
-        this.FILES_PATH1 = "../Files_Folder";
-        this.FILES_PATH2 = "/" + this.gs.FILES_FOLDER + "/Files/";
+    if (this.FILES_PATH1 == "") {
+      this.FILES_PATH1 = "../Files_Folder";
+      this.FILES_PATH2 = "/" + this.gs.FILES_FOLDER + "/Files/";
     }
 
-     frmData.append("files_id", this.fileName);
-     frmData.append("files_path", this.FILES_PATH1);
-     frmData.append("files_path2", this.FILES_PATH2);
-     frmData.append("files_create_folder", "N");
-     frmData.append("files_type", this.Files_Type);
-     frmData.append("table_name", this.table_name);
-     frmData.append("table_pk_column", this.table_pk_column);
-     frmData.append("files_parent_id", this.Files_Parent_Id);
-     frmData.append("files_sub_id", this.Files_Sub_Id);
-     frmData.append("comp_code", this.gs.company_code);
-     frmData.append("branch_code", this.gs.branch_code);
-     frmData.append("files_created_date", this.fileCreateDate);
-     frmData.append("files_ref_no", this.txt_fileRefno);
-     frmData.append("updatecolumn", this.updatecolumn);
-     frmData.append("files_size", this.fileSize.toString());
-     frmData.append("files_desc", this.fileDesc);
+    frmData.append("files_id", this.fileName);
+    frmData.append("files_path", this.FILES_PATH1);
+    frmData.append("files_path2", this.FILES_PATH2);
+    frmData.append("files_create_folder", "N");
+    frmData.append("files_type", this.Files_Type);
+    frmData.append("table_name", this.table_name);
+    frmData.append("table_pk_column", this.table_pk_column);
+    frmData.append("files_parent_id", this.Files_Parent_Id);
+    frmData.append("files_sub_id", this.Files_Sub_Id);
+    frmData.append("comp_code", this.gs.company_code);
+    frmData.append("branch_code", this.gs.branch_code);
+    frmData.append("files_created_date", this.fileCreateDate);
+    frmData.append("files_ref_no", this.txt_fileRefno);
+    frmData.append("updatecolumn", this.updatecolumn);
+    frmData.append("files_size", this.fileSize.toString());
+    frmData.append("files_desc", this.fileDesc);
+    frmData.append("root_folder", this.gs.FS_APP_FOLDER);
 
 
     for (var i = 0; i < this.myFiles.length; i++) {
@@ -258,7 +243,7 @@ export class FileUploadComponent implements OnInit {
           this.filesSelected = false;
           this.fileinput.nativeElement.value = '';
           this.List();
-          alert('Upload Complete');
+          //alert('Upload Complete');
         },
         error => {
           this.loading = false;
@@ -266,20 +251,6 @@ export class FileUploadComponent implements OnInit {
         }
       );
   }
-
-// GetSpaceTrim(str: string) {
-//     let num: number;
-//     let strTrim = {
-//       newstr: ''
-//     };
-//     if (str.trim() != "") {
-//       var temparr = str.split(' ');
-//       for (num = 0; num < temparr.length; num++) {
-//         strTrim.newstr = strTrim.newstr.concat(temparr[num]);
-//       }
-//     }
-//     return strTrim;
-//   }
 
 
   List() {
@@ -351,57 +322,52 @@ export class FileUploadComponent implements OnInit {
   }
 
 
-  // IsTypeListContainsCode(_scode:string)
-  // {
-  //   let bRet:boolean =false;
+  ShowFile(_rec: Table_Mast_Files) {
 
-  //   this.Files_TypeList.forEach(Rec => {
-  //     if (Rec.code == _scode)
-  //       return Rec.name;
-  //   })
-
-  //   return bRet;
-
-  // }
-
-  ShowFile(filename: string) {
-    this.Downloadfile(filename, "", filename);
+    let filename: string = "";
+    let filedisplayname: string = "";
+    filename = this.gs.FS_APP_FOLDER + _rec.files_path + _rec.file_id;
+    filedisplayname = _rec.file_desc;
+    this.Downloadfile(filename, "", filedisplayname);
   }
 
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
-    this.gs.DownloadFile(this.gs.globalVariables.report_folder, filename, filetype, filedisplayname);
+    this.gs.DownloadFile(this.gs.FS_APP_FOLDER, filename, filetype, filedisplayname);
+  }
+
+  Sendmail(_rec: Table_Mast_Files) {
+
+
   }
 
   RemoveRow(_rec: Table_Mast_Files) {
 
-  }
-
-  RemoveList(event: any) {
-
-    if (!event.selected) {
+    if (!confirm("Remove Selected File " + _rec.file_desc)) {
       return;
     }
 
-    // this.loading = true;
+    this.loading = true;
 
-    // let SearchData = {
-    //   pkid: event.id,
-    //   type: this.type,
-    //   parentid: this.pkid,
-    //   user_code: this.gs.globalVariables.user_code
-    // };
-
-    // this.ErrorMessage = '';
-    // this.InfoMessage = '';
-    // this.lovService.DeleteRecord(SearchData)
-    //   .subscribe(response => {
-    //     this.loading = false;
-    //     this.RecordList.splice(this.RecordList.findIndex(rec => rec.doc_pkid == this.pkid), 1);
-    //   },
-    //     error => {
-    //       this.loading = false;
-    //       this.ErrorMessage = this.gs.getError(error);
-    //     });
+    let SearchData = {
+      fileid: '',
+      filelocation: ''
+    };
+    SearchData.fileid = _rec.file_id;
+    SearchData.filelocation = this.gs.FS_APP_FOLDER + _rec.files_path;
+    this.errorMessage = '';
+    this.lovService.DeleteRecord(SearchData)
+      .subscribe(response => {
+        this.loading = false;
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        } else
+          this.RecordList.splice(this.RecordList.findIndex(rec => rec.file_id == _rec.file_id), 1);
+      },
+        error => {
+          this.loading = false;
+          this.errorMessage = this.gs.getError(error);
+        });
   }
 
   Close() {
@@ -421,4 +387,5 @@ export class FileUploadComponent implements OnInit {
       }
     }
   }
+
 }
