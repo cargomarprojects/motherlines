@@ -50,6 +50,15 @@ export class DockPageComponent implements OnInit {
   DESC_TYPE: string = "DOCKDESC";
 
   canSave: boolean = false;
+  canPrint: boolean = false;
+
+
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+  tab: string = 'main';
+  
+
 
   constructor(
     private router: Router,
@@ -71,6 +80,7 @@ export class DockPageComponent implements OnInit {
   initPage() {
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
+    this.canPrint = this.gs.canPrint(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = [];
 
@@ -440,6 +450,20 @@ export class DockPageComponent implements OnInit {
 
 
 
+  Print(_type : string){
 
+    this.report_url = '/api/SeaExport/Mblpage/MblReport';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.pkid;
+    this.report_searchdata.dock_type = _type;
+    this.report_menuid = this.gs.MENU_SE_MASTER_MBL_INSTRUCTION;
+    this.tab = 'report';
+
+  }
+
+  
+  callbackevent() {
+    this.tab = 'main';
+  }
 
 }
