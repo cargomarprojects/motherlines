@@ -1,4 +1,3 @@
-
 <div class="page-header">
   <div class="row align-items-center justify-content-left p-1">
     <label class="mr-3">{{Doc_title}}</label>
@@ -54,7 +53,7 @@
             [(ngModel)]="txt_fileName" maxlength="50" />
         </div>
       </div>
-  
+
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">Ref# </label>
         <div class="col-10">
@@ -62,29 +61,29 @@
             [(ngModel)]="txt_fileRefno" maxlength="50" />
         </div>
       </div>
-  
+
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">DocType</label>
         <div class="col-10">
           <select class="form-control form-control-sm" [(ngModel)]="txt_fileDocType">
             <option *ngFor="let rec of Files_TypeList" [value]="rec.code">{{rec.name}}</option>
-          </select>  
+          </select>
         </div>
       </div>
-      <div class="form-group row" >
+      <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm"></label>
         <div class="col-10">
           <button (click)="uploadFiles()">Upload</button>
         </div>
       </div>
-    
-  
+
+
     </div>
     <div class="col-md-6 testbox  px-0 mx-0">
-  
+
     </div>
   </div>
-  </div>
+</div>
 
 <div class="row border">
   <div class="col-md-12  px-0 mx-0">
@@ -102,19 +101,22 @@
             <th>EMAIL</th>
           </tr>
         </thead>
-        <tbody class="page-body-tbody">
-          <tr *ngFor="let rec of RecordList">
-            <td><i class="fa fa-download fa-lg pointer" aria-hidden="true"
-              (click)="ShowFile(rec)"></i></td>
+        <tbody class="page-body-tbody" *ngFor="let rec of RecordList">
+          <tr>
+            <td class="p-0"><i class="fa fa-download fa-lg pointer" aria-hidden="true" (click)="ShowFile(rec)"></i></td>
             <td class="p-0">{{rec.files_type}}</td>
-            <td class="p-0">{{rec.file_desc}}</td>
+            <td (click)="editrow(rec)" class="p-0">{{rec.file_desc}}</td>
             <td class="p-0">{{rec.files_sizewithunit}}</td>
             <td class="p-0">{{rec.files_ref_no}}</td>
             <td class="p-0">{{rec.files_created_date | date : gs.date_display_fmt_with_time}}</td>
-            <td><i class="fa fa-trash fa-lg pointer" aria-hidden="true"
-              (click)="RemoveRow(rec)"></i></td>
-            <td><i class="fa fa-paper-plane fa-lg pointer" aria-hidden="true"
-              (click)="Sendmail(rec)"></i></td>
+            <td class="p-0"><i class="fa fa-trash fa-lg pointer" aria-hidden="true" (click)="RemoveRow(rec)"></i></td>
+            <td class="p-0"><i class="fa fa-paper-plane fa-lg pointer" aria-hidden="true" (click)="Sendmail(rec)"></i>
+            </td>
+          </tr>
+          <tr *ngIf="rec.files_editrow">
+            <td colspan="6">
+              <app-fileupload-edit [record]="rec"></app-fileupload-edit>
+            </td>
           </tr>
         </tbody>
       </table>

@@ -271,6 +271,7 @@ export class FileUploadComponent implements OnInit {
             Rec.file_uri = this.gs.WWW_ROOT_FILE_FOLDER + "/../" + Rec.files_path + Rec.file_id;
           }
           Rec.files_type = this.GetFileType(Rec.files_type); //in database filestype  store code but the list wants to shows name, so to retreive name this fn is used;
+          Rec.files_editrow = false;
         })
 
         if (this.Files_Type == "PAYMENT SETTLEMENT")
@@ -385,6 +386,14 @@ export class FileUploadComponent implements OnInit {
         this.txt_fileRefno = this.txt_fileRefno.toUpperCase();
         break;
       }
+    }
+  }
+
+  editrow(_rec: Table_Mast_Files) {
+    if (_rec.file_id == null)
+      return;
+    if (_rec.file_id !== '') {
+      _rec.files_editrow = !_rec.files_editrow;
     }
   }
 

@@ -10,4 +10,13 @@ export interface Table_Mast_Files {
     files_size: number;
     files_sizewithunit: string;
     files_path: string;
+    files_editrow: boolean;
+}
+
+export interface vm_table_mast_files {
+    mode: string;
+    record: Table_Mast_Files;
+    pkid: string;
+    userinfo: any;
+    filter: any;
 }

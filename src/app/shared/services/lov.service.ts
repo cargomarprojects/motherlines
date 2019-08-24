@@ -31,7 +31,10 @@ export class LovService {
     DeleteRecord(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/DeleteDocument', SearchData, this.gs.headerparam2('authorized'));
     }
-
+    
+    Save(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/Save', SearchData, this.gs.headerparam2('authorized'));
+  }
 
 
 
