@@ -35,7 +35,7 @@ export class ProfitReportComponent implements OnInit {
   ar_bal: number = 0;
   ap_bal: number = 0;
 
-  
+
   report_url: string;
   report_searchdata: any = {};
   report_menuid: string;
@@ -43,21 +43,25 @@ export class ProfitReportComponent implements OnInit {
 
   records: Tbl_Cargo_Invoice_Profit[];
 
-  main_type : string = 'INVOICE';
+  main_type: string = 'INVOICE';
 
-  refno : string = '';
-  mblno : string = '';
-  pol : string = '';
-  pod : string = '';
-  WT : number = 0;
-  CHWT : number = 0;
-  CBM : number = 0;
+  refno: string = '';
+  mblno: string = '';
+  pol: string = '';
+  pod: string = '';
+  WT: number = 0;
+  CHWT: number = 0;
+  CBM: number = 0;
 
-  radio_cbm : string = 'CBM';
+  radio_cbm: string = 'CBM';
 
 
-  tab : string = 'main';
-  
+  filename : string ;
+  filetype  : string ;
+  filedisplayname  : string ;
+
+  tab: string = 'main';
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -97,49 +101,53 @@ export class ProfitReportComponent implements OnInit {
     SearchData.PKID = this.mbl_pkid;
     SearchData.INV_TYPE = this.mbl_type; // OE AE
     SearchData.REP_TYPE = this.main_type; // INVOIOCE OR HOUSE
-    if ( this.main_type == 'HOUSE')
-      SearchData.REP_BASEDON = this.radio_cbm ;
-    else 
+    if (this.main_type == 'HOUSE')
+      SearchData.REP_BASEDON = this.radio_cbm;
+    else
       SearchData.REP_BASEDON = '';
 
 
     this.mainservice.ProfitReport(SearchData).subscribe(response => {
-      
+
       this.records = response.list;
-      this.refno =response.record.mbl_refno ;
-      this.mblno= response.record.mbl_no ;
-      this.pol =response.record.mbl_pol_name ;
-      this.pod =response.record.mbl_pod_name ;
-      this.WT = response.record.mbl_weight ;
-      this.CHWT  =response.record.mbl_chwt ;
-      this.CBM =response.record.mbl_cbm ;
+      this.refno = response.record.mbl_refno;
+      this.mblno = response.record.mbl_no;
+      this.pol = response.record.mbl_pol_name;
+      this.pod = response.record.mbl_pod_name;
+      this.WT = response.record.mbl_weight;
+      this.CHWT = response.record.mbl_chwt;
+      this.CBM = response.record.mbl_cbm;
+
+      this.filename = response.filename;
+      this.filetype = response.filetype;
+      this.filedisplayname = response.filedisplayname;
 
 
-      
+
+
 
 
     }, error => {
       this.errormessage = this.gs.getError(error)
     });
   }
- 
+
 
   DisplayProfit() {
-      return;
+    return;
   }
 
   Print() {
-  
-  this.report_url = '';
-  this.report_searchdata = this.gs.UserInfo;
-  this.report_searchdata.pkid = this.mbl_pkid;
-  this.report_menuid = this.gs.MENU_SE_MASTER_PROFIT_REPORT;
-  this.tab = 'report';
-}
+    this.report_url = '';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.mbl_pkid;
+    this.report_menuid = this.gs.MENU_SE_MASTER_PROFIT_REPORT;
+    this.tab = 'report';
+  }
 
-callbackevent() {
-  this.tab = 'main';
-}
+  callbackevent() {
+    this.tab = 'main';
+  }
 
 
 
