@@ -37,6 +37,11 @@ export class MailComponent implements OnInit {
   private subject: string = '';
   private message: string = '';
 
+  private msgFontFamily: string = '';
+  private msgFontSize: string = '';
+  private msgForeground: string = '';
+  private msgFontWeight: string = '';
+
   private errorMessage: string[] = [];
   constructor(
     private gs: GlobalService,
@@ -55,7 +60,14 @@ export class MailComponent implements OnInit {
     this.bcc_ids = '';
     this.to_ids = '';
     this.subject = '';
-    this.message = '';
+    this.message = this.gs.user_email_signature.toString();
+    this.msgFontFamily = this.gs.user_email_sign_font;
+    this.msgFontSize = this.gs.user_email_sign_size+"px";
+    this.msgForeground = this.gs.user_email_sign_color;
+    if (this.gs.user_email_sign_bold == "Y")
+      this.msgFontWeight = "bold";
+    else
+      this.msgFontWeight = "normal";
   }
 
   LovSelected(_Record: SearchTable) {
@@ -76,7 +88,7 @@ export class MailComponent implements OnInit {
     if (!this.allvalid())
       return;
 
-     this.SearchRecord('smtpmail', 'MAIL');
+    this.SearchRecord('smtpmail', 'MAIL');
   }
 
   allvalid() {
@@ -150,7 +162,7 @@ export class MailComponent implements OnInit {
       user_name: this.gs.user_name,
       user_code: this.gs.user_code,
       read_receipt: this.chkReadRecipt ? "YES" : "NO",
-      delivery_receipt:this.chkDelivReceipt ? "YES" : "NO"
+      delivery_receipt: this.chkDelivReceipt ? "YES" : "NO"
     };
 
     SearchData.table = controlname;
@@ -190,7 +202,7 @@ export class MailComponent implements OnInit {
   */
 
   RemoveAttachment(Id: string, _type: string) {
-     this.AttachList.splice(this.AttachList.findIndex(rec => rec.filename == Id), 1);
+    this.AttachList.splice(this.AttachList.findIndex(rec => rec.filename == Id), 1);
   }
 
 }
