@@ -122,11 +122,6 @@ export class ProfitReportComponent implements OnInit {
       this.filetype = response.filetype;
       this.filedisplayname = response.filedisplayname;
 
-
-
-
-
-
     }, error => {
       this.errormessage = this.gs.getError(error)
     });
