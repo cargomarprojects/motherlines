@@ -133,7 +133,6 @@ export class MailComponent implements OnInit {
     }
 
 
-
     let SearchData = {
       table: controlname,
       pkid: '',
@@ -190,98 +189,8 @@ export class MailComponent implements OnInit {
   }
   */
 
-
-  getFileDetails(e: any) {
-    //console.log (e.target.files);
-    let isValidFile = true;
-    let fname: string = '';
-    this.filesSelected = false;
-    this.myFiles = [];
-    for (var i = 0; i < e.target.files.length; i++) {
-      this.filesSelected = true;
-      fname = e.target.files[i].name;
-      if (fname.indexOf('&') >= 0)
-        isValidFile = false;
-      if (fname.indexOf('%') >= 0)
-        isValidFile = false;
-      if (fname.indexOf('#') >= 0)
-        isValidFile = false;
-      this.myFiles.push(e.target.files[i]);
-    }
-
-    if (!isValidFile) {
-      this.filesSelected = false;
-      alert('Invalid File Name - &%#');
-    }
-  }
-
-
-  uploadFiles() {
-    // if (this.catg_id == '' && this.rootpage == "FTPPAGE") {
-    //   alert('Pls Select Category');
-    //   return;
-    // }
-    if (!this.filesSelected) {
-      alert('No File Selected');
-      return;
-    }
-
-    this.loading = true;
-
-    let frmData: FormData = new FormData();
-
-    frmData.append("COMPCODE", this.gs.globalVariables.comp_code);
-    frmData.append("BRANCHCODE", this.gs.globalVariables.branch_code);
-    frmData.append("PARENTID", this.gs.globalVariables.report_folder);
-    frmData.append("GROUPID", 'MAIL-FTP-ATTACHMENT');
-    // frmData.append("TYPE", this.type);
-    // frmData.append("CATGID", this.catg_id);
-    frmData.append("CREATEDBY", this.gs.globalVariables.user_code);
-
-    for (var i = 0; i < this.myFiles.length; i++) {
-      frmData.append("fileUpload", this.myFiles[i]);
-    }
-
-    this.http2.post<any>(
-      this.gs.baseUrl + '/api/General/UploadFiles', frmData, this.gs.headerparam2('authorized-fileupload')).subscribe(
-        data => {
-          this.loading = false;
-          this.filesSelected = false;
-          this.fileinput.nativeElement.value = '';
-          // if (this.rootpage == "FTPPAGE") {
-          //   if (this.FtpAttachList == null)
-          //     this.FtpAttachList = new Array<any>();
-          //   this.FtpAttachList.push({ filename: data.filename, filetype: data.filetype, filedisplayname: data.filedisplayname, filecategory: data.category, fileftpfolder: '', fileisack: 'N', fileprocessid: '' });
-          // } else {
-          //   if (this.AttachList == null)
-          //     this.AttachList = new Array<any>();
-          //   this.AttachList.push({ filename: data.filename, filetype: data.filetype, filedisplayname: data.filedisplayname, filecategory: data.category, fileftpfolder: '', fileisack: 'N', fileprocessid: '' });
-          // }
-          //this.ShowHideAttach(); 
-        },
-        error => {
-          this.loading = false;
-          alert('Failed');
-        }
-      );
-  }
-  ShowHideAttach() {
-    this.showattach = !this.showattach;
-  }
-  ShowPage(_type: string) {
-    //  this.rootpage = _type;
-    // if (_type == "MAIL")
-    //   this.rootpage = "MAILPAGE";
-    // else
-    //   this.rootpage = "FTPPAGE";
-  }
-
   RemoveAttachment(Id: string, _type: string) {
-    if (_type == "MAIL") {
-      this.AttachList.splice(this.AttachList.findIndex(rec => rec.filename == Id), 1);
-      // } else {
-      //   this.FtpAttachList.splice(this.FtpAttachList.findIndex(rec => rec.filename == Id), 1);
-    }
+     this.AttachList.splice(this.AttachList.findIndex(rec => rec.filename == Id), 1);
   }
 
 }
