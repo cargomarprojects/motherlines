@@ -35,9 +35,10 @@ export class ProfitReportComponent implements OnInit {
   ar_bal: number = 0;
   ap_bal: number = 0;
 
-  MBL_LOSS_APPROVED : boolean = false;
-  MBL_PROFIT_REQ : boolean = false;
-  MBL_LOSS_MEMO : string = '';
+  
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
 
 
   records: Tbl_Cargo_Invoice_Profit[];
@@ -52,7 +53,11 @@ export class ProfitReportComponent implements OnInit {
   CHWT : number = 0;
   CBM : number = 0;
 
+  radio_cbm : string = 'CBM';
 
+
+  tab : string = 'main';
+  
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -92,7 +97,11 @@ export class ProfitReportComponent implements OnInit {
     SearchData.PKID = this.mbl_pkid;
     SearchData.INV_TYPE = this.mbl_type; // OE AE
     SearchData.REP_TYPE = this.main_type; // INVOIOCE OR HOUSE
-    SearchData.REP_BASEDON = ''; // WT
+    if ( this.main_type == 'HOUSE')
+      SearchData.REP_BASEDON = this.radio_cbm ;
+    else 
+      SearchData.REP_BASEDON = '';
+
 
     this.mainservice.ProfitReport(SearchData).subscribe(response => {
       
@@ -105,6 +114,10 @@ export class ProfitReportComponent implements OnInit {
       this.CHWT  =response.record.mbl_chwt ;
       this.CBM =response.record.mbl_cbm ;
 
+
+      
+
+
     }, error => {
       this.errormessage = this.gs.getError(error)
     });
@@ -114,6 +127,21 @@ export class ProfitReportComponent implements OnInit {
   DisplayProfit() {
       return;
   }
+
+  Print() {
+  
+  this.report_url = '';
+  this.report_searchdata = this.gs.UserInfo;
+  this.report_searchdata.pkid = this.mbl_pkid;
+  this.report_menuid = this.gs.MENU_SE_MASTER_PROFIT_REPORT;
+  this.tab = 'report';
+}
+
+callbackevent() {
+  this.tab = 'main';
+}
+
+
 
   Close() {
     this.location.back();
