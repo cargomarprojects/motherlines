@@ -77,7 +77,7 @@
           <div class="form-group row">
             <label class="col-md-2 col-form-label col-form-label-sm">Attachments</label>
             <div class="col-sm-10">
-              <div style="padding: 0%" class="page-details">
+              <div >
                 <label *ngFor="let rec of AttachList">
                   <button [disabled]="loading" (click)="Downloadfile(rec.filename,rec.filetype,rec.filedisplayname)"
                     class="btn btn-link pointer">{{rec.filedisplayname}}</button>
@@ -85,24 +85,6 @@
                 </label>
               </div>
             </div>
-          </div>
-          <div class="form-group row">
-            <!-- <label style="color: #007ee9;font-size: 15px;" class="col-sm-1 col-form-label col-form-label-sm pointer"  (click)="ShowHideAttach()">Attach.File</label> -->
-            <div style="padding-left: 2px" class="col-md-2">
-              <button [disabled]="loading" (click)="ShowHideAttach()" class="btn btn-link">Attach File</button>
-            </div>
-            <!-- <div *ngIf="showattach" class="col-sm-11">
-              <div class="page-details">
-                <div class="form-group row">
-                  <div class="col-7">
-                    <input type="file" id="file" style="width: 600px" #fileinput (change)="getFileDetails($event)">
-                  </div>
-                  <div class="col-1">
-                    <button (click)="uploadFiles()">Attach</button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
           </div>
           <!-- <div *ngIf="sHtml" class="form-group row">
             <label class="col-sm-1 col-form-label col-form-label-sm">Message</label>

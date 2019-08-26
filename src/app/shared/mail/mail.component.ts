@@ -30,14 +30,14 @@ export class MailComponent implements OnInit {
 
   disableSave = true;
   loading = false;
-   
+
   private to_ids: string = '';
   private cc_ids: string = '';
   private bcc_ids: string = '';
   private subject: string = '';
   private message: string = '';
 
-  private errorMessage:string[] = [];
+  private errorMessage: string[] = [];
   constructor(
     private gs: GlobalService,
     private lovService: LovService,
@@ -56,9 +56,8 @@ export class MailComponent implements OnInit {
     this.to_ids = '';
     this.subject = '';
     this.message = '';
-    this.AttachList = new Array<any>();
   }
-   
+
   LovSelected(_Record: SearchTable) {
     if (_Record.controlname == 'CUSTOMER') {
       this.customer_name = _Record.name;
@@ -67,15 +66,17 @@ export class MailComponent implements OnInit {
   }
   // Destroy Will be called when this component is closed
   ngOnDestroy() {
-    
+
   }
 
- // Save Data
+  // Save Data
   SendMail() {
+
     this.errorMessage = [];
     if (!this.allvalid())
       return;
-//    this.SearchRecord('smtpmail', 'MAIL');
+
+     this.SearchRecord('smtpmail', 'MAIL');
   }
 
   allvalid() {
@@ -97,7 +98,7 @@ export class MailComponent implements OnInit {
     }
 
     if (!bret)
-    alert('Error While Saving');
+      alert('Error While Saving');
 
     return bret;
   }
@@ -112,9 +113,9 @@ export class MailComponent implements OnInit {
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.globalVariables.report_folder, filename, filetype, filedisplayname);
   }
-  
+
   SearchRecord(controlname: string, _type: string) {
-    
+
     this.errorMessage = [];
     let filename: string = "";
     let filedisplayname: string = "";
@@ -132,7 +133,7 @@ export class MailComponent implements OnInit {
     }
 
 
-    
+
     let SearchData = {
       table: controlname,
       pkid: '',
@@ -148,7 +149,9 @@ export class MailComponent implements OnInit {
       branch_code: this.gs.branch_code,
       user_pkid: this.gs.user_pkid,
       user_name: this.gs.user_name,
-      user_code: this.gs.user_code
+      user_code: this.gs.user_code,
+      read_receipt: this.chkReadRecipt ? "YES" : "NO",
+      delivery_receipt:this.chkDelivReceipt ? "YES" : "NO"
     };
 
     SearchData.table = controlname;
@@ -166,11 +169,11 @@ export class MailComponent implements OnInit {
     SearchData.user_pkid = this.gs.user_pkid;
     SearchData.user_name = this.gs.user_name;
     SearchData.user_code = this.gs.user_code;
-    
+
     this.gs.SearchRecord(SearchData)
       .subscribe(response => {
         if (_type == "MAIL") {
-          this.errorMessage.push(response.smtpmail);
+          this.errorMessage.push(response.message);
         }
       },
         error => {
@@ -187,7 +190,7 @@ export class MailComponent implements OnInit {
   }
   */
 
-  
+
   getFileDetails(e: any) {
     //console.log (e.target.files);
     let isValidFile = true;
@@ -266,7 +269,7 @@ export class MailComponent implements OnInit {
     this.showattach = !this.showattach;
   }
   ShowPage(_type: string) {
-  //  this.rootpage = _type;
+    //  this.rootpage = _type;
     // if (_type == "MAIL")
     //   this.rootpage = "MAILPAGE";
     // else
@@ -276,8 +279,8 @@ export class MailComponent implements OnInit {
   RemoveAttachment(Id: string, _type: string) {
     if (_type == "MAIL") {
       this.AttachList.splice(this.AttachList.findIndex(rec => rec.filename == Id), 1);
-    // } else {
-    //   this.FtpAttachList.splice(this.FtpAttachList.findIndex(rec => rec.filename == Id), 1);
+      // } else {
+      //   this.FtpAttachList.splice(this.FtpAttachList.findIndex(rec => rec.filename == Id), 1);
     }
   }
 
