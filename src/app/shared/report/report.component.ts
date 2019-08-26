@@ -9,6 +9,7 @@ import { GlobalService } from '../../core/services/global.service';
 export class ReportComponent implements OnInit {
 
   private errorMessage : string = '';
+  private  tab: string = 'main';
 
   private canPrint : boolean = false;
   private canDownload : boolean = false;
@@ -40,6 +41,8 @@ export class ReportComponent implements OnInit {
 
   @Output() callbackevent = new EventEmitter<any>();
 
+  AttachList: any[] = [];
+  
   constructor(
     private http2: HttpClient,
     private gs: GlobalService) {
@@ -98,5 +101,16 @@ export class ReportComponent implements OnInit {
 
   report ( action : string  ) {
 
+    if(action=="email")
+    {
+      this.tab="email";
+    }
   }
+
+  mailcallbackevent(event: any) {
+    this.tab = 'main';
+    this.AutoLoad();
+  }
+
+
 }
