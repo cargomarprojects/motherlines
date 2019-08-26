@@ -1,3 +1,4 @@
+<div *ngIf="tab=='main'">
 <div class="page-header">
   <div class="row  align-items-center justify-content-left p-1">
     <label class="mr-3">{{_title}}</label>
@@ -15,13 +16,14 @@
 </div>
 
 
+  <div class="page-body" style="height:99vh">
 
-
-<div class="page-body" style="height:99vh">
- 
     <ng2-pdfjs-viewer [showSpinner]="true" [print]="canPrint" [download]="canDownload" [openFile]="false" [zoom]="100"
       [cursor]="'HAND'" [scroll]="'H'" #pdfViewerAutoLoad></ng2-pdfjs-viewer>
-  
+
+  </div>
+
 </div>
-
-
+<div *ngIf="tab=='email'">
+  <app-mail [pkid]="''"  [AttachList]="AttachList" (mailcallbackevent)="mailcallbackevent($event)"></app-mail>
+</div>
