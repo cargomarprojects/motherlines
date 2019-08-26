@@ -69,7 +69,14 @@ export class ReportComponent implements OnInit {
     this.canDownload = this.gs.canDownload(this._menuid);
     this.canExcel = this.gs.canExel(this._menuid);
     this.canEmail = this.gs.canEmail(this._menuid);
-    if ( this.url == undefined)
+
+
+    
+
+    if ( this._url == undefined && this._filename == undefined)
+    return ;
+
+    if ( this._url == undefined)
       this.AutoLoad();
     else 
       this.loaddata();
