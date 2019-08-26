@@ -39,6 +39,22 @@ export class ReportComponent implements OnInit {
     this._searchdata = value;
   }
 
+
+  private _filename  : string ;
+  @Input() set filename(value: any) {
+    this._filename = value;
+  }
+
+  private _filetype : string ;
+  @Input() set filetype(value: any) {
+    this._filetype = value;
+  }
+
+  private _filedisplayname : string ;
+  @Input() set filedisplayname(value: any) {
+    this._filedisplayname = value;
+  }
+
   @Output() callbackevent = new EventEmitter<any>();
 
   AttachList: any[] = [];
@@ -48,20 +64,18 @@ export class ReportComponent implements OnInit {
     private gs: GlobalService) {
   }
 
-
   ngOnInit() {
-
     this.canPrint = this.gs.canPrint(this._menuid);
     this.canDownload = this.gs.canDownload(this._menuid);
     this.canExcel = this.gs.canExel(this._menuid);
     this.canEmail = this.gs.canEmail(this._menuid);
-
-    this.loaddata();
+    if ( this.url == undefined)
+      this.AutoLoad();
+    else 
+      this.loaddata();
+    
   }
 
-  filename  : string ;
-  filetype : string ;
-  filedisplayname : string ;
 
   loaddata(){
     this.gs.makecall( this._url, this._searchdata).subscribe (
@@ -87,7 +101,7 @@ export class ReportComponent implements OnInit {
   
   AutoLoad(){
 
-    this.gs.getFile(this.gs.GLOBAL_REPORT_FOLDER, this.filename, this.filetype, this.filedisplayname).subscribe( response =>{
+    this.gs.getFile(this.gs.GLOBAL_REPORT_FOLDER, this._filename, this._filetype, this._filedisplayname).subscribe( response =>{
 
       this.pdfViewerAutoLoad.pdfSrc = response;
       this.pdfViewerAutoLoad.refresh(); 
