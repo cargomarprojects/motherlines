@@ -824,6 +824,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       case 'POD': {
         this.report_title = 'POD';
         this.report_url = '/api/SeaImport/Master/GetPODSeaImpRpt';
+        this.report_url = '';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_menuid = this.gs.MENU_SI_MASTER_POD;
