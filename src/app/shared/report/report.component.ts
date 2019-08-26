@@ -125,7 +125,7 @@ export class ReportComponent implements OnInit {
     if(action=="email")
     {
       this.AttachList = new Array<any>();
-      this.AttachList.push({ filename: this.filename, filetype: this.filetype, filedisplayname: this.filedisplayname});
+      this.AttachList.push({ filename: this._filename, filetype: this._filetype, filedisplayname: this._filedisplayname});
       this.tab="email";
     }
   }
