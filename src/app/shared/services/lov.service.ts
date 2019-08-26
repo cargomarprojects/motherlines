@@ -13,19 +13,18 @@ export class LovService {
 
     List(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + '/api/Admin/Lov/List', SearchData, this.gs.headerparam2('authorized'));
-    }
+    } 
 
     FileUpload(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + '/api/General/UploadFiles', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    LoadDefault(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + '/api/General/LoadDefault', SearchData, this.gs.headerparam2('authorized'));
+    }
 
     DocumentList(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/DocumentList', SearchData, this.gs.headerparam2('authorized'));
-    }
-
-    LoadDefault(SearchData: any) {
-      return this.http2.post<any>(this.gs.baseUrl + '/api/General/LoadDefault', SearchData, this.gs.headerparam2('authorized'));
     }
 
     DeleteRecord(SearchData: any) {
@@ -36,6 +35,9 @@ export class LovService {
       return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/Save', SearchData, this.gs.headerparam2('authorized'));
   }
 
+  GetEmailIds(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/GetEmailIds', SearchData, this.gs.headerparam2('authorized'));
+    }
 
 
 }

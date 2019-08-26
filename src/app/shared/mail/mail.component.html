@@ -27,7 +27,7 @@
               </app-autocomplete2>
             </div>
             <div class="col-2">
-              <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Get Email Ids</button>
+              <button class="btn btn-primary btn-sm mr-1" (click)="GetEmailIds()">Get Email Ids</button>
             </div>
             <div class="col-4">
               <div class="form-check form-check-inline">
@@ -38,6 +38,54 @@
                 <input class="form-check-input" type="checkbox" id="Chk_Deliv_Receipt" [(ngModel)]="chkDelivReceipt">
                 <label class="form-check-label" for="Chk_Deliv_Receipt">Delivery Receipt</label>
               </div>
+            </div>
+          </div>
+          <div *ngIf="EmailList.length>0" class="form-group row">
+            <div class="offset-md-2 col-10">
+              <div class="page-body table-responsive">
+                <table class="table  table-hover table-sm">
+                  <thead class="page-body-thead">
+                    <tr>
+                      <th>
+                        <div class="form-check"> <input type="checkbox" (click)="SelectDeselect('TO')"
+                            class="form-check-input" [(ngModel)]="chkallto"><span>TO</span>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="form-check"> <input type="checkbox" (click)="SelectDeselect('CC')"
+                            class="form-check-input" [(ngModel)]="chkallcc"><span>CC</span>
+                        </div>
+                      </th>
+                      <th>NAME</th>
+                      <th>TITLE</th>
+                      <th>EMAIL-ID</th>
+                    </tr>
+                  </thead>
+                  <tbody class="page-body-tbody">
+                    <tr *ngFor="let rec of EmailList">
+                      <td class="p-0">
+                        <div class="form-check"> <input type="checkbox" class="form-check-input"
+                            [(ngModel)]="rec.is_to"><span></span></div>
+                      </td>
+                      <td class="p-0">
+                        <div class="form-check"> <input type="checkbox" class="form-check-input"
+                            [(ngModel)]="rec.is_cc"><span></span></div>
+                      </td>
+                      <td class="p-0">{{rec.name}}</td>
+                      <td class="p-0">{{rec.title}}</td>
+                      <td class="p-0">{{rec.email}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <button class="btn btn-success btn-sm mr-1"  (click)="SaveIds()">Ok</button>
+                    <button class="btn btn-success btn-sm mr-1"  (click)="CancelList()">Cancel</button>
+                  </div>
+                </div>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -77,7 +125,7 @@
           <div class="form-group row">
             <label class="col-md-2 col-form-label col-form-label-sm">Attachments</label>
             <div class="col-sm-10">
-              <div >
+              <div>
                 <label *ngFor="let rec of AttachList">
                   <button [disabled]="loading" (click)="Downloadfile(rec.filename,rec.filetype,rec.filedisplayname)"
                     class="btn btn-link pointer">{{rec.filedisplayname}}</button>
@@ -103,7 +151,9 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label col-form-label-sm">Message</label>
             <div class="col-sm-10">
-              <textarea rows="18"  [style.font-family]="msgFontFamily" [style.font-size]="msgFontSize" [style.color]="msgForeground" [style.font-weight]="msgFontWeight" class="form-control form-control-sm" [(ngModel)]="message"></textarea>
+              <textarea rows="18" [style.font-family]="msgFontFamily" [style.font-size]="msgFontSize"
+                [style.color]="msgForeground" [style.font-weight]="msgFontWeight" class="form-control form-control-sm"
+                [(ngModel)]="message"></textarea>
             </div>
           </div>
 
@@ -128,4 +178,3 @@
     </div>
   </div>
 </div>
-

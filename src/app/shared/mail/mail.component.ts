@@ -3,7 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from '../../core/services/global.service';
 import { LovService } from '../services/lov.service';
+import { Table_Email } from '../models/table_email';
 import { SearchTable } from '../../shared/models/searchtable';
+import { strictEqual } from 'assert';
+import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-mail',
@@ -41,6 +44,12 @@ export class MailComponent implements OnInit {
   private msgFontSize: string = '';
   private msgForeground: string = '';
   private msgFontWeight: string = '';
+  EmailList: Table_Email[] = [];
+  chkallto: boolean = true;
+  chkallcc: boolean = false;
+  allto: boolean = true;
+  allcc: boolean = false;
+
 
   private errorMessage: string[] = [];
   constructor(
@@ -62,7 +71,7 @@ export class MailComponent implements OnInit {
     this.subject = '';
     this.message = this.gs.user_email_signature.toString();
     this.msgFontFamily = this.gs.user_email_sign_font;
-    this.msgFontSize = this.gs.user_email_sign_size+"px";
+    this.msgFontSize = this.gs.user_email_sign_size + "px";
     this.msgForeground = this.gs.user_email_sign_color;
     if (this.gs.user_email_sign_bold == "Y")
       this.msgFontWeight = "bold";
@@ -205,4 +214,78 @@ export class MailComponent implements OnInit {
     this.AttachList.splice(this.AttachList.findIndex(rec => rec.filename == Id), 1);
   }
 
+  GetEmailIds() {
+    this.errorMessage = [];;
+    if (this.gs.isBlank(this.customer_id)) {
+      this.errorMessage.push("Please select a Party and continue.....");
+      alert(this.errorMessage);
+      return;
+    }
+
+    var SearchData = this.gs.UserInfo;
+    SearchData.PKID = this.customer_id;
+    this.lovService.GetEmailIds(SearchData)
+      .subscribe(response => {
+        this.EmailList = <Table_Email[]>response.list;
+
+        // this.RecordList.forEach(Rec => {
+        //   Rec.file_uri = this.gs.WWW_FILES_URL + "/" + Rec.file_id;
+        //   if (Rec.files_type == "XML-EDI") {
+        //     Rec.file_uri = this.gs.WWW_ROOT_FILE_FOLDER + "/../" + Rec.files_path + Rec.file_id;
+        //   }
+        //   Rec.files_type = this.GetFileType(Rec.files_type); //in database filestype  store code but the list wants to shows name, so to retreive name this fn is used;
+        //   Rec.files_editrow = false;
+        // })
+
+        // if (this.Files_Type == "PAYMENT SETTLEMENT")
+        //   this.ReLoadDocType(response.tothouse);
+
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+  }
+
+  SelectDeselect(_type: string) {
+    if (_type == "TO") {
+      this.allto = !this.allto;
+      this.EmailList.forEach(Rec => {
+        Rec.is_to = this.allto;
+        this.chkallto = this.allto;
+      })
+    }
+
+    if (_type == "CC") {
+      this.allcc = !this.allcc;
+      this.EmailList.forEach(Rec => {
+        Rec.is_cc = this.allcc;
+        this.chkallcc = this.allcc;
+      })
+    }
+
+  }
+
+  SaveIds() {
+    let Mail_To: string = "";
+    let Mail_Cc: string = "";
+    this.EmailList.forEach(Rec => {
+      if (Rec.is_to == true && Rec.email.toString().trim().length > 0) {
+        if (Mail_To != "")
+          Mail_To += ",";
+        Mail_To += Rec.email.toString();
+      }
+      if (Rec.is_cc == true && Rec.email.toString().trim().length > 0) {
+        if (Mail_Cc != "")
+          Mail_Cc += ",";
+        Mail_Cc += Rec.email.toString();
+      }
+    })
+
+    this.to_ids = Mail_To.toString();
+    this.cc_ids = Mail_Cc.toString();
+
+    this.EmailList = <Table_Email[]>[];
+  }
+  CancelList() {
+    this.EmailList = <Table_Email[]>[];
+  }
 }
