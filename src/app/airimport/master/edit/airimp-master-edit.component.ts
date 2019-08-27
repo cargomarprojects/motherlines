@@ -520,6 +520,17 @@ export class AirImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
         break;
       }
+      case 'PROFITREPORT': {
+        let prm = {
+          menuid: this.gs.MENU_AI_MASTER_PROFIT_REPORT,
+          mbl_pkid:  this.pkid, 
+          mbl_refno : this.record.mbl_refno,
+          mbl_type: 'AI',
+          origin: 'airimp-master-page',
+        };
+        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));        
+        break;
+      }      
       case 'HOUSE': {
         let prm = {
           menuid: this.gs.MENU_AI_HOUSE,

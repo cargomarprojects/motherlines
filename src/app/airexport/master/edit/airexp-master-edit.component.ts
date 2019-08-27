@@ -514,11 +514,22 @@ export class AirExpMasterEditComponent implements OnInit {
           pkid: this.pkid,
           refno: this.record.mbl_refno,
           type: 'AI',
-          origin: 'airimp-master-page',
+          origin: 'airexp-master-page',
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
         break;
       }
+      case 'PROFITREPORT': {
+        let prm = {
+          menuid: this.gs.MENU_AE_MASTER_PROFIT_REPORT,
+          mbl_pkid:  this.pkid, 
+          mbl_refno : this.record.mbl_refno,
+          mbl_type: 'AE',
+          origin: 'airexp-master-page',
+        };
+        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));        
+        break;
+      }      
       case 'HOUSE': {
         let prm = {
           menuid: this.gs.MENU_AE_HOUSE,
@@ -541,7 +552,7 @@ export class AirExpMasterEditComponent implements OnInit {
           cp_mode: 'AIR EXPORT',
           cp_ref_no: this.record.mbl_refno,
           islocked: false,
-          origin: 'airimp-master-page'
+          origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
         break;
@@ -553,7 +564,7 @@ export class AirExpMasterEditComponent implements OnInit {
           mbl_mode: 'AIR EXPORT',
           mbl_refno: this.record.mbl_refno,
           islocked: false,
-          origin: 'airimp-master-page'
+          origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
         break;
@@ -565,7 +576,7 @@ export class AirExpMasterEditComponent implements OnInit {
           master_refno: this.record.mbl_refno,
           master_refdate: this.record.mbl_ref_date,
           islocked: false,
-          origin: 'airimp-master-page'
+          origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
         break;
@@ -578,7 +589,7 @@ export class AirExpMasterEditComponent implements OnInit {
           doc_type: 'AIR EXPORT',
           req_type: 'REQUEST',
           islocked: false,
-          origin: 'airimp-master-page'
+          origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
         break;
