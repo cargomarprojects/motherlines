@@ -30,22 +30,17 @@ export class TopCustomerReportComponent implements OnInit {
 
   currentTab: string = '';
 
-  report_category: string;
   sdate: string;
   edate: string;
-  mode: string = '';
   comp_type: string = '';
-
-  report_shptype: string = '';
-
+  report_category: string;
   topnum: number = 0;
   toporder: string = '';
   report_type: string = '';
   radio_exp: string = 'EXP'
-
-  agent_id: string;
-  agent_name: string;
-  reportformat = '';
+  report_amt_caption: string;
+  reportformat: string = '';
+  group_by_parent: boolean = false;
 
   page_count: number = 0;
   page_current: number = 0;
@@ -63,8 +58,6 @@ export class TopCustomerReportComponent implements OnInit {
   Reportstate1: Observable<ReportState>;
 
   MainList: TBL_MBL_REPORT[];
-
-  AGENTRECORD: SearchTable = new SearchTable();
 
   constructor(
     public gs: GlobalService,
@@ -92,18 +85,17 @@ export class TopCustomerReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-
         this.report_category = rec.report_category
         this.sdate = rec.sdate;
         this.edate = rec.edate;
-        this.mode = rec.mode;
         this.comp_type = rec.comp_type;
         this.report_type = rec.report_type;
-        this.report_shptype = rec.report_shptype;
-        this.agent_id = rec.agent_id;
-        this.agent_name = rec.agent_name;
         this.reportformat = rec.reportformat;
-
+        this.topnum = rec.topnum;
+        this.toporder = rec.toporder;
+        this.radio_exp = rec.radio_exp;
+        this.report_amt_caption = rec.report_amt_caption;
+        this.group_by_parent = rec.group_by_parent;
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -114,7 +106,6 @@ export class TopCustomerReportComponent implements OnInit {
         this.SearchData = this.gs.UserInfo;
         this.SearchData.SDATE = this.sdate;
         this.SearchData.EDATE = this.edate;
-        this.SearchData.MODE = this.mode;
         this.SearchData.COMP_TYPE = this.comp_type;
         if (this.comp_type == 'ALL')
           this.SearchData.COMP_CODE = this.gs.branch_codes;
@@ -122,13 +113,6 @@ export class TopCustomerReportComponent implements OnInit {
           this.SearchData.COMP_CODE = this.comp_type;
 
         this.SearchData.REPORT_TYPE = this.report_type;
-        this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-
-        this.SearchData.AGENT_ID = this.agent_id;
-        this.SearchData.AGENT_NAME = this.agent_name;
-
-        this.AGENTRECORD.id = this.agent_id;
-        this.AGENTRECORD.name = this.agent_name;
 
       }
       else {
@@ -141,23 +125,22 @@ export class TopCustomerReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
 
-        this.report_category = "AGENT";
+        this.report_category = "OVERSEAS AGENT";
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
-        this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
         this.report_type = "DETAIL";
-        this.report_shptype = "ALL";
-        this.agent_id = "";
-        this.agent_name = "";
         this.reportformat = 'DETAIL';
-
+        this.topnum = 10;
+        this.toporder = 'ASC';
+        this.radio_exp = 'REVENUE';
+        this.report_amt_caption = '';
+        this.group_by_parent = false;
 
         this.SearchData = this.gs.UserInfo;
 
       }
     });
-
   }
 
   ngOnInit() {
@@ -187,7 +170,6 @@ export class TopCustomerReportComponent implements OnInit {
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
-      this.SearchData.MODE = this.mode;
       this.SearchData.COMP_TYPE = this.comp_type;
 
       if (this.comp_type == 'ALL')
@@ -196,18 +178,51 @@ export class TopCustomerReportComponent implements OnInit {
         this.SearchData.COMP_CODE = this.comp_type;
 
       this.SearchData.REPORT_TYPE = this.report_type;
-      this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-      this.SearchData.CUST_ID = this.agent_id;
-      this.SearchData.AGENT_ID = this.agent_id;
-      this.SearchData.AGENT_NAME = this.agent_name;
+
+      this.SearchData.ISPARENT = this.group_by_parent == true ? "Y" : "N";
+      this.SearchData.ISADMIN = (this.gs.user_isadmin == "Y" || this.gs.IsAdmin(this.menuid) )? "Y" : "N";
 
       this.reportformat = this.report_type;
-    }
 
+      this.SearchData.TOP_VAL = this.topnum;
+      this.SearchData.SORT_ORDER = this.toporder;
+      this.SearchData.TOP_BY = "EXPENSE";
+/*
+      
+      
+      
+      
+     
+
+     
+      
+
+      Filter.Add("TOP_VAL", Txt_Top.Text);
+      Filter.Add("SORT_ORDER", Cmb_Orderby.SelectedItem.ToString().Trim());
+      if (OPT_EXP.IsChecked == true)
+          Filter.Add("TOP_BY", "EXPENSE");
+      else if (OPT_REVENUE.IsChecked == true)
+          Filter.Add("TOP_BY", "REVENUE");
+      else if (OPT_PROFIT.IsChecked == true)
+          Filter.Add("TOP_BY", "PROFIT");
+      else if (OPT_TEU.IsChecked == true)
+          Filter.Add("TOP_BY", "TEU");
+      else if (OPT_TON.IsChecked == true)
+          Filter.Add("TOP_BY", "TON");
+      else if (OPT_HBL_TOT.IsChecked == true)
+          Filter.Add("TOP_BY", "TOT_HBL");
+
+
+*/
+
+
+
+
+    }
 
     this.loading = true;
 
-    this.mainservice.TeuReport(this.SearchData)
+    this.mainservice.TopCustomerReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat == "SCREEN") {
@@ -219,13 +234,14 @@ export class TopCustomerReportComponent implements OnInit {
             report_category: this.SearchData.REPORT_CATEGORY,
             sdate: this.SearchData.SDATE,
             edate: this.SearchData.EDATE,
-            mode: this.SearchData.MODE,
             comp_type: this.SearchData.COMP_TYPE,
             report_type: this.SearchData.REPORT_TYPE,
-            report_shptype: this.SearchData.REPORT_SHPTYPE,
-            agent_id: this.SearchData.AGENT_ID,
-            agent_name: this.SearchData.AGENT_NAME,
             reportformat: this.reportformat,
+            topnum: this.topnum,
+            toporder: this.toporder,
+            radio_exp: this.radio_exp,
+            report_amt_caption: this.report_amt_caption,
+            group_by_parent: this.group_by_parent,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
@@ -249,21 +265,12 @@ export class TopCustomerReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-    this.AGENTRECORD = new SearchTable();
-    this.AGENTRECORD.controlname = "AGENT";
-    this.AGENTRECORD.displaycolumn = "NAME";
-    this.AGENTRECORD.type = "MASTER";
-    this.AGENTRECORD.subtype = "";
-    this.AGENTRECORD.id = "";
-    this.AGENTRECORD.code = "";
+
 
   }
 
   LovSelected(_Record: SearchTable) {
-    if (_Record.controlname == "AGENT") {
-      this.agent_id = _Record.id;
-      this.agent_name = _Record.name;
-    }
+
   }
 
 
