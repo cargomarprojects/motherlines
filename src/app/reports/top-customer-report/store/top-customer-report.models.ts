@@ -10,13 +10,14 @@ export interface ReportState{
     report_category: string;
     sdate: string;
     edate: string;
-    mode : string;
     comp_type: string;
     report_type: string;
-    report_shptype : string;
-    agent_id : string ;
-    agent_name : string ;
     reportformat : string ;
+    topnum: number ;
+    toporder: string ;
+    radio_exp: string ;
+    report_amt_caption: string;
+    group_by_parent:boolean;
     
     page_rows :number;
     page_count :number;

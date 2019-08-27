@@ -41,8 +41,17 @@
                         <label class="col-4 col-form-label col-form-label-sm">Category</label>
                         <div class="col-8">
                             <select class="form-control form-control-sm" [(ngModel)]="report_category">
-                                <option [value]="'AGENT'">AGENT</option>
-                                <option [value]="'OPERATION GROUP'">OPERATION GROUP</option>
+                                <option [value]="'OVERSEAS AGENT'">OVERSEAS AGENT</option>
+                                <option [value]="'CONSIGNEE'">CONSIGNEE</option>
+                                <option [value]="'SHIPPER'">SHIPPER</option>
+                                <option [value]="'BROKER'">BROKER</option>
+                                <option [value]="'DOMESTIC FORWARDER'">DOMESTIC FORWARDER</option>
+                                <option [value]="'AIR CARRIER'">AIR CARRIER</option>
+                                <option [value]="'SEA CARRIER'">SEA CARRIER</option>
+                                <option [value]="'TRUCKER'">TRUCKER</option>
+                                <option [value]="'GENERAL VENDOR'">GENERAL VENDOR</option>
+                                <option [value]="'POL'">POL</option>
+                                <option [value]="'POD'">POD</option>
                             </select>
                         </div>
                     </div>
@@ -51,9 +60,9 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label col-form-label-sm">Top</label>
                         <div class="col-8 input-group input-group-sm">
-                                <input class="form-control form-control-sm" type="number" (blur)="onBlur('hbl_weight')"
-                                [(ngModel)]="record.hbl_weight" maxlength="15" #weight />
-                            <select class="form-control form-control-sm" [(ngModel)]="mode">
+                            <input class="form-control form-control-sm" type="number" (blur)="onBlur('topnum')"
+                                [(ngModel)]="topnum" maxlength="15" />
+                            <select class="form-control form-control-sm" [(ngModel)]="toporder">
                                 <option [value]="'ASC'">ASC</option>
                                 <option [value]="'DESC'">DESC</option>
                             </select>
@@ -72,13 +81,46 @@
 
 
                 </div>
-                <div class="col-md-3">
-
-
-
-
+                <div class="col-md-2">
+                    <div class="offset-4 col-8">
+                        <input type="radio" [(ngModel)]="radio_exp" [value]="'REVENUE'" />
+                        <span>REVENUE</span>
+                    </div>
+                    <div class="offset-4 col-8">
+                        <input type="radio" [(ngModel)]="radio_exp" [value]="'EXPENSE'" />
+                        <span>EXPENSE</span>
+                    </div>
+                    <div class="offset-4 col-8">
+                        <input type="radio" [(ngModel)]="radio_exp" [value]="'PROFIT'" />
+                        <span>PROFIT</span>
+                    </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <div class="offset-4 col-8">
+                        <input type="radio" [(ngModel)]="radio_exp" [value]="'TEU'" />
+                        <span>TEU</span>
+                    </div>
+                    <div class="offset-4 col-8">
+                        <input type="radio" [(ngModel)]="radio_exp" [value]="'TONNAGE'" />
+                        <span>TONNAGE</span>
+                    </div>
+                    <div class="offset-4 col-8">
+                        <input type="radio" [(ngModel)]="radio_exp" [value]="'TOTHOUSE'" />
+                        <span>TOT.HOUSE</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label col-form-label-sm"></label>
+                        <div class="col-8">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input"
+                                    [(ngModel)]="group_by_parent" />
+                                <span>Group by Parent</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-4 col-form-label col-form-label-sm"></label>
                         <div class="col-8">
@@ -108,9 +150,9 @@
             <thead class="page-body-thead">
                 <tr>
                     <th>REFNO</th>
-                    <th>HOUSE></th>
-                    <th>{{REPORT_CATEGORY}}</th>
-                    <th class="text-right">{{REPORT_AMT_CAPTION}}</th>
+                    <th>HOUSE</th>
+                    <th>{{report_category}}</th>
+                    <th class="text-right">{{report_amt_caption}}</th>
                 </tr>
             </thead>
             <tbody class="page-body-tbody" *ngFor="let rec of MainList">
@@ -129,8 +171,8 @@
         <table class="table  table-hover table-sm">
             <thead class="page-body-thead">
                 <tr>
-                    <th>{{REPORT_CATEGORY}}</th>
-                    <th class="text-right">{{REPORT_AMT_CAPTION}}</th>
+                    <th>{{report_category}}</th>
+                    <th class="text-right">{{report_amt_caption}}</th>
                 </tr>
             </thead>
             <tbody class="page-body-tbody" *ngFor="let rec of MainList">
