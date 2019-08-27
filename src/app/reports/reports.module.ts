@@ -21,14 +21,18 @@ import { ShipLabelReportReducer } from './ship-label-report/store/ship-label-rep
 
 
 import { TopCustomerReportReducer } from './top-customer-report/store/top-customer-report.reducer';
+import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report.reducer';
+import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
+
 @NgModule({
+    declarations :[
     ShipHandReportComponent,
     TeuReportComponent,
     TonReportComponent,
     ProfitReportComponent,
     ProfitReportHouseComponent,
     ShipLabelReportComponent,
-    ConsShipReportComponent
+    ConsShipReportComponent,
     TopCustomerReportComponent
   ],
   imports: [
