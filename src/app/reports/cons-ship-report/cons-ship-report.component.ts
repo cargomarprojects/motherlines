@@ -38,8 +38,8 @@ export class ConsShipReportComponent implements OnInit {
   report_type: string = '';
   report_shptype: string = '';
 
-  agent_id: string;
-  agent_name: string;
+  cons_id: string;
+  cons_name: string;
   reportformat = '';
 
   page_count: number = 0;
@@ -59,7 +59,7 @@ export class ConsShipReportComponent implements OnInit {
 
   MainList: TBL_MBL_REPORT[];
 
-  AGENTRECORD: SearchTable = new SearchTable();
+  CONSRECORD: SearchTable = new SearchTable();
 
   constructor(
     public gs: GlobalService,
@@ -95,8 +95,8 @@ export class ConsShipReportComponent implements OnInit {
         this.comp_type = rec.comp_type;
         this.report_type = rec.report_type;
         this.report_shptype = rec.report_shptype;
-        this.agent_id = rec.agent_id;
-        this.agent_name = rec.agent_name;
+        this.cons_id = rec.cons_id;
+        this.cons_name = rec.cons_name;
         this.reportformat = rec.reportformat;
 
 
@@ -119,11 +119,11 @@ export class ConsShipReportComponent implements OnInit {
         this.SearchData.REPORT_TYPE = this.report_type;
         this.SearchData.REPORT_SHPTYPE = this.report_shptype;
 
-        this.SearchData.AGENT_ID = this.agent_id;
-        this.SearchData.AGENT_NAME = this.agent_name;
+        this.SearchData.CONS_ID = this.cons_id;
+        this.SearchData.CONS_NAME = this.cons_name;
 
-        this.AGENTRECORD.id = this.agent_id;
-        this.AGENTRECORD.name = this.agent_name;
+        this.CONSRECORD.id = this.cons_id;
+        this.CONSRECORD.name = this.cons_name;
 
       }
       else {
@@ -136,15 +136,15 @@ export class ConsShipReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
 
-        this.report_category = "AGENT";
+        this.report_category = "CONSIGNEE SHIPMENT REPORT";
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
         this.report_type = "DETAIL";
         this.report_shptype = "ALL";
-        this.agent_id = "";
-        this.agent_name = "";
+        this.cons_id = "";
+        this.cons_name = "";
         this.reportformat = 'DETAIL';
 
 
@@ -192,9 +192,9 @@ export class ConsShipReportComponent implements OnInit {
 
       this.SearchData.REPORT_TYPE = this.report_type;
       this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-      this.SearchData.CUST_ID = this.agent_id;
-      this.SearchData.AGENT_ID = this.agent_id;
-      this.SearchData.AGENT_NAME = this.agent_name;
+      this.SearchData.CUST_ID = this.cons_id;
+      this.SearchData.CONS_ID = this.cons_id;
+      this.SearchData.CONS_NAME = this.cons_name;
 
       this.reportformat = this.report_type;
     }
@@ -218,8 +218,8 @@ export class ConsShipReportComponent implements OnInit {
             comp_type: this.SearchData.COMP_TYPE,
             report_type: this.SearchData.REPORT_TYPE,
             report_shptype: this.SearchData.REPORT_SHPTYPE,
-            agent_id: this.SearchData.AGENT_ID,
-            agent_name: this.SearchData.AGENT_NAME,
+            cons_id: this.SearchData.CONS_ID,
+            cons_name: this.SearchData.CONS_NAME,
             reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
@@ -244,19 +244,19 @@ export class ConsShipReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-    this.AGENTRECORD = new SearchTable();
-    this.AGENTRECORD.controlname = "CONSGINEE";
-    this.AGENTRECORD.displaycolumn = "NAME";
-    this.AGENTRECORD.type = "MASTER";
-    this.AGENTRECORD.subtype = "";
-    this.AGENTRECORD.id = "";
-    this.AGENTRECORD.code = "";
+    this.CONSRECORD = new SearchTable();
+    this.CONSRECORD.controlname = "CONSGINEE";
+    this.CONSRECORD.displaycolumn = "NAME";
+    this.CONSRECORD.type = "MASTER";
+    this.CONSRECORD.subtype = "";
+    this.CONSRECORD.id = "";
+    this.CONSRECORD.code = "";
   }
 
   LovSelected(_Record: SearchTable) {
     if (_Record.controlname == "CONSIGNEE") {
-      this.agent_id = _Record.id;
-      this.agent_name = _Record.name;
+      this.cons_id = _Record.id;
+      this.cons_name = _Record.name;
     }
   }
 

@@ -14,8 +14,10 @@ export interface ReportState{
     comp_type: string;
     report_type: string;
     report_shptype : string;
-    agent_id : string ;
-    agent_name : string ;
+    
+    cons_id : string ;
+    cons_name : string ;
+
     reportformat : string ;
     
     page_rows :number;
