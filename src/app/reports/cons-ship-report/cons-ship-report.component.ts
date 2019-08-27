@@ -202,7 +202,7 @@ export class ConsShipReportComponent implements OnInit {
 
     this.loading = true;
 
-    this.mainservice.TeuReport(this.SearchData)
+    this.mainservice.ConsigneeShipmentReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat == "SCREEN") {
