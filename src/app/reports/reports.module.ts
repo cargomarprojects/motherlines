@@ -28,11 +28,8 @@ import { TopCustomerReportReducer } from './top-customer-report/store/top-custom
     ProfitReportComponent,
     ProfitReportHouseComponent,
     ShipLabelReportComponent,
-<<<<<<< HEAD
     ConsShipReportComponent
-=======
     TopCustomerReportComponent
->>>>>>> 6da04aa72b772fea680e0112cd4cf4c4c4e4b02b
   ],
   imports: [
     SharedModule,
@@ -42,13 +39,10 @@ import { TopCustomerReportReducer } from './top-customer-report/store/top-custom
     StoreModule.forFeature('TonReport',TonReportReducer ),        
     StoreModule.forFeature('ProfitReport',ProfitReportReducer ),        
     StoreModule.forFeature('ProfitReportHouse',ProfitReportHouseReducer ), 
-<<<<<<< HEAD
     StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ) ,
     StoreModule.forFeature('ConsShipReport',ConsShipReportReducer ) ,
-=======
     StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer )  ,
     StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer )     
->>>>>>> 6da04aa72b772fea680e0112cd4cf4c4c4e4b02b
   ],
   providers: [
   ]
