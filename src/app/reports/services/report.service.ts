@@ -40,10 +40,10 @@ export class ReportService {
     }
 
 
-    ConsigneeShipmentReport(SearchData: any) {
-      return this.http2.post<any>(this.gs.baseUrl + "/api/Report/TeuReport", SearchData, this.gs.headerparam2('authorized'));
+    ConsShipmentReport(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/Report/ConsShipReport", SearchData, this.gs.headerparam2('authorized'));
     }
-    
+
     TopCustomerReport(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Report/TopCustomerReport", SearchData, this.gs.headerparam2('authorized'));
     }
