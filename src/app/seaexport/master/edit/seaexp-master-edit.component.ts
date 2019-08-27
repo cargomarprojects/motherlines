@@ -31,6 +31,21 @@ export class SeaexpMasterEditComponent implements OnInit {
   report_searchdata : any = {} ;
   report_menuid : string = '';
 
+  attach_title: string = '';
+  attach_parentid: string = '';
+  attach_subid: string = '';
+  attach_type: string = '';
+  attach_typelist: any = {};
+  attach_tablename: string = '';
+  attach_tablepkcolumn: string = '';
+  attach_refno: string = '';
+  attach_customername: string = '';
+  attach_updatecolumn: string = '';
+  attach_viewonlysource: string = '';
+  attach_viewonlyid: string = '';
+  attach_filespath: string = '';
+  attach_filespath2: string = '';
+
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
 
   records: Tbl_cargo_exp_container[] = [];
@@ -615,6 +630,26 @@ export class SeaexpMasterEditComponent implements OnInit {
           origin: 'seaexp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
+        break;
+      }
+      case 'ATTACHMENT': {
+        let TypeList: any[] = [];
+        TypeList = [{ "code": "EMAIL", "name": "E-MAIL" }, { "code": "HOUSEBL", "name": "HOUSE B/L" }, { "code": "MASTER", "name": "MASTER" }, { "code": "PAYMENT SETTLEMENT", "name": "OTHERS" }];
+        this.attach_title = 'Documents';
+        this.attach_parentid = this.pkid;
+        this.attach_subid = '';
+        this.attach_type = 'PAYMENT SETTLEMENT';
+        this.attach_typelist = TypeList;
+        this.attach_tablename = 'cargo_masterm';
+        this.attach_tablepkcolumn = 'mbl_pkid';
+        this.attach_refno = this.record.mbl_refno;
+        this.attach_customername = '';
+        this.attach_updatecolumn = 'REC_FILES_ATTACHED';
+        this.attach_viewonlysource = '';
+        this.attach_viewonlyid = '';
+        this.attach_filespath = '';
+        this.attach_filespath2 = '';
+        this.tab = 'attachment';
         break;
       }
       case 'MESSENGER-SLIP': {
