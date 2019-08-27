@@ -18,7 +18,7 @@ const routes: Routes = [
    { path :'ProfitReport', component : ProfitReportComponent },
    { path :'HouseProfitReport', component : ProfitReportHouseComponent },
    { path :'ShipLabelPage', component : ShipLabelReportComponent },
-   { path :'ConsShipReportPage', component : ConsShipReportComponent },
+   { path :'ConsigneeShipmentReport', component : ConsShipReportComponent },
    { path :'TopCustomerReport', component : TopCustomerReportComponent }
 ];
 

@@ -38,6 +38,12 @@ export class ReportService {
     ShipmentLabelReport(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Report/ShipmentLabelReport", SearchData, this.gs.headerparam2('authorized'));
     }
+
+
+    ConsigneeShipmentReport(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/Report/TeuReport", SearchData, this.gs.headerparam2('authorized'));
+    }
+
 }
 
 
