@@ -17,16 +17,22 @@ import { TonReportReducer } from './ton-report/store/ton-report.reducer';
 import { ProfitReportReducer } from './profit-report/store/profit-report.reducer';
 import { ProfitReportHouseReducer } from './profit-report-house/store/profit-report-house.reducer';
 import { ShipLabelReportReducer } from './ship-label-report/store/ship-label-report.reducer';
+
+
+
 import { TopCustomerReportReducer } from './top-customer-report/store/top-customer-report.reducer';
+import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report.reducer';
+import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
 
 @NgModule({
-  declarations: [
+    declarations :[
     ShipHandReportComponent,
     TeuReportComponent,
     TonReportComponent,
     ProfitReportComponent,
     ProfitReportHouseComponent,
     ShipLabelReportComponent,
+    ConsShipReportComponent,
     TopCustomerReportComponent
   ],
   imports: [
@@ -37,6 +43,8 @@ import { TopCustomerReportReducer } from './top-customer-report/store/top-custom
     StoreModule.forFeature('TonReport',TonReportReducer ),        
     StoreModule.forFeature('ProfitReport',ProfitReportReducer ),        
     StoreModule.forFeature('ProfitReportHouse',ProfitReportHouseReducer ), 
+    StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ) ,
+    StoreModule.forFeature('ConsShipReport',ConsShipReportReducer ) ,
     StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer )  ,
     StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer )     
   ],
