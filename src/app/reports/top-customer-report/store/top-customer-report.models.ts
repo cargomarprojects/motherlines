@@ -18,8 +18,11 @@ export interface ReportState{
     radio_exp: string ;
     report_amt_caption: string;
     group_by_parent:boolean;
-    
-    page_rows :number;
+     filename: string;
+     filetype: string;
+     filedisplayname: string;
+
+        page_rows :number;
     page_count :number;
     page_current :number;
     page_rowcount :number;        

@@ -14,6 +14,7 @@ import { ReportState } from './store/top-customer-report.models'
 
 import { Observable } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-top-customer-report',
@@ -30,6 +31,10 @@ export class TopCustomerReportComponent implements OnInit {
 
   currentTab: string = '';
 
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+
   sdate: string;
   edate: string;
   comp_type: string = '';
@@ -41,6 +46,10 @@ export class TopCustomerReportComponent implements OnInit {
   report_amt_caption: string;
   reportformat: string = '';
   group_by_parent: boolean = false;
+  radio_Visibility = true;
+  filename: string= '';
+  filetype: string= '';
+  filedisplayname: string= '';
 
   page_count: number = 0;
   page_current: number = 0;
@@ -49,9 +58,11 @@ export class TopCustomerReportComponent implements OnInit {
 
   storesub: any;
   sub: any;
-
+  tab: string = 'main';
+  
   loading: boolean = false;
   errorMessage: string = '';
+
 
   SearchData: any = {};
 
@@ -97,6 +108,11 @@ export class TopCustomerReportComponent implements OnInit {
         this.report_amt_caption = rec.report_amt_caption;
         this.group_by_parent = rec.group_by_parent;
 
+        this.filename = rec.filename;
+        this.filetype = rec.filetype;
+        this.filedisplayname = rec.filedisplayname;
+
+        
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
         this.page_current = rec.page_current;
@@ -136,7 +152,11 @@ export class TopCustomerReportComponent implements OnInit {
         this.radio_exp = 'REVENUE';
         this.report_amt_caption = '';
         this.group_by_parent = false;
+        this.filename = '';
+        this.filetype  = '';
+        this.filedisplayname = '';
 
+        
         this.SearchData = this.gs.UserInfo;
 
       }
@@ -157,6 +177,15 @@ export class TopCustomerReportComponent implements OnInit {
 
   List(_outputformat: string, _action: string = 'NEW') {
 
+    let top_by: string = "";
+    this.errorMessage = '';
+    if (this.topnum <= 0) {
+      this.errorMessage = 'Invalid Top Value';
+      alert(this.errorMessage);
+      return;
+    }
+
+    this.ResetControls();
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
@@ -171,49 +200,31 @@ export class TopCustomerReportComponent implements OnInit {
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
       this.SearchData.COMP_TYPE = this.comp_type;
-
       if (this.comp_type == 'ALL')
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       else
         this.SearchData.COMP_CODE = this.comp_type;
-
       this.SearchData.REPORT_TYPE = this.report_type;
-
       this.SearchData.ISPARENT = this.group_by_parent == true ? "Y" : "N";
-      this.SearchData.ISADMIN = (this.gs.user_isadmin == "Y" || this.gs.IsAdmin(this.menuid) )? "Y" : "N";
-
-      this.reportformat = this.report_type;
-
+      this.SearchData.ISADMIN = (this.gs.user_isadmin == "Y" || this.gs.IsAdmin(this.menuid)) ? "Y" : "N";
+     
       this.SearchData.TOP_VAL = this.topnum;
       this.SearchData.SORT_ORDER = this.toporder;
-      this.SearchData.TOP_BY = "EXPENSE";
-/*
-      
-     
-     
-      
+      if (this.radio_exp == 'EXPENSE')
+        top_by = "EXPENSE";
+      if (this.radio_exp == "REVENUE")
+        top_by = "REVENUE";
+      if (this.radio_exp == "PROFIT")
+        top_by = "PROFIT";
+      if (this.radio_exp == "TEU")
+        top_by = "TEU";
+      if (this.radio_exp == "TONNAGE")
+        top_by = "TON";
+      if (this.radio_exp == "TOTHOUSE")
+        top_by = "TOT_HBL";
 
-      Filter.Add("TOP_VAL", Txt_Top.Text);
-      Filter.Add("SORT_ORDER", Cmb_Orderby.SelectedItem.ToString().Trim());
-      if (OPT_EXP.IsChecked == true)
-          Filter.Add("TOP_BY", "EXPENSE");
-      else if (OPT_REVENUE.IsChecked == true)
-          Filter.Add("TOP_BY", "REVENUE");
-      else if (OPT_PROFIT.IsChecked == true)
-          Filter.Add("TOP_BY", "PROFIT");
-      else if (OPT_TEU.IsChecked == true)
-          Filter.Add("TOP_BY", "TEU");
-      else if (OPT_TON.IsChecked == true)
-          Filter.Add("TOP_BY", "TON");
-      else if (OPT_HBL_TOT.IsChecked == true)
-          Filter.Add("TOP_BY", "TOT_HBL");
-
-
-*/
-
-
-
-
+      this.SearchData.TOP_BY = top_by;
+      this.reportformat = this.report_type;
     }
 
     this.loading = true;
@@ -242,7 +253,11 @@ export class TopCustomerReportComponent implements OnInit {
             page_count: response.page_count,
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
-            records: response.list
+            records: response.list,
+            filename:  response.filename,
+            filetype:  response.filetype,
+            filedisplayname: response.filedisplayname
+      
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
@@ -268,6 +283,59 @@ export class TopCustomerReportComponent implements OnInit {
   LovSelected(_Record: SearchTable) {
 
   }
+  OnChange(field: string) {
+    if (field == 'report_category') {
+      try {
+        if (this.report_category == "SHIPPER" || this.report_category == "CONSIGNEE" ||
+          this.report_category == "OVERSEAS AGENT" || this.report_category == "POL" ||
+          this.report_category == "POD") {
+          this.radio_exp = 'REVENUE';
+          this.radio_Visibility = true;
+        }
+        else {
+          this.radio_exp = 'EXPENSE';
+          this.radio_Visibility = false;
+        }
+      }
+      catch (Exception) {
+      }
+    }
+  }
 
+  rdbtnclick() {
+    this.group_by_parent = false;
+  }
+  ResetControls() {
+    if (this.radio_exp == 'EXPENSE')
+      this.report_amt_caption = "EXPENSE";
+    if (this.radio_exp == "REVENUE")
+      this.report_amt_caption = "REVENUE";
+    if (this.radio_exp == "PROFIT")
+      this.report_amt_caption = "PROFIT";
+    if (this.radio_exp == "TEU")
+      this.report_amt_caption = "TEU";
+    if (this.radio_exp == "TONNAGE")
+      this.report_amt_caption = "TONNAGE";
+    if (this.radio_exp == "TOTHOUSE")
+      this.report_amt_caption = "NO OF HOUSE";
 
+    if (this.report_type == "DETAIL") {
+      this.reportformat = "DETAIL";
+    }
+    else if (this.report_type == "SUMMARY") {
+      this.reportformat = "SUMMARY";
+    }
+  }
+
+  Print() {
+    this.report_url = '';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = '';
+    this.report_menuid = ''
+    this.tab = 'report';
+  }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
 }
