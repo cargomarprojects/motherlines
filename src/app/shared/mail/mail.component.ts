@@ -6,6 +6,7 @@ import { LovService } from '../services/lov.service';
 import { Table_Email } from '../models/table_email';
 import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { HtmlParser } from '@angular/compiler';
 
 @Component({
   selector: 'app-mail',
@@ -35,6 +36,7 @@ export class MailComponent implements OnInit {
 
   private to_ids: string = '';
   private cc_ids: string = '';
+  private cc_ids2: string = '';
   private bcc_ids: string = '';
   private subject: string = '';
   private message: string = '';
@@ -65,9 +67,11 @@ export class MailComponent implements OnInit {
     this.chkDelivReceipt = false;
     this.chkReadRecipt = false;
     this.cc_ids = '';
+    this.cc_ids2 = '';
     this.bcc_ids = '';
     this.to_ids = '';
     this.subject = '';
+    this.cc_ids2 = this.gs.user_email_cc.toString();
     this.message = this.gs.user_email_signature.toString();
     this.msgFontFamily = this.gs.user_email_sign_font;
     this.msgFontSize = this.gs.user_email_sign_size + "px";
@@ -136,9 +140,39 @@ export class MailComponent implements OnInit {
 
   SearchRecord(controlname: string, _type: string) {
 
+    let Htm: string = "";
+    let str: string = "";
     this.errorMessage = [];
     let filename: string = "";
-    let filedisplayname: string = "";
+    let filedisplayname: string = "";  
+
+    this.cc_ids = this.cc_ids.trim();
+    if (this.cc_ids2.trim().length > 0 && this.cc_ids != "")
+      this.cc_ids += ",";
+    this.cc_ids += this.cc_ids2;
+
+    Htm += " <html> ";
+    Htm += " <head>";
+    Htm += " <style type='text/css'> ";
+    Htm += " body { ";
+    Htm += " font-family:" + this.gs.user_email_sign_font +  ";";
+    Htm += " color:" +  this.gs.user_email_sign_color +  ";";
+    Htm += " font-size:" +  this.gs.user_email_sign_size  + "px;";
+    if (  this.gs.user_email_sign_bold == "Y") 
+        Htm += " font-weight:bold;";
+    Htm += " } ";
+    Htm += " </style> ";
+    Htm += " </head> ";
+    Htm += " <body> ";
+    
+    str = this.message.toString().replace("\r\n", "<BR>");
+    str = str.replace("\r", "<BR>");
+    str = str.replace("\n", "<BR>");
+    Htm += str;
+    Htm += " </body> ";
+    Htm += " </html> ";
+
+
     if (this.AttachList != null) {
       if (this.AttachList.length == 1) {
         filename = this.AttachList[0].filename;
@@ -179,7 +213,7 @@ export class MailComponent implements OnInit {
     SearchData.cc_ids = this.cc_ids;
     SearchData.bcc_ids = this.bcc_ids;
     SearchData.subject = this.subject;
-    SearchData.message = this.message;
+    SearchData.message = Htm;
     SearchData.filename = filename;
     SearchData.filedisplayname = filedisplayname;
     SearchData.type = _type;
@@ -226,19 +260,6 @@ export class MailComponent implements OnInit {
     this.lovService.GetEmailIds(SearchData)
       .subscribe(response => {
         this.EmailList = <Table_Email[]>response.list;
-
-        // this.RecordList.forEach(Rec => {
-        //   Rec.file_uri = this.gs.WWW_FILES_URL + "/" + Rec.file_id;
-        //   if (Rec.files_type == "XML-EDI") {
-        //     Rec.file_uri = this.gs.WWW_ROOT_FILE_FOLDER + "/../" + Rec.files_path + Rec.file_id;
-        //   }
-        //   Rec.files_type = this.GetFileType(Rec.files_type); //in database filestype  store code but the list wants to shows name, so to retreive name this fn is used;
-        //   Rec.files_editrow = false;
-        // })
-
-        // if (this.Files_Type == "PAYMENT SETTLEMENT")
-        //   this.ReLoadDocType(response.tothouse);
-
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
