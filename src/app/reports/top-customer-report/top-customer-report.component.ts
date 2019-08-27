@@ -189,11 +189,7 @@ export class TopCustomerReportComponent implements OnInit {
       this.SearchData.TOP_BY = "EXPENSE";
 /*
       
-      
-      
-      
      
-
      
       
 
