@@ -9,7 +9,11 @@ import { TonReportComponent } from './ton-report/ton-report.component';
 import { ProfitReportComponent } from './profit-report/profit-report.component';
 import { ProfitReportHouseComponent } from './profit-report-house/profit-report-house.component';
 import { ShipLabelReportComponent } from './ship-label-report/ship-label-report.component';
+<<<<<<< HEAD
 import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
+=======
+import { TopCustomerReportComponent } from './top-customer-report/top-customer-report.component';
+>>>>>>> 6da04aa72b772fea680e0112cd4cf4c4c4e4b02b
 
 import { ShipHandReportReducer } from './ship-hand-report/store/ship-hand-report.reducer';
 import { TeuReportReducer } from './teu-report/store/teu-report.reducer';
@@ -17,10 +21,14 @@ import { TonReportReducer } from './ton-report/store/ton-report.reducer';
 import { ProfitReportReducer } from './profit-report/store/profit-report.reducer';
 import { ProfitReportHouseReducer } from './profit-report-house/store/profit-report-house.reducer';
 import { ShipLabelReportReducer } from './ship-label-report/store/ship-label-report.reducer';
+<<<<<<< HEAD
 import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report.reducer';
 
 
 
+=======
+import { TopCustomerReportReducer } from './top-customer-report/store/top-customer-report.reducer';
+>>>>>>> 6da04aa72b772fea680e0112cd4cf4c4c4e4b02b
 
 @NgModule({
   declarations: [
@@ -30,7 +38,11 @@ import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report
     ProfitReportComponent,
     ProfitReportHouseComponent,
     ShipLabelReportComponent,
+<<<<<<< HEAD
     ConsShipReportComponent
+=======
+    TopCustomerReportComponent
+>>>>>>> 6da04aa72b772fea680e0112cd4cf4c4c4e4b02b
   ],
   imports: [
     SharedModule,
@@ -40,8 +52,13 @@ import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report
     StoreModule.forFeature('TonReport',TonReportReducer ),        
     StoreModule.forFeature('ProfitReport',ProfitReportReducer ),        
     StoreModule.forFeature('ProfitReportHouse',ProfitReportHouseReducer ), 
+<<<<<<< HEAD
     StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ) ,
     StoreModule.forFeature('ConsShipReport',ConsShipReportReducer ) ,
+=======
+    StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer )  ,
+    StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer )     
+>>>>>>> 6da04aa72b772fea680e0112cd4cf4c4c4e4b02b
   ],
   providers: [
   ]
