@@ -21,7 +21,7 @@ import { map, tap, filter } from 'rxjs/operators';
 })
 export class TopCustomerReportComponent implements OnInit {
 
-  title: string = 'Sea Volume Report';
+  title: string = 'Top Customer Report';
 
   pkid: string;
   urlid: string;
@@ -29,14 +29,19 @@ export class TopCustomerReportComponent implements OnInit {
   menuid: string;
 
   currentTab: string = '';
-  
+
   report_category: string;
   sdate: string;
   edate: string;
-  mode : string  ='';
+  mode: string = '';
   comp_type: string = '';
+
+  report_shptype: string = '';
+
+  topnum: number = 0;
+  toporder: string = '';
   report_type: string = '';
-  report_shptype : string = '';
+  radio_exp: string = 'EXP'
 
   agent_id: string;
   agent_name: string;
@@ -87,11 +92,11 @@ export class TopCustomerReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-        
+
         this.report_category = rec.report_category
         this.sdate = rec.sdate;
         this.edate = rec.edate;
-        this.mode  = rec.mode ;
+        this.mode = rec.mode;
         this.comp_type = rec.comp_type;
         this.report_type = rec.report_type;
         this.report_shptype = rec.report_shptype;
@@ -105,7 +110,7 @@ export class TopCustomerReportComponent implements OnInit {
         this.page_current = rec.page_current;
         this.page_rowcount = rec.page_rowcount;
 
-        
+
         this.SearchData = this.gs.UserInfo;
         this.SearchData.SDATE = this.sdate;
         this.SearchData.EDATE = this.edate;
@@ -135,7 +140,7 @@ export class TopCustomerReportComponent implements OnInit {
         this.page_rowcount = 0;
 
         this.currentTab = 'LIST';
-        
+
         this.report_category = "AGENT";
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
@@ -178,13 +183,13 @@ export class TopCustomerReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat == "SCREEN" && _action == 'NEW') {
-      
+
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
       this.SearchData.MODE = this.mode;
       this.SearchData.COMP_TYPE = this.comp_type;
-      
+
       if (this.comp_type == 'ALL')
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       else
@@ -220,7 +225,7 @@ export class TopCustomerReportComponent implements OnInit {
             report_shptype: this.SearchData.REPORT_SHPTYPE,
             agent_id: this.SearchData.AGENT_ID,
             agent_name: this.SearchData.AGENT_NAME,
-            reportformat : this.reportformat,
+            reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
