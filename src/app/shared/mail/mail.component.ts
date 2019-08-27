@@ -6,7 +6,6 @@ import { LovService } from '../services/lov.service';
 import { Table_Email } from '../models/table_email';
 import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
-import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-mail',
