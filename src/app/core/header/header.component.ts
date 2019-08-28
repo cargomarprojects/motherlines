@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../services/global.service';
 import { LoginService } from '../services/login.service';
-
 import { User_Menu } from '../models/menum';
-
 
 @Component({
     selector: 'app-header',
@@ -17,7 +15,7 @@ export class HeaderComponent {
     id = '';
     constructor(
         private router: Router,
-        private location : Location,
+        private location: Location,
         public gs: GlobalService,
         private loginservice: LoginService) {
     }
@@ -40,7 +38,7 @@ export class HeaderComponent {
         this.id = this.gs.getGuid();
     }
 
-    getTEST(){
+    getTEST() {
         return 'FROM AJITH COMPUTER';
     }
 
