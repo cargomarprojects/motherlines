@@ -14,9 +14,10 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private location : Location,
     public gs: GlobalService
-  ) { 
-    if ( !this.gs.IsAuthenticated)
+  ) {
+    if ( !this.gs.IsAuthenticated) {
       this.router.navigate(['login']);
+    }
   }
 
   ngOnInit() {
