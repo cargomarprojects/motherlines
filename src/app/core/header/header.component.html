@@ -1,28 +1,30 @@
 
-<div *ngIf="gs.IsAuthenticated">
-  <nav class="navbar  navbar-dark bg-primary">
-    <div style="margin-top: 5px">
-      <h5 style="color:white">{{gs.company_name}}</h5>
-    </div>
 
-    <div class="btn-group" [ngStyle]="{'margin':'0px'}" ngbDropdown *ngFor="let rech of gs.Modules">
-      <button class="btn btn-primary btn-sm" ngbDropdownToggle>{{rech.module_name}}</button>
-      <div class="dropdown-menu" ngbDropdownMenu>
-        <div *ngFor="let rec of gs.MenuList" class="menulist">
-          <a *ngIf="rech.module_name == rec.module_name && rec.menu_hiden=='N'" class="dropdown-item"
-            (click)="LoadPage(rec)">{{rec.menu_name}}</a>
+<div *ngIf="gs.IsAuthenticated">
+
+    <nav class="navbar  navbar-dark bg-primary">
+      <div style="margin-top: 5px">
+        <h5 style="color:white">{{gs.company_name}}</h5>
+      </div>
+
+      <div class="btn-group" [ngStyle]="{'margin':'0px'}" ngbDropdown *ngFor="let rech of gs.Modules">
+        <button class="btn btn-primary btn-sm" ngbDropdownToggle>{{rech.module_name}}</button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <div *ngFor="let rec of gs.MenuList" class="menulist">
+            <a *ngIf="rech.module_name == rec.module_name && rec.menu_hiden=='N'" class="dropdown-item"
+              (click)="LoadPage(rec)">{{rec.menu_name}}</a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <span  style="color:white;margin-top: 5px">
-      <label>{{gs.user_name}}</label>
-      <label>|</label>
-      <label>{{gs.branch_name}}</label>
-      <label>|</label>
-      <label>|</label> -->
-      <a (click)="Logout()">Logout</a>
-    </span>
-  </nav>
+      <span  style="color:white;margin-top: 5px">
+        <label>{{gs.user_name}}</label>
+        <label>|</label>
+        <label>{{gs.branch_name}}</label>
+        <label>|</label>
+        <label>|</label> -->
+        <a (click)="Logout()">Logout</a>
+      </span>
+    </nav>
 
-</div>
+  </div>
