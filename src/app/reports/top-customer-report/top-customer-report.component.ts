@@ -15,6 +15,7 @@ import { ReportState } from './store/top-customer-report.models'
 import { Observable } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
 import { ThrowStmt } from '@angular/compiler';
+import { THIS_EXPR, IfStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-top-customer-report',
@@ -105,7 +106,6 @@ export class TopCustomerReportComponent implements OnInit {
         this.radio_exp = rec.radio_exp;
         this.report_amt_caption = rec.report_amt_caption;
         this.group_by_parent = rec.group_by_parent;
-
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
@@ -146,6 +146,8 @@ export class TopCustomerReportComponent implements OnInit {
           this.SearchData.TOP_BY = "TON";
         if (this.radio_exp == "TOTHOUSE")
           this.SearchData.TOP_BY = "TOT_HBL";
+
+
 
         // this.SearchData.TOP_BY = top_by;
         this.reportformat = this.report_type;
@@ -206,6 +208,7 @@ export class TopCustomerReportComponent implements OnInit {
     }
 
     this.ResetControls();
+
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
@@ -245,6 +248,9 @@ export class TopCustomerReportComponent implements OnInit {
       if (this.radio_exp == "TOTHOUSE")
         this.SearchData.TOP_BY = "TOT_HBL";
       this.reportformat = this.report_type;
+      this.SearchData.filename = "";
+      this.SearchData.filedisplayname = "";
+      this.SearchData.filetype = "";
     }
 
     this.loading = true;
@@ -253,6 +259,12 @@ export class TopCustomerReportComponent implements OnInit {
       .subscribe(response => {
 
         if (_outputformat == "SCREEN") {
+
+          if (_action == "NEW") {
+            this.SearchData.filename = response.filename;
+            this.SearchData.filedisplayname = response.filedisplayname;
+            this.SearchData.filetype = response.filetype;
+          }
           const state: ReportState = {
             pkid: this.pkid,
             urlid: this.urlid,
@@ -274,9 +286,9 @@ export class TopCustomerReportComponent implements OnInit {
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
             records: response.list,
-            filename: response.filename,
-            filetype: response.filetype,
-            filedisplayname: response.filedisplayname
+            filename: this.SearchData.filename,
+            filetype: this.SearchData.filetype,
+            filedisplayname: this.SearchData.filedisplayname
 
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
