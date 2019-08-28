@@ -6,10 +6,9 @@ import { ReportService } from '../services/report.service';
 import { TBL_MBL_REPORT } from '../models/tbl_mbl_report';
 import { SearchTable } from '../../shared/models/searchtable';
 
-
 import { Store, State, select } from '@ngrx/store';
-import *  as myActions from './store/cons-ship-report.actions';
-import *  as myReducer from './store/cons-ship-report.reducer';
+import * as myActions from './store/cons-ship-report.actions';
+import * as myReducer from './store/cons-ship-report.reducer';
 import { ReportState } from './store/cons-ship-report.models'
 
 import { Observable } from 'rxjs';
@@ -88,7 +87,7 @@ export class ConsShipReportComponent implements OnInit {
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
 
-        this.report_category = rec.report_category
+        this.report_category = rec.report_category;
         this.sdate = rec.sdate;
         this.edate = rec.edate;
         this.mode = rec.mode;
@@ -111,10 +110,11 @@ export class ConsShipReportComponent implements OnInit {
         this.SearchData.EDATE = this.edate;
         this.SearchData.MODE = this.mode;
         this.SearchData.COMP_TYPE = this.comp_type;
-        if (this.comp_type == 'ALL')
+        if (this.comp_type === 'ALL') {
           this.SearchData.COMP_CODE = this.gs.branch_codes;
-        else
+        } else {
           this.SearchData.COMP_CODE = this.comp_type;
+        }
 
         this.SearchData.REPORT_TYPE = this.report_type;
         this.SearchData.REPORT_SHPTYPE = this.report_shptype;
@@ -125,8 +125,7 @@ export class ConsShipReportComponent implements OnInit {
         this.CONSRECORD.id = this.cons_id;
         this.CONSRECORD.name = this.cons_name;
 
-      }
-      else {
+      } else {
         this.MainList = Array<TBL_MBL_REPORT>();
 
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
@@ -136,15 +135,15 @@ export class ConsShipReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
 
-        this.report_category = "CONSIGNEE SHIPMENT REPORT";
+        this.report_category = 'CONSIGNEE SHIPMENT REPORT';
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
-        this.report_type = "DETAIL";
-        this.report_shptype = "ALL";
-        this.cons_id = "";
-        this.cons_name = "";
+        this.report_type = 'DETAIL';
+        this.report_shptype = 'ALL';
+        this.cons_id = '';
+        this.cons_name = '';
         this.reportformat = 'DETAIL';
 
 
@@ -177,7 +176,7 @@ export class ConsShipReportComponent implements OnInit {
     this.SearchData.page_rows = this.page_rows;
     this.SearchData.page_rowcount = this.page_rowcount;
 
-    if (_outputformat == "SCREEN" && _action == 'NEW') {
+    if (_outputformat === 'SCREEN' && _action === 'NEW') {
 
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.SDATE = this.sdate;
@@ -185,10 +184,11 @@ export class ConsShipReportComponent implements OnInit {
       this.SearchData.MODE = this.mode;
       this.SearchData.COMP_TYPE = this.comp_type;
 
-      if (this.comp_type == 'ALL')
+      if (this.comp_type === 'ALL') {
         this.SearchData.COMP_CODE = this.gs.branch_codes;
-      else
+      } else {
         this.SearchData.COMP_CODE = this.comp_type;
+      }
 
       this.SearchData.REPORT_TYPE = this.report_type;
       this.SearchData.REPORT_SHPTYPE = this.report_shptype;
@@ -205,7 +205,7 @@ export class ConsShipReportComponent implements OnInit {
     this.mainservice.ConsigneeShipmentReport(this.SearchData)
       .subscribe(response => {
 
-        if (_outputformat == "SCREEN") {
+        if (_outputformat === 'SCREEN') {
           const state: ReportState = {
             pkid: this.pkid,
             urlid: this.urlid,
@@ -245,16 +245,16 @@ export class ConsShipReportComponent implements OnInit {
 
   initLov(caption: string = '') {
     this.CONSRECORD = new SearchTable();
-    this.CONSRECORD.controlname = "CONSGINEE";
-    this.CONSRECORD.displaycolumn = "NAME";
-    this.CONSRECORD.type = "MASTER";
-    this.CONSRECORD.subtype = "";
-    this.CONSRECORD.id = "";
-    this.CONSRECORD.code = "";
+    this.CONSRECORD.controlname = 'CONSGINEE';
+    this.CONSRECORD.displaycolumn = 'NAME';
+    this.CONSRECORD.type = 'MASTER';
+    this.CONSRECORD.subtype = '';
+    this.CONSRECORD.id = '';
+    this.CONSRECORD.code = '';
   }
 
   LovSelected(_Record: SearchTable) {
-    if (_Record.controlname == "CONSIGNEE") {
+    if (_Record.controlname === 'CONSIGNEE') {
       this.cons_id = _Record.id;
       this.cons_name = _Record.name;
     }
