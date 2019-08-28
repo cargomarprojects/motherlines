@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../services/global.service';
 import { LoginService } from '../services/login.service';
-
 import { User_Menu } from '../models/menum';
-import { Alert } from 'selenium-webdriver';
 
 @Component({
     selector: 'app-header',
@@ -13,12 +11,11 @@ import { Alert } from 'selenium-webdriver';
 })
 export class HeaderComponent {
     public isNavbarCollapsed = true;
-    
-    title = "Pls Login";
-    id: string = "";
+    title = 'Pls Login';
+    id = '';
     constructor(
         private router: Router,
-        private location : Location,
+        private location: Location,
         public gs: GlobalService,
         private loginservice: LoginService) {
     }
@@ -26,27 +23,23 @@ export class HeaderComponent {
     LoadPage(rec: User_Menu) {
         this.getUrlID();
         this.id =  rec.menu_pkid;
-        var menu_route = rec.menu_xap_dll + "/" + rec.menu_xap_class;
-        rec.menu_route2 ='';
+        const menu_route = rec.menu_xap_dll + '/' + rec.menu_xap_class;
+        rec.menu_route2 = '';
         this.router.navigate([menu_route], { queryParams: { id: this.id, menuid : rec.menu_pkid, menu_param : rec.menu_param }});
     }
 
     Logout() {
         this.loginservice.Logout();
         this.title = 'Pls Login';
-        this.router.navigate(['login'], { replaceUrl: true }); 
+        this.router.navigate(['login'], { replaceUrl: true });
     }
 
     getUrlID() {
         this.id = this.gs.getGuid();
     }
 
-    getTEST(){
+    getTEST() {
         return 'FROM AJITH COMPUTER';
-    }
-
-    ngOnDestroy(){
-
     }
 
 }
