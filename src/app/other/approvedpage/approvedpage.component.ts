@@ -25,6 +25,7 @@ export class ApprovedPageComponent implements OnInit {
   records$: Observable<Tbl_Cargo_Approved[]>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
+  sub: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +35,14 @@ export class ApprovedPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.mainservice.init(this.route.snapshot.queryParams);
+   // this.mainservice.init(this.route.snapshot.queryParams);
+   this.sub = this.route.queryParams.subscribe(params => {
+    if (params["parameter"] != "") {
+      this.mainservice.init(params);
+    // this.mainservice.Search('SCREEN');
+    }
+  });
+
     this.initPage();
   }
 
@@ -100,5 +108,8 @@ export class ApprovedPageComponent implements OnInit {
     this.location.back();
   }
 
+ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
 }

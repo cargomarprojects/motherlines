@@ -70,6 +70,8 @@ export interface SearchQuery {
     caType: string;
     userName: string;
     userId: string;
+    userLovDisabled: boolean;
+    userLovCaption: string;
 }
 
 export interface ApprovedPageModel {

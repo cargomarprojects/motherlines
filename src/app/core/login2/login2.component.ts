@@ -190,7 +190,7 @@ export class Login2Component implements OnInit {
         var SearchData: any = {};
         SearchData = this.GLOBALCONTANTS.UserInfo;
 
-        if (this.GLOBALCONTANTS.user_isadmin)
+        if (this.GLOBALCONTANTS.user_isadmin == "Y")
             SearchData.UA_ID = "";
         else
             SearchData.UA_ID = this.GLOBALCONTANTS.user_ua_pkid;

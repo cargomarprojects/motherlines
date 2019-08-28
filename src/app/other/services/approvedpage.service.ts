@@ -38,14 +38,19 @@ export class ApprovedPageService {
     public init(params: any) {
         if (this.initlialized)
             return;
-
+        let usrid: string = '';
+        let usrname: string = '';
         this.id = params.id;
         this.menuid = params.menuid;
         this.param_type = params.menu_param;
+        if (this.param_type != 'APPROVED') {
+            usrid = this.gs.user_pkid;
+            usrname = this.gs.user_name;
+        }
         this.record = <ApprovedPageModel><unknown>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.defaultValues.lastmonthdate, toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userId: '' },
+            searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.defaultValues.lastmonthdate, toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userName: usrname, userId: usrid, userLovDisabled: true, userLovCaption: 'Request./Aprvd.By' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -56,7 +61,19 @@ export class ApprovedPageService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
-        this.initlialized = true;
+
+        this.record.searchQuery.userLovDisabled = true;
+        if (this.isAdmin || this.param_type == 'APPROVED')
+            this.record.searchQuery.userLovDisabled = false;
+
+        this.record.searchQuery.userLovCaption = 'Request./Aprvd.By';
+        if (this.param_type == 'REQUEST REPORT')
+            this.record.searchQuery.userLovCaption = 'Request.By';
+        else if (this.param_type == 'APPROVED REPORT')
+            this.record.searchQuery.userLovCaption = 'Approved.By';
+
+        //this.initlialized = true;
+        this.initlialized = false;
     }
 
     Search(_searchdata: any, type: string = '') {
