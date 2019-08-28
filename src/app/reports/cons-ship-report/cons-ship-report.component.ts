@@ -119,8 +119,8 @@ export class ConsShipReportComponent implements OnInit {
         this.SearchData.REPORT_TYPE = this.report_type;
         this.SearchData.REPORT_SHPTYPE = this.report_shptype;
 
-        this.SearchData.CONS_ID = this.cons_id;
-        this.SearchData.CONS_NAME = this.cons_name;
+        this.SearchData.CONSIGNEE_ID = this.cons_id;
+        this.SearchData.CONSIGNEE_NAME = this.cons_name;
 
         this.CONSRECORD.id = this.cons_id;
         this.CONSRECORD.name = this.cons_name;
@@ -178,6 +178,7 @@ export class ConsShipReportComponent implements OnInit {
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
 
+      this.SearchData.JV_YEAR = this.gs.globalVariables.year_code;
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
@@ -192,9 +193,9 @@ export class ConsShipReportComponent implements OnInit {
 
       this.SearchData.REPORT_TYPE = this.report_type;
       this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-      this.SearchData.CUST_ID = this.cons_id;
-      this.SearchData.CONS_ID = this.cons_id;
-      this.SearchData.CONS_NAME = this.cons_name;
+
+      this.SearchData.CONSIGNEE_ID = this.cons_id;
+      this.SearchData.CONSIGNEE_NAME = this.cons_name;
 
       this.reportformat = this.report_type;
     }
@@ -218,8 +219,8 @@ export class ConsShipReportComponent implements OnInit {
             comp_type: this.SearchData.COMP_TYPE,
             report_type: this.SearchData.REPORT_TYPE,
             report_shptype: this.SearchData.REPORT_SHPTYPE,
-            cons_id: this.SearchData.CONS_ID,
-            cons_name: this.SearchData.CONS_NAME,
+            cons_id: this.SearchData.CONSIGNEE_ID,
+            cons_name: this.SearchData.CONSIGNEE_NAME,
             reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
@@ -245,7 +246,7 @@ export class ConsShipReportComponent implements OnInit {
 
   initLov(caption: string = '') {
     this.CONSRECORD = new SearchTable();
-    this.CONSRECORD.controlname = 'CONSGINEE';
+    this.CONSRECORD.controlname = 'CONSIGNEE';
     this.CONSRECORD.displaycolumn = 'NAME';
     this.CONSRECORD.type = 'MASTER';
     this.CONSRECORD.subtype = '';
