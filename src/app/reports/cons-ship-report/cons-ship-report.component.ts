@@ -20,19 +20,19 @@ import { map, tap, filter } from 'rxjs/operators';
 })
 export class ConsShipReportComponent implements OnInit {
 
-  title: string = 'Consignee Shipment Report';
+  title = 'Consignee Shipment Report';
 
   pkid: string;
   urlid: string;
   url: string;
   menuid: string;
 
-  currentTab: string = '';
+  currentTab = '';
 
   report_category: string;
   sdate: string;
   edate: string;
-  mode: string = '';
+  mode  = '';
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
