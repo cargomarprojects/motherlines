@@ -5,7 +5,7 @@ import { GlobalService } from '../services/global.service';
 import { LoginService } from '../services/login.service';
 
 import { User_Menu } from '../models/menum';
-import { Alert } from 'selenium-webdriver';
+
 
 @Component({
     selector: 'app-header',
@@ -14,7 +14,7 @@ import { Alert } from 'selenium-webdriver';
 export class HeaderComponent {
     public isNavbarCollapsed = true;
     title = 'Pls Login';
-    id: string = '';
+    id = '';
     constructor(
         private router: Router,
         private location : Location,
