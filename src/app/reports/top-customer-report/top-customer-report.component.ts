@@ -42,14 +42,14 @@ export class TopCustomerReportComponent implements OnInit {
   topnum: number = 0;
   toporder: string = '';
   report_type: string = '';
-  radio_exp: string = 'EXP'
-  report_amt_caption: string;
+  radio_exp: string = 'EXPENSE';
+  report_amt_caption: string = 'EXPENSE';
   reportformat: string = '';
   group_by_parent: boolean = false;
   radio_Visibility = true;
-  filename: string= '';
-  filetype: string= '';
-  filedisplayname: string= '';
+  filename: string = '';
+  filetype: string = '';
+  filedisplayname: string = '';
 
   page_count: number = 0;
   page_current: number = 0;
@@ -59,7 +59,7 @@ export class TopCustomerReportComponent implements OnInit {
   storesub: any;
   sub: any;
   tab: string = 'main';
-  
+
   loading: boolean = false;
   errorMessage: string = '';
 
@@ -78,13 +78,11 @@ export class TopCustomerReportComponent implements OnInit {
     private store: Store<myReducer.AppState>,
     private mainservice: ReportService
   ) {
-
     this.sub = this.activatedroute.queryParams.subscribe(params => {
       this.urlid = params.id;
       this.menuid = params.menuid;
       this.InitPage();
     });
-
   }
 
   InitPage() {
@@ -112,7 +110,7 @@ export class TopCustomerReportComponent implements OnInit {
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
 
-        
+
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
         this.page_current = rec.page_current;
@@ -120,6 +118,9 @@ export class TopCustomerReportComponent implements OnInit {
 
 
         this.SearchData = this.gs.UserInfo;
+        this.SearchData.REPORT_TYPE = this.report_type;
+        this.SearchData.REPORT_CATEGORY = this.report_category;
+        this.SearchData.REPORT_AMT_CAPTION = this.report_amt_caption;
         this.SearchData.SDATE = this.sdate;
         this.SearchData.EDATE = this.edate;
         this.SearchData.COMP_TYPE = this.comp_type;
@@ -127,8 +128,27 @@ export class TopCustomerReportComponent implements OnInit {
           this.SearchData.COMP_CODE = this.gs.branch_codes;
         else
           this.SearchData.COMP_CODE = this.comp_type;
+        this.SearchData.COMP_NAME = this.gs.branch_name;
+        this.SearchData.ISPARENT = this.group_by_parent == true ? "Y" : "N";
+        this.SearchData.ISADMIN = (this.gs.user_isadmin == "Y" || this.gs.IsAdmin(this.menuid)) ? "Y" : "N";
 
-        this.SearchData.REPORT_TYPE = this.report_type;
+        this.SearchData.TOP_VAL = this.topnum;
+        this.SearchData.SORT_ORDER = this.toporder;
+        if (this.radio_exp == 'EXPENSE')
+          this.SearchData.TOP_BY = "EXPENSE";
+        if (this.radio_exp == "REVENUE")
+          this.SearchData.TOP_BY = "REVENUE";
+        if (this.radio_exp == "PROFIT")
+          this.SearchData.TOP_BY = "PROFIT";
+        if (this.radio_exp == "TEU")
+          this.SearchData.TOP_BY = "TEU";
+        if (this.radio_exp == "TONNAGE")
+          this.SearchData.TOP_BY = "TON";
+        if (this.radio_exp == "TOTHOUSE")
+          this.SearchData.TOP_BY = "TOT_HBL";
+
+        // this.SearchData.TOP_BY = top_by;
+        this.reportformat = this.report_type;
 
       }
       else {
@@ -145,18 +165,18 @@ export class TopCustomerReportComponent implements OnInit {
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
         this.comp_type = this.gs.branch_code;
-        this.report_type = "DETAIL";
-        this.reportformat = 'DETAIL';
+        this.report_type = "SUMMARY";
+        this.reportformat = 'SUMMARY';
         this.topnum = 10;
-        this.toporder = 'ASC';
+        this.toporder = 'DESC';
         this.radio_exp = 'REVENUE';
         this.report_amt_caption = '';
         this.group_by_parent = false;
         this.filename = '';
-        this.filetype  = '';
+        this.filetype = '';
         this.filedisplayname = '';
 
-        
+
         this.SearchData = this.gs.UserInfo;
 
       }
@@ -177,7 +197,7 @@ export class TopCustomerReportComponent implements OnInit {
 
   List(_outputformat: string, _action: string = 'NEW') {
 
-    let top_by: string = "";
+
     this.errorMessage = '';
     if (this.topnum <= 0) {
       this.errorMessage = 'Invalid Top Value';
@@ -196,7 +216,9 @@ export class TopCustomerReportComponent implements OnInit {
 
     if (_outputformat == "SCREEN" && _action == 'NEW') {
 
+      this.SearchData.REPORT_TYPE = this.report_type;
       this.SearchData.REPORT_CATEGORY = this.report_category;
+      this.SearchData.REPORT_AMT_CAPTION = this.report_amt_caption;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
       this.SearchData.COMP_TYPE = this.comp_type;
@@ -204,26 +226,24 @@ export class TopCustomerReportComponent implements OnInit {
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       else
         this.SearchData.COMP_CODE = this.comp_type;
-      this.SearchData.REPORT_TYPE = this.report_type;
+      this.SearchData.COMP_NAME = this.gs.branch_name;
       this.SearchData.ISPARENT = this.group_by_parent == true ? "Y" : "N";
       this.SearchData.ISADMIN = (this.gs.user_isadmin == "Y" || this.gs.IsAdmin(this.menuid)) ? "Y" : "N";
-     
+
       this.SearchData.TOP_VAL = this.topnum;
       this.SearchData.SORT_ORDER = this.toporder;
       if (this.radio_exp == 'EXPENSE')
-        top_by = "EXPENSE";
+        this.SearchData.TOP_BY = "EXPENSE";
       if (this.radio_exp == "REVENUE")
-        top_by = "REVENUE";
+        this.SearchData.TOP_BY = "REVENUE";
       if (this.radio_exp == "PROFIT")
-        top_by = "PROFIT";
+        this.SearchData.TOP_BY = "PROFIT";
       if (this.radio_exp == "TEU")
-        top_by = "TEU";
+        this.SearchData.TOP_BY = "TEU";
       if (this.radio_exp == "TONNAGE")
-        top_by = "TON";
+        this.SearchData.TOP_BY = "TON";
       if (this.radio_exp == "TOTHOUSE")
-        top_by = "TOT_HBL";
-
-      this.SearchData.TOP_BY = top_by;
+        this.SearchData.TOP_BY = "TOT_HBL";
       this.reportformat = this.report_type;
     }
 
@@ -254,10 +274,10 @@ export class TopCustomerReportComponent implements OnInit {
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
             records: response.list,
-            filename:  response.filename,
-            filetype:  response.filetype,
+            filename: response.filename,
+            filetype: response.filetype,
             filedisplayname: response.filedisplayname
-      
+
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
@@ -328,10 +348,16 @@ export class TopCustomerReportComponent implements OnInit {
   }
 
   Print() {
+    this.errorMessage = "";
+    if (this.MainList.length <= 0) {
+      this.errorMessage = "List Not Found";
+      alert(this.errorMessage);
+      return;
+    }
     this.report_url = '';
     this.report_searchdata = this.gs.UserInfo;
     this.report_searchdata.pkid = '';
-    this.report_menuid = ''
+    this.report_menuid = this.menuid;
     this.tab = 'report';
   }
 
