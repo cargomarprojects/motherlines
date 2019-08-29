@@ -37,6 +37,19 @@ export class ShipmentLogReportComponent implements OnInit {
   date_basedon:string="REF DATE";
   sdate: string;
   edate: string;
+  shipper_id:string;
+  shipper_name:string;
+  consignee_id:string;
+  consignee_name:string;
+  agent_id:string;
+  agent_name:string;
+  handled_basedon:string="HANDLED BY";
+  handled_id:string;
+  handled_name:string;
+  report_masterwise:boolean = false;
+  report_housewise:boolean = false;
+
+
   comp_type: string = '';
   report_category: string;
   topnum: number = 0;
