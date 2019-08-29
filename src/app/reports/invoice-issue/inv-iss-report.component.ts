@@ -228,7 +228,7 @@ export class InvIssReportComponent implements OnInit {
 
     this.loading = true;
 
-    this.mainservice.ConsigneeShipmentReport(this.SearchData)
+    this.mainservice.InvoiceIssueReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
