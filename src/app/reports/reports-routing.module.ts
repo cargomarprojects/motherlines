@@ -11,7 +11,7 @@ import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.com
 
 import { TopCustomerReportComponent } from './top-customer-report/top-customer-report.component';
 import { ShipmentLogReportComponent } from './ship-log-report/ship-log-report.component';
-import { InvoiceIssueReportComponent } from './invoice-issue-report/invoice-issue-report.component';
+import { InvoiceIssueReportComponent } from './invoice-issue/invoice-issue-report.component';
 
 const routes: Routes = [
    { path :'ShipmentHandledReport', component : ShipHandReportComponent },

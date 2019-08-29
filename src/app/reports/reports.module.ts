@@ -24,8 +24,8 @@ import { TopCustomerReportReducer } from './top-customer-report/store/top-custom
 import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report.reducer';
 import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
 import { ShipmentLogReportReducer } from './ship-log-report/store/ship-log-report.reducer';
-import { InvoiceIssueReportComponent } from './invoice-issue-report/invoice-issue-report.component';
-import { InvoiceIssueReportReducer } from './invoice-issue-report/store/invoice-issue-report.reducer';
+import { InvoiceIssueReportComponent } from './invoice-issue/invoice-issue-report.component';
+import { InvoiceIssueReportReducer } from './invoice-issue/store/invoice-issue-report.reducer';
 
 @NgModule({
     declarations :[
