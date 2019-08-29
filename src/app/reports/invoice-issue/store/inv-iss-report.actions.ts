@@ -1,11 +1,11 @@
 import { Action } from '@ngrx/store';
 import { TBL_MBL_REPORT} from '../../models/tbl_mbl_report'
-import { ReportState } from './invoice-issue-report.models';
+import { ReportState } from './inv-iss-report.models';
 
 export enum ActionTypes {
-  ADD = '[Invoice-Issue-Report] Add Report',
-  UPDATE = '[Invoice-Issue-Report] Update Report',
-  DELETE = '[Invoice-Issue-Report] Delete Report',
+  ADD = '[invoice-issue-report-new] Add Report',
+  UPDATE = '[invoice-issue-report-new] Update Report',
+  DELETE = '[invoice-issue-report-new] Delete Report',
 }
 
 export class Add implements Action {

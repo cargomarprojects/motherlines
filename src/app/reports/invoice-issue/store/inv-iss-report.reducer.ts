@@ -31,7 +31,7 @@ export const initialState: ReportState = {
     records : []
 };
 
-export function InvoiceIssueReportReducer(state: ReportState[] = [initialState], action: myActions.Actions): ReportState [] {
+export function InvIssReportReducer(state: ReportState[] = [initialState], action: myActions.Actions): ReportState [] {
   switch (action.type) {
     case myActions.ActionTypes.ADD:
         return [...state,action.payload];

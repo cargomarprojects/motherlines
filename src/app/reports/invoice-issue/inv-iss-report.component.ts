@@ -7,18 +7,18 @@ import { TBL_MBL_REPORT } from '../models/tbl_mbl_report';
 import { SearchTable } from '../../shared/models/searchtable';
 
 import { Store, State, select } from '@ngrx/store';
-import * as myActions from './store/Invoice-Issue-report.actions';
-import * as myReducer from './store/Invoice-Issue-report.reducer';
-import { ReportState } from './store/Invoice-Issue-report.models'
+import * as myActions from './store/inv-iss-report.actions';
+import * as myReducer from './store/inv-iss-report.reducer';
+import { ReportState } from './store/inv-iss-report.models'
 
 import { Observable } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-invoice-issue-report',
-  templateUrl: './invoice-issue-report.component.html'
+  templateUrl: './inv-iss-report.component.html'
 })
-export class InvoiceIssueReportComponent implements OnInit {
+export class InvIssReportComponent implements OnInit {
 
   title = 'Invoice Issue Report';
 
