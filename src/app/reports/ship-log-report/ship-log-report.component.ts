@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 })
 export class ShipmentLogReportComponent implements OnInit {
 
-  title: string = 'Top Customer Report';
+  title: string = 'Shipment Log Report';
 
   pkid: string;
   urlid: string;
@@ -33,6 +33,8 @@ export class ShipmentLogReportComponent implements OnInit {
   report_searchdata: any = {};
   report_menuid: string;
 
+  job_mode:string="OCEAN IMPORT";
+  date_basedon:string="REF DATE";
   sdate: string;
   edate: string;
   comp_type: string = '';
