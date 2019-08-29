@@ -20,11 +20,12 @@ import { ProfitReportHouseReducer } from './profit-report-house/store/profit-rep
 import { ShipLabelReportReducer } from './ship-label-report/store/ship-label-report.reducer';
 
 
-
 import { TopCustomerReportReducer } from './top-customer-report/store/top-customer-report.reducer';
 import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report.reducer';
 import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
 import { ShipmentLogReportReducer } from './ship-log-report/store/ship-log-report.reducer';
+import { InvoiceIssueReportComponent } from './invoice-issue-report/invoice-issue-report.component';
+import { InvoiceIssueReportReducer } from './invoice-issue-report/store/invoice-issue-report.reducer';
 
 @NgModule({
     declarations :[
@@ -36,7 +37,8 @@ import { ShipmentLogReportReducer } from './ship-log-report/store/ship-log-repor
     ShipLabelReportComponent,
     ConsShipReportComponent,
     TopCustomerReportComponent,
-    ShipmentLogReportComponent
+    ShipmentLogReportComponent,
+    InvoiceIssueReportComponent
   ],
   imports: [
     SharedModule,
@@ -46,11 +48,12 @@ import { ShipmentLogReportReducer } from './ship-log-report/store/ship-log-repor
     StoreModule.forFeature('TonReport',TonReportReducer ),        
     StoreModule.forFeature('ProfitReport',ProfitReportReducer ),        
     StoreModule.forFeature('ProfitReportHouse',ProfitReportHouseReducer ), 
-    StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ) ,
-    StoreModule.forFeature('ConsShipReport',ConsShipReportReducer ) ,
-    StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer )  ,
-    StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer )  ,   
-    StoreModule.forFeature('ShipmentLogReport',ShipmentLogReportReducer )    
+    StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ),
+    StoreModule.forFeature('ConsShipReport',ConsShipReportReducer ),
+    StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ),
+    StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer ),   
+    StoreModule.forFeature('ShipmentLogReport',ShipmentLogReportReducer ),
+    StoreModule.forFeature('InvoiceIssueReport',InvoiceIssueReportReducer ),
   ],
   providers: [
   ]
