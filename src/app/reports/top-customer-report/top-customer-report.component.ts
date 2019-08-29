@@ -13,9 +13,6 @@ import *  as myReducer from './store/top-customer-report.reducer';
 import { ReportState } from './store/top-customer-report.models'
 
 import { Observable } from 'rxjs';
-import { map, tap, filter } from 'rxjs/operators';
-import { ThrowStmt } from '@angular/compiler';
-import { THIS_EXPR, IfStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-top-customer-report',

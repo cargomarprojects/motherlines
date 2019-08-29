@@ -10,6 +10,7 @@ import { ProfitReportComponent } from './profit-report/profit-report.component';
 import { ProfitReportHouseComponent } from './profit-report-house/profit-report-house.component';
 import { ShipLabelReportComponent } from './ship-label-report/ship-label-report.component';
 import { TopCustomerReportComponent } from './top-customer-report/top-customer-report.component';
+import { ShipmentLogReportComponent } from './ship-log-report/ship-log-report.component';
 
 import { ShipHandReportReducer } from './ship-hand-report/store/ship-hand-report.reducer';
 import { TeuReportReducer } from './teu-report/store/teu-report.reducer';
@@ -23,6 +24,7 @@ import { ShipLabelReportReducer } from './ship-label-report/store/ship-label-rep
 import { TopCustomerReportReducer } from './top-customer-report/store/top-customer-report.reducer';
 import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report.reducer';
 import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
+import { ShipmentLogReportReducer } from './ship-log-report/store/ship-log-report.reducer';
 
 @NgModule({
     declarations :[
@@ -33,7 +35,8 @@ import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.com
     ProfitReportHouseComponent,
     ShipLabelReportComponent,
     ConsShipReportComponent,
-    TopCustomerReportComponent
+    TopCustomerReportComponent,
+    ShipmentLogReportComponent
   ],
   imports: [
     SharedModule,
@@ -46,7 +49,8 @@ import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.com
     StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ) ,
     StoreModule.forFeature('ConsShipReport',ConsShipReportReducer ) ,
     StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer )  ,
-    StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer )     
+    StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer )  ,   
+    StoreModule.forFeature('ShipmentLogReport',ShipmentLogReportReducer )    
   ],
   providers: [
   ]

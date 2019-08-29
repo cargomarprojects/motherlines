@@ -10,6 +10,7 @@ import { ShipLabelReportComponent } from './ship-label-report/ship-label-report.
 import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
 
 import { TopCustomerReportComponent } from './top-customer-report/top-customer-report.component';
+import { ShipmentLogReportComponent } from './ship-log-report/ship-log-report.component';
 
 const routes: Routes = [
    { path :'ShipmentHandledReport', component : ShipHandReportComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
    { path :'HouseProfitReport', component : ProfitReportHouseComponent },
    { path :'ShipLabelPage', component : ShipLabelReportComponent },
    { path :'ConsigneeShipmentReport', component : ConsShipReportComponent },
-   { path :'TopCustomerReport', component : TopCustomerReportComponent }
+   { path :'TopCustomerReport', component : TopCustomerReportComponent },
+   { path :'ShipmentLogPage', component : ShipmentLogReportComponent }
 ];
 
 @NgModule({
