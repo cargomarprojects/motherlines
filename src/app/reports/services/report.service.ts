@@ -48,6 +48,10 @@ export class ReportService {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Report/TopCustomerReport", SearchData, this.gs.headerparam2('authorized'));
     }
 
+    InvoiceIssueReport(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/Report/InvoiceIssueReport", SearchData, this.gs.headerparam2('authorized'));
+    }
+
 }
 
 
