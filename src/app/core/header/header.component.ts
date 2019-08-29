@@ -22,10 +22,14 @@ export class HeaderComponent {
 
     LoadPage(rec: User_Menu) {
         this.getUrlID();
-        this.id =  rec.menu_pkid;
+        this.id = rec.menu_pkid;
+
+        if (rec.menu_xap_class == 'ShipmentLogPage')
+            rec.menu_xap_dll = 'Silver.Reports.General';
+
         const menu_route = rec.menu_xap_dll + '/' + rec.menu_xap_class;
         rec.menu_route2 = '';
-        this.router.navigate([menu_route], { queryParams: { id: this.id, menuid : rec.menu_pkid, menu_param : rec.menu_param }});
+        this.router.navigate([menu_route], { queryParams: { id: this.id, menuid: rec.menu_pkid, menu_param: rec.menu_param } });
     }
 
     Logout() {
