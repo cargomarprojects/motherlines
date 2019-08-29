@@ -1,4 +1,4 @@
-import { TBL_MBL_REPORT } from '../../models/TBL_MBL_REPORT';
+import { TBL_INV_ISSUE_RPT } from '../../models/tbl_inv_issue_rpt';
 export interface ReportState{ 
 
     pkid : string,    
@@ -12,12 +12,17 @@ export interface ReportState{
     comp_type: string;
     report_type: string;
     report_shptype : string;
-    cons_id : string ;
-    cons_name : string ;
+    
+    cust_id : string ;
+    cust_name : string ;
+
+    cust_parent_id : string ;
+    cust_parent_name : string ;
+
     reportformat : string ;
     page_rows :number;
     page_count :number;
     page_current :number;
     page_rowcount :number;        
-    records : TBL_MBL_REPORT[]
+    records : TBL_INV_ISSUE_RPT[];
 }

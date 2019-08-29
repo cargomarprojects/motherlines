@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
 import { ReportService } from '../services/report.service';
-import { TBL_MBL_REPORT } from '../models/tbl_mbl_report';
+import { TBL_INV_ISSUE_RPT } from '../models/tbl_inv_issue_rpt';
 import { SearchTable } from '../../shared/models/searchtable';
 
 import { Store, State, select } from '@ngrx/store';
@@ -37,8 +37,12 @@ export class InvIssReportComponent implements OnInit {
   report_type: string = '';
   report_shptype: string = '';
 
-  cons_id: string;
-  cons_name: string;
+  cust_id: string;
+  cust_name: string;
+
+  cust_parent_id: string;
+  cust_parent_name: string;
+
   reportformat = '';
 
   page_count: number = 0;
@@ -56,9 +60,10 @@ export class InvIssReportComponent implements OnInit {
 
   Reportstate1: Observable<ReportState>;
 
-  MainList: TBL_MBL_REPORT[];
+  MainList: TBL_INV_ISSUE_RPT[];
 
-  CONSRECORD: SearchTable = new SearchTable();
+  CUSTRECORD: SearchTable = new SearchTable();
+  PARENTRECORD: SearchTable = new SearchTable();
 
   constructor(
     public gs: GlobalService,
@@ -94,8 +99,12 @@ export class InvIssReportComponent implements OnInit {
         this.comp_type = rec.comp_type;
         this.report_type = rec.report_type;
         this.report_shptype = rec.report_shptype;
-        this.cons_id = rec.cons_id;
-        this.cons_name = rec.cons_name;
+        this.cust_id = rec.cust_id;
+        this.cust_name = rec.cust_name;
+
+        this.cust_parent_id = rec.cust_parent_id;
+        this.cust_parent_name = rec.cust_parent_name;
+
         this.reportformat = rec.reportformat;
 
 
@@ -119,14 +128,22 @@ export class InvIssReportComponent implements OnInit {
         this.SearchData.REPORT_TYPE = this.report_type;
         this.SearchData.REPORT_SHPTYPE = this.report_shptype;
 
-        this.SearchData.CONSIGNEE_ID = this.cons_id;
-        this.SearchData.CONSIGNEE_NAME = this.cons_name;
+        this.SearchData.CUST_ID = this.cust_id;
+        this.SearchData.CUST_NAME = this.cust_name;
+        this.CUSTRECORD.id = this.cust_id;
+        this.CUSTRECORD.name = this.cust_name;
 
-        this.CONSRECORD.id = this.cons_id;
-        this.CONSRECORD.name = this.cons_name;
+
+        this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
+        this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
+        this.PARENTRECORD.id = this.cust_parent_id;
+        this.PARENTRECORD.name = this.cust_parent_name;
+
+
+
 
       } else {
-        this.MainList = Array<TBL_MBL_REPORT>();
+        this.MainList = Array<TBL_INV_ISSUE_RPT>();
 
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
         this.page_count = 0;
@@ -142,8 +159,13 @@ export class InvIssReportComponent implements OnInit {
         this.comp_type = this.gs.branch_code;
         this.report_type = 'DETAIL';
         this.report_shptype = 'ALL';
-        this.cons_id = '';
-        this.cons_name = '';
+        
+        this.cust_id = '';
+        this.cust_name = '';
+
+        this.cust_parent_id = '';
+        this.cust_parent_name = '';
+
         this.reportformat = 'DETAIL';
 
 
@@ -194,8 +216,11 @@ export class InvIssReportComponent implements OnInit {
       this.SearchData.REPORT_TYPE = this.report_type;
       this.SearchData.REPORT_SHPTYPE = this.report_shptype;
 
-      this.SearchData.CONSIGNEE_ID = this.cons_id;
-      this.SearchData.CONSIGNEE_NAME = this.cons_name;
+      this.SearchData.CUST_ID = this.cust_id;
+      this.SearchData.CUST_NAME = this.cust_name;
+
+      this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
+      this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
 
       this.reportformat = this.report_type;
     }
@@ -219,8 +244,10 @@ export class InvIssReportComponent implements OnInit {
             comp_type: this.SearchData.COMP_TYPE,
             report_type: this.SearchData.REPORT_TYPE,
             report_shptype: this.SearchData.REPORT_SHPTYPE,
-            cons_id: this.SearchData.CONSIGNEE_ID,
-            cons_name: this.SearchData.CONSIGNEE_NAME,
+            cust_id: this.SearchData.CUST_ID,
+            cust_name: this.SearchData.CUST_NAME,
+            cust_parent_id: this.SearchData.CUST_PARENT_ID,
+            cust_parent_name: this.SearchData.CUST_PAERNT_NAME,            
             reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
@@ -245,20 +272,27 @@ export class InvIssReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-    this.CONSRECORD = new SearchTable();
-    this.CONSRECORD.controlname = 'CONSIGNEE';
-    this.CONSRECORD.displaycolumn = 'NAME';
-    this.CONSRECORD.type = 'MASTER';
-    this.CONSRECORD.subtype = '';
-    this.CONSRECORD.id = '';
-    this.CONSRECORD.code = '';
+    this.CUSTRECORD = new SearchTable();
+    this.CUSTRECORD.controlname = 'CUSTOMER';
+    this.CUSTRECORD.displaycolumn = 'NAME';
+    this.CUSTRECORD.type = 'MASTER';
+    this.CUSTRECORD.subtype = '';
+    this.CUSTRECORD.id = '';
+    this.CUSTRECORD.code = '';
+
+    
+
   }
 
   LovSelected(_Record: SearchTable) {
-    if (_Record.controlname === 'CONSIGNEE') {
-      this.cons_id = _Record.id;
-      this.cons_name = _Record.name;
+    if (_Record.controlname === 'CUSTOMER') {
+      this.cust_id = _Record.id;
+      this.cust_name = _Record.name;
     }
+    if (_Record.controlname === 'PARENT') {
+      this.cust_parent_id = _Record.id;
+      this.cust_parent_name = _Record.name;
+    }    
   }
 
 }

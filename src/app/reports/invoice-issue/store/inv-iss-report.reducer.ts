@@ -1,5 +1,5 @@
 import { createFeatureSelector,createSelector } from '@ngrx/store';
-import { TBL_MBL_REPORT } from '../../models/tbl_mbl_report';
+import { TBL_INV_ISSUE_RPT } from '../../models/tbl_inv_issue_rpt';
 import { AppState } from '../../../reducer';
 
 import * as myActions from './inv-iss-report.actions';
@@ -21,8 +21,10 @@ export const initialState: ReportState = {
     comp_type : '',
     report_type : '',
     report_shptype : '',
-    cons_id :'',
-    cons_name :'',
+    cust_id :'',
+    cust_name :'',
+    cust_parent_id :'',
+    cust_parent_name :'',    
     reportformat :'',
     page_rows :0,
     page_count :0,

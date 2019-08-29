@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { TBL_MBL_REPORT} from '../../models/tbl_mbl_report'
+import { TBL_INV_ISSUE_RPT} from '../../models/tbl_inv_issue_rpt'
 import { ReportState } from './inv-iss-report.models';
 
 export enum ActionTypes {
