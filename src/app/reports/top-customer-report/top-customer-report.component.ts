@@ -376,4 +376,9 @@ export class TopCustomerReportComponent implements OnInit {
   callbackevent() {
     this.tab = 'main';
   }
+
+  onBlur(field: string = '')
+  {
+
+  }
 }
