@@ -279,9 +279,6 @@ export class InvIssReportComponent implements OnInit {
     this.CUSTRECORD.subtype = '';
     this.CUSTRECORD.id = '';
     this.CUSTRECORD.code = '';
-
-    
-
   }
 
   LovSelected(_Record: SearchTable) {
