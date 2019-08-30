@@ -71,6 +71,7 @@ export class ShipmentLogReportComponent implements OnInit {
   sub: any;
   tab: string = 'main';
 
+  chklstCol2Visible: boolean = false;
   loading: boolean = false;
   errorMessage: string = '';
 
@@ -369,6 +370,7 @@ export class ShipmentLogReportComponent implements OnInit {
   }
 
   SetStages() {
+    this.chklstCol2Visible = false;
     for (let i = 0; i < 16; i++) {
       this.checkList[i].code = "";
       this.checkList[i].name = "";
@@ -392,8 +394,11 @@ export class ShipmentLogReportComponent implements OnInit {
     }
 
     for (let i = 0; i < 16; i++) {
-      if (this.checkList[i].name.length > 0)
+      if (this.checkList[i].name.length > 0) {
         this.checkList[i].ischecked = this.checkList[i].name == "NIL" ? false : true;
+        if (i > 7)
+          this.chklstCol2Visible = true;
+      }
     }
   }
 
