@@ -204,31 +204,35 @@ export class ShipmentLogReportComponent implements OnInit {
   }
 
   PageEvents(actions) {
+    this.page_current = actions.page_current;
     this.List(actions.outputformat, actions.action);
   }
 
   List(_outputformat: string, _action: string = 'NEW') {
 
-
     this.errorMessage = '';
-    // if (this.topnum <= 0) {
-    //   this.errorMessage = 'Invalid Top Value';
-    //   alert(this.errorMessage);
-    //   return;
-    // }
+    if (this.gs.isBlank(this.job_mode)) {
+      this.errorMessage = 'Shipment Mode cannot be blank';
+      alert(this.errorMessage);
+      return;
+    }
 
-
+    if (this.report_masterwise == false && this.report_housewise == false) {
+      this.errorMessage = 'Either Master or House must be selected';
+      alert(this.errorMessage);
+      return;
+    }
 
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
     this.SearchData.page_count = this.page_count;
-    this.SearchData.page_current = _action == 'NEW' ? -1 : this.page_current;
+    this.SearchData.page_current = this.page_current;
     this.SearchData.page_rows = this.page_rows;
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat == "SCREEN" && _action == 'NEW') {
-
+      this.SearchData.page_current = -1;
       this.SearchData.SHOWSTAGES = this.GetStages();
       this.SearchData.SORT = this.sort_order.replace("mbl_no", "hbl_houseno"); //In gridlist filed hbl_houseno is used for both houseno and masterno;
       this.SearchData.HANDLED_TYPE = this.handled_basedon;
@@ -336,6 +340,25 @@ export class ShipmentLogReportComponent implements OnInit {
   }
 
   LovSelected(_Record: SearchTable) {
+
+    if (_Record.controlname == "SHIPPER") {
+      this.shipper_id = _Record.id;
+      this.shipper_name = _Record.name;
+    }
+    if (_Record.controlname == "CONSIGNEE") {
+      this.consignee_id = _Record.id;
+      this.consignee_name = _Record.name;
+    }
+
+    if (_Record.controlname == "AGENT") {
+      this.agent_id = _Record.id;
+      this.agent_name = _Record.name;
+    }
+    if (_Record.controlname == "HANDLEDBY") {
+      this.handled_id = _Record.id;
+      this.handled_name = _Record.name;
+    }
+
 
   }
 
