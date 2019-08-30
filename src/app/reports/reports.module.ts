@@ -27,6 +27,8 @@ import { ShipmentLogReportReducer } from './ship-log-report/store/ship-log-repor
 
 import { InvIssReportComponent } from './invoice-issue/inv-iss-report.component';
 import { InvIssReportReducer } from './invoice-issue/store/inv-iss-report.reducer';
+import { ItShipReportComponent } from './it-ship-report/it-ship-report.component';
+import { ItShipReportReducer } from './it-ship-report/store/it-ship-report.reducer';
 
 @NgModule({
     declarations :[
@@ -39,7 +41,8 @@ import { InvIssReportReducer } from './invoice-issue/store/inv-iss-report.reduce
     ConsShipReportComponent,
     TopCustomerReportComponent,
     ShipmentLogReportComponent,
-    InvIssReportComponent
+    InvIssReportComponent,
+    ItShipReportComponent,
   ],
   imports: [
     SharedModule,
@@ -55,6 +58,8 @@ import { InvIssReportReducer } from './invoice-issue/store/inv-iss-report.reduce
     StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer ),   
     StoreModule.forFeature('ShipmentLogReport',ShipmentLogReportReducer ),
     StoreModule.forFeature('InvoiceIssueReport',InvIssReportReducer ),
+    StoreModule.forFeature('ItShipReport',ItShipReportReducer),    
+    
   ],
   providers: [
   ]
