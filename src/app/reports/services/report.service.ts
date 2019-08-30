@@ -56,6 +56,10 @@ export class ReportService {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Report/ItShipmentReport", SearchData, this.gs.headerparam2('authorized'));
     }
 
+    ShipmentCloseReport(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/Other/Report/ShipmentCloseReport", SearchData, this.gs.headerparam2('authorized'));
+    }
+
 
 }
 
