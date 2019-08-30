@@ -12,6 +12,7 @@ import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.com
 import { TopCustomerReportComponent } from './top-customer-report/top-customer-report.component';
 import { ShipmentLogReportComponent } from './ship-log-report/ship-log-report.component';
 import { InvIssReportComponent } from './invoice-issue/inv-iss-report.component';
+import { ItShipReportComponent } from './it-ship-report/it-ship-report.component';
 
 const routes: Routes = [
    { path :'ShipmentHandledReport', component : ShipHandReportComponent },
@@ -23,7 +24,8 @@ const routes: Routes = [
    { path :'ConsigneeShipmentReport', component : ConsShipReportComponent },
    { path :'TopCustomerReport', component : TopCustomerReportComponent },
    { path :'ShipmentLogPage', component : ShipmentLogReportComponent },
-   { path :'InvoiceIssueReport', component : InvIssReportComponent }
+   { path :'InvoiceIssueReport', component : InvIssReportComponent },
+   { path :'ITShipmentReport', component : ItShipReportComponent }
 ];
 
 @NgModule({
