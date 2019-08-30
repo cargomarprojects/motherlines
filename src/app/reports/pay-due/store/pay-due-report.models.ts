@@ -10,8 +10,10 @@ export interface ReportState{
     edate: string;
     mode : string;
     comp_type: string;
-    user_id: string ;
-    user_name: string ;
+    sdata: string ;
+    sort: string ;
+    cust_id: string ;
+    cust_name: string ;
     
     page_rows :number;
     page_count :number;

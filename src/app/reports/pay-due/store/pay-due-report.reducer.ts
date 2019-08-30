@@ -19,8 +19,10 @@ export const initialState: ReportState = {
     edate: '',
     mode: '',
     comp_type: '',
-    user_id: '',
-    user_name: '',
+    sdata :'',
+    sort :'',
+    cust_id: '',
+    cust_name: '',
     page_rows: 0,
     page_count: 0,
     page_current: 0,
@@ -28,7 +30,7 @@ export const initialState: ReportState = {
     records: []
 };
 
-export function PayReqReportReducer(state: ReportState[] = [initialState], action: myActions.Actions): ReportState[] {
+export function PayDueReportReducer(state: ReportState[] = [initialState], action: myActions.Actions): ReportState[] {
     switch (action.type) {
         case myActions.ActionTypes.ADD:
             return [...state, action.payload];

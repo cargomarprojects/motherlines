@@ -32,13 +32,16 @@ export class PayDueReportComponent implements OnInit {
   report_category: string;
   sdate: string;
   edate: string;
-  mode = 'PENDING';
+  mode = '';
+  
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
 
-  user_id: string;
-  user_name: string;
+  sort: string ='inv_mbl_refno';
+  sdata = '';
+  cust_id: string;
+  cust_name: string;
 
 
   reportformat = '';
@@ -60,7 +63,7 @@ export class PayDueReportComponent implements OnInit {
 
   MainList: Tbl_cargo_invoicem[];
 
-  USERRECORD: SearchTable = new SearchTable();
+  CUSTRECORD: SearchTable = new SearchTable();
 
 
   constructor(
@@ -95,11 +98,14 @@ export class PayDueReportComponent implements OnInit {
         this.edate = rec.edate;
         this.mode = rec.mode;
 
-        this.user_id = rec.user_id;
-        this.user_name = rec.user_name;
+        this.sdata = rec.sdata;
+        this.sort = rec.sort;
 
-        this.USERRECORD.id = this.user_id;
-        this.USERRECORD.name = this.user_name;
+        this.cust_id = rec.cust_id;
+        this.cust_name = rec.cust_name;
+
+        this.CUSTRECORD.id = this.cust_id;
+        this.CUSTRECORD.name = this.cust_name;
 
         this.comp_type = rec.comp_type;
         this.page_rows = rec.page_rows;
@@ -137,11 +143,13 @@ export class PayDueReportComponent implements OnInit {
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
-        this.mode = 'PENDING';
+        this.mode = "'SEA IMPORT'";
         this.comp_type = this.gs.branch_code;
 
-        this.user_id = '';
-        this.user_name = '';
+        this.sdata = '';
+        this.sort = 'inv_mbl_refno';
+        this.cust_id = '';
+        this.cust_name = '';
 
         this.SearchData = this.gs.UserInfo;
 
@@ -181,12 +189,20 @@ export class PayDueReportComponent implements OnInit {
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.FDATE = this.sdate;
       this.SearchData.TDATE = this.edate;
+      
       this.SearchData.STYPE = this.mode;
+      
+      this.SearchData.SHOWSMODE = this.mode;
+
+      this.SearchData.SORT = this.sort;
+      
       this.SearchData.ISADMIN = 'N';
 
-      this.SearchData.REQUEST_ID= this.user_id;
-      this.SearchData.user_id = this.user_id;
-      this.SearchData.user_name = this.user_name;
+      this.SearchData.SDATA = this.sdata;
+      this.SearchData.SORT= this.sort;
+      this.SearchData.CUST_ID = this.cust_id;
+      this.SearchData.user_id = this.cust_id;
+      this.SearchData.user_name = this.cust_name;
 
 
     }
@@ -208,8 +224,10 @@ export class PayDueReportComponent implements OnInit {
             mode: this.SearchData.STYPE,
             comp_type: this.SearchData.COMP_TYPE,
 
-            user_id: this.SearchData.user_id,
-            user_name: this.SearchData.user_name,
+            sdata: this.SearchData.SDATA,
+            sort: this.SearchData.SORT,
+            cust_id: this.SearchData.cust_id,
+            cust_name: this.SearchData.cust_name,
 
             page_rows: response.page_rows,
             page_count: response.page_count,
@@ -234,23 +252,21 @@ export class PayDueReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-    this.USERRECORD = new SearchTable();
-    this.USERRECORD.controlname = "CUSTOMER";
-    this.USERRECORD.displaycolumn = "NAME";
-    this.USERRECORD.type = "CUSTOMER";
-    this.USERRECORD.subtype = "";
-    this.USERRECORD.id = "";
-    this.USERRECORD.code = "";
+    this.CUSTRECORD = new SearchTable();
+    this.CUSTRECORD.controlname = "CUSTOMER";
+    this.CUSTRECORD.displaycolumn = "NAME";
+    this.CUSTRECORD.type = "CUSTOMER";
+    this.CUSTRECORD.subtype = "";
+    this.CUSTRECORD.id = "";
+    this.CUSTRECORD.code = "";
 
   }
 
   LovSelected(_Record: SearchTable) {
     if (_Record.controlname == "CUSTOMER") {
-      this.user_id = _Record.id;
-      this.user_name = _Record.name;
+      this.cust_id = _Record.id;
+      this.cust_name = _Record.name;
     }
   }
-
-
 
 }

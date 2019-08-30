@@ -32,19 +32,26 @@
           <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm">Group</label>
             <div class="col-8">
-              <select class="form-control form-control-sm" [(ngModel)]="mode">
-                <option [value]="'PENDING'">PENDING</option>
-                <option [value]="'PAID'">PAID</option>
-                <option [value]="'CANCELLED'">CANCELLED</option>
-                <option [value]="'DELETED'">DELETED</option>
+              <select class="form-control form-control-sm" [(ngModel)]="sort">
+                <option [value]="'inv_mbl_refno'">REF#</option>
+                <option [value]="'inv_houseno'">HOUSE#</option>
+                <option [value]="'inv_name'">CUSTOMER</option>
+                <option [value]="'inv_no'">INVOICE#</option>
+                <option [value]="'inv_date'">INVOICE DATE</option>
+                <option [value]="'inv_payment_date'">PAYMENT DATE</option>
+                <option [value]="'inv_total'">INVOICE AMOUNT</option>                
+                <option [value]="'inv_bal_amt'">BALANCE</option>                
+
               </select>
             </div>
           </div>
 
+
+
           <div class="form-group row">
-            <label class="col-4 col-form-label col-form-label-sm">Req.By</label>
+            <label class="col-4 col-form-label col-form-label-sm">CUSTOMER</label>
             <div class="col-8">
-                <app-autocomplete  [inputdata]="USERRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete>                
+                <app-autocomplete  [inputdata]="CUSTRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete>                
             </div>
           </div>
 
@@ -74,36 +81,27 @@
     <table class="table  table-hover table-sm">
       <thead class="page-body-thead">
         <tr>
-          <th>REQUESTED-BY</th>
-          <th>REQ.DATE</th>
+
           <th>REF#</th>
-          <th>REQ.TYPE</th>
-          <th>PAYEE</th>
-          <th>A/P NO</th>
+          <th>HOUSE#</th>
+          <th>CUSTOMER</th>
+          <th>INVOICE#</th>
+          <th>INVOICE DATE</th>
           <th>PAYMENT DATE</th>
-          <th>STATUS</th>
-          <th>NOTES</th>
-          <th>OHBL/TELEX RLS COPY</th>
-          <th>CHECK COPY</th>
-          <th>APPROVAL</th>
-          <th>ARAP</th>
+          <th>INVOICE AMOUNT</th>
+          <th>BALANCE</th>
         </tr>
       </thead>
       <tbody class="page-body-tbody" *ngFor="let rec of MainList">
         <tr>
-          <td>{{rec.rec_created_by}}</td>
-          <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-          <td>{{rec.cp_master_refno}}</td>
-          <td>{{rec.cp_paytype_needed}}</td>
-          <td>{{rec.cp_cust_name}}</td>
-          <td>{{rec.cp_inv_no}}</td>
-          <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-          <td>{{rec.cp_pay_status}}</td>
-          <td>{{rec.cp_spl_notes}}</td>
-          <td>ATTACHMENTS</td>
-          <td>CHECK COPY</td>
-          <td>APPROVAL</td>
-          <td>ARAP</td>
+          <td>{{rec.inv_mbl_refno}}</td>
+          <td>{{rec.inv_houseno}}</td>
+          <td>{{rec.inv_name}}</td>
+          <td>{{rec.inv_no}}</td>
+          <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+          <td>{{rec.inv_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+          <td>{{rec.inv_amt}}</td>
+          <td>{{rec.inv_bal_amt}}</td>
         </tr>
       </tbody>
     </table>
