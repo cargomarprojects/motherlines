@@ -27,6 +27,11 @@ export class HeaderComponent {
         if (rec.menu_xap_class == 'ShipmentLogPage')
             rec.menu_xap_dll = 'Silver.Reports.General';
 
+        if (rec.menu_xap_class == 'ShipmentClosingPage')
+            rec.menu_xap_dll = 'Silver.Reports.General';
+
+
+
         const menu_route = rec.menu_xap_dll + '/' + rec.menu_xap_class;
         rec.menu_route2 = '';
         this.router.navigate([menu_route], { queryParams: { id: this.id, menuid: rec.menu_pkid, menu_param: rec.menu_param } });
