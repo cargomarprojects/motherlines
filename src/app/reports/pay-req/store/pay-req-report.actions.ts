@@ -3,9 +3,9 @@ import { Tbl_shipment_close } from '../../models/Tbl_shipment_close'
 import { ReportState } from './pay-req-report.models';
 
 export enum ActionTypes {
-  ADD = '[Ship-Close-Report-new] Add Report',
-  UPDATE = '[Ship-Close-Report-new] Update Report',
-  DELETE = '[Ship-Close-Report-new] Delete Report',
+  ADD = '[Pay-Req-Report-new] Add Report',
+  UPDATE = '[Pay-Req-Report-new] Update Report',
+  DELETE = '[Pay-Req-Report-new] Delete Report',
 }
 
 export class Add implements Action {
