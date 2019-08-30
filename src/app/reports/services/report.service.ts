@@ -61,7 +61,7 @@ export class ReportService {
     }
 
     ShipmentLogReport(SearchData: any) {
-      return this.http2.post<any>(this.gs.baseUrl + "/api/Other/ShipmentLogReport", SearchData, this.gs.headerparam2('authorized'));
+      return this.http2.post<any>(this.gs.baseUrl + "/api/Other/Report/ShipmentLogReport", SearchData, this.gs.headerparam2('authorized'));
     }
 
 }

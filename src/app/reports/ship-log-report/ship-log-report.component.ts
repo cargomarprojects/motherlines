@@ -253,7 +253,7 @@ export class ShipmentLogReportComponent implements OnInit {
 
     this.loading = true;
 
-    this.mainservice.TopCustomerReport(this.SearchData)
+    this.mainservice.ShipmentLogReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat == "SCREEN") {
