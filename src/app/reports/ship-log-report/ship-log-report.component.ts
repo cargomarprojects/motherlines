@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
 import { ReportService } from '../services/report.service';
-import { Tbl_cargo_general} from '../../other/models/tbl_cargo_general'
+import { Tbl_cargo_general } from '../../other/models/tbl_cargo_general'
+import { Tbl_shipment_stage } from '../models/tbl_shipment_stage';
 import { SearchTable } from '../../shared/models/searchtable';
 
 
@@ -33,33 +34,30 @@ export class ShipmentLogReportComponent implements OnInit {
   report_searchdata: any = {};
   report_menuid: string;
 
-  job_mode:string="OCEAN IMPORT";
-  date_basedon:string="REF DATE";
+  job_mode: string = "OCEAN IMPORT";
+  date_basedon: string = "REF DATE";
   sdate: string;
   edate: string;
-  shipper_id:string;
-  shipper_name:string;
-  consignee_id:string;
-  consignee_name:string;
-  agent_id:string;
-  agent_name:string;
-  handled_basedon:string="HANDLED BY";
-  handled_id:string;
-  handled_name:string;
-  report_masterwise:boolean = false;
-  report_housewise:boolean = false;
+  shipper_id: string;
+  shipper_name: string;
+  consignee_id: string;
+  consignee_name: string;
+  agent_id: string;
+  agent_name: string;
+  handled_basedon: string = "HANDLED BY";
+  handled_id: string;
+  handled_name: string;
+  report_masterwise: boolean = false;
+  report_housewise: boolean = false;
+  checkList: any[] = [{ "code": "Stage1", "name": "Stage1", "ischecked": false }, { "code": "Stage2", "name": "Stage2", "ischecked": false }, { "code": "Stage3", "name": "Stage3", "ischecked": false }, { "code": "Stage4", "name": "Stage4", "ischecked": false },
+  { "code": "Stage5", "name": "Stage5", "ischecked": false }, { "code": "Stage6", "name": "Stage6", "ischecked": false }, { "code": "Stage7", "name": "Stage7", "ischecked": false }, { "code": "Stage8", "name": "Stage8", "ischecked": false },
+  { "code": "Stage9", "name": "Stage9", "ischecked": false }, { "code": "Stage10", "name": "Stage10", "ischecked": false }, { "code": "Stage11", "name": "Stage11", "ischecked": false }, { "code": "Stage12", "name": "Stage12", "ischecked": false },
+  { "code": "Stage13", "name": "Stage13", "ischecked": false }, { "code": "Stage14", "name": "Stage14", "ischecked": false }, { "code": "Stage15", "name": "Stage15", "ischecked": false }, { "code": "Stage16", "name": "Stage16", "ischecked": false },];
+  sort_order: string = "mbl_refno";
+  format_type: string = "FORMAT-1";
+  printer_friendly: boolean = false;
 
-
-  comp_type: string = '';
-  report_category: string;
-  topnum: number = 0;
-  toporder: string = '';
-  report_type: string = '';
-  radio_exp: string = 'EXPENSE';
-  report_amt_caption: string = 'EXPENSE';
   reportformat: string = '';
-  group_by_parent: boolean = false;
-  radio_Visibility = true;
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
@@ -75,7 +73,6 @@ export class ShipmentLogReportComponent implements OnInit {
 
   loading: boolean = false;
   errorMessage: string = '';
-
 
   SearchData: any = {};
 
@@ -107,92 +104,93 @@ export class ShipmentLogReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-        this.report_category = rec.report_category
+        this.job_mode = rec.job_mode;
+        this.date_basedon = rec.date_basedon;
         this.sdate = rec.sdate;
         this.edate = rec.edate;
-        this.comp_type = rec.comp_type;
-        this.report_type = rec.report_type;
+        this.shipper_id = rec.shipper_id;
+        this.shipper_name = rec.shipper_name;
+        this.consignee_id = rec.consignee_id;
+        this.consignee_name = rec.consignee_name;
+        this.agent_id = rec.agent_id;
+        this.agent_name = rec.agent_name;
+        this.handled_basedon = rec.handled_basedon;
+        this.handled_id = rec.handled_id;
+        this.handled_name = rec.handled_name;
+        this.report_masterwise = rec.report_masterwise;
+        this.report_housewise = rec.report_housewise;
+        this.checkList = rec.checkList;
+        this.sort_order = rec.sort_order;
+        this.format_type = rec.format_type;
+        this.printer_friendly = rec.printer_friendly;
         this.reportformat = rec.reportformat;
-        this.topnum = rec.topnum;
-        this.toporder = rec.toporder;
-        this.radio_exp = rec.radio_exp;
-        this.report_amt_caption = rec.report_amt_caption;
-        this.group_by_parent = rec.group_by_parent;
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
-
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
         this.page_current = rec.page_current;
         this.page_rowcount = rec.page_rowcount;
 
-
         this.SearchData = this.gs.UserInfo;
-        this.SearchData.REPORT_TYPE = this.report_type;
-        this.SearchData.REPORT_CATEGORY = this.report_category;
-        this.SearchData.REPORT_AMT_CAPTION = this.report_amt_caption;
+
+        this.SearchData.SHOWSTAGES = this.GetStages();;
+        this.SearchData.SORT = this.sort_order.replace("mbl_no", "hbl_houseno"); //In gridlist filed hbl_houseno is used for both houseno and masterno;
+        this.SearchData.HANDLED_TYPE = this.handled_basedon;
+        this.SearchData.HANDLED_ID = this.handled_id;
+        this.SearchData.MASTER_AGENT_ID = this.agent_id;
+        this.SearchData.CONSIGNEE_ID = this.consignee_id;
+        this.SearchData.SHIPPER_ID = this.shipper_id;
+        if (this.job_mode == "OTHER OPERATION")
+          this.SearchData.SMODE = 'OTHERS';
+        else
+          this.SearchData.SMODE = this.job_mode;
+        this.SearchData.MASTER_WISE = this.report_masterwise == true ? "Y" : "N";
+        this.SearchData.HOUSE_WISE = this.report_housewise == true ? "Y" : "N";
+        this.SearchData.OVERRIDE_ETA = this.gs.SEA_IMP_OVERRIDE_POD_ETA;
+        this.SearchData.DATE_TYPE = this.date_basedon;
         this.SearchData.SDATE = this.sdate;
         this.SearchData.EDATE = this.edate;
-        this.SearchData.COMP_TYPE = this.comp_type;
-        if (this.comp_type == 'ALL')
-          this.SearchData.COMP_CODE = this.gs.branch_codes;
-        else
-          this.SearchData.COMP_CODE = this.comp_type;
-        this.SearchData.COMP_NAME = this.gs.branch_name;
-        this.SearchData.ISPARENT = this.group_by_parent == true ? "Y" : "N";
-        this.SearchData.ISADMIN = (this.gs.user_isadmin == "Y" || this.gs.IsAdmin(this.menuid)) ? "Y" : "N";
-
-        this.SearchData.TOP_VAL = this.topnum;
-        this.SearchData.SORT_ORDER = this.toporder;
-        if (this.radio_exp == 'EXPENSE')
-          this.SearchData.TOP_BY = "EXPENSE";
-        if (this.radio_exp == "REVENUE")
-          this.SearchData.TOP_BY = "REVENUE";
-        if (this.radio_exp == "PROFIT")
-          this.SearchData.TOP_BY = "PROFIT";
-        if (this.radio_exp == "TEU")
-          this.SearchData.TOP_BY = "TEU";
-        if (this.radio_exp == "TONNAGE")
-          this.SearchData.TOP_BY = "TON";
-        if (this.radio_exp == "TOTHOUSE")
-          this.SearchData.TOP_BY = "TOT_HBL";
-
-
-
-        // this.SearchData.TOP_BY = top_by;
-        this.reportformat = this.report_type;
 
       }
       else {
         this.MainList = Array<Tbl_cargo_general>();
-
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
         this.page_count = 0;
         this.page_current = 0;
         this.page_rowcount = 0;
-
         this.currentTab = 'LIST';
 
-        this.report_category = "OVERSEAS AGENT";
+        this.job_mode = 'OCEAN IMPORT';
+        this.date_basedon = 'REF DATE';
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
-        this.comp_type = this.gs.branch_code;
-        this.report_type = "SUMMARY";
-        this.reportformat = 'SUMMARY';
-        this.topnum = 10;
-        this.toporder = 'DESC';
-        this.radio_exp = 'REVENUE';
-        this.report_amt_caption = '';
-        this.group_by_parent = false;
+        this.shipper_id = '';
+        this.shipper_name = '';
+        this.consignee_id = '';
+        this.consignee_name = '';
+        this.agent_id = '';
+        this.agent_name = '';
+        this.handled_basedon = 'HANDLED BY';
+        this.handled_id = '';
+        this.handled_name = '';
+        this.report_masterwise = false;
+        this.report_housewise = false;
+        this.checkList = [{ "code": "Stage1", "name": "Stage1", "ischecked": false }, { "code": "Stage2", "name": "Stage2", "ischecked": false }, { "code": "Stage3", "name": "Stage3", "ischecked": false }, { "code": "Stage4", "name": "Stage4", "ischecked": false },
+        { "code": "Stage5", "name": "Stage5", "ischecked": false }, { "code": "Stage6", "name": "Stage6", "ischecked": false }, { "code": "Stage7", "name": "Stage7", "ischecked": false }, { "code": "Stage8", "name": "Stage8", "ischecked": false },
+        { "code": "Stage9", "name": "Stage9", "ischecked": false }, { "code": "Stage10", "name": "Stage10", "ischecked": false }, { "code": "Stage11", "name": "Stage11", "ischecked": false }, { "code": "Stage12", "name": "Stage12", "ischecked": false },
+        { "code": "Stage13", "name": "Stage13", "ischecked": false }, { "code": "Stage14", "name": "Stage14", "ischecked": false }, { "code": "Stage15", "name": "Stage15", "ischecked": false }, { "code": "Stage16", "name": "Stage16", "ischecked": false },];
+        this.sort_order = 'mbl_refno'
+        this.format_type = 'FORMAT-1';
+        this.printer_friendly = false;
+        this.reportformat = 'FORMAT-1';
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
 
-
         this.SearchData = this.gs.UserInfo;
-
+        this.SetStages();
       }
     });
   }
@@ -213,13 +211,13 @@ export class ShipmentLogReportComponent implements OnInit {
 
 
     this.errorMessage = '';
-    if (this.topnum <= 0) {
-      this.errorMessage = 'Invalid Top Value';
-      alert(this.errorMessage);
-      return;
-    }
+    // if (this.topnum <= 0) {
+    //   this.errorMessage = 'Invalid Top Value';
+    //   alert(this.errorMessage);
+    //   return;
+    // }
 
-    this.ResetControls();
+
 
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
@@ -231,35 +229,23 @@ export class ShipmentLogReportComponent implements OnInit {
 
     if (_outputformat == "SCREEN" && _action == 'NEW') {
 
-      this.SearchData.REPORT_TYPE = this.report_type;
-      this.SearchData.REPORT_CATEGORY = this.report_category;
-      this.SearchData.REPORT_AMT_CAPTION = this.report_amt_caption;
+      this.SearchData.SHOWSTAGES = this.GetStages();
+      this.SearchData.SORT = this.sort_order.replace("mbl_no", "hbl_houseno"); //In gridlist filed hbl_houseno is used for both houseno and masterno;
+      this.SearchData.HANDLED_TYPE = this.handled_basedon;
+      this.SearchData.HANDLED_ID = this.handled_id;
+      this.SearchData.MASTER_AGENT_ID = this.agent_id;
+      this.SearchData.CONSIGNEE_ID = this.consignee_id;
+      this.SearchData.SHIPPER_ID = this.shipper_id;
+      if (this.job_mode == "OTHER OPERATION")
+        this.SearchData.SMODE = 'OTHERS';
+      else
+        this.SearchData.SMODE = this.job_mode;
+      this.SearchData.MASTER_WISE = this.report_masterwise == true ? "Y" : "N";
+      this.SearchData.HOUSE_WISE = this.report_housewise == true ? "Y" : "N";
+      this.SearchData.OVERRIDE_ETA = this.gs.SEA_IMP_OVERRIDE_POD_ETA;
+      this.SearchData.DATE_TYPE = this.date_basedon;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
-      this.SearchData.COMP_TYPE = this.comp_type;
-      if (this.comp_type == 'ALL')
-        this.SearchData.COMP_CODE = this.gs.branch_codes;
-      else
-        this.SearchData.COMP_CODE = this.comp_type;
-      this.SearchData.COMP_NAME = this.gs.branch_name;
-      this.SearchData.ISPARENT = this.group_by_parent == true ? "Y" : "N";
-      this.SearchData.ISADMIN = (this.gs.user_isadmin == "Y" || this.gs.IsAdmin(this.menuid)) ? "Y" : "N";
-
-      this.SearchData.TOP_VAL = this.topnum;
-      this.SearchData.SORT_ORDER = this.toporder;
-      if (this.radio_exp == 'EXPENSE')
-        this.SearchData.TOP_BY = "EXPENSE";
-      if (this.radio_exp == "REVENUE")
-        this.SearchData.TOP_BY = "REVENUE";
-      if (this.radio_exp == "PROFIT")
-        this.SearchData.TOP_BY = "PROFIT";
-      if (this.radio_exp == "TEU")
-        this.SearchData.TOP_BY = "TEU";
-      if (this.radio_exp == "TONNAGE")
-        this.SearchData.TOP_BY = "TON";
-      if (this.radio_exp == "TOTHOUSE")
-        this.SearchData.TOP_BY = "TOT_HBL";
-      this.reportformat = this.report_type;
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
@@ -278,21 +264,34 @@ export class ShipmentLogReportComponent implements OnInit {
             this.SearchData.filetype = response.filetype;
           }
           const state: ReportState = {
+
             pkid: this.pkid,
             urlid: this.urlid,
             menuid: this.menuid,
             currentTab: this.currentTab,
-            report_category: this.SearchData.REPORT_CATEGORY,
+
+            job_mode: this.SearchData.SMODE,
+            date_basedon: this.SearchData.DATE_TYPE,
             sdate: this.SearchData.SDATE,
             edate: this.SearchData.EDATE,
-            comp_type: this.SearchData.COMP_TYPE,
-            report_type: this.SearchData.REPORT_TYPE,
+            shipper_id: this.SearchData.SHIPPER_ID,
+            shipper_name: this.shipper_name,
+            consignee_id: this.SearchData.CONSIGNEE_ID,
+            consignee_name: this.consignee_name,
+            agent_id: this.SearchData.MASTER_AGENT_ID,
+            agent_name: this.agent_name,
+            handled_basedon: this.SearchData.HANDLED_TYPE,
+            handled_id: this.SearchData.HANDLED_ID,
+            handled_name: this.handled_name,
+            report_masterwise: this.SearchData.MASTER_WISE == "Y" ? true : false,
+            report_housewise: this.SearchData.HOUSE_WISE == "Y" ? true : false,
+            checkList: this.checkList,
+            sort_order: this.SearchData.SORT,
+            format_type: this.format_type,
+            printer_friendly: this.printer_friendly,
+
             reportformat: this.reportformat,
-            topnum: this.topnum,
-            toporder: this.toporder,
-            radio_exp: this.radio_exp,
-            report_amt_caption: this.report_amt_caption,
-            group_by_parent: this.group_by_parent,
+
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
@@ -314,6 +313,18 @@ export class ShipmentLogReportComponent implements OnInit {
       });
   }
 
+  GetStages() {
+    let Stages: string = "";
+    for (let i = 0; i < 16; i++) {
+      if (this.checkList[i].name.length > 0 && this.checkList[i].ischecked == true) {
+        if (Stages != "")
+          Stages += ",";
+        Stages += "'" + this.checkList[i].code + "'";
+      }
+    }
+    return Stages;
+  }
+
   Close() {
     this.store.dispatch(new myActions.Delete({ id: this.urlid }));
     this.location.back();
@@ -327,49 +338,56 @@ export class ShipmentLogReportComponent implements OnInit {
   LovSelected(_Record: SearchTable) {
 
   }
+
   OnChange(field: string) {
-    if (field == 'report_category') {
-      try {
-        if (this.report_category == "SHIPPER" || this.report_category == "CONSIGNEE" ||
-          this.report_category == "OVERSEAS AGENT" || this.report_category == "POL" ||
-          this.report_category == "POD") {
-          this.radio_exp = 'REVENUE';
-          this.radio_Visibility = true;
-        }
-        else {
-          this.radio_exp = 'EXPENSE';
-          this.radio_Visibility = false;
-        }
-      }
-      catch (Exception) {
-      }
+    if (field == 'job_mode') {
+      this.SetStages();
     }
   }
 
-  rdbtnclick() {
-    this.group_by_parent = false;
-  }
-  ResetControls() {
-    if (this.radio_exp == 'EXPENSE')
-      this.report_amt_caption = "EXPENSE";
-    if (this.radio_exp == "REVENUE")
-      this.report_amt_caption = "REVENUE";
-    if (this.radio_exp == "PROFIT")
-      this.report_amt_caption = "PROFIT";
-    if (this.radio_exp == "TEU")
-      this.report_amt_caption = "TEU";
-    if (this.radio_exp == "TONNAGE")
-      this.report_amt_caption = "TONNAGE";
-    if (this.radio_exp == "TOTHOUSE")
-      this.report_amt_caption = "NO OF HOUSE";
+  SetStages() {
+    for (let i = 0; i < 16; i++) {
+      this.checkList[i].code = "";
+      this.checkList[i].name = "";
+      this.checkList[i].ischecked = false;
+    }
+    if (this.job_mode == "OCEAN EXPORT") {
+      this.FillStages(this.gs.SHIPMENT_STAGE_OE, "OE");
+    }
+    else if (this.job_mode == "AIR EXPORT") {
+      this.FillStages(this.gs.SHIPMENT_STAGE_AE, "AE");
+    }
+    else if (this.job_mode == "AIR IMPORT") {
+      this.FillStages(this.gs.SHIPMENT_STAGE_AI, "AI");
+    }
+    else if (this.job_mode == "OTHER OPERATION") {
+      this.FillStages(this.gs.SHIPMENT_STAGE_OT, "OT");
+    }
+    else // OCEAN IMPORT
+    {
+      this.FillStages(this.gs.SHIPMENT_STAGE_OI, "OI");
+    }
 
-    if (this.report_type == "DETAIL") {
-      this.reportformat = "DETAIL";
-    }
-    else if (this.report_type == "SUMMARY") {
-      this.reportformat = "SUMMARY";
+    for (let i = 0; i < 16; i++) {
+      if (this.checkList[i].name.length > 0)
+        this.checkList[i].ischecked = this.checkList[i].name == "NIL" ? false : true;
     }
   }
+
+  FillStages(stageList: any, OprMode: string) {
+    let slno: number = 0;
+    stageList.forEach(Rec => {
+      if (Rec.name != "NIL") {
+        this.checkList[slno].code = Rec.code;
+        this.checkList[slno].name = Rec.name;
+        slno++;
+      }
+    })
+    this.checkList[slno].code = "NIL";
+    this.checkList[slno].name = "NIL";
+  }
+
+
 
   Print() {
     this.errorMessage = "";
@@ -389,8 +407,14 @@ export class ShipmentLogReportComponent implements OnInit {
     this.tab = 'main';
   }
 
-  onBlur(field: string = '')
-  {
+  onBlur(field: string = '') {
 
+  }
+
+  SelectDeselect(_type: string) {
+    for (let i = 0; i < 16; i++) {
+      if (this.checkList[i].name.length > 0)
+        this.checkList[i].ischecked = _type == "SELECT" ? true : false;
+    }
   }
 }

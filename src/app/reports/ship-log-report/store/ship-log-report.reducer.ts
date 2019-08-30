@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Tbl_cargo_general} from '../../../other/models/tbl_cargo_general'
+import { Tbl_cargo_general } from '../../../other/models/tbl_cargo_general'
 import { AppState } from '../../../reducer';
 
 import * as myActions from './ship-log-report.actions';
@@ -14,22 +14,29 @@ export const initialState: ReportState = {
     urlid: '',
     menuid: '',
     currentTab: '',
-
-    report_category: '',
+    job_mode: '',
+    date_basedon: '',
     sdate: '',
     edate: '',
-    comp_type: '',
-    report_type: '',
-    topnum: 10,
-    toporder: '',
-    radio_exp: '',
-    report_amt_caption: '',
-    group_by_parent: false,
-    reportformat: '',
+    shipper_id: '',
+    shipper_name: '',
+    consignee_id: '',
+    consignee_name: '',
+    agent_id: '',
+    agent_name: '',
+    handled_basedon: '',
+    handled_id: '',
+    handled_name: '',
+    report_masterwise: false,
+    report_housewise: false,
+    checkList: [],
+    sort_order: '',
+    format_type: '',
+    reportformat:'',
+    printer_friendly: false,
     filename: '',
     filetype: '',
     filedisplayname: '',
-
     page_rows: 0,
     page_count: 0,
     page_current: 0,
