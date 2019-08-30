@@ -5,7 +5,7 @@ import { GlobalService } from '../../../core/services/global.service';
 
 import { AirImpMasterService } from '../../services/airimp-master.service';
 import { User_Menu } from '../../../core/models/menum';
-import { Tbl_cargo_imp_masterm,Tbl_cargo_imp_housem, vm_tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
+import { Tbl_cargo_imp_masterm, Tbl_cargo_imp_housem, vm_tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { isNumber } from 'util';
 import { flatMap } from 'rxjs/operators';
@@ -25,17 +25,32 @@ export class AirImpMasterEditComponent implements OnInit {
     01-07-2019 Created By Ajith  
   */
 
- tab : string = 'main';
- report_title : string = '';
- report_url : string = '';
- report_searchdata : any = {} ;
- report_menuid : string = '';
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
 
-  private pkid: string="";
+  attach_title: string = '';
+  attach_parentid: string = '';
+  attach_subid: string = '';
+  attach_type: string = '';
+  attach_typelist: any = {};
+  attach_tablename: string = '';
+  attach_tablepkcolumn: string = '';
+  attach_refno: string = '';
+  attach_customername: string = '';
+  attach_updatecolumn: string = '';
+  attach_viewonlysource: string = '';
+  attach_viewonlyid: string = '';
+  attach_filespath: string = '';
+  attach_filespath2: string = '';
+
+  private pkid: string = "";
   private menuid: string;
   private hbl_pkid: string = '';
   private hbl_mode: string = '';
-  
+
   private mode: string;
 
   private errorMessage: string;
@@ -360,7 +375,7 @@ export class AirImpMasterEditComponent implements OnInit {
   }
 
   IsValidAWB(Awb: string) {
-    let strnum:string ="0123456789";
+    let strnum: string = "0123456789";
     let i: number = 0;//"".indexOf(snum)<0
     let strChar: string = '';
     Awb = Awb.trim();
@@ -368,7 +383,7 @@ export class AirImpMasterEditComponent implements OnInit {
       return false;
     for (i = 0; i < Awb.length; i++) {
       strChar = Awb.substr(i, 1);
-      if (strnum.indexOf(strChar)<0)
+      if (strnum.indexOf(strChar) < 0)
         return false;
     }
     return true;
@@ -434,43 +449,43 @@ export class AirImpMasterEditComponent implements OnInit {
         this.record.mbl_no = this.record.mbl_no.toUpperCase();
         break;
       }
-    //   case 'mbl_liner_bookingno': {
-    //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
-    //     break;
-    //   }
+      //   case 'mbl_liner_bookingno': {
+      //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
+      //     break;
+      //   }
       case 'mbl_vessel': {
         this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
         break;
       }
-    //   case 'mbl_voyage': {
-    //     this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_to_port1': {
-    //     this.record.mbl_to_port1 = this.record.mbl_to_port1.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_by_carrier1': {
-    //     this.record.mbl_by_carrier1 = this.record.mbl_by_carrier1.toUpperCase();
-    //     break;
-    //   }
+      //   case 'mbl_voyage': {
+      //     this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
+      //     break;
+      //   }
+      //   case 'mbl_to_port1': {
+      //     this.record.mbl_to_port1 = this.record.mbl_to_port1.toUpperCase();
+      //     break;
+      //   }
+      //   case 'mbl_by_carrier1': {
+      //     this.record.mbl_by_carrier1 = this.record.mbl_by_carrier1.toUpperCase();
+      //     break;
+      //   }
 
-    //   case 'mbl_to_port2': {
-    //     this.record.mbl_to_port2 = this.record.mbl_to_port2.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_by_carrier2': {
-    //     this.record.mbl_by_carrier2 = this.record.mbl_by_carrier2.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_to_port3': {
-    //     this.record.mbl_to_port3 = this.record.mbl_to_port3.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_by_carrier3': {
-    //     this.record.mbl_by_carrier3 = this.record.mbl_by_carrier3.toUpperCase();
-    //     break;
-    //   }
+      //   case 'mbl_to_port2': {
+      //     this.record.mbl_to_port2 = this.record.mbl_to_port2.toUpperCase();
+      //     break;
+      //   }
+      //   case 'mbl_by_carrier2': {
+      //     this.record.mbl_by_carrier2 = this.record.mbl_by_carrier2.toUpperCase();
+      //     break;
+      //   }
+      //   case 'mbl_to_port3': {
+      //     this.record.mbl_to_port3 = this.record.mbl_to_port3.toUpperCase();
+      //     break;
+      //   }
+      //   case 'mbl_by_carrier3': {
+      //     this.record.mbl_by_carrier3 = this.record.mbl_by_carrier3.toUpperCase();
+      //     break;
+      //   }
       case 'mbl_mawb_weight': {
         this.record.mbl_mawb_weight = this.gs.roundNumber(this.record.mbl_mawb_weight, 3);
         break;
@@ -523,14 +538,14 @@ export class AirImpMasterEditComponent implements OnInit {
       case 'PROFITREPORT': {
         let prm = {
           menuid: this.gs.MENU_AI_MASTER_PROFIT_REPORT,
-          mbl_pkid:  this.pkid, 
-          mbl_refno : this.record.mbl_refno,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
           mbl_type: 'AI',
           origin: 'airimp-master-page',
         };
-        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));
         break;
-      }      
+      }
       case 'HOUSE': {
         let prm = {
           menuid: this.gs.MENU_AI_HOUSE,
@@ -544,7 +559,7 @@ export class AirImpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(prm));
         break;
       }
-       
+
       case 'PAYMENT-REQUEST': {
         let prm = {
           menuid: this.gs.MENU_AI_PAYMENT_REQUEST,
@@ -556,6 +571,26 @@ export class AirImpMasterEditComponent implements OnInit {
           origin: 'airimp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
+        break;
+      }
+      case 'ATTACHMENT': {
+        let TypeList: any[] = [];
+        TypeList = [{ "code": "EMAIL", "name": "E-MAIL" }, { "code": "HOUSEBL", "name": "HOUSE B/L" }, { "code": "MASTER", "name": "MASTER" }, { "code": "PAYMENT SETTLEMENT", "name": "OTHERS" }];
+        this.attach_title = 'Documents';
+        this.attach_parentid = this.pkid;
+        this.attach_subid = '';
+        this.attach_type = 'PAYMENT SETTLEMENT';
+        this.attach_typelist = TypeList;
+        this.attach_tablename = 'cargo_masterm';
+        this.attach_tablepkcolumn = 'mbl_pkid';
+        this.attach_refno = this.record.mbl_refno;
+        this.attach_customername = '';
+        this.attach_updatecolumn = 'REC_FILES_ATTACHED';
+        this.attach_viewonlysource = '';
+        this.attach_viewonlyid = '';
+        this.attach_filespath = '';
+        this.attach_filespath2 = '';
+        this.tab = 'attachment';
         break;
       }
       case 'MESSENGER-SLIP': {
@@ -614,7 +649,7 @@ export class AirImpMasterEditComponent implements OnInit {
         this.report_url = '/api/AirImport/Master/GetPODAirImpRpt';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_AI_MASTER_POD ;
+        this.report_menuid = this.gs.MENU_AI_MASTER_POD;
         this.tab = 'report';
         break;
       }
@@ -634,7 +669,7 @@ export class AirImpMasterEditComponent implements OnInit {
     }
   }
 
-  callbackevent( event : any ){
+  callbackevent(event: any) {
     this.tab = 'main';
   }
   CopyLoc2House() {
