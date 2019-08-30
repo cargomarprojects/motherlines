@@ -2,7 +2,7 @@
     <div class="page-header">
         <div class="col">
             <label class="mr-1">{{title}}</label>
-            <button class="btn btn-primary btn-sm" (click)="Close()">Close</button>
+            <button class="btn btn-primary btn-sm" (click)="Close()">Return</button>
             <i *ngIf="loading" class="fa fa-spinner"></i>
         </div>
     </div>
@@ -17,7 +17,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm">Mode</label>
                             <div class="col-8">
-                                <select class="form-control form-control-sm" [(ngModel)]="job_mode">
+                                <select class="form-control form-control-sm" [(ngModel)]="job_mode" (change)="OnChange('job_mode')">
                                     <option [value]="'OCEAN EXPORT'">OCEAN EXPORT</option>
                                     <option [value]="'OCEAN IMPORT'">OCEAN IMPORT</option>
                                     <option [value]="'AIR EXPORT'">AIR EXPORT</option>
@@ -46,32 +46,33 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm">Shipper</label>
                             <div class="col-8">
-                              <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [subtype]="'SHIPPER'"
-                                [displaycolumn]="'NAME'" [displaydata]="shipper_name"
-                                (ValueChanged)="LovSelected($event)">
-                              </app-autocomplete2>
+                                <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'"
+                                    [subtype]="'SHIPPER'" [displaycolumn]="'NAME'" [displaydata]="shipper_name"
+                                    (ValueChanged)="LovSelected($event)">
+                                </app-autocomplete2>
                             </div>
-                          </div>
-                          <div class="form-group row">
+                        </div>
+                        <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm">Consignee</label>
                             <div class="col-8">
-                              <app-autocomplete2 [controlname]="'CONSIGNEE'" [tabletype]="'MASTER'" [subtype]="'CONSIGNEE'"
-                                [displaycolumn]="'NAME'" [displaydata]="consignee_name"
-                                (ValueChanged)="LovSelected($event)">
-                              </app-autocomplete2>
+                                <app-autocomplete2 [controlname]="'CONSIGNEE'" [tabletype]="'MASTER'"
+                                    [subtype]="'CONSIGNEE'" [displaycolumn]="'NAME'" [displaydata]="consignee_name"
+                                    (ValueChanged)="LovSelected($event)">
+                                </app-autocomplete2>
                             </div>
-                          </div>
-                          <div class="form-group row">
+                        </div>
+                        <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm">Agent</label>
                             <div class="col-8">
-          
-                              <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
-                                [displaydata]="agent_name" (ValueChanged)="LovSelected($event)" >
-                              </app-autocomplete2>
-          
+
+                                <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'"
+                                    [displaycolumn]="'NAME'" [displaydata]="agent_name"
+                                    (ValueChanged)="LovSelected($event)">
+                                </app-autocomplete2>
+
                             </div>
-                          </div>
-                          <div class="form-group row">
+                        </div>
+                        <div class="form-group row">
                             <div class="col-4">
                                 <select class="form-control form-control-sm" [(ngModel)]="handled_basedon">
                                     <option [value]="'HANDLED BY'">Handled By</option>
@@ -79,112 +80,199 @@
                                 </select>
                             </div>
                             <div class="col-8">
-                              <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
-                                [displaycolumn]="'NAME'" [displaydata]="handled_name"
-                                (ValueChanged)="LovSelected($event)" >
-                              </app-autocomplete2>
+                                <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'"
+                                    [subtype]="'SALESMAN'" [displaycolumn]="'NAME'" [displaydata]="handled_name"
+                                    (ValueChanged)="LovSelected($event)">
+                                </app-autocomplete2>
                             </div>
-                          </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm">Based On</label>
                             <div class="col-8">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" [(ngModel)]="report_masterwise">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                        [(ngModel)]="report_masterwise">
                                     <label class="form-check-label" for="inlineCheckbox1">Master</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" [(ngModel)]="report_housewise">
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                        [(ngModel)]="report_housewise">
                                     <label class="form-check-label" for="inlineCheckbox2">House</label>
-                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">Category</label>
-                            <div class="col-8">
-                                <select class="form-control form-control-sm" [(ngModel)]="report_category"
-                                    (change)="OnChange('report_category')">
-                                    <option [value]="'OVERSEAS AGENT'">OVERSEAS AGENT</option>
-                                    <option [value]="'CONSIGNEE'">CONSIGNEE</option>
-                                    <option [value]="'SHIPPER'">SHIPPER</option>
-                                    <option [value]="'BROKER'">BROKER</option>
-                                    <option [value]="'DOMESTIC FORWARDER'">DOMESTIC FORWARDER</option>
-                                    <option [value]="'AIR CARRIER'">AIR CARRIER</option>
-                                    <option [value]="'SEA CARRIER'">SEA CARRIER</option>
-                                    <option [value]="'TRUCKER'">TRUCKER</option>
-                                    <option [value]="'GENERAL VENDOR'">GENERAL VENDOR</option>
-                                    <option [value]="'POL'">POL</option>
-                                    <option [value]="'POD'">POD</option>
-                                </select>
+                            <div class="col-12">
+                                <button class="btn btn-success btn-sm mr-1" (click)="SelectDeselect('SELECT')">Select
+                                    All</button>
+                                <button class="btn btn-success btn-sm mr-1"
+                                    (click)="SelectDeselect('DESELECT')">Deselect All </button>
                             </div>
                         </div>
-
-
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">Top</label>
-                            <div class="col-8 input-group input-group-sm">
-                                <!-- <input class="form-control form-control-sm" type="number" (blur)="onBlur('topnum')"
-                                    [(ngModel)]="topnum" maxlength="3" /> -->
-                                <select class="form-control form-control-sm" [(ngModel)]="toporder">
-                                    <option [value]="'ASC'">ASC</option>
-                                    <option [value]="'DESC'">DESC</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">Type</label>
-                            <div class="col-8">
-                                <select class="form-control form-control-sm" [(ngModel)]="report_type">
-                                    <option [value]="'DETAIL'">DETAIL</option>
-                                    <option [value]="'SUMMARY'">SUMMARY</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div *ngIf="radio_Visibility" class="col-md-2">
-                        <div class="offset-4 col-8">
-                            <input type="radio" [(ngModel)]="radio_exp" [value]="'REVENUE'" (click)="rdbtnclick()" />
-                            <span>REVENUE</span>
-                        </div>
-                        <div class="offset-4 col-8">
-                            <input type="radio" [(ngModel)]="radio_exp" [value]="'EXPENSE'" (click)="rdbtnclick()" />
-                            <span>EXPENSE</span>
-                        </div>
-                        <div class="offset-4 col-8">
-                            <input type="radio" [(ngModel)]="radio_exp" [value]="'PROFIT'" (click)="rdbtnclick()" />
-                            <span>PROFIT</span>
-                        </div>
-                    </div>
-                    <div *ngIf="radio_Visibility" class="col-md-2">
-                        <div class="offset-4 col-8">
-                            <input type="radio" [(ngModel)]="radio_exp" [value]="'TEU'" (click)="rdbtnclick()" />
-                            <span>TEU</span>
-                        </div>
-                        <div class="offset-4 col-8">
-                            <input type="radio" [(ngModel)]="radio_exp" [value]="'TONNAGE'" (click)="rdbtnclick()" />
-                            <span>TONNAGE</span>
-                        </div>
-                        <div class="offset-4 col-8">
-                            <input type="radio" [(ngModel)]="radio_exp" [value]="'TOTHOUSE'" (click)="rdbtnclick()" />
-                            <span>TOT.HOUSE</span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm"></label>
-                            <div class="col-8">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" [(ngModel)]="group_by_parent" />
-                                    <span>Group by Parent</span>
+                            <div class="col-12">
+                                <div *ngIf="checkList[0].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[0].ischecked"><span>{{checkList[0].name}}</span>
                                 </div>
                             </div>
                         </div>
-
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[1].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[1].ischecked"><span>{{checkList[1].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[2].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[2].ischecked"><span>{{checkList[2].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[3].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[3].ischecked"><span>{{checkList[3].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[4].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[4].ischecked"><span>{{checkList[4].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[5].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[5].ischecked"><span>{{checkList[5].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[6].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[6].ischecked"><span>{{checkList[6].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[7].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[7].ischecked"><span>{{checkList[7].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[8].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[8].ischecked"><span>{{checkList[8].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[9].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[9].ischecked"><span>{{checkList[9].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[10].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[10].ischecked"><span>{{checkList[10].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[11].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[11].ischecked"><span>{{checkList[11].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[12].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[12].ischecked"><span>{{checkList[12].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[13].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[13].ischecked"><span>{{checkList[13].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[14].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[14].ischecked"><span>{{checkList[14].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div *ngIf="checkList[15].name.length>0" class="form-check">
+                                    <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="checkList[15].ischecked"><span>{{checkList[15].name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label col-form-label-sm">Sort Order</label>
+                            <div class="col-8">
+                                <select class="form-control form-control-sm" [(ngModel)]="sort_order">
+                                    <option [value]="'mbl_refno'">REFNO</option>
+                                    <option [value]="'mbl_no'">MASTER</option>
+                                    <option [value]="'hbl_houseno'">HOUSE</option>
+                                    <option [value]="'shipment_stage'">SHIPMENT STAGE</option>
+                                    <option [value]="'mbl_liner_name'">CARRIER</option>
+                                    <option [value]="'hbl_consignee_name'">CONSIGNEE</option>
+                                    <option [value]="'mbl_pod_eta'">ETA</option>
+                                    <option [value]="'hbl_paid_status'">CLIENT PAID</option>
+                                    <option [value]="'hbl_place_final'">FINAL DESTINATION</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label col-form-label-sm">Formats</label>
+                            <div class="col-4">
+                                <select class="form-control form-control-sm" [(ngModel)]="format_type">
+                                    <option [value]="'FORMAT-1'">FORMAT-1</option>
+                                    <option [value]="'FORMAT-2'">FORMAT-2</option>
+                                    <option [value]="'FORMAT-3'">FORMAT-3</option>
+                                </select>
+                            </div>
+                            <div class="col-4 form-check">
+                                <input type="checkbox" class="form-check-input" [(ngModel)]="printer_friendly" />
+                                <span>Printer Friendly</span>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm"></label>
                             <div class="col-8">
@@ -195,12 +283,8 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
-
         </div>
 
         <App-Page
