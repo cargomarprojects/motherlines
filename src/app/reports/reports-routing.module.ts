@@ -14,6 +14,7 @@ import { ShipmentLogReportComponent } from './ship-log-report/ship-log-report.co
 import { InvIssReportComponent } from './invoice-issue/inv-iss-report.component';
 import { ItShipReportComponent } from './it-ship-report/it-ship-report.component';
 import { ShipCloseReportComponent } from './ship-closing/ship-close-report.component';
+import { PaymentReqComponent } from '../businessmodule/paymentreq/paymentreq.component';
 
 const routes: Routes = [
    { path :'ShipmentHandledReport', component : ShipHandReportComponent },
@@ -27,7 +28,9 @@ const routes: Routes = [
    { path :'ShipmentLogPage', component : ShipmentLogReportComponent },
    { path :'InvoiceIssueReport', component : InvIssReportComponent },
    { path :'ITShipmentReport', component : ItShipReportComponent },
-   { path :'ShipmentClosingPage', component : ShipCloseReportComponent }
+   { path :'ShipmentClosingPage', component : ShipCloseReportComponent },
+   { path :'PaymentRequest', component : PaymentReqComponent },   
+   
 ];
 
 @NgModule({

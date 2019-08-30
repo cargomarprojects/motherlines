@@ -31,6 +31,8 @@ import { ItShipReportComponent } from './it-ship-report/it-ship-report.component
 import { ItShipReportReducer } from './it-ship-report/store/it-ship-report.reducer';
 import { ShipCloseReportComponent } from './ship-closing/ship-close-report.component';
 import { ShipCloseReportReducer } from './ship-closing/store/ship-close-report.reducer';
+import { PayReqReportComponent } from './pay-req/pay-req-report.component';
+import { PayReqReportReducer } from './pay-req/store/pay-req-report.reducer';
 
 @NgModule({
     declarations :[
@@ -46,6 +48,7 @@ import { ShipCloseReportReducer } from './ship-closing/store/ship-close-report.r
     InvIssReportComponent,
     ItShipReportComponent,
     ShipCloseReportComponent,
+    PayReqReportComponent,
   ],
   imports: [
     SharedModule,
@@ -63,6 +66,7 @@ import { ShipCloseReportReducer } from './ship-closing/store/ship-close-report.r
     StoreModule.forFeature('InvoiceIssueReport',InvIssReportReducer ),
     StoreModule.forFeature('ItShipReport',ItShipReportReducer),    
     StoreModule.forFeature('ShipCloseReport',ShipCloseReportReducer),    
+    StoreModule.forFeature('PayReqReport',PayReqReportReducer),    
     
   ],
   providers: [

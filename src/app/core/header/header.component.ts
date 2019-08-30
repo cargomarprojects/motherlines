@@ -24,12 +24,8 @@ export class HeaderComponent {
         this.getUrlID();
         this.id = rec.menu_pkid;
 
-        if (rec.menu_xap_class == 'ShipmentLogPage')
+        if (rec.menu_xap_class == 'ShipmentLogPage' || rec.menu_xap_class == 'ShipmentClosingPage' || rec.menu_xap_class == 'PaymentRequest')
             rec.menu_xap_dll = 'Silver.Reports.General';
-
-        if (rec.menu_xap_class == 'ShipmentClosingPage')
-            rec.menu_xap_dll = 'Silver.Reports.General';
-
 
 
         const menu_route = rec.menu_xap_dll + '/' + rec.menu_xap_class;
