@@ -17,7 +17,8 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm">Mode</label>
                             <div class="col-8">
-                                <select class="form-control form-control-sm" [(ngModel)]="job_mode" (change)="OnChange('job_mode')">
+                                <select class="form-control form-control-sm" [(ngModel)]="job_mode"
+                                    (change)="OnChange('job_mode')">
                                     <option [value]="'OCEAN EXPORT'">OCEAN EXPORT</option>
                                     <option [value]="'OCEAN IMPORT'">OCEAN IMPORT</option>
                                     <option [value]="'AIR EXPORT'">AIR EXPORT</option>
@@ -293,54 +294,79 @@
 
 
 
-        <div *ngIf="report_type=='DETAIL'" class="page-body table-responsive">
+        <div class="page-body table-responsive">
             <table class="table  table-hover table-sm">
                 <thead class="page-body-thead">
                     <tr>
-                        <th width="15%">REFNO</th>
-                        <th width="15%"
-                            *ngIf="!(report_category == 'OVERSEAS AGENT' || report_category == 'POL' || report_category == 'POD')">
-                            HOUSE</th>
-                        <th width="20%">{{report_category}}</th>
-                        <th width="15%" class="text-right">{{report_amt_caption}}</th>
-                        <th width="35%"></th>
+                        <th> REFNO </th>
+                        <th> REF-DATE </th>
+                        <th> HOUSE# </th>
+                        <th> SHIPMENT STAGE </th>
+                        <th> CARRIER </th>
+                        <th> BOOKING# </th>
+                        <th> SHIPPER </th>
+                        <th> CONSIGNEE </th>
+                        <th> TYPE </th>
+                        <th> PACKAGES </th>
+                        <th> FINAL DESTINATION </th>
+                        <th> ETD </th>
+                        <th> ISF </th>
+                        <th> M RLS </th>
+                        <th> H RLS </th>
+                        <th> PL </th>
+                        <th> CI </th>
+                        <th> CARRIER AN </th>
+                        <th> CUSTOM RELEASE STATUS </th>
+                        <th> FREIGHT RELEASE STATUS </th>
+                        <th> CLIENT PAID </th>
+                        <th> ETA </th>
+                        <th> LAST FREE DATE </th>
+                        <th> DELIVERY </th>
+                        <th> DELIVERY DATE </th>
+                        <th> REMARKS </th>
+                        <th> A </th>
+                        <th> B </th>
+                        <th> C </th>
+                        <th> D </th>
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                     <tr>
                         <td>{{rec.mbl_refno}}</td>
-                        <td
-                            *ngIf="!(report_category == 'OVERSEAS AGENT' || report_category == 'POL' || report_category == 'POD')">
-                            {{rec.hbl_houseno}}</td>
-                        <td>{{rec.mbl_customer_name}}</td>
-                        <td align='right'>{{rec.mbl_customer_amt | number : '1.2-2'}}</td>
-                        <td></td>
+                        <td>{{rec.mbl_ref_date}}</td>
+                        <td>{{rec.hbl_houseno}}</td>
+                        <td>{{rec.hbl_shipment_stage}}</td>
+                        <td>{{rec.mbl_liner_name}}</td>
+                        <td>{{rec.mbl_liner_bookingno}}</td>
+                        <td>{{rec.hbl_shipper_name}}</td>
+                        <td>{{rec.hbl_consignee_name}}</td>
+                        <td>{{rec.mbl_cntr_type}}</td>
+                        <td>{{rec.hbl_packages}}</td>
+                        <td>{{rec.hbl_place_final}}</td>
+                        <td>{{rec.mbl_pol_etd}}</td>
+                        <td>{{rec.hbl_isf_no}}</td>
+                        <td>{{rec.mbl_is_sea_waybill}}</td>
+                        <td>{{rec.hbl_bl_status}}</td>
+                        <td>{{rec.hbl_is_pl}}</td>
+                        <td>{{rec.hbl_is_ci}}</td>
+                        <td>{{rec.hbl_is_carr_an}}</td>
+                        <td>{{rec.hbl_custom_reles_status}}</td>
+                        <td>{{rec.hbl_cargo_release_status}}</td>
+                        <td>{{rec.hbl_paid_status}}</td>
+                        <td>{{rec.mbl_pod_eta}}</td>
+                        <td>{{rec.hbl_lfd_date}}</td>
+                        <td>{{rec.hbl_is_delivery}}</td>
+                        <td>{{rec.hbl_pld_eta}}</td>
+                        <td>{{rec.hbl_remark3}}</td>
+                        <td>{{rec.mbl_inv_stage_a}}</td>
+                        <td>{{rec.mbl_inv_stage_b}}</td>
+                        <td>{{rec.mbl_inv_stage_c}}</td>
+                        <td>{{rec.mbl_inv_stage_d}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-
-        <div *ngIf="report_type=='SUMMARY'" class="page-body table-responsive">
-            <table class="table  table-hover table-sm">
-                <thead class="page-body-thead">
-                    <tr>
-                        <th width="15%">{{report_category}}</th>
-                        <th width="15%" class="text-right">{{report_amt_caption}}</th>
-                        <th width="70%"></th>
-                    </tr>
-                </thead>
-                <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr>
-                        <td>{{rec.mbl_customer_name}}</td>
-                        <td align='right'>{{rec.mbl_customer_amt | number : '1.2-2'}}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
+ 
         <App-Page
             [PageData]={page_count:page_count,page_current:page_current,page_rows:page_rows,page_rowcount:page_rowcount}
             (PageEvents)="PageEvents($event)"></App-Page>

@@ -223,7 +223,7 @@ export class ShipmentLogReportComponent implements OnInit {
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
     this.SearchData.page_count = this.page_count;
-    this.SearchData.page_current = this.page_current;
+    this.SearchData.page_current = _action == 'NEW' ? -1 : this.page_current;
     this.SearchData.page_rows = this.page_rows;
     this.SearchData.page_rowcount = this.page_rowcount;
 
