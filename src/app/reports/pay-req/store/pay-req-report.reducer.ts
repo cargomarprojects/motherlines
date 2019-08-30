@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Tbl_shipment_close } from '../../models/Tbl_shipment_close';
+import { Tbl_Cargo_Payrequest } from '../../models/Tbl_Cargo_Payrequest';
 import { AppState } from '../../../reducer';
 
 import * as myActions from './pay-req-report.actions';
@@ -19,6 +19,8 @@ export const initialState: ReportState = {
     edate: '',
     mode: '',
     comp_type: '',
+    user_id: '',
+    user_name: '',
     page_rows: 0,
     page_count: 0,
     page_current: 0,

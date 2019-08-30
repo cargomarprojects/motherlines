@@ -1,4 +1,4 @@
-import { Tbl_shipment_close } from '../../models/Tbl_shipment_close';
+import { Tbl_Cargo_Payrequest } from '../../models/Tbl_Cargo_Payrequest';
 export interface ReportState{ 
 
     pkid : string,    
@@ -10,10 +10,12 @@ export interface ReportState{
     edate: string;
     mode : string;
     comp_type: string;
+    user_id: string ;
+    user_name: string ;
     
     page_rows :number;
     page_count :number;
     page_current :number;
     page_rowcount :number;        
-    records : Tbl_shipment_close[];
+    records : Tbl_Cargo_Payrequest[];
 }

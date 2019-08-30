@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
 import { ReportService } from '../services/report.service';
-import { Tbl_shipment_close } from '../models/Tbl_shipment_close';
+import { Tbl_Cargo_Payrequest } from '../models/Tbl_Cargo_Payrequest';
 import { SearchTable } from '../../shared/models/searchtable';
 
 import { Store, State, select } from '@ngrx/store';
@@ -32,18 +32,18 @@ export class PayReqReportComponent implements OnInit {
   report_category: string;
   sdate: string;
   edate: string;
-  mode  = '';
+  mode = 'PAID';
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
 
-  cust_id: string;
-  cust_name: string;
+  user_id: string;
+  user_name: string;
 
-  cust_parent_id: string;
-  cust_parent_name: string;
 
   reportformat = '';
+
+
 
   page_count: number = 0;
   page_current: number = 0;
@@ -60,7 +60,7 @@ export class PayReqReportComponent implements OnInit {
 
   Reportstate1: Observable<ReportState>;
 
-  MainList: Tbl_shipment_close[];
+  MainList: Tbl_Cargo_Payrequest[];
 
   CUSTRECORD: SearchTable = new SearchTable();
   PARENTRECORD: SearchTable = new SearchTable();
@@ -85,7 +85,7 @@ export class PayReqReportComponent implements OnInit {
   InitPage() {
 
     this.storesub = this.store.select(myReducer.getState(this.urlid)).subscribe(rec => {
-      
+
       if (rec) {
 
         this.MainList = rec.records;
@@ -96,6 +96,10 @@ export class PayReqReportComponent implements OnInit {
         this.sdate = rec.sdate;
         this.edate = rec.edate;
         this.mode = rec.mode;
+
+        this.user_id = rec.user_id;
+        this.user_name = rec.user_name;
+
         this.comp_type = rec.comp_type;
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -116,7 +120,7 @@ export class PayReqReportComponent implements OnInit {
 
 
       } else {
-        this.MainList = Array<Tbl_shipment_close>();
+        this.MainList = Array<Tbl_Cargo_Payrequest>();
 
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
         this.page_count = 0;
@@ -125,11 +129,16 @@ export class PayReqReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
 
+
+
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
+
+        this.user_id = '';
+        this.user_name = '';
 
         this.SearchData = this.gs.UserInfo;
 
@@ -171,13 +180,16 @@ export class PayReqReportComponent implements OnInit {
       this.SearchData.EDATE = this.edate;
       this.SearchData.MODE = this.mode;
 
+      this.SearchData.user_id = '';
+      this.SearchData.user_name = '';
+
       this.SearchData.LOCK_DAYS_SEA = this.gs.LOCK_DAYS_SEA;
       this.SearchData.LOCK_DAYS_AIR = this.gs.LOCK_DAYS_AIR;
       this.SearchData.LOCK_DAYS_OTHERS = this.gs.LOCK_DAYS_OTHERS;
       this.SearchData.LOCK_DAYS_ADMIN = this.gs.LOCK_DAYS_ADMIN;
       this.SearchData.TODAYS_DATE = this.gs.defaultValues.today;
     }
-    
+
     this.loading = true;
 
     this.mainservice.ShipmentCloseReport(this.SearchData)
@@ -194,6 +206,10 @@ export class PayReqReportComponent implements OnInit {
             edate: this.SearchData.EDATE,
             mode: this.SearchData.MODE,
             comp_type: this.SearchData.COMP_TYPE,
+
+            user_id: this.SearchData.user_id,
+            user_name: this.SearchData.user_name,
+
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
