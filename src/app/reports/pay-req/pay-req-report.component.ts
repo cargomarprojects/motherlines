@@ -32,7 +32,7 @@ export class PayReqReportComponent implements OnInit {
   report_category: string;
   sdate: string;
   edate: string;
-  mode = 'PAID';
+  mode = 'PENDING';
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
@@ -62,8 +62,8 @@ export class PayReqReportComponent implements OnInit {
 
   MainList: Tbl_Cargo_Payrequest[];
 
-  CUSTRECORD: SearchTable = new SearchTable();
-  PARENTRECORD: SearchTable = new SearchTable();
+  USERRECORD: SearchTable = new SearchTable();
+
 
   constructor(
     public gs: GlobalService,
@@ -85,7 +85,7 @@ export class PayReqReportComponent implements OnInit {
   InitPage() {
 
     this.storesub = this.store.select(myReducer.getState(this.urlid)).subscribe(rec => {
-
+      this.initLov();
       if (rec) {
 
         this.MainList = rec.records;
@@ -100,11 +100,16 @@ export class PayReqReportComponent implements OnInit {
         this.user_id = rec.user_id;
         this.user_name = rec.user_name;
 
+        this.USERRECORD.id = this.user_id;
+        this.USERRECORD.name = this.user_name;
+
         this.comp_type = rec.comp_type;
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
         this.page_current = rec.page_current;
         this.page_rowcount = rec.page_rowcount;
+
+
 
 
         this.SearchData = this.gs.UserInfo;
@@ -134,7 +139,7 @@ export class PayReqReportComponent implements OnInit {
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
-        this.mode = 'OCEAN IMPORT';
+        this.mode = 'PENDING';
         this.comp_type = this.gs.branch_code;
 
         this.user_id = '';
@@ -176,18 +181,16 @@ export class PayReqReportComponent implements OnInit {
 
       this.SearchData.JV_YEAR = this.gs.globalVariables.year_code;
       this.SearchData.REPORT_CATEGORY = this.report_category;
-      this.SearchData.SDATE = this.sdate;
-      this.SearchData.EDATE = this.edate;
-      this.SearchData.MODE = this.mode;
+      this.SearchData.FDATE = this.sdate;
+      this.SearchData.TDATE = this.edate;
+      this.SearchData.STYPE = this.mode;
+      this.SearchData.ISADMIN = 'N';
 
-      this.SearchData.user_id = '';
-      this.SearchData.user_name = '';
+      this.SearchData.REQUEST_ID= this.user_id;
+      this.SearchData.user_id = this.user_id;
+      this.SearchData.user_name = this.user_name;
 
-      this.SearchData.LOCK_DAYS_SEA = this.gs.LOCK_DAYS_SEA;
-      this.SearchData.LOCK_DAYS_AIR = this.gs.LOCK_DAYS_AIR;
-      this.SearchData.LOCK_DAYS_OTHERS = this.gs.LOCK_DAYS_OTHERS;
-      this.SearchData.LOCK_DAYS_ADMIN = this.gs.LOCK_DAYS_ADMIN;
-      this.SearchData.TODAYS_DATE = this.gs.defaultValues.today;
+
     }
 
     this.loading = true;
@@ -202,9 +205,9 @@ export class PayReqReportComponent implements OnInit {
             menuid: this.menuid,
             currentTab: this.currentTab,
             report_category: this.SearchData.REPORT_CATEGORY,
-            sdate: this.SearchData.SDATE,
-            edate: this.SearchData.EDATE,
-            mode: this.SearchData.MODE,
+            sdate: this.SearchData.FDATE,
+            edate: this.SearchData.TDATE,
+            mode: this.SearchData.STYPE,
             comp_type: this.SearchData.COMP_TYPE,
 
             user_id: this.SearchData.user_id,
@@ -231,6 +234,25 @@ export class PayReqReportComponent implements OnInit {
     this.store.dispatch(new myActions.Delete({ id: this.urlid }));
     this.location.back();
   }
+
+  initLov(caption: string = '') {
+    this.USERRECORD = new SearchTable();
+    this.USERRECORD.controlname = "USER";
+    this.USERRECORD.displaycolumn = "NAME";
+    this.USERRECORD.type = "USER";
+    this.USERRECORD.subtype = "";
+    this.USERRECORD.id = "";
+    this.USERRECORD.code = "";
+
+  }
+
+  LovSelected(_Record: SearchTable) {
+    if (_Record.controlname == "USER") {
+      this.user_id = _Record.id;
+      this.user_name = _Record.name;
+    }
+  }
+
 
 
 }
