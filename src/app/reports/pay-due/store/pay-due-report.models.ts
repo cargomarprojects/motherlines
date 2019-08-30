@@ -11,6 +11,7 @@ export interface ReportState{
     mode : string;
     comp_type: string;
     sdata: string ;
+    sort: string ;
     cust_id: string ;
     cust_name: string ;
     

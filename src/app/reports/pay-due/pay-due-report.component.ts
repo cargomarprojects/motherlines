@@ -32,12 +32,14 @@ export class PayDueReportComponent implements OnInit {
   report_category: string;
   sdate: string;
   edate: string;
-  mode = 'PENDING';
+  mode = '';
+  
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
 
-  sdata : string ;
+  sort: string ='inv_mbl_refno';
+  sdata = '';
   cust_id: string;
   cust_name: string;
 
@@ -97,6 +99,7 @@ export class PayDueReportComponent implements OnInit {
         this.mode = rec.mode;
 
         this.sdata = rec.sdata;
+        this.sort = rec.sort;
 
         this.cust_id = rec.cust_id;
         this.cust_name = rec.cust_name;
@@ -140,10 +143,11 @@ export class PayDueReportComponent implements OnInit {
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
-        this.mode = 'PENDING';
+        this.mode = "'SEA IMPORT'";
         this.comp_type = this.gs.branch_code;
 
         this.sdata = '';
+        this.sort = 'inv_mbl_refno';
         this.cust_id = '';
         this.cust_name = '';
 
@@ -185,11 +189,18 @@ export class PayDueReportComponent implements OnInit {
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.FDATE = this.sdate;
       this.SearchData.TDATE = this.edate;
+      
       this.SearchData.STYPE = this.mode;
+      
+      this.SearchData.SHOWSMODE = this.mode;
+
+      this.SearchData.SORT = this.sort;
+      
       this.SearchData.ISADMIN = 'N';
 
-      this.SearchData.SDATA= this.sdata;
-      this.SearchData.CUST_ID= this.cust_id;
+      this.SearchData.SDATA = this.sdata;
+      this.SearchData.SORT= this.sort;
+      this.SearchData.CUST_ID = this.cust_id;
       this.SearchData.user_id = this.cust_id;
       this.SearchData.user_name = this.cust_name;
 
@@ -214,6 +225,7 @@ export class PayDueReportComponent implements OnInit {
             comp_type: this.SearchData.COMP_TYPE,
 
             sdata: this.SearchData.SDATA,
+            sort: this.SearchData.SORT,
             cust_id: this.SearchData.cust_id,
             cust_name: this.SearchData.cust_name,
 
@@ -256,7 +268,5 @@ export class PayDueReportComponent implements OnInit {
       this.cust_name = _Record.name;
     }
   }
-
-
 
 }

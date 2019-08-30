@@ -20,6 +20,7 @@ export const initialState: ReportState = {
     mode: '',
     comp_type: '',
     sdata :'',
+    sort :'',
     cust_id: '',
     cust_name: '',
     page_rows: 0,
