@@ -192,7 +192,7 @@ export class PayReqReportComponent implements OnInit {
 
     this.loading = true;
 
-    this.mainservice.ShipmentCloseReport(this.SearchData)
+    this.mainservice.PayReqReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
