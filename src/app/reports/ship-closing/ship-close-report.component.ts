@@ -147,6 +147,7 @@ export class ShipCloseReportComponent implements OnInit {
   }
 
   PageEvents(actions) {
+    this.page_current = actions.page_current;
     this.List(actions.outputformat, actions.action);
   }
 
@@ -161,6 +162,8 @@ export class ShipCloseReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
+
+      this.SearchData.page_current = -1;
 
       this.SearchData.JV_YEAR = this.gs.globalVariables.year_code;
       this.SearchData.REPORT_CATEGORY = this.report_category;
