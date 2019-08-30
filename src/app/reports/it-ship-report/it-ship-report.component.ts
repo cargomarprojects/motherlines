@@ -29,17 +29,12 @@ export class ItShipReportComponent implements OnInit {
 
   currentTab = '';
 
-  report_category: string;
+ 
   sdate: string;
   edate: string;
   mode  = '';
   comp_type: string = '';
-  report_type: string = '';
-  report_shptype: string = '';
-
-  cons_id: string;
-  cons_name: string;
-  reportformat = '';
+  
 
   page_count: number = 0;
   page_current: number = 0;
@@ -58,7 +53,7 @@ export class ItShipReportComponent implements OnInit {
 
   MainList: TBL_MBL_REPORT[];
 
-  CONSRECORD: SearchTable = new SearchTable();
+  
 
   constructor(
     public gs: GlobalService,
@@ -80,25 +75,15 @@ export class ItShipReportComponent implements OnInit {
   InitPage() {
 
     this.storesub = this.store.select(myReducer.getState(this.urlid)).subscribe(rec => {
-      this.initLov();
+      
       if (rec) {
 
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-
-        this.report_category = rec.report_category;
         this.sdate = rec.sdate;
         this.edate = rec.edate;
-        this.mode = rec.mode;
         this.comp_type = rec.comp_type;
-        this.report_type = rec.report_type;
-        this.report_shptype = rec.report_shptype;
-        this.cons_id = rec.cons_id;
-        this.cons_name = rec.cons_name;
-        this.reportformat = rec.reportformat;
-
-
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
         this.page_current = rec.page_current;
@@ -116,15 +101,6 @@ export class ItShipReportComponent implements OnInit {
           this.SearchData.COMP_CODE = this.comp_type;
         }
 
-        this.SearchData.REPORT_TYPE = this.report_type;
-        this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-
-        this.SearchData.CONSIGNEE_ID = this.cons_id;
-        this.SearchData.CONSIGNEE_NAME = this.cons_name;
-
-        this.CONSRECORD.id = this.cons_id;
-        this.CONSRECORD.name = this.cons_name;
-
       } else {
         this.MainList = Array<TBL_MBL_REPORT>();
 
@@ -135,18 +111,11 @@ export class ItShipReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
 
-        this.report_category = 'CONSIGNEE SHIPMENT REPORT';
+
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
-        this.report_type = 'DETAIL';
-        this.report_shptype = 'ALL';
-        this.cons_id = '';
-        this.cons_name = '';
-        this.reportformat = 'DETAIL';
-
-
         this.SearchData = this.gs.UserInfo;
 
       }
@@ -178,11 +147,9 @@ export class ItShipReportComponent implements OnInit {
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
 
-      this.SearchData.JV_YEAR = this.gs.globalVariables.year_code;
-      this.SearchData.REPORT_CATEGORY = this.report_category;
+      
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
-      this.SearchData.MODE = this.mode;
       this.SearchData.COMP_TYPE = this.comp_type;
 
       if (this.comp_type === 'ALL') {
@@ -191,19 +158,12 @@ export class ItShipReportComponent implements OnInit {
         this.SearchData.COMP_CODE = this.comp_type;
       }
 
-      this.SearchData.REPORT_TYPE = this.report_type;
-      this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-
-      this.SearchData.CONSIGNEE_ID = this.cons_id;
-      this.SearchData.CONSIGNEE_NAME = this.cons_name;
-
-      this.reportformat = this.report_type;
     }
 
 
     this.loading = true;
 
-    this.mainservice.ConsigneeShipmentReport(this.SearchData)
+    this.mainservice.ItShipmentReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
@@ -212,16 +172,9 @@ export class ItShipReportComponent implements OnInit {
             urlid: this.urlid,
             menuid: this.menuid,
             currentTab: this.currentTab,
-            report_category: this.SearchData.REPORT_CATEGORY,
             sdate: this.SearchData.SDATE,
             edate: this.SearchData.EDATE,
-            mode: this.SearchData.MODE,
             comp_type: this.SearchData.COMP_TYPE,
-            report_type: this.SearchData.REPORT_TYPE,
-            report_shptype: this.SearchData.REPORT_SHPTYPE,
-            cons_id: this.SearchData.CONSIGNEE_ID,
-            cons_name: this.SearchData.CONSIGNEE_NAME,
-            reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
@@ -244,21 +197,5 @@ export class ItShipReportComponent implements OnInit {
     this.location.back();
   }
 
-  initLov(caption: string = '') {
-    this.CONSRECORD = new SearchTable();
-    this.CONSRECORD.controlname = 'CONSIGNEE';
-    this.CONSRECORD.displaycolumn = 'NAME';
-    this.CONSRECORD.type = 'MASTER';
-    this.CONSRECORD.subtype = '';
-    this.CONSRECORD.id = '';
-    this.CONSRECORD.code = '';
-  }
-
-  LovSelected(_Record: SearchTable) {
-    if (_Record.controlname === 'CONSIGNEE') {
-      this.cons_id = _Record.id;
-      this.cons_name = _Record.name;
-    }
-  }
 
 }

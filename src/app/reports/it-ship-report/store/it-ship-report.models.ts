@@ -5,16 +5,11 @@ export interface ReportState{
     urlid : string,
     menuid : string;
     currentTab : string ;
-    report_category: string;
+    
     sdate: string;
     edate: string;
-    mode : string;
     comp_type: string;
-    report_type: string;
-    report_shptype : string;
-    cons_id : string ;
-    cons_name : string ;
-    reportformat : string ;
+
     page_rows :number;
     page_count :number;
     page_current :number;
