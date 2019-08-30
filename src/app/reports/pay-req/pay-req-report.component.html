@@ -65,34 +65,36 @@
     <table class="table  table-hover table-sm">
       <thead class="page-body-thead">
         <tr>
+          <th>REQUESTED-BY</th>
+          <th>REQ.DATE</th>
           <th>REF#</th>
-          <th>REF-DATE</th>
-          <th>LOCK</th>
-          <th>BL-STATUS</th>
-          <th>SHIPMENT</th>
-          <th>E.RET-DATE</th>
-          <th>PICKUP-DATE</th>          
-          <th>PROFIT-MET</th>          
-          <th>LOSS-APPROVED</th>          
-          <th>MEMO</th>
-          <th>PROFIT</th>          
-          <th>ATTACHMENTS</th>          
+          <th>REQ.TYPE</th>
+          <th>PAYEE</th>
+          <th>A/P NO</th>
+          <th>PAYMENT DATE</th>
+          <th>STATUS</th>
+          <th>NOTES</th>
+          <th>OHBL/TELEX RLS COPY</th>
+          <th>CHECK COPY</th>
+          <th>APPROVAL</th>
+          <th>ARAP</th>
         </tr>
       </thead>
       <tbody class="page-body-tbody" *ngFor="let rec of MainList">
         <tr>
-          <td>{{rec.sc_mbl_refno}}</td>
-          <td>{{rec.sc_mbl_ref_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-          <td>{{rec.sc_mbl_lock}}</td>
-          <td>{{rec.sc_bl_status}}</td>
-          <td>{{rec.sc_shipment_type}}</td>
-          <td>{{rec.sc_emptyret_date  | date : gs.FRONTEND_DATEFORMAT }}</td>
-          <td>{{rec.sc_pickup_date  | date : gs.FRONTEND_DATEFORMAT }}</td>
-          <td>{{rec.sc_profit_met}}</td>
-          <td>{{rec.sc_loss_approved}}</td>
-          <td>{{rec.sc_memo}}</td>
-          <td>{{rec.sc_profit}}</td>
-          <td>Attachments</td>
+          <td>{{rec.rec_created_by}}</td>
+          <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+          <td>{{rec.cp_master_refno}}</td>
+          <td>{{rec.cp_paytype_needed}}</td>
+          <td>{{rec.cp_cust_name}}</td>
+          <td>{{rec.cp_inv_no}}</td>
+          <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+          <td>{{rec.cp_pay_status}}</td>
+          <td>{{rec.cp_spl_notes}}</td>
+          <td>ATTACHMENTS</td>
+          <td>CHECK COPY</td>
+          <td>APPROVAL</td>
+          <td>ARAP</td>
         </tr>
       </tbody>
     </table>
