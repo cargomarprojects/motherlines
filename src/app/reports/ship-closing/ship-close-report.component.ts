@@ -167,18 +167,14 @@ export class ShipCloseReportComponent implements OnInit {
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
       this.SearchData.MODE = this.mode;
-      this.SearchData.COMP_TYPE = this.comp_type;
 
-      if (this.comp_type === 'ALL') {
-        this.SearchData.COMP_CODE = this.gs.branch_codes;
-      } else {
-        this.SearchData.COMP_CODE = this.comp_type;
-      }
-
-      this.reportformat = this.report_type;
+      this.SearchData.LOCK_DAYS_SEA = this.gs.LOCK_DAYS_SEA;
+      this.SearchData.LOCK_DAYS_AIR = this.gs.LOCK_DAYS_AIR;
+      this.SearchData.LOCK_DAYS_OTHERS = this.gs.LOCK_DAYS_OTHERS;
+      this.SearchData.LOCK_DAYS_ADMIN = this.gs.LOCK_DAYS_ADMIN;
+      this.SearchData.TODAYS_DATE = this.gs.defaultValues.today;
     }
-
-
+    
     this.loading = true;
 
     this.mainservice.ShipmentCloseReport(this.SearchData)
