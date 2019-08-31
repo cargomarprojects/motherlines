@@ -29,20 +29,28 @@ export class PayDueReportComponent implements OnInit {
 
   currentTab = '';
 
+
+  mode = "";
   report_category: string;
   sdate: string;
   edate: string;
-  mode = '';
-  
+  showsmode = '';
+
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
 
-  sort: string ='inv_mbl_refno';
+  sort: string = 'inv_mbl_refno';
   sdata = '';
   cust_id: string;
   cust_name: string;
 
+  chk_air_import = true;
+  chk_air_export = true;
+  chk_sea_import = true;
+  chk_sea_export = true;
+  chk_others = true;
+  chk_admin_expense = false;
 
   reportformat = '';
 
@@ -96,10 +104,18 @@ export class PayDueReportComponent implements OnInit {
         this.report_category = rec.report_category;
         this.sdate = rec.sdate;
         this.edate = rec.edate;
-        this.mode = rec.mode;
+        this.showsmode = rec.showsmode;
 
         this.sdata = rec.sdata;
         this.sort = rec.sort;
+
+        this.chk_air_import = rec.chk_air_import;
+        this.chk_sea_import = rec.chk_sea_import;
+        this.chk_air_export = rec.chk_air_export;
+        this.chk_sea_export = rec.chk_sea_export;
+        this.chk_others = rec.chk_others;
+        this.chk_admin_expense = rec.chk_admin_expense;
+
 
         this.cust_id = rec.cust_id;
         this.cust_name = rec.cust_name;
@@ -113,14 +129,13 @@ export class PayDueReportComponent implements OnInit {
         this.page_current = rec.page_current;
         this.page_rowcount = rec.page_rowcount;
 
-
-
-
         this.SearchData = this.gs.UserInfo;
         this.SearchData.SDATE = this.sdate;
         this.SearchData.EDATE = this.edate;
-        this.SearchData.MODE = this.mode;
+        this.SearchData.SHOWSMODE = this.showsmode;
         this.SearchData.COMP_TYPE = this.comp_type;
+
+
         if (this.comp_type === 'ALL') {
           this.SearchData.COMP_CODE = this.gs.branch_codes;
         } else {
@@ -143,13 +158,20 @@ export class PayDueReportComponent implements OnInit {
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
-        this.mode = "'SEA IMPORT'";
+        this.showsmode = "";
         this.comp_type = this.gs.branch_code;
 
         this.sdata = '';
         this.sort = 'inv_mbl_refno';
         this.cust_id = '';
         this.cust_name = '';
+
+        this.chk_air_import = true;
+        this.chk_air_export = true;
+        this.chk_sea_import = true;
+        this.chk_sea_export = true;
+        this.chk_others = true;
+        this.chk_admin_expense = false;
 
         this.SearchData = this.gs.UserInfo;
 
@@ -189,21 +211,59 @@ export class PayDueReportComponent implements OnInit {
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.FDATE = this.sdate;
       this.SearchData.TDATE = this.edate;
-      
-      this.SearchData.STYPE = this.mode;
-      
-      this.SearchData.SHOWSMODE = this.mode;
+
+      //this.SearchData.STYPE = this.mode;
+
 
       this.SearchData.SORT = this.sort;
-      
+
       this.SearchData.ISADMIN = 'N';
 
       this.SearchData.SDATA = this.sdata;
-      this.SearchData.SORT= this.sort;
+      this.SearchData.SORT = this.sort;
       this.SearchData.CUST_ID = this.cust_id;
       this.SearchData.user_id = this.cust_id;
       this.SearchData.user_name = this.cust_name;
 
+      this.mode ="";
+      if ( this.chk_air_import)
+      {
+          if (this.mode != "")
+              this.mode += ",";
+          this.mode += "'AIR IMPORT'";
+      }
+      if ( this.chk_air_export)
+      {
+          if (this.mode != "")
+              this.mode += ",";
+          this.mode += "'AIR EXPORT'";
+      }
+      if ( this.chk_sea_import)
+      {
+          if (this.mode != "")
+              this.mode += ",";
+          this.mode += "'SEA IMPORT'";
+      }
+      if ( this.chk_sea_export)
+      {
+          if (this.mode != "")
+              this.mode += ",";
+          this.mode += "'SEA EXPORT'";
+      }
+      if ( this.chk_others)
+      {
+          if (this.mode != "")
+              this.mode += ",";
+          this.mode += "'OTHERS'";
+      }
+      if ( this.chk_admin_expense)
+      {
+          if (this.mode != "")
+              this.mode += ",";
+          this.mode += "'CM','GE','PR','PS'";
+      }
+      this.showsmode  = this.mode;
+      this.SearchData.SHOWSMODE  = this.showsmode;
 
     }
 
@@ -221,13 +281,21 @@ export class PayDueReportComponent implements OnInit {
             report_category: this.SearchData.REPORT_CATEGORY,
             sdate: this.SearchData.FDATE,
             edate: this.SearchData.TDATE,
-            mode: this.SearchData.STYPE,
+            
             comp_type: this.SearchData.COMP_TYPE,
 
             sdata: this.SearchData.SDATA,
             sort: this.SearchData.SORT,
             cust_id: this.SearchData.cust_id,
             cust_name: this.SearchData.cust_name,
+
+            chk_air_import: this.chk_air_import,
+            chk_sea_import: this.chk_sea_import,
+            chk_air_export: this.chk_air_export,
+            chk_sea_export: this.chk_sea_export,
+            chk_others: this.chk_others,
+            chk_admin_expense: this.chk_admin_expense,
+            showsmode: this.SearchData.SHOWSMODE,
 
             page_rows: response.page_rows,
             page_count: response.page_count,

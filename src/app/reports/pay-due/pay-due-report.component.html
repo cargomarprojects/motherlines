@@ -12,7 +12,26 @@
     <div class="page-search">
 
       <div class="row">
+
         <div class="col-md-3">
+
+          <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm">Sort</label>
+            <div class="col-8">
+              <select class="form-control form-control-sm" [(ngModel)]="sort">
+                <option [value]="'inv_mbl_refno'">REF#</option>
+                <option [value]="'inv_houseno'">HOUSE#</option>
+                <option [value]="'inv_name'">CUSTOMER</option>
+                <option [value]="'inv_no'">INVOICE#</option>
+                <option [value]="'inv_date'">INVOICE DATE</option>
+                <option [value]="'inv_payment_date'">PAYMENT DATE</option>
+                <option [value]="'inv_total'">INVOICE AMOUNT</option>
+                <option [value]="'inv_bal_amt'">BALANCE</option>
+
+              </select>
+            </div>
+          </div>
+
 
           <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm">From</label>
@@ -27,38 +46,62 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-3">
-
           <div class="form-group row">
-            <label class="col-4 col-form-label col-form-label-sm">Group</label>
+            <label class="col-4 col-form-label col-form-label-sm"></label>
             <div class="col-8">
-              <select class="form-control form-control-sm" [(ngModel)]="sort">
-                <option [value]="'inv_mbl_refno'">REF#</option>
-                <option [value]="'inv_houseno'">HOUSE#</option>
-                <option [value]="'inv_name'">CUSTOMER</option>
-                <option [value]="'inv_no'">INVOICE#</option>
-                <option [value]="'inv_date'">INVOICE DATE</option>
-                <option [value]="'inv_payment_date'">PAYMENT DATE</option>
-                <option [value]="'inv_total'">INVOICE AMOUNT</option>                
-                <option [value]="'inv_bal_amt'">BALANCE</option>                
-
-              </select>
+              <input class="form-check-input" type="checkbox" [(ngModel)]="chk_air_import">
+              <label class="form-check-label">AIR IMPORT</label>
             </div>
           </div>
-
-
-
           <div class="form-group row">
-            <label class="col-4 col-form-label col-form-label-sm">CUSTOMER</label>
+            <label class="col-4 col-form-label col-form-label-sm"></label>
             <div class="col-8">
-                <app-autocomplete  [inputdata]="CUSTRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete>                
+              <input class="form-check-input" type="checkbox" [(ngModel)]="chk_air_export">
+              <label class="form-check-label">AIR EXPORT</label>
             </div>
           </div>
-
-
+          <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm"></label>
+            <div class="col-8">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="chk_sea_import">
+              <label class="form-check-label">OCEAN IMPORT</label>
+            </div>
+          </div>
         </div>
 
         <div class="col-md-3">
+          <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm"></label>
+            <div class="col-8">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="chk_sea_export">
+              <label class="form-check-label">OCEAN EXPORT</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm"></label>
+            <div class="col-8">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="chk_others">
+              <label class="form-check-label">OTHERS</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm"></label>
+            <div class="col-8">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="chk_admin_expense">
+              <label class="form-check-label">ADMIN EXPENSE</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm">CUSTOMER</label>
+            <div class="col-8">
+              <app-autocomplete [inputdata]="CUSTRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete>
+            </div>
+          </div>
           <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm"></label>
             <div class="col-8">
@@ -66,7 +109,6 @@
             </div>
           </div>
         </div>
-
 
       </div>
 
