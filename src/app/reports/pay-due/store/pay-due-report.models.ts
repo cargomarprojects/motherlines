@@ -8,10 +8,18 @@ export interface ReportState{
     report_category: string;
     sdate: string;
     edate: string;
-    mode : string;
+    showsmode : string;
     comp_type: string;
     sdata: string ;
     sort: string ;
+
+    chk_air_import : boolean;
+    chk_sea_import : boolean;
+    chk_air_export : boolean,
+    chk_sea_export : boolean;
+    chk_others : boolean;
+    chk_admin_expense : boolean;
+
     cust_id: string ;
     cust_name: string ;
     
