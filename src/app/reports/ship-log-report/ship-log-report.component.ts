@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
@@ -22,6 +22,24 @@ import { Observable } from 'rxjs';
 export class ShipmentLogReportComponent implements OnInit {
 
   title: string = 'Shipment Log Report';
+
+  @ViewChild('chkbox0') mChkBox0: ElementRef;
+  @ViewChild('chkbox1') mChkBox1: ElementRef;
+  @ViewChild('chkbox2') mChkBox2: ElementRef;
+  @ViewChild('chkbox3') mChkBox3: ElementRef;
+  @ViewChild('chkbox4') mChkBox4: ElementRef;
+  @ViewChild('chkbox5') mChkBox5: ElementRef;
+  @ViewChild('chkbox6') mChkBox6: ElementRef;
+  @ViewChild('chkbox7') mChkBox7: ElementRef;
+  @ViewChild('chkbox8') mChkBox8: ElementRef;
+  @ViewChild('chkbox9') mChkBox9: ElementRef;
+  @ViewChild('chkbox10') mChkBox10: ElementRef;
+  @ViewChild('chkbox11') mChkBox11: ElementRef;
+  @ViewChild('chkbox12') mChkBox12: ElementRef;
+  @ViewChild('chkbox13') mChkBox13: ElementRef;
+  @ViewChild('chkbox14') mChkBox14: ElementRef;
+  @ViewChild('chkbox15') mChkBox15: ElementRef;
+
 
   pkid: string;
   urlid: string;
@@ -71,6 +89,8 @@ export class ShipmentLogReportComponent implements OnInit {
   sub: any;
   tab: string = 'main';
 
+  isRecStored: boolean = false;
+
   chklstCol2Visible: boolean = false;
   loading: boolean = false;
   errorMessage: string = '';
@@ -101,7 +121,7 @@ export class ShipmentLogReportComponent implements OnInit {
     this.storesub = this.store.select(myReducer.getState(this.urlid)).subscribe(rec => {
       this.initLov();
       if (rec) {
-
+        this.isRecStored = true;
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
@@ -156,6 +176,7 @@ export class ShipmentLogReportComponent implements OnInit {
 
       }
       else {
+        this.isRecStored = false;
         this.MainList = Array<Tbl_cargo_general>();
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
         this.page_count = 0;
@@ -440,9 +461,51 @@ export class ShipmentLogReportComponent implements OnInit {
   }
 
   SelectDeselect(_type: string) {
-    for (let i = 0; i < 16; i++) {
-      if (this.checkList[i].name.length > 0)
-        this.checkList[i].ischecked = _type == "SELECT" ? true : false;
+    if (this.isRecStored)
+      this.store.dispatch(new myActions.SelectDeselect({ id: this.urlid, flag: _type == "SELECT" ? true : false }));
+    else {
+      for (let i = 0; i < 16; i++) {
+        if (this.checkList[i].name.length > 0)
+          this.checkList[i].ischecked = _type == "SELECT" ? true : false;
+      }
     }
+
+  }
+  SelectDeselect2(_code: string, _chkedseq: number) {
+    if (this.isRecStored) {
+      if (_chkedseq == 0)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox0.nativeElement.checked }));
+      else if (_chkedseq == 1)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox1.nativeElement.checked }));
+      else if (_chkedseq == 2)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox2.nativeElement.checked }));
+      else if (_chkedseq == 3)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox3.nativeElement.checked }));
+      else if (_chkedseq == 4)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox4.nativeElement.checked }));
+      else if (_chkedseq == 5)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox5.nativeElement.checked }));
+      else if (_chkedseq == 6)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox6.nativeElement.checked }));
+      else if (_chkedseq == 7)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox7.nativeElement.checked }));
+      else if (_chkedseq == 8)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox8.nativeElement.checked }));
+      else if (_chkedseq == 9)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox9.nativeElement.checked }));
+      else if (_chkedseq == 10)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox10.nativeElement.checked }));
+      else if (_chkedseq == 11)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox11.nativeElement.checked }));
+      else if (_chkedseq == 12)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox12.nativeElement.checked }));
+      else if (_chkedseq == 13)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox13.nativeElement.checked }));
+      else if (_chkedseq == 14)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox14.nativeElement.checked }));
+      else if (_chkedseq == 15)
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox15.nativeElement.checked }));
+    }
+
   }
 }
