@@ -32,7 +32,7 @@ export const initialState: ReportState = {
     checkList: [],
     sort_order: '',
     format_type: '',
-    reportformat:'',
+    reportformat: '',
     printer_friendly: false,
     filename: '',
     filetype: '',
@@ -52,6 +52,27 @@ export function ShipmentLogReportReducer(state: ReportState[] = [initialState], 
             return [...state.filter(rec => rec.urlid != action.payload.id), action.payload.changes];
         case myActions.ActionTypes.DELETE:
             return [...state.filter(rec => rec.urlid != action.payload.id)];
+        case myActions.ActionTypes.SELECTDESELECT: {
+            const rec = { ...state.find(rec1 => rec1.urlid == action.payload.id) };
+            const record = {
+                ...rec,
+                checkList: rec.checkList.map(r1 => {
+                    return { ...r1, ischecked: action.payload.flag }
+                })
+            };
+            return [...state.filter(rec2 => rec2.urlid != action.payload.id), record];
+        }
+        case myActions.ActionTypes.SINGLESELECTDESELECT: {
+
+            const rec = { ...state.find(rec1 => rec1.urlid == action.payload.urlid) };
+            const record = {
+                ...rec,
+                checkList: rec.checkList.map(r1 => {
+                    return r1.code == action.payload.id ? { ...r1, ischecked: action.payload.flag } : r1
+                })
+            };
+            return [...state.filter(rec2 => rec2.urlid != action.payload.urlid), record];
+        }
         default:
             return state;
     }

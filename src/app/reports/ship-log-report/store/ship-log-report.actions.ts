@@ -6,6 +6,8 @@ export enum ActionTypes {
   ADD = '[Ship-Log-Report] Add Report',
   UPDATE = '[Ship-Log-Report] Update Report',
   DELETE = '[Ship-Log-Report] Delete Report',
+  SELECTDESELECT = '[Ship-Log-Report] Select Deselect Report',
+  SINGLESELECTDESELECT = '[Ship-Log-Report] Single Select Deselect Report'
 }
 
 export class Add implements Action {
@@ -23,4 +25,14 @@ export class Delete implements Action {
   constructor(public payload : { id: string}) { }
 }
 
-export type Actions = Add | Update | Delete;
+export class SelectDeselect implements Action {
+  readonly type = ActionTypes.SELECTDESELECT;
+  constructor(public payload : { id: string, flag : boolean}){ }
+}
+
+export class SingleSelectDeselect implements Action {
+  readonly type = ActionTypes.SINGLESELECTDESELECT;
+  constructor(public payload : { urlid : string, id: string, flag: boolean }){ }
+}
+
+export type Actions = Add | Update | Delete | SelectDeselect | SingleSelectDeselect ;
