@@ -53,7 +53,7 @@ export class ShipmentLogReportComponent implements OnInit {
   report_menuid: string;
 
   job_mode: string = "OCEAN IMPORT";
-  date_basedon: string = "REF DATE";
+  date_basedon: string = "REF. DATE";
   sdate: string;
   edate: string;
   shipper_id: string;
@@ -140,7 +140,7 @@ export class ShipmentLogReportComponent implements OnInit {
         this.handled_name = rec.handled_name;
         this.report_masterwise = rec.report_masterwise;
         this.report_housewise = rec.report_housewise;
-        this.checkList = rec.checkList;
+        this.checkList = JSON.parse( JSON.stringify(rec.checkList));
         this.sort_order = rec.sort_order;
         this.format_type = rec.format_type;
         this.printer_friendly = rec.printer_friendly;
@@ -185,7 +185,7 @@ export class ShipmentLogReportComponent implements OnInit {
         this.currentTab = 'LIST';
 
         this.job_mode = 'OCEAN IMPORT';
-        this.date_basedon = 'REF DATE';
+        this.date_basedon = 'REF. DATE';
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
         this.shipper_id = '';
@@ -334,7 +334,7 @@ export class ShipmentLogReportComponent implements OnInit {
         this.loading = false;
       }, error => {
         this.loading = false;
-        this.errorMessage = error.error.error_description;
+        this.errorMessage =  this.gs.getError(error);
         alert(this.errorMessage);
       });
   }
