@@ -775,9 +775,9 @@ export class OthGeneralEditComponent implements OnInit {
       case 'ARAP': {
         let prm = {
           menuid: this.gs.MENU_OT_OPERATION_ARAP,
-          pkid: this.pkid,
-          refno: this.record.mbl_refno,
-          type: 'OT',
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          mbl_type: 'OT',
           origin: 'other-general-page',
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));

@@ -525,10 +525,10 @@ export class AirExpMasterEditComponent implements OnInit {
     switch (action) {
       case 'ARAP': {
         let prm = {
-          menuid: this.gs.MENU_AI_MASTER_ARAP,
-          pkid: this.pkid,
-          refno: this.record.mbl_refno,
-          type: 'AI',
+          menuid: this.gs.MENU_AE_MASTER_ARAP,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          mbl_type: 'AI',
           origin: 'airexp-master-page',
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));

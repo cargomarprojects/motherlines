@@ -527,9 +527,9 @@ export class AirImpMasterEditComponent implements OnInit {
       case 'ARAP': {
         let prm = {
           menuid: this.gs.MENU_AI_MASTER_ARAP,
-          pkid: this.pkid,
-          refno: this.record.mbl_refno,
-          type: 'AI',
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          mbl_type: 'AI',
           origin: 'airimp-master-page',
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
