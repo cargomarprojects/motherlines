@@ -42,8 +42,8 @@ export class PayDueReportComponent implements OnInit {
 
   sort: string = 'inv_mbl_refno';
   sdata = '';
-  cust_id: string;
-  cust_name: string;
+  cust_id = '';
+  cust_name = '';
 
   chk_air_import = true;
   chk_air_export = true;
@@ -134,6 +134,8 @@ export class PayDueReportComponent implements OnInit {
         this.SearchData.EDATE = this.edate;
         this.SearchData.SHOWSMODE = this.showsmode;
         this.SearchData.COMP_TYPE = this.comp_type;
+        this.SearchData.CUST_ID = '';
+        this.SearchData.CUST_NAME = '';
 
 
         if (this.comp_type === 'ALL') {
@@ -222,8 +224,7 @@ export class PayDueReportComponent implements OnInit {
       this.SearchData.SDATA = this.sdata;
       this.SearchData.SORT = this.sort;
       this.SearchData.CUST_ID = this.cust_id;
-      this.SearchData.user_id = this.cust_id;
-      this.SearchData.user_name = this.cust_name;
+      this.SearchData.CUST_NAME = this.cust_name;
 
       this.mode ="";
       if ( this.chk_air_import)
@@ -286,8 +287,8 @@ export class PayDueReportComponent implements OnInit {
 
             sdata: this.SearchData.SDATA,
             sort: this.SearchData.SORT,
-            cust_id: this.SearchData.cust_id,
-            cust_name: this.SearchData.cust_name,
+            cust_id: this.SearchData.CUST_ID,
+            cust_name: this.SearchData.CUST_NAME,
 
             chk_air_import: this.chk_air_import,
             chk_sea_import: this.chk_sea_import,
