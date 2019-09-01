@@ -1,8 +1,9 @@
 <div *ngIf="tab=='main'">
 <div class="page-header">
   <div class="col">
-    <label>{{title}} ({{mode}})</label>
+    <label class="mr-3">{{title}} ({{mode}})</label>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    <label class="text-danger" *ngIf="is_locked">LOCKED</label>
   </div>
 </div>
 
@@ -659,7 +660,7 @@
 
 <div class="page-footer">
   <div class="row row justify-content-center p-1">
-    <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+    <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)  && !is_locked" (click)="Save()">Save</button>
   </div>
 </div>
 

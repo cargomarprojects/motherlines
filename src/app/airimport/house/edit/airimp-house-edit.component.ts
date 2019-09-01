@@ -71,7 +71,8 @@ export class AirImpHouseEditComponent implements OnInit {
   TelexRlsList: any[] = [];
   PaidStatusList: any[] = [];
 
-  IsLocked: boolean = false;
+  // IsLocked: boolean = false;
+  is_locked: boolean = false;
 
   constructor(
     private router: Router,
@@ -137,6 +138,7 @@ export class AirImpHouseEditComponent implements OnInit {
 
   actionHandler() {
     this.errorMessage = '';
+    this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_imp_housem>{};
       this.descrecords = <Tbl_cargo_imp_desc[]>[];
@@ -310,6 +312,8 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record = <Tbl_cargo_imp_housem>response.record;
         this.descrecords = <Tbl_cargo_imp_desc[]>response.descrecords;
         this.mode = 'EDIT';
+        this.is_locked = this.gs.IsShipmentClosed("AIR IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
+
         // if (this.ShipmentType.trim() == "FCL" || this.ShipmentType.trim() == "LCL") {
         //   Cmb_Shpmnt_Stage.IsEnabled = false;
         // }
@@ -318,7 +322,7 @@ export class AirImpHouseEditComponent implements OnInit {
         //   this.ShowDesc(Rec);
         // })
 
-        this.CheckData();
+      //  this.CheckData();
 
         // this.hbl_houseno_field.nativeElement.focus();
       }, error => {
@@ -440,6 +444,7 @@ export class AirImpHouseEditComponent implements OnInit {
     this.mainService.LoadMasterData(SearchData)
       .subscribe(response => {
         this.mblrecord = <Tbl_cargo_imp_masterm>response.record;
+        this.is_locked = this.gs.IsShipmentClosed("AIR IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
         this.init();
 
       }, error => {

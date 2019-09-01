@@ -62,8 +62,8 @@ export class AirExpMasterEditComponent implements OnInit {
   private cmbList = {};
 
 
-  IsLocked: boolean = false;
-
+  //IsLocked: boolean = false;
+  is_locked: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -96,6 +96,7 @@ export class AirExpMasterEditComponent implements OnInit {
 
   actionHandler() {
     this.errorMessage = '';
+    this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_exp_masterm>{};
       this.hrecords = <Tbl_cargo_exp_housem[]>[];
@@ -180,7 +181,8 @@ export class AirExpMasterEditComponent implements OnInit {
         this.record = <Tbl_cargo_exp_masterm>response.record;
         this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;
         this.mode = 'EDIT';
-        this.CheckData();
+        this.is_locked = this.gs.IsShipmentClosed("AIR EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
+       // this.CheckData();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });

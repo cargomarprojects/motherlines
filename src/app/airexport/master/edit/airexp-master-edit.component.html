@@ -4,6 +4,7 @@
     <label class="mr-3">{{title}} ({{mode}})</label>
     <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    <label class="text-danger" *ngIf="is_locked">LOCKED</label>
   </div>
 </div>
 
@@ -306,7 +307,7 @@
             </table>
             <div class="form-group row">
               <div class="col-12">
-                <button class="btn btn-success btn-sm mr-1" (click)="AddHouse()">Add House</button>
+                <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked" (click)="AddHouse()">Add House</button>
               </div>
             </div>
           </div>
@@ -371,7 +372,7 @@
 
 <div class="page-footer">
   <div class="row justify-content-center p-1">
-      <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+      <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode) && !is_locked" (click)="Save()">Save</button>
   </div>
 </div>
 
