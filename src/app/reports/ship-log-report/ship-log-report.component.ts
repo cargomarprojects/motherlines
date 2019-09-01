@@ -140,7 +140,7 @@ export class ShipmentLogReportComponent implements OnInit {
         this.handled_name = rec.handled_name;
         this.report_masterwise = rec.report_masterwise;
         this.report_housewise = rec.report_housewise;
-        this.checkList = JSON.parse( JSON.stringify(rec.checkList));
+        this.checkList = JSON.parse(JSON.stringify(rec.checkList));
         this.sort_order = rec.sort_order;
         this.format_type = rec.format_type;
         this.printer_friendly = rec.printer_friendly;
@@ -197,7 +197,7 @@ export class ShipmentLogReportComponent implements OnInit {
         this.handled_basedon = 'HANDLED BY';
         this.handled_id = '';
         this.handled_name = '';
-        this.report_masterwise = false;
+        this.report_masterwise = true;
         this.report_housewise = false;
         this.checkList = [{ "code": "Stage1", "name": "Stage1", "ischecked": false }, { "code": "Stage2", "name": "Stage2", "ischecked": false }, { "code": "Stage3", "name": "Stage3", "ischecked": false }, { "code": "Stage4", "name": "Stage4", "ischecked": false },
         { "code": "Stage5", "name": "Stage5", "ischecked": false }, { "code": "Stage6", "name": "Stage6", "ischecked": false }, { "code": "Stage7", "name": "Stage7", "ischecked": false }, { "code": "Stage8", "name": "Stage8", "ischecked": false },
@@ -210,7 +210,6 @@ export class ShipmentLogReportComponent implements OnInit {
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
-
         this.SearchData = this.gs.UserInfo;
         this.SetStages();
       }
@@ -275,6 +274,8 @@ export class ShipmentLogReportComponent implements OnInit {
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
+
+      this.reportformat = this.format_type;
     }
 
     this.loading = true;
@@ -334,7 +335,7 @@ export class ShipmentLogReportComponent implements OnInit {
         this.loading = false;
       }, error => {
         this.loading = false;
-        this.errorMessage =  this.gs.getError(error);
+        this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
       });
   }
