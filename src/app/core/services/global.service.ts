@@ -852,7 +852,10 @@ export class GlobalService {
     return nDate.toISOString().slice(0, 10);
   }
 
-
+  public getPreviousDate(_days: number) {
+    return this.getNewdate(_days);
+  }
+  
   public roundWeight(_number: number, _category: string) {
 
     let _precision: number;
