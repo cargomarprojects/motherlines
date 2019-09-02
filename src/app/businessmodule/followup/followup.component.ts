@@ -21,7 +21,7 @@ export class FollowupComponent implements OnInit {
   record: Table_Cargo_Followup = <Table_Cargo_Followup>{};
   // 15-07-2019 Created By Ajith  
 
-  private menuid: string;
+  menuid: string;
   cf_masterid: string;
   cf_refno: string;
   cf_refdate: string;
@@ -34,9 +34,9 @@ export class FollowupComponent implements OnInit {
   IsLocked: boolean = false;
   lblSave: string = "Save";
   cmbNotes: string = "";
-  private FollowupList: any[] = [];
-  private UserList: any[] = [];
-  private UsrDeleteId = '';
+  FollowupList: any[] = [];
+  UserList: any[] = [];
+  UsrDeleteId = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -260,7 +260,7 @@ export class FollowupComponent implements OnInit {
   RemoveRow(_rec: Table_Cargo_Followup) {
 
     this.errorMessage = '';
-     if (!confirm("DELETE "+_rec.cf_remarks)) {
+    if (!confirm("DELETE " + _rec.cf_remarks)) {
       return;
     }
 

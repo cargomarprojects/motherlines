@@ -19,16 +19,16 @@ export class AirImpCargoPickupComponent implements OnInit {
   @ViewChild('pick_truk_name') pick_truk_name_ctrl: InputBoxComponent;
   record: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
   defaultrecord: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
-   
+
   // 17-07-2019 Created By Ajith  
 
-  private pkid: string;
-  private menuid: string;
-  private mode: string;
-  private title: string = '';
-  private isAdmin: boolean;
-  private chkallselected: boolean = false;
-  private selectdeselect: boolean = false;
+  pkid: string;
+  menuid: string;
+  mode: string;
+  title: string = '';
+  isAdmin: boolean;
+  chkallselected: boolean = false;
+  selectdeselect: boolean = false;
   errorMessage: string;
   IsLocked: boolean = false;
 
@@ -170,7 +170,7 @@ export class AirImpCargoPickupComponent implements OnInit {
       .subscribe(response => {
         this.chkallselected = false;
         this.selectdeselect = false;
-        
+
         this.mode = response.mode;
         if (this.mode == 'ADD') {
           this.defaultrecord = <Tbl_cargo_imp_pickup>response.defaultrecord;
@@ -188,7 +188,7 @@ export class AirImpCargoPickupComponent implements OnInit {
           this.record.IS_CPU = (str.includes("CPU")) ? true : false;
           this.record.IS_DDU = (str.includes("DDU")) ? true : false;
           this.record.IS_FRT_OTH = (str.includes("Others")) ? true : false;
-          this.record.freightothers ='';
+          this.record.freightothers = '';
           if (this.record.IS_FRT_OTH) {
             sData = str.split(':');
             this.record.freightothers = sData[1];
@@ -730,8 +730,8 @@ export class AirImpCargoPickupComponent implements OnInit {
   }
 
   SelectDeselect() {
-   
-    
+
+
   }
 
 }

@@ -42,18 +42,18 @@ export class ParamEditComponent implements OnInit {
   lovName: string = 'lovName';
   name6: string = 'Name6';
 
-  private bcodeenabled: boolean = true;
+  bcodeenabled: boolean = true;
 
-  private bcode: boolean = true;
-  private bname1: boolean = true;
-  private bname2: boolean = true;
-  private bname3: boolean = false;
-  private bname4: boolean = false;
-  private bname5: boolean = false;
-  private blovName: boolean = false;
-  private bname6: boolean = false;
+  bcode: boolean = true;
+  bname1: boolean = true;
+  bname2: boolean = true;
+  bname3: boolean = false;
+  bname4: boolean = false;
+  bname5: boolean = false;
+  blovName: boolean = false;
+  bname6: boolean = false;
 
-  private cmbList = {};
+  cmbList = {};
 
   USERRECORD: SearchTable = new SearchTable();
 
@@ -356,7 +356,7 @@ export class ParamEditComponent implements OnInit {
       this.name2 = "Sort Order";
       this.bname2 = true;
 
-      this.bcode =false;
+      this.bcode = false;
 
     }
     if (this.menu_param == 'SALESMAN') {
