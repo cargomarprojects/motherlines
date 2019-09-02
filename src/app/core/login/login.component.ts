@@ -15,13 +15,13 @@ export class LoginComponent implements OnInit {
 
   loading: Boolean = false;
   showloginbutton : Boolean = false;
-  username: string = '';
-  password: string = '';
+
   errorMessage: string = '';
 
   
-  
   software_version_string = '1.101';
+  username: string = 'ADMIN';
+  password: string = '123';
   server_software_version_string = '';
 
 
@@ -46,12 +46,11 @@ export class LoginComponent implements OnInit {
     this.GLOBALCONTANTS.IsAuthenticated =false;
     this.showloginbutton = false;
 
-    this.GLOBALCONTANTS.user_code = 'ADMIN';
-    this.GLOBALCONTANTS.user_pwd = '123';
-
+    //this.GLOBALCONTANTS.user_code = '';
+    //this.GLOBALCONTANTS.user_pwd = '';
    
-    this.username = this.GLOBALCONTANTS.user_code;
-    this.password = this.GLOBALCONTANTS.user_pwd;
+    //this.username = this.GLOBALCONTANTS.user_code;
+    //this.password = this.GLOBALCONTANTS.user_pwd;
     
     this.LoadCombo();
   }
