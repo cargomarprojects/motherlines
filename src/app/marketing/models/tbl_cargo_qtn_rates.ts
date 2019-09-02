@@ -26,6 +26,7 @@ export interface Tbl_Cargo_Qtn_Rates {
 
 export interface vm_tbl_cargo_qtn_rates {
     mode: string;
+    pkid: string;
     record: Tbl_Cargo_Qtn_Rates;
     userinfo: any,
     filter: any;

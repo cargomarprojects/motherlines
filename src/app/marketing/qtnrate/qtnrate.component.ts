@@ -67,16 +67,13 @@ export class QtnRateComponent implements OnInit {
 //   }
   edit(_record: Tbl_Cargo_Qtn_Rates) {
 
-
-    // let parameter = {
-    //   menuid: this.mainservice.menuid,
-    //   pkid: _record.hbl_pkid,
-    //   parentid :_record.hbl_mbl_id,
-    //   type: '',
-    //   origin: 'airimp-house-page',
-    //   mode: 'EDIT'
-    // };
-    // this.gs.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(parameter));
+    let parameter = {
+      menuid: this.mainservice.menuid,
+      pkid: _record.qtnr_pkid,
+      origin: 'qtnrate-page',
+      mode: 'EDIT'
+    };
+    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationRateEditPage', JSON.stringify(parameter));
   }
 
   Close() {
