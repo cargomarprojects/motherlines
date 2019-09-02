@@ -19,17 +19,17 @@ export class LoginComponent implements OnInit {
   password: string = '';
   errorMessage: string = '';
 
-  software_version_string = '1.00';
+  software_version_string = '1.101';
+
+  server_software_version_string = '';
 
   CompanyList: Companym[];
 
   Company_Id: string = '';
   Company_Code: string = '';
 
-
   userrecord: any;
-
-  
+ 
 
   constructor(
     private mainservice: LoginService,
@@ -64,16 +64,25 @@ export class LoginComponent implements OnInit {
       TYPE: 'USR_COMPANY'
     };
 
+
     this.showloginbutton = false;
     this.mainservice.LoadCompany(SearchData)
       .subscribe(response => {
         this.CompanyList = response.list;
+        this.server_software_version_string = response.verson;
+        if (this.software_version_string == this.server_software_version_string) {
+          this.showloginbutton = true;
+        }
+        else {
+          this.errorMessage = "New Version Available, Kindly Clear Browser History";
+          this.showloginbutton = false;
+        }
 
         response.list.forEach(a => {
           this.Company_Id = a.pkid;
         })
         
-        this.showloginbutton = true;
+        
         this.loading = false;
       }, error => {
         this.loading = false;
