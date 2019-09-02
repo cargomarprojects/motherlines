@@ -7,8 +7,9 @@
 
 html, body {
   margin: 0px;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-top :25px;
+  padding-left: 1px;
+  padding-right: 1px;
   font-family: 'roboto' ;
   font-size : 14px;
   height:100%;
