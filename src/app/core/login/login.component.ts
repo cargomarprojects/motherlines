@@ -19,9 +19,12 @@ export class LoginComponent implements OnInit {
   password: string = '';
   errorMessage: string = '';
 
+  
+  
   software_version_string = '1.101';
-
   server_software_version_string = '';
+
+
 
   CompanyList: Companym[];
 
@@ -69,8 +72,8 @@ export class LoginComponent implements OnInit {
     this.mainservice.LoadCompany(SearchData)
       .subscribe(response => {
         this.CompanyList = response.list;
-        this.server_software_version_string = response.verson;
-        if (this.software_version_string == this.server_software_version_string) {
+        this.server_software_version_string = response.version;
+        if (this.software_version_string === this.server_software_version_string) {
           this.showloginbutton = true;
         }
         else {
