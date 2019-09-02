@@ -9,6 +9,8 @@ import { SearchQuery } from '../models/tbl_cargo_exp_masterm';
 })
 export class AirExpMasterHeaderComponent implements OnInit {
   // Call By Value using Input Parameters
+
+  
   searchQuery: SearchQuery;
   @Input() set _query(value: SearchQuery) {
     this.searchQuery = Object.assign({}, value);

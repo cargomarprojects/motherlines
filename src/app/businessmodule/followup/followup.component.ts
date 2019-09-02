@@ -22,18 +22,18 @@ export class FollowupComponent implements OnInit {
   // 15-07-2019 Created By Ajith  
 
   private menuid: string;
-  private cf_masterid: string;
-  private cf_refno: string;
-  private cf_refdate: string;
-  private pkid: string;
-  private mode: string;
-  private title: string = '';
-  private isAdmin: boolean;
-  private errorMessage: string;
-  private selectedRowIndex: number = -1;
+  cf_masterid: string;
+  cf_refno: string;
+  cf_refdate: string;
+  pkid: string;
+  mode: string;
+  title: string = '';
+  isAdmin: boolean;
+  errorMessage: string;
+  selectedRowIndex: number = -1;
   IsLocked: boolean = false;
-  private lblSave: string = "Save";
-  private cmbNotes: string = "";
+  lblSave: string = "Save";
+  cmbNotes: string = "";
   private FollowupList: any[] = [];
   private UserList: any[] = [];
   private UsrDeleteId = '';
@@ -130,7 +130,7 @@ export class FollowupComponent implements OnInit {
   }
 
 
-  private NewRecord() {
+  NewRecord() {
 
     // if (CmbList != null && UsrDeleteRec != null)
     // {
@@ -159,7 +159,7 @@ export class FollowupComponent implements OnInit {
     //Txtmemo.Focus();
   }
 
-  private EditRow(_rec: Table_Cargo_Followup) {
+  EditRow(_rec: Table_Cargo_Followup) {
 
     if (this.UserList != null) {
       let bFind: boolean = false;
@@ -232,7 +232,7 @@ export class FollowupComponent implements OnInit {
       });
   }
 
-  private Allvalid(): boolean {
+  Allvalid(): boolean {
 
     var bRet = true;
     this.errorMessage = "";

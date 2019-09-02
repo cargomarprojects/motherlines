@@ -23,62 +23,62 @@ import { invoiceService } from '../../services/invoice.service';
 })
 export class InvoiceEditComponent implements OnInit {
 
-  private errorMessage: string;
+  errorMessage: string;
 
-  private mode: string;
-  private mbl_pkid: string;
-  private hbl_pkid: string;
-  private mbl_refno: string;
-  private mbl_type: string; // OE OI AE AI ...etc
-  private showdeleted: boolean;
-  private paid_amt: number;
-  private bal_amt: number;
+  mode: string;
+   mbl_pkid: string;
+   hbl_pkid: string;
+   mbl_refno: string;
+   mbl_type: string; // OE OI AE AI ...etc
+   showdeleted: boolean;
+   paid_amt: number;
+   bal_amt: number;
 
-  private inv_arap: string; // AR OR AP
-  private arrival_notice: string = '';
+   inv_arap: string; // AR OR AP
+   arrival_notice: string = '';
 
-  private ArAp_Where_Condition: string = '';
+   ArAp_Where_Condition: string = '';
 
-  private pkid: string;
-  private menuid: string;
+   pkid: string;
+   menuid: string;
 
-  private title: string;
-  private isAdmin: boolean;
-  private canAdd: boolean;
-  private canEdit: boolean;
-  private canSave: boolean;
-
-
-  private acc_id: string = '';
-  private acc_code: string = '';
-  private acc_name: string = '';
-
-  private inv_mbl_id: string = "";
-  private inv_hbl_id: string = "";
-
-  private inv_house_id: string = "";
+   title: string;
+   isAdmin: boolean;
+   canAdd: boolean;
+   canEdit: boolean;
+   canSave: boolean;
 
 
-  private enable_customer_control: boolean = false;
-  private enable_arap_control: boolean = false;
-  private enable_acc_control: boolean = false;
+   acc_id: string = '';
+   acc_code: string = '';
+   acc_name: string = '';
 
-  private enable_currency: boolean = false;
+   inv_mbl_id: string = "";
+   inv_hbl_id: string = "";
 
-  private show_currency: boolean = false;
-  private show_cc_control: boolean = false;
-  private show_vat: boolean = false;
-  private show_confirm: boolean = false;
-  private show_invstage: boolean = false;
+   inv_house_id: string = "";
 
-  private isVat: boolean = false;
-  private isConfirmed: boolean = true;
 
-  private record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
-  private records: Tbl_Cargo_Invoiced[] = [];
-  private history: Tbl_PayHistory[] = [];
+   enable_customer_control: boolean = false;
+   enable_arap_control: boolean = false;
+   enable_acc_control: boolean = false;
 
-  private HouseList: Tbl_House[] = [];
+   enable_currency: boolean = false;
+
+   show_currency: boolean = false;
+   show_cc_control: boolean = false;
+   show_vat: boolean = false;
+   show_confirm: boolean = false;
+   show_invstage: boolean = false;
+
+   isVat: boolean = false;
+   isConfirmed: boolean = true;
+
+  public record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
+  public records: Tbl_Cargo_Invoiced[] = [];
+   history: Tbl_PayHistory[] = [];
+
+   HouseList: Tbl_House[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -732,7 +732,7 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.inv_hbl_cft, 3);
   }
 
-  onBlur(field: string, rec: Tbl_Cargo_Invoiced) {
+  onBlur(field: string, rec: Tbl_Cargo_Invoiced = null) {
     switch (field) {
       case 'inv_no': {
         break;

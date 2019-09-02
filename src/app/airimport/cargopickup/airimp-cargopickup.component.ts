@@ -29,7 +29,7 @@ export class AirImpCargoPickupComponent implements OnInit {
   private isAdmin: boolean;
   private chkallselected: boolean = false;
   private selectdeselect: boolean = false;
-  private errorMessage: string;
+  errorMessage: string;
   IsLocked: boolean = false;
 
   constructor(

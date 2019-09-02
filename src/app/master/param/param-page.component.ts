@@ -25,24 +25,24 @@ export class ParamPageComponent implements OnInit, OnDestroy {
 
   // 24-05-2019 Created By Joy  
 
-  private id: string;
-  private menuid: string;
-  private menu_param: string;
-  private sub: any;
+  id: string;
+  menuid: string;
+  menu_param: string;
+  sub: any;
 
-  private title: string;
-  private isAdmin: boolean;
+  title: string;
+  isAdmin: boolean;
 
 
-  private loading: boolean;
+  loading: boolean;
 
 
   private SearchData: any;
 
-  private data$: Observable<TBL_MAST_PARAM[]>;
-  private pageQuery$: Observable<PageQuery>;
-  private searchQuery$: Observable<SearchQuery>;
-  private errorMessage$: Observable<string>;
+  data$: Observable<TBL_MAST_PARAM[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
+  errorMessage$: Observable<string>;
 
   constructor(
     private router: Router,

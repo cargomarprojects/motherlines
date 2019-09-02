@@ -14,20 +14,20 @@ import { invoiceService } from '../services/invoice.service';
 })
 export class InvoiceComponent implements OnInit {
 
-  private errormessage: string;
-  private mbl_pkid: string;
-  private mbl_refno: string;
-  private mbl_type: string;
-  private showdeleted: boolean;
+  errormessage: string;
+  mbl_pkid: string;
+  mbl_refno: string;
+  mbl_type: string;
+  showdeleted: boolean;
 
-  private id: string;
-  private menuid: string;
+  id: string;
+  menuid: string;
 
-  private title: string;
-  private isAdmin: boolean;
-  private canAdd: boolean;
-  private canEdit: boolean;
-  private canSave: boolean;
+  title: string;
+  isAdmin: boolean;
+  canAdd: boolean;
+  canEdit: boolean;
+  canSave: boolean;
 
   income: number = 0;
   expense: number = 0;

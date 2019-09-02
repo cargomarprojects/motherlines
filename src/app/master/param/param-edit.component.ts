@@ -21,26 +21,26 @@ export class ParamEditComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
 
-  private pkid: string;
-  private menuid: string;
-  private menu_param: string;
-  private mode: string;
-  private sub: any;
-  private errorMessage: string;
+  pkid: string;
+  menuid: string;
+  menu_param: string;
+  mode: string;
+  sub: any;
+  errorMessage: string;
 
-  private closeCaption: string = 'Return';
+  closeCaption: string = 'Return';
 
-  private title: string;
-  private isAdmin: boolean;
+  title: string;
+  isAdmin: boolean;
 
-  private code: string = 'Code';
-  private name1: string = 'Name';
-  private name2: string = 'Name2';
-  private name3: string = 'Name3';
-  private name4: string = 'Name4';
-  private name5: string = 'Name5';
-  private lovName: string = 'lovName';
-  private name6: string = 'Name6';
+  code: string = 'Code';
+  name1: string = 'Name';
+  name2: string = 'Name2';
+  name3: string = 'Name3';
+  name4: string = 'Name4';
+  name5: string = 'Name5';
+  lovName: string = 'lovName';
+  name6: string = 'Name6';
 
   private bcodeenabled: boolean = true;
 

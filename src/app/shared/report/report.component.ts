@@ -8,13 +8,13 @@ import { GlobalService } from '../../core/services/global.service';
 })
 export class ReportComponent implements OnInit {
 
-  private errorMessage : string = '';
-  private  tab: string = 'main';
+  public errorMessage : string = '';
+  public  tab: string = 'main';
 
-  private canPrint : boolean = false;
-  private canDownload : boolean = false;
-  private canExcel : boolean = false;
-  private canEmail : boolean = false;
+  canPrint : boolean = false;
+  canDownload : boolean = false;
+  canExcel : boolean = false;
+  canEmail : boolean = false;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
 
