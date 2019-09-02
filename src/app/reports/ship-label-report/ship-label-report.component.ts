@@ -23,7 +23,7 @@ export class ShipLabelReportComponent implements OnInit {
 
     title: string = 'Shipment Label Report ';
 
-    @ViewChild('chkbox')  mChkBox : ElementRef ;
+    @ViewChild('chkbox') mChkBox: ElementRef;
 
     tab: string = 'main';
     report_title: string = '';
@@ -97,7 +97,7 @@ export class ShipLabelReportComponent implements OnInit {
                 this.group = rec.group;
                 this.mbl_pkid = rec.mbl_pkid;
                 this.mbl_ids = rec.mbl_ids;
-                
+
                 this.page_rows = rec.page_rows;
                 this.page_count = rec.page_count;
                 this.page_current = rec.page_current;
@@ -119,11 +119,11 @@ export class ShipLabelReportComponent implements OnInit {
                 this.page_rowcount = 0;
 
                 this.currentTab = 'LIST';
-                this.from_date = this.gs.defaultValues.today;
+                this.from_date = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
                 this.to_date = this.gs.defaultValues.today;
                 this.group = 'OCEAN EXPORT';
                 this.mbl_pkid = this.mbl_pkid;
-                this.mbl_ids='';
+                this.mbl_ids = '';
                 this.SearchData = this.gs.UserInfo;
             }
             // this.MainList.forEach(Rec => {
@@ -148,6 +148,11 @@ export class ShipLabelReportComponent implements OnInit {
     }
 
     List(_outputformat: string, _action: string = 'NEW') {
+
+        if (this.gs.isBlank(this.from_date))
+            this.from_date = this.gs.year_start_date;
+        if (this.gs.isBlank(this.to_date))
+            this.to_date = this.gs.defaultValues.today;
 
         this.SearchData.outputformat = _outputformat;
         this.SearchData.pkid = this.urlid;
@@ -181,7 +186,7 @@ export class ShipLabelReportComponent implements OnInit {
                         to_date: this.SearchData.EDATE,
                         group: this.SearchData.MODE,
                         mbl_pkid: this.SearchData.MBL_PKID,
-                        mbl_ids:'',
+                        mbl_ids: '',
                         page_rows: response.page_rows,
                         page_count: response.page_count,
                         page_current: response.page_current,
@@ -217,17 +222,17 @@ export class ShipLabelReportComponent implements OnInit {
     }
 
     SelectDeselect() {
-         this.selectdeselect = !this.selectdeselect;
+        this.selectdeselect = !this.selectdeselect;
         // this.MainList.forEach(Rec => {
         //     Rec.lblm_yn_b = this.selectdeselect;
         //     this.chkallselected = this.selectdeselect;
         // })
-        this.store.dispatch(new myActions.SelectDeselect({ id: this.urlid, flag : this.selectdeselect }));
+        this.store.dispatch(new myActions.SelectDeselect({ id: this.urlid, flag: this.selectdeselect }));
     }
 
-    SelectDeselect2(rec : TBL_LABELM) {
-        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid : this.urlid,  id: rec.lblm_mbl_pkid, flag : this.mChkBox.nativeElement.checked }));
-        
+    SelectDeselect2(rec: TBL_LABELM) {
+        this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: rec.lblm_mbl_pkid, flag: this.mChkBox.nativeElement.checked }));
+
     }
 
     BtnNavigation(action: string) {
@@ -259,7 +264,7 @@ export class ShipLabelReportComponent implements OnInit {
     }
 
     printShipLabels() {
-        
+
         this.mbl_ids = "";
         for (let rec of this.MainList) {
             if (rec.lblm_yn_b) {
@@ -269,16 +274,14 @@ export class ShipLabelReportComponent implements OnInit {
             }
         }
 
-        if ( this.MainList == null)
-        {
-            this.errorMessage="No List Found", "Print";
+        if (this.MainList == null) {
+            this.errorMessage = "No List Found", "Print";
             alert(this.errorMessage);
             return;
         }
-         
-        if (this.gs.isBlank(this.mbl_ids))
-        {
-            this.errorMessage ="No Rows Selected";
+
+        if (this.gs.isBlank(this.mbl_ids)) {
+            this.errorMessage = "No Rows Selected";
             alert(this.errorMessage);
             return;
         }
