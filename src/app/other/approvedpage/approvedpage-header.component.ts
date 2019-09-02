@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter,SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { SearchQuery } from '../models/tbl_cargo_approved';
 import { SearchTable } from '../../shared/models/searchtable';
+import { GlobalService } from '../../core/services/global.service';
 
 @Component({
   selector: 'app-approvedpage-header',
@@ -16,7 +17,8 @@ export class ApprovedPageHeaderComponent implements OnInit {
   
   @Output() searchEvents = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(public gs: GlobalService
+    ) { }
 
   ngOnInit() {
   }
@@ -25,6 +27,13 @@ export class ApprovedPageHeaderComponent implements OnInit {
   }
 
   List(outputformat: string) {
+
+    
+    if (this.gs.isBlank(this.searchQuery.fromDate))
+      this.searchQuery.fromDate = this.gs.year_start_date;
+    if (this.gs.isBlank(this.searchQuery.toDate))
+      this.searchQuery.toDate = this.gs.defaultValues.today;
+
     this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
   }
 
