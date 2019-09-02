@@ -124,8 +124,8 @@ export class Login2Component implements OnInit {
         this.GLOBALCONTANTS.year_pkid = this.Year_Row.fy_pkid;
         this.GLOBALCONTANTS.year_code = this.Year_Row.fy_code;
         this.GLOBALCONTANTS.year_name = this.Year_Row.fy_name;
-        this.GLOBALCONTANTS.year_start_date = this.Year_Row.fy_start_date;
-        this.GLOBALCONTANTS.year_end_date = this.Year_Row.fy_end_date;
+        this.GLOBALCONTANTS.year_start_date = this.GLOBALCONTANTS.replaceAll(this.Year_Row.fy_start_date, "/", "-");
+        this.GLOBALCONTANTS.year_end_date = this.GLOBALCONTANTS.replaceAll(this.Year_Row.fy_end_date, "/", "-");
         this.GLOBALCONTANTS.year_islocked = this.Year_Row.fy_islocked;
 
         this.GLOBALCONTANTS.InitUserInfo();
@@ -141,6 +141,7 @@ export class Login2Component implements OnInit {
         this.router.navigate(['home'], { replaceUrl: true });
     }
 
+   
     SetupYearList() {
         this.GLOBALCONTANTS.YearList = [];
         this.GLOBALCONTANTS.software_start_year = 0;

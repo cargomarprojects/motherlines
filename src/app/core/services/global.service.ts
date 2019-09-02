@@ -632,7 +632,7 @@ export class GlobalService {
 
   public screenExists(menuid: string): boolean {
     var bret: boolean = false;
-    var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_add == "Y" || f.rights_edit == "Y" || f.rights_view == "Y"||f.rights_print == "Y"||f.rights_delete == "Y"));
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_add == "Y" || f.rights_edit == "Y" || f.rights_view == "Y" || f.rights_print == "Y" || f.rights_delete == "Y"));
     if (itm)
       bret = true;
     return bret;
@@ -682,6 +682,13 @@ export class GlobalService {
       return JSON.parse(error.error).Message;
     else
       return error.error.Message;
+  }
+
+  public replaceAll(_str: any, _oldChar: string, _newChar: string) {
+    while (_str.indexOf(_oldChar) > -1) {
+      _str = _str.replace(_oldChar, _newChar);
+    }
+    return _str;
   }
 
 
@@ -979,50 +986,44 @@ export class GlobalService {
     return bRet;
   }
 
-  public GetAirportCode(PortCode:string,PortName:string, CountryCode:string)
-  {
-     let str:string = "";
+  public GetAirportCode(PortCode: string, PortName: string, CountryCode: string) {
+    let str: string = "";
 
-      if (this.AIRPORTDISPLAYCOLUMN == "CODE")
-      {
-          if (PortCode.toString().trim().length > 0)
-              str = PortCode.toString();
-          if (CountryCode.toString().trim().length > 0)
-          {
-              if (str.trim() != "")
-                  str += ", ";
-              str += CountryCode.toString();
-          }
+    if (this.AIRPORTDISPLAYCOLUMN == "CODE") {
+      if (PortCode.toString().trim().length > 0)
+        str = PortCode.toString();
+      if (CountryCode.toString().trim().length > 0) {
+        if (str.trim() != "")
+          str += ", ";
+        str += CountryCode.toString();
       }
-      else
-          str = PortName;
-      return str;
     }
+    else
+      str = PortName;
+    return str;
+  }
 
-    public ProperFileName(str:string)
-    {
-        let sRet:string = str;
-        try
-        {
-            sRet = sRet.replace("\\", "");
-            sRet = sRet.replace("/", "");
-            sRet = sRet.replace(":", "");
-            sRet = sRet.replace("*", "");
-            sRet = sRet.replace("?", "");
-            sRet = sRet.replace("<", "");
-            sRet = sRet.replace(">", "");
-            sRet = sRet.replace("|", "");
-            sRet = sRet.replace("'", "");
-            sRet = sRet.replace("#", "");
-            sRet = sRet.replace("&", "");
-            sRet = sRet.replace("%", "");
-        }
-        catch (Exception)
-        {
-        }
-        return sRet;
-    
+  public ProperFileName(str: string) {
+    let sRet: string = str;
+    try {
+      sRet = sRet.replace("\\", "");
+      sRet = sRet.replace("/", "");
+      sRet = sRet.replace(":", "");
+      sRet = sRet.replace("*", "");
+      sRet = sRet.replace("?", "");
+      sRet = sRet.replace("<", "");
+      sRet = sRet.replace(">", "");
+      sRet = sRet.replace("|", "");
+      sRet = sRet.replace("'", "");
+      sRet = sRet.replace("#", "");
+      sRet = sRet.replace("&", "");
+      sRet = sRet.replace("%", "");
     }
+    catch (Exception) {
+    }
+    return sRet;
+
+  }
 
   // MENU CONSTANTS
 
@@ -1259,22 +1260,22 @@ export class GlobalService {
     sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
     sessionStorage.setItem('WWW_ROOT', JSON.stringify(this.WWW_ROOT));
     sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
-    sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify( this.ADDRESS_LINE2));
-    sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify( this.ADDRESS_LINE3));
-    sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify( this.ADDRESS_LINE4));
-    sessionStorage.setItem('ADDRESS_LINE5', JSON.stringify( this.ADDRESS_LINE5));
-    sessionStorage.setItem('user_name', JSON.stringify( this.user_name));
-    sessionStorage.setItem('DOC_FOOTER1', JSON.stringify( this.DOC_FOOTER1));
-    sessionStorage.setItem('DOC_FOOTER2', JSON.stringify( this.DOC_FOOTER2));
-    sessionStorage.setItem('date_display_fmt', JSON.stringify( this.date_display_fmt));
-    sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify( this.BOE_IMPORT_REQUIRED));
-    sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify( this.FRONTEND_DATEFORMAT));
-    sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify( this.PRINT_FIRMCODE));
-    sessionStorage.setItem('WWW_ROOT', JSON.stringify( this.WWW_ROOT));
-    sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify( this.GLOBAL_REPORT_FOLDER));
-    sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify( this.AIRPORTDISPLAYCOLUMN));
-    sessionStorage.setItem('FILES_FOLDER', JSON.stringify( this.FILES_FOLDER));
-    sessionStorage.setItem('FS_APP_FOLDER', JSON.stringify( this.FS_APP_FOLDER));
+    sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify(this.ADDRESS_LINE2));
+    sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify(this.ADDRESS_LINE3));
+    sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify(this.ADDRESS_LINE4));
+    sessionStorage.setItem('ADDRESS_LINE5', JSON.stringify(this.ADDRESS_LINE5));
+    sessionStorage.setItem('user_name', JSON.stringify(this.user_name));
+    sessionStorage.setItem('DOC_FOOTER1', JSON.stringify(this.DOC_FOOTER1));
+    sessionStorage.setItem('DOC_FOOTER2', JSON.stringify(this.DOC_FOOTER2));
+    sessionStorage.setItem('date_display_fmt', JSON.stringify(this.date_display_fmt));
+    sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify(this.BOE_IMPORT_REQUIRED));
+    sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify(this.FRONTEND_DATEFORMAT));
+    sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
+    sessionStorage.setItem('WWW_ROOT', JSON.stringify(this.WWW_ROOT));
+    sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
+    sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify(this.AIRPORTDISPLAYCOLUMN));
+    sessionStorage.setItem('FILES_FOLDER', JSON.stringify(this.FILES_FOLDER));
+    sessionStorage.setItem('FS_APP_FOLDER', JSON.stringify(this.FS_APP_FOLDER));
 
 
   }
