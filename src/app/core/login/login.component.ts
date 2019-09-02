@@ -46,6 +46,8 @@ export class LoginComponent implements OnInit {
     this.GLOBALCONTANTS.IsAuthenticated =false;
     this.showloginbutton = false;
 
+
+
     //this.GLOBALCONTANTS.user_code = '';
     //this.GLOBALCONTANTS.user_pwd = '';
    
