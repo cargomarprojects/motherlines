@@ -14,7 +14,7 @@ import { invoiceService } from '../services/invoice.service';
 })
 export class InvoiceComponent implements OnInit {
 
-  errormessage: string;
+  errorMessage: string;
   mbl_pkid: string;
   mbl_refno: string;
   mbl_type: string;
@@ -103,7 +103,7 @@ export class InvoiceComponent implements OnInit {
 
       this.DisplayProfit();
     }, error => {
-      this.errormessage = this.gs.getError(error)
+      this.errorMessage = this.gs.getError(error)
     });
   }
 
@@ -116,11 +116,11 @@ export class InvoiceComponent implements OnInit {
     SearchData.MBL_PROFIT_REQ = ( this.MBL_PROFIT_REQ) ? 'Y' : 'N';
     SearchData.MBL_LOSS_APPROVED =( this.MBL_LOSS_APPROVED) ? 'Y' : 'N';
 
-    this.errormessage = '';
+    this.errorMessage = '';
     this.mainservice.MasterLoss_Status_Save(SearchData).subscribe(response => {
-      this.errormessage = 'Update Complete';
+      this.errorMessage = 'Update Complete';
     }, error => {
-      this.errormessage = this.gs.getError(error)
+      this.errorMessage = this.gs.getError(error)
     });
 
   }

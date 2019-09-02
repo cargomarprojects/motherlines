@@ -14,19 +14,19 @@ import { ApprovedPageService } from '../services/approvedpage.service';
 })
 export class ApprovedPageListComponent implements OnInit {
 
-  private errormessage: string;
-  private mbl_pkid: string;
-  private mbl_refno: string;
-  private mbl_mode: string;
-  private doc_type: string;
-  private req_type: string;
+  errormessage: string;
+  mbl_pkid: string;
+  mbl_refno: string;
+  mbl_mode: string;
+  doc_type: string;
+  req_type: string;
 
-  private menuid: string;
-  private title: string;
-  private isAdmin: boolean;
-  private canAdd: boolean;
-  private canEdit: boolean;
-  private canSave: boolean;
+  menuid: string;
+  title: string;
+  isAdmin: boolean;
+  canAdd: boolean;
+  canEdit: boolean;
+  canSave: boolean;
 
 
   records: Tbl_Cargo_Approved[]

@@ -14,16 +14,16 @@ import { DeliveryOrderService } from '../services/deliveryorder.service';
 })
 export class DeliveryOrderListComponent implements OnInit {
 
-  private errormessage: string;
-  private parentid: string;
-  private pickCategory: string;
+  errorMessage: string;
+   parentid: string;
+   pickCategory: string;
 
-  private menuid: string;
-  private title: string;
-  private isAdmin: boolean;
-  private canAdd: boolean;
-  private canEdit: boolean;
-  private canSave: boolean;
+   menuid: string;
+   title: string;
+   isAdmin: boolean;
+   canAdd: boolean;
+   canEdit: boolean;
+   canSave: boolean;
 
  
   records: Tbl_cargo_imp_pickup[]
@@ -58,7 +58,7 @@ export class DeliveryOrderListComponent implements OnInit {
       this.records = response.list;
       
     }, error => {
-      this.errormessage = this.gs.getError(error)
+      this.errorMessage = this.gs.getError(error)
     });
   }
   

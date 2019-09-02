@@ -23,14 +23,14 @@ export class SeaImpCargoPickupComponent implements OnInit {
   cntrrecords: Tbl_cargo_imp_container[] = [];
   // 17-07-2019 Created By Ajith  
 
-  private pkid: string;
-  private menuid: string;
-  private mode: string;
-  private title: string = '';
-  private isAdmin: boolean;
-  private chkallselected: boolean = false;
-  private selectdeselect: boolean = false;
-  private errorMessage: string;
+  pkid: string;
+  menuid: string;
+  mode: string;
+  title: string = '';
+  isAdmin: boolean;
+  chkallselected: boolean = false;
+  selectdeselect: boolean = false;
+  errorMessage: string;
   IsLocked: boolean = false;
 
   constructor(
@@ -70,7 +70,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
     this.errorMessage = '';
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_imp_pickup>{};
-     //this.cntrrecords = <Tbl_cargo_imp_container[]>[];
+      //this.cntrrecords = <Tbl_cargo_imp_container[]>[];
       this.init();
       this.LoadDefault();
     }
@@ -190,7 +190,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
           this.record.IS_CPU = (str.includes("CPU")) ? true : false;
           this.record.IS_DDU = (str.includes("DDU")) ? true : false;
           this.record.IS_FRT_OTH = (str.includes("Others")) ? true : false;
-          this.record.freightothers ='';
+          this.record.freightothers = '';
           if (this.record.IS_FRT_OTH) {
             sData = str.split(':');
             this.record.freightothers = sData[1];
@@ -203,7 +203,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
           this.record.IS_PktList = (str.includes("PLST")) ? true : false;
           this.record.IS_ExDeclaration = (str.includes("EDEC")) ? true : false;
           this.record.IS_Export_OTH = (str.includes("OTH")) ? true : false;
-          this.record.exportothers ='';
+          this.record.exportothers = '';
           if (this.record.IS_Export_OTH) {
             sData = str.split(':');
             this.record.exportothers = sData[1];
@@ -736,7 +736,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
     for (let rec of this.cntrrecords) {
       rec.cntr_selected = this.selectdeselect;
     }
-    this.chkallselected=this.selectdeselect;
+    this.chkallselected = this.selectdeselect;
   }
 
 }

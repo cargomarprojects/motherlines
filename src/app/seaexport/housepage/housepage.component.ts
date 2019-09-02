@@ -26,16 +26,16 @@ import { Tbl_cargo_exp_container } from '../models/tbl_cargo_exp_masterm';
 export class HousePageComponent implements OnInit {
 
 
-  private pkid: string;
-  private menuid: string;
-  private mode: string = "ADD";
+  pkid: string;
+   menuid: string;
+   mode: string = "ADD";
 
 
 
-  private errorMessage: string[] = [];
+   errorMessage: string[] = [];
 
-  private title: string;
-  private isAdmin: boolean;
+   title: string;
+   isAdmin: boolean;
 
   record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
   records: Tbl_cargo_exp_desc[] = [];
@@ -56,11 +56,11 @@ export class HousePageComponent implements OnInit {
   is_locked: boolean = false;
   is_stage_locked = false;
 
-  private parentid: string;
-  private mbl_refno: string;
-  private type: string;
+   parentid: string;
+   mbl_refno: string;
+   type: string;
 
-  private refno: string;
+   refno: string;
 
   constructor(
     private router: Router,
