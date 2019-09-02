@@ -1279,8 +1279,8 @@ export class GlobalService {
     sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify(this.AIRPORTDISPLAYCOLUMN));
     sessionStorage.setItem('FILES_FOLDER', JSON.stringify(this.FILES_FOLDER));
     sessionStorage.setItem('FS_APP_FOLDER', JSON.stringify(this.FS_APP_FOLDER));
-
-
+    sessionStorage.setItem('SEARCH_DATE_DIFF', JSON.stringify(this.SEARCH_DATE_DIFF));
+    
   }
 
 
