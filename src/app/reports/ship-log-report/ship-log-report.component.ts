@@ -125,7 +125,7 @@ export class ShipmentLogReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-        this.job_mode = rec.job_mode;
+        this.job_mode = rec.job_mode == "OTHERS" ? "OTHER OPERATION" : rec.job_mode;
         this.date_basedon = rec.date_basedon;
         this.sdate = rec.sdate;
         this.edate = rec.edate;
@@ -214,6 +214,8 @@ export class ShipmentLogReportComponent implements OnInit {
         this.SetStages();
       }
     });
+
+
   }
 
   ngOnInit() {
