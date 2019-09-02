@@ -14,7 +14,7 @@ import { ApprovedPageService } from '../services/approvedpage.service';
 })
 export class ApprovedPageListComponent implements OnInit {
 
-  errormessage: string;
+  errorMessage: string;
   mbl_pkid: string;
   mbl_refno: string;
   mbl_mode: string;
@@ -64,7 +64,7 @@ export class ApprovedPageListComponent implements OnInit {
       this.records = response.list;
 
     }, error => {
-      this.errormessage = this.gs.getError(error)
+      this.errorMessage = this.gs.getError(error)
     });
   }
 
