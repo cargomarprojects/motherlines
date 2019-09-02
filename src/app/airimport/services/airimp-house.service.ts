@@ -47,7 +47,7 @@ export class AirImpHouseService {
         this.record = <AirImpHouseModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.defaultValues.lastmonthdate, todate: this.gs.defaultValues.today, mblid: '' },
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today, mblid: '' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
