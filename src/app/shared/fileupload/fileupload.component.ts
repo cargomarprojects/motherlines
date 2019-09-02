@@ -13,7 +13,7 @@ export class FileUploadComponent implements OnInit {
 
 
 
-  private Doc_title: string = "";
+  public Doc_title: string = "";
   @Input() set title(value: string) {
     this.Doc_title = value;
   }
@@ -86,7 +86,7 @@ export class FileUploadComponent implements OnInit {
     this.FILES_PATH2 = value;
   }
 
-  private canupload: boolean = true;
+  public canupload: boolean = true;
   @Input() set isviewonly(value: boolean) {
     this.canupload = value;
   }
@@ -104,7 +104,7 @@ export class FileUploadComponent implements OnInit {
 
   
 
-  private errorMessage: string = '';
+  public errorMessage: string = '';
 
   loading = false;
   myFiles: string[] = [];

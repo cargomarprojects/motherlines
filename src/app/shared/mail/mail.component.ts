@@ -34,17 +34,17 @@ export class MailComponent implements OnInit {
   disableSave = true;
   loading = false;
 
-  private to_ids: string = '';
-  private cc_ids: string = '';
-  private cc_ids2: string = '';
-  private bcc_ids: string = '';
-  private subject: string = '';
-  private message: string = '';
+  to_ids: string = '';
+  cc_ids: string = '';
+  cc_ids2: string = '';
+  bcc_ids: string = '';
+  subject: string = '';
+  message: string = '';
 
-  private msgFontFamily: string = '';
-  private msgFontSize: string = '';
-  private msgForeground: string = '';
-  private msgFontWeight: string = '';
+  msgFontFamily: string = '';
+  msgFontSize: string = '';
+  msgForeground: string = '';
+  msgFontWeight: string = '';
   EmailList: Table_Email[] = [];
   chkallto: boolean = true;
   chkallcc: boolean = false;
@@ -52,7 +52,7 @@ export class MailComponent implements OnInit {
   allcc: boolean = false;
 
 
-  private errorMessage: string[] = [];
+  public errorMessage: string[] = [];
   constructor(
     private gs: GlobalService,
     private lovService: LovService,

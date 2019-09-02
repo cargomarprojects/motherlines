@@ -57,7 +57,7 @@ export class AutoComplete2Component {
     this._id = value;
   }
 
-  private _displaydata: string;
+  public _displaydata: string;
   @Input() set displaydata(value: string) {
     this._displaydata = value;
   }
