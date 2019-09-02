@@ -205,10 +205,12 @@ export class Login2Component implements OnInit {
 
                 response.list.forEach(element => {
                     if (module_name != element.module_name) {
+
                         this.mRec = new Modulem();
                         this.mRec.module_name = element.module_name;
                         this.GLOBALCONTANTS.Modules.push(this.mRec);
                         module_name = element.module_name;
+                        
                     }
                 });
 
