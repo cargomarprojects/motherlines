@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter,SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { SearchQuery } from '../models/tbl_cargo_slip';
+import { GlobalService } from '../../core/services/global.service';
 
 @Component({
   selector: 'app-messengerslip-header',
@@ -15,7 +16,8 @@ export class MessengerSlipHeaderComponent implements OnInit {
   
   @Output() searchEvents = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(public gs: GlobalService
+    ) { }
 
   ngOnInit() {
   }
@@ -24,6 +26,12 @@ export class MessengerSlipHeaderComponent implements OnInit {
   }
 
   List(outputformat: string) {
+
+    if (this.gs.isBlank(this.searchQuery.fromdate))
+      this.searchQuery.fromdate = this.gs.year_start_date;
+    if (this.gs.isBlank(this.searchQuery.todate))
+      this.searchQuery.todate = this.gs.defaultValues.today;
+
     this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
   }
 }

@@ -50,7 +50,7 @@ export class ApprovedPageService {
         this.record = <ApprovedPageModel><unknown>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.defaultValues.lastmonthdate, toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userName: usrname, userId: usrid, userLovDisabled: true, userLovCaption: 'Request./Aprvd.By' },
+            searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userName: usrname, userId: usrid, userLovDisabled: true, userLovCaption: 'Request./Aprvd.By' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
