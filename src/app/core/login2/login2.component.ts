@@ -141,7 +141,7 @@ export class Login2Component implements OnInit {
         this.router.navigate(['home'], { replaceUrl: true });
     }
 
-   
+
     SetupYearList() {
         this.GLOBALCONTANTS.YearList = [];
         this.GLOBALCONTANTS.software_start_year = 0;
@@ -202,7 +202,6 @@ export class Login2Component implements OnInit {
 
                 this.GLOBALCONTANTS.MenuList = response.list;
                 this.GLOBALCONTANTS.Modules = [];
-
                 response.list.forEach(element => {
                     if (module_name != element.module_name) {
                         this.mRec = new Modulem();
