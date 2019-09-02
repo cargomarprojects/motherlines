@@ -28,13 +28,13 @@ export class PaymentReqComponent implements OnInit {
   invrecords: Table_Cargo_Payrequest[] = [];
 
   // 15-07-2019 Created By Ajith  
-  private pkid: string;
-  private menuid: string;
-  private mode: string;
-  private title: string = '';
-  private isAdmin: boolean;
-  private errorMessage: string;
-  private IsLocked: boolean = false;
+  pkid: string;
+  menuid: string;
+  mode: string;
+  title: string = '';
+  isAdmin: boolean;
+  errorMessage: string;
+  IsLocked: boolean = false;
 
   constructor(
     private router: Router,
@@ -215,7 +215,7 @@ export class PaymentReqComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Payment Date cannot be blank";
       alert(this.errorMessage);
-     // this.payment_date_field.Focus();
+      // this.payment_date_field.Focus();
       return bRet;
     }
 

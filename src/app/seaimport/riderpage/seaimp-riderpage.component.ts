@@ -19,14 +19,14 @@ export class SeaImpRiderPageComponent implements OnInit {
 
   // 15-07-2019 Created By Ajith  
 
-  private pkid: string;
-  private source: string;
-  private menuid: string;
-  private mode: string;
-  private title: string = '';
-  private isAdmin: boolean;
-  private errorMessage: string;
-  private selectedRowIndex: number = -1;
+  pkid: string;
+  source: string;
+  menuid: string;
+  mode: string;
+  title: string = '';
+  isAdmin: boolean;
+  errorMessage: string;
+  selectedRowIndex: number = -1;
   IsLocked: boolean = false;
 
   constructor(
@@ -182,7 +182,7 @@ export class SeaImpRiderPageComponent implements OnInit {
     this.selectedRowIndex = _indx;
   }
 
-  private ChangePosition(thistype: string) {
+  ChangePosition(thistype: string) {
     if (this.selectedRowIndex == -1)
       return;
     let _newindx: number = this.selectedRowIndex;

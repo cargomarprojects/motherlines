@@ -26,24 +26,24 @@ export class ParamDetPageComponent implements OnInit, OnDestroy {
 
   // 24-05-2019 Created By Joy  
 
-  private id: string;
-  private menuid: string;
-  private menu_param: string;
-  private sub: any;
+  id: string;
+  menuid: string;
+  menu_param: string;
+  sub: any;
 
-  private title: string;
-  private isAdmin: boolean;
-
-
-  private loading: boolean;
+  title: string;
+  isAdmin: boolean;
 
 
-  private SearchData: any;
+  loading: boolean;
 
-  private data$: Observable<TBL_MAST_PARAM[]>;
-  private pageQuery$: Observable<PageQuery>;
-  private searchQuery$: Observable<SearchQuery>;
-  private errorMessage$: Observable<string>;
+
+  SearchData: any;
+
+  data$: Observable<TBL_MAST_PARAM[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
+  errorMessage$: Observable<string>;
 
   constructor(
     private router: Router,
@@ -95,7 +95,7 @@ export class ParamDetPageComponent implements OnInit, OnDestroy {
       menuid: this.menuid,
       pkid: '',
       type: this.menu_param,
-      origin:'param-page',
+      origin: 'param-page',
       mode: 'ADD'
     };
     this.gs.Naviagete('Silver.Master/ParamPageDetEdit', JSON.stringify(parameter));
@@ -113,7 +113,7 @@ export class ParamDetPageComponent implements OnInit, OnDestroy {
       menuid: this.menuid,
       pkid: _record.param_pkid,
       type: _record.param_type,
-      origin:'param-page',      
+      origin: 'param-page',
       mode: 'EDIT'
     };
     this.gs.Naviagete('Silver.Master/ParamPageDetEdit', JSON.stringify(parameter));

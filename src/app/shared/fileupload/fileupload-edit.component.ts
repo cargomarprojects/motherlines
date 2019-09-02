@@ -15,7 +15,7 @@ export class FileUploadEditComponent implements OnInit {
 
     @Input() record: Table_Mast_Files;
 
-    private errorMessage: string = '';
+    errorMessage: string = '';
 
     loading = false;
 

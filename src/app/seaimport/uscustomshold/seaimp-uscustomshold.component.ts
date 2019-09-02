@@ -20,15 +20,15 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
 
   // 15-07-2019 Created By Ajith  
 
-  private pkid: string;
-  private menuid: string;
-  private mode: string;
-  private title: string='';
-  private isAdmin: boolean;
-  private houseno: string = '';
-  private mblrefno: string = '';
+   pkid: string;
+   menuid: string;
+   mode: string;
+   title: string='';
+   isAdmin: boolean;
+   houseno: string = '';
+   mblrefno: string = '';
 
-  private errorMessage: string;
+   errorMessage: string;
 
   IsLocked: boolean = false;
 

@@ -17,11 +17,11 @@ export class LoginComponent implements OnInit {
   showloginbutton : Boolean = false;
 
   errorMessage: string = '';
-
-  
+ 
   software_version_string = '1.101';
   username: string = 'ADMIN';
   password: string = '123';
+
   server_software_version_string = '';
 
 

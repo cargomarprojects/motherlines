@@ -21,24 +21,24 @@ export class OthTrackingPageComponent implements OnInit {
   trackmemorecords: Tbl_Cargo_Tracking_Status[] = [];
   // 15-07-2019 Created By Ajith  
 
-  private pkid: string;
-  private parentType: string;
-  private paramType: string;
-  private menuid: string;
-  private refno: string;
-  private hideTracking: string = 'N';
-  private oprgrp: string = '';
-  private mode: string;
-  private title: string = '';
-  private isAdmin: boolean;
-  private errorMessage: string;
-  private selectedRowIndex: number = -1;
+  pkid: string;
+  parentType: string;
+  paramType: string;
+  menuid: string;
+  refno: string;
+  hideTracking: string = 'N';
+  oprgrp: string = '';
+  mode: string;
+  title: string = '';
+  isAdmin: boolean;
+  errorMessage: string;
+  selectedRowIndex: number = -1;
   IsLocked: boolean = false;
-  private Memo_Mode: string = "ADD";
-  private Memo_Id: string = "";
-  private lblSaveMemo: string = "Save";
-  private cmbNotes: string = "";
-  private MemoList: any[] = [];
+  Memo_Mode: string = "ADD";
+  Memo_Id: string = "";
+  lblSaveMemo: string = "Save";
+  cmbNotes: string = "";
+  MemoList: any[] = [];
 
   constructor(
     private router: Router,
@@ -70,7 +70,7 @@ export class OthTrackingPageComponent implements OnInit {
   }
 
   LoadCombo() {
-  this.SearchRecord('loadcombo');
+    this.SearchRecord('loadcombo');
   }
 
   // NewRecord() {
@@ -232,7 +232,7 @@ export class OthTrackingPageComponent implements OnInit {
   //     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   //   }
 
-  private NewRecord() {
+  NewRecord() {
     this.Memo_Mode = "ADD";
     this.Memo_Id = this.gs.getGuid();
     this.trackmemorecord = <Tbl_Cargo_Tracking_Status>{};
@@ -253,8 +253,7 @@ export class OthTrackingPageComponent implements OnInit {
     this.lblSaveMemo = "Update";
   }
 
-  SaveMemo() 
-  {
+  SaveMemo() {
     const saveRecord = <vm_Tbl_Cargo_Tracking_Status>{};
     saveRecord.userinfo = this.gs.UserInfo;
     saveRecord.memorecord = this.trackmemorecord;
@@ -262,7 +261,7 @@ export class OthTrackingPageComponent implements OnInit {
     saveRecord.memoPkid = this.Memo_Id;
     saveRecord.memoMode = this.Memo_Mode;
     saveRecord.parentType = this.parentType;
-  
+
     this.mainService.SaveMemo(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {

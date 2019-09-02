@@ -4,7 +4,7 @@
     <button class="btn btn-primary btn-sm mr-1" *ngIf="canAdd" (click)="NewRecord('AR')">Add A/R</button>
     <button class="btn btn-primary btn-sm mr-1" *ngIf="canAdd" (click)="NewRecord('AP')">Add A/P</button>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
-    <i *ngIf="loading" class="fa fa-spinner"></i>
+    
   </div>
 </div>
 
@@ -33,7 +33,7 @@
               <span>Show Deleted</span>
             </div>
             <div class="col-3">
-              <button [disabled]="loading" (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Search</button>
+              <button  (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Search</button>
             </div>
           </div>
 
@@ -102,7 +102,7 @@
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm"></label>
             <div class="col-6">
-              <button [disabled]="loading" (click)="UpdateStatus()" class="btn btn-primary btn-sm mr-1">Update Status</button>
+              <button (click)="UpdateStatus()" class="btn btn-primary btn-sm mr-1">Update Status</button>
             </div>
           </div>
 

@@ -27,7 +27,7 @@ export class InputBoxNumberComponent {
 
     }
 
-    onBlur1() {
+    onBlur1($event) {
         if (this.inputModel != null) {
             this.inputModel = this.gs.roundNumber(this.inputModel, this.dec);            
         }

@@ -14,19 +14,19 @@ import { MessengerSlipService } from '../services/messengerslip.service';
 })
 export class MessengerSlipListComponent implements OnInit {
 
-  private errormessage: string;
-  private mbl_pkid: string;
-  private mbl_refno: string;
-  private mbl_mode:string; 
-  
-  private menuid: string;
-  private title: string;
-  private isAdmin: boolean;
-  private canAdd: boolean;
-  private canEdit: boolean;
-  private canSave: boolean;
+  errorMessage: string;
+  mbl_pkid: string;
+  mbl_refno: string;
+  mbl_mode: string;
 
- 
+  menuid: string;
+  title: string;
+  isAdmin: boolean;
+  canAdd: boolean;
+  canEdit: boolean;
+  canSave: boolean;
+
+
   records: Tbl_cargo_slip[]
 
   constructor(
@@ -37,7 +37,7 @@ export class MessengerSlipListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-   
+
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.menuid = options.menuid;
     this.mbl_pkid = options.mbl_pkid;
@@ -51,20 +51,20 @@ export class MessengerSlipListComponent implements OnInit {
 
     this.List('SCREEN');
   }
- 
+
 
   List(action: string = '') {
     var SearchData = this.gs.UserInfo;
     SearchData.mbl_pkid = this.mbl_pkid;
-   
+
     this.mainservice.GeneralList(SearchData).subscribe(response => {
       this.records = response.list;
-      
+
     }, error => {
-      this.errormessage = this.gs.getError(error)
+      this.errorMessage = this.gs.getError(error)
     });
   }
-  
+
 
   NewRecord() {
     if (!this.canAdd) {
@@ -76,10 +76,10 @@ export class MessengerSlipListComponent implements OnInit {
       menuid: this.menuid,
       pkid: '',
       mode: 'ADD',
-      mbl_pkid : this.mbl_pkid,
-      mbl_refno : this.mbl_refno,
-      mbl_mode:this.mbl_mode
-       
+      mbl_pkid: this.mbl_pkid,
+      mbl_refno: this.mbl_refno,
+      mbl_mode: this.mbl_mode
+
     };
     this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
 
@@ -95,9 +95,9 @@ export class MessengerSlipListComponent implements OnInit {
       menuid: this.menuid,
       pkid: _record.cs_pkid,
       mode: 'EDIT',
-      mbl_pkid : this.mbl_pkid,
-      mbl_refno : this.mbl_refno,
-      mbl_mode:this.mbl_mode
+      mbl_pkid: this.mbl_pkid,
+      mbl_refno: this.mbl_refno,
+      mbl_mode: this.mbl_mode
     };
     this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
   }

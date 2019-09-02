@@ -19,17 +19,17 @@ export class CopyCntrPageComponent implements OnInit {
 
   // 15-07-2019 Created By Ajith  
 
-  private pkid: string;
-  private menuid: string;
-  private mode: string;
-  private title: string = '';
-  private isAdmin: boolean;
-  private chkallselected_cntr: boolean = false;
-  private selectdeselect_cntr: boolean = false;
-  private chkallselected_hbl: boolean = false;
-  private selectdeselect_hbl: boolean = false;
-  private errorMessage: string;
-  private mbl_cntr_type: string;
+  pkid: string;
+  menuid: string;
+  mode: string;
+  title: string = '';
+  isAdmin: boolean;
+  chkallselected_cntr: boolean = false;
+  selectdeselect_cntr: boolean = false;
+  chkallselected_hbl: boolean = false;
+  selectdeselect_hbl: boolean = false;
+  errorMessage: string;
+  mbl_cntr_type: string;
 
   IsLocked: boolean = false;
 

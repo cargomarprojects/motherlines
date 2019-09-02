@@ -20,23 +20,23 @@ export class OthGeneralExpenseEditComponent implements OnInit {
   //   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
 
   record: Tbl_cargo_general = <Tbl_cargo_general>{};
-  private HouseList: Tbl_cargo_obl_released[] = [];
+  HouseList: Tbl_cargo_obl_released[] = [];
 
   // 24-05-2019 Created By Joy  
 
-  private pkid: string;
-  private menuid: string;
+  pkid: string;
+  menuid: string;
 
-  private mode: string;
-  private FALockStatus: string = "";
-  private errorMessage: string[] = [];
+  mode: string;
+  FALockStatus: string = "";
+  errorMessage: string[] = [];
 
-  private closeCaption: string = 'Return';
+  closeCaption: string = 'Return';
 
-  private title: string;
-  private isAdmin: boolean;
+  title: string;
+  isAdmin: boolean;
 
-  private cmbList = {};
+  cmbList = {};
   EXPTYPE: string = "";
   MblStatusList: any[] = [];
   BlStatusList: any[] = [];

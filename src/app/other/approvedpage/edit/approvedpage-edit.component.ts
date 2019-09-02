@@ -33,25 +33,25 @@ export class ApprovedPageEditComponent implements OnInit {
   detrecords: Tbl_Cargo_Approvedd[] = [];
 
 
-  private mbl_pkid: string;
-  private mbl_refno: string;
-  private doc_type: string;
-  private req_type: string = "REQUEST";
+   mbl_pkid: string;
+   mbl_refno: string;
+   doc_type: string;
+   req_type: string = "REQUEST";
 
-  private pkid: string;
-  private menuid: string;
-  private mode: string;
-  private errorMessage: string;
-  private closeCaption: string = 'Return';
+   pkid: string;
+   menuid: string;
+   mode: string;
+   errorMessage: string;
+   closeCaption: string = 'Return';
 
-  private title: string;
-  private isAdmin: boolean;
-  private oprgrp: string = "GENERAL";
-  private rdBtnChkedValue: string = "";
+   title: string;
+   isAdmin: boolean;
+   oprgrp: string = "GENERAL";
+   rdBtnChkedValue: string = "";
 
-  private IsLocked: boolean = false;
-  private RdbApproved: boolean = false;
-  private RdbNotApproved: boolean = false;
+   IsLocked: boolean = false;
+   RdbApproved: boolean = false;
+   RdbNotApproved: boolean = false;
 
   constructor(
     private router: Router,

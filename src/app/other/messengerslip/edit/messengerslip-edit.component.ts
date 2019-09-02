@@ -27,19 +27,19 @@ export class MessengerSlipEditComponent implements OnInit {
 
   record: Tbl_cargo_slip = <Tbl_cargo_slip>{};
 
-  private mbl_pkid: string;
-  private pkid: string;
-  private menuid: string;
-  private mode: string;
-  private errorMessage: string;
-  private closeCaption: string = 'Return';
+  mbl_pkid: string;
+  pkid: string;
+  menuid: string;
+  mode: string;
+  errorMessage: string;
+  closeCaption: string = 'Return';
 
-  private title: string;
-  private isAdmin: boolean;
-  private oprgrp: string = "GENERAL";
-  private refno: string = "";
+  title: string;
+  isAdmin: boolean;
+  oprgrp: string = "GENERAL";
+  refno: string = "";
 
-  private IsLocked: boolean = false;
+  IsLocked: boolean = false;
 
   constructor(
     private router: Router,
@@ -87,9 +87,9 @@ export class MessengerSlipEditComponent implements OnInit {
     var curr_date = new Date();
     var curr_hh = curr_date.getHours();
 
-    if (this.mode == "ADD") 
+    if (this.mode == "ADD")
       this.pkid = this.gs.getGuid();
-      
+
     this.record.cs_pkid = this.pkid;
     this.record.cs_refno = this.refno;
     this.record.cs_mode = this.oprgrp;
@@ -107,7 +107,7 @@ export class MessengerSlipEditComponent implements OnInit {
       this.record.cs_to_tel = '';
       this.record.cs_to_fax = '';
     }
-    
+
     if (this.record.cs_mbl_id == undefined || this.record.cs_mbl_id == '' || this.record.cs_mbl_id == null) {
       this.record.cs_from_id = '';
       this.record.cs_from_name = '';
