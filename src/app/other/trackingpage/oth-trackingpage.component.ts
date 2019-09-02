@@ -232,7 +232,7 @@ export class OthTrackingPageComponent implements OnInit {
   //     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   //   }
 
-  private NewRecord() {
+  NewRecord() {
     this.Memo_Mode = "ADD";
     this.Memo_Id = this.gs.getGuid();
     this.trackmemorecord = <Tbl_Cargo_Tracking_Status>{};
