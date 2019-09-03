@@ -93,6 +93,8 @@ export class DateComponent {
 
         var date1 = new Date();
 
+        var sepchar = '';
+
         this.yy = 0;
         this.mm = 0;
         this.dd = 0;
@@ -102,8 +104,13 @@ export class DateComponent {
         if (this.DisplayDate == null || this.DisplayDate == undefined)
             this.DisplayDate = "";
 
-        if (this.DisplayDate.indexOf("/") != -1) {
-            var parts = this.DisplayDate.split("/");
+        if (this.DisplayDate.indexOf("/") != -1)
+            sepchar = '/';
+        if (this.DisplayDate.indexOf("-") != -1)
+            sepchar = '-';
+
+        if (sepchar != '') {
+            var parts = this.DisplayDate.split(sepchar);
             if (parts.length == 3) {
 
                 if (this.gs.DateFormat() === 'dd') {
@@ -117,29 +124,33 @@ export class DateComponent {
                     this.yy = parseInt(parts[2], 10);
                 }
 
-            }
-        }
-        else if (this.DisplayDate.indexOf("-") != -1) {
-            var parts = this.DisplayDate.split("-");
-            if (parts.length == 3) {
-                if (this.gs.DateFormat() === 'dd') {
-                    this.dd = parseInt(parts[0], 10);
-                    this.mm = parseInt(parts[1], 10);
-                    this.yy = parseInt(parts[2], 10);
-                }
-                if (this.gs.DateFormat() === 'mm') {
-                    this.mm = parseInt(parts[0], 10);
-                    this.dd = parseInt(parts[1], 10);
-                    this.yy = parseInt(parts[2], 10);
-                }
             }
         }
         else {
-            if (this.DisplayDate.length == 8 || this.DisplayDate.length == 6) {
+
+            if (this.DisplayDate.length == 1 || this.DisplayDate.length == 2) {
+                if (parseInt(this.DisplayDate) >= 0 && parseInt(this.DisplayDate) <= 31) {
+                    this.dd = parseInt(this.DisplayDate);
+                    this.mm = date1.getMonth() + 1;
+                    this.yy = date1.getFullYear();
+                }
+            }
+            if (this.DisplayDate.length == 4 ) {
                 if (this.gs.DateFormat() === 'dd') {
                     this.dd = parseInt(this.DisplayDate.substr(0, 2));
                     this.mm = parseInt(this.DisplayDate.substr(2, 2));
-
+                    this.yy = this.gs.defaultValues.yy;
+                }
+                if (this.gs.DateFormat() === 'mm') {
+                    this.mm = parseInt(this.DisplayDate.substr(0, 2));
+                    this.dd = parseInt(this.DisplayDate.substr(2, 2));
+                    this.yy = 0;
+                }                
+            }            
+            else if (this.DisplayDate.length == 6 || this.DisplayDate.length == 8) {
+                if (this.gs.DateFormat() === 'dd') {
+                    this.dd = parseInt(this.DisplayDate.substr(0, 2));
+                    this.mm = parseInt(this.DisplayDate.substr(2, 2));
                     if (this.DisplayDate.length == 6)
                         this.yy = parseInt(this.DisplayDate.substr(4, 2)) + 2000;
                     else
@@ -148,19 +159,10 @@ export class DateComponent {
                 if (this.gs.DateFormat() === 'mm') {
                     this.mm = parseInt(this.DisplayDate.substr(0, 2));
                     this.dd = parseInt(this.DisplayDate.substr(2, 2));
-
                     if (this.DisplayDate.length == 6)
                         this.yy = parseInt(this.DisplayDate.substr(4, 4)) + 2000;
                     else
                         this.yy = parseInt(this.DisplayDate.substr(4, 4));
-
-                }
-            }
-            else if (this.DisplayDate.length == 1 || this.DisplayDate.length == 2) {
-                if (parseInt(this.DisplayDate) >= 0 && parseInt(this.DisplayDate) <= 31) {
-                    this.dd = parseInt(this.DisplayDate);
-                    this.mm = date1.getMonth() + 1;
-                    this.yy = date1.getFullYear();
                 }
             }
         }
