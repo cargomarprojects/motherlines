@@ -26,6 +26,7 @@ export class QtnRateService {
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
+    public canDelete: boolean;
 
     public initlialized: boolean;
 
@@ -57,6 +58,7 @@ export class QtnRateService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
+        this.canDelete = this.gs.canDelete(this.menuid);
 
         this.initlialized = true;
 
@@ -106,6 +108,55 @@ export class QtnRateService {
         });
     }
 
+    RefreshList(_rec: Tbl_Cargo_Qtn_Rates) {
+        if (this.record.records == null)
+            return;
+        var REC = this.record.records.find(rec => rec.qtnr_pkid == _rec.qtnr_pkid);
+        if (REC == null) {
+            this.record.records.push(_rec);
+        }
+        else {
+
+            REC.qtnr_agent_name = _rec.qtnr_agent_name;
+            REC.qtnr_pol_cntry_name = _rec.qtnr_pol_cntry_name;
+            REC.qtnr_pod_cntry_name = _rec.qtnr_pod_cntry_name;
+            REC.qtnr_mode = _rec.qtnr_mode;
+            REC.qtnr_validity = _rec.qtnr_validity;
+            REC.qtnr_file_name = _rec.qtnr_file_name;
+            REC.qtnr_file_name = _rec.qtnr_file_name;
+        }
+    }
+
+    DeleteRow(_rec: Tbl_Cargo_Qtn_Rates) {
+
+        this.record.errormessage = '';
+        if (!confirm("DELETE " + _rec.qtnr_slno)) {
+            return;
+        }
+
+        let fpath = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\Files\\";
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.qtnr_pkid;
+        SearchData.remarks = _rec.qtnr_slno;
+        SearchData.fpath = fpath;
+
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.qtnr_pkid == _rec.qtnr_pkid), 1);
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+            });
+    }
+
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnRate/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -113,9 +164,13 @@ export class QtnRateService {
     GetRecord(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnRate/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
- 
+
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnRate/Save', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnRate/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }
