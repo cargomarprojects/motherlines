@@ -469,13 +469,14 @@ export class GlobalService {
 
 
   public DateFormat() {
-    if (this.date_display_fmt.startsWith('dd'))
+    if (this.date_display_fmt =='')    
+      return '';
+    else if (this.date_display_fmt.toLowerCase().startsWith('dd'))
       return 'dd';
-    else if (this.date_display_fmt.startsWith('mm'))
+    else if (this.date_display_fmt.toLowerCase().startsWith('mm'))
       return 'mm';
     else
       return '';
-
   }
 
   public InitUserInfo() {
