@@ -19,11 +19,10 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
  
   software_version_string = '1.101';
-  username: string = 'ADMIN';
+  username: string = 'Admin';
   password: string = '123';
 
   server_software_version_string = '';
-
 
 
   CompanyList: Companym[];
