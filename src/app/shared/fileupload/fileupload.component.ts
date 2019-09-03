@@ -102,7 +102,7 @@ export class FileUploadComponent implements OnInit {
   private fileSize: number = 0;
   private fileCreateDate: string = "";
 
-  
+  DefaultFilename: string = "";
 
   public errorMessage: string = '';
 
@@ -127,10 +127,31 @@ export class FileUploadComponent implements OnInit {
   ngOnInit() {
     this.txt_fileDocType = this.Files_Type;
     this.txt_fileRefno = this.Files_Ref_No;
+    this.SetDefault();
+    this.LoadCombo();
     this.List();
   }
 
+  SetDefault() {
+    if (this.Files_Ref_No.trim() != "" && this.Customer_Name.trim() != "")
+      this.DefaultFilename = this.Files_Ref_No + " " + this.Customer_Name;
+    this.txt_fileRefno = this.Files_Ref_No;
+  }
+  LoadCombo() {
+    if (this.Files_TypeList == null)
+      this.Files_TypeList = new Array<any>();
 
+    if (this.Files_Type.trim().length > 0) {
+      if (this.GetFileType(this.Files_Type) == "") {
+        let newRec = {
+          code: this.Files_Type,
+          name: this.Files_Type
+        };
+        this.Files_TypeList.push(newRec);
+        this.txt_fileDocType = this.Files_Type;
+      }
+    }
+  }
   getFileDetails(e: any) {
 
     this.MultiFilesList = <Table_Mast_Files[]>[];
@@ -138,7 +159,7 @@ export class FileUploadComponent implements OnInit {
 
     let fileExtn: string = "";
 
-    let DefaultFilename: string = "";
+
 
     let strDfname: string = "";
 
@@ -156,16 +177,16 @@ export class FileUploadComponent implements OnInit {
       this.fileDesc = this.fileDesc.toUpperCase();
       this.fileSize = e.target.files[i].size;
 
-      if (DefaultFilename.trim() != "")
-        strDfname = DefaultFilename + fileExtn.toUpperCase();
+      if (this.DefaultFilename.trim() != "")
+        strDfname = this.DefaultFilename + fileExtn.toUpperCase();
       if (strDfname.length > 50) {
-        DefaultFilename = DefaultFilename.substring(0, 50 - fileExtn.length);
-        strDfname = DefaultFilename + fileExtn.toUpperCase();
+        this.DefaultFilename = this.DefaultFilename.substring(0, 50 - fileExtn.length);
+        strDfname = this.DefaultFilename + fileExtn.toUpperCase();
       }
 
       if (this.fileDesc.length > 50)
         this.fileDesc = this.fileDesc.substring(0, 50 - fileExtn.length) + fileExtn.toUpperCase();
-       
+
       this.txt_fileName = strDfname;
       if (this.txt_fileName.trim().length <= 0)
         this.txt_fileName = this.fileDesc;
