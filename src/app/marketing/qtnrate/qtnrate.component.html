@@ -39,7 +39,7 @@
                     <td>{{rec.qtnr_pod_cntry_name}}</td>
                     <td>{{rec.qtnr_mode}}</td>
                     <td>{{rec.qtnr_validity | date : gs.FRONTEND_DATEFORMAT }}</td>
-                    <td>{{rec.qtnr_file_name}}</td>
+                    <td (click)="ShowFile(rec)">{{rec.qtnr_file_name}}</td>
                     <td>{{rec.rec_created_by}}</td>
                     <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                     <td *ngIf="mainservice.canDelete" style="text-align:center"><i class="fa fa-trash  fa-lg pointer"
