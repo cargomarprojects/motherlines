@@ -4,6 +4,10 @@ export class DefaultValues {
     monthbegindate: string;
     lastmonthdate: string;
 
+    yy : number ;
+    mm : number ;
+    dd : number ;
+
     gstin: string;
     gstin_state_code: string;
     print_cheque_only_after_ho_approved: string;

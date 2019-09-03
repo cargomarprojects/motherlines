@@ -468,6 +468,17 @@ export class GlobalService {
   public branch_add4 = "";
 
 
+  public DateFormat() {
+    if (this.date_display_fmt == '')
+      return '';
+    else if (this.date_display_fmt.toLowerCase().startsWith('dd'))
+      return 'dd';
+    else if (this.date_display_fmt.toLowerCase().startsWith('mm'))
+      return 'mm';
+    else
+      return '';
+  }
+
   public InitUserInfo() {
 
     this.UserInfo = {
@@ -821,11 +832,19 @@ export class GlobalService {
 
   public InitdefaultValues() {
 
+    var dt = new  Date();
+
     this.defaultValues = new DefaultValues;
-    this.defaultValues.today = new Date().toISOString().slice(0, 10);
+    this.defaultValues.today = dt.toISOString().slice(0, 10);
+
+    this.defaultValues.yy = dt.getFullYear();
+    this.defaultValues.mm = dt.getMonth() + 1;
+    this.defaultValues.dd = dt.getDate();
+
     this.defaultValues.monthbegindate = this.getNewdate(0);
     this.defaultValues.lastmonthdate = this.getNewdate(30);//get today -30 days
     this.defaultValues.print_cheque_only_after_ho_approved = 'N';
+
     this.globalData.cost_sea_fromdate = this.defaultValues.monthbegindate;
     this.globalData.cost_sea_todate = this.defaultValues.today;
     this.globalData.cost_air_fromdate = this.defaultValues.monthbegindate;
@@ -835,6 +854,8 @@ export class GlobalService {
     this.globalData.cost_agentinvoice_fromdate = this.defaultValues.monthbegindate;
     this.globalData.cost_agentinvoice_todate = this.defaultValues.today;
 
+
+
     this.globalData.job_fromdate = this.defaultValues.lastmonthdate;
     this.globalData.job_todate = this.defaultValues.today;
     this.globalData.hbl_fromdate = this.defaultValues.lastmonthdate;
@@ -843,6 +864,11 @@ export class GlobalService {
     this.globalData.mbl_todate = this.defaultValues.today;
     this.globalData.ledger_fromdate = this.defaultValues.lastmonthdate;
     this.globalData.ledger_todate = this.defaultValues.today;
+
+
+    
+
+
   }
   public getNewdate(_days: number) {
     var nDate = new Date();
@@ -850,13 +876,14 @@ export class GlobalService {
       nDate.setDate(1);
     else
       nDate.setDate(nDate.getDate() - _days);
+      
     return nDate.toISOString().slice(0, 10);
   }
 
   public getPreviousDate(_days: number) {
     return this.getNewdate(_days);
   }
-  
+
   public roundWeight(_number: number, _category: string) {
 
     let _precision: number;
@@ -1281,7 +1308,7 @@ export class GlobalService {
     sessionStorage.setItem('FILES_FOLDER', JSON.stringify(this.FILES_FOLDER));
     sessionStorage.setItem('FS_APP_FOLDER', JSON.stringify(this.FS_APP_FOLDER));
     sessionStorage.setItem('SEARCH_DATE_DIFF', JSON.stringify(this.SEARCH_DATE_DIFF));
-    
+
   }
 
 
