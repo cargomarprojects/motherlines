@@ -767,6 +767,7 @@ export class AirExpHouseEditComponent implements OnInit {
         if (this.mode == "ADD")
           this.record.hbl_houseno = response.refno;
         this.mode = 'EDIT';
+        this.mainService.RefreshList(this.record);
       }
     }, error => {
       this.errorMessage.push(this.gs.getError(error));

@@ -107,7 +107,28 @@ export class AirExpHouseService {
             this.mdata$.next(this.record);
         });
     }
-
+    RefreshList(_rec: Tbl_cargo_exp_housem) {
+        if (this.record.records == null)
+            return;
+        var REC = this.record.records.find(rec => rec.hbl_pkid == _rec.hbl_pkid);
+        if (REC == null) {
+            this.record.records.push(_rec);
+        }
+        else {
+            REC.mbl_refno = _rec.mbl_refno;
+            REC.mbl_no = _rec.mbl_no;
+            REC.hbl_houseno = _rec.hbl_houseno;
+            REC.hbl_shipper_name = _rec.hbl_shipper_name;
+            REC.hbl_consignee_name = _rec.hbl_consignee_name;
+            REC.hbl_packages = _rec.hbl_packages;
+            REC.hbl_handled_name = _rec.hbl_handled_name;
+            REC.mbl_pol_etd = _rec.mbl_pol_etd;
+            REC.mbl_pod_eta = _rec.mbl_pod_eta;
+            REC.rec_created_by = _rec.rec_created_by;
+            REC.rec_created_date = _rec.rec_created_date;
+        }
+    }
+    
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -127,6 +148,6 @@ export class AirExpHouseService {
     LoadMasterData(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/LoadMasterData', SearchData, this.gs.headerparam2('authorized'));
     }
-    
+
 
 }

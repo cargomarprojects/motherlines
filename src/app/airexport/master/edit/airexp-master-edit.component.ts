@@ -258,6 +258,7 @@ export class AirExpMasterEditComponent implements OnInit {
           this.mode = 'EDIT';
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
+          this.mainService.RefreshList(this.record);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
