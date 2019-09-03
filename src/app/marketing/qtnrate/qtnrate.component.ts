@@ -69,6 +69,11 @@ export class QtnRateComponent implements OnInit {
   }
   edit(_record: Tbl_Cargo_Qtn_Rates) {
 
+    if (_record.qtnr_slno == null || _record.qtnr_slno.toString().trim() == "") {
+      alert('Cannot View/Edit This Row')
+      return;
+    }
+
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')
       return;
@@ -87,5 +92,19 @@ export class QtnRateComponent implements OnInit {
     this.location.back();
   }
 
- 
+  ShowFile(_rec: Tbl_Cargo_Qtn_Rates) {
+
+    let filepath = "Files_Folder\\" + this.gs.FILES_FOLDER + "\\Files\\";
+    let filename: string = "";
+    let filedisplayname: string = "";
+    //filename = this.gs.FS_APP_FOLDER + this.gs.WWW_FILES_URL + _rec.qtnr_file_id;
+    filename = this.gs.FS_APP_FOLDER + filepath + _rec.qtnr_file_id;
+    filedisplayname = _rec.qtnr_file_name;
+    this.Downloadfile(filename, "", filedisplayname);
+  }
+
+  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+    this.gs.DownloadFile(this.gs.FS_APP_FOLDER, filename, filetype, filedisplayname);
+  }
+
 }
