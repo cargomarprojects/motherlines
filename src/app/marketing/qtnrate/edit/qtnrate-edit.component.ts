@@ -87,7 +87,7 @@ export class QtnRateEditComponent implements OnInit {
         this.record.qtnr_pod_cntry_id = '';
         this.record.qtnr_pod_cntry_code = '';
         this.record.qtnr_pod_cntry_name = '';
-        this.record.qtnr_mode = '';
+        this.record.qtnr_mode = 'AIR';
         this.record.qtnr_validity = this.gs.defaultValues.today;
         this.record.rec_files_attached = 'N';;
         this.record.rec_created_by = this.gs.user_code;
