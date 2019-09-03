@@ -18,6 +18,23 @@ export class QtnRateEditComponent implements OnInit {
 
     record: Tbl_Cargo_Qtn_Rates = <Tbl_Cargo_Qtn_Rates>{};
 
+    tab: string = 'main';
+
+    attach_title: string = '';
+    attach_parentid: string = '';
+    attach_subid: string = '';
+    attach_type: string = '';
+    attach_typelist: any = {};
+    attach_tablename: string = '';
+    attach_tablepkcolumn: string = '';
+    attach_refno: string = '';
+    attach_customername: string = '';
+    attach_updatecolumn: string = '';
+    attach_viewonlysource: string = '';
+    attach_viewonlyid: string = '';
+    attach_filespath: string = '';
+    attach_filespath2: string = '';
+
     mbl_pkid: string;
     pkid: string;
     menuid: string;
@@ -132,7 +149,7 @@ export class QtnRateEditComponent implements OnInit {
                     this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
                     alert(this.errorMessage);
-                    
+
                 }
 
             }, error => {
@@ -142,7 +159,7 @@ export class QtnRateEditComponent implements OnInit {
     }
 
     private SaveParent() {
-       
+
     }
     private Allvalid(): boolean {
 
@@ -207,17 +224,27 @@ export class QtnRateEditComponent implements OnInit {
 
     BtnNavigation(action: string) {
         switch (action) {
-            //   case 'CUSTOMSHOLD': {
-            //     let prm = {
-            //       menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
-            //       pkid: this.pkid,
-            //       origin: 'seaimp-House-page',
-            //     };
-            //     this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
-            //     break;
-            //   }
-
+            case 'ATTACHMENT': {
+                this.attach_title = 'Documents';
+                this.attach_parentid = this.pkid;
+                this.attach_subid = '';
+                this.attach_type = 'QUOTATION RATES';
+                this.attach_typelist = [];
+                this.attach_tablename = 'cargo_qtn_rates';
+                this.attach_tablepkcolumn = 'qtnr_pkid';
+                this.attach_refno = '';
+                this.attach_customername = '';
+                this.attach_updatecolumn = 'REC_FILES_ATTACHED';
+                this.attach_viewonlysource = '';
+                this.attach_viewonlyid = '';
+                this.attach_filespath = '';
+                this.attach_filespath2 = '';
+                this.tab = 'attachment';
+                break;
+            }
         }
     }
-
+    callbackevent(event: any) {
+        this.tab = 'main';
+      }
 }
