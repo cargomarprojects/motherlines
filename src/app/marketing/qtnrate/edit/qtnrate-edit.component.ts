@@ -123,6 +123,8 @@ export class QtnRateEditComponent implements OnInit {
 
                 if (this.record.rec_files_attached == "Y")
                     this.Foregroundcolor = "red";
+                else
+                    this.Foregroundcolor = "white";
 
             }, error => {
                 this.errorMessage = this.gs.getError(error);
