@@ -144,7 +144,7 @@ export class DateComponent {
                 if (this.gs.DateFormat() === 'mm') {
                     this.mm = parseInt(this.DisplayDate.substr(0, 2));
                     this.dd = parseInt(this.DisplayDate.substr(2, 2));
-                    this.yy = 0;
+                    this.yy = this.gs.defaultValues.yy;
                 }                
             }            
             else if (this.DisplayDate.length == 6 || this.DisplayDate.length == 8) {
