@@ -41,7 +41,6 @@ export class QtnRateEditComponent implements OnInit {
 
         this.menuid = options.menuid;
         this.pkid = options.pkid;
-        this.refno = options.mbl_refno;
         this.mode = options.mode;
 
         this.initPage();
@@ -78,76 +77,24 @@ export class QtnRateEditComponent implements OnInit {
 
     init() {
 
-        this.pkid = this.gs.getGuid();
-
         this.record.qtnr_pkid = this.pkid;
-        // this.record.cs_refno = this.refno;
-        // this.record.cs_mode = this.oprgrp;
-        // this.record.cs_mbl_id = this.mbl_pkid;
-        // this.record.cs_date = this.gs.defaultValues.today;
-        // if (curr_hh >= 12)
-        //   this.record.cs_ampm = "PM";
-        // else
-        //   this.record.cs_ampm = "AM";
-
-        // if (this.gs.MESSENGER_PKID == null || this.gs.MESSENGER_PKID == '') {
-        //   this.record.cs_to_id = '';
-        //   this.record.cs_to_code = '';
-        //   this.record.cs_to_name = '';
-        //   this.record.cs_to_tel = '';
-        //   this.record.cs_to_fax = '';
-        // }
-
-        // if (this.record.cs_mbl_id == undefined || this.record.cs_mbl_id == '' || this.record.cs_mbl_id == null) {
-        //   this.record.cs_from_id = '';
-        //   this.record.cs_from_name = '';
-        //   this.record.cs_mbl_no = '';
-        // }
-        // this.record.cs_is_drop = 'N';
-        // this.record.cs_is_pick = 'N';
-        // this.record.cs_is_receipt = 'N';
-        // this.record.cs_is_check = 'N';
-        // this.record.cs_check_det = '';
-        // this.record.cs_is_bl = 'N';
-        // this.record.cs_bl_det = '';
-        // this.record.cs_is_oth = 'N';
-        // this.record.cs_oth_det = '';
-        // this.record.cs_deliver_to_id = '';
-        // this.record.cs_deliver_to_code = '';
-        // this.record.cs_deliver_to_name = '';
-        // this.record.cs_deliver_to_add1 = '';
-        // this.record.cs_deliver_to_add2 = '';
-        // this.record.cs_deliver_to_add3 = '';
-        // this.record.cs_deliver_to_tel = '';
-        // this.record.cs_deliver_to_attn = '';
-        // this.record.cs_remark = '';
-
+        this.record.qtnr_agent_id = '';
+        this.record.qtnr_agent_code = '';
+        this.record.qtnr_agent_name = '';
+        this.record.qtnr_pol_cntry_id = '';
+        this.record.qtnr_pol_cntry_code = '';
+        this.record.qtnr_pol_cntry_name = '';
+        this.record.qtnr_pod_cntry_id = '';
+        this.record.qtnr_pod_cntry_code = '';
+        this.record.qtnr_pod_cntry_name = '';
+        this.record.qtnr_mode = '';
+        this.record.qtnr_validity = this.gs.defaultValues.today;
+        this.record.rec_files_attached = 'N';;
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
-
-
-
-        // if (this.record.cs_mbl_id) {
-        //   this.record.cs_from_id = _rec.cs_from_id;
-        //   this.record.cs_from_name = _rec.cs_from_name;
-        //   this.record.cs_mbl_no = _rec.cs_mbl_no;
-        // }
-
-        // if (this.gs.MESSENGER_PKID) {
-        //   this.record.cs_to_id = _rec.cs_to_id;
-        //   this.record.cs_to_code = _rec.cs_to_code;
-        //   this.record.cs_to_name = _rec.cs_to_name;
-        //   this.record.cs_to_tel = _rec.cs_to_tel;
-        //   this.record.cs_to_fax = _rec.cs_to_fax;
-        // }
-
-
-        // this.csdate_field.Focus();
-
     }
 
     GetRecord() {
-
         this.errorMessage = '';
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = this.pkid;
@@ -182,8 +129,10 @@ export class QtnRateEditComponent implements OnInit {
                     if (this.mode == "ADD" && response.code != '')
                         this.record.qtnr_slno = response.code;
                     this.mode = 'EDIT';
+                    this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
                     alert(this.errorMessage);
+                    
                 }
 
             }, error => {
@@ -193,18 +142,7 @@ export class QtnRateEditComponent implements OnInit {
     }
 
     private SaveParent() {
-        // if (this.oprgrp == "GENERAL")
-        //   this.record.cs_mbl_id = this.pkid;
-        // else
-        //   this.record.cs_mbl_id = this.mbl_pkid;
-        // this.record.cs_mode = this.oprgrp;
-        // this.record.cs_pkid = this.pkid;
-        // this.record.cs_is_drop = this.record.cs_is_drop_bool == true ? "Y" : "N";
-        // this.record.cs_is_pick = this.record.cs_is_pick_bool == true ? "Y" : "N";
-        // this.record.cs_is_receipt = this.record.cs_is_receipt_bool == true ? "Y" : "N";
-        // this.record.cs_is_check = this.record.cs_is_check_bool == true ? "Y" : "N";
-        // this.record.cs_is_bl = this.record.cs_is_bl_bool == true ? "Y" : "N";
-        // this.record.cs_is_oth = this.record.cs_is_oth_bool == true ? "Y" : "N";
+       
     }
     private Allvalid(): boolean {
 
@@ -219,21 +157,18 @@ export class QtnRateEditComponent implements OnInit {
             return bRet;
         }
 
-        // if (this.gs.isBlank(this.record.cs_date)) {
-        //   bRet = false;
-        //   this.errorMessage = "Date cannot be blank";
-        //   alert(this.errorMessage);
-        //   // this.csdate_field.Focus();
-        //   return bRet;
-        // }
-
-        // if (this.record.cs_is_drop_bool == false && this.record.cs_is_pick_bool == false && this.record.cs_is_receipt_bool == false) {
-        //   bRet = false;
-        //   this.errorMessage = "Please Select Drop/ Pick Up/ Get Receipt";
-        //   alert(this.errorMessage);
-        //   this.is_drop_field.nativeElement.focus();
-        //   return bRet;
-        // }
+        if (this.gs.isBlank(this.record.qtnr_agent_id) || this.gs.isBlank(this.record.qtnr_agent_name)) {
+            bRet = false;
+            this.errorMessage = "Agent Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+        if (this.gs.isBlank(this.record.qtnr_validity)) {
+            bRet = false;
+            this.errorMessage = "Validity cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
 
         return bRet;
     }
@@ -242,7 +177,6 @@ export class QtnRateEditComponent implements OnInit {
     Close() {
         this.location.back();
     }
-
 
     LovSelected(_Record: SearchTable) {
 
@@ -263,27 +197,11 @@ export class QtnRateEditComponent implements OnInit {
     }
 
     OnChange(field: string) {
-        if (field == 'hbl_frt_status') {
-        }
     }
-
     onFocusout(field: string) {
-        switch (field) {
-            case 'mbl_liner_bookingno': {
-                // this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
-                // break;
-            }
-        }
     }
 
     onBlur(field: string) {
-        switch (field) {
-            //   case 'cs_remark': {
-            //     this.record.cs_remark = this.record.cs_remark.toUpperCase();
-            //     break;
-            //   }
-
-        }
     }
 
 

@@ -18,12 +18,11 @@ import { QtnRateService } from '../services/qtnrate.service';
 export class QtnRateComponent implements OnInit {
 
   // 02-07-2019 Created By Ajith  
- 
 
-  errorMessage$ : Observable<string> ;
-  records$ :  Observable<Tbl_Cargo_Qtn_Rates[]>;
-  pageQuery$ : Observable<PageQuery>;
-  searchQuery$ : Observable<SearchQuery>;
+  errorMessage$: Observable<string>;
+  records$: Observable<Tbl_Cargo_Qtn_Rates[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,32 +39,40 @@ export class QtnRateComponent implements OnInit {
   initPage() {
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
-    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
+    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions,  'SEARCH');
+    this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
-    this.mainservice.Search(actions,'PAGE');
+    this.mainservice.Search(actions, 'PAGE');
   }
 
-//   NewRecord() {
+  NewRecord() {
 
-//     let parameter = {
-//       menuid: this.mainservice.menuid,
-//       pkid: '',
-//       parentid :'',
-//       type: this.mainservice.param_type,
-//       origin: 'airimp-house-page',
-//       mode: 'ADD'
-//     };
-//     this.gs.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(parameter));
+    if (!this.mainservice.canAdd) {
+      alert('Insufficient User Rights')
+      return;
+    }
 
-//   }
+    let parameter = {
+      menuid: this.mainservice.menuid,
+      pkid: '',
+      origin: 'qtnrate-page',
+      mode: 'ADD'
+    };
+    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationRateEditPage', JSON.stringify(parameter));
+
+  }
   edit(_record: Tbl_Cargo_Qtn_Rates) {
+
+    if (!this.mainservice.canEdit) {
+      alert('Insufficient User Rights')
+      return;
+    }
 
     let parameter = {
       menuid: this.mainservice.menuid,
