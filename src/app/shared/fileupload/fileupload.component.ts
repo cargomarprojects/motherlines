@@ -29,12 +29,12 @@ export class FileUploadComponent implements OnInit {
     this.Files_Sub_Id = value;
   }
 
-  private Files_Type: string = "";
+   Files_Type: string = "";
   @Input() set type(value: string) {
     this.Files_Type = value;
   }
 
-  private Files_TypeList: any;
+   Files_TypeList: any;
   @Input() set typelist(value: any) {
     this.Files_TypeList = value;
   }
