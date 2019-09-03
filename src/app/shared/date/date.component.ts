@@ -135,16 +135,25 @@ export class DateComponent {
             }
         }
         else {
-            if (this.DisplayDate.length == 8) {
+            if (this.DisplayDate.length == 8 || this.DisplayDate.length == 6) {
                 if (this.gs.DateFormat() === 'dd') {
                     this.dd = parseInt(this.DisplayDate.substr(0, 2));
                     this.mm = parseInt(this.DisplayDate.substr(2, 2));
-                    this.yy = parseInt(this.DisplayDate.substr(4, 4));
+
+                    if (this.DisplayDate.length == 6)
+                        this.yy = parseInt(this.DisplayDate.substr(4, 2)) + 2000;
+                    else
+                        this.yy = parseInt(this.DisplayDate.substr(4, 4));
                 }
                 if (this.gs.DateFormat() === 'mm') {
                     this.mm = parseInt(this.DisplayDate.substr(0, 2));
                     this.dd = parseInt(this.DisplayDate.substr(2, 2));
-                    this.yy = parseInt(this.DisplayDate.substr(4, 4));
+
+                    if (this.DisplayDate.length == 6)
+                        this.yy = parseInt(this.DisplayDate.substr(4, 4)) + 2000;
+                    else
+                        this.yy = parseInt(this.DisplayDate.substr(4, 4));
+
                 }
             }
             else if (this.DisplayDate.length == 1 || this.DisplayDate.length == 2) {
