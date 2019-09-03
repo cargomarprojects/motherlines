@@ -40,6 +40,7 @@ export class QtnRateEditComponent implements OnInit {
     menuid: string;
     mode: string;
     errorMessage: string;
+    Foregroundcolor: string;
 
     title: string;
     isAdmin: boolean;
@@ -119,6 +120,10 @@ export class QtnRateEditComponent implements OnInit {
             .subscribe(response => {
                 this.record = <Tbl_Cargo_Qtn_Rates>response.record;
                 this.mode = 'EDIT';
+
+                if (this.record.rec_files_attached == "Y")
+                    this.Foregroundcolor = "red";
+
             }, error => {
                 this.errorMessage = this.gs.getError(error);
             });
@@ -246,5 +251,5 @@ export class QtnRateEditComponent implements OnInit {
     }
     callbackevent(event: any) {
         this.tab = 'main';
-      }
+    }
 }

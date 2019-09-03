@@ -83,7 +83,7 @@
                     <label class="col-4 col-form-label col-form-label-sm"></label>
                     <div class="col-8">
                         <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
-                        <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="BtnNavigation('ATTACHMENT')">File Upload</button>
+                        <button  [style.color]="Foregroundcolor" *ngIf="mode=='EDIT'" class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('ATTACHMENT')">File Upload</button>
                     </div>
                 </div>
             </div>
