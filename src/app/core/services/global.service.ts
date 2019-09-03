@@ -468,6 +468,16 @@ export class GlobalService {
   public branch_add4 = "";
 
 
+  public DateFormat() {
+    if (this.date_display_fmt.startsWith('dd'))
+      return 'dd';
+    else if (this.date_display_fmt.startsWith('mm'))
+      return 'mm';
+    else
+      return '';
+
+  }
+
   public InitUserInfo() {
 
     this.UserInfo = {
@@ -856,7 +866,7 @@ export class GlobalService {
   public getPreviousDate(_days: number) {
     return this.getNewdate(_days);
   }
-  
+
   public roundWeight(_number: number, _category: string) {
 
     let _precision: number;
@@ -1281,7 +1291,7 @@ export class GlobalService {
     sessionStorage.setItem('FILES_FOLDER', JSON.stringify(this.FILES_FOLDER));
     sessionStorage.setItem('FS_APP_FOLDER', JSON.stringify(this.FS_APP_FOLDER));
     sessionStorage.setItem('SEARCH_DATE_DIFF', JSON.stringify(this.SEARCH_DATE_DIFF));
-    
+
   }
 
 
