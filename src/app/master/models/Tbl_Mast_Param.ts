@@ -19,7 +19,6 @@ export interface TBL_MAST_PARAM {
     userInfo : any ;
 }
 
-
 export interface VM_TBL_MAST_PARAM {
     mode : string;
     record : TBL_MAST_PARAM,
