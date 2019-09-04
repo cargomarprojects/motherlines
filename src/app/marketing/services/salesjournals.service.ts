@@ -43,7 +43,7 @@ export class SalesJournalService {
 
         this.id = params.id;
         this.menuid = params.id;
-        this.param_type = params.param_type;
+        this.param_type = params.menu_param;
         this.record = <SalesJournalModel>{
             errormessage: '',
             records: [],
@@ -82,7 +82,7 @@ export class SalesJournalService {
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.TYPE = this.param_type;
         SearchData.ISADMIN = this.isAdmin == true ? "Y" : "N";
-        SearchData.ISCOMPANY =  this.isCompany == true ? "Y" : "N";
+        SearchData.ISCOMPANY = this.isCompany == true ? "Y" : "N";
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -128,31 +128,27 @@ export class SalesJournalService {
 
     DeleteRow(_rec: Tbl_Cargo_Journals_Master) {
 
-        /*    this.record.errormessage = '';
-            if (!confirm("DELETE " + _rec.qtnr_slno)) {
-                return;
-            }
-    
-            let fpath = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\Files\\";
-    
-            var SearchData = this.gs.UserInfo;
-            SearchData.pkid = _rec.qtnr_pkid;
-            SearchData.remarks = _rec.qtnr_slno;
-            SearchData.fpath = fpath;
-    
-            this.DeleteRecord(SearchData)
-                .subscribe(response => {
-                    if (response.retvalue == false) {
-                        this.record.errormessage = response.error;
-                        alert(this.record.errormessage);
-                    }
-                    else {
-                        this.record.records.splice(this.record.records.findIndex(rec => rec.qtnr_pkid == _rec.qtnr_pkid), 1);
-                    }
-                }, error => {
-                    this.record.errormessage = this.gs.getError(error);
+        this.record.errormessage = '';
+        if (!confirm("DELETE " + _rec.cjm_customer_name)) {
+            return;
+        }
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.cjm_pkid;
+        SearchData.remarks = _rec.cjm_customer_name;
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
                     alert(this.record.errormessage);
-                });*/
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.cjm_pkid == _rec.cjm_pkid), 1);
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+            });
     }
 
 
