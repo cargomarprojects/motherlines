@@ -53,6 +53,7 @@ export class AirExpHouseEditComponent implements OnInit {
   Client_Category: string = "SHPR";
   is_locked: boolean = false;
   is_stage_locked = false;
+  origin: string = "";
 
   private parentid: string;
   private mbl_refno: string;
@@ -77,6 +78,7 @@ export class AirExpHouseEditComponent implements OnInit {
     this.mbl_refno = options.refno;
     this.type = options.type;
     this.mode = options.mode;
+    this.origin = options.origin;
 
     this.initPage();
     this.actionHandler();
@@ -729,7 +731,7 @@ export class AirExpHouseEditComponent implements OnInit {
         this.FindOther("C3");
         break;
       }
-       
+
     }
 
   }
@@ -764,10 +766,11 @@ export class AirExpHouseEditComponent implements OnInit {
     this.mainService.Save(saverec).subscribe(response => {
 
       if (response.retvalue) {
-        if (this.mode == "ADD")
+        if (this.mode === "ADD")
           this.record.hbl_houseno = response.refno;
         this.mode = 'EDIT';
-        this.mainService.RefreshList(this.record);
+        if (this.origin === "airexp-house-page")
+          this.mainService.RefreshList(this.record);
       }
     }, error => {
       this.errorMessage.push(this.gs.getError(error));
