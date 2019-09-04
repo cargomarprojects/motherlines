@@ -43,7 +43,7 @@ export class SalesJournalService {
 
         this.id = params.id;
         this.menuid = params.id;
-        this.param_type = params.menu_param;
+        this.param_type = "MARKETING";  //params.menu_param;
         this.record = <SalesJournalModel>{
             errormessage: '',
             records: [],

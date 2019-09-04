@@ -60,10 +60,10 @@ export class SalesJournalsComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: '',
-      origin: 'qtnrate-page',
+      origin: 'salesjournals-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationRateEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Marketing.Master/SalesJournalsEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_Cargo_Journals_Master) {
@@ -81,10 +81,10 @@ export class SalesJournalsComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.cjm_pkid,
-      origin: 'qtnrate-page',
+      origin: 'salesjournals-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationRateEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Marketing.Master/SalesJournalsEditPage', JSON.stringify(parameter));
   }
 
   Close() {
