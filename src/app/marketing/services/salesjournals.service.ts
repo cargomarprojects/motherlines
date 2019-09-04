@@ -23,6 +23,7 @@ export class SalesJournalService {
 
     public title: string;
     public isAdmin: boolean;
+    public isCompany: boolean;
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
@@ -42,17 +43,18 @@ export class SalesJournalService {
 
         this.id = params.id;
         this.menuid = params.id;
-         
+        this.param_type = params.param_type;
         this.record = <SalesJournalModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: ''},
+            searchQuery: <SearchQuery>{ searchString: '' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
         this.mdata$.next(this.record);
 
         this.isAdmin = this.gs.IsAdmin(this.menuid);
+        this.isCompany = this.gs.IsCompany(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
@@ -78,6 +80,9 @@ export class SalesJournalService {
         SearchData.pkid = this.id;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
+        SearchData.TYPE = this.param_type;
+        SearchData.ISADMIN = this.isAdmin == true ? "Y" : "N";
+        SearchData.ISCOMPANY =  this.isCompany == true ? "Y" : "N";
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -123,31 +128,31 @@ export class SalesJournalService {
 
     DeleteRow(_rec: Tbl_Cargo_Journals_Master) {
 
-    /*    this.record.errormessage = '';
-        if (!confirm("DELETE " + _rec.qtnr_slno)) {
-            return;
-        }
-
-        let fpath = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\Files\\";
-
-        var SearchData = this.gs.UserInfo;
-        SearchData.pkid = _rec.qtnr_pkid;
-        SearchData.remarks = _rec.qtnr_slno;
-        SearchData.fpath = fpath;
-
-        this.DeleteRecord(SearchData)
-            .subscribe(response => {
-                if (response.retvalue == false) {
-                    this.record.errormessage = response.error;
+        /*    this.record.errormessage = '';
+            if (!confirm("DELETE " + _rec.qtnr_slno)) {
+                return;
+            }
+    
+            let fpath = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\Files\\";
+    
+            var SearchData = this.gs.UserInfo;
+            SearchData.pkid = _rec.qtnr_pkid;
+            SearchData.remarks = _rec.qtnr_slno;
+            SearchData.fpath = fpath;
+    
+            this.DeleteRecord(SearchData)
+                .subscribe(response => {
+                    if (response.retvalue == false) {
+                        this.record.errormessage = response.error;
+                        alert(this.record.errormessage);
+                    }
+                    else {
+                        this.record.records.splice(this.record.records.findIndex(rec => rec.qtnr_pkid == _rec.qtnr_pkid), 1);
+                    }
+                }, error => {
+                    this.record.errormessage = this.gs.getError(error);
                     alert(this.record.errormessage);
-                }
-                else {
-                    this.record.records.splice(this.record.records.findIndex(rec => rec.qtnr_pkid == _rec.qtnr_pkid), 1);
-                }
-            }, error => {
-                this.record.errormessage = this.gs.getError(error);
-                alert(this.record.errormessage);
-            });*/
+                });*/
     }
 
 

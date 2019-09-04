@@ -688,6 +688,16 @@ export class GlobalService {
     return bret1 || bret2;
   }
 
+  public IsCompany(menuid: string): boolean {
+    var bret1: boolean;
+    var bret2: boolean;
+    bret1 = this.user_isadmin == 'Y';
+    var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_company == 'Y');
+    if (itm)
+      bret2 = true;
+
+    return bret1 || bret2;
+  }
 
   public getError(error: any) {
     if (this.isolderror)
