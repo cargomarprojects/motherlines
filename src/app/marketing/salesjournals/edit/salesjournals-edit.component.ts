@@ -6,7 +6,7 @@ import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomple
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 import { SalesJournalService } from '../../../marketing/services/salesjournals.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_Tbl_Cargo_Journals_Master, Tbl_Cargo_Journals_Master } from '../../../marketing/models/tbl_cargo_journals_master';
+import { vm_Tbl_Cargo_Journals_Master, Tbl_Cargo_Journals_Master,Tbl_Mark_Contacts } from '../../../marketing/models/tbl_cargo_journals_master';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 
@@ -17,6 +17,8 @@ import { strictEqual } from 'assert';
 export class SalesJournalsEditComponent implements OnInit {
 
     record: Tbl_Cargo_Journals_Master = <Tbl_Cargo_Journals_Master>{};
+    custrecord: Tbl_Mark_Contacts = <Tbl_Mark_Contacts>{};
+
     tab: string = 'main';
 
     @ViewChild('customer') customer_field: AutoComplete2Component;
@@ -60,6 +62,7 @@ export class SalesJournalsEditComponent implements OnInit {
 
         this.menuid = options.menuid;
         this.pkid = options.pkid;
+        this.customer_id =options.custid;
         this.mode = options.mode;
 
         this.initPage();
@@ -90,7 +93,7 @@ export class SalesJournalsEditComponent implements OnInit {
             this.init();
         }
         if (this.mode == 'EDIT') {
-            this.GetRecord();
+            this.LoadCustomerRecord();
         }
     }
 
@@ -113,6 +116,43 @@ export class SalesJournalsEditComponent implements OnInit {
             .subscribe(response => {
                 this.record = <Tbl_Cargo_Journals_Master>response.record;
                 this.mode = 'EDIT';
+                this.customer_id = this.record.cjm_customer_id;
+               this.LoadCustomerRecord();
+                if (this.record.rec_files_attached == "Y")
+                    this.Foregroundcolor = "red";
+                else
+                    this.Foregroundcolor = "white";
+
+            }, error => {
+                this.errorMessage = this.gs.getError(error);
+            });
+    }
+
+LoadCustomerRecord() {
+        this.errorMessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = this.pkid;
+        SearchData.customer_id = this.customer_id;
+
+        this.mainService.LoadCustomerRecord(SearchData)
+            .subscribe(response => {
+                this.custrecord = <Tbl_Mark_Contacts>response.record;
+               
+                if (this.mode === "EDIT")
+                {
+                    this.customer_name = this.custrecord.gen_name.toString();
+                    this.customer_id = this.custrecord.gen_pkid;
+                }
+
+                if (this.mode === "ADD" && this.custrecord.cjm_customer_id === this.customer_id && this.custrecord.cjm_user_id === this.gs.user_pkid)
+                {
+                    this.pkid = this.custrecord.cjm_pkid;
+                    this.mode = "EDIT";
+                }
+               
+               
+               
+                 
 
                 if (this.record.rec_files_attached == "Y")
                     this.Foregroundcolor = "red";

@@ -60,6 +60,7 @@ export class SalesJournalsComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: '',
+      custid:'',
       origin: 'salesjournals-page',
       mode: 'ADD'
     };
@@ -81,6 +82,7 @@ export class SalesJournalsComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.cjm_pkid,
+      custid: _record.cjm_customer_id,
       origin: 'salesjournals-page',
       mode: 'EDIT'
     };

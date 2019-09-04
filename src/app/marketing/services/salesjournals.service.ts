@@ -160,6 +160,10 @@ export class SalesJournalService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/SalesJournals/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    LoadCustomerRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/SalesJournals/LoadCustomerRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
+
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/SalesJournals/Save', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -167,5 +171,7 @@ export class SalesJournalService {
     DeleteRecord(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/SalesJournals/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
     }
+
+    
 
 }
