@@ -91,10 +91,10 @@ export class XmlRemarksComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-      case 'remarks': {
-        this.record.remarks = this.record.remarks.toUpperCase();
-        break;
-      }
+      // case 'remarks': {
+      //   this.record.remarks = this.record.remarks.toUpperCase();
+      //   break;
+      // }
     }
   }
 
