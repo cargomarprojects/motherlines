@@ -6,7 +6,7 @@ import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomple
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 import { SalesJournalService } from '../../../marketing/services/salesjournals.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_Tbl_Cargo_Journals_Master, Tbl_Cargo_Journals_Master,Tbl_Mark_Contacts } from '../../../marketing/models/tbl_cargo_journals_master';
+import { vm_Tbl_Cargo_Journals_Master, Tbl_Cargo_Journals_Master, Tbl_Mark_Contacts,Tbl_Mast_Contacts } from '../../../marketing/models/tbl_cargo_journals_master';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 
@@ -18,7 +18,7 @@ export class SalesJournalsEditComponent implements OnInit {
 
     record: Tbl_Cargo_Journals_Master = <Tbl_Cargo_Journals_Master>{};
     custrecord: Tbl_Mark_Contacts = <Tbl_Mark_Contacts>{};
-
+    custdetrecords: Tbl_Mast_Contacts[] = [];
     tab: string = 'main';
 
     @ViewChild('customer') customer_field: AutoComplete2Component;
@@ -62,7 +62,7 @@ export class SalesJournalsEditComponent implements OnInit {
 
         this.menuid = options.menuid;
         this.pkid = options.pkid;
-        this.customer_id =options.custid;
+        this.customer_id = options.custid;
         this.mode = options.mode;
 
         this.initPage();
@@ -88,7 +88,9 @@ export class SalesJournalsEditComponent implements OnInit {
     actionHandler() {
         this.errorMessage = '';
         if (this.mode == 'ADD') {
+            this.custrecord = <Tbl_Mark_Contacts>{};
             this.record = <Tbl_Cargo_Journals_Master>{};
+            this.custdetrecords = <Tbl_Mast_Contacts[]>[];      
             this.pkid = this.gs.getGuid();
             this.init();
         }
@@ -116,8 +118,9 @@ export class SalesJournalsEditComponent implements OnInit {
             .subscribe(response => {
                 this.record = <Tbl_Cargo_Journals_Master>response.record;
                 this.mode = 'EDIT';
+
                 this.customer_id = this.record.cjm_customer_id;
-               this.LoadCustomerRecord();
+                this.LoadCustomerRecord();
                 if (this.record.rec_files_attached == "Y")
                     this.Foregroundcolor = "red";
                 else
@@ -128,7 +131,17 @@ export class SalesJournalsEditComponent implements OnInit {
             });
     }
 
-LoadCustomerRecord() {
+    getCustomer() {
+        this.errorMessage = "";
+        if (this.gs.isBlank(this.customer_id)) {
+            this.errorMessage = "Customer cannot be empty";
+            alert(this.errorMessage);
+            return;
+        }
+        this.LoadCustomerRecord();
+    }
+
+    LoadCustomerRecord() {
         this.errorMessage = '';
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = this.pkid;
@@ -137,24 +150,18 @@ LoadCustomerRecord() {
         this.mainService.LoadCustomerRecord(SearchData)
             .subscribe(response => {
                 this.custrecord = <Tbl_Mark_Contacts>response.record;
-               
-                if (this.mode === "EDIT")
-                {
+                this.custdetrecords = <Tbl_Mast_Contacts[]>response.records;     
+                if (this.mode === "EDIT") {
                     this.customer_name = this.custrecord.gen_name.toString();
                     this.customer_id = this.custrecord.gen_pkid;
                 }
 
-                if (this.mode === "ADD" && this.custrecord.cjm_customer_id === this.customer_id && this.custrecord.cjm_user_id === this.gs.user_pkid)
-                {
+                if (this.mode === "ADD" && this.custrecord.cjm_customer_id === this.customer_id && this.custrecord.cjm_user_id === this.gs.user_pkid) {
                     this.pkid = this.custrecord.cjm_pkid;
                     this.mode = "EDIT";
                 }
-               
-               
-               
-                 
 
-                if (this.record.rec_files_attached == "Y")
+                if (this.custrecord.rec_files_attached == "Y")
                     this.Foregroundcolor = "red";
                 else
                     this.Foregroundcolor = "white";
@@ -229,12 +236,21 @@ LoadCustomerRecord() {
     }
 
     LovSelected(_Record: SearchTable) {
+        let bchange: boolean = false;
 
         if (_Record.controlname == "CUSTOMER") {
+            bchange = false;
+            if (this.customer_id != _Record.id)
+                bchange = true;
             this.customer_id = _Record.id;
             this.customer_name = _Record.name;
+            if(bchange)
+            {
+                this.custrecord = <Tbl_Mark_Contacts>{};
+                this.custdetrecords = <Tbl_Mast_Contacts[]>[];      
+            }
         }
-    }        
+    }
 
     OnChange(field: string) {
     }
@@ -251,10 +267,10 @@ LoadCustomerRecord() {
                 this.attach_title = 'Documents';
                 this.attach_parentid = this.pkid;
                 this.attach_subid = '';
-                this.attach_type = 'QUOTATION RATES';
+                this.attach_type = 'MARKETING';
                 this.attach_typelist = [];
-                this.attach_tablename = 'cargo_qtn_rates';
-                this.attach_tablepkcolumn = 'qtnr_pkid';
+                this.attach_tablename = 'cargo_journals_master';
+                this.attach_tablepkcolumn = 'cjm_pkid';
                 this.attach_refno = '';
                 this.attach_customername = '';
                 this.attach_updatecolumn = 'REC_FILES_ATTACHED';

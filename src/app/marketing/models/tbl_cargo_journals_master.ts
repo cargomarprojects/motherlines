@@ -114,3 +114,19 @@ export interface Tbl_Mark_Contacts {
     cjm_user_id: string;
     cjm_pkid: string;
 }
+
+export interface Tbl_Mast_Contacts {
+
+    cont_pkid: string;
+    cont_parent_id: string;
+    cont_type: string;
+    cont_order: number;
+    cont_name: string;
+    cont_title: string;
+    cont_email: string;
+    cont_tel: string;
+    cont_mobile: string;
+    cont_remarks: string;
+    cont_oth_messenger: string;
+
+}
