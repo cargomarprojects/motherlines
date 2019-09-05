@@ -5,11 +5,13 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { PaymentReqComponent } from './paymentreq/paymentreq.component';
 import { FollowupComponent } from './followup/followup.component';
+import { XmlRemarksComponent } from './xmlremarks/xmlremarks.component';
 
 @NgModule({
   declarations: [
     PaymentReqComponent,
-    FollowupComponent
+    FollowupComponent,
+    XmlRemarksComponent
   ],
   imports: [
     SharedModule,    
