@@ -5,7 +5,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { Table_Cargo_Remarks, vm_Table_Cargo_Remarks } from '../models/table_cargo_remarks';
 import { XmlRemarksService } from '../services/xmlremarks.service';
 import { User_Menu } from '../../core/models/menum';
- import { SearchTable } from '../../shared/models/searchtable';
+import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { AnyFn } from '@ngrx/store/src/selector';
 
@@ -16,10 +16,10 @@ import { AnyFn } from '@ngrx/store/src/selector';
 export class XmlRemarksComponent implements OnInit {
 
   //@ViewChild('mbl_no') mbl_no_field: ElementRef;
-   
+
   // 15-07-2019 Created By Ajith  
   record: Table_Cargo_Remarks = <Table_Cargo_Remarks>{};
-  menuid: string; 
+  menuid: string;
   pkid: string;
   source: string;
   mode: string;
@@ -28,7 +28,7 @@ export class XmlRemarksComponent implements OnInit {
   errorMessage: string;
   IsLocked: boolean = false;
   remarks: string = "";
-  
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -42,19 +42,19 @@ export class XmlRemarksComponent implements OnInit {
     this.menuid = options.menuid;
     this.pkid = options.pkid;
     this.source = options.source;
+    this.title = options.title;
     this.initPage();
     this.actionHandler();
   }
 
   private initPage() {
-    this.title = 'Memo';
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.errorMessage = '';
     this.LoadCombo();
   }
 
   LoadCombo() {
-     
+
   }
 
   actionHandler() {
@@ -66,21 +66,27 @@ export class XmlRemarksComponent implements OnInit {
 
   GetRecord() {
     this.errorMessage = '';
+    let filePath: string = "";
+    filePath = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\xmlremarks\\";
     var SearchData = this.gs.UserInfo;
+    SearchData.filePath = filePath;
     SearchData.pkid = this.pkid;
+    SearchData.source = this.source;
 
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
-
-       
+        this.record = <Table_Cargo_Remarks>{};
+        this.record.remarks = response.remarks;
+        this.record.pkid = this.pkid;
+        this.record.source = this.source;
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
 
-   
+
   OnChange(field: string) {
-   
+
   }
 
   onBlur(field: string) {
@@ -98,18 +104,24 @@ export class XmlRemarksComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
+    let sPath: string = "";
+    sPath = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\xmlremarks\\";
+
     const saveRecord = <vm_Table_Cargo_Remarks>{};
     saveRecord.userinfo = this.gs.UserInfo;
-    saveRecord.pkid = this.pkid;
     saveRecord.record = this.record;
-    saveRecord.mode = this.mode;
+    saveRecord.filepath = sPath;
 
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
           this.errorMessage = response.error;
           alert(this.errorMessage);
+        }else{
+          this.errorMessage = 'Save Complete';
+          alert(this.errorMessage);
         }
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
@@ -120,14 +132,21 @@ export class XmlRemarksComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
-    if (this.gs.isBlank(this.remarks)) {
+    if (this.gs.isBlank(this.record.pkid) || this.gs.isBlank(this.record.source)) {
+      bRet = false;
+      this.errorMessage = "ID or Source Cannot be empty";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+    if (this.gs.isBlank(this.record.remarks)) {
       bRet = false;
       this.errorMessage = "Remarks Cannot be empty";
       alert(this.errorMessage);
       return bRet;
     }
     return bRet;
-}
+  }
 
 
   Close() {

@@ -6,9 +6,7 @@ export interface Table_Cargo_Remarks {
 }
 
 export interface vm_Table_Cargo_Remarks {
-    mode: string;
-    pkid: string;
     record: Table_Cargo_Remarks;
     userinfo: any;
-    filter: any;
+    filepath:any;
 }

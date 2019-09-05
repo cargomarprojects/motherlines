@@ -281,6 +281,17 @@ export class SalesJournalsEditComponent implements OnInit {
                 this.tab = 'attachment';
                 break;
             }
+            case 'MEMO': {
+                let prm = {
+                  menuid: this.menuid,
+                  pkid: this.pkid,
+                  source: 'CONTACT-MEMO',
+                  title:'Memo',
+                  origin: 'sales-journal-page'
+                };
+                this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
+                break;
+              }
         }
     }
     callbackevent(event: any) {
