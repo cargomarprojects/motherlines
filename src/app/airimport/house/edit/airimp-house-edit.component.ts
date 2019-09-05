@@ -46,11 +46,12 @@ export class AirImpHouseEditComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
 
-  tab : string = 'main';
-  report_title : string = '';
-  report_url : string = '';
-  report_searchdata : any = {} ;
-  report_menuid : string = '';
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+  origin: string = "";
 
   private parentid: string;
   private pkid: string;
@@ -88,6 +89,7 @@ export class AirImpHouseEditComponent implements OnInit {
     this.menuid = options.menuid;
     this.mode = options.mode;
     this.parentid = options.parentid;
+    this.origin = options.origin;
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
@@ -322,7 +324,7 @@ export class AirImpHouseEditComponent implements OnInit {
         //   this.ShowDesc(Rec);
         // })
 
-      //  this.CheckData();
+        //  this.CheckData();
 
         // this.hbl_houseno_field.nativeElement.focus();
       }, error => {
@@ -504,6 +506,8 @@ export class AirImpHouseEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
+          if (this.origin === "airimp-house-page")
+            this.mainService.RefreshList(this.record);
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
         }
@@ -626,14 +630,14 @@ export class AirImpHouseEditComponent implements OnInit {
       return bRet;
     }
 
-    if(this.gs.BRANCH_REGION=="USA")
-    if (this.gs.isBlank(this.record.hbl_location_id)) {
-      bRet = false;
-      this.errorMessage = "Location Details cannot be blank";
-      alert(this.errorMessage);
-      //  this.hbl_agent_name_field.Focus();
-      return bRet;
-    }
+    if (this.gs.BRANCH_REGION == "USA")
+      if (this.gs.isBlank(this.record.hbl_location_id)) {
+        bRet = false;
+        this.errorMessage = "Location Details cannot be blank";
+        alert(this.errorMessage);
+        //  this.hbl_agent_name_field.Focus();
+        return bRet;
+      }
     if (this.gs.isBlank(this.record.hbl_agent_id)) {
       bRet = false;
       this.errorMessage = "Agent can't be blank";
@@ -652,7 +656,7 @@ export class AirImpHouseEditComponent implements OnInit {
     //   }
     // }
 
-     
+
     if (this.gs.isBlank(this.record.hbl_place_final)) {
       bRet = false;
       this.errorMessage = "Final Destination can't be blank";
@@ -699,7 +703,7 @@ export class AirImpHouseEditComponent implements OnInit {
       return bRet;
     }
 
-    
+
     if (this.gs.BRANCH_REGION == "USA") {
       if (this.gs.isZero(this.record.hbl_lbs)) {
         bRet = false;
@@ -876,9 +880,9 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_cha_name = _Record.name;
       if (_Record.col8 != "")
         this.record.hbl_cha_name = _Record.name;
-        this.record.hbl_cha_attn = _Record.col5;
-        this.record.hbl_cha_tel = _Record.col6;
-        this.record.hbl_cha_fax = _Record.col7;
+      this.record.hbl_cha_attn = _Record.col5;
+      this.record.hbl_cha_tel = _Record.col6;
+      this.record.hbl_cha_fax = _Record.col7;
     }
 
     if (_Record.controlname == "HANDLEDBY") {
@@ -942,150 +946,150 @@ export class AirImpHouseEditComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-     
-     /*
-      case 'mbl_refno': {
-        this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
-        break;
-      }
-      case 'mbl_no': {
-        this.record.mbl_no = this.record.mbl_no.toUpperCase();
-        break;
-      }
 
-      case 'mbl_refno': {
-        this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
-        break;
-      }
-      case 'hbl_houseno': {
-        this.record.hbl_houseno = this.record.hbl_houseno.toUpperCase();
-        break;
-      }
-      case 'hbl_bltype': {
-        this.record.hbl_bltype = this.record.hbl_bltype.toUpperCase();
-        break;
-      }
-      case 'hbl_frt_status': {
-        this.record.hbl_frt_status = this.record.hbl_frt_status.toUpperCase();
-        break;
-      }
-
-      case 'hbl_it_no': {
-        this.record.hbl_it_no = this.record.hbl_it_no.toUpperCase();
-        break;
-      }
-      case 'hbl_it_port': {
-        this.record.hbl_it_port = this.record.hbl_it_port.toUpperCase();
-        break;
-      }
-      case 'hbl_consignee_name': {
-        this.record.hbl_consignee_name = this.record.hbl_consignee_name.toUpperCase();
-        break;
-      }
-      case 'hbl_consignee_add1': {
-        this.record.hbl_consignee_add1 = this.record.hbl_consignee_add1.toUpperCase();
-        break;
-      }
-      case 'hbl_consignee_add2': {
-        this.record.hbl_consignee_add2 = this.record.hbl_consignee_add2.toUpperCase();
-        break;
-      }
-
-
-      case 'hbl_consignee_add3': {
-        this.record.hbl_consignee_add3 = this.record.hbl_consignee_add3.toUpperCase();
-        break;
-      }
-      case 'hbl_consignee_add4': {
-        this.record.hbl_consignee_add4 = this.record.hbl_consignee_add4.toUpperCase();
-        break;
-      }
-      case 'hbl_consignee_add5': {
-        this.record.hbl_consignee_add5 = this.record.hbl_consignee_add5.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_name': {
-        this.record.hbl_shipper_name = this.record.hbl_shipper_name.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_add1': {
-        this.record.hbl_shipper_add1 = this.record.hbl_shipper_add1.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_add2': {
-        this.record.hbl_shipper_add2 = this.record.hbl_shipper_add2.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_add3': {
-        this.record.hbl_shipper_add3 = this.record.hbl_shipper_add3.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_add4': {
-        this.record.hbl_shipper_add4 = this.record.hbl_shipper_add4.toUpperCase();
-        break;
-      }
-      case 'hbl_shipper_add5': {
-        this.record.hbl_shipper_add5 = this.record.hbl_shipper_add5.toUpperCase();
-        break;
-      }
-      case 'hbl_location_code': {
-        this.record.hbl_location_code = this.record.hbl_location_code.toUpperCase();
-        break;
-      }
-      case 'hbl_location_add1': {
-        this.record.hbl_location_add1 = this.record.hbl_location_add1.toUpperCase();
-        break;
-      }
-      case 'hbl_location_add2': {
-        this.record.hbl_location_add2 = this.record.hbl_location_add2.toUpperCase();
-        break;
-      }
-      case 'hbl_location_add3': {
-        this.record.hbl_location_add3 = this.record.hbl_location_add3.toUpperCase();
-        break;
-      }
-      case 'hbl_location_add4': {
-        this.record.hbl_location_add4 = this.record.hbl_location_add4.toUpperCase();
-        break;
-      }
-      case 'hbl_location_add5': {
-        this.record.hbl_location_add5 = this.record.hbl_location_add5.toUpperCase();
-        break;
-      }
-
-      case 'hbl_agent_name': {
-        this.record.hbl_agent_name = this.record.hbl_agent_name.toUpperCase();
-        break;
-      }
-      case 'hbl_cha_code': {
-        this.record.hbl_cha_code = this.record.hbl_cha_code.toUpperCase();
-        break;
-      }
-      case 'hbl_cha_name': {
-        this.record.hbl_cha_name = this.record.hbl_cha_name.toUpperCase();
-        break;
-      }
-      case 'hbl_cha_attn': {
-        this.record.hbl_cha_attn = this.record.hbl_cha_attn.toUpperCase();
-        break;
-      }
-      case 'hbl_cha_tel': {
-        this.record.hbl_cha_tel = this.record.hbl_cha_tel.toUpperCase();
-        break;
-      }
-      case 'hbl_cha_fax': {
-        this.record.hbl_cha_fax = this.record.hbl_cha_fax.toUpperCase();
-        break;
-      }
-      case 'hbl_commodity': {
-        this.record.hbl_commodity = this.record.hbl_commodity.toUpperCase();
-        break;
-      }
-      case 'hbl_uom': {
-        this.record.hbl_uom = this.record.hbl_uom.toUpperCase();
-        break;
-      }
-*/
+      /*
+       case 'mbl_refno': {
+         this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
+         break;
+       }
+       case 'mbl_no': {
+         this.record.mbl_no = this.record.mbl_no.toUpperCase();
+         break;
+       }
+ 
+       case 'mbl_refno': {
+         this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
+         break;
+       }
+       case 'hbl_houseno': {
+         this.record.hbl_houseno = this.record.hbl_houseno.toUpperCase();
+         break;
+       }
+       case 'hbl_bltype': {
+         this.record.hbl_bltype = this.record.hbl_bltype.toUpperCase();
+         break;
+       }
+       case 'hbl_frt_status': {
+         this.record.hbl_frt_status = this.record.hbl_frt_status.toUpperCase();
+         break;
+       }
+ 
+       case 'hbl_it_no': {
+         this.record.hbl_it_no = this.record.hbl_it_no.toUpperCase();
+         break;
+       }
+       case 'hbl_it_port': {
+         this.record.hbl_it_port = this.record.hbl_it_port.toUpperCase();
+         break;
+       }
+       case 'hbl_consignee_name': {
+         this.record.hbl_consignee_name = this.record.hbl_consignee_name.toUpperCase();
+         break;
+       }
+       case 'hbl_consignee_add1': {
+         this.record.hbl_consignee_add1 = this.record.hbl_consignee_add1.toUpperCase();
+         break;
+       }
+       case 'hbl_consignee_add2': {
+         this.record.hbl_consignee_add2 = this.record.hbl_consignee_add2.toUpperCase();
+         break;
+       }
+ 
+ 
+       case 'hbl_consignee_add3': {
+         this.record.hbl_consignee_add3 = this.record.hbl_consignee_add3.toUpperCase();
+         break;
+       }
+       case 'hbl_consignee_add4': {
+         this.record.hbl_consignee_add4 = this.record.hbl_consignee_add4.toUpperCase();
+         break;
+       }
+       case 'hbl_consignee_add5': {
+         this.record.hbl_consignee_add5 = this.record.hbl_consignee_add5.toUpperCase();
+         break;
+       }
+       case 'hbl_shipper_name': {
+         this.record.hbl_shipper_name = this.record.hbl_shipper_name.toUpperCase();
+         break;
+       }
+       case 'hbl_shipper_add1': {
+         this.record.hbl_shipper_add1 = this.record.hbl_shipper_add1.toUpperCase();
+         break;
+       }
+       case 'hbl_shipper_add2': {
+         this.record.hbl_shipper_add2 = this.record.hbl_shipper_add2.toUpperCase();
+         break;
+       }
+       case 'hbl_shipper_add3': {
+         this.record.hbl_shipper_add3 = this.record.hbl_shipper_add3.toUpperCase();
+         break;
+       }
+       case 'hbl_shipper_add4': {
+         this.record.hbl_shipper_add4 = this.record.hbl_shipper_add4.toUpperCase();
+         break;
+       }
+       case 'hbl_shipper_add5': {
+         this.record.hbl_shipper_add5 = this.record.hbl_shipper_add5.toUpperCase();
+         break;
+       }
+       case 'hbl_location_code': {
+         this.record.hbl_location_code = this.record.hbl_location_code.toUpperCase();
+         break;
+       }
+       case 'hbl_location_add1': {
+         this.record.hbl_location_add1 = this.record.hbl_location_add1.toUpperCase();
+         break;
+       }
+       case 'hbl_location_add2': {
+         this.record.hbl_location_add2 = this.record.hbl_location_add2.toUpperCase();
+         break;
+       }
+       case 'hbl_location_add3': {
+         this.record.hbl_location_add3 = this.record.hbl_location_add3.toUpperCase();
+         break;
+       }
+       case 'hbl_location_add4': {
+         this.record.hbl_location_add4 = this.record.hbl_location_add4.toUpperCase();
+         break;
+       }
+       case 'hbl_location_add5': {
+         this.record.hbl_location_add5 = this.record.hbl_location_add5.toUpperCase();
+         break;
+       }
+ 
+       case 'hbl_agent_name': {
+         this.record.hbl_agent_name = this.record.hbl_agent_name.toUpperCase();
+         break;
+       }
+       case 'hbl_cha_code': {
+         this.record.hbl_cha_code = this.record.hbl_cha_code.toUpperCase();
+         break;
+       }
+       case 'hbl_cha_name': {
+         this.record.hbl_cha_name = this.record.hbl_cha_name.toUpperCase();
+         break;
+       }
+       case 'hbl_cha_attn': {
+         this.record.hbl_cha_attn = this.record.hbl_cha_attn.toUpperCase();
+         break;
+       }
+       case 'hbl_cha_tel': {
+         this.record.hbl_cha_tel = this.record.hbl_cha_tel.toUpperCase();
+         break;
+       }
+       case 'hbl_cha_fax': {
+         this.record.hbl_cha_fax = this.record.hbl_cha_fax.toUpperCase();
+         break;
+       }
+       case 'hbl_commodity': {
+         this.record.hbl_commodity = this.record.hbl_commodity.toUpperCase();
+         break;
+       }
+       case 'hbl_uom': {
+         this.record.hbl_uom = this.record.hbl_uom.toUpperCase();
+         break;
+       }
+ */
 
 
       case 'hbl_pcs': {
@@ -1106,118 +1110,118 @@ export class AirImpHouseEditComponent implements OnInit {
       }
       case 'hbl_cbm': {
         this.record.hbl_cbm = this.gs.roundNumber(this.record.hbl_cbm, 3);
-        break;  
+        break;
       }
       case 'hbl_cft': {
         this.record.hbl_cft = this.gs.roundNumber(this.record.hbl_cft, 3);
         break;
       }
-/*
-      case 'hbl_pono': {
-        this.record.hbl_pono = this.record.hbl_pono.toUpperCase();
-        break;
-      }
-
-      case 'hbl_remark1': {
-        this.record.hbl_remark1 = this.record.hbl_remark1.toUpperCase();
-        break;
-      }
-      case 'hbl_remark2': {
-        this.record.hbl_remark2 = this.record.hbl_remark2.toUpperCase();
-        break;
-      }
-      case 'hbl_remark3': {
-        this.record.hbl_remark3 = this.record.hbl_remark3.toUpperCase();
-        break;
-      }
-
-      case 'hbl_salesman_name': {
-        this.record.hbl_salesman_name = this.record.hbl_salesman_name.toUpperCase();
-        break;
-      }
-      case 'hbl_handled_name': {
-        this.record.hbl_handled_name = this.record.hbl_handled_name.toUpperCase();
-        break;
-      }
-      case 'hbl_handled_email': {
-        this.record.hbl_handled_email = this.record.hbl_handled_email.toUpperCase();
-        break;
-      }
-      case 'rec_created_email': {
-        this.record.rec_created_email = this.record.rec_created_email.toUpperCase();
-        break;
-      }
-      case 'hbl_liner_code': {
-        this.record.hbl_liner_code = this.record.hbl_liner_code.toUpperCase();
-        break;
-      }
-      case 'hbl_liner_name': {
-        this.record.hbl_liner_name = this.record.hbl_liner_name.toUpperCase();
-        break;
-      }
-      case 'hbl_vessel': {
-        this.record.hbl_vessel = this.record.hbl_vessel.toUpperCase();
-        break;
-      }
-      case 'hbl_voyage': {
-        this.record.hbl_voyage = this.record.hbl_voyage.toUpperCase();
-        break;
-      }
-      case 'hbl_pol_code': {
-        this.record.hbl_pol_code = this.record.hbl_pol_code.toUpperCase();
-        break;
-      }
-      case 'hbl_pol_name': {
-        this.record.hbl_pol_name = this.record.hbl_pol_name.toUpperCase();
-        break;
-      }
-      case 'hbl_pod_code': {
-        this.record.hbl_pod_code = this.record.hbl_pod_code.toUpperCase();
-        break;
-      }
-      case 'hbl_pod_name': {
-        this.record.hbl_pod_name = this.record.hbl_pod_name.toUpperCase();
-        break;
-      }
-
-      case 'hbl_careof_name': {
-        this.record.hbl_careof_name = this.record.hbl_careof_name.toUpperCase();
-        break;
-      }
-      case 'mbl_lock': {
-        this.record.mbl_lock = this.record.mbl_lock.toUpperCase();
-        break;
-      }
-      case 'hbl_boeno': {
-        this.record.hbl_boeno = this.record.hbl_boeno.toUpperCase();
-        break;
-      }
-      case 'hbl_paid_status': {
-        this.record.hbl_paid_status = this.record.hbl_paid_status.toUpperCase();
-        break;
-      }
-
-      case 'hbl_cargo_release_status': {
-        this.record.hbl_cargo_release_status = this.record.hbl_cargo_release_status.toUpperCase();
-        break;
-      }
-      case 'hbl_shipment_stage': {
-        this.record.hbl_shipment_stage = this.record.hbl_shipment_stage.toUpperCase();
-        break;
-      }
-      case 'hbl_custom_reles_status': {
-        this.record.hbl_custom_reles_status = this.record.hbl_custom_reles_status.toUpperCase();
-        break;
-      }
-      case 'hbl_is_delivery': {
-        this.record.hbl_is_delivery = this.record.hbl_is_delivery.toUpperCase();
-        break;
-      }
-      case 'hbl_paid_remarks': {
-        this.record.hbl_paid_remarks = this.record.hbl_paid_remarks.toUpperCase();
-        break;
-      }
-*/
+      /*
+            case 'hbl_pono': {
+              this.record.hbl_pono = this.record.hbl_pono.toUpperCase();
+              break;
+            }
+      
+            case 'hbl_remark1': {
+              this.record.hbl_remark1 = this.record.hbl_remark1.toUpperCase();
+              break;
+            }
+            case 'hbl_remark2': {
+              this.record.hbl_remark2 = this.record.hbl_remark2.toUpperCase();
+              break;
+            }
+            case 'hbl_remark3': {
+              this.record.hbl_remark3 = this.record.hbl_remark3.toUpperCase();
+              break;
+            }
+      
+            case 'hbl_salesman_name': {
+              this.record.hbl_salesman_name = this.record.hbl_salesman_name.toUpperCase();
+              break;
+            }
+            case 'hbl_handled_name': {
+              this.record.hbl_handled_name = this.record.hbl_handled_name.toUpperCase();
+              break;
+            }
+            case 'hbl_handled_email': {
+              this.record.hbl_handled_email = this.record.hbl_handled_email.toUpperCase();
+              break;
+            }
+            case 'rec_created_email': {
+              this.record.rec_created_email = this.record.rec_created_email.toUpperCase();
+              break;
+            }
+            case 'hbl_liner_code': {
+              this.record.hbl_liner_code = this.record.hbl_liner_code.toUpperCase();
+              break;
+            }
+            case 'hbl_liner_name': {
+              this.record.hbl_liner_name = this.record.hbl_liner_name.toUpperCase();
+              break;
+            }
+            case 'hbl_vessel': {
+              this.record.hbl_vessel = this.record.hbl_vessel.toUpperCase();
+              break;
+            }
+            case 'hbl_voyage': {
+              this.record.hbl_voyage = this.record.hbl_voyage.toUpperCase();
+              break;
+            }
+            case 'hbl_pol_code': {
+              this.record.hbl_pol_code = this.record.hbl_pol_code.toUpperCase();
+              break;
+            }
+            case 'hbl_pol_name': {
+              this.record.hbl_pol_name = this.record.hbl_pol_name.toUpperCase();
+              break;
+            }
+            case 'hbl_pod_code': {
+              this.record.hbl_pod_code = this.record.hbl_pod_code.toUpperCase();
+              break;
+            }
+            case 'hbl_pod_name': {
+              this.record.hbl_pod_name = this.record.hbl_pod_name.toUpperCase();
+              break;
+            }
+      
+            case 'hbl_careof_name': {
+              this.record.hbl_careof_name = this.record.hbl_careof_name.toUpperCase();
+              break;
+            }
+            case 'mbl_lock': {
+              this.record.mbl_lock = this.record.mbl_lock.toUpperCase();
+              break;
+            }
+            case 'hbl_boeno': {
+              this.record.hbl_boeno = this.record.hbl_boeno.toUpperCase();
+              break;
+            }
+            case 'hbl_paid_status': {
+              this.record.hbl_paid_status = this.record.hbl_paid_status.toUpperCase();
+              break;
+            }
+      
+            case 'hbl_cargo_release_status': {
+              this.record.hbl_cargo_release_status = this.record.hbl_cargo_release_status.toUpperCase();
+              break;
+            }
+            case 'hbl_shipment_stage': {
+              this.record.hbl_shipment_stage = this.record.hbl_shipment_stage.toUpperCase();
+              break;
+            }
+            case 'hbl_custom_reles_status': {
+              this.record.hbl_custom_reles_status = this.record.hbl_custom_reles_status.toUpperCase();
+              break;
+            }
+            case 'hbl_is_delivery': {
+              this.record.hbl_is_delivery = this.record.hbl_is_delivery.toUpperCase();
+              break;
+            }
+            case 'hbl_paid_remarks': {
+              this.record.hbl_paid_remarks = this.record.hbl_paid_remarks.toUpperCase();
+              break;
+            }
+      */
     }
   }
 
@@ -1275,7 +1279,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.type = 'ARRIVAL-NOTICE';
-        this.report_menuid = this.gs.MENU_AI_HOUSE_ARRIVAL_NOTICE ;
+        this.report_menuid = this.gs.MENU_AI_HOUSE_ARRIVAL_NOTICE;
         this.tab = 'report';
         break;
       }
@@ -1285,7 +1289,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.type = 'FREIGHT-INVOICE';
-        this.report_menuid = this.gs.MENU_AI_HOUSE_ARRIVAL_NOTICE ;
+        this.report_menuid = this.gs.MENU_AI_HOUSE_ARRIVAL_NOTICE;
         this.tab = 'report';
         break;
       }
@@ -1294,7 +1298,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.report_url = '/api/AirImport/House/GetReleaseOrder';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_AI_HOUSE_RELEASE_ORDER ;
+        this.report_menuid = this.gs.MENU_AI_HOUSE_RELEASE_ORDER;
         this.tab = 'report';
         break;
       }
@@ -1303,7 +1307,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.report_url = '/api/AirImport/House/GetAuthorityEntry';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_AI_HOUSE_AUTH_MAKE_ENTRY ;
+        this.report_menuid = this.gs.MENU_AI_HOUSE_AUTH_MAKE_ENTRY;
         this.tab = 'report';
         break;
       }
@@ -1312,14 +1316,14 @@ export class AirImpHouseEditComponent implements OnInit {
         this.report_url = '/api/AirImport/House/GetShipmentNotRelease';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_AI_HOUSE_NOT_RELEASE_LETTER ;
+        this.report_menuid = this.gs.MENU_AI_HOUSE_NOT_RELEASE_LETTER;
         this.tab = 'report';
         break;
       }
 
     }
   }
-  callbackevent( event : any ){
+  callbackevent(event: any) {
     this.tab = 'main';
   }
 
@@ -1425,72 +1429,72 @@ export class AirImpHouseEditComponent implements OnInit {
       });
   }
 
-/*
-  GetArrivalNotice(_type: string) {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-    SearchData.type = _type;
-
-    this.mainService.GetArrivalNotice(SearchData)
-      .subscribe(response => {
-
-        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-
-
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-  }
-
-  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
-    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
-  }
-
-  GetReleaseOrder() {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-
-    this.mainService.GetReleaseOrder(SearchData)
-      .subscribe(response => {
-
-        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-
-
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-  }
-
-
-  GetAuthorityEntry() {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-
-    this.mainService.GetAuthorityEntry(SearchData)
-      .subscribe(response => {
-
-        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-
-     }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-  }
-
-  GetShipmentNotRelease() {
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.pkid;
-
-    this.mainService.GetShipmentNotRelease(SearchData)
-      .subscribe(response => {
-
-        this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-
-     }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-  }*/
+  /*
+    GetArrivalNotice(_type: string) {
+      this.errorMessage = '';
+      var SearchData = this.gs.UserInfo;
+      SearchData.pkid = this.pkid;
+      SearchData.type = _type;
+  
+      this.mainService.GetArrivalNotice(SearchData)
+        .subscribe(response => {
+  
+          this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+  
+  
+        }, error => {
+          this.errorMessage = this.gs.getError(error);
+        });
+    }
+  
+    Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+      this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+    }
+  
+    GetReleaseOrder() {
+      this.errorMessage = '';
+      var SearchData = this.gs.UserInfo;
+      SearchData.pkid = this.pkid;
+  
+      this.mainService.GetReleaseOrder(SearchData)
+        .subscribe(response => {
+  
+          this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+  
+  
+        }, error => {
+          this.errorMessage = this.gs.getError(error);
+        });
+    }
+  
+  
+    GetAuthorityEntry() {
+      this.errorMessage = '';
+      var SearchData = this.gs.UserInfo;
+      SearchData.pkid = this.pkid;
+  
+      this.mainService.GetAuthorityEntry(SearchData)
+        .subscribe(response => {
+  
+          this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+  
+       }, error => {
+          this.errorMessage = this.gs.getError(error);
+        });
+    }
+  
+    GetShipmentNotRelease() {
+      this.errorMessage = '';
+      var SearchData = this.gs.UserInfo;
+      SearchData.pkid = this.pkid;
+  
+      this.mainService.GetShipmentNotRelease(SearchData)
+        .subscribe(response => {
+  
+          this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+  
+       }, error => {
+          this.errorMessage = this.gs.getError(error);
+        });
+    }*/
 }

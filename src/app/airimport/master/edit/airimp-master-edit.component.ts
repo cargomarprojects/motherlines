@@ -258,6 +258,7 @@ export class AirImpMasterEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
+          this.mainService.RefreshList(this.record);
           this.errorMessage = 'Save Complete';
           alert(this.errorMessage);
         }

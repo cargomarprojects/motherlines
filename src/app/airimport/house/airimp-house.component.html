@@ -22,12 +22,12 @@
             <thead class="page-body-thead">
                 <tr>
                     <th>REF.NO</th>
-                    <th>MBL#</th>
-                    <th>HBL#</th>
+                    <th>MAWB</th>
+                    <th>HOUSE</th>
                     <th>SHIPPER</th>
                     <th>CONSIGNEE</th>
                     <th>PCS</th>
-                    <th>TELEX RELEASED</th>
+                    <!-- <th>TELEX RELEASED</th> -->
                     <th>HANDLED-BY</th>
                     <th>ETD</th>
                     <th>ETA</th>
@@ -43,7 +43,7 @@
                     <td>{{rec.hbl_shipper_name}}</td>
                     <td>{{rec.hbl_consignee_name}}</td>
                     <td class='text-right'>{{rec.hbl_packages}}</td>
-                    <td>{{rec.hbl_telex_released}}</td>
+                    <!-- <td>{{rec.hbl_telex_released}}</td> -->
                     <td>{{rec.hbl_handled_name}}</td>
                     <td>{{rec.mbl_pol_etd | date : gs.FRONTEND_DATEFORMAT }}</td>
                     <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT }}</td>
