@@ -82,7 +82,9 @@ export class QtnLclService {
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
-        SearchData.SEARCH_TYPE = this.record.searchQuery.searchtype;
+        // SearchData.COLUMN_NAME = this.record.searchQuery.searchtype;
+        SearchData.COLUMN_NAME = 'Place Of Delivery';
+        SearchData.STYPE = 'LCL';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
