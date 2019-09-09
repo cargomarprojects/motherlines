@@ -370,30 +370,50 @@
 
 
         <div class="row border">
-            <div class="col-md-12  px-0 mx-0">
+            <div class="col-md-8  px-0 mx-0">
                 <div class="row">
-                    <div class="form-group row">
-                        <div class="offset-2 col-10">
-                            <button class="btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">Msg 1
-                                (C-Imp)</button>
-                            <button class="btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">Msg 1
-                                (C-Imp)</button>
-                            <button class="btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">Msg 1
-                                (C-Imp)</button>
-                            <button class="btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">Msg 1
-                                (C-Imp)</button>
-                            <button class="btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">Msg 1
-                                (C-Imp)</button>
-                            <button class="btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">Msg 1
-                                (C-Imp)</button>
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <div class="offset-1 col-11">
+                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
+                                    (C-Imp)</button>
+                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
+                                    (C-Imp)</button>
+                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
+                                    (C-Imp)</button>
+                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
+                                    (C-Imp)</button>
+                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
+                                    (C-Imp)</button>
+                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
+                                    (C-Imp)</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group row">
-                            <label class="col-2 col-form-label col-form-label-sm">Subject</label>
-                            <div class="col-10">
+                            <label class="col-1 col-form-label col-form-label-sm">Subject</label>
+                            <div class="col-11">
+                                <textarea rows="6" class="form-control form-control-sm"
+                                    [(ngModel)]="message"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <label class="col-1 col-form-label col-form-label-sm">Remarks</label>
+                            <div class="col-11">
+                                <textarea rows="6" class="form-control form-control-sm"
+                                    [(ngModel)]="message"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <label class="col-1 col-form-label col-form-label-sm">Office Use Only</label>
+                            <div class="col-11">
                                 <textarea rows="6" class="form-control form-control-sm"
                                     [(ngModel)]="message"></textarea>
                             </div>
