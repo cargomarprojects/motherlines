@@ -47,7 +47,7 @@ export class QtnLclService {
         this.record = <QtnmModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today, searchtype: 'REFNO' },
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today, searchtype: 'Quote To / Quote #' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -82,8 +82,7 @@ export class QtnLclService {
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
-        // SearchData.COLUMN_NAME = this.record.searchQuery.searchtype;
-        SearchData.COLUMN_NAME = 'Place Of Delivery';
+        SearchData.COLUMN_NAME = this.record.searchQuery.searchtype;
         SearchData.STYPE = 'LCL';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
@@ -136,12 +135,9 @@ export class QtnLclService {
             return;
         }
 
-        let fpath = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\Files\\";
-
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = _rec.qtnm_pkid;
         SearchData.remarks = _rec.qtnm_no;
-        SearchData.fpath = fpath;
 
         this.DeleteRecord(SearchData)
             .subscribe(response => {
