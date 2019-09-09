@@ -238,17 +238,14 @@ export class QtnLclEditComponent implements OnInit {
     }
 
     AddRow() {
-
         var rec = <Tbl_Cargo_Qtnd_Lcl>{};
-        // rec.cntr_pkid = this.gs.getGuid();
-        // rec.cntr_no = "",
-        //     rec.cntr_type = "",
-        //     rec.cntr_sealno = '';
-        // rec.cntr_packages_uom = '';
-        // rec.cntr_movement = "",
-        //     rec.cntr_weight = 0;
-        // rec.cntr_pieces = 0;
-        // rec.cntr_cbm = 0;
+        rec.qtnd_pkid = this.gs.getGuid();
+        rec.qtnd_parent_id = this.pkid,
+        rec.qtnd_desc_id = '',
+        rec.qtnd_desc_code = '';
+        rec.qtnd_desc_name = '';
+        rec.qtnd_per = '',
+        rec.qtnd_amt = 0;
         this.records.push(rec);
     }
 
@@ -272,6 +269,31 @@ export class QtnLclEditComponent implements OnInit {
             this.record.qtnm_salesman_id = _Record.id;
             this.record.qtnm_salesman_name = _Record.name;
         }
+        if (_Record.controlname == "POR") {
+            this.record.qtnm_por_id = _Record.id;
+            this.record.qtnm_por_code =_Record.code;
+            this.record.qtnm_por_name =_Record.name;
+        }
+        if (_Record.controlname == "POL") {
+            this.record.qtnm_pol_id = _Record.id;
+            this.record.qtnm_pol_code =_Record.code;
+            this.record.qtnm_pol_name =_Record.name;
+        }
+        if (_Record.controlname == "POD") {
+            this.record.qtnm_pod_id = _Record.id;
+            this.record.qtnm_pod_code =_Record.code;
+            this.record.qtnm_pod_name =_Record.name;
+        }
+
+        if (_Record.controlname == "INVOICE-CODE") {
+            this.records.forEach(rec => {
+              if (rec.qtnd_desc_id == _Record.uid) {
+                rec.qtnd_desc_code = _Record.code;
+                rec.qtnd_desc_name = _Record.name;
+              }
+            });
+          }
+
     }
 
     OnChange(field: string) {
@@ -280,8 +302,37 @@ export class QtnLclEditComponent implements OnInit {
     }
 
     onBlur(field: string) {
+        switch (field) {
+
+            case 'qtnm_kgs': {
+                this.record.qtnm_kgs = this.gs.roundNumber(this.record.qtnm_kgs, 3);
+                break;
+            }
+            case 'qtnm_lbs': {
+                this.record.qtnm_lbs = this.gs.roundNumber(this.record.qtnm_lbs, 3);
+                break;
+            }
+            case 'qtnm_cbm': {
+                this.record.qtnm_cbm = this.gs.roundNumber(this.record.qtnm_cbm, 3);
+                break;
+            }
+            case 'hbl_cft': {
+                this.record.qtnm_cft = this.gs.roundNumber(this.record.qtnm_cft, 3);
+                break;
+            }
+        }
     }
 
+    FindWeight(_type: string) {
+        if (_type == "Kgs2Lbs")
+            this.record.qtnm_lbs = this.gs.Convert_Weight("KG2LBS", this.record.qtnm_kgs, 3);
+        else if (_type == "Lbs2Kgs")
+            this.record.qtnm_kgs = this.gs.Convert_Weight("LBS2KG", this.record.qtnm_lbs, 3);
+        else if (_type == "Cbm2Cft")
+            this.record.qtnm_cft = this.gs.Convert_Weight("CBM2CFT", this.record.qtnm_cbm, 3);
+        else if (_type == "Cft2Cbm")
+            this.record.qtnm_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.qtnm_cft, 3);
+    }
 
     BtnNavigation(action: string) {
         switch (action) {
@@ -307,5 +358,10 @@ export class QtnLclEditComponent implements OnInit {
     }
     callbackevent(event: any) {
         this.tab = 'main';
+    }
+
+    RemoveRow(_rec: Tbl_Cargo_Qtnd_Lcl)
+    {
+        this.records.splice(this.records.findIndex(rec => rec.qtnd_pkid == _rec.qtnd_pkid), 1);
     }
 }
