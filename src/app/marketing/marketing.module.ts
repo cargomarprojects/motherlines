@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { QtnLclHeaderComponent } from './qtnlcl/qtnlcl-header.component';
 import { QtnLclComponent } from './qtnlcl/qtnlcl.component';
+import { QtnLclEditComponent } from './qtnlcl/edit/qtnlcl-edit.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { QtnLclComponent } from './qtnlcl/qtnlcl.component';
     SalesJournalsComponent,
     SalesJournalsEditComponent,
     QtnLclHeaderComponent,
-    QtnLclComponent
+    QtnLclComponent,
+    QtnLclEditComponent
   ],
   imports: [
     SharedModule,    

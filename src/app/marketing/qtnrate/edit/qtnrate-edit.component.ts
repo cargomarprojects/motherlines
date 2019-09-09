@@ -9,6 +9,7 @@ import { User_Menu } from '../../../core/models/menum';
 import { vm_tbl_cargo_qtn_rates, Tbl_Cargo_Qtn_Rates } from '../../../marketing/models/tbl_cargo_qtn_rates';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { Tbl_Cargo_Qtnd_Lcl } from '../../models/tbl_cargo_qtnm';
 
 @Component({
     selector: 'app-qtnrate-edit',

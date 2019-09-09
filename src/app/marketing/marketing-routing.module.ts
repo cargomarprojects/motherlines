@@ -6,6 +6,7 @@ import { QtnRateEditComponent } from './qtnrate/edit/qtnrate-edit.component';
 import { SalesJournalsComponent } from './salesjournals/salesjournals.component';
 import { SalesJournalsEditComponent } from './salesjournals/edit/salesjournals-edit.component';
 import { QtnLclComponent } from './qtnlcl/qtnlcl.component';
+import { QtnLclEditComponent } from './qtnlcl/edit/qtnlcl-edit.component';
 
 const routes: Routes = [
   { path : 'QuotationRatePage', component : QtnRateComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path : 'MarkContactsPage', component : SalesJournalsComponent },
   { path : 'SalesJournalsEditPage', component : SalesJournalsEditComponent },
   { path : 'QuotationLCLPage', component : QtnLclComponent },
+  { path : 'QuotationLclEditPage', component : QtnLclEditComponent },
 ];
 
 

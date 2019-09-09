@@ -58,14 +58,13 @@ export class QtnLclComponent implements OnInit {
       return;
     }
 
-    // let parameter = {
-    //   menuid: this.mainservice.menuid,
-    //   pkid: '',
-    //   origin: 'qtnrate-page',
-    //   mode: 'ADD'
-    // };
-    // this.gs.Naviagete('Silver.Marketing.Quotation/QuotationRateEditPage', JSON.stringify(parameter));
-
+    let parameter = {
+      menuid: this.mainservice.menuid,
+      pkid: '',
+      origin: 'qtnm-lcl-page',
+      mode: 'ADD'
+    };
+    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationLclEditPage', JSON.stringify(parameter));
   }
   edit(_record: Tbl_Cargo_Qtnm) {
 
@@ -79,13 +78,13 @@ export class QtnLclComponent implements OnInit {
       return;
     }
 
-    // let parameter = {
-    //   menuid: this.mainservice.menuid,
-    //   pkid: _record.qtnr_pkid,
-    //   origin: 'qtnrate-page',
-    //   mode: 'EDIT'
-    // };
-    // this.gs.Naviagete('Silver.Marketing.Quotation/QuotationRateEditPage', JSON.stringify(parameter));
+    let parameter = {
+      menuid: this.mainservice.menuid,
+      pkid: _record.qtnm_pkid,
+      origin: 'qtnm-lcl-page',
+      mode: 'EDIT'
+    };
+    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationLclEditPage', JSON.stringify(parameter));
 
   }
 
