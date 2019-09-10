@@ -157,10 +157,10 @@ export class QtnLclEditComponent implements OnInit {
                 this.records = <Tbl_Cargo_Qtnd_Lcl[]>response.records;
                 this.mode = 'EDIT';
 
-                // if (this.record.rec_attached == "Y")
-                //     this.Foregroundcolor = "red";
-                // else
-                //     this.Foregroundcolor = "white";
+                if (this.record.rec_files_attached == "Y")
+                    this.Foregroundcolor = "red";
+                else
+                    this.Foregroundcolor = "white";
 
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
@@ -241,11 +241,11 @@ export class QtnLclEditComponent implements OnInit {
         var rec = <Tbl_Cargo_Qtnd_Lcl>{};
         rec.qtnd_pkid = this.gs.getGuid();
         rec.qtnd_parent_id = this.pkid,
-        rec.qtnd_desc_id = '',
-        rec.qtnd_desc_code = '';
+            rec.qtnd_desc_id = '',
+            rec.qtnd_desc_code = '';
         rec.qtnd_desc_name = '';
         rec.qtnd_per = '',
-        rec.qtnd_amt = 0;
+            rec.qtnd_amt = 0;
         this.records.push(rec);
     }
 
@@ -271,28 +271,28 @@ export class QtnLclEditComponent implements OnInit {
         }
         if (_Record.controlname == "POR") {
             this.record.qtnm_por_id = _Record.id;
-            this.record.qtnm_por_code =_Record.code;
-            this.record.qtnm_por_name =_Record.name;
+            this.record.qtnm_por_code = _Record.code;
+            this.record.qtnm_por_name = _Record.name;
         }
         if (_Record.controlname == "POL") {
             this.record.qtnm_pol_id = _Record.id;
-            this.record.qtnm_pol_code =_Record.code;
-            this.record.qtnm_pol_name =_Record.name;
+            this.record.qtnm_pol_code = _Record.code;
+            this.record.qtnm_pol_name = _Record.name;
         }
         if (_Record.controlname == "POD") {
             this.record.qtnm_pod_id = _Record.id;
-            this.record.qtnm_pod_code =_Record.code;
-            this.record.qtnm_pod_name =_Record.name;
+            this.record.qtnm_pod_code = _Record.code;
+            this.record.qtnm_pod_name = _Record.name;
         }
 
         if (_Record.controlname == "INVOICE-CODE") {
             this.records.forEach(rec => {
-              if (rec.qtnd_desc_id == _Record.uid) {
-                rec.qtnd_desc_code = _Record.code;
-                rec.qtnd_desc_name = _Record.name;
-              }
+                if (rec.qtnd_desc_id == _Record.uid) {
+                    rec.qtnd_desc_code = _Record.code;
+                    rec.qtnd_desc_name = _Record.name;
+                }
             });
-          }
+        }
 
     }
 
@@ -340,10 +340,10 @@ export class QtnLclEditComponent implements OnInit {
                 this.attach_title = 'Documents';
                 this.attach_parentid = this.pkid;
                 this.attach_subid = '';
-                this.attach_type = 'QUOTATION RATES';
+                this.attach_type = 'QUOT-LCL';
                 this.attach_typelist = [];
-                this.attach_tablename = 'cargo_qtn_rates';
-                this.attach_tablepkcolumn = 'qtnr_pkid';
+                this.attach_tablename = 'cargo_qtnm';
+                this.attach_tablepkcolumn = 'qtnm_pkid';
                 this.attach_refno = '';
                 this.attach_customername = '';
                 this.attach_updatecolumn = 'REC_FILES_ATTACHED';
@@ -360,8 +360,32 @@ export class QtnLclEditComponent implements OnInit {
         this.tab = 'main';
     }
 
-    RemoveRow(_rec: Tbl_Cargo_Qtnd_Lcl)
-    {
+    RemoveRow(_rec: Tbl_Cargo_Qtnd_Lcl) {
         this.records.splice(this.records.findIndex(rec => rec.qtnd_pkid == _rec.qtnd_pkid), 1);
+    }
+
+    GetMessage(_msgType: string) {
+        this.errorMessage = [];
+        let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.msgtype = this.pkid;
+        SearchData.filepath = filepath;
+
+        this.mainService.GetMessage(SearchData)
+            .subscribe(response => {
+
+                if (_msgType == "LCLMSG6") {
+                    this.record.qtnm_remarks = response.message;
+                    //Txt_Remarks.Focus();
+                }
+                else {
+                    this.record.qtnm_subjects = response.message;
+                    // Txt_Subject.Focus();
+                }
+
+            }, error => {
+                this.errorMessage.push(this.gs.getError(error));
+            });
     }
 }

@@ -14,6 +14,9 @@ import { QtnLclHeaderComponent } from './qtnlcl/qtnlcl-header.component';
 import { QtnLclComponent } from './qtnlcl/qtnlcl.component';
 import { QtnLclEditComponent } from './qtnlcl/edit/qtnlcl-edit.component';
 
+import { QtnFclHeaderComponent } from './qtnfcl/qtnfcl-header.component';
+import { QtnFclComponent } from './qtnfcl/qtnfcl.component';
+
 @NgModule({
   declarations: [
     QtnRateComponent,
@@ -24,7 +27,9 @@ import { QtnLclEditComponent } from './qtnlcl/edit/qtnlcl-edit.component';
     SalesJournalsEditComponent,
     QtnLclHeaderComponent,
     QtnLclComponent,
-    QtnLclEditComponent
+    QtnLclEditComponent,
+    QtnFclHeaderComponent,
+    QtnFclComponent
   ],
   imports: [
     SharedModule,    

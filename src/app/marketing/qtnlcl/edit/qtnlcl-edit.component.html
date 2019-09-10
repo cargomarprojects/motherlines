@@ -6,11 +6,6 @@
         </div>
     </div>
 
-    <!-- <div *ngIf="errorMessage">
-        <div class="alert alert-primary">
-            {{errorMessage}}
-        </div>
-    </div> -->
     <div *ngIf="errorMessage.length >0">
         <div class="alert alert-success">
             <a (click)="errorMessage=[]" class="close" aria-label="close">&times;</a>
@@ -319,7 +314,7 @@
             </div>
         </div>
         <div class="row border">
-            <div class="col-md-8  px-0 mx-0">
+            <div class="col-md-8">
                 <div class="page-body table-responsive">
                     <table class="table  table-hover table-sm">
                         <thead class="page-body-thead">
@@ -372,27 +367,27 @@
         <div class="row border">
             <div class="col-md-8  px-0 mx-0">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 px-0 mx-0">
                         <div class="form-group row">
                             <div class="offset-1 col-11">
-                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG1')">Msg 1
                                     (C-Imp)</button>
-                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
-                                    (C-Imp)</button>
-                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
-                                    (C-Imp)</button>
-                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
-                                    (C-Imp)</button>
-                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
-                                    (C-Imp)</button>
-                                <button class="btn btn-info btn-sm mr-1" (click)="BtnNavigation('ARAP')">Msg 1
-                                    (C-Imp)</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG2')">Msg 2
+                                    (C-Exp)</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG3')">Msg 3
+                                    (C-Local)</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG4')">Msg 4
+                                    (A-Exp)</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG5')">Msg 5
+                                    (A-Local)</button>
+                                <button class="btn btn-success btn-sm mr-1"
+                                    (click)="GetMessage('LCLMSG6')">DDU/DDP</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 px-0 mx-0">
                         <div class="form-group row">
                             <label class="col-1 col-form-label col-form-label-sm">Subject</label>
                             <div class="col-11">
@@ -400,8 +395,8 @@
                                     [(ngModel)]="message"></textarea>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12">
+
+
                         <div class="form-group row">
                             <label class="col-1 col-form-label col-form-label-sm">Remarks</label>
                             <div class="col-11">
@@ -409,14 +404,14 @@
                                     [(ngModel)]="message"></textarea>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12">
+
                         <div class="form-group row">
                             <label class="col-1 col-form-label col-form-label-sm">Office Use Only</label>
                             <div class="col-11">
                                 <textarea rows="6" class="form-control form-control-sm"
                                     [(ngModel)]="message"></textarea>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -474,21 +469,25 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group row">
-                        <label class="col-3 col-form-label col-form-label-sm"></label>
-                        <div class="col-9">
+                        <label class="col-2 col-form-label col-form-label-sm"></label>
+                        <div class="col-10">
                             <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
-                            <!-- <button [style.color]="Foregroundcolor" *ngIf="mode=='EDIT'" class="btn btn-success btn-sm mr-1"
-                            (click)="BtnNavigation('ATTACHMENT')">File Upload</button> -->
+                            <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1"
+                                (click)="BtnNavigation('PRINT')">Print</button>
+                            <button [style.color]="Foregroundcolor" *ngIf="mode=='EDIT'"
+                                class="btn btn-primary btn-sm mr-1" (click)="BtnNavigation('ATTACHMENT')">Supporting
+                                Documents</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div *ngIf="tab=='attachment'">
-        <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid" [type]="attach_type"
-            [typelist]="attach_typelist" [tablename]="attach_tablename" [tablepkcolumn]="attach_tablepkcolumn"
-            [refno]="attach_refno" [customername]="attach_customername" [updatecolumn]="attach_updatecolumn"
-            [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath"
-            [filespath2]="attach_filespath2" (callbackevent)="callbackevent($event)"></app-fileupload>
-    </div>
+</div>
+<div *ngIf="tab=='attachment'">
+    <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid" [type]="attach_type"
+        [typelist]="attach_typelist" [tablename]="attach_tablename" [tablepkcolumn]="attach_tablepkcolumn"
+        [refno]="attach_refno" [customername]="attach_customername" [updatecolumn]="attach_updatecolumn"
+        [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath"
+        [filespath2]="attach_filespath2" (callbackevent)="callbackevent($event)"></app-fileupload>
+</div>

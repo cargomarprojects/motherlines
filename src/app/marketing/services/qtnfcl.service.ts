@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_Cargo_Qtnd_Lcl, QtnmModel, vm_Tbl_Cargo_Qtnd_Lcl, Tbl_Cargo_Qtnm } from '../models/tbl_cargo_qtnm';
+import { Tbl_Cargo_Qtnd_Fcl, QtnmModel, vm_Tbl_Cargo_Qtnd_Fcl, Tbl_Cargo_Qtnm } from '../models/tbl_cargo_qtnm';
 import { SearchQuery } from '../models/tbl_cargo_qtnm';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 @Injectable({
     providedIn: 'root'
 })
-export class QtnLclService {
+export class QtnFclService {
 
     private mdata$ = new BehaviorSubject<QtnmModel>(null);
     get data$(): Observable<QtnmModel> {
@@ -82,8 +82,7 @@ export class QtnLclService {
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
-        SearchData.COLUMN_NAME = this.record.searchQuery.searchtype;
-        SearchData.STYPE = 'LCL';
+        SearchData.STYPE = 'FCL';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -156,22 +155,22 @@ export class QtnLclService {
 
 
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
     DeleteRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
     }
     GetMessage(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/GetMessage', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/GetMessage', SearchData, this.gs.headerparam2('authorized'));
     }
 
     
