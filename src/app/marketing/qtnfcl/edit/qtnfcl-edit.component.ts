@@ -43,6 +43,9 @@ export class QtnFclEditComponent implements OnInit {
     errorMessage: string[] = [];
     Foregroundcolor: string;
 
+    grdColHdr: string[] = ['OFF','PSS','BAF','ISPS','HAULAGE','ISF'];
+    grdColFld: string[] = ['qtnd_of','rec.qtnd_pss','rec.qtnd_baf','rec.qtnd_isps','rec.qtnd_haulage','rec.qtnd_ifs'];
+ 
     title: string;
     isAdmin: boolean;
     refno: string = "";
