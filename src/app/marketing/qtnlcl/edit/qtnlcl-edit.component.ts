@@ -263,7 +263,7 @@ export class QtnLclEditComponent implements OnInit {
             this.record.qtnm_to_addr3 = _Record.col3.toString();
             this.record.qtnm_to_addr4 = this.gs.GetAttention(_Record.col5.toString());
             // Dispatcher.BeginInvoke(() => { Txt_QuoteTo_Name.Focus(); });
-            // GetContactMemo(this.record.qtnm_to_id);
+            this.GetContactMemo(this.record.qtnm_to_id);
         }
         if (_Record.controlname == "SALESMAN") {
             this.record.qtnm_salesman_id = _Record.id;
@@ -369,7 +369,7 @@ export class QtnLclEditComponent implements OnInit {
         let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
 
         var SearchData = this.gs.UserInfo;
-        SearchData.msgtype = this.pkid;
+        SearchData.msgtype = _msgType;
         SearchData.filepath = filepath;
 
         this.mainService.GetMessage(SearchData)
@@ -388,4 +388,21 @@ export class QtnLclEditComponent implements OnInit {
                 this.errorMessage.push(this.gs.getError(error));
             });
     }
+
+    GetContactMemo(_contactId: string) {
+        this.errorMessage = [];
+        let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\xmlremarks\\";
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _contactId;
+        SearchData.SPATH = filepath;
+
+        this.mainService.GetContactMemo(SearchData)
+            .subscribe(response => {
+                this.record.qtnm_subjects = response.message;
+                // Txt_Subject.Focus();
+            }, error => {
+                this.errorMessage.push(this.gs.getError(error));
+            });
+    }
+
 }

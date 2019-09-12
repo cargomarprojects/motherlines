@@ -174,5 +174,7 @@ export class QtnLclService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/GetMessage', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    
+    GetContactMemo(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/GetContactMemo', SearchData, this.gs.headerparam2('authorized'));
+    }
 }
