@@ -172,6 +172,8 @@ export class QtnFclService {
     GetMessage(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/GetMessage', SearchData, this.gs.headerparam2('authorized'));
     }
-
+    GetContactMemo(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/GetContactMemo', SearchData, this.gs.headerparam2('authorized'));
+    }
     
 }

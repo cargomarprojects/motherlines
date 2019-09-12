@@ -64,7 +64,7 @@ export class QtnFclComponent implements OnInit {
       origin: 'qtnm-fcl-page',
       mode: 'ADD'
     };
-   // this.gs.Naviagete('Silver.Marketing.Quotation/QuotationFclEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationFclEditPage', JSON.stringify(parameter));
   }
   edit(_record: Tbl_Cargo_Qtnm) {
 
@@ -84,7 +84,7 @@ export class QtnFclComponent implements OnInit {
       origin: 'qtnm-fcl-page',
       mode: 'EDIT'
     };
-   // this.gs.Naviagete('Silver.Marketing.Quotation/QuotationFclEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationFclEditPage', JSON.stringify(parameter));
 
   }
 

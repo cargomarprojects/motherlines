@@ -16,6 +16,7 @@ import { QtnLclEditComponent } from './qtnlcl/edit/qtnlcl-edit.component';
 
 import { QtnFclHeaderComponent } from './qtnfcl/qtnfcl-header.component';
 import { QtnFclComponent } from './qtnfcl/qtnfcl.component';
+import { QtnFclEditComponent } from './qtnfcl/edit/qtnfcl-edit.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { QtnFclComponent } from './qtnfcl/qtnfcl.component';
     QtnLclComponent,
     QtnLclEditComponent,
     QtnFclHeaderComponent,
-    QtnFclComponent
+    QtnFclComponent,
+    QtnFclEditComponent
   ],
   imports: [
     SharedModule,    

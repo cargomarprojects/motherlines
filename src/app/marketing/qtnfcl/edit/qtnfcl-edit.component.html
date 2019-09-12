@@ -1,0 +1,345 @@
+<div *ngIf="tab=='main'">
+    <div class="page-header">
+        <div class="row align-items-center justify-content-left p-1">
+            <label class="mr-3">{{title}}({{mode}})</label>
+            <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+        </div>
+    </div>
+
+    <div *ngIf="errorMessage.length >0">
+        <div class="alert alert-success">
+            <a (click)="errorMessage=[]" class="close" aria-label="close">&times;</a>
+            <ul>
+                <li *ngFor="let str of errorMessage">
+                    <p class="h4"> {{str}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="page-body">
+        <div class="row border">
+            <div class="col-md-4 testbox  px-0 mx-0">
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Quote#</label>
+                    <div class="col-9">
+                        <input class="form-control form-control-sm text-danger" type="text" [(ngModel)]="record.qtnm_no"
+                            [disabled]="true" maxlength="25" #refno />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 testbox  px-0 mx-0">
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-4 testbox  px-0 mx-0">
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Quote To</label>
+                    <div class="col-9">
+                        <app-autocomplete2 [controlname]="'QUOTE-TO'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+                            [displaydata]="record.qtnm_to_code" (ValueChanged)="LovSelected($event)" #to_code>
+                        </app-autocomplete2>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Name</label>
+                    <div class="col-9">
+                        <InputBox [(inputModel)]="record.qtnm_to_name" [maxlength]="60" [uppercase]="true" #to_name>
+                        </InputBox>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Address</label>
+                    <div class="col-9">
+                        <InputBox [(inputModel)]="record.qtnm_to_addr1" [maxlength]="60" [uppercase]="true" #to_addr1>
+                        </InputBox>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm"></label>
+                    <div class="col-9">
+                        <InputBox [(inputModel)]="record.qtnm_to_addr2" [maxlength]="60" [uppercase]="true" #to_addr2>
+                        </InputBox>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm"></label>
+                    <div class="col-9">
+                        <InputBox [(inputModel)]="record.qtnm_to_addr3" [maxlength]="60" [uppercase]="true" #to_addr3>
+                        </InputBox>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm"></label>
+                    <div class="col-9">
+                        <InputBox [(inputModel)]="record.qtnm_to_addr4" [maxlength]="60" [uppercase]="true" #to_addr4>
+                        </InputBox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 testbox  px-0 mx-0">
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Quote Date</label>
+                    <div class="col-9">
+                        <app-date [inputdate]="record.qtnm_date" (ValueChanged)="record.qtnm_date=$event">
+                        </app-date>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Quote By</label>
+                    <div class="col-9">
+                        <InputBox [(inputModel)]="record.qtnm_quot_by" [maxlength]="60" [uppercase]="true" #quot_by>
+                        </InputBox>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Validity</label>
+                    <div class="col-9">
+                        <app-date [inputdate]="record.qtnm_valid_date" (ValueChanged)="record.qtnm_valid_date=$event">
+                        </app-date>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Sales Rep.</label>
+                    <div class="col-9">
+                        <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                            [displaycolumn]="'NAME'" [displaydata]="record.qtnm_salesman_name"
+                            (ValueChanged)="LovSelected($event)">
+                        </app-autocomplete2>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Move Type</label>
+                    <div class="col-9">
+                        <InputBox [(inputModel)]="record.qtnm_move_type" [maxlength]="25" [uppercase]="true" #move_type>
+                        </InputBox>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label col-form-label-sm">Commodity</label>
+                    <div class="col-9">
+                        <InputBox [(inputModel)]="record.qtnm_commodity" [maxlength]="60" [uppercase]="true" #Commodity>
+                        </InputBox>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4 testbox  px-0 mx-0">
+
+                <div class="form-group row" *ngIf="gs.BRANCH_REGION != 'USA'">
+                    <label class="col-3 col-form-label col-form-label-sm">Currency</label>
+                    <div class="col-9">
+                        <app-autocomplete2 [controlname]="'CURR'" [tabletype]="'PARAM'" [subtype]="'CURRENCY'"
+                            [displaycolumn]="'CODE'" [displaydata]="record.qtnm_curr_code"
+                            (ValueChanged)="LovSelected($event)">
+                        </app-autocomplete2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-md-8">
+                <div class="page-body table-responsive">
+                    <table class="table  table-hover table-sm">
+                        <thead class="page-body-thead">
+                            <tr>
+                                <th>ETD</th>
+                                <th>CUTT.OFF</th>
+                                <th>T/T</th>
+                                <th>ROUTING</th>
+                                <th>CNTR.TYPE</th>
+                                <th>OFF</th>
+                                <th>PSS</th>
+                                <th>BAF</th>
+                                <th>ISPS</th>
+                                <th>HAULAGE</th>
+                                <th>ISF</th>
+                                <th>TOTAL</th>
+                                <th style="text-align:center">DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody class="page-body-tbody" *ngFor="let rec of records">
+                            <tr >
+                                <td class="p-0">
+                                    <!-- <app-autocomplete2 [controlname]="'INVOICE-CODE'" [displaycolumn]="'CODE'"
+                                        [tabletype]="'PARAM'" [subtype]="'INVOICE-DESCRIPTION'" [uid]="rec.qtnd_desc_id"
+                                        [displaydata]="rec.qtnd_desc_code" (ValueChanged)="LovSelected($event)">
+                                    </app-autocomplete2> -->
+                                    <InputBox [(inputModel)]="rec.qtnd_etd" [maxlength]="60" [uppercase]="true"
+                                        #quot_desc2>
+                                    </InputBox>
+                                </td>
+                                <td class="p-0">
+                                    <InputBox [(inputModel)]="rec.qtnd_cutoff" [maxlength]="60" [uppercase]="true"
+                                        #quot_desc>
+                                    </InputBox>
+                                </td>
+                                <td class="p-0">
+                                    <InputBox [(inputModel)]="rec.qtnd_transtime" [maxlength]="60" [uppercase]="true"
+                                        #quot_desc>
+                                    </InputBox>
+                                </td>
+                                <td class="p-0">
+                                    <InputBox [(inputModel)]="rec.qtnd_routing" [maxlength]="60" [uppercase]="true"
+                                        #quot_per>
+                                    </InputBox>
+                                </td>
+
+                                <td class="p-0">
+                                    <InputBox [(inputModel)]="rec.qtnd_cntr_type" [maxlength]="60" [uppercase]="true"
+                                        #quot_desc>
+                                    </InputBox>
+                                </td>
+                                <td class="p-0">
+                                    <InputBoxNumber [(inputModel)]="rec.qtnd_of" [maxlength]="15" [dec]="2">
+                                    </InputBoxNumber>
+                                </td>
+                                <td class="p-0">
+                                    <InputBoxNumber [(inputModel)]="rec.qtnd_pss" [maxlength]="15" [dec]="2">
+                                    </InputBoxNumber>
+                                </td>
+                                <td class="p-0">
+                                    <InputBoxNumber [(inputModel)]="rec.qtnd_baf" [maxlength]="15" [dec]="2">
+                                    </InputBoxNumber>
+                                </td>
+                                <td class="p-0">
+                                    <InputBoxNumber [(inputModel)]="rec.qtnd_isps" [maxlength]="15" [dec]="2">
+                                    </InputBoxNumber>
+                                </td>
+                                <td class="p-0">
+                                    <InputBoxNumber [(inputModel)]="rec.qtnd_haulage" [maxlength]="15" [dec]="2">
+                                    </InputBoxNumber>
+                                </td>
+                                <td class="p-0">
+                                    <InputBoxNumber [(inputModel)]="rec.qtnd_ifs" [maxlength]="15" [dec]="2">
+                                    </InputBoxNumber>
+                                </td>
+                                <td class="p-0">
+                                    <InputBoxNumber [(inputModel)]="rec.qtnd_tot_amt" [maxlength]="15" [dec]="2">
+                                    </InputBoxNumber>
+                                </td>
+
+                                <td style="text-align:center"><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
+                                        (click)="RemoveRow(rec)"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="p-0">POL
+                                </td>
+                                <td colspan="3" class="p-0">
+                                    <app-autocomplete2 [controlname]="'POL'" [displaycolumn]="'CODE'"
+                                        [tabletype]="'PORT'" [uid]="rec.qtnd_pol_id"
+                                        [displaydata]="rec.qtnd_pol_code" (ValueChanged)="LovSelected($event)">
+                                    </app-autocomplete2>
+                                </td>
+                                <td class="p-0">POD
+                                </td>
+                                <td colspan="3" class="p-0">
+                                    <app-autocomplete2 [controlname]="'POD'" [displaycolumn]="'CODE'"
+                                        [tabletype]="'PORT'" [uid]="rec.qtnd_pod_id"
+                                        [displaydata]="rec.qtnd_pod_code" (ValueChanged)="LovSelected($event)">
+                                    </app-autocomplete2>
+                                </td>
+                                <td class="p-0">CARRIER
+                                </td>
+                                <td colspan="3" class="p-0">
+                                    <app-autocomplete2 [controlname]="'CARRIER'" [displaycolumn]="'CODE'"
+                                        [tabletype]="'PARAM'" [uid]="rec.qtnd_carrier_id"
+                                        [displaydata]="rec.qtnd_carrier_code" (ValueChanged)="LovSelected($event)">
+                                    </app-autocomplete2>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Row</button>
+                            <button class="btn btn-success btn-sm mr-1">History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row border">
+            <div class="col-md-8  px-0 mx-0">
+                <div class="row">
+                    <div class="col-12 px-0 mx-0">
+                        <div class="form-group row">
+                            <div class="offset-1 col-11">
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG1')">Msg 1
+                                    (C-Imp)</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG2')">Msg 2
+                                    (C-Exp)</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG3')">Msg 3
+                                    (C-Local)</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG4')">Msg 4
+                                    (A-Exp)</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG5')">Msg 5
+                                    (A-Local)</button>
+                                <button class="btn btn-success btn-sm mr-1"
+                                    (click)="GetMessage('LCLMSG6')">DDU/DDP</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 px-0 mx-0">
+                        <div class="form-group row">
+                            <label class="col-1 col-form-label col-form-label-sm">Subject</label>
+                            <div class="col-11">
+                                <textarea rows="6" class="form-control form-control-sm"
+                                    [(ngModel)]="record.qtnm_subjects"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-1 col-form-label col-form-label-sm">Remarks</label>
+                            <div class="col-11">
+                                <textarea rows="6" class="form-control form-control-sm"
+                                    [(ngModel)]="record.qtnm_remarks"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-1 col-form-label col-form-label-sm">Office Use Only</label>
+                            <div class="col-11">
+                                <textarea rows="6" class="form-control form-control-sm"
+                                    [(ngModel)]="record.qtnm_office_use"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm"></label>
+                        <div class="col-10">
+                            <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
+                            <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1"
+                                (click)="BtnNavigation('PRINT')">Print</button>
+                            <button [style.color]="Foregroundcolor" *ngIf="mode=='EDIT'"
+                                class="btn btn-primary btn-sm mr-1" (click)="BtnNavigation('ATTACHMENT')">Supporting
+                                Documents</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="tab=='attachment'">
+    <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid" [type]="attach_type"
+        [typelist]="attach_typelist" [tablename]="attach_tablename" [tablepkcolumn]="attach_tablepkcolumn"
+        [refno]="attach_refno" [customername]="attach_customername" [updatecolumn]="attach_updatecolumn"
+        [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath"
+        [filespath2]="attach_filespath2" (callbackevent)="callbackevent($event)"></app-fileupload>
+</div>
