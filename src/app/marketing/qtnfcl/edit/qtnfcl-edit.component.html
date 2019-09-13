@@ -147,16 +147,16 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm">POL</label>
                             <div class="col-9">
-                                <app-autocomplete2 [controlname]="'POL'" [displaycolumn]="'CODE'" [tabletype]="'PORT'"
-                                    [displaydata]="record.qtnm_curr_code" (ValueChanged)="LovSelected($event)">
+                                <app-autocomplete2 [controlname]="'POL'" [displaycolumn]="'CODE'"
+                                    [tabletype]="'PARAMDET'" [subtype]="'SEA PORT'" [displaydata]="polCode"
+                                    (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="record.qtnm_move_type" [maxlength]="25" [uppercase]="true"
-                                    #move_type2>
+                                <InputBox [(inputModel)]="polName" [maxlength]="60" [uppercase]="true" #pol_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -165,16 +165,16 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm">POD</label>
                             <div class="col-9">
-                                <app-autocomplete2 [controlname]="'POL'" [displaycolumn]="'CODE'" [tabletype]="'PORT'"
-                                    [displaydata]="record.qtnm_curr_code" (ValueChanged)="LovSelected($event)">
+                                <app-autocomplete2 [controlname]="'POD'" [displaycolumn]="'CODE'"
+                                    [tabletype]="'PARAMDET'" [subtype]="'SEA PORT'" [displaydata]="podCode"
+                                    (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="record.qtnm_move_type" [maxlength]="25" [uppercase]="true"
-                                    #move_type2>
+                                <InputBox [(inputModel)]="podName" [maxlength]="60" [uppercase]="true" #pod_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -183,16 +183,16 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm">CARRIER</label>
                             <div class="col-9">
-                                <app-autocomplete2 [controlname]="'POL'" [displaycolumn]="'CODE'" [tabletype]="'PORT'"
-                                    [displaydata]="record.qtnm_curr_code" (ValueChanged)="LovSelected($event)">
+                                <app-autocomplete2 [controlname]="'CARR'" [displaycolumn]="'CODE'"
+                                    [tabletype]="'SEA CARRIER'" [subtype]="'SEA CARRIER'" [displaydata]="carrCode"
+                                    (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="record.qtnm_move_type" [maxlength]="25" [uppercase]="true"
-                                    #move_type2>
+                                <InputBox [(inputModel)]="carrName" [maxlength]="60" [uppercase]="true" #carr_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -213,94 +213,93 @@
                             <div class="col-2 pl-0  pr-0">
                                 <label class="col-form-label col-form-label-sm">ETD</label>
                             </div>
-                            <div class="col-2 pl-0  pr-0">
+                            <div class="col-2 pl-0">
                                 <label class="col-form-label col-form-label-sm">CUTT.OFF</label>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-2  pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true"
-                                    #pick_desc1>
+                                <InputBox [(inputModel)]="transitTime" [maxlength]="15" [uppercase]="true"
+                                    #transit_time>
                                 </InputBox>
                             </div>
                             <div class="col-4 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom1></InputBox>
+                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing1>
+                                </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom2></InputBox>
+                                <InputBox [(inputModel)]="cntrType" [maxlength]="6" [uppercase]="true" #cntr_type>
+                                </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom3></InputBox>
+                                <InputBox [(inputModel)]="etd" [maxlength]="25" [uppercase]="true" #etd1></InputBox>
                             </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom4></InputBox>
+
+                            <div class="col-2 pl-0  ">
+                                <InputBox [(inputModel)]="cutOff" [maxlength]="25" [uppercase]="true" #cut_off>
+                                </InputBox>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 testbox  px-0 mx-0">
                         <div class="form-group row">
-                            <div class="col-2  pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">OFF</label>
+                            <div class="col-2  pr-0">
+                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[0]}}</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">PASS</label>
+                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[1]}}</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">BAF</label>
+                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[2]}}</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">ISPS</label>
+                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[3]}}</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">HAULAGE</label>
+                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[4]}}</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">IFS</label>
+                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[5]}}</label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-2  pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_desc1" [maxlength]="100" [uppercase]="true"
-                                    #pick_desc1>
-                                </InputBox>
+                            <div class="col-2   pr-0">
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[0]]" [dec]="2" [maxlength]="15">
+                                </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom1></InputBox>
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[1]]" [dec]="2" [maxlength]="15">
+                                </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom1></InputBox>
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[2]]" [dec]="2" [maxlength]="15">
+                                </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom2></InputBox>
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[3]]" [dec]="2" [maxlength]="15">
+                                </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom3></InputBox>
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[4]]" [dec]="2" [maxlength]="15">
+                                </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    #pick_uom4></InputBox>
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[5]]" [dec]="2" [maxlength]="15">
+                                </InputBoxNumber>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-8">
-                                <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Row</button>
-                                <button class="btn btn-success btn-sm mr-1">New Row</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">{{lblSave}}</button>
+                                <button class="btn btn-success btn-sm mr-1" (click)="AddData()">New Row</button>
                             </div>
                             <div class="col-2 pl-0  pr-0" style="text-align:center">
                                 <label class="col-form-label col-form-label-sm">TOTAL</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="record.pick_uom1" [maxlength]="10" [uppercase]="true"
-                                    [disabled]="true" #pick_uom4></InputBox>
+                                    <InputBoxNumber [(inputModel)]="totRt" [dec]="2" [maxlength]="15">
+                                    </InputBoxNumber>
                             </div>
                         </div>
                     </div>
@@ -317,33 +316,33 @@
                                 <th>T/T</th>
                                 <th>ROUTING</th>
                                 <th>CNTR.TYPE</th>
-                                <!-- <th>{{grdColHdr[0]}}</th>
-                                <th>{{grdColHdr[1]}}</th>
-                                <th>{{grdColHdr[2]}}</th>
-                                <th>{{grdColHdr[3]}}</th>
-                                <th>{{grdColHdr[4]}}</th>
-                                <th>{{grdColHdr[5]}}</th> -->
+                                <th>{{tblRtColHdr[0]}}</th>
+                                <th>{{tblRtColHdr[1]}}</th>
+                                <th>{{tblRtColHdr[2]}}</th>
+                                <th>{{tblRtColHdr[3]}}</th>
+                                <th>{{tblRtColHdr[4]}}</th>
+                                <th>{{tblRtColHdr[5]}}</th>
                                 <th>TOTAL</th>
                                 <th style="text-align:center">DELETE</th>
                             </tr>
                         </thead>
                         <tbody class="page-body-tbody">
                             <tr *ngFor="let rec of records">
-                                <td class="p-0">{{rec.qtnd_pol_name}} </td>
+                                <td class="p-0" (click)="EditRow(rec)">{{rec.qtnd_pol_name}} </td>
                                 <td class="p-0">{{rec.qtnd_pod_name}} </td>
                                 <td class="p-0">{{rec.qtnd_carrier_name}} </td>
-                                <td class="p-0">{{rec.qtnd_etd}} </td>
-                                <td class="p-0">{{rec.qtnd_cutoff}} </td>
-                                <td class="p-0">{{rec.qtnd_transtime}} </td>
-                                <td class="p-0">{{rec.qtnd_routing}} </td>
-                                <td class="p-0">{{rec.qtnd_cntr_type}} </td>
-                                <!-- <td class="p-0">{{grdColFld[0]}} </td>
-                                <td class="p-0">{{grdColFld[1]}} </td>
-                                <td class="p-0">{{grdColFld[2]}} </td>
-                                <td class="p-0">{{grdColFld[3]}} </td>
-                                <td class="p-0">{{grdColFld[4]}} </td>
-                                <td class="p-0">{{grdColFld[5]}} </td> -->
-                                <td class="p-0">{{rec.qtnd_tot_amt}} </td>
+                                <td class="p-0">{{rec.qtnd_etd}}</td>
+                                <td class="p-0">{{rec.qtnd_cutoff}}</td>
+                                <td class="p-0">{{rec.qtnd_transtime}}</td>
+                                <td class="p-0">{{rec.qtnd_routing}}</td>
+                                <td class="p-0">{{rec.qtnd_cntr_type}}</td>
+                                <td class="p-0">{{rec[tblRtColFld[0]]}}</td>
+                                <td class="p-0">{{rec[tblRtColFld[1]]}}</td>
+                                <td class="p-0">{{rec[tblRtColFld[2]]}}</td>
+                                <td class="p-0">{{rec[tblRtColFld[3]]}}</td>
+                                <td class="p-0">{{rec[tblRtColFld[4]]}}</td>
+                                <td class="p-0">{{rec[tblRtColFld[5]]}}</td>
+                                <td class="p-0">{{rec.qtnd_tot_amt}}</td>
                                 <td class="p-0" style="text-align:center"><i class="fa fa-trash  fa-lg pointer"
                                         aria-hidden="true" (click)="RemoveRow(rec)"></i></td>
                             </tr>
@@ -353,7 +352,6 @@
 
             </div>
         </div>
-
 
         <div class="row border">
             <div class="col-md-8  px-0 mx-0">

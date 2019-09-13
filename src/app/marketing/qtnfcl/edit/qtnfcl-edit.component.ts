@@ -36,6 +36,7 @@ export class QtnFclEditComponent implements OnInit {
     attach_filespath: string = '';
     attach_filespath2: string = '';
 
+    lblSave = "Add Row";
     mbl_pkid: string;
     pkid: string;
     menuid: string;
@@ -43,9 +44,31 @@ export class QtnFclEditComponent implements OnInit {
     errorMessage: string[] = [];
     Foregroundcolor: string;
 
-    grdColHdr: string[] = ['OFF','PSS','BAF','ISPS','HAULAGE','ISF'];
-    grdColFld: string[] = ['qtnd_of','rec.qtnd_pss','rec.qtnd_baf','rec.qtnd_isps','rec.qtnd_haulage','rec.qtnd_ifs'];
- 
+    //details
+    polId: string = '';
+    polCode: string = '';
+    polName: string = '';
+    podId: string = '';
+    podCode: string = '';
+    podName: string = '';
+    carrId: string = '';
+    carrCode: string = '';
+    carrName: string = '';
+    transitTime: string = '';
+    routing: string = '';
+    etd: string = '';
+    cutOff: string = '';
+    cntrType: string = '';
+    arrRtColHdr: string[] = ['OFF', 'PSS', 'BAF', 'ISPS', 'HAULAGE', 'IFS'];
+    arrRtColFld: string[] = ['qtnd_of', 'qtnd_pss', 'qtnd_baf', 'qtnd_isps', 'qtnd_haulage', 'qtnd_ifs'];
+    arrRtVal: any[] =  [{'qtnd_of':0}, {'qtnd_pss':0}, {'qtnd_baf':0}, {'qtnd_isps':0}, {'qtnd_haulage':0}, {'qtnd_ifs':0}];  
+
+    totRt: number = 0;
+    //List
+    tblRtColHdr: string[] = ['OFF', 'PSS', 'BAF', 'ISPS', 'HAULAGE', 'IFS'];
+    tblRtColFld: string[] = ['qtnd_of', 'qtnd_pss', 'qtnd_baf', 'qtnd_isps', 'qtnd_haulage', 'qtnd_ifs'];
+
+
     title: string;
     isAdmin: boolean;
     refno: string = "";
@@ -167,7 +190,7 @@ export class QtnFclEditComponent implements OnInit {
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
             });
-        }
+    }
 
 
     Save() {
@@ -243,7 +266,7 @@ export class QtnFclEditComponent implements OnInit {
         var rec = <Tbl_Cargo_Qtnd_Fcl>{};
         rec.qtnd_pkid = this.gs.getGuid();
         rec.qtnd_parent_id = this.pkid,
-        rec.qtnd_pol_code = '';
+            rec.qtnd_pol_code = '';
         rec.qtnd_pol_id = '';
         rec.qtnd_pol_name = '';
         rec.qtnd_pod_code = '';
@@ -264,8 +287,93 @@ export class QtnFclEditComponent implements OnInit {
         rec.qtnd_ifs = 0;
         rec.qtnd_haulage = 0;
         rec.qtnd_tot_amt = 0;
-       
+
         this.records.push(rec);
+    }
+    NewRow() {
+
+        // if (CmbList != null && UsrDeleteRec != null)
+        // {
+        //     CmbList.Remove(UsrDeleteRec);
+        //     UsrDeleteRec = null;
+        // }
+
+        // if (this.UserList != null && this.UsrDeleteId != '') {
+        //     this.UserList.splice(this.UserList.findIndex(rec => rec.id == this.UsrDeleteId), 1);
+        //     this.UsrDeleteId = '';
+        // }
+
+        // this.mode = "ADD";
+        // this.pkid = this.gs.getGuid();
+        // this.record = <Table_Cargo_Followup>{};
+        // this.record.cf_pkid = this.pkid;
+        // this.record.cf_master_id = this.cf_masterid;
+        // this.record.cf_user_id = this.gs.user_pkid;
+        // this.record.rec_created_by = this.gs.user_code;
+        // this.record.cf_followup_date = this.gs.defaultValues.today;
+        // this.record.cf_assigned_id = this.gs.user_pkid;
+        // this.record.cf_assigned_code = this.gs.user_code;
+        // this.record.cf_assigned_name = this.gs.user_name;
+        // this.record.cf_remarks = '';
+        // this.lblSave = "Save";
+        //Txtmemo.Focus();
+    }
+
+    AddData()
+    {
+        this.lblSave = "Add Row";
+        this.InitDetail();
+       // Txt_Pol_code.Focus();
+    }
+    InitDetail() {
+        this.polId = "";
+        this.polCode = "";
+        this.polName = "";
+        this.podId = "";
+        this.podCode = "";
+        this.podName = "";
+        this.carrId = "";
+        this.carrCode = "";
+        this.carrName = "";
+        this.transitTime = "";
+        this.routing = "";
+        this.cntrType = "";
+        this.etd = "";
+        this.cutOff = "";
+        this.arrRtVal[this.arrRtColFld[0]] = 0;
+        this.arrRtVal[this.arrRtColFld[1]] = 0;
+        this.arrRtVal[this.arrRtColFld[2]] = 0;
+        this.arrRtVal[this.arrRtColFld[3]] = 0;
+        this.arrRtVal[this.arrRtColFld[4]] = 0;
+        this.arrRtVal[this.arrRtColFld[5]] = 0;
+        this.totRt = 0;
+
+    }
+    EditRow(_rec:Tbl_Cargo_Qtnd_Fcl)
+    {
+        this.polId =_rec.qtnd_pol_id;
+        this.polCode = _rec.qtnd_pol_code;
+        this.polName = _rec.qtnd_pol_name;
+        this.podId = _rec.qtnd_pod_id;
+        this.podCode = _rec.qtnd_pod_code;
+        this.podName =_rec.qtnd_pod_name;
+        this.carrId =_rec.qtnd_carrier_id;
+        this.carrCode = _rec.qtnd_carrier_code;
+        this.carrName = _rec.qtnd_carrier_name;
+        this.transitTime = _rec.qtnd_transtime;
+        this.routing = _rec.qtnd_routing;
+        this.cntrType = _rec.qtnd_cntr_type;
+        this.etd = _rec.qtnd_etd;
+        this.cutOff = _rec.qtnd_cutoff;
+        this.arrRtVal[this.arrRtColFld[0]] =_rec.qtnd_of;
+        this.arrRtVal[this.arrRtColFld[1]] =_rec.qtnd_pss;
+        this.arrRtVal[this.arrRtColFld[2]] =_rec.qtnd_baf;
+        this.arrRtVal[this.arrRtColFld[3]] = _rec.qtnd_isps;
+        this.arrRtVal[this.arrRtColFld[4]] =_rec.qtnd_ifs;
+        this.arrRtVal[this.arrRtColFld[5]] = _rec.qtnd_haulage;
+        this.totRt = _rec.qtnd_tot_amt;
+        this.lblSave = "Update Row";
+        //Dispatcher.BeginInvoke(() => { Txt_Pol_code.Focus(); });
     }
 
     LovSelected(_Record: SearchTable) {
