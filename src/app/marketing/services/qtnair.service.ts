@@ -82,7 +82,7 @@ export class QtnAirService {
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
-        SearchData.STYPE = 'FCL';
+        SearchData.STYPE = 'AIR';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
