@@ -18,6 +18,10 @@ import { QtnFclHeaderComponent } from './qtnfcl/qtnfcl-header.component';
 import { QtnFclComponent } from './qtnfcl/qtnfcl.component';
 import { QtnFclEditComponent } from './qtnfcl/edit/qtnfcl-edit.component';
 
+import { QtnAirHeaderComponent } from './qtnair/qtnair-header.component';
+import { QtnAirComponent } from './qtnair/qtnair.component';
+import { QtnAirEditComponent } from './qtnair/edit/qtnair-edit.component';
+
 @NgModule({
   declarations: [
     QtnRateComponent,
@@ -31,7 +35,10 @@ import { QtnFclEditComponent } from './qtnfcl/edit/qtnfcl-edit.component';
     QtnLclEditComponent,
     QtnFclHeaderComponent,
     QtnFclComponent,
-    QtnFclEditComponent
+    QtnFclEditComponent,
+    QtnAirHeaderComponent,
+    QtnAirComponent,
+    QtnAirEditComponent
   ],
   imports: [
     SharedModule,    

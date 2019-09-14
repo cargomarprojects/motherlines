@@ -9,6 +9,9 @@ import { QtnLclComponent } from './qtnlcl/qtnlcl.component';
 import { QtnLclEditComponent } from './qtnlcl/edit/qtnlcl-edit.component';
 import { QtnFclComponent } from './qtnfcl/qtnfcl.component';
 import { QtnFclEditComponent } from './qtnfcl/edit/qtnfcl-edit.component';
+import { QtnAirComponent } from './qtnair/qtnair.component';
+import { QtnAirEditComponent } from './qtnair/edit/qtnair-edit.component';
+
 
 const routes: Routes = [
   { path : 'QuotationRatePage', component : QtnRateComponent },
@@ -19,6 +22,8 @@ const routes: Routes = [
   { path : 'QuotationLclEditPage', component : QtnLclEditComponent },
   { path : 'QuotationFCLPage', component : QtnFclComponent },
   { path : 'QuotationFclEditPage', component : QtnFclEditComponent },
+  { path : 'QuotationAIRPage', component : QtnAirComponent },
+  { path : 'QuotationAIREditPage', component : QtnAirEditComponent },
 ];
 
 

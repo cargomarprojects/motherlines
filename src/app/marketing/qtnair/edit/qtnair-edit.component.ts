@@ -4,20 +4,20 @@ import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
 import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
-import { QtnFclService } from '../../../marketing/services/qtnfcl.service';
+import { QtnAirService } from '../../../marketing/services/qtnair.service';
 import { User_Menu } from '../../../core/models/menum';
-import { Tbl_Cargo_Qtnm, vm_Tbl_Cargo_Qtnd_Fcl, Tbl_Cargo_Qtnd_Fcl } from '../../../marketing/models/tbl_cargo_qtnm';
+import { Tbl_Cargo_Qtnm, vm_Tbl_Cargo_Qtnd_Air, Tbl_Cargo_Qtnd_Air } from '../../../marketing/models/tbl_cargo_qtnm';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
-
+ 
 @Component({
-    selector: 'app-qtnfcl-edit',
-    templateUrl: './qtnfcl-edit.component.html'
+    selector: 'app-qtnair-edit',
+    templateUrl: './qtnair-edit.component.html'
 })
-export class QtnFclEditComponent implements OnInit {
+export class QtnAirEditComponent implements OnInit {
 
     record: Tbl_Cargo_Qtnm = <Tbl_Cargo_Qtnm>{};
-    records: Tbl_Cargo_Qtnd_Fcl[] = [];
+    records: Tbl_Cargo_Qtnd_Air[] = [];
 
     tab: string = 'main';
 
@@ -75,7 +75,7 @@ export class QtnFclEditComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
-        private mainService: QtnFclService,
+        private mainService: QtnAirService,
     ) { }
 
     ngOnInit() {
@@ -159,7 +159,7 @@ export class QtnFclEditComponent implements OnInit {
         this.errorMessage = [];
         if (this.mode == 'ADD') {
             this.record = <Tbl_Cargo_Qtnm>{};
-            this.records = <Tbl_Cargo_Qtnd_Fcl[]>[];
+            this.records = <Tbl_Cargo_Qtnd_Air[]>[];
             this.pkid = this.gs.getGuid();
             this.init();
             this.NewRow();
@@ -229,7 +229,7 @@ export class QtnFclEditComponent implements OnInit {
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
                 this.record = <Tbl_Cargo_Qtnm>response.record;
-                this.records = <Tbl_Cargo_Qtnd_Fcl[]>response.records;
+                this.records = <Tbl_Cargo_Qtnd_Air[]>response.records;
                 this.mode = 'EDIT';
                 if (this.record.rec_files_attached == "Y")
                     this.Foregroundcolor = "red";
@@ -247,7 +247,7 @@ export class QtnFclEditComponent implements OnInit {
         if (!this.Allvalid())
             return;
         this.SaveParent();
-        const saveRecord = <vm_Tbl_Cargo_Qtnd_Fcl>{};
+        const saveRecord = <vm_Tbl_Cargo_Qtnd_Air>{};
         saveRecord.record = this.record;
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
@@ -314,11 +314,11 @@ export class QtnFclEditComponent implements OnInit {
     AddRow() {
 
         if (this.records == null)
-            this.records = <Tbl_Cargo_Qtnd_Fcl[]>[];
+            this.records = <Tbl_Cargo_Qtnd_Air[]>[];
 
         var rec = this.records.find(rec => rec.qtnd_pkid == this.qtnd_pkid);
         if (rec == null) {
-            rec = <Tbl_Cargo_Qtnd_Fcl>{};
+            rec = <Tbl_Cargo_Qtnd_Air>{};
             rec.qtnd_pkid = this.qtnd_pkid;
             rec.qtnd_parent_id = this.pkid;
             this.records.push(rec);
@@ -334,16 +334,16 @@ export class QtnFclEditComponent implements OnInit {
         rec.qtnd_carrier_name = this.carrName;
         rec.qtnd_transtime = this.transitTime;
         rec.qtnd_routing = this.routing
-        rec.qtnd_cntr_type = this.cntrType
+       // rec.qtnd_cntr_type = this.cntrType
         rec.qtnd_etd = this.etd;
-        rec.qtnd_cutoff = this.cutOff;
-        rec[this.arrRtColFld[0]] = this.arrRtVal[this.arrRtColFld[0]];
-        rec[this.arrRtColFld[1]] = this.arrRtVal[this.arrRtColFld[1]];
-        rec[this.arrRtColFld[2]] = this.arrRtVal[this.arrRtColFld[2]];
-        rec[this.arrRtColFld[3]] = this.arrRtVal[this.arrRtColFld[3]];
-        rec[this.arrRtColFld[4]] = this.arrRtVal[this.arrRtColFld[4]];
-        rec[this.arrRtColFld[5]] = this.arrRtVal[this.arrRtColFld[5]];
-        rec.qtnd_tot_amt = this.totAmt;
+       // rec.qtnd_cutoff = this.cutOff;
+        // rec[this.arrRtColFld[0]] = this.arrRtVal[this.arrRtColFld[0]];
+        // rec[this.arrRtColFld[1]] = this.arrRtVal[this.arrRtColFld[1]];
+        // rec[this.arrRtColFld[2]] = this.arrRtVal[this.arrRtColFld[2]];
+        // rec[this.arrRtColFld[3]] = this.arrRtVal[this.arrRtColFld[3]];
+        // rec[this.arrRtColFld[4]] = this.arrRtVal[this.arrRtColFld[4]];
+        // rec[this.arrRtColFld[5]] = this.arrRtVal[this.arrRtColFld[5]];
+      ///  rec.qtnd_tot_amt = this.totAmt;
 
         this.NewRow();
 
@@ -370,16 +370,16 @@ export class QtnFclEditComponent implements OnInit {
         this.cntrType = "";
         this.etd = "";
         this.cutOff = "";
-        this.arrRtVal[this.arrRtColFld[0]] = 0;
-        this.arrRtVal[this.arrRtColFld[1]] = 0;
-        this.arrRtVal[this.arrRtColFld[2]] = 0;
-        this.arrRtVal[this.arrRtColFld[3]] = 0;
-        this.arrRtVal[this.arrRtColFld[4]] = 0;
-        this.arrRtVal[this.arrRtColFld[5]] = 0;
-        this.totAmt = 0;
+        // this.arrRtVal[this.arrRtColFld[0]] = 0;
+        // this.arrRtVal[this.arrRtColFld[1]] = 0;
+        // this.arrRtVal[this.arrRtColFld[2]] = 0;
+        // this.arrRtVal[this.arrRtColFld[3]] = 0;
+        // this.arrRtVal[this.arrRtColFld[4]] = 0;
+        // this.arrRtVal[this.arrRtColFld[5]] = 0;
+        // this.totAmt = 0;
 
     }
-    EditRow(_rec: Tbl_Cargo_Qtnd_Fcl) {
+    EditRow(_rec: Tbl_Cargo_Qtnd_Air) {
         this.qtnd_pkid = _rec.qtnd_pkid;
         this.polId = _rec.qtnd_pol_id;
         this.polCode = _rec.qtnd_pol_code;
@@ -392,16 +392,16 @@ export class QtnFclEditComponent implements OnInit {
         this.carrName = _rec.qtnd_carrier_name;
         this.transitTime = _rec.qtnd_transtime;
         this.routing = _rec.qtnd_routing;
-        this.cntrType = _rec.qtnd_cntr_type;
+       // this.cntrType = _rec.qtnd_cntr_type;
         this.etd = _rec.qtnd_etd;
-        this.cutOff = _rec.qtnd_cutoff;
-        this.arrRtVal[this.arrRtColFld[0]] = _rec[this.arrRtColFld[0]];
-        this.arrRtVal[this.arrRtColFld[1]] = _rec[this.arrRtColFld[1]];
-        this.arrRtVal[this.arrRtColFld[2]] = _rec[this.arrRtColFld[2]];
-        this.arrRtVal[this.arrRtColFld[3]] = _rec[this.arrRtColFld[3]];
-        this.arrRtVal[this.arrRtColFld[4]] = _rec[this.arrRtColFld[4]];
-        this.arrRtVal[this.arrRtColFld[5]] = _rec[this.arrRtColFld[5]];
-        this.totAmt = _rec.qtnd_tot_amt;
+        // this.cutOff = _rec.qtnd_cutoff;
+        // this.arrRtVal[this.arrRtColFld[0]] = _rec[this.arrRtColFld[0]];
+        // this.arrRtVal[this.arrRtColFld[1]] = _rec[this.arrRtColFld[1]];
+        // this.arrRtVal[this.arrRtColFld[2]] = _rec[this.arrRtColFld[2]];
+        // this.arrRtVal[this.arrRtColFld[3]] = _rec[this.arrRtColFld[3]];
+        // this.arrRtVal[this.arrRtColFld[4]] = _rec[this.arrRtColFld[4]];
+        // this.arrRtVal[this.arrRtColFld[5]] = _rec[this.arrRtColFld[5]];
+        // this.totAmt = _rec.qtnd_tot_amt;
         this.lblSave = "Update Row";
         //Dispatcher.BeginInvoke(() => { Txt_Pol_code.Focus(); });
     }
@@ -496,7 +496,7 @@ export class QtnFclEditComponent implements OnInit {
         this.tab = 'main';
     }
 
-    RemoveRow(_rec: Tbl_Cargo_Qtnd_Fcl) {
+    RemoveRow(_rec: Tbl_Cargo_Qtnd_Air) {
         this.records.splice(this.records.findIndex(rec => rec.qtnd_pkid == _rec.qtnd_pkid), 1);
     }
 
