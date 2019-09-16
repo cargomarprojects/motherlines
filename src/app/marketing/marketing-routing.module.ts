@@ -23,7 +23,7 @@ const routes: Routes = [
   { path : 'QuotationFCLPage', component : QtnFclComponent },
   { path : 'QuotationFclEditPage', component : QtnFclEditComponent },
   { path : 'QuotationAIRPage', component : QtnAirComponent },
-  { path : 'QuotationAIREditPage', component : QtnAirEditComponent },
+  { path : 'QuotationAirEditPage', component : QtnAirEditComponent },
 ];
 
 
