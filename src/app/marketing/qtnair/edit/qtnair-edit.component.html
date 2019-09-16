@@ -160,6 +160,26 @@
                                 </InputBox>
                             </div>
                         </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label col-form-label-sm">POD</label>
+                            <div class="col-9">
+                                <app-autocomplete2 [controlname]="'POD'" [displaycolumn]="'CODE'"
+                                    [tabletype]="'PARAMDET'" [subtype]="'SEA PORT'" [displaydata]="podCode"
+                                    (ValueChanged)="LovSelected($event)">
+                                </app-autocomplete2>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label col-form-label-sm"></label>
+                            <div class="col-9">
+                                <InputBox [(inputModel)]="podName" [maxlength]="60" [uppercase]="true" #pod_name>
+                                </InputBox>
+                            </div>
+                        </div>
+
+
                     </div>
                     <div class="col-md-4 testbox  px-0 mx-0">
                         <div class="form-group row">
@@ -178,34 +198,16 @@
                                 </InputBox>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4 testbox  px-0 mx-0">
-                        <div class="form-group row">
-                            <label class="col-3 col-form-label col-form-label-sm">CARRIER</label>
-                            <div class="col-9">
-                                <app-autocomplete2 [controlname]="'CARR'" [displaycolumn]="'CODE'"
-                                    [tabletype]="'SEA CARRIER'" [subtype]="'SEA CARRIER'" [displaydata]="carrCode"
-                                    (ValueChanged)="LovSelected($event)">
-                                </app-autocomplete2>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-3 col-form-label col-form-label-sm"></label>
-                            <div class="col-9">
-                                <InputBox [(inputModel)]="carrName" [maxlength]="60" [uppercase]="true" #carr_name>
-                                </InputBox>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 testbox  px-0 mx-0">
-                        <div class="form-group row">
+
+<div class="form-group row">
                             <div class="col-2  pl-0  pr-0">
                                 <label class="col-form-label col-form-label-sm">T/T</label>
                             </div>
-                            <div class="col-4 pl-0  pr-0">
+                            <div class="col-2 pl-0  pr-0">
                                 <label class="col-form-label col-form-label-sm">ROUTING</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">ROUTING2</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
                                 <label class="col-form-label col-form-label-sm">CNTR.TYPE</label>
@@ -223,8 +225,135 @@
                                     #transit_time>
                                 </InputBox>
                             </div>
-                            <div class="col-4 pl-0  pr-0">
+                            <div class="col-2 pl-0  pr-0">
                                 <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing1>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing2>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="cntrType" [maxlength]="6" [uppercase]="true" #cntr_type>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="etd" [maxlength]="25" [uppercase]="true" #etd1></InputBox>
+                            </div>
+
+                            <div class="col-2 pl-0  ">
+                                <InputBox [(inputModel)]="cutOff" [maxlength]="25" [uppercase]="true" #cut_off>
+                                </InputBox>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="col-md-4 testbox  px-0 mx-0">
+                        <!-- <div class="form-group row">
+                            <label class="col-3 col-form-label col-form-label-sm">CARRIER</label>
+                            <div class="col-9">
+                                <app-autocomplete2 [controlname]="'CARR'" [displaycolumn]="'CODE'"
+                                    [tabletype]="'SEA CARRIER'" [subtype]="'SEA CARRIER'" [displaydata]="carrCode"
+                                    (ValueChanged)="LovSelected($event)">
+                                </app-autocomplete2>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label col-form-label-sm"></label>
+                            <div class="col-9">
+                                <InputBox [(inputModel)]="carrName" [maxlength]="60" [uppercase]="true" #carr_name>
+                                </InputBox>
+                            </div>
+                        </div> -->
+
+
+                        <div class="form-group row">
+                            <div class="col-2  pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">T/T</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">ROUTING</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">ROUTING2</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">CNTR.TYPE</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">ETD</label>
+                            </div>
+                            <div class="col-2 pl-0">
+                                <label class="col-form-label col-form-label-sm">CUTT.OFF</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2  pl-0  pr-0">
+                                <InputBox [(inputModel)]="transitTime" [maxlength]="15" [uppercase]="true"
+                                    #transit_time>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing1>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing2>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="cntrType" [maxlength]="6" [uppercase]="true" #cntr_type>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="etd" [maxlength]="25" [uppercase]="true" #etd1></InputBox>
+                            </div>
+
+                            <div class="col-2 pl-0  ">
+                                <InputBox [(inputModel)]="cutOff" [maxlength]="25" [uppercase]="true" #cut_off>
+                                </InputBox>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 testbox  px-0 mx-0">
+                        <div class="form-group row">
+                            <div class="col-2  pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">T/T</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">ROUTING</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">ROUTING2</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">CNTR.TYPE</label>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <label class="col-form-label col-form-label-sm">ETD</label>
+                            </div>
+                            <div class="col-2 pl-0">
+                                <label class="col-form-label col-form-label-sm">CUTT.OFF</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2  pl-0  pr-0">
+                                <InputBox [(inputModel)]="transitTime" [maxlength]="15" [uppercase]="true"
+                                    #transit_time>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing1>
+                                </InputBox>
+                            </div>
+                            <div class="col-2 pl-0  pr-0">
+                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing2>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
@@ -264,27 +393,33 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-2   pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[0]]" [dec]="2"  [maxlength]="15" [field]="'arrRtVal1'" (blur)="onBlur($event)">
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[0]]" [dec]="2" [maxlength]="15"
+                                    [field]="'arrRtVal1'" (blur)="onBlur($event)">
                                 </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[1]]" [dec]="2" [maxlength]="15" [field]="'arrRtVal2'" (blur)="onBlur($event)">
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[1]]" [dec]="2" [maxlength]="15"
+                                    [field]="'arrRtVal2'" (blur)="onBlur($event)">
                                 </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[2]]" [dec]="2" [maxlength]="15" [field]="'arrRtVal3'" (blur)="onBlur($event)">
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[2]]" [dec]="2" [maxlength]="15"
+                                    [field]="'arrRtVal3'" (blur)="onBlur($event)">
                                 </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[3]]" [dec]="2" [maxlength]="15" [field]="'arrRtVal4'" (blur)="onBlur($event)">
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[3]]" [dec]="2" [maxlength]="15"
+                                    [field]="'arrRtVal4'" (blur)="onBlur($event)">
                                 </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[4]]" [dec]="2" [maxlength]="15" [field]="'arrRtVal5'" (blur)="onBlur($event)">
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[4]]" [dec]="2" [maxlength]="15"
+                                    [field]="'arrRtVal5'" (blur)="onBlur($event)">
                                 </InputBoxNumber>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[5]]" [dec]="2" [maxlength]="15" [field]="'arrRtVal6'" (blur)="onBlur($event)">
+                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[5]]" [dec]="2" [maxlength]="15"
+                                    [field]="'arrRtVal6'" (blur)="onBlur($event)">
                                 </InputBoxNumber>
                             </div>
                         </div>
@@ -298,8 +433,8 @@
                                 <label class="col-form-label col-form-label-sm">TOTAL</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                    <InputBoxNumber [(inputModel)]="totAmt" [dec]="2" [maxlength]="15" [disabled]="true">
-                                    </InputBoxNumber>
+                                <InputBoxNumber [(inputModel)]="totAmt" [dec]="2" [maxlength]="15" [disabled]="true">
+                                </InputBoxNumber>
                             </div>
                         </div>
                     </div>
