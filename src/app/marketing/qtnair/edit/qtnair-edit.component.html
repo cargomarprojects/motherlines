@@ -183,10 +183,10 @@
                     </div>
                     <div class="col-md-4 testbox  px-0 mx-0">
                         <div class="form-group row">
-                            <label class="col-3 col-form-label col-form-label-sm">POD</label>
+                            <label class="col-3 col-form-label col-form-label-sm">CARRIER</label>
                             <div class="col-9">
-                                <app-autocomplete2 [controlname]="'POD'" [displaycolumn]="'CODE'"
-                                    [tabletype]="'PARAMDET'" [subtype]="'SEA PORT'" [displaydata]="podCode"
+                                <app-autocomplete2 [controlname]="'CARR'" [displaycolumn]="'CODE'"
+                                    [tabletype]="'SEA CARRIER'" [subtype]="'SEA CARRIER'" [displaydata]="carrCode"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>
@@ -194,61 +194,38 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="podName" [maxlength]="60" [uppercase]="true" #pod_name>
+                                <InputBox [(inputModel)]="carrName" [maxlength]="60" [uppercase]="true" #carr_name>
                                 </InputBox>
                             </div>
                         </div>
 
-<div class="form-group row">
-                            <div class="col-2  pl-0  pr-0">
+                        <div class="form-group row">
+                            <div class="col-4  pr-0">
                                 <label class="col-form-label col-form-label-sm">T/T</label>
                             </div>
-                            <div class="col-2 pl-0  pr-0">
+                            <div class="col-4 pl-0  pr-0">
                                 <label class="col-form-label col-form-label-sm">ROUTING</label>
                             </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">ROUTING2</label>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">CNTR.TYPE</label>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
+
+                            <div class="col-4 pl-0  ">
                                 <label class="col-form-label col-form-label-sm">ETD</label>
                             </div>
-                            <div class="col-2 pl-0">
-                                <label class="col-form-label col-form-label-sm">CUTT.OFF</label>
-                            </div>
+
                         </div>
                         <div class="form-group row">
-                            <div class="col-2  pl-0  pr-0">
+                            <div class="col-4    pr-0">
                                 <InputBox [(inputModel)]="transitTime" [maxlength]="15" [uppercase]="true"
                                     #transit_time>
                                 </InputBox>
                             </div>
-                            <div class="col-2 pl-0  pr-0">
+                            <div class="col-4 pl-0  pr-0">
                                 <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing1>
                                 </InputBox>
                             </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing2>
-                                </InputBox>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="cntrType" [maxlength]="6" [uppercase]="true" #cntr_type>
-                                </InputBox>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
+                            <div class="col-4 pl-0  ">
                                 <InputBox [(inputModel)]="etd" [maxlength]="25" [uppercase]="true" #etd1></InputBox>
                             </div>
-
-                            <div class="col-2 pl-0  ">
-                                <InputBox [(inputModel)]="cutOff" [maxlength]="25" [uppercase]="true" #cut_off>
-                                </InputBox>
-                            </div>
                         </div>
-
-
-
 
                     </div>
                     <div class="col-md-4 testbox  px-0 mx-0">
@@ -272,22 +249,22 @@
 
                         <div class="form-group row">
                             <div class="col-2  pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">T/T</label>
+                                <label class="col-form-label col-form-label-sm">MINIMUM</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">ROUTING</label>
+                                <label class="col-form-label col-form-label-sm">+45K</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">ROUTING2</label>
+                                <label class="col-form-label col-form-label-sm">+100K</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">CNTR.TYPE</label>
+                                <label class="col-form-label col-form-label-sm">+300K</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">ETD</label>
+                                <label class="col-form-label col-form-label-sm">+500K</label>
                             </div>
                             <div class="col-2 pl-0">
-                                <label class="col-form-label col-form-label-sm">CUTT.OFF</label>
+                                <label class="col-form-label col-form-label-sm">+1000K</label>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -317,29 +294,24 @@
                                 </InputBox>
                             </div>
                         </div>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 testbox  px-0 mx-0">
                         <div class="form-group row">
                             <div class="col-2  pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">T/T</label>
+                                <label class="col-form-label col-form-label-sm">FSC</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">ROUTING</label>
+                                <label class="col-form-label col-form-label-sm">WAR</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">ROUTING2</label>
+                                <label class="col-form-label col-form-label-sm">SFC</label>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">CNTR.TYPE</label>
+                                <label class="col-form-label col-form-label-sm">HAC</label>
                             </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">ETD</label>
+                            <div class="col-2">
+                                <label class="col-form-label col-form-label-sm"></label>
                             </div>
-                            <div class="col-2 pl-0">
-                                <label class="col-form-label col-form-label-sm">CUTT.OFF</label>
+                            <div class="col-2">
+                                <label class="col-form-label col-form-label-sm"></label>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -360,85 +332,15 @@
                                 <InputBox [(inputModel)]="cntrType" [maxlength]="6" [uppercase]="true" #cntr_type>
                                 </InputBox>
                             </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="etd" [maxlength]="25" [uppercase]="true" #etd1></InputBox>
-                            </div>
-
-                            <div class="col-2 pl-0  ">
-                                <InputBox [(inputModel)]="cutOff" [maxlength]="25" [uppercase]="true" #cut_off>
-                                </InputBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 testbox  px-0 mx-0">
-                        <div class="form-group row">
-                            <div class="col-2  pr-0">
-                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[0]}}</label>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[1]}}</label>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[2]}}</label>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[3]}}</label>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[4]}}</label>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <label class="col-form-label col-form-label-sm">{{arrRtColHdr[5]}}</label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-2   pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[0]]" [dec]="2" [maxlength]="15"
-                                    [field]="'arrRtVal1'" (blur)="onBlur($event)">
-                                </InputBoxNumber>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[1]]" [dec]="2" [maxlength]="15"
-                                    [field]="'arrRtVal2'" (blur)="onBlur($event)">
-                                </InputBoxNumber>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[2]]" [dec]="2" [maxlength]="15"
-                                    [field]="'arrRtVal3'" (blur)="onBlur($event)">
-                                </InputBoxNumber>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[3]]" [dec]="2" [maxlength]="15"
-                                    [field]="'arrRtVal4'" (blur)="onBlur($event)">
-                                </InputBoxNumber>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[4]]" [dec]="2" [maxlength]="15"
-                                    [field]="'arrRtVal5'" (blur)="onBlur($event)">
-                                </InputBoxNumber>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="arrRtVal[arrRtColFld[5]]" [dec]="2" [maxlength]="15"
-                                    [field]="'arrRtVal6'" (blur)="onBlur($event)">
-                                </InputBoxNumber>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-8">
+                            <div class="col-4">
                                 <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">{{lblSave}}</button>
-                                <button class="btn btn-success btn-sm mr-1" (click)="NewRow()">New Row</button>
-                            </div>
-                            <div class="col-2 pl-0  pr-0" style="text-align:center">
-                                <label class="col-form-label col-form-label-sm">TOTAL</label>
-                            </div>
-                            <div class="col-2 pl-0  pr-0">
-                                <InputBoxNumber [(inputModel)]="totAmt" [dec]="2" [maxlength]="15" [disabled]="true">
-                                </InputBoxNumber>
+                                <button class="btn btn-success btn-sm mr-1" (click)="NewRow()">New</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
+                    
                 <div class="page-body table-responsive">
                     <table class="table  table-hover table-sm">
                         <thead class="page-body-thead">
