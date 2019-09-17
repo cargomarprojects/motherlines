@@ -94,7 +94,7 @@ export class QtnAirEditComponent implements OnInit {
         this.title = this.gs.getTitle(this.menuid);
         this.errorMessage = [];
         this.LoadCombo();
-        this.LoadLabelHeader();
+      //  this.LoadLabelHeader();
 
     }
 
