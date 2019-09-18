@@ -148,7 +148,7 @@
                             <label class="col-3 col-form-label col-form-label-sm">POL</label>
                             <div class="col-9">
                                 <app-autocomplete2 [controlname]="'POL'" [displaycolumn]="'CODE'"
-                                    [tabletype]="'PARAMDET'" [subtype]="'SEA PORT'" [displaydata]="polCode"
+                                    [tabletype]="'PARAMDET'" [subtype]="'AIR PORT'" [displaydata]="polCode"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>
@@ -166,7 +166,7 @@
                             <label class="col-3 col-form-label col-form-label-sm">POD</label>
                             <div class="col-9">
                                 <app-autocomplete2 [controlname]="'POD'" [displaycolumn]="'CODE'"
-                                    [tabletype]="'PARAMDET'" [subtype]="'SEA PORT'" [displaydata]="podCode"
+                                    [tabletype]="'PARAMDET'" [subtype]="'AIR PORT'" [displaydata]="podCode"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>
@@ -186,7 +186,7 @@
                             <label class="col-3 col-form-label col-form-label-sm">CARRIER</label>
                             <div class="col-9">
                                 <app-autocomplete2 [controlname]="'CARR'" [displaycolumn]="'CODE'"
-                                    [tabletype]="'SEA CARRIER'" [subtype]="'SEA CARRIER'" [displaydata]="carrCode"
+                                    [tabletype]="'AIR CARRIER'" [subtype]="'AIR CARRIER'" [displaydata]="carrCode"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>
@@ -269,28 +269,28 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-2  pl-0  pr-0">
-                                <InputBox [(inputModel)]="transitTime" [maxlength]="15" [uppercase]="true"
-                                    #transit_time>
+                                <InputBox [(inputModel)]="kmin" [maxlength]="25" [uppercase]="true"
+                                    #k_min>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing1>
+                                <InputBox [(inputModel)]="k45" [maxlength]="15" [uppercase]="true" #k_45>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing2>
+                                <InputBox [(inputModel)]="k100" [maxlength]="15" [uppercase]="true" #k_100>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="cntrType" [maxlength]="6" [uppercase]="true" #cntr_type>
+                                <InputBox [(inputModel)]="k300" [maxlength]="15" [uppercase]="true" #k_300>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="etd" [maxlength]="25" [uppercase]="true" #etd1></InputBox>
+                                <InputBox [(inputModel)]="k500" [maxlength]="15" [uppercase]="true" #k_500></InputBox>
                             </div>
 
                             <div class="col-2 pl-0  ">
-                                <InputBox [(inputModel)]="cutOff" [maxlength]="25" [uppercase]="true" #cut_off>
+                                <InputBox [(inputModel)]="k1000" [maxlength]="15" [uppercase]="true" #k_1000>
                                 </InputBox>
                             </div>
                         </div>
@@ -316,20 +316,20 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-2  pl-0  pr-0">
-                                <InputBox [(inputModel)]="transitTime" [maxlength]="15" [uppercase]="true"
-                                    #transit_time>
+                                <InputBox [(inputModel)]="fsc" [maxlength]="15" [uppercase]="true"
+                                    #k_fsc>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing1>
+                                <InputBox [(inputModel)]="war" [maxlength]="15" [uppercase]="true" #k_war>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="routing" [maxlength]="60" [uppercase]="true" #routing2>
+                                <InputBox [(inputModel)]="sfc" [maxlength]="15" [uppercase]="true" #k_sfc>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
-                                <InputBox [(inputModel)]="cntrType" [maxlength]="6" [uppercase]="true" #cntr_type>
+                                <InputBox [(inputModel)]="hac" [maxlength]="15" [uppercase]="true" #k_hac>
                                 </InputBox>
                             </div>
                             <div class="col-4">
@@ -349,17 +349,18 @@
                                 <th>POD</th>
                                 <th>CARRIER</th>
                                 <th>ETD</th>
-                                <th>CUTT.OFF</th>
                                 <th>T/T</th>
                                 <th>ROUTING</th>
-                                <th>CNTR.TYPE</th>
-                                <th>{{arrRtColHdr[0]}}</th>
-                                <th>{{arrRtColHdr[1]}}</th>
-                                <th>{{arrRtColHdr[2]}}</th>
-                                <th>{{arrRtColHdr[3]}}</th>
-                                <th>{{arrRtColHdr[4]}}</th>
-                                <th>{{arrRtColHdr[5]}}</th>
-                                <th>TOTAL</th>
+                                <th>MINIMUM</th>
+                                <th>+45K</th>
+                                <th>+100K</th>
+                                <th>+300K</th>
+                                <th>+500K</th>
+                                <th>+1000K</th>
+                                <th>FSC</th>
+                                <th>WAR</th>
+                                <th>SFC</th>
+                                <th>HAC</th>
                                 <th style="text-align:center">DELETE</th>
                             </tr>
                         </thead>
@@ -369,17 +370,18 @@
                                 <td class="p-0">{{rec.qtnd_pod_name}} </td>
                                 <td class="p-0">{{rec.qtnd_carrier_name}} </td>
                                 <td class="p-0">{{rec.qtnd_etd}}</td>
-                                <td class="p-0">{{rec.qtnd_cutoff}}</td>
                                 <td class="p-0">{{rec.qtnd_transtime}}</td>
                                 <td class="p-0">{{rec.qtnd_routing}}</td>
-                                <td class="p-0">{{rec.qtnd_cntr_type}}</td>
-                                <td class="p-0">{{rec[arrRtColFld[0]]}}</td>
-                                <td class="p-0">{{rec[arrRtColFld[1]]}}</td>
-                                <td class="p-0">{{rec[arrRtColFld[2]]}}</td>
-                                <td class="p-0">{{rec[arrRtColFld[3]]}}</td>
-                                <td class="p-0">{{rec[arrRtColFld[4]]}}</td>
-                                <td class="p-0">{{rec[arrRtColFld[5]]}}</td>
-                                <td class="p-0">{{rec.qtnd_tot_amt}}</td>
+                                <td class="p-0">{{rec.qtnd_min}}</td>
+                                <td class="p-0">{{rec.qtnd_45k}}</td>
+                                <td class="p-0">{{rec.qtnd_100k}}</td>
+                                <td class="p-0">{{rec.qtnd_300k}}</td>
+                                <td class="p-0">{{rec.qtnd_500k}}</td>
+                                <td class="p-0">{{rec.qtnd_1000k}}</td>
+                                <td class="p-0">{{rec.qtnd_fsc}}</td>
+                                <td class="p-0">{{rec.qtnd_war}}</td>
+                                <td class="p-0">{{rec.qtnd_sfc}}</td>
+                                <td class="p-0">{{rec.qtnd_hac}}</td>
                                 <td class="p-0" style="text-align:center"><i class="fa fa-trash  fa-lg pointer"
                                         aria-hidden="true" (click)="RemoveRow(rec)"></i></td>
                             </tr>
@@ -396,11 +398,11 @@
                     <div class="col-12 px-0 mx-0">
                         <div class="form-group row">
                             <div class="offset-1 col-11">
-                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('FCLMSG1')">Msg 1
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('AIRMSG1')">Msg 1
                                     (C-Imp)</button>
-                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('FCLMSG2')">Msg 2
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('AIRMSG2')">Msg 2
                                     (C-Exp)</button>
-                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('FCLMSG3')">Msg 3
+                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('AIRMSG3')">Msg 3
                                     (A-Exp)</button>
                             </div>
                         </div>

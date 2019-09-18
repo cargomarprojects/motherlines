@@ -9,7 +9,7 @@ import { User_Menu } from '../../../core/models/menum';
 import { Tbl_Cargo_Qtnm, vm_Tbl_Cargo_Qtnd_Air, Tbl_Cargo_Qtnd_Air } from '../../../marketing/models/tbl_cargo_qtnm';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
- 
+
 @Component({
     selector: 'app-qtnair-edit',
     templateUrl: './qtnair-edit.component.html'
@@ -36,7 +36,7 @@ export class QtnAirEditComponent implements OnInit {
     attach_filespath: string = '';
     attach_filespath2: string = '';
 
-    lblSave = "Add Row";
+    lblSave = "Add";
     qtnd_pkid: string;
     mbl_pkid: string;
     pkid: string;
@@ -58,11 +58,17 @@ export class QtnAirEditComponent implements OnInit {
     transitTime: string = '';
     routing: string = '';
     etd: string = '';
-    cutOff: string = '';
-    cntrType: string = '';
-    arrRtColHdr: string[] = ['OFF', 'PSS', 'BAF', 'ISPS', 'HAULAGE', 'IFS'];
-    arrRtColFld: string[] = ['qtnd_of', 'qtnd_pss', 'qtnd_baf', 'qtnd_isps', 'qtnd_haulage', 'qtnd_ifs'];
-    arrRtVal: any[] = [{ 'qtnd_of': 0 }, { 'qtnd_pss': 0 }, { 'qtnd_baf': 0 }, { 'qtnd_isps': 0 }, { 'qtnd_haulage': 0 }, { 'qtnd_ifs': 0 }];
+
+    kmin: string = '';
+    k45: string = '';
+    k100: string = '';
+    k300: string = '';
+    k500: string = '';
+    k1000: string = '';
+    fsc: string = '';
+    war: string = '';
+    sfc: string = '';
+    hac: string = '';
 
     totAmt: number = 0;
 
@@ -94,61 +100,11 @@ export class QtnAirEditComponent implements OnInit {
         this.title = this.gs.getTitle(this.menuid);
         this.errorMessage = [];
         this.LoadCombo();
-      //  this.LoadLabelHeader();
-
     }
 
     LoadCombo() {
 
     }
-    LoadLabelHeader() {
-        this.errorMessage = [];
-        var SearchData = this.gs.UserInfo;
-        this.mainService.LoadLabelHeader(SearchData)
-            .subscribe(response => {
-                let LblList = <any[]>response.records;
-                if (LblList != null) {
-                    for (let c = 0; c < 6; c++) {
-                        this.ArrangeControls(LblList[c], c);
-                    }
-                }
-            }, error => {
-                this.errorMessage.push(this.gs.getError(error));
-            });
-    }
-
-    ArrangeControls(sItems: string, ColPos: number) {
-        var sdata = sItems.split(',');
-        switch (sdata[0].trim()) {
-            case "GENERAL_FCL_QUOT_LABEL_OF":
-                this.arrRtColHdr[ColPos] = sdata[1];
-                this.arrRtColFld[ColPos] = "qtnd_of";
-                break;
-            case "GENERAL_FCL_QUOT_LABEL_PSS":
-                this.arrRtColHdr[ColPos] = sdata[1];
-                this.arrRtColFld[ColPos] = "qtnd_pss";
-                break;
-            case "GENERAL_FCL_QUOT_LABEL_BAF":
-                this.arrRtColHdr[ColPos] = sdata[1];
-                this.arrRtColFld[ColPos] = "qtnd_baf";
-                break;
-            case "GENERAL_FCL_QUOT_LABEL_ISPS":
-                this.arrRtColHdr[ColPos] = sdata[1];
-                this.arrRtColFld[ColPos] = "qtnd_isps";
-                break;
-            case "GENERAL_FCL_QUOT_LABEL_HAULAGE":
-                this.arrRtColHdr[ColPos] = sdata[1];
-                this.arrRtColFld[ColPos] = "qtnd_haulage";
-                break;
-            case "GENERAL_FCL_QUOT_LABEL_IFS":
-                this.arrRtColHdr[ColPos] = sdata[1];
-                this.arrRtColFld[ColPos] = "qtnd_ifs";
-                break;
-        }
-    }
-
-
-
 
     NewRecord() {
         this.mode = 'ADD'
@@ -334,23 +290,23 @@ export class QtnAirEditComponent implements OnInit {
         rec.qtnd_carrier_name = this.carrName;
         rec.qtnd_transtime = this.transitTime;
         rec.qtnd_routing = this.routing
-       // rec.qtnd_cntr_type = this.cntrType
         rec.qtnd_etd = this.etd;
-       // rec.qtnd_cutoff = this.cutOff;
-        // rec[this.arrRtColFld[0]] = this.arrRtVal[this.arrRtColFld[0]];
-        // rec[this.arrRtColFld[1]] = this.arrRtVal[this.arrRtColFld[1]];
-        // rec[this.arrRtColFld[2]] = this.arrRtVal[this.arrRtColFld[2]];
-        // rec[this.arrRtColFld[3]] = this.arrRtVal[this.arrRtColFld[3]];
-        // rec[this.arrRtColFld[4]] = this.arrRtVal[this.arrRtColFld[4]];
-        // rec[this.arrRtColFld[5]] = this.arrRtVal[this.arrRtColFld[5]];
-      ///  rec.qtnd_tot_amt = this.totAmt;
+        rec.qtnd_min = this.kmin;
+        rec.qtnd_45k = this.k45;
+        rec.qtnd_100k = this.k100;
+        rec.qtnd_300k = this.k300;
+        rec.qtnd_500k = this.k500;
+        rec.qtnd_1000k = this.k1000;
+        rec.qtnd_fsc = this.fsc;
+        rec.qtnd_war = this.war;
+        rec.qtnd_sfc = this.sfc;
+        rec.qtnd_hac = this.hac;
 
         this.NewRow();
-
     }
 
     NewRow() {
-        this.lblSave = "Add Row";
+        this.lblSave = "Add";
         this.qtnd_pkid = this.gs.getGuid();
         this.InitDetail();
         // Txt_Pol_code.Focus();
@@ -367,17 +323,17 @@ export class QtnAirEditComponent implements OnInit {
         this.carrName = "";
         this.transitTime = "";
         this.routing = "";
-        this.cntrType = "";
         this.etd = "";
-        this.cutOff = "";
-        // this.arrRtVal[this.arrRtColFld[0]] = 0;
-        // this.arrRtVal[this.arrRtColFld[1]] = 0;
-        // this.arrRtVal[this.arrRtColFld[2]] = 0;
-        // this.arrRtVal[this.arrRtColFld[3]] = 0;
-        // this.arrRtVal[this.arrRtColFld[4]] = 0;
-        // this.arrRtVal[this.arrRtColFld[5]] = 0;
-        // this.totAmt = 0;
-
+        this.kmin = "";
+        this.k45 = "";
+        this.k100 = "";
+        this.k300 = "";
+        this.k500 = "";
+        this.k1000 = "";
+        this.fsc = "";
+        this.war = "";
+        this.sfc = "";
+        this.hac = "";
     }
     EditRow(_rec: Tbl_Cargo_Qtnd_Air) {
         this.qtnd_pkid = _rec.qtnd_pkid;
@@ -392,17 +348,18 @@ export class QtnAirEditComponent implements OnInit {
         this.carrName = _rec.qtnd_carrier_name;
         this.transitTime = _rec.qtnd_transtime;
         this.routing = _rec.qtnd_routing;
-       // this.cntrType = _rec.qtnd_cntr_type;
         this.etd = _rec.qtnd_etd;
-        // this.cutOff = _rec.qtnd_cutoff;
-        // this.arrRtVal[this.arrRtColFld[0]] = _rec[this.arrRtColFld[0]];
-        // this.arrRtVal[this.arrRtColFld[1]] = _rec[this.arrRtColFld[1]];
-        // this.arrRtVal[this.arrRtColFld[2]] = _rec[this.arrRtColFld[2]];
-        // this.arrRtVal[this.arrRtColFld[3]] = _rec[this.arrRtColFld[3]];
-        // this.arrRtVal[this.arrRtColFld[4]] = _rec[this.arrRtColFld[4]];
-        // this.arrRtVal[this.arrRtColFld[5]] = _rec[this.arrRtColFld[5]];
-        // this.totAmt = _rec.qtnd_tot_amt;
-        this.lblSave = "Update Row";
+        this.kmin = _rec.qtnd_min;
+        this.k45 = _rec.qtnd_45k;
+        this.k100 = _rec.qtnd_100k;
+        this.k300 = _rec.qtnd_300k;
+        this.k500 = _rec.qtnd_500k;
+        this.k1000 = _rec.qtnd_1000k;
+        this.fsc = _rec.qtnd_fsc;
+        this.war = _rec.qtnd_war;
+        this.sfc = _rec.qtnd_sfc;
+        this.hac = _rec.qtnd_hac;
+        this.lblSave = "Update";
         //Dispatcher.BeginInvoke(() => { Txt_Pol_code.Focus(); });
     }
 
@@ -459,16 +416,9 @@ export class QtnAirEditComponent implements OnInit {
     }
 
     onBlur(fld: any) {
-        if (fld.field.toString().toUpperCase().includes('ARRRTVAL'))
-            this.FindTotAmt();
+
     }
 
-    FindTotAmt() {
-        let _amt: number = 0;
-        for (let i = 0; i < this.arrRtVal.length; i++)
-            _amt += this.arrRtVal[this.arrRtColFld[i]];
-        this.totAmt = this.gs.roundNumber(_amt, 2);
-    }
 
     BtnNavigation(action: string) {
         switch (action) {
@@ -476,7 +426,7 @@ export class QtnAirEditComponent implements OnInit {
                 this.attach_title = 'Documents';
                 this.attach_parentid = this.pkid;
                 this.attach_subid = '';
-                this.attach_type = 'QUOT-LCL';
+                this.attach_type = 'QUOT-AIR';
                 this.attach_typelist = [];
                 this.attach_tablename = 'cargo_qtnm';
                 this.attach_tablepkcolumn = 'qtnm_pkid';
