@@ -175,6 +175,7 @@ export class QtnLclEditComponent implements OnInit {
         this.SaveParent();
         const saveRecord = <vm_Tbl_Cargo_Qtnd_Lcl>{};
         saveRecord.record = this.record;
+        saveRecord.records = this.records;
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
         saveRecord.userinfo = this.gs.UserInfo;
