@@ -124,6 +124,9 @@ export class QtnAirEditComponent implements OnInit {
             this.NewRow();
             this.GetRecord();
         }
+        if (this.mode == 'COPY') {
+            this.CopyRecord();
+        }
     }
 
     init() {
@@ -205,6 +208,7 @@ export class QtnAirEditComponent implements OnInit {
         this.SaveParent();
         const saveRecord = <vm_Tbl_Cargo_Qtnd_Air>{};
         saveRecord.record = this.record;
+        saveRecord.records = this.records;
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
         saveRecord.userinfo = this.gs.UserInfo;
@@ -483,5 +487,43 @@ export class QtnAirEditComponent implements OnInit {
                 this.errorMessage.push(this.gs.getError(error));
             });
     }
+
+    Copy() {
+        if (!confirm("Copy Record " + this.record.qtnm_no)) {
+            return;
+        }
+        this.CopyRecord();
+    }
+    
+    CopyRecord() {
+        this.errorMessage = [];
+        let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = this.pkid;
+        SearchData.PATH = filepath;
+
+        this.mainService.GetRecord(SearchData)
+            .subscribe(response => {
+                this.NewRecord();
+                this.record = <Tbl_Cargo_Qtnm>response.record;
+                this.records = <Tbl_Cargo_Qtnd_Air[]>response.records;
+
+                this.record.qtnm_cfno = 0;
+                this.record.qtnm_no = "";
+                this.record.qtnm_pkid = this.pkid;
+                this.record.qtnm_quot_by = this.gs.user_name;
+
+                this.records.forEach(rec => {
+                    rec.qtnd_pkid = this.gs.getGuid();
+                    rec.qtnd_parent_id = this.pkid;
+
+                });
+
+            }, error => {
+                this.errorMessage.push(this.gs.getError(error));
+            });
+    }
+
 
 }
