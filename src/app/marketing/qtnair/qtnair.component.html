@@ -41,7 +41,7 @@
                 <td>{{rec.qtnm_pod_name}}</td>
                 <td>{{rec.qtnm_move_type}}</td>
                 <td>{{rec.qtnm_commodity}}</td>
-                <td *ngIf="mainservice.canDelete" style="text-align:center"><i class="fa fa-copy  fa-lg pointer"
+                <td style="text-align:center"><i class="fa fa-copy  fa-lg pointer"
                     aria-hidden="true" (click)="CopyRecord(rec)"></i></td>
                 <td *ngIf="mainservice.canDelete" style="text-align:center"><i class="fa fa-trash  fa-lg pointer"
                     aria-hidden="true" (click)="mainservice.DeleteRow(rec)"></i></td>
