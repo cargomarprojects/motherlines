@@ -18,11 +18,13 @@ import { QtnLclService } from '../services/qtnlcl.service';
 export class QtnLclComponent implements OnInit {
 
   // 02-07-2019 Created By Ajith  
-
+ 
   errorMessage$: Observable<string>;
   records$: Observable<Tbl_Cargo_Qtnm[]>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
+
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +34,7 @@ export class QtnLclComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.mainservice.init(this.route.snapshot.queryParams);
     this.initPage();
   }
@@ -97,7 +100,7 @@ export class QtnLclComponent implements OnInit {
 
     if (!confirm("Copy Record " + _record.qtnm_no)) {
       return;
-  }
+    }
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.qtnm_pkid,
@@ -107,6 +110,12 @@ export class QtnLclComponent implements OnInit {
     this.gs.Naviagete('Silver.Marketing.Quotation/QuotationLclEditPage', JSON.stringify(parameter));
   }
 
+ 
+
+
+  callbackevent(event: any) {
+    this.mainservice.tab = 'main';
+  }
 
   Close() {
     this.location.back();
