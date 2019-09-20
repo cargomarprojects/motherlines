@@ -88,6 +88,26 @@ export class QtnLclComponent implements OnInit {
 
   }
 
+  CopyRecord(_record: Tbl_Cargo_Qtnm) {
+
+    if (!this.mainservice.canAdd) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    if (!confirm("Copy Record " + _record.qtnm_no)) {
+      return;
+  }
+    let parameter = {
+      menuid: this.mainservice.menuid,
+      pkid: _record.qtnm_pkid,
+      origin: 'qtnm-lcl-page',
+      mode: 'COPY'
+    };
+    this.gs.Naviagete('Silver.Marketing.Quotation/QuotationLclEditPage', JSON.stringify(parameter));
+  }
+
+
   Close() {
     this.location.back();
   }
