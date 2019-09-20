@@ -381,6 +381,16 @@ export class QtnLclEditComponent implements OnInit {
                 this.attach_filespath2 = '';
                 this.tab = 'attachment';
                 break;
+            } case 'HISTORY': {
+                let prm = {
+                    menuid: this.menuid,
+                    pkid: this.pkid,
+                    source: 'QUOTATION-LCL-RATE',
+                    title: "History [Quote# : " + this.record.qtnm_no + "]",
+                    origin: 'qtn-lcl-page'
+                };
+                this.gs.Naviagete('Silver.BusinessModule/LogBookPage', JSON.stringify(prm));
+                break;
             }
         }
     }
