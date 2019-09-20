@@ -4,12 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { InvoiceEditComponent } from './invoice/edit/invoice-edit.component';
 import { ProfitReportComponent } from './profitreport/profitreport.component';
+import { AcctmComponent } from './acctm/acctm.component';
 
 
 const routes: Routes = [
   { path : 'InvoicePage', component : InvoiceComponent },
   { path : 'InvoiceEditPage', component : InvoiceEditComponent },
   { path : 'ProfitReportPage', component : ProfitReportComponent },
+  { path : 'AcctmPage', component : AcctmComponent },
 ];
 
 @NgModule({
