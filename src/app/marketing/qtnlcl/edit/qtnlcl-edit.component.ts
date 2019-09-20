@@ -18,6 +18,7 @@ export class QtnLclEditComponent implements OnInit {
 
     record: Tbl_Cargo_Qtnm = <Tbl_Cargo_Qtnm>{};
     records: Tbl_Cargo_Qtnd_Lcl[] = [];
+    historyList: Tbl_Cargo_Qtnd_Lcl[] = [];
 
     tab: string = 'main';
 
@@ -93,6 +94,9 @@ export class QtnLclEditComponent implements OnInit {
         if (this.mode == 'EDIT') {
             this.GetRecord();
         }
+        if (this.mode == 'COPY') {
+            this.CopyRecord();
+        }
     }
 
     init() {
@@ -162,6 +166,12 @@ export class QtnLclEditComponent implements OnInit {
                 else
                     this.Foregroundcolor = "white";
 
+                this.historyList = new Array<Tbl_Cargo_Qtnd_Lcl>();
+                this.records.forEach(rec => {
+                    rec.qtnd_old_amt = rec.qtnd_amt;
+                    rec.qtnd_old_pkid = rec.qtnd_pkid;
+                });
+
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
             });
@@ -172,6 +182,7 @@ export class QtnLclEditComponent implements OnInit {
 
         if (!this.Allvalid())
             return;
+        this.FindGrandTotal();
         this.SaveParent();
         const saveRecord = <vm_Tbl_Cargo_Qtnd_Lcl>{};
         saveRecord.record = this.record;
@@ -179,6 +190,8 @@ export class QtnLclEditComponent implements OnInit {
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
         saveRecord.userinfo = this.gs.UserInfo;
+        saveRecord.historys = this.historyList;
+
 
         this.mainService.Save(saveRecord)
             .subscribe(response => {
@@ -195,6 +208,7 @@ export class QtnLclEditComponent implements OnInit {
                     alert(this.errorMessage);
                 }
 
+                this.historyList = new Array<Tbl_Cargo_Qtnd_Lcl>();
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
                 alert(this.errorMessage);
@@ -203,6 +217,17 @@ export class QtnLclEditComponent implements OnInit {
 
     private SaveParent() {
 
+        if (this.mode === "EDIT" && this.historyList != null) {
+            this.records.forEach(rec => {
+                if (rec.qtnd_old_amt != rec.qtnd_amt) {
+                    rec.qtnd_old_amt = rec.qtnd_amt;
+                    if (rec.qtnd_old_pkid == rec.qtnd_pkid)
+                        this.AddhList("EDIT", rec.qtnd_desc_name, rec.qtnd_old_amt.toString(), rec.qtnd_amt.toString());
+                    else
+                        this.AddhList("ADD", rec.qtnd_desc_name, rec.qtnd_old_amt.toString(), rec.qtnd_amt.toString());
+                }
+            });
+        }
     }
     private Allvalid(): boolean {
 
@@ -241,12 +266,14 @@ export class QtnLclEditComponent implements OnInit {
     AddRow() {
         var rec = <Tbl_Cargo_Qtnd_Lcl>{};
         rec.qtnd_pkid = this.gs.getGuid();
-        rec.qtnd_parent_id = this.pkid,
-            rec.qtnd_desc_id = '',
-            rec.qtnd_desc_code = '';
+        rec.qtnd_parent_id = this.pkid;
+        rec.qtnd_desc_id = '';
+        rec.qtnd_desc_code = '';
         rec.qtnd_desc_name = '';
-        rec.qtnd_per = '',
-            rec.qtnd_amt = 0;
+        rec.qtnd_per = '';
+        rec.qtnd_amt = 0;
+        rec.qtnd_old_pkid = '';
+        rec.qtnd_old_amt = 0;
         this.records.push(rec);
     }
 
@@ -354,6 +381,16 @@ export class QtnLclEditComponent implements OnInit {
                 this.attach_filespath2 = '';
                 this.tab = 'attachment';
                 break;
+            } case 'HISTORY': {
+                let prm = {
+                    menuid: this.menuid,
+                    pkid: this.pkid,
+                    source: 'QUOTATION-LCL-RATE',
+                    title: "History [Quote# : " + this.record.qtnm_no + "]",
+                    origin: 'qtn-lcl-page'
+                };
+                this.gs.Naviagete('Silver.BusinessModule/LogBookPage', JSON.stringify(prm));
+                break;
             }
         }
     }
@@ -362,6 +399,12 @@ export class QtnLclEditComponent implements OnInit {
     }
 
     RemoveRow(_rec: Tbl_Cargo_Qtnd_Lcl) {
+        if (this.mode === "EDIT" && this.historyList != null) {
+            this.records.forEach(rec => {
+                if (rec.qtnd_pkid == _rec.qtnd_pkid)
+                    this.AddhList("DELETE", rec.qtnd_desc_name, rec.qtnd_old_amt.toString(), rec.qtnd_amt.toString());
+            });
+        }
         this.records.splice(this.records.findIndex(rec => rec.qtnd_pkid == _rec.qtnd_pkid), 1);
     }
 
@@ -406,4 +449,61 @@ export class QtnLclEditComponent implements OnInit {
             });
     }
 
+    Copy() {
+        if (!confirm("Copy Record " + this.record.qtnm_no)) {
+            return;
+        }
+        this.CopyRecord();
+    }
+
+    CopyRecord() {
+        this.errorMessage = [];
+        let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = this.pkid;
+        SearchData.PATH = filepath;
+
+        this.mainService.GetRecord(SearchData)
+            .subscribe(response => {
+                this.NewRecord();
+                this.record = <Tbl_Cargo_Qtnm>response.record;
+                this.records = <Tbl_Cargo_Qtnd_Lcl[]>response.records;
+
+                this.record.qtnm_cfno = 0;
+                this.record.qtnm_no = "";
+                this.record.qtnm_pkid = this.pkid;
+                this.record.qtnm_quot_by = this.gs.user_name;
+
+                this.records.forEach(rec => {
+                    rec.qtnd_pkid = this.gs.getGuid();
+                    rec.qtnd_parent_id = this.pkid;
+                    rec.qtnd_old_amt = 0;
+                    rec.qtnd_old_pkid = '';
+                });
+
+            }, error => {
+                this.errorMessage.push(this.gs.getError(error));
+            });
+    }
+
+    AddhList(_Action: string, _hDesc: string, OldDescAmt: string, NewDescAmt: string) {
+        let Str: string = "";
+        Str = _Action;
+        Str += "~" + OldDescAmt;
+        Str += "~" + NewDescAmt;
+        Str += "~" + _hDesc.replace("~", "");
+
+        var rec = <Tbl_Cargo_Qtnd_Lcl>{};
+        rec.qtnd_desc_name = Str;
+        this.historyList.push(rec);
+    }
+
+    FindGrandTotal() {
+        let nTot: number = 0;
+        this.records.forEach(rec => {
+            nTot += rec.qtnd_amt;
+        });
+        this.record.qtnm_tot_amt = nTot;
+    }
 }

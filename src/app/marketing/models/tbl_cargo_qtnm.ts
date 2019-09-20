@@ -57,6 +57,8 @@ export interface Tbl_Cargo_Qtnd_Lcl {
     qtnd_transtime: string;
     qtnd_routing: string;
     qtnd_order: number;
+    qtnd_old_pkid: string;
+    qtnd_old_amt: number;
 }
 
 export interface Tbl_Cargo_Qtnd_Fcl {
@@ -124,6 +126,7 @@ export interface vm_Tbl_Cargo_Qtnd_Lcl {
     records: Tbl_Cargo_Qtnd_Lcl[]
     userinfo: any,
     filter: any;
+    historys: Tbl_Cargo_Qtnd_Lcl[];
 }
 
 export interface vm_Tbl_Cargo_Qtnd_Fcl {

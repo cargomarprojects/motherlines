@@ -2,6 +2,7 @@
     <div class="page-header">
         <div class="row align-items-center justify-content-left p-1">
             <label class="mr-3">{{title}}({{mode}})</label>
+            <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="Copy()">Copy</button>
             <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         </div>
     </div>
@@ -356,7 +357,7 @@
                     <div class="form-group row">
                         <div class="col-12">
                             <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Row</button>
-                            <button class="btn btn-success btn-sm mr-1">History</button>
+                            <button *ngIf="mode=='EDIT'" class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('HISTORY')">History</button>
                         </div>
                     </div>
                 </div>
