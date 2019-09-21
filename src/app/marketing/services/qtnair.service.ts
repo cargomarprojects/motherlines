@@ -27,6 +27,7 @@ export class QtnAirService {
     public canEdit: boolean;
     public canSave: boolean;
     public canDelete: boolean;
+    public canPrint: boolean;
 
     public initlialized: boolean;
 
@@ -59,6 +60,7 @@ export class QtnAirService {
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
         this.canDelete = this.gs.canDelete(this.menuid);
+        this.canPrint = this.gs.canPrint(this.menuid);
 
         this.initlialized = true;
 
@@ -178,5 +180,5 @@ export class QtnAirService {
     LoadLabelHeader(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnAir/LoadLabelHeader', SearchData, this.gs.headerparam2('authorized'));
     }
-    
+
 }
