@@ -110,7 +110,7 @@ export class AcgroupEditComponent implements OnInit {
 
     Save() {
 
-        this.getParentCode();
+        this.record.acc_parent_code = this.getParentCode();
 
         if (!this.Allvalid())
             return;
@@ -219,17 +219,17 @@ export class AcgroupEditComponent implements OnInit {
 
     getParentCode() {
         var sCode = "";
-        if (this.record.acc_parent_code == "DIRECT INCOME")
+        if (this.record.acc_parent_name == "DIRECT INCOME")
             sCode = "1A";
-        else if (this.record.acc_parent_code == "DIRECT EXPENSE")
+        else if (this.record.acc_parent_name == "DIRECT EXPENSE")
             sCode = "1B";
-        else if (this.record.acc_parent_code == "INDIRECT INCOME")
+        else if (this.record.acc_parent_name == "INDIRECT INCOME")
             sCode = "2A";
-        else if (this.record.acc_parent_code == "INDIRECT EXPENSE")
+        else if (this.record.acc_parent_name == "INDIRECT EXPENSE")
             sCode = "2B";
-        else if (this.record.acc_parent_code == "ASSET")
+        else if (this.record.acc_parent_name == "ASSET")
             sCode = "3A";
-        else if (this.record.acc_parent_code == "LIABILITY")
+        else if (this.record.acc_parent_name == "LIABILITY")
             sCode = "3B";
         else
             sCode = "";
