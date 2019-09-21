@@ -23,7 +23,7 @@ export class AcctmEditComponent implements OnInit {
 
     pkid: string;
     menuid: string;
-    public mode: string ='';
+    public mode: string = '';
     errorMessage: string;
     Foregroundcolor: string;
 
@@ -36,11 +36,12 @@ export class AcctmEditComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
-        private mainService: AcctmService,
-    ) { }
+        public mainService: AcctmService,
+    ){}
 
     ngOnInit() {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+
 
         this.menuid = options.menuid;
         this.pkid = options.pkid;
@@ -82,6 +83,24 @@ export class AcctmEditComponent implements OnInit {
 
         this.record.acc_pkid = this.pkid;
         this.record.acc_code = '';
+        this.record.acc_name = '';
+        this.record.acc_short_name = '';        
+        
+        this.record.acc_branch = '';        
+
+        this.record.acc_type = 'OTHERS';        
+
+        this.record.acc_budget_id = '';
+
+        this.record.acc_address1 = '';        
+        this.record.acc_address2 = '';        
+        this.record.acc_address3 = '';        
+        this.record.acc_address4 = '';        
+        this.record.acc_address5 = '';        
+
+        this.record.acc_chq_format_id = 'NIL';
+
+
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
     }
@@ -151,20 +170,29 @@ export class AcctmEditComponent implements OnInit {
             alert(this.errorMessage);
             return bRet;
         }
-        if (this.gs.isBlank(this.record.acc_group_id) ) {
+        
+        if (this.gs.isBlank(this.record.acc_group_id)) {
             bRet = false;
             this.errorMessage = "Group Cannot be blank";
             alert(this.errorMessage);
             return bRet;
         }
 
-        if (this.gs.isBlank(this.record.acc_chq_format_id) ) {
+        if (this.gs.isBlank(this.record.acc_type)) {
+            bRet = false;
+            this.errorMessage = "Type Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+
+        if (this.gs.isBlank(this.record.acc_chq_format_id)) {
             bRet = false;
             this.errorMessage = "check Format Cannot be blank";
             alert(this.errorMessage);
             return bRet;
         }
-        
+
 
 
         return bRet;
@@ -177,21 +205,46 @@ export class AcctmEditComponent implements OnInit {
 
 
     LovSelected(_Record: SearchTable) {
-        
+
         if (_Record.controlname == "ACC_GROUPM") {
             this.record.acc_group_id = _Record.id;
             this.record.acc_group_name = _Record.name;
         }
-        
+
     }
 
     OnChange(field: string) {
     }
-    
+
     onFocusout(field: string) {
     }
 
     onBlur(field: string) {
+
+        if (field === 'acc_code')
+            this.record.acc_code = this.record.acc_code.toUpperCase();
+        if (field === 'acc_name')
+            this.record.acc_name = this.record.acc_name.toUpperCase();
+        if (field === 'acc_short_name')
+            this.record.acc_short_name = this.record.acc_short_name.toUpperCase();
+
+
+        if (field === 'acc_address1')
+            this.record.acc_address1 = this.record.acc_address1.toUpperCase();
+
+        if (field === 'acc_address2')
+            this.record.acc_address2 = this.record.acc_address2.toUpperCase();
+
+        if (field === 'acc_address3')
+            this.record.acc_address3 = this.record.acc_address3.toUpperCase();
+
+        if (field === 'acc_address4')
+            this.record.acc_address4 = this.record.acc_address4.toUpperCase();
+
+        if (field === 'acc_address1')
+            this.record.acc_address5 = this.record.acc_address5.toUpperCase();
+
+
     }
 
 }

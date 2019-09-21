@@ -1,7 +1,7 @@
 <div class="page-header">
     <div class="row align-items-center justify-content-left p-1">
         <label class="mr-3">A/c Master ({{mode}})</label>
-        <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>        
+        <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
     </div>
 </div>
@@ -85,6 +85,13 @@
             </div>
 
 
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>                
+                <label class="col-8 col-form-label col-form-label-sm">Bank Information</label>
+            </div>
+
+
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Bank Name</label>
                 <div class="col-8">
@@ -107,7 +114,7 @@
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('acc_address3')"
                         [(ngModel)]="record.acc_address3" maxlength="60" />
                 </div>
-            </div>            
+            </div>
 
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm"></label>
@@ -115,15 +122,15 @@
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('acc_address4')"
                         [(ngModel)]="record.acc_address4" maxlength="60" />
                 </div>
-            </div>            
-            
+            </div>
+
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm"></label>
                 <div class="col-8">
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('acc_address5')"
                         [(ngModel)]="record.acc_address5" maxlength="60" />
                 </div>
-            </div>            
+            </div>
 
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Check Format</label>
@@ -152,8 +159,3 @@
         </div>
     </div>
 </div>
-
-<div>
-    ({{mode}})
-</div>
-
