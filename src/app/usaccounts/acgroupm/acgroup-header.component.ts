@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
-import { SearchQuery } from '../models/tbl_acc_acctm';
+import { SearchQuery } from '../models/tbl_acc_groupm';
 
 @Component({
     selector: 'app-acgroup-header',

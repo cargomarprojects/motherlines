@@ -5,7 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 import { GlobalService } from '../../core/services/global.service';
 import { Tbl_acc_groupm, AccGroupModel } from '../models/tbl_acc_groupm';
-import { SearchQuery } from '../models/tbl_acc_acctm';
+import { SearchQuery } from '../models/tbl_acc_groupm';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 
