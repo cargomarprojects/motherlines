@@ -736,8 +736,18 @@ export class Login2Component implements OnInit {
         }).forEach(a => {
             this.GLOBALCONTANTS.BUDGET_TYPE.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
-
         this.GLOBALCONTANTS.BUDGET_TYPE.push({ "code": '', "name": 'NIL' })
+
+
+        this.MainList.filter(a => a.param_type == 'CHQ-FORMAT').sort(function (a, b) {
+            return b.param_name1 < a.param_name1 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.CHQ_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
+        });
+        this.GLOBALCONTANTS.CHQ_FORMAT.push({ "code": 'NIL', "name": 'NIL' })
+        
+
+
 
 
 

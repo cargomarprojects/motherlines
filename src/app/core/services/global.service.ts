@@ -176,6 +176,8 @@ export class GlobalService {
 
   public BUDGET_TYPE : any = [];
 
+  public CHQ_FORMAT : any = [];
+
   public SHIPMENT_STAGE_OI: any;
   public SHIPMENT_STAGE_OE: any;
   public SHIPMENT_STAGE_AI: any;
