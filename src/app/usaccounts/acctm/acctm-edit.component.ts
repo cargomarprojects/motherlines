@@ -21,25 +21,9 @@ export class AcctmEditComponent implements OnInit {
 
     tab: string = 'main';
 
-    attach_title: string = '';
-    attach_parentid: string = '';
-    attach_subid: string = '';
-    attach_type: string = '';
-    attach_typelist: any = {};
-    attach_tablename: string = '';
-    attach_tablepkcolumn: string = '';
-    attach_refno: string = '';
-    attach_customername: string = '';
-    attach_updatecolumn: string = '';
-    attach_viewonlysource: string = '';
-    attach_viewonlyid: string = '';
-    attach_filespath: string = '';
-    attach_filespath2: string = '';
-
-    mbl_pkid: string;
     pkid: string;
     menuid: string;
-    mode: string;
+    public mode: string ='';
     errorMessage: string;
     Foregroundcolor: string;
 
@@ -167,6 +151,22 @@ export class AcctmEditComponent implements OnInit {
             alert(this.errorMessage);
             return bRet;
         }
+        if (this.gs.isBlank(this.record.acc_group_id) ) {
+            bRet = false;
+            this.errorMessage = "Group Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isBlank(this.record.acc_chq_format_id) ) {
+            bRet = false;
+            this.errorMessage = "check Format Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+        
+
+
         return bRet;
     }
 
