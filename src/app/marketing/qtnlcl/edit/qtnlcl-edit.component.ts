@@ -21,6 +21,10 @@ export class QtnLclEditComponent implements OnInit {
     historyList: Tbl_Cargo_Qtnd_Lcl[] = [];
 
     tab: string = 'main';
+    report_title: string = '';
+    report_url: string = '';
+    report_searchdata: any = {};
+    report_menuid: string = '';
 
     attach_title: string = '';
     attach_parentid: string = '';
@@ -390,6 +394,17 @@ export class QtnLclEditComponent implements OnInit {
                     origin: 'qtn-lcl-page'
                 };
                 this.gs.Naviagete('Silver.BusinessModule/LogBookPage', JSON.stringify(prm));
+                break;
+            }
+            case 'PRINT': {
+                let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+                this.report_title = 'Quotation LCL';
+                this.report_url = '/api/Marketing/QtnReport/GetQuotationLclRpt';
+                this.report_searchdata = this.gs.UserInfo;
+                this.report_searchdata.pkid = this.pkid;
+                this.report_searchdata.PATH = filepath;
+                this.report_menuid = this.gs.MENU_QUOTATION_LCL;
+                this.tab = 'report';
                 break;
             }
         }
