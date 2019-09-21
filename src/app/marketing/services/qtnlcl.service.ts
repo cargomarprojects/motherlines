@@ -30,13 +30,7 @@ export class QtnLclService {
     public canPrint: boolean;
 
     public initlialized: boolean;
-    public tab: string = 'main';
-    report_title: string = '';
-    report_url: string = '';
-    report_searchdata: any = {};
-    report_menuid: string = '';
-
-
+  
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
@@ -80,10 +74,6 @@ export class QtnLclService {
             this.record.pageQuery = _searchdata.pageQuery;
         }
 
-        if (_searchdata.outputformat === "PRINT") {
-            this.PrintQtn();
-            return;
-        }
         var SearchData = this.gs.UserInfo;
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
@@ -98,7 +88,6 @@ export class QtnLclService {
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
-
 
         if (type == 'PAGE') {
             SearchData.action = this.record.pageQuery.action;
@@ -164,22 +153,7 @@ export class QtnLclService {
                 alert(this.record.errormessage);
             });
     }
-
-    PrintQtn() {
-        this.report_title = 'POD';
-        this.report_url = '/api/Marketing/QtnReport/GetQuotationRpt';
-        this.report_searchdata = this.gs.UserInfo;
-        this.report_searchdata.pkid = this.gs.getGuid();
-        this.report_searchdata.CODE = '';
-        // this.report_searchdata.SDATE = this.record.searchQuery.fromdate;
-        // this.report_searchdata.EDATE = this.record.searchQuery.todate;
-        // this.report_searchdata.COLUMN_NAME = this.record.searchQuery.searchtype;
-        this.report_searchdata.TYPE = 'LCL';
-        this.report_menuid = this.gs.MENU_QUOTATION_LCL;
-        this.tab = 'report';
-    }
-
-
+ 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/List', SearchData, this.gs.headerparam2('authorized'));
     }

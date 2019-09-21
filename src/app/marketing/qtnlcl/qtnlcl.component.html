@@ -1,4 +1,4 @@
-<div *ngIf="mainservice.tab=='main'">
+<div *ngIf="tab=='main'">
 <div class="page-header">
     <div class="col">
         <label class="mr-3">{{mainservice.title}}</label>
@@ -60,7 +60,7 @@
 
 <br />
 </div>
-<div *ngIf="mainservice.tab=='report'">
+<div *ngIf="tab=='report'">
     <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"
       (callbackevent)="callbackevent($event)"></app-report>
   </div>

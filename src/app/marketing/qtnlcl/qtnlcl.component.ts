@@ -18,13 +18,17 @@ import { QtnLclService } from '../services/qtnlcl.service';
 export class QtnLclComponent implements OnInit {
 
   // 02-07-2019 Created By Ajith  
- 
+
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+
   errorMessage$: Observable<string>;
   records$: Observable<Tbl_Cargo_Qtnm[]>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
-
-  
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +51,10 @@ export class QtnLclComponent implements OnInit {
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions, 'SEARCH');
+    if (actions.outputformat === "PRINT")
+      this.PrintQtn(actions);
+    else
+      this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
@@ -110,11 +117,29 @@ export class QtnLclComponent implements OnInit {
     this.gs.Naviagete('Silver.Marketing.Quotation/QuotationLclEditPage', JSON.stringify(parameter));
   }
 
- 
 
+  PrintQtn(_searchdata: any) {
+
+    if (!this.mainservice.canPrint) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    this.report_title = 'Quotation LCL';
+    this.report_url = '/api/Marketing/QtnReport/GetQuotationRpt';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.gs.getGuid();
+    this.report_searchdata.CODE = _searchdata.searchQuery.searchString;
+    this.report_searchdata.SDATE = _searchdata.searchQuery.fromdate;
+    this.report_searchdata.EDATE = _searchdata.searchQuery.todate;
+    this.report_searchdata.COLUMN_NAME = _searchdata.searchQuery.searchtype;
+    this.report_searchdata.STYPE = 'LCL';
+    this.report_menuid = this.gs.MENU_QUOTATION_LCL;
+    this.tab = 'report';
+  }
 
   callbackevent(event: any) {
-    this.mainservice.tab = 'main';
+    this.tab = 'main';
   }
 
   Close() {
