@@ -6,6 +6,7 @@ import { InvoiceEditComponent } from './invoice/edit/invoice-edit.component';
 import { ProfitReportComponent } from './profitreport/profitreport.component';
 import { AcctmComponent } from './acctm/acctm.component';
 import { AcctmEditComponent } from './acctm/acctm-edit.component';
+import { AcgroupComponent } from './acgroupm/acgroup.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,9 @@ const routes: Routes = [
   { path : 'ProfitReportPage', component : ProfitReportComponent },
   { path : 'AcctmPage', component : AcctmComponent },
   { path : 'AcctmEditPage', component : AcctmEditComponent },
+  { path : 'AccGroupPage', component : AcgroupComponent },
+  { path : 'AccGroupEditPage', component : AcgroupComponent },
+
 ];
 
 @NgModule({
