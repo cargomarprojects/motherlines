@@ -175,14 +175,14 @@ export class AcctmEditComponent implements OnInit {
         this.location.back();
     }
 
+
     LovSelected(_Record: SearchTable) {
-        /*
-        if (_Record.controlname == "AGENT") {
-            this.record.qtnr_agent_id = _Record.id;
-            this.record.qtnr_agent_code = _Record.code;
-            this.record.qtnr_agent_name = _Record.name;
+        
+        if (_Record.controlname == "ACC_GROUPM") {
+            this.record.acc_group_id = _Record.id;
+            this.record.acc_group_name = _Record.name;
         }
-        */
+        
     }
 
     OnChange(field: string) {

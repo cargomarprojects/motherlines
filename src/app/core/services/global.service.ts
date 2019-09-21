@@ -47,6 +47,9 @@ export class GlobalService {
   public CompanyList: Companym[] = [];
   public YearList: any[];
 
+  public AccGroupList: any[];
+
+
   public software_start_year: number = 0;
 
   public branch_codes: string = '';
@@ -171,6 +174,7 @@ export class GlobalService {
   public AUTO_CLOSE_CHECK_PRINT = "N";
   public RE_PRINT_CHECK = "N";
 
+  public BUDGET_TYPE : any = [];
 
   public SHIPMENT_STAGE_OI: any;
   public SHIPMENT_STAGE_OE: any;
