@@ -8,6 +8,7 @@ import { InvoiceEditComponent } from './invoice/edit/invoice-edit.component';
 import { ProfitReportComponent } from './profitreport/profitreport.component';
 import { AcctmComponent } from './acctm/acctm.component';
 import { AcctmHeaderComponent } from './acctm/acctm-header.component';
+import { AcctmEditComponent } from './acctm/acctm-edit.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AcctmHeaderComponent } from './acctm/acctm-header.component';
   ProfitReportComponent,
   AcctmComponent,
   AcctmHeaderComponent,
+  AcctmEditComponent,
 ],
   imports: [
     SharedModule,

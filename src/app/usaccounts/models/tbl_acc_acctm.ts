@@ -55,3 +55,13 @@ export interface AcctmModel {
      pageQuery: PageQuery;
      records: Tbl_acc_acctm[]
  }
+
+
+ export interface vm_tbl_acctm {
+     mode: string;
+     pkid: string;
+     record: Tbl_acc_acctm;
+     userinfo: any,
+     filter: any;
+ }
+ 

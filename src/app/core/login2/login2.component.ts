@@ -38,6 +38,10 @@ export class Login2Component implements OnInit {
 
     MainList: any[];
 
+
+    AccGroupList: any[];
+
+
     constructor(
         private mainservice: LoginService,
         public GLOBALCONTANTS: GlobalService,
@@ -76,16 +80,22 @@ export class Login2Component implements OnInit {
                 this.CompanyList = response.companylist;
                 this.YearList = response.yearlist;
 
+
                 this.GLOBALCONTANTS.SetupCompanyList(response.companylist);
+
+
+                this.GLOBALCONTANTS.AccGroupList = response.accgrouplist;;
+
+
 
                 response.companylist.forEach(a => {
                     if (this.Company_Id == '')
                         this.Company_Id = a.comp_pkid;
-                })
+                });
 
                 response.yearlist.forEach(a => {
                     this.Year_Id = a.fy_pkid;
-                })
+                });
 
                 this.loading = false;
             }, error => {
@@ -719,6 +729,27 @@ export class Login2Component implements OnInit {
         }).forEach(a => {
             this.GLOBALCONTANTS.PARAM_HAWB_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
+
+
+        this.MainList.filter(a => a.param_type == 'BUDGET-TYPE').sort(function (a, b) {
+            return b.param_name1 < a.param_name1 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.BUDGET_TYPE.push({ "code": a.param_pkid, "name": a.param_name1 })
+        });
+        this.GLOBALCONTANTS.BUDGET_TYPE.push({ "code": '', "name": 'NIL' })
+
+
+        this.MainList.filter(a => a.param_type == 'CHQ-FORMAT').sort(function (a, b) {
+            return b.param_name1 < a.param_name1 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.CHQ_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
+        });
+        this.GLOBALCONTANTS.CHQ_FORMAT.push({ "code": 'NIL', "name": 'NIL' })
+        
+
+
+
+
 
         /*      public PARAM_FREIGHT_STATUS : any = [];
                 public PARAM_CARGO_MOVEMENT : any = [];

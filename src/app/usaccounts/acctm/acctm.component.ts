@@ -65,10 +65,10 @@ NewRecord() {
     menuid: this.mainservice.menuid,
     pkid: '',
     type: this.mainservice.param_type,
-    origin: 'airimp-master-page',
+    origin: 'acctm-page',
     mode: 'ADD'
   };
-  this.gs.Naviagete('Silver.AirImport.Trans/AirImpMasterEditPage', JSON.stringify(parameter));
+  this.gs.Naviagete('Silver.USAccounts.Master/AcctmEditPage', JSON.stringify(parameter));
 
 }
 edit(_record: Tbl_acc_acctm) {
@@ -81,10 +81,10 @@ edit(_record: Tbl_acc_acctm) {
     menuid: this.mainservice.menuid,
     pkid: _record.acc_pkid,
     type: '',
-    origin: 'airimp-master-page',
+    origin: 'acctm-page',
     mode: 'EDIT'
   };
-  this.gs.Naviagete('Silver.AirImport.Trans/AirImpMasterEditPage', JSON.stringify(parameter));
+  this.gs.Naviagete('Silver.USAccounts.Master/AcctmEditPage', JSON.stringify(parameter));
 }
 
 Close() {
