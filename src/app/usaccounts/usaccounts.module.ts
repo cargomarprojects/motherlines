@@ -20,7 +20,7 @@ import { AcgroupEditComponent } from './acgroupm/acgroup-edit.component';
   ProfitReportComponent,
   AcctmComponent,
   AcctmHeaderComponent,
-  AcctmEditComponent,,
+  AcctmEditComponent,
   AcgroupComponent,
   AcgroupHeaderComponent,
   AcgroupEditComponent,
