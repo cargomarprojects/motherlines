@@ -114,6 +114,7 @@ export class QtnFclComponent implements OnInit {
     };
     this.gs.Naviagete('Silver.Marketing.Quotation/QuotationFclEditPage', JSON.stringify(parameter));
   }
+
   PrintQtn(_searchdata: any) {
 
     if (!this.mainservice.canPrint) {
