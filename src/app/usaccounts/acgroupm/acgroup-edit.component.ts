@@ -85,8 +85,8 @@ export class AcgroupEditComponent implements OnInit {
     init() {
 
         this.record.acc_group_pkid = this.pkid;
-        this.record.acc_parent_code = '';
-        this.record.acc_parent_name = '';
+        this.record.acc_parent_code = '1A';
+        this.record.acc_parent_name = 'DIRECT INCOME';
         this.record.acc_group_name = '';
         this.record.acc_sub_group_name = '';
         this.record.acc_order = 0;
@@ -109,6 +109,8 @@ export class AcgroupEditComponent implements OnInit {
 
 
     Save() {
+
+        this.record.acc_parent_code = this.getParentCode();
 
         if (!this.Allvalid())
             return;
@@ -153,7 +155,15 @@ export class AcgroupEditComponent implements OnInit {
             return bRet;
         }
 
-        if (this.gs.isBlank(this.record.acc_parent_name)) {
+        if (this.gs.isBlank(this.record.acc_parent_name) || this.gs.isBlank(this.record.acc_parent_code)) {
+            bRet = false;
+            this.errorMessage = "Level1 Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+
+        if (this.gs.isBlank(this.record.acc_group_name)) {
             bRet = false;
             this.errorMessage = "Level2 Cannot be blank";
             alert(this.errorMessage);
@@ -167,7 +177,7 @@ export class AcgroupEditComponent implements OnInit {
             return bRet;
         }
 
-        if (this.gs.isZero (this.record.acc_order)) {
+        if (this.gs.isZero(this.record.acc_order)) {
             bRet = false;
             this.errorMessage = "Order Cannot be blank";
             alert(this.errorMessage);
@@ -206,5 +216,27 @@ export class AcgroupEditComponent implements OnInit {
 
 
     }
+
+    getParentCode() {
+        var sCode = "";
+        if (this.record.acc_parent_name == "DIRECT INCOME")
+            sCode = "1A";
+        else if (this.record.acc_parent_name == "DIRECT EXPENSE")
+            sCode = "1B";
+        else if (this.record.acc_parent_name == "INDIRECT INCOME")
+            sCode = "2A";
+        else if (this.record.acc_parent_name == "INDIRECT EXPENSE")
+            sCode = "2B";
+        else if (this.record.acc_parent_name == "ASSET")
+            sCode = "3A";
+        else if (this.record.acc_parent_name == "LIABILITY")
+            sCode = "3B";
+        else
+            sCode = "";
+        return sCode;
+    }
+
+
+
 
 }
