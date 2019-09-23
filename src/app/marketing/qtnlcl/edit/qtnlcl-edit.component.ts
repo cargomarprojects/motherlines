@@ -47,6 +47,7 @@ export class QtnLclEditComponent implements OnInit {
     mode: string;
     errorMessage: string[] = [];
     Foregroundcolor: string;
+    foreign_amt_decplace: number = 2;
 
     title: string;
     isAdmin: boolean;
@@ -72,6 +73,7 @@ export class QtnLclEditComponent implements OnInit {
     }
 
     private initPage() {
+        this.foreign_amt_decplace = this.gs.foreign_amt_dec;
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
         this.errorMessage = [];
@@ -255,6 +257,36 @@ export class QtnLclEditComponent implements OnInit {
         //     alert(this.errorMessage);
         //     return bRet;
         // }
+
+
+
+        if (this.gs.isBlank(this.record.qtnm_to_name)) {
+            bRet = false;
+            this.errorMessage.push("Quote To Cannot blank");
+        }
+        if (this.gs.isBlank(this.record.qtnm_date)) {
+            bRet = false;
+            this.errorMessage.push("Quote Date Cannot blank");
+        }
+        if (this.gs.isBlank(this.record.qtnm_salesman_id)||this.gs.isBlank(this.record.qtnm_salesman_name)) {
+            bRet = false;
+            this.errorMessage.push("Sales Rep. Cannot blank");
+        }
+
+        let iCtr:number = 0;
+        this.records.forEach(Rec => {
+            iCtr++;
+            // if (Rec.qtnd_amt <= 0) {
+            //     bRet = false;
+            //     this.errorMessage.push("Amount Cannot blank (" + Rec.qtnd_desc_code + ")");
+            // }
+        })
+
+        if (iCtr == 0) {
+            bRet = false;
+            this.errorMessage.push("No Detail Rows To Save");
+        }
+
 
         if (!bRet)
             alert('Error While Saving');
