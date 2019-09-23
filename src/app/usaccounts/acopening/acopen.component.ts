@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { GlobalService } from '../../core/services/global.service';
 import { Tbl_Acc_Opening } from '../models/Tbl_Acc_Opening';
-import { SearchQuery } from '../models/tbl_acc_groupm';
+import { SearchQuery } from '../models/Tbl_Acc_Opening';
 import { PageQuery } from '../../shared/models/pageQuery';
 import { AcOpeningService } from '../services/acopening.service';
 

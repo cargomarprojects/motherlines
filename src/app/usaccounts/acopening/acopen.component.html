@@ -10,8 +10,8 @@
   {{errorMessage}}
 </div>
 
-<app-acgroup-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-</app-acgroup-header>
+<app-acopen-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+</app-acopen-header>
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 
