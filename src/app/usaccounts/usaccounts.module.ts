@@ -13,6 +13,7 @@ import { AcgroupComponent } from './acgroupm/acgroup.component';
 import { AcgroupHeaderComponent } from './acgroupm/acgroup-header.component';
 import { AcgroupEditComponent } from './acgroupm/acgroup-edit.component';
 import { BudgetComponent } from './budget/budget.component';
+import { AcopenComponent } from './acopening/acopen.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BudgetComponent } from './budget/budget.component';
   AcgroupComponent,
   AcgroupHeaderComponent,
   AcgroupEditComponent,
-  BudgetComponent
+  BudgetComponent,
+  AcopenComponent
 ],
   imports: [
     SharedModule,

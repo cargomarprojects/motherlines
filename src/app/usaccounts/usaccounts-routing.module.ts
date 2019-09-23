@@ -9,6 +9,7 @@ import { AcctmEditComponent } from './acctm/acctm-edit.component';
 import { AcgroupComponent } from './acgroupm/acgroup.component';
 import { AcgroupEditComponent } from './acgroupm/acgroup-edit.component';
 import { BudgetComponent } from './budget/budget.component';
+import { AcopenComponent } from './acopening/acopen.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path : 'AccGroupPage', component : AcgroupComponent },
   { path : 'AccGroupEditPage', component : AcgroupEditComponent },
   { path : 'AccBudgetPage', component : BudgetComponent },
+  { path : 'OpeningPage', component : AcopenComponent },
 
 ];
 
