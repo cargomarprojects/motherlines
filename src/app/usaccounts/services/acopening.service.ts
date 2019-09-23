@@ -49,7 +49,7 @@ export class AcOpeningService {
         this.record = <AccOpeningModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: ''},
+            searchQuery: <SearchQuery>{ searchString: '', balance :''},
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -97,6 +97,8 @@ export class AcOpeningService {
         this.List(SearchData).subscribe(response => {
             this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
+            var nBal = response.TotDr - response.TotCr;
+            this.record.searchQuery.balance= `Dr : ${response.TotDr} - Cr : ${response.TotDr} = ${nBal}`;
             this.mdata$.next(this.record);
         }, error => {
             this.record = <AccOpeningModel>{

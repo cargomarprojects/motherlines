@@ -2,6 +2,7 @@
 import { PageQuery } from '../../shared/models/pageQuery';
 
 export interface SearchQuery {
+    balance : string ;
     searchString: string;
 }
 
