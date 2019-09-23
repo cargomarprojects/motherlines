@@ -20,6 +20,10 @@ export class QtnAirEditComponent implements OnInit {
     records: Tbl_Cargo_Qtnd_Air[] = [];
 
     tab: string = 'main';
+    report_title: string = '';
+    report_url: string = '';
+    report_searchdata: any = {};
+    report_menuid: string = '';
 
     attach_title: string = '';
     attach_parentid: string = '';
@@ -442,6 +446,17 @@ export class QtnAirEditComponent implements OnInit {
                 this.attach_filespath = '';
                 this.attach_filespath2 = '';
                 this.tab = 'attachment';
+                break;
+            }
+            case 'PRINT': {
+                let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+                this.report_title = 'Quotation AIR';
+                this.report_url = '/api/Marketing/QtnReport/GetQuotationAirRpt';
+                this.report_searchdata = this.gs.UserInfo;
+                this.report_searchdata.pkid = this.pkid;
+                this.report_searchdata.PATH = filepath;
+                this.report_menuid = this.gs.MENU_QUOTATION_AIR;
+                this.tab = 'report';
                 break;
             }
         }
