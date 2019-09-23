@@ -30,6 +30,7 @@ export class HeaderComponent {
 
         const menu_route = rec.menu_xap_dll + '/' + rec.menu_xap_class;
         rec.menu_route2 = '';
+        console.log(menu_route);
         this.router.navigate([menu_route], { queryParams: { id: this.id, menuid: rec.menu_pkid, menu_param: rec.menu_param } });
     }
 
