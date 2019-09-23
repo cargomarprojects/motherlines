@@ -259,7 +259,6 @@ export class QtnLclEditComponent implements OnInit {
         // }
 
 
-
         if (this.gs.isBlank(this.record.qtnm_to_name)) {
             bRet = false;
             this.errorMessage.push("Quote To Cannot blank");

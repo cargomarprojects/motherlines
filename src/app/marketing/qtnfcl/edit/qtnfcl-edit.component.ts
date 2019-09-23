@@ -48,6 +48,7 @@ export class QtnFclEditComponent implements OnInit {
     mode: string;
     errorMessage: string[] = [];
     Foregroundcolor: string;
+    foreign_amt_decplace: number = 2;
 
     //details
     polId: string = '';
@@ -94,6 +95,7 @@ export class QtnFclEditComponent implements OnInit {
     }
 
     private initPage() {
+        this.foreign_amt_decplace = this.gs.foreign_amt_dec;
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
         this.errorMessage = [];
@@ -253,6 +255,7 @@ export class QtnFclEditComponent implements OnInit {
 
         if (!this.Allvalid())
             return;
+        this.FindGrandTotal();
         this.SaveParent();
         const saveRecord = <vm_Tbl_Cargo_Qtnd_Fcl>{};
         saveRecord.record = this.record;
@@ -295,18 +298,33 @@ export class QtnFclEditComponent implements OnInit {
             this.errorMessage.push("Invalid ID");
         }
 
-        // if (this.gs.isBlank(this.record.qtnr_agent_id) || this.gs.isBlank(this.record.qtnr_agent_name)) {
-        //     bRet = false;
-        //     this.errorMessage = "Agent Cannot be blank";
-        //     alert(this.errorMessage);
-        //     return bRet;
-        // }
-        // if (this.gs.isBlank(this.record.qtnr_validity)) {
-        //     bRet = false;
-        //     this.errorMessage = "Validity cannot be blank";
-        //     alert(this.errorMessage);
-        //     return bRet;
-        // }
+        if (this.gs.isBlank(this.record.qtnm_to_name)) {
+            bRet = false;
+            this.errorMessage.push("Quote To Cannot blank");
+        }
+        if (this.gs.isBlank(this.record.qtnm_date)) {
+            bRet = false;
+            this.errorMessage.push("Quote Date Cannot blank");
+        }
+        if (this.gs.isBlank(this.record.qtnm_salesman_id) || this.gs.isBlank(this.record.qtnm_salesman_name)) {
+            bRet = false;
+            this.errorMessage.push("Sales Rep. Cannot blank");
+        }
+        let iCtr: number = 0;
+        this.records.forEach(Rec => {
+            iCtr++;
+            Rec.qtnd_order = iCtr;
+            if (Rec.qtnd_pol_name.trim() != "" || Rec.qtnd_pod_name.trim() != "") {
+                this.record.qtnm_pol_name = Rec.qtnd_pol_name;
+                this.record.qtnm_pod_name = Rec.qtnd_pod_name;
+            }
+        })
+
+        if (iCtr == 0) {
+            bRet = false;
+            this.errorMessage.push("No Detail Rows To Save");
+        }
+
 
         if (!bRet)
             alert('Error While Saving');
@@ -437,28 +455,20 @@ export class QtnFclEditComponent implements OnInit {
         if (_Record.controlname == "POL") {
             this.polId = _Record.id;
             this.polCode = _Record.code;
-            this.polName = _Record.name;
+            // this.polName = _Record.name;
+            this.polName = this.gs.GetAirportCode(_Record.col3.toString(), _Record.name.toString(), _Record.col4.toString());
         }
         if (_Record.controlname == "POD") {
             this.podId = _Record.id;
             this.podCode = _Record.code;
-            this.podName = _Record.name;
+            // this.podName = _Record.name;
+            this.podName = this.gs.GetAirportCode(_Record.col3.toString(), _Record.name.toString(), _Record.col4.toString());
         }
         if (_Record.controlname == "CARR") {
             this.carrId = _Record.id;
             this.carrCode = _Record.code;
             this.carrName = _Record.name;
         }
-
-        // if (_Record.controlname == "INVOICE-CODE") {
-        //     this.records.forEach(rec => {
-        //         if (rec.qtnd_desc_id == _Record.uid) {
-        //             rec.qtnd_desc_code = _Record.code;
-        //             rec.qtnd_desc_name = _Record.name;
-        //         }
-        //     });
-        // }
-
     }
 
     OnChange(field: string) {
@@ -475,7 +485,7 @@ export class QtnFclEditComponent implements OnInit {
         let _amt: number = 0;
         for (let i = 0; i < this.arrRtVal.length; i++)
             _amt += this.arrRtVal[this.arrRtColFld[i]];
-        this.totAmt = this.gs.roundNumber(_amt, 2);
+        this.totAmt = this.gs.roundNumber(_amt, this.foreign_amt_decplace);
     }
 
     BtnNavigation(action: string) {
@@ -560,7 +570,7 @@ export class QtnFclEditComponent implements OnInit {
         }
         this.CopyRecord();
     }
-    
+
     CopyRecord() {
         this.errorMessage = [];
         let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
@@ -589,6 +599,14 @@ export class QtnFclEditComponent implements OnInit {
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
             });
+    }
+
+    FindGrandTotal() {
+        let nTot: number = 0;
+        this.records.forEach(rec => {
+            nTot += rec.qtnd_tot_amt;
+        });
+        this.record.qtnm_tot_amt = nTot;
     }
 
 }
