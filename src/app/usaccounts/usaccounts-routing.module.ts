@@ -8,6 +8,7 @@ import { AcctmComponent } from './acctm/acctm.component';
 import { AcctmEditComponent } from './acctm/acctm-edit.component';
 import { AcgroupComponent } from './acgroupm/acgroup.component';
 import { AcgroupEditComponent } from './acgroupm/acgroup-edit.component';
+import { BudgetComponent } from './budget/budget.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path : 'AcctmEditPage', component : AcctmEditComponent },
   { path : 'AccGroupPage', component : AcgroupComponent },
   { path : 'AccGroupEditPage', component : AcgroupEditComponent },
+  { path : 'AccBudgetPage', component : BudgetComponent },
 
 ];
 
