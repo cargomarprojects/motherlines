@@ -75,15 +75,21 @@ export class PartyService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        SearchData.TYPE = this.param_type;
+        SearchData.TYPE = 'PARTYS';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
-        SearchData.SDATE = this.record.searchQuery.fromdate;
-        SearchData.EDATE = this.record.searchQuery.todate;
+        SearchData.CODE = '';
+        SearchData.ISADMIN = 'Y';
+        SearchData.ISCOMPANY = 'Y';
+        SearchData.SORT = 'gen_code';
+        SearchData.STATE = '';
+        SearchData.CITY = '';
+        SearchData.ZIP = '';
+        SearchData.TEL = '';
+        SearchData.FAX = '';
+        SearchData.BLACK_ACCOUNT = 'N';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
-
 
         if (type == 'PAGE') {
             SearchData.action = this.record.pageQuery.action;
