@@ -35,13 +35,17 @@ export class AcopenEditComponent implements OnInit {
     isAdmin: boolean;
     refno: string = "";
 
+    decplace = 0;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
         public mainService: AcOpeningService,
-    ) { }
+    ) {
+        this.decplace = this.gs.foreign_amt_dec;    
+     }
 
     ngOnInit() {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -170,7 +174,15 @@ export class AcopenEditComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
 
-        if (_Record.controlname == "ACC_OPENING") {
+        if (_Record.controlname == "ACCTM") {
+            this.record.op_acc_id = _Record.id;
+            this.record.op_acc_code = _Record.code;
+            this.record.op_acc_name = _Record.name;
+        }
+        if (_Record.controlname == "CUSTOMER") {
+            this.record.op_cust_id = _Record.id;
+            this.record.op_cust_code = _Record.code;
+            this.record.op_cust_name = _Record.name;
         }
 
     }
