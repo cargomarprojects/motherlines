@@ -7,7 +7,7 @@ import { seaexpMasterService } from '../../services/seaexp-master.service';
 import { User_Menu } from '../../../core/models/menum';
 import { Tbl_cargo_exp_masterm, Tbl_cargo_exp_container, vm_tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
 
-import {Tbl_cargo_exp_housem} from '../../models/Tbl_cargo_exp_housem';
+import { Tbl_cargo_exp_housem } from '../../models/Tbl_cargo_exp_housem';
 
 import { SearchTable } from '../../../shared/models/searchtable';
 
@@ -25,11 +25,11 @@ export class SeaexpMasterEditComponent implements OnInit {
   @ViewChild('mbl_no') mbl_no_field: InputBoxComponent;
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: InputBoxComponent;
 
-  tab : string = 'main';
-  report_title : string = '';
-  report_url : string = '';
-  report_searchdata : any = {} ;
-  report_menuid : string = '';
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
 
   attach_title: string = '';
   attach_parentid: string = '';
@@ -71,8 +71,8 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   IsLocked: boolean = false;
 
-  hblid : string;
-  hblmode : string;
+  hblid: string;
+  hblmode: string;
 
 
   constructor(
@@ -110,7 +110,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_exp_masterm>{};
       this.records = <Tbl_cargo_exp_container[]>[];
-      this.hrecords = <Tbl_cargo_exp_housem[]>[];      
+      this.hrecords = <Tbl_cargo_exp_housem[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
@@ -131,14 +131,14 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.record.mbl_prefix = this.gs.SEA_EXPORT_REFNO_PREFIX;
     this.record.mbl_startingno = this.gs.SEA_EXPORT_REFNO_STARTING_NO;
 
-    this.record.mbl_no ='';
-    this.record.mbl_liner_bookingno ='';
-    this.record.mbl_sub_houseno ='';
+    this.record.mbl_no = '';
+    this.record.mbl_liner_bookingno = '';
+    this.record.mbl_sub_houseno = '';
 
-    this.record.mbl_por ='';
+    this.record.mbl_por = '';
 
-    this.record.mbl_vessel ='';
-    this.record.mbl_voyage ='';
+    this.record.mbl_vessel = '';
+    this.record.mbl_voyage = '';
 
   }
 
@@ -152,7 +152,7 @@ export class SeaexpMasterEditComponent implements OnInit {
       .subscribe(response => {
         this.record = <Tbl_cargo_exp_masterm>response.record;
         this.records = <Tbl_cargo_exp_container[]>response.records;
-        this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;        
+        this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;
         this.mode = 'EDIT';
         this.CheckData();
       }, error => {
@@ -197,7 +197,7 @@ export class SeaexpMasterEditComponent implements OnInit {
         if (response.retvalue) {
           this.errorMessage = response.retstring;
           if (stype == 'BOOKING')
-            this.mbl_liner_bookingno_field.focus();''
+            this.mbl_liner_bookingno_field.focus(); ''
           if (stype == 'MBL')
             this.mbl_no_field.focus();
         }
@@ -262,6 +262,12 @@ export class SeaexpMasterEditComponent implements OnInit {
       return bRet;
     }
     */
+    if (this.gs.JOB_TYPE_OE.length > 0 && this.record.mbl_jobtype_id == "") {
+      bRet = false;
+      this.errorMessage = "Job Type cannot be blank";
+      return bRet;
+    }
+    
     if (this.record.mbl_shipment_stage == "") {
       bRet = false;
       this.errorMessage = "Shipment Stage cannot be blank";
@@ -374,11 +380,11 @@ export class SeaexpMasterEditComponent implements OnInit {
 
     var rec = <Tbl_cargo_exp_container>{};
     rec.cntr_pkid = this.gs.getGuid();
-      rec.cntr_no = "",
+    rec.cntr_no = "",
       rec.cntr_type = "",
-      rec.cntr_sealno ='';
-      rec.cntr_packages_uom ='';      
-      rec.cntr_movement = "",
+      rec.cntr_sealno = '';
+    rec.cntr_packages_uom = '';
+    rec.cntr_movement = "",
       rec.cntr_weight = 0;
     rec.cntr_pieces = 0;
     rec.cntr_cbm = 0;
@@ -428,7 +434,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (_Record.controlname == "CONTAINER TYPE") {
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
-          
+
         }
       });
     }
@@ -446,22 +452,22 @@ export class SeaexpMasterEditComponent implements OnInit {
     }
   }
 
-  onBlur( data : {field: string, rec: any}) {
-    switch (data.field) {  
+  onBlur(data: { field: string, rec: any }) {
+    switch (data.field) {
       case 'mbl_no': {
-        this.IsBLDupliation('MBL', this.record.mbl_no);        
+        this.IsBLDupliation('MBL', this.record.mbl_no);
         break;
       }
       case 'mbl_liner_bookingno': {
-        this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);        
+        this.IsBLDupliation('BOOKING', this.record.mbl_liner_bookingno);
         break;
       }
-      case  'cntr_sealno' : {
-         break;
+      case 'cntr_sealno': {
+        break;
       }
 
     }
-  }  
+  }
 
   onBlur11(field: string, rec: Tbl_cargo_exp_container) {
     switch (field) {
@@ -553,10 +559,10 @@ export class SeaexpMasterEditComponent implements OnInit {
       case 'BOOKING': {
         let prm = {
           menuid: this.gs.MENU_SE_BOOKING,
-          pkid:  this.pkid,
+          pkid: this.pkid,
           origin: 'seaexp-master-page',
         };
-        this.gs.Naviagete('Silver.SeaExport.Trans/BookingPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.SeaExport.Trans/BookingPage', JSON.stringify(prm));
         break;
       }
 
@@ -573,50 +579,50 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.gs.Naviagete('Silver.SeaExport.Trans/SeaExpHouseEditPage', JSON.stringify(prm));
         break;
       }
-      
+
       case 'MBLPAGE': {
         let prm = {
           menuid: this.gs.MENU_SE_MASTER_MBL_INSTRUCTION,
-          pkid:  this.pkid,
+          pkid: this.pkid,
           origin: 'seaexp-master-page',
         };
-        this.gs.Naviagete('Silver.SeaExport.Trans/MBLPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.SeaExport.Trans/MBLPage', JSON.stringify(prm));
         break;
       }
 
       case 'DOCKPAGE': {
         let prm = {
           menuid: this.gs.MENU_SE_MASTER_DOCK_RECEIPT,
-          pkid:  this.pkid,
+          pkid: this.pkid,
           origin: 'seaexp-master-page',
         };
-        this.gs.Naviagete('Silver.SeaExport.Trans/DockPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.SeaExport.Trans/DockPage', JSON.stringify(prm));
         break;
-      }      
+      }
 
       case 'ARAP': {
         let prm = {
           menuid: this.gs.MENU_SE_MASTER_ARAP,
-          mbl_pkid:  this.pkid,
-          mbl_refno : this.record.mbl_refno,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
           mbl_type: 'OE',
           origin: 'seaexp-master-page',
         };
-        this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
         break;
       }
-      
+
       case 'PROFITREPORT': {
         let prm = {
           menuid: this.gs.MENU_SE_MASTER_PROFIT_REPORT,
-          mbl_pkid:  this.pkid, 
-          mbl_refno : this.record.mbl_refno,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
           mbl_type: 'OE',
           origin: 'seaexp-master-page',
         };
-        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));
         break;
-      }      
+      }
 
 
       case 'PAYMENT-REQUEST': {
@@ -708,8 +714,8 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.report_url = '/api/SeaExport/Master/SeaExportManifest';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_SE_MASTER_MANIFEST ;
-       // this.tab = 'manifest';
+        this.report_menuid = this.gs.MENU_SE_MASTER_MANIFEST;
+        // this.tab = 'manifest';
         this.tab = 'report';
         break;
       }
@@ -730,26 +736,26 @@ export class SeaexpMasterEditComponent implements OnInit {
     }
   }
 
-  callbackevent( event : any ){
+  callbackevent(event: any) {
     this.tab = 'main';
   }
 
   getManiFestReport1() {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
-    
+
     SearchData.pkid = this.pkid;
-        
+
     this.mainService.getManiFestReport(SearchData)
       .subscribe(response => {
-        
+
         this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
-        
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
-  
+
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }
