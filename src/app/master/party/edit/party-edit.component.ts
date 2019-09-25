@@ -24,6 +24,8 @@ export class PartyEditComponent implements OnInit {
     01-07-2019 Created By Ajith  
   */
 
+  locationList: any[] = [];
+
   tab: string = 'main';
   report_title: string = '';
   report_url: string = '';
@@ -86,6 +88,12 @@ export class PartyEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
+    this.locationList = <any[]>[];
+    this.gs.CompanyList.forEach(rec => {
+      if (rec.comp_code != "ALL")
+        this.locationList.push(rec);
+    });
+    // this.complist = this.gs.CompanyList;
     this.errorMessage = '';
   }
 
@@ -182,7 +190,7 @@ export class PartyEditComponent implements OnInit {
         this.record = <Tbl_Mast_Partym>response.record;
         this.records = <Tbl_Mast_Contacts[]>response.hrecords;
         this.mode = 'EDIT';
-     }, error => {
+      }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
@@ -398,22 +406,22 @@ export class PartyEditComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-    //   case 'mbl_refno': {
-    //     this.record.mbl_refno = this.record.mbl_refno.toUpperCase();
-    //     break;
-    //   }
-    //   case 'mbl_no': {
-    //     this.record.mbl_no = this.record.mbl_no.toUpperCase();
-    //     break;
-    //   }
+        case 'gen_pincode': {
+          this.record.gen_pincode = this.record.gen_pincode.toUpperCase();
+          break;
+        }
+      //   case 'mbl_no': {
+      //     this.record.mbl_no = this.record.mbl_no.toUpperCase();
+      //     break;
+      //   }
       //   case 'mbl_liner_bookingno': {
       //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
       //     break;
       //   }
-    //   case 'mbl_vessel': {
-    //     this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
-    //     break;
-    //   }
+      //   case 'mbl_vessel': {
+      //     this.record.mbl_vessel = this.record.mbl_vessel.toUpperCase();
+      //     break;
+      //   }
       //   case 'mbl_voyage': {
       //     this.record.mbl_voyage = this.record.mbl_voyage.toUpperCase();
       //     break;
@@ -443,14 +451,14 @@ export class PartyEditComponent implements OnInit {
       //     this.record.mbl_by_carrier3 = this.record.mbl_by_carrier3.toUpperCase();
       //     break;
       //   }
-    //   case 'mbl_mawb_weight': {
-    //     this.record.mbl_mawb_weight = this.gs.roundNumber(this.record.mbl_mawb_weight, 3);
-    //     break;
-    //   }
-    //   case 'mbl_mawb_chwt': {
-    //     this.record.mbl_mawb_chwt = this.gs.roundNumber(this.record.mbl_mawb_chwt, 3);
-    //     break;
-    //   }
+      //   case 'mbl_mawb_weight': {
+      //     this.record.mbl_mawb_weight = this.gs.roundNumber(this.record.mbl_mawb_weight, 3);
+      //     break;
+      //   }
+      //   case 'mbl_mawb_chwt': {
+      //     this.record.mbl_mawb_chwt = this.gs.roundNumber(this.record.mbl_mawb_chwt, 3);
+      //     break;
+      //   }
 
     }
   }
@@ -501,7 +509,7 @@ export class PartyEditComponent implements OnInit {
         this.tab = 'attachment';
         break;
       }
-     
+
     }
   }
 
