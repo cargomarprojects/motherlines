@@ -112,8 +112,13 @@ export interface vm_Tbl_Mast_Partym {
 
 export interface SearchQuery {
     searchString: string;
-    fromdate: string;
-    todate: string;
+    searchSort: string;
+    searchState: string;
+    searchCity: string;
+    searchTel: string;
+    searchZip: string;
+    searchFax: string;
+    searchBlackAc: boolean;
 }
 
 export interface PartyModel {
