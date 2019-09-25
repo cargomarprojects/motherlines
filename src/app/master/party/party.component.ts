@@ -69,7 +69,7 @@ export class PartyComponent implements OnInit {
       origin: 'partymaster-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.AirImport.Trans/AirImpMasterEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Master/PartyEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_Mast_Partym) {
@@ -85,7 +85,7 @@ export class PartyComponent implements OnInit {
       origin: 'partymaster-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.AirImport.Trans/AirImpMasterEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Master/PartyEditPage', JSON.stringify(parameter));
   }
 
   Close() {

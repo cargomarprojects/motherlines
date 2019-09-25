@@ -20,6 +20,7 @@ import { ParamDetHeaderComponent } from './paramdet/paramdet-header.component';
 import { ParamDetEditComponent } from './paramdet/paramdet-edit.component';
 import { PartyHeaderComponent } from './party/party-header.component';
 import { PartyComponent } from './party/party.component';
+import { PartyEditComponent } from './party/edit/party-edit.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PartyComponent } from './party/party.component';
     ParamDetHeaderComponent,
     ParamDetEditComponent,   
     PartyHeaderComponent,
-    PartyComponent
+    PartyComponent,
+    PartyEditComponent
   ],
   imports: [
     SharedModule,
