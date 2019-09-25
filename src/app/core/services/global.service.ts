@@ -465,6 +465,8 @@ export class GlobalService {
   public GENERAL_BRANCH_CODE = "";
 
 
+  public ACCOUNTS_LOCKED_DATE ="";
+
   public user_ua_pkid = "";
   public branch_code = "";
   public branch_name = "";
@@ -808,6 +810,33 @@ export class GlobalService {
           alert(err);
         });
   }
+
+
+  public IsDateLocked(sDate : string = '')
+  {
+      var bRet = false;
+      var IsNullVal = false;
+      try
+      {
+          IsNullVal = false;
+          if (sDate === "")
+              IsNullVal = true;
+          else if (sDate == null)
+              IsNullVal = true;
+          if (!IsNullVal)
+          {
+              if (sDate.replace('-','') <= this.ACCOUNTS_LOCKED_DATE.replace('-',''))
+                  bRet = true;
+          }
+      }
+      catch (Exception)
+      {
+          bRet = true;
+
+      }
+      return bRet;
+  }
+
 
 
   public roundNumber(_number: number, _precision: number) {

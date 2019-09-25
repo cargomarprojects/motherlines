@@ -38,6 +38,7 @@
                 <label class="col-3 col-form-label col-form-label-sm">A/c</label>
                 <div class="col-9">
                     <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'" [displaycolumn]="'CODE'"
+
                         [displaydata]="record.op_acc_code" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
                 </div>

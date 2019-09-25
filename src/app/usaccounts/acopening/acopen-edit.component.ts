@@ -44,8 +44,8 @@ export class AcopenEditComponent implements OnInit {
         public gs: GlobalService,
         public mainService: AcOpeningService,
     ) {
-        this.decplace = this.gs.foreign_amt_dec;    
-     }
+        this.decplace = this.gs.foreign_amt_dec;
+    }
 
     ngOnInit() {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -90,9 +90,46 @@ export class AcopenEditComponent implements OnInit {
     init() {
 
         this.record.op_pkid = this.pkid;
+        this.record.op_docno = '';
+        this.record.op_date = this.gs.year_start_date;
+
         this.record.op_vrno = '';
+        this.record.op_type = 'OP';
+
+        this.record.op_arap = '';
+
+        this.record.op_year = +this.gs.year_code;
+
+        this.record.op_acc_id = '';
+        this.record.op_acc_code = '';
+        this.record.op_acc_name = '';
+
+        this.record.op_cust_id = '';
+        this.record.op_cust_code = '';
+        this.record.op_cust_name = '';
+
+
+        this.record.op_curr_code = this.gs.base_cur_code;
+        this.record.op_ex_rate = 1;
+
+        this.record.op_famt = 0;
+        this.record.op_amt = 0;
+
+        this.record.op_drcr = "DR";
+
+        this.record.op_mbl_refno = '';
+        this.record.op_inv_refno = '';
+        this.record.op_invno = '';
+        this.record.op_invdate = '';
+
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
+
+        if (this.gs.IS_SINGLE_CURRENCY == true) {
+            this.record.op_curr_code = this.gs.base_cur_code;
+            this.record.op_ex_rate = 1;
+        }
+
     }
 
     GetRecord() {
@@ -111,8 +148,11 @@ export class AcopenEditComponent implements OnInit {
 
     Save() {
 
+
         if (!this.Allvalid())
             return;
+
+
         this.SaveParent();
         const saveRecord = <vm_tbl_accOpening>{};
         saveRecord.record = this.record;
@@ -128,6 +168,9 @@ export class AcopenEditComponent implements OnInit {
                 }
                 else {
                     this.mode = 'EDIT';
+
+                    this.record.op_docno = response.DOCNO;
+
                     this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
                     alert(this.errorMessage);
@@ -141,6 +184,15 @@ export class AcopenEditComponent implements OnInit {
 
     private SaveParent() {
 
+        if (this.record.op_arap == 'NO') {
+            this.record.op_cust_id = "";
+            this.record.op_cust_code = "";
+            this.record.op_cust_name = "";
+            this.record.op_invno = "";
+            this.record.op_invdate = null;
+            this.record.op_inv_refno = "";
+            this.record.op_mbl_refno = "";
+        }
     }
     private Allvalid(): boolean {
 
@@ -163,6 +215,23 @@ export class AcopenEditComponent implements OnInit {
         }
         */
 
+       if (this.record.op_is_paid == "Y")
+       {
+           bRet= false;
+           alert("Invoice Settled, Cannot Edit"); 
+           return bRet;
+       }
+
+       
+
+       if (this.gs.IsDateLocked(ParentRec.op_date)) //Locked by locked date from br settings by 01/July/2018
+       {
+           //LBL_LOCK.Content = "LOCKED";
+           CmdSave.IsEnabled = false;
+       }
+
+
+
         return bRet;
     }
 
@@ -178,6 +247,11 @@ export class AcopenEditComponent implements OnInit {
             this.record.op_acc_id = _Record.id;
             this.record.op_acc_code = _Record.code;
             this.record.op_acc_name = _Record.name;
+            this.record.op_arap = 'NO';
+            if (_Record.col8 === 'R')
+                this.record.op_arap = 'AR';
+            if (_Record.col8 === 'P')
+                this.record.op_arap = 'AP';
         }
         if (_Record.controlname == "CUSTOMER") {
             this.record.op_cust_id = _Record.id;
@@ -194,14 +268,32 @@ export class AcopenEditComponent implements OnInit {
     }
 
     onBlur(field: string) {
-
         /*
         if (field === 'group_name')
             this.record.acc_group_name = this.record.acc_group_name.toUpperCase();
         */
-
+        if (field === 'op_famt') {
+            this.FindTotal();
+        }
+        if (field === 'op_ex_rate') {
+            this.FindTotal();
+        }
     }
 
+
+    FindTotal() {
+        var nTot = 0;
+        if (this.gs.IS_SINGLE_CURRENCY == true) {
+            this.record.op_curr_code = this.gs.base_cur_code;
+            this.record.op_ex_rate = 1;
+        }
+        if (this.record.op_ex_rate <= 0)
+            this.record.op_ex_rate = 1;
+
+        nTot = this.record.op_famt * this.record.op_ex_rate;
+        this.record.op_amt = this.gs.roundNumber(nTot, 2);
+
+    }
 
 
 }
