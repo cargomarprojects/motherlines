@@ -37,6 +37,8 @@ export class AcopenEditComponent implements OnInit {
 
     decplace = 0;
 
+    isAccLocked = false;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -77,6 +79,8 @@ export class AcopenEditComponent implements OnInit {
 
     actionHandler() {
         this.errorMessage = '';
+        this.isAccLocked = false;
+
         if (this.mode == 'ADD') {
             this.record = <Tbl_Acc_Opening>{};
             this.pkid = this.gs.getGuid();
@@ -140,20 +144,44 @@ export class AcopenEditComponent implements OnInit {
             .subscribe(response => {
                 this.record = <Tbl_Acc_Opening>response.record;
                 this.mode = 'EDIT';
+
+                if (this.record.op_is_paid == "Y") {
+                    alert("Invoice Settled, Cannot Edit");
+                }
+                else if (this.gs.IsDateLocked(this.record.op_date)) {
+                    this.isAccLocked = true;
+                    alert("Accounting Period Locked");
+                }
+
             }, error => {
                 this.errorMessage = this.gs.getError(error);
             });
     }
 
 
+    private SaveParent() {
+
+        if (this.record.op_arap == 'NO') {
+            this.record.op_cust_id = "";
+            this.record.op_cust_code = "";
+            this.record.op_cust_name = "";
+            this.record.op_invno = "";
+            this.record.op_invdate = null;
+            this.record.op_inv_refno = "";
+            this.record.op_mbl_refno = "";
+        }
+    }
+
+
     Save() {
 
+        this.FindTotal();
 
         if (!this.Allvalid())
             return;
 
-
         this.SaveParent();
+
         const saveRecord = <vm_tbl_accOpening>{};
         saveRecord.record = this.record;
         saveRecord.pkid = this.pkid;
@@ -182,22 +210,13 @@ export class AcopenEditComponent implements OnInit {
             });
     }
 
-    private SaveParent() {
 
-        if (this.record.op_arap == 'NO') {
-            this.record.op_cust_id = "";
-            this.record.op_cust_code = "";
-            this.record.op_cust_name = "";
-            this.record.op_invno = "";
-            this.record.op_invdate = null;
-            this.record.op_inv_refno = "";
-            this.record.op_mbl_refno = "";
-        }
-    }
     private Allvalid(): boolean {
 
         var bRet = true;
         this.errorMessage = "";
+
+
 
         if (this.gs.isBlank(this.pkid)) {
             bRet = false;
@@ -206,29 +225,117 @@ export class AcopenEditComponent implements OnInit {
             return bRet;
         }
 
-        /*
-        if (this.gs.isBlank(this.record.acc_group_name)) {
+        if (this.isAccLocked) {
             bRet = false;
-            this.errorMessage = "Level2 Cannot be blank";
+            this.errorMessage = "Accounting Period Locked";
             alert(this.errorMessage);
             return bRet;
         }
-        */
 
-       if (this.record.op_is_paid == "Y")
-       {
-           bRet= false;
-           alert("Invoice Settled, Cannot Edit"); 
-           return bRet;
-       }
+        if (this.record.op_is_paid == "Y") {
+            bRet = false;
+            this.errorMessage = "Invoice Settled, Cannot Edit";
+            alert(this.errorMessage);
+            return bRet;
+        }
 
-       
+        if (this.gs.IsDateLocked(this.record.op_date)) //Locked by locked date from br settings by 01/July/2018
+        {
+            bRet = false;
+            this.errorMessage = "Accounting Period Locked";
+            alert(this.errorMessage);
+            return bRet;
+        }
 
-       if (this.gs.IsDateLocked(ParentRec.op_date)) //Locked by locked date from br settings by 01/July/2018
-       {
-           //LBL_LOCK.Content = "LOCKED";
-           CmdSave.IsEnabled = false;
-       }
+        if (this.gs.isBlank(this.record.op_date)) {
+            bRet = false;
+            this.errorMessage = "Invalid Date";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isBlank(this.record.op_acc_id)) {
+            bRet = false;
+            this.errorMessage = "Invalid A/c Selected";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isZero(this.record.op_famt)) {
+            bRet = false;
+            this.errorMessage = "Invalid Amount";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isBlank(this.record.op_curr_code)) {
+            bRet = false;
+            this.errorMessage = "Invalid Currency";
+            alert(this.errorMessage);
+            return bRet;
+        }        
+
+        if (this.gs.isZero(this.record.op_ex_rate)) {
+            bRet = false;
+            this.errorMessage = "Invalid Ex.Rate";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isZero(this.record.op_amt)) {
+            bRet = false;
+            this.errorMessage = "Invalid Amount";
+            alert(this.errorMessage);
+            return bRet;
+        }        
+
+
+        if (this.gs.isBlank(this.record.op_drcr)) {
+            bRet = false;
+            this.errorMessage = "Invalid A/c Type";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if ( this.record.op_arap === 'AR' ||  this.record.op_arap === 'AP')
+        {
+            if (this.gs.isBlank(this.record.op_cust_id)) {
+                bRet = false;
+                this.errorMessage = "Invalid Party";
+                alert(this.errorMessage);
+                return bRet;
+            }
+            if (this.gs.isBlank(this.record.op_invno)) {
+                bRet = false;
+                this.errorMessage = "Invalid Invoice No";
+                alert(this.errorMessage);
+                return bRet;
+            }
+            if (this.gs.isBlank(this.record.op_invdate)) {
+                bRet = false;
+                this.errorMessage = "Invalid Invoice Date";
+                alert(this.errorMessage);
+                return bRet;
+            }
+        }
+
+        if ( this.record.op_arap === 'AR' ){
+            if ( this.record.op_drcr == 'CR'){
+                bRet = false;
+                this.errorMessage = "A/c Type need to be DR";
+                alert(this.errorMessage);
+                return bRet;
+            }
+        }
+        if ( this.record.op_arap === 'AP' ){
+            if ( this.record.op_drcr == 'DR'){
+                bRet = false;
+                this.errorMessage = "A/c Type need to be CR";
+                alert(this.errorMessage);
+                return bRet;
+            }
+        }
+
 
 
 
