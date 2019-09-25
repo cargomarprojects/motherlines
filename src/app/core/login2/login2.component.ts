@@ -545,22 +545,15 @@ export class Login2Component implements OnInit {
                 else if (Rec.param_name1 == "SHIPMENT-LOG-FORMAT")
                     this.GLOBALCONTANTS.SHIPMENTLOG_FORMAT = Rec.param_name3;
 
-                /*
+                
                 else if (Rec.param_name1 == "SHIPMENT-LOCKED-DATE")
                 {
                     if (Rec.param_name3.Trim() != "")
                     {
-                        string[] sdata = Rec.param_name3.Split('-');
-                        if (sdata.Length == 3)
-                        {
-                            int yy = Lib.Convert2Integer(sdata[0]);
-                            int mm = Lib.Convert2Integer(sdata[1]);
-                            int dd = Lib.Convert2Integer(sdata[2]);
-                            this.GLOBALCONTANTS.ACCOUNTS_LOCKED_DATE = new DateTime(yy, mm, dd);
-                        }
+                        var sdata  = Rec.param_name3.Split('-');
+                        this.GLOBALCONTANTS.ACCOUNTS_LOCKED_DATE =Rec.param_name3;
                     }
                 }
-                */
             }
             else if (Rec.param_type == "GLOBAL SETTINGS") {
                 if (Rec.param_name1 == "SOFTWARE VERSION")
