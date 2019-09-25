@@ -145,12 +145,13 @@ export class AcopenEditComponent implements OnInit {
                 this.record = <Tbl_Acc_Opening>response.record;
                 this.mode = 'EDIT';
 
+                this.errorMessage  ="";
                 if (this.record.op_is_paid == "Y") {
-                    alert("Invoice Settled, Cannot Edit");
+                    this.errorMessage  ="Invoice Settled, Cannot Edit";
                 }
                 else if (this.gs.IsDateLocked(this.record.op_date)) {
                     this.isAccLocked = true;
-                    alert("Accounting Period Locked");
+                    this.errorMessage  ="Accoutning Period Locked";
                 }
 
             }, error => {
@@ -379,10 +380,10 @@ export class AcopenEditComponent implements OnInit {
         if (field === 'group_name')
             this.record.acc_group_name = this.record.acc_group_name.toUpperCase();
         */
-        if (field === 'op_famt') {
+        if (field == "op_famt") {
             this.FindTotal();
         }
-        if (field === 'op_ex_rate') {
+        if (field == "op_ex_rate") {
             this.FindTotal();
         }
     }
