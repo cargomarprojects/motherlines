@@ -235,8 +235,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 px-0 mx-0">
-                        <div class="row border">
+                    <div class="col-md-12 px-0 mx-0 border">
+                        <div class="row">
                             <label
                                 class="col-12  pr-0 col-form-label col-form-label-sm"><strong>Category</strong></label>
                             <div class="col-md-3 testbox  px-0 mx-0">
@@ -276,7 +276,8 @@
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>Customs Broker (B)</span>
+                                                [(ngModel)]="record.gen_handled_name"><span>Customs Broker
+                                                (B)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +297,8 @@
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>Overseas Agent (A)</span>
+                                                [(ngModel)]="record.gen_handled_name"><span>Overseas Agent
+                                                (A)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +366,8 @@
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>Shipping Vendor (H)</span>
+                                                [(ngModel)]="record.gen_handled_name"><span>Shipping Vendor
+                                                (H)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -373,7 +376,8 @@
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>General Vendor (G)</span>
+                                                [(ngModel)]="record.gen_handled_name"><span>General Vendor
+                                                (G)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -420,58 +424,125 @@
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>Bank / Financial Institue (K)</span>
+                                                [(ngModel)]="record.gen_handled_name"><span>Bank / Financial
+                                                Institue (K)</span>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 testbox  px-0 mx-0">
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label col-form-label-sm">ClientType</label>
+                                    <div class="col-8">
+                                        <select class="form-control form-control-sm"
+                                            [(ngModel)]="record.gen_handled_loc_id">
+                                            <option *ngFor="let rec of locationList" [value]="rec.comp_pkid">
+                                                {{rec.comp_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3 testbox  px-0 mx-0">
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label col-form-label-sm">VendorPriority</label>
+                                    <div class="col-8">
+                                        <select class="form-control form-control-sm"
+                                            [(ngModel)]="record.gen_handled_loc_id">
+                                            <option *ngFor="let rec of locationList" [value]="rec.comp_pkid">
+                                                {{rec.comp_name}}</option>
+                                        </select>
                                     </div>
                                 </div>
 
                             </div>
 
-                            <!-- <div class="col-md-4 testbox  px-0 mx-0">
+                            <div class="col-md-6 testbox  px-0 mx-0">
                                 <div class="form-group row">
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="searchQuery.searchBlackAc"><span>Black Account</span>
-                                        </div>
+                                    <label class="col-4 col-form-label col-form-label-sm">Criteria/Min.Profit</label>
+                                    <div class="col-8 input-group input-group-sm">
+                                        <select class="form-control form-control-sm"
+                                            [(ngModel)]="record.gen_handled_loc_id">
+                                            <option *ngFor="let rec of locationList" [value]="rec.comp_pkid">
+                                                {{rec.comp_name}}</option>
+                                        </select>
+                                        <input class="form-control form-control-sm" type="text"
+                                            [(ngModel)]="record.gen_pincode" (blur)="onBlur('gen_pincode')"
+                                            maxlength="30" />
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="searchQuery.searchBlackAc"><span>Black Account</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
 
-                            <!-- <div class="col-md-4 testbox  px-0 mx-0">
-                                <div class="form-group row">
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="searchQuery.searchBlackAc"><span>Black Account</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="searchQuery.searchBlackAc"><span>Black Account</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
+                            </div>
 
                         </div>
+
                     </div>
 
+                    <div class="col-md-12 px-0 mx-0 border">
+                        <div class="row">
+                            <div class="col-md-6 testbox  px-0 mx-0">
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm">FirmCode</label>
+                                    <div class="col-4">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code2>
+                                        </InputBox>
+                                    </div>
+                                    <label class="col-2 col-form-label col-form-label-sm">EIN/IRS/SS#</label>
+                                    <div class="col-4">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code4>
+                                        </InputBox>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm">CreditDays</label>
+                                    <div class="col-4">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code2>
+                                        </InputBox>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>Credit/Special
+                                                Account</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 testbox  px-0 mx-0">
+                                <div class="form-group row">
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>C-TPAT Certified</span>
+                                        </div>
+                                    </div>
+                                    <label class="col-2 col-form-label col-form-label-sm">C-TPAT#</label>
+                                    <div class="col-4">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code2>
+                                        </InputBox>
+                                    </div>
 
-
+                                </div>
+                                <div class="form-group row">
+                                        
+                                        <label class="col-2 col-form-label col-form-label-sm">Memo</label>
+                                        <div class="col-10">
+                                            <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                                #_gen_code2>
+                                            </InputBox>
+                                        </div>
+    
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Second row -->
                     <!-- <div class="col-md-12 px-0 mx-0">
                         <div class="row border">
