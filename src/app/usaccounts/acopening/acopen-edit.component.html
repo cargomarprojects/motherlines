@@ -1,8 +1,8 @@
 <div class="page-header">
     <div class="row align-items-center justify-content-left p-1">
         <label class="mr-3">A/c Master ({{mode}})</label>
-        <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+        <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>        
     </div>
 </div>
 
@@ -136,6 +136,7 @@
                 <label class="col-3 col-form-label col-form-label-sm">Inv.Date</label>
                 <div class="col-9">
                     <app-date [inputdate]="record.op_invdate" (ValueChanged)="sdate=$event"></app-date>
+
                 </div>
             </div>
 
