@@ -461,8 +461,8 @@
 
                             <div class="col-md-6 testbox  px-0 mx-0">
                                 <div class="form-group row">
-                                    <label class="col-4 col-form-label col-form-label-sm">Criteria/Min.Profit</label>
-                                    <div class="col-8 input-group input-group-sm">
+                                    <label class="col-2 col-form-label col-form-label-sm">Criteria/Min.Profit</label>
+                                    <div class="col-10 input-group input-group-sm">
                                         <select class="form-control form-control-sm"
                                             [(ngModel)]="record.gen_handled_loc_id">
                                             <option *ngFor="let rec of locationList" [value]="rec.comp_pkid">
@@ -513,6 +513,22 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>Vendor</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>Black Account</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="col-md-6 testbox  px-0 mx-0">
                                 <div class="form-group row">
@@ -528,292 +544,265 @@
                                             #_gen_code2>
                                         </InputBox>
                                     </div>
-
                                 </div>
                                 <div class="form-group row">
-                                        
-                                        <label class="col-2 col-form-label col-form-label-sm">Memo</label>
-                                        <div class="col-10">
-                                            <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
-                                                #_gen_code2>
-                                            </InputBox>
-                                        </div>
-    
+
+                                    <label class="col-2 col-form-label col-form-label-sm">Memo</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code2>
+                                        </InputBox>
                                     </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Second row -->
-                    <!-- <div class="col-md-12 px-0 mx-0">
+
+                    <div class="col-md-12 px-0 mx-0">
                         <div class="row border">
                             <div class="col-md-6 testbox  px-0 mx-0">
 
                                 <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Mawb#</label>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" type="text"
-                                            (blur)="onBlur('mbl_no')" #mbl_no (focusout)="onFocusout('mbl_no')"
-                                            [(ngModel)]="record.mbl_no" maxlength="11" />
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Master Agent</label>
-                                    <div class="col-9">
-
-                                        <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'"
-                                            [displaycolumn]="'NAME'" [displaydata]="record.mbl_agent_name"
+                                    <label class="col-2 col-form-label col-form-label-sm">CHB</label>
+                                    <div class="col-10">
+                                        <app-autocomplete2 [controlname]="'PARENT'" [tabletype]="'OVERSEAAGENT'"
+                                            [displaycolumn]="'NAME'" [displaydata]="record.gen_parent_name"
                                             (ValueChanged)="LovSelected($event)">
                                         </app-autocomplete2>
-
                                     </div>
                                 </div>
-
-
-
                                 <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Pol</label>
-                                    <div class="col-9">
-
-                                        <app-autocomplete2 [controlname]="'POL'" [tabletype]="'AIR PORT'"
-                                            [displaycolumn]="'NAME'" [displaydata]="record.mbl_pol_name"
-                                            (ValueChanged)="LovSelected($event)">
-                                        </app-autocomplete2>
-
+                                    <label class="col-2 col-form-label col-form-label-sm">Name</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_location" maxlength="60" [uppercase]="true"
+                                            #_gen_location>
+                                        </InputBox>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
-                                    <div class="col-9">
-                                        <app-date [inputdate]="record.mbl_pol_etd"
-                                            (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Port.Discharge</label>
-                                    <div class="col-9">
-
-                                        <app-autocomplete2 [controlname]="'POD'" [tabletype]="'AIR PORT'"
-                                            [displaycolumn]="'NAME'" [displaydata]="record.mbl_pod_name"
-                                            (ValueChanged)="LovSelected($event)">
-                                        </app-autocomplete2>
-
-
+                                    <label class="col-2 col-form-label col-form-label-sm">Address</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_address1" maxlength="60" [uppercase]="true"
+                                            #_gen_address1>
+                                        </InputBox>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
-                                    <div class="col-9">
-                                        <app-date [inputdate]="record.mbl_pod_eta"
-                                            (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
+                                    <label class="col-2 col-form-label col-form-label-sm"></label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_address2" maxlength="60" [uppercase]="true"
+                                            #_gen_address2>
+                                        </InputBox>
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm"></label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_address3" maxlength="60" [uppercase]="true"
+                                            #_gen_address3>
+                                        </InputBox>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6 testbox  px-0 mx-0">
                                 <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Carrier</label>
-                                    <div class="col-9">
-
-                                        <app-autocomplete2 [controlname]="'CARRIER'" [tabletype]="'AIR CARRIER'"
-                                            [displaycolumn]="'NAME'" [displaydata]="record.mbl_liner_name"
-                                            (ValueChanged)="LovSelected($event)">
-                                        </app-autocomplete2>
-
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Flight No</label>
-                                    <div class="col-9 ">
-                                        <InputBox [(inputModel)]="record.mbl_vessel" [maxlength]="15" [uppercase]="true"
-                                            #vessel vessel>
-                                        </InputBox>
-
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
-                                    <div class="col-9">
+                                    <label class="col-2 col-form-label col-form-label-sm">Group</label>
+                                    <div class="col-10">
                                         <select class="form-control form-control-sm"
-                                            [(ngModel)]="record.mbl_frt_status">
-                                            <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">
-                                                {{rec.name}}</option>
+                                            [(ngModel)]="record.gen_handled_loc_id">
+                                            <option *ngFor="let rec of locationList" [value]="rec.comp_pkid">
+                                                {{rec.comp_name}}</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Origin.Country</label>
-                                    <div class="col-9">
-
-                                        <app-autocomplete2 [controlname]="'COUNTRY'" [tabletype]="'PARAM'"
-                                            [subtype]="'COUNTRY'" [displaycolumn]="'NAME'"
-                                            [displaydata]="record.mbl_country_name"
-                                            (ValueChanged)="LovSelected($event)">
-                                        </app-autocomplete2>
-
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Handled.By</label>
-                                    <div class="col-9">
-
-                                        <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'"
-                                            [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
-                                            [displaydata]="record.mbl_handled_name"
-                                            (ValueChanged)="LovSelected($event)">
-                                        </app-autocomplete2>
-
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
-                                    <div class="col-9">
-                                        <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'"
-                                            [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
-                                            [displaydata]="record.mbl_salesman_name"
-                                            (ValueChanged)="LovSelected($event)">
-                                        </app-autocomplete2>
+                                    <label class="col-2 col-form-label col-form-label-sm">Contact</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_contact" maxlength="60" [uppercase]="true"
+                                            #_gen_contact>
+                                        </InputBox>
                                     </div>
                                 </div>
 
 
-
-                            </div>
-                        </div>
-
-                        <div class="row border">
-                            <div class="col-md-6 testbox  px-0 mx-0">
                                 <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Cargo Location</label>
-                                    <div class="col-9">
-                                        <app-autocomplete2 [controlname]="'CARGO-LOC'" [tabletype]="'MASTER'"
-                                            [subtype]="'LOCATION'" [displaycolumn]="'NAME'"
-                                            [displaydata]="record.mbl_cargo_loccode"
-                                            (ValueChanged)="LovSelected($event)">
-                                        </app-autocomplete2>
+                                    <label class="col-2 col-form-label col-form-label-sm">Tel</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_tel" maxlength="60" [uppercase]="true"
+                                            #_gen_location>
+                                        </InputBox>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <button class=" col-3 btn btn-success btn-sm" *ngIf="!is_locked"
-                                        (click)="CopyLoc2House()">Cpoy to All
-                                        House</button>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" type="text"
-                                            (blur)="onBlur('mbl_cargo_locname')" [(ngModel)]="record.mbl_cargo_locname"
-                                            maxlength="60" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm"></label>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" type="text"
-                                            (blur)="onBlur('mbl_cargo_locaddr1')"
-                                            [(ngModel)]="record.mbl_cargo_locaddr1" maxlength="60" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm"></label>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" type="text"
-                                            (blur)="onBlur('mbl_cargo_locaddr2')"
-                                            [(ngModel)]="record.mbl_cargo_locaddr2" maxlength="60" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm"></label>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" type="text"
-                                            (blur)="onBlur('mbl_cargo_locaddr3')"
-                                            [(ngModel)]="record.mbl_cargo_locaddr3" maxlength="60" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm"></label>
-                                    <div class="col-9">
-                                        <input class="form-control form-control-sm" type="text"
-                                            (blur)="onBlur('mbl_cargo_locaddr4')"
-                                            [(ngModel)]="record.mbl_cargo_locaddr4" maxlength="60" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 testbox  px-0 mx-0">
-
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm">Mawb GrWt</label>
-                                    <div class="col-9 ">
-                                        <input class="form-control form-control-sm" type="number"
-                                            (blur)="onBlur('mbl_mawb_weight')" [(ngModel)]="record.mbl_mawb_weight"
-                                            maxlength="15" />
+                                    <label class="col-2 col-form-label col-form-label-sm">Fax</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_fax" maxlength="30" [uppercase]="true"
+                                            #_gen_location>
+                                        </InputBox>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-3 col-form-label col-form-label-sm pr-0">Mawb ChWt</label>
-                                    <div class="col-9 ">
-                                        <input class="form-control form-control-sm " type="number"
-                                            (blur)="onBlur('mbl_mawb_chwt')" [(ngModel)]="record.mbl_mawb_chwt"
-                                            maxlength="15" />
+                                    <label class="col-2 col-form-label col-form-label-sm">Email</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_email" maxlength="60" [uppercase]="true"
+                                            #_gen_location>
+                                        </InputBox>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
-                        <hr>
-                    </div> -->
+                    </div>
+
+                    <div class="col-md-12 px-0 mx-0 border">
+                        <div class="row">
+                            <div class="col-md-6 testbox  px-0 mx-0">
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm"></label>
+                                    <div class="col-10">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>POA For Customs On
+                                                File</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm">Brokers</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code2>
+                                        </InputBox>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm"></label>
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>POA For ISF On File</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>Annual Bond</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 testbox  px-0 mx-0">
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm">Purch/From</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code2>
+                                        </InputBox>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm">BondNo</label>
+                                    <div class="col-10">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code2>
+                                        </InputBox>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label col-form-label-sm">BondExp/Date</label>
+                                    <div class="col-6">
+                                        <app-date [inputdate]="record.mbl_pod_eta"
+                                            (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 px-0 mx-0 border">
+                        <div class="row">
+                            <div class="col-md-6 testbox  px-0 mx-0">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>Branch</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-10">
+                                        <select class="form-control form-control-sm"
+                                            [(ngModel)]="record.gen_handled_loc_id">
+                                            <option *ngFor="let rec of locationList" [value]="rec.comp_pkid">
+                                                {{rec.comp_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 testbox  px-0 mx-0">
+                                <div class="form-group row">
+                                    <!-- <label class="col-2 col-form-label col-form-label-sm"></label> -->
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [(ngModel)]="record.gen_handled_name"><span>Protected Record</span>
+                                        </div>
+                                    </div>
+                                    <label class="col-2 col-form-label col-form-label-sm">CurrencyCode</label>
+                                    <div class="col-4">
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                            #_gen_code2>
+                                        </InputBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- <div *ngIf="mode=='EDIT'" class="row">
+                <div class="row">
 
                     <div class="col-md-12  px-0 mx-0">
                         <div class="page-body table-responsive">
+                            <div class="form-group row">
+                                <label
+                                    class="col-12  pr-0 col-form-label col-form-label-sm"><strong>Other Contacts</strong></label>
+                            </div>
                             <table class="table  table-hover table-sm">
                                 <thead class="page-body-thead">
                                     <tr>
-                                        <th>HOUSE</th>
-                                        <th>SHIPPER</th>
-                                        <th>CONSIGNEE</th>
-                                        <th>PCS</th>
-                                        <th>HANDLED-BY</th>
-                                        <th>ETD</th>
-                                        <th>ETA</th>
-                                        <th>CREATED-BY</th>
-                                        <th>DATE</th>
+                                        <th>NAME</th>
+                                        <th>TITLE</th>
+                                        <th>EMAIL</th>
+                                        <th>REMARKS</th>
+                                        <th>TEL</th>
+                                        <th>MOBILE</th>
                                     </tr>
                                 </thead>
                                 <tbody class="page-body-tbody">
-                                    <tr *ngFor="let rec of hrecords">
-                                        <td (click)="EditHouse(rec)">{{rec.hbl_houseno}}</td>
+                                    <tr *ngFor="let rec of records">
+                                        <td>{{rec.hbl_houseno}}</td>
                                         <td>{{rec.hbl_shipper_name}}</td>
                                         <td>{{rec.hbl_consignee_name}}</td>
                                         <td>{{rec.hbl_packages}}</td>
                                         <td>{{rec.hbl_handled_name}}</td>
                                         <td>{{rec.mbl_pol_etd | date : gs.FRONTEND_DATEFORMAT }}</td>
-                                        <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT }}</td>
-                                        <td>{{rec.rec_created_by}}</td>
-                                        <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked"
-                                        (click)="AddHouse()">Add House</button>
+                                    <button class="btn btn-success btn-sm mr-1" (click)="AddHouse()">Add Row</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div> -->
+                </div>
 
             </div>
             <div *ngIf="mode=='EDIT'" class="col-md-2 p-1 testbox">
