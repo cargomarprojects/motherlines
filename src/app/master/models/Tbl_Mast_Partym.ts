@@ -69,6 +69,8 @@ export interface Tbl_Mast_Partym {
     gen_is_exporter: string;
     gen_is_terminal: string;
     gen_is_terminal2: string;
+
+
     gen_branch: string;
     gen_protected: string;
     gen_is_carrier2_sea: string;
@@ -101,6 +103,33 @@ export interface Tbl_Mast_Partym {
     gen_is_splac: string;
     gen_splac_memo: string;
     gen_is_blackac: string;
+
+    gen_is_shipper_b: boolean;
+    gen_is_consignee_b: boolean;
+    gen_is_cha_b: boolean;
+    gen_is_forwarder_b: boolean;
+    gen_is_agent_b: boolean;
+    gen_is_carrier_b: boolean;
+    gen_is_trucker_b: boolean;
+    gen_is_vendor_b: boolean;
+    gen_is_warehouse_b: boolean;
+    gen_is_miscellaneous_b: boolean;
+    gen_is_employees_b: boolean;
+    gen_is_importer_b: boolean;
+    gen_is_exporter_b: boolean;
+    gen_is_terminal_b: boolean;
+    gen_is_terminal2_b: boolean;
+    gen_is_carrier2_sea_b: boolean;
+    gen_is_shipper_vendor_b: boolean;
+    gen_is_contractor_b: boolean;
+    gen_is_ctpat_b: boolean;
+    gen_is_bank_b: boolean;
+    gen_poa_customs_yn_b: boolean;
+    gen_poa_isf_yn_b: boolean;
+    gen_bond_yn_b: boolean;
+    gen_is_actual_vendor_b: boolean;
+    gen_is_splac_b: boolean;
+    gen_is_blackac_b: boolean;
 }
 
 export interface vm_Tbl_Mast_Partym {
