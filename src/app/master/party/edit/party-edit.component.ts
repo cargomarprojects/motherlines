@@ -47,6 +47,8 @@ export class PartyEditComponent implements OnInit {
   attach_filespath: string = '';
   attach_filespath2: string = '';
 
+  SetAddressToLine: string = "";
+
   private pkid: string = "";
   private menuid: string;
   private hbl_pkid: string = '';
@@ -196,7 +198,7 @@ export class PartyEditComponent implements OnInit {
     this.record.gen_criteria = '';
     this.record.gen_min_profit = '';
     this.record.gen_branch = '';
-    this.record.gen_protected = '';
+    this.record.gen_protected = 'N';
     this.record.gen_is_actual_vendor = 'N';
     this.record.gen_is_splac = 'N';
     this.record.gen_splac_memo = '';
@@ -204,63 +206,9 @@ export class PartyEditComponent implements OnInit {
     this.record.gen_handled_loc_id = '';
     this.record.gen_cust_group_id = '';
     this.record.gen_is_acc_alert = 'N';
+    this.record.gen_protected = 'N';
+    this.gen_branch_b = false;
 
-
-
-
-
-    // this.record.mbl_prefix = this.gs.AIR_EXPORT_REFNO_PREFIX;
-    // this.record.mbl_startingno = this.gs.AIR_EXPORT_REFNO_STARTING_NO;
-    // // if (this.gs.BRANCH_REGION == "USA")
-    // //   this.record.mbl_currency = "USD";
-    // // else
-    // //   this.record.mbl_currency = "AED";
-    // this.record.mbl_no = '';
-    // this.record.mbl_refno = '';
-    // this.record.mbl_ref_date = this.gs.defaultValues.today;
-    // this.record.mbl_date = '';
-    // this.record.mbl_frt_status = '';
-    // this.record.mbl_liner_id = '';
-    // this.record.mbl_liner_name = '';
-    // this.record.mbl_liner_code = '';
-    // this.record.mbl_agent_id = '';
-    // this.record.mbl_agent_name = '';
-    // this.record.mbl_agent_code = '';
-    // this.record.mbl_pod_id = '';
-    // this.record.mbl_pod_code = '';
-    // this.record.mbl_pod_name = '';
-    // this.record.mbl_pod_cntry_code = '';
-    // this.record.mbl_pol_id = '';
-    // this.record.mbl_pol_code = '';
-    // this.record.mbl_pol_name = '';
-    // this.record.mbl_pol_cntry_code = '';
-    // this.record.mbl_liner_bookingno = '';
-    // this.record.mbl_direct = 'N';
-    // this.record.mbl_direct_bool = false;
-    // this.record.mbl_pol_etd = '';
-    // this.record.mbl_pod_eta = '';
-    // this.record.mbl_vessel = '';
-    // this.record.mbl_voyage = '';
-    // this.record.mbl_currency = '';
-    // this.record.mbl_to_port1 = '';
-    // this.record.mbl_to_port2 = '';
-    // this.record.mbl_to_port3 = '';
-    // this.record.mbl_by_carrier1 = '';
-    // this.record.mbl_by_carrier2 = '';
-    // this.record.mbl_by_carrier3 = '';
-    // this.record.mbl_country_id = '';
-    // this.record.mbl_country_name = '';
-    // this.record.mbl_handled_id = '';
-    // this.record.mbl_handled_name = '';
-    // this.record.mbl_mawb_weight = 0;
-    // this.record.mbl_mawb_chwt = 0;
-    // this.record.mbl_jobtype_id = '';
-    // this.record.mbl_jobtype_name = '';
-    // this.record.mbl_shipment_stage = 'NIL';
-    // this.record.mbl_salesman_id = '';
-    // this.record.mbl_salesman_name = '';
-    // this.record.mbl_3rdparty = 'N';
-    // this.record.mbl_3rdparty_bool = false;
     if (this.gs.JOB_TYPE_AI.length > 0) {
       // if (JobList.Count > 0)
       //     Cmb_JobType.SelectedIndex = 0;
@@ -276,8 +224,36 @@ export class PartyEditComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_Mast_Partym>response.record;
-        this.records = <Tbl_Mast_Contacts[]>response.hrecords;
+        this.records = <Tbl_Mast_Contacts[]>response.records;
         this.mode = 'EDIT';
+        this.record.gen_is_shipper_b = (this.record.gen_is_shipper == "Y") ? true : false;
+        this.record.gen_is_consignee_b = (this.record.gen_is_consignee == "Y") ? true : false;
+        this.record.gen_is_importer_b = (this.record.gen_is_importer == "Y") ? true : false;
+        this.record.gen_is_exporter_b = (this.record.gen_is_exporter == "Y") ? true : false;
+        this.record.gen_is_cha_b = (this.record.gen_is_cha == "Y") ? true : false;
+        this.record.gen_is_forwarder_b = (this.record.gen_is_forwarder == "Y") ? true : false;
+        this.record.gen_is_agent_b = (this.record.gen_is_agent == "Y") ? true : false;
+        this.record.gen_is_carrier_b = (this.record.gen_is_carrier == "Y") ? true : false;
+        this.record.gen_is_carrier2_sea_b = (this.record.gen_is_carrier2_sea == "Y") ? true : false;
+        this.record.gen_is_trucker_b = (this.record.gen_is_trucker == "Y") ? true : false;
+        this.record.gen_is_warehouse_b = (this.record.gen_is_warehouse == "Y") ? true : false;
+        this.record.gen_is_terminal_b = (this.record.gen_is_terminal == "Y") ? true : false;
+        this.record.gen_is_terminal2_b = (this.record.gen_is_terminal2 == "Y") ? true : false;
+        this.record.gen_is_shipper_vendor_b = (this.record.gen_is_shipper_vendor == "Y") ? true : false;
+        this.record.gen_is_vendor_b = (this.record.gen_is_vendor == "Y") ? true : false;
+        this.record.gen_is_employees_b = (this.record.gen_is_employees == "Y") ? true : false;
+        this.record.gen_is_contractor_b = (this.record.gen_is_contractor == "Y") ? true : false;
+        this.record.gen_is_miscellaneous_b = (this.record.gen_is_miscellaneous == "Y") ? true : false;
+        this.record.gen_is_tbd_b = (this.record.gen_is_tbd == "Y") ? true : false;
+        this.record.gen_is_bank_b = (this.record.gen_is_bank == "Y") ? true : false;
+        this.record.gen_is_splac_b = (this.record.gen_is_splac == "Y") ? true : false;
+        this.record.gen_is_ctpat_b = (this.record.gen_is_ctpat == "Y") ? true : false;
+        this.record.gen_is_actual_vendor_b = (this.record.gen_is_actual_vendor == "Y") ? true : false;
+        this.record.gen_is_blackac_b = (this.record.gen_is_blackac == "Y") ? true : false;
+        this.record.gen_poa_customs_yn_b = (this.record.gen_poa_customs_yn == "Y") ? true : false;
+        this.record.gen_poa_isf_yn_b = (this.record.gen_poa_isf_yn == "Y") ? true : false;
+        this.record.gen_bond_yn_b = (this.record.gen_bond_yn == "Y") ? true : false;
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -289,8 +265,33 @@ export class PartyEditComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
-    // this.record.mbl_direct = this.record.mbl_direct_bool ? 'Y' : 'N';
-    // this.record.mbl_3rdparty = this.record.mbl_3rdparty_bool ? 'Y' : 'N';
+    this.record.gen_is_shipper = this.record.gen_is_shipper_b ? 'Y' : 'N';
+    this.record.gen_is_consignee = this.record.gen_is_consignee_b ? 'Y' : 'N';
+    this.record.gen_is_importer = this.record.gen_is_importer_b ? 'Y' : 'N';
+    this.record.gen_is_exporter = this.record.gen_is_exporter_b ? 'Y' : 'N';
+    this.record.gen_is_cha = this.record.gen_is_cha_b ? 'Y' : 'N';
+    this.record.gen_is_forwarder = this.record.gen_is_forwarder_b ? 'Y' : 'N';
+    this.record.gen_is_agent = this.record.gen_is_agent_b ? 'Y' : 'N';
+    this.record.gen_is_carrier = this.record.gen_is_carrier_b ? 'Y' : 'N';
+    this.record.gen_is_carrier2_sea = this.record.gen_is_carrier2_sea_b ? 'Y' : 'N';
+    this.record.gen_is_trucker = this.record.gen_is_trucker_b ? 'Y' : 'N';
+    this.record.gen_is_warehouse = this.record.gen_is_warehouse_b ? 'Y' : 'N';
+    this.record.gen_is_terminal = this.record.gen_is_terminal_b ? 'Y' : 'N';
+    this.record.gen_is_terminal2 = this.record.gen_is_terminal2_b ? 'Y' : 'N';
+    this.record.gen_is_shipper_vendor = this.record.gen_is_shipper_vendor_b ? 'Y' : 'N';
+    this.record.gen_is_vendor = this.record.gen_is_vendor_b ? 'Y' : 'N';
+    this.record.gen_is_employees = this.record.gen_is_employees_b ? 'Y' : 'N';
+    this.record.gen_is_contractor = this.record.gen_is_contractor_b ? 'Y' : 'N';
+    this.record.gen_is_miscellaneous = this.record.gen_is_miscellaneous_b ? 'Y' : 'N';
+    this.record.gen_is_tbd = this.record.gen_is_tbd_b ? 'Y' : 'N';
+    this.record.gen_is_bank = this.record.gen_is_bank_b ? 'Y' : 'N';
+    this.record.gen_is_splac = this.record.gen_is_splac_b ? 'Y' : 'N';
+    this.record.gen_is_ctpat = this.record.gen_is_ctpat_b ? 'Y' : 'N';
+    this.record.gen_is_actual_vendor = this.record.gen_is_actual_vendor_b ? 'Y' : 'N';
+    this.record.gen_is_blackac = this.record.gen_is_blackac_b ? 'Y' : 'N';
+    this.record.gen_poa_customs_yn = this.record.gen_poa_customs_yn_b ? 'Y' : 'N';
+    this.record.gen_poa_isf_yn = this.record.gen_poa_isf_yn_b ? 'Y' : 'N';
+    this.record.gen_bond_yn = this.record.gen_bond_yn_b ? 'Y' : 'N';
 
     const saveRecord = <vm_Tbl_Mast_Partym>{};
     saveRecord.record = this.record;
@@ -448,36 +449,28 @@ export class PartyEditComponent implements OnInit {
 
   LovSelected(_Record: SearchTable) {
 
-    // if (_Record.controlname == "AGENT") {
-    //   this.record.mbl_agent_id = _Record.id;
-    //   this.record.mbl_agent_name = _Record.name;
-    // }
-    // if (_Record.controlname == "CARRIER") {
-    //   this.record.mbl_liner_id = _Record.id;
-    //   this.record.mbl_liner_name = _Record.name;
-    // }
-    // if (_Record.controlname == "HANDLEDBY") {
-    //   this.record.mbl_handled_id = _Record.id;
-    //   this.record.mbl_handled_name = _Record.name;
-    // }
-    // if (_Record.controlname == "SALESMAN") {
-    //   this.record.mbl_salesman_id = _Record.id;
-    //   this.record.mbl_salesman_name = _Record.name;
-    // }
-    // if (_Record.controlname == "POL") {
-    //   this.record.mbl_pol_id = _Record.id;
-    //   this.record.mbl_pol_name = _Record.name;
-    // }
+    if (_Record.controlname == "PARENT") {
+      this.record.gen_parent_id = _Record.id;
+      this.record.gen_parent_name = _Record.name;
+    }
+    if (_Record.controlname == "COUNTRY") {
+      this.record.gen_country_id = _Record.id;
+      this.record.gen_country_name = _Record.name;
+    }
+    if (_Record.controlname == "HANDLEDBY") {
+      this.record.gen_handled_id = _Record.id;
+      this.record.gen_handled_name = _Record.name;
+    }
+    if (_Record.controlname == "SALESMAN") {
+      this.record.gen_salesman_id = _Record.id;
+      this.record.gen_salesman_name = _Record.name;
+    }
+    if (_Record.controlname == "CHB") {
+      this.record.gen_cha_id = _Record.id;
+      this.record.gen_cha_code = _Record.code;
+      this.record.gen_cha_name = _Record.name;
+    }
 
-    // if (_Record.controlname == "POD") {
-    //   this.record.mbl_pod_id = _Record.id;
-    //   this.record.mbl_pod_name = _Record.name;
-    // }
-
-    // if (_Record.controlname == "COUNTRY") {
-    //   this.record.mbl_country_id = _Record.id;
-    //   this.record.mbl_country_name = _Record.name;
-    // }
 
   }
 
@@ -604,4 +597,84 @@ export class PartyEditComponent implements OnInit {
   callbackevent(event: any) {
     this.tab = 'main';
   }
+
+  AddRow() {
+    this.errorMessage = "";
+    if (this.records == null)
+      this.records = <Tbl_Mast_Contacts[]>[];
+      
+    let bOk: Boolean = true;
+    this.records.forEach(Rec => {
+      if (Rec.cont_name == null)
+        bOk = false;
+      if (Rec.cont_name == "")
+        bOk = false;
+    })
+    if (bOk == false) {
+      this.errorMessage = "Name Cannot Be Empty in Other Contacts";
+      alert(this.errorMessage);
+    }
+    else {
+      var rec = <Tbl_Mast_Contacts>{};
+      rec.cont_pkid = this.gs.getGuid();
+      rec.cont_parent_id = this.pkid;
+      rec.cont_type = "PARTYS";
+      rec.cont_name = ''
+      rec.cont_title = ''
+      rec.cont_email = ''
+      rec.cont_remarks = ''
+      rec.cont_tel = ''
+      rec.cont_mobile = ''
+      rec.cont_oth_messenger = ''
+      this.records.push(rec);
+    }
+  }
+
+  RemoveRow(_rec: Tbl_Mast_Contacts) {
+    this.errorMessage = '';
+    this.records.splice(this.records.findIndex(rec => rec.cont_pkid == _rec.cont_pkid), 1);
+  }
+
+  SetAddress() {
+    if (this.gs.isBlank(this.record.gen_address2))
+      this.SetAddressToLine = "Line2";
+    else if (this.gs.isBlank(this.record.gen_address3))
+      this.SetAddressToLine = "Line3";
+    else
+      this.SetAddressToLine = "";
+    this.GetAddress2();
+  }
+
+  GetAddress2() {
+    let str: string = "";
+    let str1: string = "";
+    let str2: string = "";
+    let str3: string = "";
+
+    str1 = this.record.gen_location;
+    str2 = this.record.gen_state;
+    if (str2 != "" && this.record.gen_state.trim().length > 0)
+      str2 += " ";
+    str2 += this.record.gen_pincode;
+
+    str3 = this.record.gen_country_name;
+
+    str = str1;
+    if (str != "" && str2 != "")
+      str += ", ";
+    str += str2;
+    if (str != "" && str3 != "")
+      str += ", ";
+    str += str3;
+
+    str = str.trim();
+    if (str.length > 60)
+      str = str.substring(0, 60);
+
+    if (this.SetAddressToLine == "Line2")
+      this.record.gen_address2 = str;
+    else if (this.SetAddressToLine == "Line3")
+      this.record.gen_address3 = str;
+  }
+
 }

@@ -121,7 +121,7 @@
                                         <input class="form-control form-control-sm" type="text"
                                             [(ngModel)]="record.gen_pincode" (blur)="onBlur('gen_pincode')"
                                             maxlength="30" />
-                                        <button (click)="List('SCREEN')" class="btn btn-success btn-sm mr-1">Set
+                                        <button (click)="SetAddress()" class="btn btn-success btn-sm mr-1">Set
                                             Address</button>
                                     </div>
                                 </div>
@@ -574,8 +574,8 @@
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label col-form-label-sm">CHB</label>
                                     <div class="col-10">
-                                        <app-autocomplete2 [controlname]="'PARENT'" [tabletype]="'OVERSEAAGENT'"
-                                            [displaycolumn]="'NAME'" [displaydata]="record.gen_parent_name"
+                                        <app-autocomplete2 [controlname]="'CHB'" [tabletype]="'MASTER'"
+                                            [displaycolumn]="'CODE'" [displaydata]="record.gen_cha_code"
                                             (ValueChanged)="LovSelected($event)">
                                         </app-autocomplete2>
                                     </div>
@@ -742,7 +742,7 @@
                                         </div>
                                     </div>
                                     <div class="col-10">
-                                        <select class="form-control form-control-sm"
+                                        <select class="form-control form-control-sm" [disabled]="!gen_branch_b"
                                             [(ngModel)]="record.gen_branch">
                                             <option *ngFor="let rec of locationList" [value]="rec.comp_code">
                                                 {{rec.comp_name}}</option>
@@ -788,22 +788,27 @@
                                         <th>REMARKS</th>
                                         <th>TEL</th>
                                         <th>MOBILE</th>
+                                        <th>MESSENGER</th>
+                                        <th style="text-align:center">DELETE</th>
                                     </tr>
                                 </thead>
                                 <tbody class="page-body-tbody">
                                     <tr *ngFor="let rec of records">
-                                        <td>{{rec.hbl_houseno}}</td>
-                                        <td>{{rec.hbl_shipper_name}}</td>
-                                        <td>{{rec.hbl_consignee_name}}</td>
-                                        <td>{{rec.hbl_packages}}</td>
-                                        <td>{{rec.hbl_handled_name}}</td>
-                                        <td>{{rec.mbl_pol_etd | date : gs.FRONTEND_DATEFORMAT }}</td>
+                                        <td class="p-0"><InputBox [(inputModel)]="rec.cont_name" [field]="'cont_name'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)"></InputBox></td>
+                                        <td class="p-0"><InputBox [(inputModel)]="rec.cont_title" [field]="'cont_title'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)"></InputBox></td>
+                                        <td class="p-0"><InputBox [(inputModel)]="rec.cont_email" [field]="'cont_email'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)"></InputBox></td>
+                                        <td class="p-0"><InputBox [(inputModel)]="rec.cont_remarks" [field]="'cont_remarks'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)"></InputBox></td>
+                                        <td class="p-0"><InputBox [(inputModel)]="rec.cont_tel" [field]="'cont_tel'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)"></InputBox></td>
+                                        <td class="p-0"><InputBox [(inputModel)]="rec.cont_mobile" [field]="'cont_mobile'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)"></InputBox></td>
+                                        <td class="p-0"><InputBox [(inputModel)]="rec.cont_oth_messenger" [field]="'cont_oth_messenger'" [maxlength]="60" [uppercase]="true" (blur)="onBlur($event)"></InputBox></td>
+                                        <td class="p-0" style="text-align:center"><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
+                                            (click)="RemoveRow(rec)"></i></td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-success btn-sm mr-1" (click)="AddHouse()">Add Row</button>
+                                    <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Row</button>
                                 </div>
                             </div>
                         </div>
