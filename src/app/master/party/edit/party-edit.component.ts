@@ -93,7 +93,7 @@ export class PartyEditComponent implements OnInit {
       if (rec.comp_code != "ALL")
         this.locationList.push(rec);
     });
-    // this.complist = this.gs.CompanyList;
+    // this.complist = this.gs.CompanyList; 
     this.errorMessage = '';
   }
 
