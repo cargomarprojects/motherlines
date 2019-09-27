@@ -128,7 +128,6 @@ export class AcOpeningService {
             REC.op_cr = _rec.op_cr;
             REC.op_cust_name = _rec.op_cust_name;
             REC.op_invno = _rec.op_invno;
-            REC.op_cr = _rec.op_cr;
 
             REC.op_invdate   = _rec.op_invdate;
             REC.op_mbl_refno = _rec.op_mbl_refno;
