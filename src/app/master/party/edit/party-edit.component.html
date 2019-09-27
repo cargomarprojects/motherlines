@@ -675,7 +675,7 @@
                                     <div class="col-10">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>POA For Customs On
+                                                [(ngModel)]="record.gen_poa_customs_yn_b"><span>POA For Customs On
                                                 File</span>
                                         </div>
                                     </div>
@@ -683,7 +683,7 @@
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label col-form-label-sm">Brokers</label>
                                     <div class="col-10">
-                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                        <InputBox [(inputModel)]="record.gen_brokers" maxlength="60" [uppercase]="true"
                                             #_gen_code2>
                                         </InputBox>
                                     </div>
@@ -693,13 +693,13 @@
                                     <div class="col-6">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>POA For ISF On File</span>
+                                                [(ngModel)]="record.gen_poa_isf_yn_b"><span>POA For ISF On File</span>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>Annual Bond</span>
+                                                [(ngModel)]="record.gen_bond_yn_b"><span>Annual Bond</span>
                                         </div>
                                     </div>
                                 </div>
@@ -708,24 +708,24 @@
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label col-form-label-sm">Purch/From</label>
                                     <div class="col-10">
-                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
-                                            #_gen_code2>
+                                        <InputBox [(inputModel)]="record.gen_purch_from" maxlength="60" [uppercase]="true"
+                                            #_gen_purch_from>
                                         </InputBox>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label col-form-label-sm">BondNo</label>
                                     <div class="col-10">
-                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
-                                            #_gen_code2>
+                                        <InputBox [(inputModel)]="record.gen_bondno" maxlength="60" [uppercase]="true"
+                                            #_gen_bondno>
                                         </InputBox>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label col-form-label-sm">BondExp/Date</label>
                                     <div class="col-6">
-                                        <app-date [inputdate]="record.mbl_pod_eta"
-                                            (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
+                                        <app-date [inputdate]="record.gen_bond_expdt"
+                                            (ValueChanged)="record.gen_bond_expdt=$event"></app-date>
                                     </div>
                                 </div>
                             </div>
@@ -738,13 +738,13 @@
                                     <div class="col-2">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>Branch</span>
+                                                [(ngModel)]="gen_branch_b"><span>Branch</span>
                                         </div>
                                     </div>
                                     <div class="col-10">
                                         <select class="form-control form-control-sm"
-                                            [(ngModel)]="record.gen_handled_loc_id">
-                                            <option *ngFor="let rec of locationList" [value]="rec.comp_pkid">
+                                            [(ngModel)]="record.gen_branch">
+                                            <option *ngFor="let rec of locationList" [value]="rec.comp_code">
                                                 {{rec.comp_name}}</option>
                                         </select>
                                     </div>
@@ -756,13 +756,13 @@
                                     <div class="col-6">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
-                                                [(ngModel)]="record.gen_handled_name"><span>Protected Record</span>
+                                                [(ngModel)]="record.gen_protected_b"><span>Protected Record</span>
                                         </div>
                                     </div>
                                     <label class="col-2 col-form-label col-form-label-sm">CurrencyCode</label>
                                     <div class="col-4">
-                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
-                                            #_gen_code2>
+                                        <InputBox [(inputModel)]="record.gen_curr_code" maxlength="3" [uppercase]="true"
+                                            #_gen_curr_code>
                                         </InputBox>
                                     </div>
                                 </div>

@@ -66,6 +66,7 @@ export class PartyEditComponent implements OnInit {
 
   //IsLocked: boolean = false;
   is_locked: boolean = false;
+  gen_branch_b: boolean = false;
 
   constructor(
     private router: Router,
@@ -93,7 +94,6 @@ export class PartyEditComponent implements OnInit {
       if (rec.comp_code != "ALL")
         this.locationList.push(rec);
     });
-    // this.complist = this.gs.CompanyList; 
     this.errorMessage = '';
   }
 
@@ -121,6 +121,94 @@ export class PartyEditComponent implements OnInit {
     this.record.gen_pkid = this.pkid;
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
+    this.record.gen_code = '';
+    this.record.gen_name = '';
+    this.record.gen_short_name = '';
+    this.record.gen_address1 = '';
+    this.record.gen_address2 = '';
+    this.record.gen_address3 = '';
+    this.record.gen_address4 = '';
+    this.record.gen_location = '';
+    this.record.gen_state = '';
+    this.record.gen_contact = '';
+    this.record.gen_title = '';
+    this.record.gen_title = '';
+    this.record.gen_tel = '';
+    this.record.gen_mobile = '';
+    this.record.gen_fax = '';
+    this.record.gen_refer_by = '';
+    this.record.gen_ctpat_no = '';
+    this.record.gen_web = '';
+    this.record.gen_email = '';
+    this.record.gen_pincode = '';
+    this.record.gen_firm_code = '';
+    this.record.gen_einirsno = '';
+    this.record.gen_cha_code = '';
+    this.record.gen_cha_id = '';
+    this.record.gen_parent_name = '';
+    this.record.gen_parent_id = '';
+    this.record.gen_curr_code = '';
+    this.record.gen_is_importer = 'N';
+    this.record.gen_is_exporter = 'N';
+    this.record.gen_is_terminal = 'N';
+    this.record.gen_is_terminal2 = 'N';
+    this.record.gen_is_shipper = 'N';
+    this.record.gen_is_consignee = 'N';
+    this.record.gen_is_cha = 'N';
+    this.record.gen_is_forwarder = 'N';
+    this.record.gen_is_agent = 'N';
+    this.record.gen_is_carrier = 'N';
+    this.record.gen_is_trucker = 'N';
+    this.record.gen_is_vendor = 'N';
+    this.record.gen_is_warehouse = 'N';
+    this.record.gen_is_miscellaneous = 'N';
+    this.record.gen_is_employees = 'N';
+    this.record.gen_is_tbd = 'N';
+    this.record.gen_is_bank = 'N';
+    this.record.gen_is_carrier2_sea = 'N';
+    this.record.gen_is_shipper_vendor = 'N';
+    this.record.gen_is_contractor = 'N';
+    this.record.gen_is_ctpat = 'N';
+    this.record.gen_days = '';
+    this.record.gen_nomination = '';
+    this.record.gen_priority = '';
+    this.record.gen_brokers = '';
+    this.record.gen_poa_customs_yn = 'N';
+    this.record.gen_poa_isf_yn = 'N';
+    this.record.gen_bond_yn = 'N';
+    this.record.gen_purch_from = '';
+    this.record.gen_bondno = '';
+    this.record.gen_country_name = '';
+    this.record.gen_country_id = '';
+    this.record.gen_salesman_name = '';
+    this.record.gen_salesman_id = '';
+    this.record.gen_handled_name = '';
+    this.record.gen_handled_id = '';
+    this.record.gen_bond_expdt = '';
+    this.record.gen_chb_name = '';
+    this.record.gen_chb_add1 = '';
+    this.record.gen_chb_add2 = '';
+    this.record.gen_chb_add3 = '';
+    this.record.gen_chb_contact = '';
+    this.record.gen_chb_tel = '';
+    this.record.gen_chb_fax = '';
+    this.record.gen_chb_email = '';
+    this.record.gen_criteria = '';
+    this.record.gen_min_profit = '';
+    this.record.gen_branch = '';
+    this.record.gen_protected = '';
+    this.record.gen_is_actual_vendor = 'N';
+    this.record.gen_is_splac = 'N';
+    this.record.gen_splac_memo = '';
+    this.record.gen_is_blackac = 'N';
+    this.record.gen_handled_loc_id = '';
+    this.record.gen_cust_group_id = '';
+    this.record.gen_is_acc_alert = 'N';
+
+
+
+
+
     // this.record.mbl_prefix = this.gs.AIR_EXPORT_REFNO_PREFIX;
     // this.record.mbl_startingno = this.gs.AIR_EXPORT_REFNO_STARTING_NO;
     // // if (this.gs.BRANCH_REGION == "USA")
@@ -406,10 +494,10 @@ export class PartyEditComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-        case 'gen_pincode': {
-          this.record.gen_pincode = this.record.gen_pincode.toUpperCase();
-          break;
-        }
+      case 'gen_pincode': {
+        this.record.gen_pincode = this.record.gen_pincode.toUpperCase();
+        break;
+      }
       //   case 'mbl_no': {
       //     this.record.mbl_no = this.record.mbl_no.toUpperCase();
       //     break;
