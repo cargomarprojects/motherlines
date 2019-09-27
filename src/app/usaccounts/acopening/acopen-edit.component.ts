@@ -170,6 +170,8 @@ export class AcopenEditComponent implements OnInit {
             this.record.op_invdate = null;
             this.record.op_inv_refno = "";
             this.record.op_mbl_refno = "";
+            this.record.op_dr = 0;
+            this.record.op_cr = 0;
         }
     }
 
@@ -247,6 +249,14 @@ export class AcopenEditComponent implements OnInit {
             alert(this.errorMessage);
             return bRet;
         }
+
+        if (this.gs.isBlank(this.record.op_arap)) {
+            bRet = false;
+            this.errorMessage = "Invalid A/c Code (AR/AP)";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
 
         if (this.gs.isBlank(this.record.op_date)) {
             bRet = false;
@@ -374,16 +384,19 @@ export class AcopenEditComponent implements OnInit {
 
     onFocusout(field: string) {
     }
-
+    
     onBlur(field: string) {
+    }
+
+    onBlur2( cb : any) {
         /*
         if (field === 'group_name')
             this.record.acc_group_name = this.record.acc_group_name.toUpperCase();
         */
-        if (field == "op_famt") {
+        if (cb.field == "op_famt") {
             this.FindTotal();
         }
-        if (field == "op_ex_rate") {
+        if (cb.field == "op_ex_rate") {
             this.FindTotal();
         }
     }
