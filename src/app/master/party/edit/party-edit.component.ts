@@ -572,15 +572,14 @@ export class PartyEditComponent implements OnInit {
       }
       case 'ATTACHMENT': {
         let TypeList: any[] = [];
-        TypeList = [{ "code": "EMAIL", "name": "E-MAIL" }, { "code": "HOUSEBL", "name": "HOUSE B/L" }, { "code": "MASTER", "name": "MASTER" }, { "code": "PAYMENT SETTLEMENT", "name": "OTHERS" }];
         this.attach_title = 'Documents';
         this.attach_parentid = this.pkid;
         this.attach_subid = '';
-        this.attach_type = 'PAYMENT SETTLEMENT';
+        this.attach_type = 'PARTYS';
         this.attach_typelist = TypeList;
-        this.attach_tablename = 'cargo_masterm';
-        this.attach_tablepkcolumn = 'mbl_pkid';
-        this.attach_refno = this.record.gen_code;
+        this.attach_tablename = 'mast_partysm';
+        this.attach_tablepkcolumn = 'gen_pkid';
+        this.attach_refno = '';
         this.attach_customername = '';
         this.attach_updatecolumn = 'REC_FILES_ATTACHED';
         this.attach_viewonlysource = '';
@@ -589,8 +588,59 @@ export class PartyEditComponent implements OnInit {
         this.attach_filespath2 = '';
         this.tab = 'attachment';
         break;
+      } case 'MEMO': {
+        let prm = {
+          menuid: this.menuid,
+          pkid: this.pkid,
+          source: 'PARTY-MEMO',
+          title: 'Memo',
+          origin: 'party-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
+        break;
       }
-
+      case 'SOP-MEMO': {
+        let prm = {
+          menuid: this.menuid,
+          pkid: this.pkid,
+          source: 'SOP-MEMO',
+          title: 'SOP Memo',
+          origin: 'party-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
+        break;
+      }
+      case 'QUOTN-MEMO': {
+        let prm = {
+          menuid: this.menuid,
+          pkid: this.pkid,
+          source: 'QUOTATION-MEMO',
+          title: 'Quotation Memo',
+          origin: 'party-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
+        break;
+      }
+      case 'ACC-ALERT': {
+        let prm = {
+          menuid: this.menuid,
+          pkid: this.pkid,
+          source: 'ACCOUNTING-ALERT',
+          title: 'Accounting Alert',
+          origin: 'party-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
+        break;
+      }
+      case 'DELIVERY-ADDRESS': {
+        let prm = {
+          menuid: this.menuid,
+          pkid: this.pkid,
+          origin: 'party-page'
+        };
+        this.gs.Naviagete('Silver.Master/DeliveryAddrPage', JSON.stringify(prm));
+        break;
+      }
     }
   }
 
@@ -602,7 +652,7 @@ export class PartyEditComponent implements OnInit {
     this.errorMessage = "";
     if (this.records == null)
       this.records = <Tbl_Mast_Contacts[]>[];
-      
+
     let bOk: Boolean = true;
     this.records.forEach(Rec => {
       if (Rec.cont_name == null)

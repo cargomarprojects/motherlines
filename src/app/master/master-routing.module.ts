@@ -8,6 +8,7 @@ import { ParamDetPageComponent } from './paramdet/paramdet-page.component';
 import { ParamDetEditComponent } from './paramdet/paramdet-edit.component';
 import { PartyComponent } from './party/party.component';
 import { PartyEditComponent } from './party/edit/party-edit.component';
+import { DeliveryAddrComponent } from './deliveryaddr/deliveryaddr.component';
 
 const routes: Routes = [
   {path:'ParamPage', component: ParamPageComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'ParamPageDetEdit', component: ParamDetEditComponent},  
   {path:'PartyPage', component: PartyComponent},  
   {path:'PartyEditPage', component: PartyEditComponent},  
+  {path:'DeliveryAddrPage', component: DeliveryAddrComponent},  
 ];
 
 @NgModule({

@@ -6,7 +6,7 @@ import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomple
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 import { SalesJournalService } from '../../../marketing/services/salesjournals.service';
 import { User_Menu } from '../../../core/models/menum';
-import { vm_Tbl_Cargo_Journals_Master, Tbl_Cargo_Journals_Master, Tbl_Mark_Contacts,Tbl_Mast_Contacts } from '../../../marketing/models/tbl_cargo_journals_master';
+import { vm_Tbl_Cargo_Journals_Master, Tbl_Cargo_Journals_Master, Tbl_Mark_Contacts, Tbl_Mast_Contacts } from '../../../marketing/models/tbl_cargo_journals_master';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 
@@ -90,7 +90,7 @@ export class SalesJournalsEditComponent implements OnInit {
         if (this.mode == 'ADD') {
             this.custrecord = <Tbl_Mark_Contacts>{};
             this.record = <Tbl_Cargo_Journals_Master>{};
-            this.custdetrecords = <Tbl_Mast_Contacts[]>[];      
+            this.custdetrecords = <Tbl_Mast_Contacts[]>[];
             this.pkid = this.gs.getGuid();
             this.init();
         }
@@ -150,7 +150,7 @@ export class SalesJournalsEditComponent implements OnInit {
         this.mainService.LoadCustomerRecord(SearchData)
             .subscribe(response => {
                 this.custrecord = <Tbl_Mark_Contacts>response.record;
-                this.custdetrecords = <Tbl_Mast_Contacts[]>response.records;     
+                this.custdetrecords = <Tbl_Mast_Contacts[]>response.records;
                 if (this.mode === "EDIT") {
                     this.customer_name = this.custrecord.gen_name.toString();
                     this.customer_id = this.custrecord.gen_pkid;
@@ -244,10 +244,9 @@ export class SalesJournalsEditComponent implements OnInit {
                 bchange = true;
             this.customer_id = _Record.id;
             this.customer_name = _Record.name;
-            if(bchange)
-            {
+            if (bchange) {
                 this.custrecord = <Tbl_Mark_Contacts>{};
-                this.custdetrecords = <Tbl_Mast_Contacts[]>[];      
+                this.custdetrecords = <Tbl_Mast_Contacts[]>[];
             }
         }
     }
@@ -283,15 +282,15 @@ export class SalesJournalsEditComponent implements OnInit {
             }
             case 'MEMO': {
                 let prm = {
-                  menuid: this.menuid,
-                  pkid: this.pkid,
-                  source: 'CONTACT-MEMO',
-                  title:'Memo',
-                  origin: 'sales-journal-page'
+                    menuid: this.menuid,
+                    pkid: this.pkid,
+                    source: 'CONTACT-MEMO',
+                    title: 'Memo',
+                    origin: 'sales-journal-page'
                 };
                 this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
                 break;
-              }
+            }
         }
     }
     callbackevent(event: any) {
