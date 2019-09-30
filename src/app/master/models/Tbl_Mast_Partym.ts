@@ -1,4 +1,5 @@
 import { PageQuery } from '../../shared/models/pageQuery';
+import { Tbl_Mast_Contacts } from 'src/app/marketing/models/tbl_cargo_journals_master';
 
 export interface Tbl_Mast_Partym {
     gen_pkid: string;
@@ -137,6 +138,7 @@ export interface Tbl_Mast_Partym {
 export interface vm_Tbl_Mast_Partym {
     mode: string;
     record: Tbl_Mast_Partym;
+    records: Tbl_Mast_Contacts[];
     userinfo: any,
     filter: any;
 }

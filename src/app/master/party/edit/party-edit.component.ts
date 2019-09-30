@@ -358,6 +358,7 @@ export class PartyEditComponent implements OnInit {
 
     const saveRecord = <vm_Tbl_Mast_Partym>{};
     saveRecord.record = this.record;
+    saveRecord.records = this.records;
     saveRecord.mode = this.mode;
     saveRecord.userinfo = this.gs.UserInfo;
 
