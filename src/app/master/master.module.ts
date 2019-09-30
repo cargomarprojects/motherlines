@@ -22,6 +22,7 @@ import { PartyHeaderComponent } from './party/party-header.component';
 import { PartyComponent } from './party/party.component';
 import { PartyEditComponent } from './party/edit/party-edit.component';
 import { DeliveryAddrComponent } from './deliveryaddr/deliveryaddr.component';
+import { PartyLoginComponent } from './partylogin/partylogin.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DeliveryAddrComponent } from './deliveryaddr/deliveryaddr.component';
     PartyHeaderComponent,
     PartyComponent,
     PartyEditComponent,
-    DeliveryAddrComponent
+    DeliveryAddrComponent,
+    PartyLoginComponent
   ],
   imports: [
     SharedModule,
