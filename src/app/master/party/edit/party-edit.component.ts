@@ -8,6 +8,7 @@ import { User_Menu } from '../../../core/models/menum';
 import { Tbl_Mast_Partym, vm_Tbl_Mast_Partym } from '../../models/Tbl_Mast_Partym';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { Tbl_Mast_Contacts } from '../../../marketing/models/tbl_cargo_journals_master';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-party-edit',
@@ -61,10 +62,10 @@ export class PartyEditComponent implements OnInit {
   private closeCaption: string = 'Return';
 
   private title: string;
-  private isAdmin: boolean;
+  private isAdmin: boolean = false;
+  private isCompany: boolean = false;
 
   private cmbList = {};
-
 
   //IsLocked: boolean = false;
   is_locked: boolean = false;
@@ -90,6 +91,7 @@ export class PartyEditComponent implements OnInit {
 
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
+    this.isCompany = this.gs.IsCompany(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
     this.locationList = <any[]>[];
     this.gs.CompanyList.forEach(rec => {
@@ -209,13 +211,17 @@ export class PartyEditComponent implements OnInit {
     this.record.gen_protected = 'N';
     this.gen_branch_b = false;
 
+    this.gs.IsAdmin
+
     if (this.gs.JOB_TYPE_AI.length > 0) {
       // if (JobList.Count > 0)
-      //     Cmb_JobType.SelectedIndex = 0;
+      //     Cmb_JobType.SelectedIndex = 0; 
     }
   }
 
   GetRecord() {
+
+    let profitamt: number = 0;
 
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
@@ -254,6 +260,19 @@ export class PartyEditComponent implements OnInit {
         this.record.gen_poa_isf_yn_b = (this.record.gen_poa_isf_yn == "Y") ? true : false;
         this.record.gen_bond_yn_b = (this.record.gen_bond_yn == "Y") ? true : false;
 
+        profitamt = +this.record.gen_min_profit;
+        if (profitamt <= 0)
+          this.record.gen_min_profit = '';
+
+        this.gen_branch_b = false;
+        if (this.record.gen_branch == "" || this.record.gen_branch == "ALL") {
+          this.gen_branch_b = false;
+          this.record.gen_branch = '';
+        }
+        else {
+          this.gen_branch_b = true;
+        }
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -261,6 +280,7 @@ export class PartyEditComponent implements OnInit {
 
 
   Save() {
+    let Type2:string = "";
 
     if (!this.Allvalid())
       return;
@@ -292,6 +312,49 @@ export class PartyEditComponent implements OnInit {
     this.record.gen_poa_customs_yn = this.record.gen_poa_customs_yn_b ? 'Y' : 'N';
     this.record.gen_poa_isf_yn = this.record.gen_poa_isf_yn_b ? 'Y' : 'N';
     this.record.gen_bond_yn = this.record.gen_bond_yn_b ? 'Y' : 'N';
+    
+    if (this.record.gen_is_shipper_b)
+        Type2 += "S";
+    if (this.record.gen_is_consignee_b)
+        Type2 += "C";
+    if (this.record.gen_is_cha_b)
+        Type2 += "B";
+    if (this.record.gen_is_forwarder_b)
+        Type2 += "F";
+    if (this.record.gen_is_agent_b)
+        Type2 += "A";
+    if (this.record.gen_is_carrier_b)
+        Type2 += "L";
+    if (this.record.gen_is_carrier2_sea_b)
+        Type2 += "R";
+    if (this.record.gen_is_vendor_b)
+        Type2 += "V";
+    if (this.record.gen_is_trucker_b)
+        Type2 += "T";
+    if (this.record.gen_is_warehouse_b)
+        Type2 += "W";
+    if (this.record.gen_is_miscellaneous_b)
+        Type2 += "M";
+    if (this.record.gen_is_employees_b)
+        Type2 += "E";
+    if (this.record.gen_is_shipper_vendor_b)
+        Type2 += "H";
+    if (this.record.gen_is_contractor_b)
+        Type2 += "O";
+    if (this.record.gen_is_tbd_b)
+        Type2 += "D";
+    if (this.record.gen_is_importer)
+        Type2 += "I";
+    if (this.record.gen_is_exporter_b)
+        Type2 += "X";
+    if (this.record.gen_is_terminal_b)
+        Type2 += "N";
+    if (this.record.gen_is_terminal2_b)
+        Type2 += "P";
+    if (this.record.gen_is_bank_b)
+        Type2 += "K";
+
+    this.record.gen_type2 = Type2;
 
     const saveRecord = <vm_Tbl_Mast_Partym>{};
     saveRecord.record = this.record;
@@ -322,126 +385,96 @@ export class PartyEditComponent implements OnInit {
   private Allvalid(): boolean {
 
     var bRet = true;
+    let IsCategory: boolean = false;
 
     this.errorMessage = "";
-    // if (this.record.mbl_ref_date == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Ref Date cannot be blank";
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.gen_short_name)) {
+      bRet = false;
+      this.errorMessage = "Name cannot be empty";
+      return bRet;
+    }
+    if (this.gs.isBlank(this.record.gen_name)) {
+      bRet = false;
+      this.errorMessage = "Official Name cannot be empty";
+      return bRet;
+    }
 
-    // if (this.gs.JOB_TYPE_AE.length > 0 && this.record.mbl_jobtype_id == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Job Type cannot be blank";
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.gen_country_id) || this.gs.isBlank(this.record.gen_country_code)) {
+      bRet = false;
+      this.errorMessage = "Country cannot be empty";
+      return bRet;
+    }
 
-    // if (this.record.mbl_shipment_stage == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Shipment Stage cannot be blank";
-    //   return bRet;
-    // }
-    // if (this.record.mbl_no == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Master BL# can't be blank"
-    //   return bRet;
-    // }
+    if (this.gs.BRANCH_REGION != "USA") {
+      if (this.gs.isBlank(this.record.gen_curr_code)) {
+        bRet = false;
+        this.errorMessage = "Currency Code Cannot Be Emty";
+        return bRet;
+      }
 
-    // if (this.record.mbl_agent_id == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Master Agent cannot be blank"
-    //   return bRet;
-    // }
-    // if (this.record.mbl_liner_id == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Carrier cannot be blank"
-    //   return bRet;
-    // }
-    // if (this.record.mbl_handled_id == "") {
-    //   bRet = false;
-    //   this.errorMessage = "A/N Handled By cannot be blank"
-    //   return bRet;
-    // }
+      if (!this.gs.isBlank(this.record.gen_curr_code)) {
+        if (this.record.gen_curr_code != this.gs.base_cur_code && this.record.gen_curr_code != this.gs.foreign_cur_code) {
+          bRet = false;
+          this.errorMessage = "Invalid Currency Code";
+          return bRet;
+        }
+      }
+    }
 
-    // if (this.record.mbl_frt_status == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Freight status cannot be blank"
-    //   return bRet;
-    // }
+    IsCategory = false;
+    if (this.record.gen_is_shipper_b)
+      IsCategory = true;
+    else if (this.record.gen_is_consignee_b)
+      IsCategory = true;
+    else if (this.record.gen_is_cha_b)
+      IsCategory = true;
+    else if (this.record.gen_is_forwarder_b)
+      IsCategory = true;
+    else if (this.record.gen_is_agent_b)
+      IsCategory = true;
+    else if (this.record.gen_is_carrier_b)
+      IsCategory = true;
+    else if (this.record.gen_is_carrier2_sea_b)
+      IsCategory = true;
+    else if (this.record.gen_is_vendor_b)
+      IsCategory = true;
+    else if (this.record.gen_is_trucker_b)
+      IsCategory = true;
+    else if (this.record.gen_is_warehouse_b)
+      IsCategory = true;
+    else if (this.record.gen_is_miscellaneous_b)
+      IsCategory = true;
+    else if (this.record.gen_is_employees_b)
+      IsCategory = true;
+    else if (this.record.gen_is_shipper_vendor_b)
+      IsCategory = true;
+    else if (this.record.gen_is_contractor_b)
+      IsCategory = true;
+    else if (this.record.gen_is_tbd_b)
+      IsCategory = true;
+    else if (this.record.gen_is_importer_b)
+      IsCategory = true;
+    else if (this.record.gen_is_exporter_b)
+      IsCategory = true;
+    else if (this.record.gen_is_terminal_b)
+      IsCategory = true;
+    else if (this.record.gen_is_terminal2_b)
+      IsCategory = true;
+    else if (this.record.gen_is_bank_b)
+      IsCategory = true;
 
-    // if (this.record.mbl_pol_id == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Port of Loading cannot be blank"
-    //   return bRet;
-    // }
-    // if (this.record.mbl_pol_etd == "") {
-    //   bRet = false;
-    //   this.errorMessage = "ETD cannot be blank"
-    //   return bRet;
-    // }
-    // if (this.record.mbl_pod_id == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Port of Discharge cannot be blank"
-    //   return bRet;
-    // }
-    // if (this.record.mbl_pod_eta == "") {
-    //   bRet = false;
-    //   this.errorMessage = "ETA cannot be blank"
-    //   return bRet;
-    // }
-    // // if (this.record.mbl_pofd_id == "") {
-    // //   bRet = false;
-    // //   this.errorMessage = "Final Destination cannot be blank"
-    // //   return bRet;
-    // // }
-
-    // if (this.record.mbl_country_id == "") {
-    //   bRet = false;
-    //   this.errorMessage = "Country Cannot be blank"
-    //   return bRet;
-    // }
-    // // if (this.record.mbl_currency == "") {
-    // //   bRet = false;
-    // //   this.errorMessage = "Currency cannot be blank"
-    // //   return bRet;
-    // // }
-
-    // if (this.record.mbl_mawb_weight <= 0) {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid Weight"
-    //   return bRet;
-    // }
-
-    // if (this.record.mbl_mawb_chwt <= 0) {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid Ch.Weight"
-    //   return bRet;
-    // }
-
-    // if (!this.IsValidAWB(this.record.mbl_no)) {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid Master BL#"
-    //   return bRet;
-    // }
+    if (!IsCategory) {
+      bRet = false;
+      this.errorMessage = "Client Category not selected";
+      return bRet;
+    }
+     
+//Email validation chked in contoller
 
     return bRet;
+ }
 
-  }
-
-  IsValidAWB(Awb: string) {
-    let strnum: string = "0123456789";
-    let i: number = 0;//"".indexOf(snum)<0
-    let strChar: string = '';
-    Awb = Awb.trim();
-    if (Awb.length != 11)
-      return false;
-    for (i = 0; i < Awb.length; i++) {
-      strChar = Awb.substr(i, 1);
-      if (strnum.indexOf(strChar) < 0)
-        return false;
-    }
-    return true;
-  }
+ 
 
   Close() {
     this.location.back();
@@ -469,8 +502,14 @@ export class PartyEditComponent implements OnInit {
       this.record.gen_cha_id = _Record.id;
       this.record.gen_cha_code = _Record.code;
       this.record.gen_cha_name = _Record.name;
+      this.record.gen_chb_add1 = _Record.col1;
+      this.record.gen_chb_add2 = _Record.col2;
+      this.record.gen_chb_add3 = _Record.col3;
+      this.record.gen_chb_email = _Record.col4;
+      this.record.gen_chb_contact = _Record.col5;
+      this.record.gen_chb_tel = _Record.col6;
+      this.record.gen_chb_fax = _Record.col7;
     }
-
 
   }
 

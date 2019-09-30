@@ -26,7 +26,7 @@
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label col-form-label-sm">Code</label>
                                     <div class="col-10">
-                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true"
+                                        <InputBox [(inputModel)]="record.gen_code" maxlength="6" [uppercase]="true" [disabled]="(mode=='ADD'||(mode=='EDIT' && !isAdmin))"
                                             #_gen_code>
                                         </InputBox>
                                     </div>
@@ -387,7 +387,7 @@
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
+                                            <input type="checkbox" class="form-check-input" [disabled]="!(isAdmin||isCompany)"
                                                 [(ngModel)]="record.gen_is_employees_b"><span>Employees (E)</span>
                                         </div>
                                     </div>
@@ -396,7 +396,7 @@
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
+                                            <input type="checkbox" class="form-check-input" [disabled]="!(isAdmin||isCompany)"
                                                 [(ngModel)]="record.gen_is_contractor_b"><span>Contractor (O)</span>
                                         </div>
                                     </div>
@@ -523,9 +523,9 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <div class="col-6">
+                                    <div *ngIf="gs.company_code == 'MNYC'" class="col-6">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
+                                            <input type="checkbox" class="form-check-input" [disabled]="!isAdmin"
                                                 [(ngModel)]="record.gen_is_actual_vendor_b"><span>Vendor</span>
                                         </div>
                                     </div>
@@ -723,7 +723,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label col-form-label-sm">BondExp/Date</label>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <app-date [inputdate]="record.gen_bond_expdt"
                                             (ValueChanged)="record.gen_bond_expdt=$event"></app-date>
                                     </div>
@@ -753,7 +753,7 @@
                             <div class="col-md-6 testbox  px-0 mx-0">
                                 <div class="form-group row">
                                     <!-- <label class="col-2 col-form-label col-form-label-sm"></label> -->
-                                    <div class="col-6">
+                                    <div *ngIf="isAdmin||isCompany" class="col-6">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input"
                                                 [(ngModel)]="record.gen_protected_b"><span>Protected Record</span>
@@ -857,10 +857,11 @@
                             Info</button>
                     </div>
 
-                    <div class="form-group row">
+                    <div *ngIf="gs.company_code == 'MNYC'" class="form-group row">
                         <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('LOGIN-DET')">Login
                             Details</button>
                     </div>
+
                     <div class="form-group row">
                         <button class=" col-12 btn btn-info btn-sm"
                             (click)="BtnNavigation('ADDRESS')">Addresses</button>
