@@ -1,5 +1,6 @@
 export interface Tbl_Party_Login {
     plogin_pkid: string;
+    plogin_party_id:string;
     plogin_code: string;
     plogin_name: string;
     plogin_pwd: string;

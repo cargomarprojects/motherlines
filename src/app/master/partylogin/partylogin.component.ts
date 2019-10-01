@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
 
-import {PartyLoginService } from '../services/partylogin.service';
+import { PartyLoginService } from '../services/partylogin.service';
 import { User_Menu } from '../../core/models/menum';
 import { Tbl_Party_Login, vm_Tbl_Party_Login } from '../models/Tbl_Party_Login';
 import { SearchTable } from '../../shared/models/searchtable';
@@ -75,7 +75,6 @@ export class PartyLoginComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.parentid;
-
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.records = <Tbl_Party_Login[]>response.records;
@@ -85,7 +84,7 @@ export class PartyLoginComponent implements OnInit {
       });
   }
 
-   
+
 
   OnChange(field: string) {
     // if (field == 'cmbNotes') {
@@ -102,10 +101,10 @@ export class PartyLoginComponent implements OnInit {
 
   onBlur(field: string, _rec: Tbl_Party_Login = null) {
     switch (field) {
-    //   case 'remarks': {
-    //     _rec.cf_remarks = _rec.cf_remarks.toUpperCase();
-    //     break;
-    //   }
+      //   case 'remarks': {
+      //     _rec.cf_remarks = _rec.cf_remarks.toUpperCase();
+      //     break;
+      //   }
 
     }
   }
@@ -116,58 +115,37 @@ export class PartyLoginComponent implements OnInit {
 
 
   NewRecord() {
-     
-    if (this.UserList != null && this.UsrDeleteId != '') {
-      this.UserList.splice(this.UserList.findIndex(rec => rec.id == this.UsrDeleteId), 1);
-      this.UsrDeleteId = '';
-    }
 
     this.mode = "ADD";
     this.pkid = this.gs.getGuid();
     this.record = <Tbl_Party_Login>{};
     this.record.plogin_pkid = this.pkid;
-    // this.record.cf_master_id = this.cf_masterid;
-    // this.record.cf_user_id = this.gs.user_pkid;
-    // this.record.rec_created_by = this.gs.user_code;
-    // this.record.cf_followup_date = this.gs.defaultValues.today;
-    // this.record.cf_assigned_id = this.gs.user_pkid;
-    // this.record.cf_assigned_code = this.gs.user_code;
-    // this.record.cf_assigned_name = this.gs.user_name;
-    // this.record.cf_remarks = '';
+    this.record.plogin_party_id = this.parentid;
+    this.record.plogin_code = '';
+    this.record.plogin_name = '';
+    this.record.plogin_pwd = '';
+    this.record.plogin_email = '';
+    this.record.plogin_locked = 'N';
+    this.record.plogin_category = 'AGENT';
+    this.record.plogin_isparent = 'N';
+    this.record.plogin_isparent_b = false;
+    this.record.plogin_locked_b = false;
     this.lblSave = "Save";
     //Txtmemo.Focus();
   }
 
   EditRow(_rec: Tbl_Party_Login) {
-
-    // if (this.UserList != null) {
-    //   let bFind: boolean = false;
-    //   this.UserList.forEach(Rec => {
-    //     if (Rec.id == _rec.cf_assigned_id)
-    //       bFind = true;
-    //   })
-
-    //   if (bFind == false) {
-
-    //     this.UsrDeleteId = _rec.cf_assigned_id;
-
-    //     var UsrDeleteRec = <SearchTable>{};
-    //     UsrDeleteRec.id = _rec.cf_assigned_id;
-    //     UsrDeleteRec.code = _rec.cf_assigned_code;
-    //     UsrDeleteRec.name = "";
-    //     this.UserList.push(UsrDeleteRec);
-    //   }
-    // }
-
     this.mode = "EDIT";
-    // this.pkid = _rec.cf_pkid.toString();
-    // this.record.cf_pkid = this.pkid;
-    // this.record.cf_followup_date = _rec.cf_followup_date;
-    // this.record.cf_remarks = _rec.cf_remarks.toString();
-    // this.record.cf_assigned_id = _rec.cf_assigned_id;
-    // this.record.cf_assigned_code = _rec.cf_assigned_code;
+    this.pkid = _rec.plogin_pkid.toString();
+    this.record.plogin_pkid = this.pkid;
+    this.record.plogin_code = _rec.plogin_code;
+    this.record.plogin_name = _rec.plogin_name;
+    this.record.plogin_pwd = _rec.plogin_pwd;
+    this.record.plogin_category = _rec.plogin_category;
+    this.record.plogin_locked_b = _rec.plogin_locked == "Y" ? true : false;
+    this.record.plogin_isparent_b = _rec.plogin_isparent == "Y" ? true : false;
+
     this.lblSave = "Update";
-    this.cmbNotes = '';
   }
 
   Save() {
@@ -194,11 +172,11 @@ export class PartyLoginComponent implements OnInit {
             //Grid_Memo.Focus();
           } else {
             if (this.records != null) {
-            //   var REC = this.records.find(rec => rec.cf_pkid == this.pkid);
-            //   if (REC != null) {
-            //     REC.cf_followup_date = this.record.cf_followup_date;
-            //     REC.cf_remarks = this.record.cf_remarks;
-            //   }
+              //   var REC = this.records.find(rec => rec.cf_pkid == this.pkid);
+              //   if (REC != null) {
+              //     REC.cf_followup_date = this.record.cf_followup_date;
+              //     REC.cf_remarks = this.record.cf_remarks;
+              //   }
             }
           }
           this.NewRecord();
@@ -254,7 +232,7 @@ export class PartyLoginComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-        //   this.records.splice(this.records.findIndex(rec => rec.cf_pkid == _rec.cf_pkid), 1);
+          //   this.records.splice(this.records.findIndex(rec => rec.cf_pkid == _rec.cf_pkid), 1);
           this.NewRecord();
         }
       }, error => {
@@ -262,27 +240,5 @@ export class PartyLoginComponent implements OnInit {
       });
   }
 
-
-  SearchRecord(controlname: string) {
-    this.errorMessage = '';
-    let SearchData = {
-      table: '',
-      pkid: '',
-    };
-
-    if (controlname == "loadcombo") {
-      SearchData.table = 'LOAD_COMBO_FOLLOWUP_PAGE';
-      SearchData.pkid = '';
-    }
-    this.gs.SearchRecord(SearchData)
-      .subscribe(response => {
-        this.FollowupList = response.followuplist;
-        this.UserList = response.userlist;
-      },
-        error => {
-          this.errorMessage = this.gs.getError(error);
-          alert(this.errorMessage);
-        });
-  }
 
 }
