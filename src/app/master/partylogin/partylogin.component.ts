@@ -51,7 +51,9 @@ export class PartyLoginComponent implements OnInit {
     this.partyCode = options.party_code;
     this.partyName = options.party_name;
     this.initPage();
+    this.mode = "ADD";
     this.actionHandler();
+    this.List('SCREEN');
   }
 
   private initPage() {
@@ -65,8 +67,27 @@ export class PartyLoginComponent implements OnInit {
   }
 
   actionHandler() {
-    this.GetRecord();
+    this.errorMessage = '';
+    if (this.mode == 'ADD') {
+      this.pkid = this.gs.getGuid();
+      this.record = <Tbl_Party_Login>{};
+      this.InitRecord();
+    }
+    if (this.mode == 'EDIT')
+      this.GetRecord();
   }
+
+
+  List(action: string = '') {
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = this.parentid;
+    this.mainService.List(SearchData).subscribe(response => {
+      this.records = response.list;
+    }, error => {
+      this.errorMessage = this.gs.getError(error)
+    });
+  }
+
 
   init() {
   }
@@ -74,11 +95,15 @@ export class PartyLoginComponent implements OnInit {
   GetRecord() {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
-    SearchData.pkid = this.parentid;
+    SearchData.pkid = this.pkid;
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
-        this.records = <Tbl_Party_Login[]>response.records;
-        this.NewRecord();
+        this.lblSave = "Update";
+        this.mode = "EDIT";
+        this.record = <Tbl_Party_Login>response.record;
+        this.record.plogin_locked_b = this.record.plogin_locked == "Y" ? true : false;
+        this.record.plogin_isparent_b = this.record.plogin_isparent == "Y" ? true : false;
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -114,11 +139,7 @@ export class PartyLoginComponent implements OnInit {
   }
 
 
-  NewRecord() {
-
-    this.mode = "ADD";
-    this.pkid = this.gs.getGuid();
-    this.record = <Tbl_Party_Login>{};
+  InitRecord() {
     this.record.plogin_pkid = this.pkid;
     this.record.plogin_party_id = this.parentid;
     this.record.plogin_code = '';
@@ -134,24 +155,25 @@ export class PartyLoginComponent implements OnInit {
     //Txtmemo.Focus();
   }
 
+  NewRecord()
+  {
+    this.mode = "ADD";
+    this.actionHandler();
+  }
   EditRow(_rec: Tbl_Party_Login) {
-    this.mode = "EDIT";
     this.pkid = _rec.plogin_pkid.toString();
-    this.record.plogin_pkid = this.pkid;
-    this.record.plogin_code = _rec.plogin_code;
-    this.record.plogin_name = _rec.plogin_name;
-    this.record.plogin_pwd = _rec.plogin_pwd;
-    this.record.plogin_category = _rec.plogin_category;
-    this.record.plogin_locked_b = _rec.plogin_locked == "Y" ? true : false;
-    this.record.plogin_isparent_b = _rec.plogin_isparent == "Y" ? true : false;
-
-    this.lblSave = "Update";
+    this.mode = "EDIT";
+    this.actionHandler();
   }
 
   Save() {
 
     if (!this.Allvalid())
       return;
+
+    this.record.plogin_party_id = this.parentid;
+    this.record.plogin_locked = this.record.plogin_locked_b == true ? "Y" : "N";
+    this.record.plogin_isparent = this.record.plogin_isparent_b == true? "Y" : "N";
 
     const saveRecord = <vm_Tbl_Party_Login>{};
     saveRecord.userinfo = this.gs.UserInfo;
@@ -172,11 +194,12 @@ export class PartyLoginComponent implements OnInit {
             //Grid_Memo.Focus();
           } else {
             if (this.records != null) {
-              //   var REC = this.records.find(rec => rec.cf_pkid == this.pkid);
-              //   if (REC != null) {
-              //     REC.cf_followup_date = this.record.cf_followup_date;
-              //     REC.cf_remarks = this.record.cf_remarks;
-              //   }
+                var REC = this.records.find(rec => rec.plogin_pkid == this.pkid);
+                if (REC != null) {
+                  REC.plogin_code = this.record.plogin_code;
+                  REC.plogin_name = this.record.plogin_name;
+                  REC.plogin_locked = this.record.plogin_locked;
+                }
             }
           }
           this.NewRecord();
@@ -193,51 +216,55 @@ export class PartyLoginComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
-    // if (this.gs.isBlank(this.record.cf_master_id)) {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid ID";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.plogin_pkid)) {
+      bRet = false;
+      this.errorMessage = "Invalid Record";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
-    // if (this.gs.isBlank(this.record.cf_assigned_id)) {
-    //   bRet = false;
-    //   this.errorMessage = "Assigned To has to be selected";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.plogin_code)) {
+      bRet = false;
+      this.errorMessage = "Code Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+    if (this.gs.isBlank(this.record.plogin_name)) {
+      bRet = false;
+      this.errorMessage = "Name Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
+    
+    if (this.gs.isBlank(this.record.plogin_pwd)) {
+      bRet = false;
+      this.errorMessage = "Password Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+    
+    if (this.gs.isBlank(this.record.plogin_email)) {
+      bRet = false;
+      this.errorMessage = "Email Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+    if (this.gs.isBlank(this.record.plogin_category)) {
+      bRet = false;
+      this.errorMessage = "Invalid Category";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
     return bRet;
   }
 
 
   Close() {
     this.location.back();
-  }
-
-  RemoveRow(_rec: Tbl_Party_Login) {
-
-    this.errorMessage = '';
-    // if (!confirm("DELETE " + _rec.cf_remarks)) {
-    //   return;
-    // }
-
-    var SearchData = this.gs.UserInfo;
-    // SearchData.pkid = _rec.cf_pkid;
-    // SearchData.remarks = _rec.cf_remarks;
-
-    this.mainService.DeleteRecord(SearchData)
-      .subscribe(response => {
-        if (response.retvalue == false) {
-          this.errorMessage = response.error;
-          alert(this.errorMessage);
-        }
-        else {
-          //   this.records.splice(this.records.findIndex(rec => rec.cf_pkid == _rec.cf_pkid), 1);
-          this.NewRecord();
-        }
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
   }
 
 
