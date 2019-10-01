@@ -11,6 +11,7 @@ import { PartyEditComponent } from './party/edit/party-edit.component';
 import { DeliveryAddrComponent } from './deliveryaddr/deliveryaddr.component';
 import { PartyLoginComponent } from './partylogin/partylogin.component';
 import { PartyAddrListComponent } from './partyaddr/partyaddr-list.component';
+import { PartyAddrEditComponent } from './partyaddr/partyaddr-edit.component';
 
 const routes: Routes = [
   {path:'ParamPage', component: ParamPageComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path:'DeliveryAddrPage', component: DeliveryAddrComponent},  
   {path:'PartyLoginPage', component: PartyLoginComponent},  
   {path:'PartyAddrPage', component: PartyAddrListComponent},  
+  {path:'PartyAddrEditPage', component: PartyAddrEditComponent},  
 ];
 
 @NgModule({

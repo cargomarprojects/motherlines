@@ -32,10 +32,8 @@ export class PartyLoginComponent implements OnInit {
   selectedRowIndex: number = -1;
   IsLocked: boolean = false;
   lblSave: string = "Save";
-  cmbNotes: string = "";
-  FollowupList: any[] = [];
-  UserList: any[] = [];
-  UsrDeleteId = '';
+   
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,

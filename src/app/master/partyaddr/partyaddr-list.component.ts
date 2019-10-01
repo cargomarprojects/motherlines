@@ -42,7 +42,8 @@ export class PartyAddrListComponent implements OnInit {
     this.party_name = options.party_name;
     
     this.isAdmin = this.gs.IsAdmin(this.menuid);
-    this.title = this.gs.getTitle(this.menuid);
+   // this.title = this.gs.getTitle(this.menuid);
+   this.title ='Address';
     this.canAdd = this.gs.canAdd(this.menuid);
     this.canEdit = this.gs.canEdit(this.menuid);
 
@@ -52,7 +53,8 @@ export class PartyAddrListComponent implements OnInit {
 
   List(action: string = '') {
     var SearchData = this.gs.UserInfo;
-    SearchData.mbl_pkid = this.party_pkid;
+    SearchData.TYPE = 'PARTYS';
+    SearchData.PARENT_ID = this.party_pkid;
 
     this.mainservice.List(SearchData).subscribe(response => {
       this.records = response.list;
@@ -75,7 +77,7 @@ export class PartyAddrListComponent implements OnInit {
       mode: 'ADD',
       party_pkid: this.party_pkid
     };
-    this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Master/PartyAddrEditPage', JSON.stringify(parameter));
 
   }
 
@@ -91,7 +93,7 @@ export class PartyAddrListComponent implements OnInit {
       mode: 'EDIT',
       party_pkid: this.party_pkid
     };
-    this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Master/PartyAddrEditPage', JSON.stringify(parameter));
   }
 
   Close() {

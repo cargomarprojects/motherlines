@@ -1,0 +1,248 @@
+<div class="page-header">
+    <div class="col">
+        <label class="mr-3">{{title}} ({{mode}})</label>
+        <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    </div>
+</div>
+
+<div *ngIf="errorMessage">
+    <div class="alert alert-primary">
+        {{errorMessage}}
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="row">
+
+                <!-- First row -->
+                <div class="col-md-12 px-0 mx-0">
+                    <div class="row border">
+                        <div class="col-md-6 testbox  px-0 mx-0">
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Code</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.add_address1" maxlength="6" [uppercase]="true"
+                                        [disabled]="(mode=='ADD'||(mode=='EDIT' && !isAdmin))" #_gen_code>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Name</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.add_address2" maxlength="60" [uppercase]="true"
+                                        #_gen_short_name>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">OfficialName</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_name" maxlength="60" [uppercase]="true"
+                                        #_gen_name>
+                                    </InputBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Parent</label>
+                                <div class="col-10">
+                                    <app-autocomplete2 [controlname]="'PARENT'" [tabletype]="'OVERSEAAGENT'"
+                                        [displaycolumn]="'NAME'" [displaydata]="record.gen_parent_name"
+                                        (ValueChanged)="LovSelected($event)">
+                                    </app-autocomplete2>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Address</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_address1" maxlength="60" [uppercase]="true"
+                                        #_gen_address1>
+                                    </InputBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm"></label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_address2" maxlength="60" [uppercase]="true"
+                                        #_gen_address2>
+                                    </InputBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm"></label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_address3" maxlength="60" [uppercase]="true"
+                                        #_gen_address3>
+                                    </InputBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">City</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_location" maxlength="60" [uppercase]="true"
+                                        #_gen_location>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">State</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_state" maxlength="60" [uppercase]="true"
+                                        #_gen_state>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Country</label>
+                                <div class="col-10">
+                                    <app-autocomplete2 [controlname]="'COUNTRY'" [tabletype]="'PARAM'"
+                                        [subtype]="'COUNTRY'" [displaycolumn]="'NAME'"
+                                        [displaydata]="record.gen_country_name" (ValueChanged)="LovSelected($event)">
+                                    </app-autocomplete2>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">ZipCode</label>
+                                <div class="col-10  input-group input-group-sm">
+                                    
+                                    <input class="form-control form-control-sm" type="text"
+                                        [(ngModel)]="record.gen_pincode" (blur)="onBlur('gen_pincode')"
+                                        maxlength="30" />
+                                    <button (click)="SetAddress()" class="btn btn-success btn-sm mr-1">Set
+                                        Address</button>
+                                </div>
+                            </div> -->
+                        </div>
+                        <!-- <div class="col-md-6 testbox  px-0 mx-0">
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Contact</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_contact" maxlength="60" [uppercase]="true"
+                                        #_gen_contact>
+                                    </InputBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Title</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_title" maxlength="60" [uppercase]="true"
+                                        #_gen_location>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Tel</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_tel" maxlength="60" [uppercase]="true"
+                                        #_gen_location>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Fax</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_fax" maxlength="30" [uppercase]="true"
+                                        #_gen_location>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Mobile</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_mobile" maxlength="60" [uppercase]="true"
+                                        #_gen_location>
+                                    </InputBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">web</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_web" maxlength="100" [uppercase]="true"
+                                        #_gen_location>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Email</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_email" maxlength="60" [uppercase]="true"
+                                        #_gen_location>
+                                    </InputBox>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Refer BY</label>
+                                <div class="col-10">
+                                    <InputBox [(inputModel)]="record.gen_refer_by" maxlength="60" [uppercase]="true"
+                                        #_gen_location>
+                                    </InputBox>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Sales.Rep</label>
+                                <div class="col-10">
+                                    <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'"
+                                        [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
+                                        [displaydata]="record.gen_salesman_name" (ValueChanged)="LovSelected($event)">
+                                    </app-autocomplete2>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Handled.By</label>
+                                <div class="col-10">
+
+                                    <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'"
+                                        [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
+                                        [displaydata]="record.gen_handled_name" (ValueChanged)="LovSelected($event)">
+                                    </app-autocomplete2>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label col-form-label-sm">Location</label>
+                                <div class="col-10">
+                                    <select class="form-control form-control-sm"
+                                        [(ngModel)]="record.gen_handled_loc_id">
+                                        <option *ngFor="let rec of locationList" [value]="rec.comp_pkid">
+                                            {{rec.comp_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="page-footer">
+    <div class="row justify-content-center p-1">
+        <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+    </div>
+</div>
+
+<div>
+    <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY:
+        {{record.rec_created_by}}
+        /
+        {{record.rec_created_date}} </label>
+</div>
