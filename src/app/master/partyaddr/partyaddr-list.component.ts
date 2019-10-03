@@ -75,7 +75,7 @@ export class PartyAddrListComponent implements OnInit {
       menuid: this.menuid,
       pkid: '',
       mode: 'ADD',
-      party_pkid: this.party_pkid
+      parentid: this.party_pkid
     };
     this.gs.Naviagete('Silver.Master/PartyAddrEditPage', JSON.stringify(parameter));
 
@@ -91,7 +91,7 @@ export class PartyAddrListComponent implements OnInit {
       menuid: this.menuid,
       pkid: _record.add_pkid,
       mode: 'EDIT',
-      party_pkid: this.party_pkid
+      parentid: this.party_pkid
     };
     this.gs.Naviagete('Silver.Master/PartyAddrEditPage', JSON.stringify(parameter));
   }

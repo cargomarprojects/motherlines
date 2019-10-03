@@ -44,6 +44,7 @@ export class PartyAddrEditComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.menuid = options.menuid;
     this.parentid = options.parentid;
+    this.pkid = options.pkid;
     this.mode = options.mode;
     this.initPage();
     this.actionHandler();
