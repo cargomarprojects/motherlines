@@ -24,6 +24,7 @@ export interface Tbl_Mast_Addressm {
     rec_created_by: string;
     rec_created_date: string;
     add_check_name: string;
+    add_is_chk_address_b:boolean;
 }
 
 export interface vm_Tbl_Mast_Addressm {

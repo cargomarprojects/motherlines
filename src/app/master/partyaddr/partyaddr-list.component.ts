@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
 import { Tbl_Mast_Addressm } from '../models/Tbl_Mast_Addressm';
 import { PartyAddrService } from '../services/partyaddr.service';
-import { Tbl_Mast_Contacts } from 'src/app/marketing/models/tbl_cargo_journals_master';
 
 @Component({
   selector: 'app-partyaddr-list',
@@ -75,7 +74,8 @@ export class PartyAddrListComponent implements OnInit {
       menuid: this.menuid,
       pkid: '',
       mode: 'ADD',
-      parentid: this.party_pkid
+      parentid: this.party_pkid,
+      party_name:this.party_name
     };
     this.gs.Naviagete('Silver.Master/PartyAddrEditPage', JSON.stringify(parameter));
 
@@ -91,7 +91,8 @@ export class PartyAddrListComponent implements OnInit {
       menuid: this.menuid,
       pkid: _record.add_pkid,
       mode: 'EDIT',
-      parentid: this.party_pkid
+      parentid: this.party_pkid,
+      party_name:this.party_name
     };
     this.gs.Naviagete('Silver.Master/PartyAddrEditPage', JSON.stringify(parameter));
   }

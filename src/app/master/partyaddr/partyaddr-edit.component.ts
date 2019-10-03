@@ -21,7 +21,7 @@ export class PartyAddrEditComponent implements OnInit {
 
   menuid: string;
   parentid: string;
-   
+
   pkid: string;
   mode: string;
   title: string = '';
@@ -30,8 +30,10 @@ export class PartyAddrEditComponent implements OnInit {
   selectedRowIndex: number = -1;
   IsLocked: boolean = false;
   lblSave: string = "Save";
-  
-   
+  party_name: string;
+  checkAddress: string = "Use this address while printing";
+  SetAddressToLine: string = "";
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -46,12 +48,18 @@ export class PartyAddrEditComponent implements OnInit {
     this.parentid = options.parentid;
     this.pkid = options.pkid;
     this.mode = options.mode;
+    this.party_name = options.party_name;
+
     this.initPage();
     this.actionHandler();
   }
 
   private initPage() {
     this.title = 'Address Details';
+    if (this.gs.BRANCH_REGION == "USA")
+      this.checkAddress = "Use this address while printing check.";
+    else
+      this.checkAddress = "Use this address while printing cheque.";
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.errorMessage = '';
     this.LoadCombo();
@@ -70,7 +78,7 @@ export class PartyAddrEditComponent implements OnInit {
     if (this.mode == 'EDIT')
       this.GetRecord();
   }
- 
+
   init() {
   }
 
@@ -82,6 +90,8 @@ export class PartyAddrEditComponent implements OnInit {
       .subscribe(response => {
         this.mode = "EDIT";
         this.record = <Tbl_Mast_Addressm>response.record;
+        this.record.add_is_chk_address_b = (this.record.add_is_chk_address == "Y") ? true : false;
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -110,41 +120,56 @@ export class PartyAddrEditComponent implements OnInit {
     }
   }
 
+  LovSelected(_Record: SearchTable) {
+    if (_Record.controlname == "COUNTRY") {
+      this.record.add_country_id = _Record.id;
+      this.record.add_country_name = _Record.name;
+    }
+  }
+
   SetRowIndex(_indx: number) {
     this.selectedRowIndex = _indx;
   }
 
 
   InitRecord() {
-    // this.record.plogin_pkid = this.pkid;
-    // this.record.plogin_party_id = this.parentid;
-    // this.record.plogin_code = '';
-    // this.record.plogin_name = '';
-    // this.record.plogin_pwd = '';
-    // this.record.plogin_email = '';
-    // this.record.plogin_locked = 'N';
-    // this.record.plogin_category = 'AGENT';
-    // this.record.plogin_isparent = 'N';
-    // this.record.plogin_isparent_b = false;
-    // this.record.plogin_locked_b = false;
-    this.lblSave = "Save";
-    //Txtmemo.Focus();
+    this.record.add_pkid = this.pkid;
+    this.record.add_parent_id = this.parentid;
+    this.record.add_type = 'PARTYS';
+    this.record.add_address1 = '';
+    this.record.add_address2 = '';
+    this.record.add_address3 = '';
+    this.record.add_location = '';
+    this.record.add_state = '';
+    this.record.add_pincode = '';
+    this.record.add_contact = '';
+    this.record.add_email = '';
+    this.record.add_web = '';
+    this.record.add_tel = '';
+    this.record.add_mobile = '';
+    this.record.add_fax = '';
+    this.record.add_country_id = '';
+    this.record.add_country_name = '';
+    this.record.add_is_chk_address = "N";
+    this.record.add_check_name = '';
+    this.record.add_is_chk_address_b = false;
   }
 
-  NewRecord()
-  {
+  NewRecord() {
     this.mode = "ADD";
     this.actionHandler();
   }
-  
+
 
   Save() {
 
     if (!this.Allvalid())
       return;
 
+    this.record.add_is_chk_address = this.record.add_is_chk_address_b ? 'Y' : 'N';
     this.record.add_parent_id = this.parentid;
-   
+    this.record.add_type = 'PARTYS';
+
     const saveRecord = <vm_Tbl_Mast_Addressm>{};
     saveRecord.userinfo = this.gs.UserInfo;
     saveRecord.record = this.record;
@@ -158,23 +183,9 @@ export class PartyAddrEditComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-        //   if (this.mode == "ADD") {
-        //     this.records.push(this.record);
-        //     // Grid_Memo.ScrollIntoView(memo_Record, Grid_Memo.Columns[0]);
-        //     //Grid_Memo.Focus();
-        //   } else {
-        //     if (this.records != null) {
-        //         var REC = this.records.find(rec => rec.plogin_pkid == this.pkid);
-        //         if (REC != null) {
-        //           REC.plogin_code = this.record.plogin_code;
-        //           REC.plogin_name = this.record.plogin_name;
-        //           REC.plogin_locked = this.record.plogin_locked;
-        //         }
-        //     }
-        //   }
-        //   this.NewRecord();
-        //   // this.errorMessage = 'Save Complete';
-        //   // alert(this.errorMessage);
+            this.mode = "EDIT"
+            this.errorMessage = 'Save Complete';
+           // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -186,48 +197,19 @@ export class PartyAddrEditComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
-    // if (this.gs.isBlank(this.record.plogin_pkid)) {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid Record";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.add_address1)) {
+      bRet = false;
+      this.errorMessage = "Address cannot be empty";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
-    // if (this.gs.isBlank(this.record.plogin_code)) {
-    //   bRet = false;
-    //   this.errorMessage = "Code Cannot Be Blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
-
-    // if (this.gs.isBlank(this.record.plogin_name)) {
-    //   bRet = false;
-    //   this.errorMessage = "Name Cannot Be Blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
-    
-    // if (this.gs.isBlank(this.record.plogin_pwd)) {
-    //   bRet = false;
-    //   this.errorMessage = "Password Cannot Be Blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
-
-    
-    // if (this.gs.isBlank(this.record.plogin_email)) {
-    //   bRet = false;
-    //   this.errorMessage = "Email Cannot Be Blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
-
-    // if (this.gs.isBlank(this.record.plogin_category)) {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid Category";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.add_country_id)||this.gs.isBlank(this.record.add_country_name)) {
+      bRet = false;
+      this.errorMessage = "Country cannot be empty";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
     return bRet;
   }
@@ -237,5 +219,46 @@ export class PartyAddrEditComponent implements OnInit {
     this.location.back();
   }
 
+  SetAddress() {
+    if (this.gs.isBlank(this.record.add_address2))
+      this.SetAddressToLine = "Line2";
+    else if (this.gs.isBlank(this.record.add_address3))
+      this.SetAddressToLine = "Line3";
+    else
+      this.SetAddressToLine = "";
+    this.GetAddress2();
+  }
+
+  GetAddress2() {
+    let str: string = "";
+    let str1: string = "";
+    let str2: string = "";
+    let str3: string = "";
+
+    str1 = this.record.add_location;
+    str2 = this.record.add_state;
+    if (str2 != "" && this.record.add_state.trim().length > 0)
+      str2 += " ";
+    str2 += this.record.add_pincode;
+
+    str3 = this.record.add_country_name;
+
+    str = str1;
+    if (str != "" && str2 != "")
+      str += ", ";
+    str += str2;
+    if (str != "" && str3 != "")
+      str += ", ";
+    str += str3;
+
+    str = str.trim();
+    if (str.length > 60)
+      str = str.substring(0, 60);
+
+    if (this.SetAddressToLine == "Line2")
+      this.record.add_address2 = str;
+    else if (this.SetAddressToLine == "Line3")
+      this.record.add_address3 = str;
+  }
 
 }
