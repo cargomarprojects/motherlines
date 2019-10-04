@@ -28,47 +28,137 @@
 
             </div>
         </div>
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-md-6 testbox  px-0 mx-0  border">
-                <div class="form-group row">
-                    <label class="col-2 col-form-label col-form-label-sm">LoginID</label>
-                    <div class="col-10">
-                        <InputBox [(inputModel)]="record.plogin_code" [maxlength]="15" [uppercase]="true" #_plogin_code>
-                        </InputBox>
+                <div class="border mx-1">
+                    <label class="col-12 col-form-label col-form-label-sm"><strong>BENEFICIARY DETAILS</strong></label>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm">Name</label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_code" [maxlength]="15" [uppercase]="true"
+                                #_plogin_code>
+                            </InputBox>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm">Address</label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_name" [maxlength]="60" [uppercase]="true"
+                                #_plogin_name>
+                            </InputBox>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm"></label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_pwd" [maxlength]="15" #_plogin_pwd>
+                            </InputBox>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm"></label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_email" [maxlength]="100" [uppercase]="true"
+                                #_plogin_email>
+                            </InputBox>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm">A/c No.</label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_name" [maxlength]="60" [uppercase]="true"
+                                #_plogin_name2>
+                            </InputBox>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label col-form-label-sm">Name</label>
-                    <div class="col-10">
-                        <InputBox [(inputModel)]="record.plogin_name" [maxlength]="60" [uppercase]="true" #_plogin_name>
-                        </InputBox>
+                <div class="border mx-1">
+                    <label class="col-12 col-form-label col-form-label-sm"><strong>BANK DETAILS</strong></label>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm">Name</label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_code" [maxlength]="15" [uppercase]="true"
+                                #_plogin_code2>
+                            </InputBox>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label col-form-label-sm">Password</label>
-                    <div class="col-10">
-                        <InputBox [(inputModel)]="record.plogin_pwd" [maxlength]="15" #_plogin_pwd>
-                        </InputBox>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm">Address</label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_name" [maxlength]="60" [uppercase]="true"
+                                #_plogin_name2>
+                            </InputBox>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label col-form-label-sm">Email</label>
-                    <div class="col-10">
-                        <InputBox [(inputModel)]="record.plogin_email" [maxlength]="100" [uppercase]="true" #_plogin_email>
-                        </InputBox>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm"></label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_pwd" [maxlength]="15" #_plogin_pwd2>
+                            </InputBox>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label col-form-label-sm">Category</label>
-                    <div class="col-10">
-                        <select class="form-control form-control-sm mr-1" [(ngModel)]="record.plogin_category">
-                            <option [value]="'AGENT'">AGENT</option>
-                            <option [value]="'SHIPPER'">SHIPPER</option>
-                            <option [value]="'CONSIGNEE'">CONSIGNEE </option>
-                        </select>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm"></label>
+                        <div class="col-10">
+                            <InputBox [(inputModel)]="record.plogin_email" [maxlength]="100" [uppercase]="true"
+                                #_plogin_email2>
+                            </InputBox>
+                        </div>
                     </div>
+
+                    <div class="border m-2">
+                        <label class="col-12 col-form-label col-form-label-sm"><strong>For International
+                                Customer/Vendor/Agent</strong></label>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label col-form-label-sm">Swift Code</label>
+                            <div class="col-10">
+                                <InputBox [(inputModel)]="record.plogin_name" [maxlength]="60" [uppercase]="true"
+                                    #_plogin_name_3>
+                                </InputBox>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label col-form-label-sm">IBAN</label>
+                            <div class="col-10">
+                                <InputBox [(inputModel)]="record.plogin_name" [maxlength]="60" [uppercase]="true"
+                                    #_plogin_name33>
+                                </InputBox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border m-2">
+                        <label class="col-12 col-form-label col-form-label-sm"><strong>For Domestic Customer/Vendor/Agent</strong></label>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label col-form-label-sm">Routing No.</label>
+                            <div class="col-10">
+                                <InputBox [(inputModel)]="record.plogin_name" [maxlength]="60" [uppercase]="true"
+                                    #_plogin_name45555>
+                                </InputBox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                            <label class="col-2 col-form-label col-form-label-sm">Further Credit To</label>
+                            <div class="col-10">
+                                <InputBox [(inputModel)]="record.plogin_pwd" [maxlength]="15" #_plogin_pwd2333>
+                                </InputBox>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label col-form-label-sm">Swift Code/ Routing No.</label>
+                            <div class="col-10">
+                                <InputBox [(inputModel)]="record.plogin_email" [maxlength]="100" [uppercase]="true"
+                                    #_plogin_email2222>
+                                </InputBox>
+                            </div>
+                        </div>
+    
+
                 </div>
-                <div class="form-group row">
+
+                <!-- <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm"></label>
                     <div class="col-10">
                         <div class="form-check">
@@ -85,7 +175,10 @@
                                 [(ngModel)]="record.plogin_locked_b"><span>Locked</span>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
+
+
                 <div class="form-group row">
                     <div class="col-12 page-footer">
                         <div class="row justify-content-center p-1">
@@ -122,6 +215,6 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
