@@ -25,6 +25,7 @@ import { DeliveryAddrComponent } from './deliveryaddr/deliveryaddr.component';
 import { PartyLoginComponent } from './partylogin/partylogin.component';
 import { PartyAddrListComponent } from './partyaddr/partyaddr-list.component';
 import { PartyAddrEditComponent } from './partyaddr/partyaddr-edit.component';
+import { BankInfoComponent } from './bankinfo/bankinfo.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PartyAddrEditComponent } from './partyaddr/partyaddr-edit.component';
     DeliveryAddrComponent,
     PartyLoginComponent,
     PartyAddrListComponent,
-    PartyAddrEditComponent
+    PartyAddrEditComponent,
+    BankInfoComponent
   ],
   imports: [
     SharedModule,

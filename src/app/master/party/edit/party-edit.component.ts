@@ -702,6 +702,17 @@ export class PartyEditComponent implements OnInit {
         this.gs.Naviagete('Silver.Master/PartyAddrPage', JSON.stringify(prm));
         break;
       }
+      case 'BANK-INFO': {
+        let prm = {
+          menuid: this.menuid,
+          parentid: this.pkid,
+          party_code:this.record.gen_code,
+          party_name:this.record.gen_name,
+          origin: 'party-page'
+        };
+        this.gs.Naviagete('Silver.Master/BankInfoPage', JSON.stringify(prm));
+        break;
+      }
     }
   }
 
