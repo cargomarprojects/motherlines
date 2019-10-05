@@ -42,12 +42,12 @@ export class PartyService {
 
         this.id = params.id;
         this.menuid = params.id;
-        this.param_type = params.param_type;
+        this.param_type = params.menu_param;
 
         this.record = <PartyModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false },
+            searchQuery: <SearchQuery>{ searchString: '', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false,menuType:this.param_type },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -60,7 +60,7 @@ export class PartyService {
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
 
-        this.initlialized = true;
+        this.initlialized = false;
 
     }
 
@@ -77,7 +77,8 @@ export class PartyService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        SearchData.TYPE = 'PARTYS';
+        // SearchData.TYPE = 'PARTYS';
+        SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.ISADMIN = this.isAdmin == true ? 'Y' : 'N';

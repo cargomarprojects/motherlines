@@ -17,15 +17,16 @@ import { PartyService } from '../services/party.service';
 })
 export class PartyComponent implements OnInit {
 
-    /*
-   01-07-2019 Created By Ajith  
+  /*
+ 01-07-2019 Created By Ajith  
 
- */
+*/
+  sub: any;
 
-  errorMessage$ : Observable<string> ;
-  records$ :  Observable<Tbl_Mast_Partym[]>;
-  pageQuery$ : Observable<PageQuery>;
-  searchQuery$ : Observable<SearchQuery>;
+  errorMessage$: Observable<string>;
+  records$: Observable<Tbl_Mast_Partym[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,25 +36,31 @@ export class PartyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.mainservice.init(this.route.snapshot.queryParams);
+    //this.mainservice.init(this.route.snapshot.queryParams);
+    this.sub = this.route.queryParams.subscribe(params => {
+      if (params["parameter"] != "") {
+        this.mainservice.init(params);
+        this.mainservice.Search('SCREEN');
+      }
+    });
     this.initPage();
   }
 
   initPage() {
-    
+
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
-    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
+    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
 
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions,  'SEARCH');
+    this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
-    this.mainservice.Search(actions,'PAGE');
+    this.mainservice.Search(actions, 'PAGE');
   }
 
   NewRecord() {
@@ -92,5 +99,8 @@ export class PartyComponent implements OnInit {
     this.location.back();
   }
 
- 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
 }

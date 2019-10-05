@@ -152,6 +152,7 @@ export interface SearchQuery {
     searchZip: string;
     searchFax: string;
     searchBlackAc: boolean;
+    menuType: string;
 }
 
 export interface PartyModel {

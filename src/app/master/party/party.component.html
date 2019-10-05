@@ -15,7 +15,7 @@
   
   <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
   
-  <div class="page-body table-responsive">
+  <div *ngIf="mainservice.param_type=='PARTYS'" class="page-body table-responsive">
     <table class="table  table-hover table-sm">
         <thead class="page-body-thead">
             <tr>
@@ -51,7 +51,22 @@
         </tbody>
     </table>
   </div>
-  
+  <div *ngIf="mainservice.param_type=='OVERSEAAGENT'" class="page-body table-responsive">
+    <table class="table  table-hover table-sm">
+        <thead class="page-body-thead">
+            <tr>
+                <th>CODE</th>
+                <th>NAME</th>
+            </tr>
+        </thead>
+        <tbody class="page-body-tbody">
+            <tr *ngFor="let rec of records$ | async">
+                <td (click)="edit(rec)" >{{rec.gen_code}}</td>
+                <td>{{rec.gen_short_name}}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
   <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
   
   <br />
