@@ -23,6 +23,10 @@ export class BankInfoComponent implements OnInit {
   parentid: string;
   partyCode: string;
   partyName: string;
+  partyOfficialName: string;
+  partyAddr1: string;
+  partyAddr2: string;
+  partyAddr3: string;
   pkid: string;
   mode: string;
   title: string = '';
@@ -31,8 +35,8 @@ export class BankInfoComponent implements OnInit {
   selectedRowIndex: number = -1;
   IsLocked: boolean = false;
   lblSave: string = "Save";
-   
-  
+
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -47,10 +51,14 @@ export class BankInfoComponent implements OnInit {
     this.parentid = options.parentid;
     this.partyCode = options.party_code;
     this.partyName = options.party_name;
+    this.partyOfficialName = options.party_officialname;
+    this.partyAddr1 = options.party_addr1;
+    this.partyAddr2 = options.party_addr2;
+    this.partyAddr3 = options.party_addr3;
     this.initPage();
     this.mode = "ADD";
     this.actionHandler();
-    this.List('SCREEN');
+     this.List('SCREEN');
   }
 
   private initPage() {
@@ -135,28 +143,32 @@ export class BankInfoComponent implements OnInit {
     this.selectedRowIndex = _indx;
   }
 
-
   InitRecord() {
-    // this.record.plogin_pkid = this.pkid;
-    // this.record.plogin_party_id = this.parentid;
-    // this.record.plogin_code = '';
-    // this.record.plogin_name = '';
-    // this.record.plogin_pwd = '';
-    // this.record.plogin_email = '';
-    // this.record.plogin_locked = 'N';
-    // this.record.plogin_category = 'AGENT';
-    // this.record.plogin_isparent = 'N';
-    // this.record.plogin_isparent_b = false;
-    // this.record.plogin_locked_b = false;
+    this.record.pb_pkid = this.pkid;
+    this.record.pb_parent_id = this.parentid;
+    this.record.pb_benefi_name = this.partyOfficialName;
+    this.record.pb_benefi_address1 = this.partyAddr1;
+    this.record.pb_benefi_address2 = this.partyAddr2;
+    this.record.pb_benefi_address3 = this.partyAddr3;
+    this.record.pb_benefi_acc_no = '';
+    this.record.pb_bank_name = '';
+    this.record.pb_bank_address1 = '';
+    this.record.pb_bank_address2 = '';
+    this.record.pb_bank_address3 = '';
+    this.record.pb_swift_code = '';
+    this.record.pb_iban = '';
+    this.record.pb_routing_no = '';
+    this.record.pb_further_credit_to = '';
+    this.record.pb_further_routing_code = '';
     this.lblSave = "Save";
     //Txtmemo.Focus();
   }
 
-  NewRecord()
-  {
+  NewRecord() {
     this.mode = "ADD";
     this.actionHandler();
   }
+
   EditRow(_rec: Tbl_Party_BankAddress) {
     this.pkid = _rec.pb_pkid.toString();
     this.mode = "EDIT";
@@ -164,13 +176,10 @@ export class BankInfoComponent implements OnInit {
   }
 
   Save() {
-
     if (!this.Allvalid())
       return;
 
-    // this.record.plogin_party_id = this.parentid;
-    // this.record.plogin_locked = this.record.plogin_locked_b == true ? "Y" : "N";
-    // this.record.plogin_isparent = this.record.plogin_isparent_b == true? "Y" : "N";
+    this.record.pb_parent_id = this.parentid;
 
     const saveRecord = <vm_Tbl_Party_BankAddress>{};
     saveRecord.userinfo = this.gs.UserInfo;
@@ -191,12 +200,12 @@ export class BankInfoComponent implements OnInit {
             //Grid_Memo.Focus();
           } else {
             if (this.records != null) {
-                var REC = this.records.find(rec => rec.pb_pkid == this.pkid);
-                if (REC != null) {
+              var REC = this.records.find(rec => rec.pb_pkid == this.pkid);
+              if (REC != null) {
                 //   REC.plogin_code = this.record.plogin_code;
                 //   REC.plogin_name = this.record.plogin_name;
                 //   REC.plogin_locked = this.record.plogin_locked;
-                }
+              }
             }
           }
           this.NewRecord();
@@ -213,48 +222,48 @@ export class BankInfoComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = "";
-    // if (this.gs.isBlank(this.record.plogin_pkid)) {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid Record";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.pb_pkid)) {
+      bRet = false;
+      this.errorMessage = "Invalid Record";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
-    // if (this.gs.isBlank(this.record.plogin_code)) {
-    //   bRet = false;
-    //   this.errorMessage = "Code Cannot Be Blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.pb_benefi_name)) {
+      bRet = false;
+      this.errorMessage = "Beneficiary Name Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
-    // if (this.gs.isBlank(this.record.plogin_name)) {
-    //   bRet = false;
-    //   this.errorMessage = "Name Cannot Be Blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
-    
-    // if (this.gs.isBlank(this.record.plogin_pwd)) {
-    //   bRet = false;
-    //   this.errorMessage = "Password Cannot Be Blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.pb_benefi_address1)) {
+      bRet = false;
+      this.errorMessage = "Beneficiary Address Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
-    
-    // if (this.gs.isBlank(this.record.plogin_email)) {
-    //   bRet = false;
-    //   this.errorMessage = "Email Cannot Be Blank";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+    if (this.gs.isBlank(this.record.pb_benefi_acc_no)) {
+      bRet = false;
+      this.errorMessage = "Beneficiary Account Number Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
-    // if (this.gs.isBlank(this.record.plogin_category)) {
-    //   bRet = false;
-    //   this.errorMessage = "Invalid Category";
-    //   alert(this.errorMessage);
-    //   return bRet;
-    // }
+
+    if (this.gs.isBlank(this.record.pb_bank_name)) {
+      bRet = false;
+      this.errorMessage = "Bank Name Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
+
+    if (this.gs.isBlank(this.record.pb_bank_address1)) {
+      bRet = false;
+      this.errorMessage = "Bank Address Cannot Be Blank";
+      alert(this.errorMessage);
+      return bRet;
+    }
 
     return bRet;
   }
