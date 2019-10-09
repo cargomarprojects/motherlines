@@ -76,8 +76,11 @@ export class PartyComponent implements OnInit {
       origin: 'partymaster-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.Master/PartyEditPage', JSON.stringify(parameter));
 
+    if (this.mainservice.param_type === "PARTYS")
+      this.gs.Naviagete('Silver.Master/PartyEditPage', JSON.stringify(parameter));
+    else
+      this.gs.Naviagete('Silver.Master/PartyParentEditPage', JSON.stringify(parameter));
   }
   edit(_record: Tbl_Mast_Partym) {
     if (!this.mainservice.canEdit) {
@@ -88,11 +91,15 @@ export class PartyComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.gen_pkid,
-      type: '',
+      type: this.mainservice.param_type,
       origin: 'partymaster-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.Master/PartyEditPage', JSON.stringify(parameter));
+
+    if (this.mainservice.param_type === "PARTYS")
+      this.gs.Naviagete('Silver.Master/PartyEditPage', JSON.stringify(parameter));
+    else
+      this.gs.Naviagete('Silver.Master/PartyParentEditPage', JSON.stringify(parameter));
   }
 
   Close() {

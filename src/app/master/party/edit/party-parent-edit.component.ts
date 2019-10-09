@@ -8,19 +8,18 @@ import { User_Menu } from '../../../core/models/menum';
 import { Tbl_Mast_Partym, vm_Tbl_Mast_Partym } from '../../models/Tbl_Mast_Partym';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { Tbl_Mast_Contacts } from '../../../marketing/models/tbl_cargo_journals_master';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
-  selector: 'app-party-edit',
-  templateUrl: './party-edit.component.html'
+  selector: 'app-party-parent-edit',
+  templateUrl: './party-parent-edit.component.html'
 })
-export class PartyEditComponent implements OnInit {
+export class PartyParentEditComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
   //@ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
 
   record: Tbl_Mast_Partym = <Tbl_Mast_Partym>{};
-  records: Tbl_Mast_Contacts[] = [];
+  records: Tbl_Mast_Partym[] = [];
   /*
     01-07-2019 Created By Ajith  
   */
@@ -53,7 +52,6 @@ export class PartyEditComponent implements OnInit {
   private pkid: string = "";
   private menuid: string;
   private type: string = '';
-  private hbl_mode: string = '';
 
   private mode: string;
 
@@ -113,7 +111,7 @@ export class PartyEditComponent implements OnInit {
     this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_Mast_Partym>{};
-      this.records = <Tbl_Mast_Contacts[]>[];
+      this.records = <Tbl_Mast_Partym[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
     }
@@ -152,7 +150,11 @@ export class PartyEditComponent implements OnInit {
     this.record.gen_cha_id = '';
     this.record.gen_parent_name = '';
     this.record.gen_parent_id = '';
+
     this.record.gen_curr_code = '';
+    if (this.gs.BRANCH_REGION != "USA")
+      this.record.gen_curr_code = this.gs.base_cur_code;
+      
     this.record.gen_is_importer = 'N';
     this.record.gen_is_exporter = 'N';
     this.record.gen_is_terminal = 'N';
@@ -228,11 +230,11 @@ export class PartyEditComponent implements OnInit {
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.type = this.type;
-    
+
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_Mast_Partym>response.record;
-        this.records = <Tbl_Mast_Contacts[]>response.records;
+        this.records = <Tbl_Mast_Partym[]>response.records2;
         this.mode = 'EDIT';
         this.record.gen_is_shipper_b = (this.record.gen_is_shipper == "Y") ? true : false;
         this.record.gen_is_consignee_b = (this.record.gen_is_consignee == "Y") ? true : false;
@@ -282,7 +284,7 @@ export class PartyEditComponent implements OnInit {
 
 
   Save() {
-    let Type2:string = "";
+    let Type2: string = "";
 
     if (!this.Allvalid())
       return;
@@ -314,53 +316,53 @@ export class PartyEditComponent implements OnInit {
     this.record.gen_poa_customs_yn = this.record.gen_poa_customs_yn_b ? 'Y' : 'N';
     this.record.gen_poa_isf_yn = this.record.gen_poa_isf_yn_b ? 'Y' : 'N';
     this.record.gen_bond_yn = this.record.gen_bond_yn_b ? 'Y' : 'N';
-    
+
     if (this.record.gen_is_shipper_b)
-        Type2 += "S";
+      Type2 += "S";
     if (this.record.gen_is_consignee_b)
-        Type2 += "C";
+      Type2 += "C";
     if (this.record.gen_is_cha_b)
-        Type2 += "B";
+      Type2 += "B";
     if (this.record.gen_is_forwarder_b)
-        Type2 += "F";
+      Type2 += "F";
     if (this.record.gen_is_agent_b)
-        Type2 += "A";
+      Type2 += "A";
     if (this.record.gen_is_carrier_b)
-        Type2 += "L";
+      Type2 += "L";
     if (this.record.gen_is_carrier2_sea_b)
-        Type2 += "R";
+      Type2 += "R";
     if (this.record.gen_is_vendor_b)
-        Type2 += "V";
+      Type2 += "V";
     if (this.record.gen_is_trucker_b)
-        Type2 += "T";
+      Type2 += "T";
     if (this.record.gen_is_warehouse_b)
-        Type2 += "W";
+      Type2 += "W";
     if (this.record.gen_is_miscellaneous_b)
-        Type2 += "M";
+      Type2 += "M";
     if (this.record.gen_is_employees_b)
-        Type2 += "E";
+      Type2 += "E";
     if (this.record.gen_is_shipper_vendor_b)
-        Type2 += "H";
+      Type2 += "H";
     if (this.record.gen_is_contractor_b)
-        Type2 += "O";
+      Type2 += "O";
     if (this.record.gen_is_tbd_b)
-        Type2 += "D";
+      Type2 += "D";
     if (this.record.gen_is_importer)
-        Type2 += "I";
+      Type2 += "I";
     if (this.record.gen_is_exporter_b)
-        Type2 += "X";
+      Type2 += "X";
     if (this.record.gen_is_terminal_b)
-        Type2 += "N";
+      Type2 += "N";
     if (this.record.gen_is_terminal2_b)
-        Type2 += "P";
+      Type2 += "P";
     if (this.record.gen_is_bank_b)
-        Type2 += "K";
+      Type2 += "K";
 
     this.record.gen_type2 = Type2;
 
     const saveRecord = <vm_Tbl_Mast_Partym>{};
     saveRecord.record = this.record;
-    saveRecord.records = this.records;
+    saveRecord.records = <Tbl_Mast_Contacts[]>[];
     saveRecord.mode = this.mode;
     saveRecord.userinfo = this.gs.UserInfo;
 
@@ -402,82 +404,10 @@ export class PartyEditComponent implements OnInit {
       return bRet;
     }
 
-    if (this.gs.isBlank(this.record.gen_country_id) || this.gs.isBlank(this.record.gen_country_code)) {
-      bRet = false;
-      this.errorMessage = "Country cannot be empty";
-      return bRet;
-    }
-
-    if (this.gs.BRANCH_REGION != "USA") {
-      if (this.gs.isBlank(this.record.gen_curr_code)) {
-        bRet = false;
-        this.errorMessage = "Currency Code Cannot Be Emty";
-        return bRet;
-      }
-
-      if (!this.gs.isBlank(this.record.gen_curr_code)) {
-        if (this.record.gen_curr_code != this.gs.base_cur_code && this.record.gen_curr_code != this.gs.foreign_cur_code) {
-          bRet = false;
-          this.errorMessage = "Invalid Currency Code";
-          return bRet;
-        }
-      }
-    }
-
-    IsCategory = false;
-    if (this.record.gen_is_shipper_b)
-      IsCategory = true;
-    else if (this.record.gen_is_consignee_b)
-      IsCategory = true;
-    else if (this.record.gen_is_cha_b)
-      IsCategory = true;
-    else if (this.record.gen_is_forwarder_b)
-      IsCategory = true;
-    else if (this.record.gen_is_agent_b)
-      IsCategory = true;
-    else if (this.record.gen_is_carrier_b)
-      IsCategory = true;
-    else if (this.record.gen_is_carrier2_sea_b)
-      IsCategory = true;
-    else if (this.record.gen_is_vendor_b)
-      IsCategory = true;
-    else if (this.record.gen_is_trucker_b)
-      IsCategory = true;
-    else if (this.record.gen_is_warehouse_b)
-      IsCategory = true;
-    else if (this.record.gen_is_miscellaneous_b)
-      IsCategory = true;
-    else if (this.record.gen_is_employees_b)
-      IsCategory = true;
-    else if (this.record.gen_is_shipper_vendor_b)
-      IsCategory = true;
-    else if (this.record.gen_is_contractor_b)
-      IsCategory = true;
-    else if (this.record.gen_is_tbd_b)
-      IsCategory = true;
-    else if (this.record.gen_is_importer_b)
-      IsCategory = true;
-    else if (this.record.gen_is_exporter_b)
-      IsCategory = true;
-    else if (this.record.gen_is_terminal_b)
-      IsCategory = true;
-    else if (this.record.gen_is_terminal2_b)
-      IsCategory = true;
-    else if (this.record.gen_is_bank_b)
-      IsCategory = true;
-
-    if (!IsCategory) {
-      bRet = false;
-      this.errorMessage = "Client Category not selected";
-      return bRet;
-    }
-     
-//Email validation chked in contoller
-
     return bRet;
- }
+  }
 
- 
+
 
   Close() {
     this.location.back();
@@ -687,8 +617,8 @@ export class PartyEditComponent implements OnInit {
         let prm = {
           menuid: this.menuid,
           parentid: this.pkid,
-          party_code:this.record.gen_code,
-          party_name:this.record.gen_name,
+          party_code: this.record.gen_code,
+          party_name: this.record.gen_name,
           origin: 'party-page'
         };
         this.gs.Naviagete('Silver.Master/PartyLoginPage', JSON.stringify(prm));
@@ -698,7 +628,7 @@ export class PartyEditComponent implements OnInit {
         let prm = {
           menuid: this.menuid,
           parentid: this.pkid,
-          party_name:this.record.gen_short_name,
+          party_name: this.record.gen_short_name,
           origin: 'party-page'
         };
         this.gs.Naviagete('Silver.Master/PartyAddrPage', JSON.stringify(prm));
@@ -708,12 +638,12 @@ export class PartyEditComponent implements OnInit {
         let prm = {
           menuid: this.menuid,
           parentid: this.pkid,
-          party_code:this.record.gen_code,
-          party_name:this.record.gen_short_name,
-          party_officialname:this.record.gen_name,
-          party_addr1:this.record.gen_address1,
-          party_addr2:this.record.gen_address2,
-          party_addr3:this.record.gen_address3,
+          party_code: this.record.gen_code,
+          party_name: this.record.gen_short_name,
+          party_officialname: this.record.gen_name,
+          party_addr1: this.record.gen_address1,
+          party_addr2: this.record.gen_address2,
+          party_addr3: this.record.gen_address3,
           origin: 'party-page'
         };
         this.gs.Naviagete('Silver.Master/BankInfoPage', JSON.stringify(prm));
@@ -729,38 +659,26 @@ export class PartyEditComponent implements OnInit {
   AddRow() {
     this.errorMessage = "";
     if (this.records == null)
-      this.records = <Tbl_Mast_Contacts[]>[];
+      this.records = <Tbl_Mast_Partym[]>[];
 
-    let bOk: Boolean = true;
-    this.records.forEach(Rec => {
-      if (Rec.cont_name == null)
-        bOk = false;
-      if (Rec.cont_name == "")
-        bOk = false;
-    })
-    if (bOk == false) {
-      this.errorMessage = "Name Cannot Be Empty in Other Contacts";
-      alert(this.errorMessage);
-    }
-    else {
-      var rec = <Tbl_Mast_Contacts>{};
-      rec.cont_pkid = this.gs.getGuid();
-      rec.cont_parent_id = this.pkid;
-      rec.cont_type = "PARTYS";
-      rec.cont_name = ''
-      rec.cont_title = ''
-      rec.cont_email = ''
-      rec.cont_remarks = ''
-      rec.cont_tel = ''
-      rec.cont_mobile = ''
-      rec.cont_oth_messenger = ''
-      this.records.push(rec);
-    }
+    var rec = <Tbl_Mast_Partym>{};
+    //   rec.cont_pkid = this.gs.getGuid();
+    //   rec.cont_parent_id = this.pkid;
+    //   rec.cont_type = "PARTYS";
+    //   rec.cont_name = ''
+    //   rec.cont_title = ''
+    //   rec.cont_email = ''
+    //   rec.cont_remarks = ''
+    //   rec.cont_tel = ''
+    //   rec.cont_mobile = ''
+    //   rec.cont_oth_messenger = ''
+    this.records.push(rec);
+
   }
 
-  RemoveRow(_rec: Tbl_Mast_Contacts) {
+  RemoveRow(_rec: Tbl_Mast_Partym) {
     this.errorMessage = '';
-    this.records.splice(this.records.findIndex(rec => rec.cont_pkid == _rec.cont_pkid), 1);
+    this.records.splice(this.records.findIndex(rec => rec.gen_pkid == _rec.gen_pkid), 1);
   }
 
   SetAddress() {
