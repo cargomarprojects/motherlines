@@ -30,18 +30,25 @@ export class TeuReportComponent implements OnInit {
   menuid: string;
 
   currentTab: string = '';
-  
+
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+
   report_category: string;
   sdate: string;
   edate: string;
-  mode : string  ='';
+  mode: string = '';
   comp_type: string = '';
   report_type: string = '';
-  report_shptype : string = '';
+  report_shptype: string = '';
 
   agent_id: string;
   agent_name: string;
   reportformat = '';
+  filename: string = '';
+  filetype: string = '';
+  filedisplayname: string = '';
 
   page_count: number = 0;
   page_current: number = 0;
@@ -50,6 +57,7 @@ export class TeuReportComponent implements OnInit {
 
   storesub: any;
   sub: any;
+  tab: string = 'main';
 
   loading: boolean = false;
   errorMessage: string = '';
@@ -88,17 +96,21 @@ export class TeuReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-        
+
         this.report_category = rec.report_category
         this.sdate = rec.sdate;
         this.edate = rec.edate;
-        this.mode  = rec.mode ;
+        this.mode = rec.mode;
         this.comp_type = rec.comp_type;
         this.report_type = rec.report_type;
         this.report_shptype = rec.report_shptype;
         this.agent_id = rec.agent_id;
         this.agent_name = rec.agent_name;
         this.reportformat = rec.reportformat;
+        this.filename = rec.filename;
+        this.filetype = rec.filetype;
+        this.filedisplayname = rec.filedisplayname;
+
 
 
         this.page_rows = rec.page_rows;
@@ -106,7 +118,7 @@ export class TeuReportComponent implements OnInit {
         this.page_current = rec.page_current;
         this.page_rowcount = rec.page_rowcount;
 
-        
+
         this.SearchData = this.gs.UserInfo;
         this.SearchData.SDATE = this.sdate;
         this.SearchData.EDATE = this.edate;
@@ -116,7 +128,7 @@ export class TeuReportComponent implements OnInit {
           this.SearchData.COMP_CODE = this.gs.branch_codes;
         else
           this.SearchData.COMP_CODE = this.comp_type;
-
+        this.SearchData.COMP_NAME = this.gs.branch_name;
         this.SearchData.REPORT_TYPE = this.report_type;
         this.SearchData.REPORT_SHPTYPE = this.report_shptype;
 
@@ -136,7 +148,7 @@ export class TeuReportComponent implements OnInit {
         this.page_rowcount = 0;
 
         this.currentTab = 'LIST';
-        
+
         this.report_category = "AGENT";
         this.sdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
@@ -147,7 +159,9 @@ export class TeuReportComponent implements OnInit {
         this.agent_id = "";
         this.agent_name = "";
         this.reportformat = 'DETAIL';
-
+        this.filename = '';
+        this.filetype = '';
+        this.filedisplayname = '';
 
         this.SearchData = this.gs.UserInfo;
 
@@ -179,18 +193,18 @@ export class TeuReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat == "SCREEN" && _action == 'NEW') {
-      
+
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
       this.SearchData.MODE = this.mode;
       this.SearchData.COMP_TYPE = this.comp_type;
-      
+
       if (this.comp_type == 'ALL')
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       else
         this.SearchData.COMP_CODE = this.comp_type;
-
+      this.SearchData.COMP_NAME = this.gs.branch_name;
       this.SearchData.REPORT_TYPE = this.report_type;
       this.SearchData.REPORT_SHPTYPE = this.report_shptype;
       this.SearchData.CUST_ID = this.agent_id;
@@ -198,6 +212,9 @@ export class TeuReportComponent implements OnInit {
       this.SearchData.AGENT_NAME = this.agent_name;
 
       this.reportformat = this.report_type;
+      this.SearchData.filename = "";
+      this.SearchData.filedisplayname = "";
+      this.SearchData.filetype = "";
     }
 
 
@@ -207,6 +224,13 @@ export class TeuReportComponent implements OnInit {
       .subscribe(response => {
 
         if (_outputformat == "SCREEN") {
+
+          if (_action == "NEW") {
+            this.SearchData.filename = response.filename;
+            this.SearchData.filedisplayname = response.filedisplayname;
+            this.SearchData.filetype = response.filetype;
+          }
+
           const state: ReportState = {
             pkid: this.pkid,
             urlid: this.urlid,
@@ -221,12 +245,15 @@ export class TeuReportComponent implements OnInit {
             report_shptype: this.SearchData.REPORT_SHPTYPE,
             agent_id: this.SearchData.AGENT_ID,
             agent_name: this.SearchData.AGENT_NAME,
-            reportformat : this.reportformat,
+            reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
-            records: response.list
+            records: response.list,
+            filename: this.SearchData.filename,
+            filetype: this.SearchData.filetype,
+            filedisplayname: this.SearchData.filedisplayname
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
@@ -262,5 +289,22 @@ export class TeuReportComponent implements OnInit {
     }
   }
 
+  Print() {
+    this.errorMessage = "";
+    if (this.MainList.length <= 0) {
+      this.errorMessage = "List Not Found";
+      alert(this.errorMessage);
+      return;
+    }
+    this.report_url = '';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = '';
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
+  }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
 
 }
