@@ -13,6 +13,9 @@ export interface ReportState{
     mode : string;
     comp_type: string;
     report_type: string;
+    filename: string;
+    filetype: string;
+    filedisplayname: string;
     
     agent_id : string ;
     agent_name : string ;
