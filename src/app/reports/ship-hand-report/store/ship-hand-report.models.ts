@@ -14,6 +14,9 @@ export interface ReportState{
     handled_id : string ;
     handled_name : string ;
     reporttype : string ;
+    filename: string;
+    filetype: string;
+    filedisplayname: string;
     
     page_rows :number;
     page_count :number;

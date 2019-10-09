@@ -29,6 +29,10 @@ export class ShipHandReportComponent implements OnInit {
   url: string;
   menuid: string;
 
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+
   currentTab: string = '';
   from_date: string;
   to_date: string;
@@ -40,6 +44,9 @@ export class ShipHandReportComponent implements OnInit {
   handled_name: string;
 
   reporttype = '';
+  filename: string = '';
+  filetype: string = '';
+  filedisplayname: string = '';
 
   page_count: number = 0;
   page_current: number = 0;
@@ -48,13 +55,14 @@ export class ShipHandReportComponent implements OnInit {
 
   storesub: any;
   sub: any;
+  tab: string = 'main';
 
   loading: boolean = false;
   errorMessage: string = '';
 
   SearchData: any = {};
 
-  mainState : ReportState;
+  mainState: ReportState;
 
   MainList: TBL_MBL_REPORT[];
 
@@ -95,12 +103,15 @@ export class ShipHandReportComponent implements OnInit {
         this.handled_id = rec.handled_id;
         this.handled_name = rec.handled_name;
         this.reporttype = rec.reporttype;
+        this.filename = rec.filename;
+        this.filetype = rec.filetype;
+        this.filedisplayname = rec.filedisplayname;
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
         this.page_current = rec.page_current;
         this.page_rowcount = rec.page_rowcount;
 
-        
+
         this.SearchData = this.gs.UserInfo;
         this.SearchData.SDATE = this.from_date;
         this.SearchData.EDATE = this.to_date;
@@ -111,6 +122,7 @@ export class ShipHandReportComponent implements OnInit {
         else
           this.SearchData.COMP_CODE = this.branch;
 
+        this.SearchData.COMP_NAME = this.gs.branch_name;
         this.SearchData.HANDLED_ID = this.handled_id;
         this.SearchData.HANDLED_NAME = this.handled_name;
 
@@ -121,7 +133,7 @@ export class ShipHandReportComponent implements OnInit {
 
       }
       else {
-        
+
         this.MainList = Array<TBL_MBL_REPORT>();
 
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
@@ -138,6 +150,10 @@ export class ShipHandReportComponent implements OnInit {
         this.handled_id = "";
         this.handled_name = "";
         this.reporttype = 'MASTER DETAILS';
+        this.filename = '';
+        this.filetype = '';
+        this.filedisplayname = '';
+
 
         this.SearchData = this.gs.UserInfo;
 
@@ -177,11 +193,15 @@ export class ShipHandReportComponent implements OnInit {
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       else
         this.SearchData.COMP_CODE = this.branch;
+      this.SearchData.COMP_NAME = this.gs.branch_name;
       this.SearchData.HANDLED_ID = this.handled_id;
       this.SearchData.HANDLED_NAME = this.handled_name;
 
       this.SearchData.VIEW_MODE = this.group;
       this.reporttype = this.group;
+      this.SearchData.filename = "";
+      this.SearchData.filedisplayname = "";
+      this.SearchData.filetype = "";
     }
 
     this.loading = true;
@@ -190,6 +210,13 @@ export class ShipHandReportComponent implements OnInit {
       .subscribe(response => {
 
         if (_outputformat == "SCREEN") {
+
+          if (_action == "NEW") {
+            this.SearchData.filename = response.filename;
+            this.SearchData.filedisplayname = response.filedisplayname;
+            this.SearchData.filetype = response.filetype;
+          }
+
           this.mainState = {
             pkid: this.pkid,
             urlid: this.urlid,
@@ -207,7 +234,10 @@ export class ShipHandReportComponent implements OnInit {
             page_count: response.page_count,
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
-            records: response.list
+            records: response.list,
+            filename: this.SearchData.filename,
+            filetype: this.SearchData.filetype,
+            filedisplayname: this.SearchData.filedisplayname
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: this.mainState }));
         }
@@ -242,6 +272,23 @@ export class ShipHandReportComponent implements OnInit {
       this.handled_name = _Record.name;
     }
   }
+  
+  Print() {
+    this.errorMessage = "";
+    if (this.MainList.length <= 0) {
+      this.errorMessage = "List Not Found";
+      alert(this.errorMessage);
+      return;
+    }
+    this.report_url = '';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = '';
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
+  }
 
+  callbackevent() {
+    this.tab = 'main';
+  }
 
 }
