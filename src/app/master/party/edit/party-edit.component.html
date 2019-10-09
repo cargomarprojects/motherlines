@@ -34,7 +34,7 @@
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label col-form-label-sm">Name</label>
                                     <div class="col-10">
-                                        <InputBox [(inputModel)]="record.gen_short_name" maxlength="60"
+                                        <InputBox [(inputModel)]="record.gen_short_name" maxlength="60" (blur)="onBlur('gen_short_name')"
                                             [uppercase]="true" #_gen_short_name>
                                         </InputBox>
                                     </div>

@@ -286,7 +286,8 @@ export class PartyEditComponent implements OnInit {
 
     if (!this.Allvalid())
       return;
-
+      
+    this.record.gen_type = this.type;
     this.record.gen_is_shipper = this.record.gen_is_shipper_b ? 'Y' : 'N';
     this.record.gen_is_consignee = this.record.gen_is_consignee_b ? 'Y' : 'N';
     this.record.gen_is_importer = this.record.gen_is_importer_b ? 'Y' : 'N';
@@ -533,10 +534,10 @@ export class PartyEditComponent implements OnInit {
         this.record.gen_pincode = this.record.gen_pincode.toUpperCase();
         break;
       }
-      //   case 'mbl_no': {
-      //     this.record.mbl_no = this.record.mbl_no.toUpperCase();
-      //     break;
-      //   }
+        case 'gen_short_name': {
+          this.record.gen_name =  this.record.gen_short_name;
+          break;
+        }
       //   case 'mbl_liner_bookingno': {
       //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
       //     break;

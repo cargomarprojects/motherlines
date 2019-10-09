@@ -154,7 +154,7 @@ export class PartyParentEditComponent implements OnInit {
     this.record.gen_curr_code = '';
     if (this.gs.BRANCH_REGION != "USA")
       this.record.gen_curr_code = this.gs.base_cur_code;
-      
+
     this.record.gen_is_importer = 'N';
     this.record.gen_is_exporter = 'N';
     this.record.gen_is_terminal = 'N';
@@ -285,6 +285,10 @@ export class PartyParentEditComponent implements OnInit {
 
   Save() {
     let Type2: string = "";
+    if (this.gs.PARENT_ADDRESS_REQUIRED != 'Y') // if official name is hidden
+      this.record.gen_name = this.record.gen_short_name;
+
+      
 
     if (!this.Allvalid())
       return;
@@ -358,6 +362,7 @@ export class PartyParentEditComponent implements OnInit {
     if (this.record.gen_is_bank_b)
       Type2 += "K";
 
+    this.record.gen_type = this.type;
     this.record.gen_type2 = Type2;
 
     const saveRecord = <vm_Tbl_Mast_Partym>{};
@@ -398,11 +403,11 @@ export class PartyParentEditComponent implements OnInit {
       this.errorMessage = "Name cannot be empty";
       return bRet;
     }
-    if (this.gs.isBlank(this.record.gen_name)) {
-      bRet = false;
-      this.errorMessage = "Official Name cannot be empty";
-      return bRet;
-    }
+    // if (this.gs.isBlank(this.record.gen_name)) {
+    //   bRet = false;
+    //   this.errorMessage = "Official Name cannot be empty";
+    //   return bRet;
+    // }
 
     return bRet;
   }
