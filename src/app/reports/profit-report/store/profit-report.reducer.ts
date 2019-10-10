@@ -31,6 +31,10 @@ export const initialState: ReportState = {
 
     sales_id :'',
     sales_name :'',    
+    filename: '',
+    filetype: '',
+    filedisplayname: '',
+    
     _report_category : '',
     _report_type :'',
     page_rows :0,
