@@ -21,12 +21,14 @@ export const initialState: ReportState = {
     comp_type : '',
     report_type : '',
 
-
     cust_id :'',
     cust_name :'',
 
     sales_id :'',
     sales_name :'',    
+    filename: '',
+    filetype: '',
+    filedisplayname: '',
     _report_category : '',
     _report_type :'',
     page_rows :0,

@@ -20,7 +20,10 @@ export interface ReportState{
     sales_id : string ;
     sales_name : string ;    
     
-
+    filename: string;
+    filetype: string;
+    filedisplayname: string;
+    
     _report_category: string;
     _report_type: string;
     

@@ -36,6 +36,13 @@ export class ProfitReportHouseComponent implements OnInit {
   comp_type: string = '';
   report_type: string = '';
 
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+
+  filename: string = '';
+  filetype: string = '';
+  filedisplayname: string = '';
 
   cust_id: string;
   cust_name: string;
@@ -59,6 +66,7 @@ export class ProfitReportHouseComponent implements OnInit {
 
   storesub: any;
   sub: any;
+  tab: string = 'main';
 
   loading: boolean = false;
   errorMessage: string = '';
@@ -97,7 +105,7 @@ export class ProfitReportHouseComponent implements OnInit {
       if (this.menu_current.rights_admin == 'Y')
         this.isAdmin = true;
 
-        this.title =  this.menu_current.menu_name;
+      this.title = this.menu_current.menu_name;
     }
 
     this.isAdmin = false;
@@ -137,7 +145,9 @@ export class ProfitReportHouseComponent implements OnInit {
 
         this._report_category = rec._report_category;
         this._report_type = rec._report_type;
-
+        this.filename = rec.filename;
+        this.filetype = rec.filetype;
+        this.filedisplayname = rec.filedisplayname;
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -155,7 +165,7 @@ export class ProfitReportHouseComponent implements OnInit {
           this.SearchData.COMP_CODE = this.gs.branch_codes;
         else
           this.SearchData.COMP_CODE = this.comp_type;
-
+          this.SearchData.COMP_NAME = this.gs.branch_name;
         this.SearchData.REPORT_TYPE = this.report_type;
 
         this.SearchData.CUST_ID = this.cust_id;
@@ -189,7 +199,9 @@ export class ProfitReportHouseComponent implements OnInit {
         this.comp_type = this.gs.branch_code;
         this.report_type = "DETAIL";
 
-
+        this.filename = '';
+        this.filetype = '';
+        this.filedisplayname = '';
 
         this.cust_id = "";
         this.cust_name = "";
@@ -244,7 +256,7 @@ export class ProfitReportHouseComponent implements OnInit {
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       else
         this.SearchData.COMP_CODE = this.comp_type;
-
+        this.SearchData.COMP_NAME = this.gs.branch_name;
 
       this.SearchData.REPORT_TYPE = this.report_type;
 
@@ -270,6 +282,13 @@ export class ProfitReportHouseComponent implements OnInit {
       .subscribe(response => {
 
         if (_outputformat == "SCREEN") {
+
+          if (_action == "NEW") {
+            this.SearchData.filename = response.filename;
+            this.SearchData.filedisplayname = response.filedisplayname;
+            this.SearchData.filetype = response.filetype;
+          }
+
           const state: ReportState = {
             pkid: this.pkid,
             urlid: this.urlid,
@@ -295,7 +314,10 @@ export class ProfitReportHouseComponent implements OnInit {
             page_count: response.page_count,
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
-            records: response.list
+            records: response.list,
+            filename: this.SearchData.filename,
+            filetype: this.SearchData.filetype,
+            filedisplayname: this.SearchData.filedisplayname
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
@@ -346,5 +368,24 @@ export class ProfitReportHouseComponent implements OnInit {
       this.sales_name = _Record.name;
     }
   }
+
+  Print() {
+    this.errorMessage = "";
+    if (this.MainList.length <= 0) {
+      this.errorMessage = "List Not Found";
+      alert(this.errorMessage);
+      return;
+    }
+    this.report_url = '';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = '';
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
+  }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
+
 
 }
