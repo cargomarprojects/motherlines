@@ -36,6 +36,9 @@ export class ConsShipReportComponent implements OnInit {
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
+  filename: string = '';
+  filetype: string = '';
+  filedisplayname: string = '';
 
   cons_id: string;
   cons_name: string;
@@ -97,7 +100,9 @@ export class ConsShipReportComponent implements OnInit {
         this.cons_id = rec.cons_id;
         this.cons_name = rec.cons_name;
         this.reportformat = rec.reportformat;
-
+        this.filename = rec.filename;
+        this.filetype = rec.filetype;
+        this.filedisplayname = rec.filedisplayname;
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -145,7 +150,9 @@ export class ConsShipReportComponent implements OnInit {
         this.cons_id = '';
         this.cons_name = '';
         this.reportformat = 'DETAIL';
-
+        this.filename = '';
+        this.filetype = '';
+        this.filedisplayname = '';
 
         this.SearchData = this.gs.UserInfo;
 
@@ -198,6 +205,9 @@ export class ConsShipReportComponent implements OnInit {
       this.SearchData.CONSIGNEE_NAME = this.cons_name;
 
       this.reportformat = this.report_type;
+      this.SearchData.filename = "";
+      this.SearchData.filedisplayname = "";
+      this.SearchData.filetype = "";
     }
 
 
@@ -207,6 +217,14 @@ export class ConsShipReportComponent implements OnInit {
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
+
+          if (_action == "NEW") {
+            this.SearchData.filename = response.filename;
+            this.SearchData.filedisplayname = response.filedisplayname;
+            this.SearchData.filetype = response.filetype;
+          }
+
+
           const state: ReportState = {
             pkid: this.pkid,
             urlid: this.urlid,
@@ -226,7 +244,10 @@ export class ConsShipReportComponent implements OnInit {
             page_count: response.page_count,
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
-            records: response.list
+            records: response.list,
+            filename: this.SearchData.filename,
+            filetype: this.SearchData.filetype,
+            filedisplayname: this.SearchData.filedisplayname
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
@@ -260,5 +281,16 @@ export class ConsShipReportComponent implements OnInit {
       this.cons_name = _Record.name;
     }
   }
-
+  Print() {
+    this.errorMessage = "";
+    if (this.MainList.length <= 0) {
+      this.errorMessage = "List Not Found";
+      alert(this.errorMessage);
+      return;
+    }
+    this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
+  }
+  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+  }
 }

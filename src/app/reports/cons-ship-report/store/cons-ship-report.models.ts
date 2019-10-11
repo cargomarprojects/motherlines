@@ -15,6 +15,9 @@ export interface ReportState{
     cons_id : string ;
     cons_name : string ;
     reportformat : string ;
+    filename: string;
+    filetype: string;
+    filedisplayname: string;
     page_rows :number;
     page_count :number;
     page_current :number;
