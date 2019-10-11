@@ -493,6 +493,6 @@
 </div>
 
 <div *ngIf="tab == 'report'">
-    <app-report [title]="'Shipment Log Report'" [url]="" [searchdata]="" [menuid]="report_menuid" [filename]="filename"
-        [filetype]="filetype" [filedisplayname]="filedisplayname" (callbackevent)="callbackevent($event)"></app-report>
+    <app-report [title]="'Shipment Log Report'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"  
+        (callbackevent)="callbackevent($event)"></app-report>
 </div>

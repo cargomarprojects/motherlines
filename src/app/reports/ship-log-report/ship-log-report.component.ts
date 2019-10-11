@@ -76,9 +76,7 @@ export class ShipmentLogReportComponent implements OnInit {
   printer_friendly: boolean = false;
 
   reportformat: string = '';
-  filename: string = '';
-  filetype: string = '';
-  filedisplayname: string = '';
+   
 
   page_count: number = 0;
   page_current: number = 0;
@@ -145,9 +143,6 @@ export class ShipmentLogReportComponent implements OnInit {
         this.format_type = rec.format_type;
         this.printer_friendly = rec.printer_friendly;
         this.reportformat = rec.reportformat;
-        this.filename = rec.filename;
-        this.filetype = rec.filetype;
-        this.filedisplayname = rec.filedisplayname;
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -173,6 +168,8 @@ export class ShipmentLogReportComponent implements OnInit {
         this.SearchData.DATE_TYPE = this.date_basedon;
         this.SearchData.SDATE = this.sdate;
         this.SearchData.EDATE = this.edate;
+        this.SearchData.FORMAT_TYPE = this.format_type;
+        this.SearchData.PRINTER_FRIENDLY = this.printer_friendly == true ? "Y" : "N";
 
       }
       else {
@@ -207,9 +204,6 @@ export class ShipmentLogReportComponent implements OnInit {
         this.format_type = 'FORMAT-1';
         this.printer_friendly = false;
         this.reportformat = 'FORMAT-1';
-        this.filename = '';
-        this.filetype = '';
-        this.filedisplayname = '';
         this.SearchData = this.gs.UserInfo;
         this.SetStages();
       }
@@ -273,9 +267,8 @@ export class ShipmentLogReportComponent implements OnInit {
       this.SearchData.DATE_TYPE = this.date_basedon;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
-      this.SearchData.filename = "";
-      this.SearchData.filedisplayname = "";
-      this.SearchData.filetype = "";
+      this.SearchData.FORMAT_TYPE = this.format_type;
+      this.SearchData.PRINTER_FRIENDLY = this.printer_friendly == true ? "Y" : "N";
 
       this.reportformat = this.format_type;
     }
@@ -325,12 +318,8 @@ export class ShipmentLogReportComponent implements OnInit {
             page_count: response.page_count,
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
-            records: response.list,
-            filename: this.SearchData.filename,
-            filetype: this.SearchData.filetype,
-            filedisplayname: this.SearchData.filedisplayname
-
-          };
+            records: response.list
+         };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
 
@@ -443,15 +432,44 @@ export class ShipmentLogReportComponent implements OnInit {
 
   Print() {
     this.errorMessage = "";
-    if (this.MainList.length <= 0) {
-      this.errorMessage = "List Not Found";
-      alert(this.errorMessage);
-      return;
-    }
-    this.report_url = '';
-    this.report_searchdata = this.gs.UserInfo;
-    this.report_searchdata.pkid = '';
+    // if (this.MainList.length <= 0) {
+    //   this.errorMessage = "List Not Found";
+    //   alert(this.errorMessage);
+    //   return;
+    // }
+    // this.report_url = '';
+    // this.report_searchdata = this.gs.UserInfo;
+    // this.report_searchdata.pkid = '';
+    // this.report_menuid = this.menuid;
+
+    this.report_url = '/api/Other/Report/ShipmentLogPrint';
     this.report_menuid = this.menuid;
+    this.report_searchdata.pkid = '';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.SHOWSTAGES = this.GetStages();
+    this.report_searchdata.SORT = this.sort_order.replace("mbl_no", "hbl_houseno"); //In gridlist filed hbl_houseno is used for both houseno and masterno;
+    this.report_searchdata.HANDLED_TYPE = this.handled_basedon;
+    this.report_searchdata.HANDLED_ID = this.handled_id;
+    this.report_searchdata.MASTER_AGENT_ID = this.agent_id;
+    this.report_searchdata.CONSIGNEE_ID = this.consignee_id;
+    this.report_searchdata.SHIPPER_ID = this.shipper_id;
+    if (this.job_mode == "OTHER OPERATION")
+      this.report_searchdata.SMODE = 'OTHERS';
+    else
+      this.report_searchdata.SMODE = this.job_mode;
+    this.report_searchdata.MASTER_WISE = this.report_masterwise == true ? "Y" : "N";
+    this.report_searchdata.HOUSE_WISE = this.report_housewise == true ? "Y" : "N";
+    this.report_searchdata.OVERRIDE_ETA = this.gs.SEA_IMP_OVERRIDE_POD_ETA;
+    this.report_searchdata.DATE_TYPE = this.date_basedon;
+    this.report_searchdata.SDATE = this.sdate;
+    this.report_searchdata.EDATE = this.edate;
+    this.report_searchdata.FORMAT_TYPE = this.format_type;
+    this.report_searchdata.PRINTER_FRIENDLY = this.printer_friendly == true ? "Y" : "N";
+    this.report_searchdata.SHIPPER_NAME = this.shipper_name;
+    this.report_searchdata.CONSIGNEE_NAME = this.consignee_name;
+    this.report_searchdata.AGENT_NAME = this.agent_name;
+    this.report_searchdata.HANDLED_NAME = this.handled_name;
+
     this.tab = 'report';
   }
 

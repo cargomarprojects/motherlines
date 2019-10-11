@@ -26,9 +26,6 @@ export interface ReportState {
     format_type:string;
     printer_friendly:boolean;
     reportformat: string ;
-    filename: string ;
-    filetype: string ;
-    filedisplayname: string;
 
     page_rows: number;
     page_count: number;
