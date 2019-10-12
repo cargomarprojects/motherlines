@@ -36,6 +36,9 @@ export class InvIssReportComponent implements OnInit {
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
+  filename: string = '';
+  filetype: string = '';
+  filedisplayname: string = '';
 
   cust_id: string;
   cust_name: string;
@@ -99,6 +102,9 @@ export class InvIssReportComponent implements OnInit {
         this.comp_type = rec.comp_type;
         this.report_type = rec.report_type;
         this.report_shptype = rec.report_shptype;
+        this.filename = rec.filename;
+        this.filetype = rec.filetype;
+        this.filedisplayname = rec.filedisplayname;
         this.cust_id = rec.cust_id;
         this.cust_name = rec.cust_name;
 
@@ -124,7 +130,7 @@ export class InvIssReportComponent implements OnInit {
         } else {
           this.SearchData.COMP_CODE = this.comp_type;
         }
-
+        this.SearchData.COMP_NAME = this.gs.branch_name;
         this.SearchData.REPORT_TYPE = this.report_type;
         this.SearchData.REPORT_SHPTYPE = this.report_shptype;
 
@@ -159,7 +165,10 @@ export class InvIssReportComponent implements OnInit {
         this.comp_type = this.gs.branch_code;
         this.report_type = 'DETAIL';
         this.report_shptype = 'ALL';
-        
+        this.filename = '';
+        this.filetype = '';
+        this.filedisplayname = '';
+
         this.cust_id = '';
         this.cust_name = '';
 
@@ -212,7 +221,7 @@ export class InvIssReportComponent implements OnInit {
       } else {
         this.SearchData.COMP_CODE = this.comp_type;
       }
-
+      this.SearchData.COMP_NAME = this.gs.branch_name;
       this.SearchData.REPORT_TYPE = this.report_type;
       this.SearchData.REPORT_SHPTYPE = this.report_shptype;
 
@@ -221,7 +230,9 @@ export class InvIssReportComponent implements OnInit {
 
       this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
       this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
-
+      this.SearchData.filename = "";
+      this.SearchData.filedisplayname = "";
+      this.SearchData.filetype = "";
       this.reportformat = this.report_type;
     }
 
@@ -232,6 +243,12 @@ export class InvIssReportComponent implements OnInit {
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
+          if (_action == "NEW") {
+            this.SearchData.filename = response.filename;
+            this.SearchData.filedisplayname = response.filedisplayname;
+            this.SearchData.filetype = response.filetype;
+          }
+
           const state: ReportState = {
             pkid: this.pkid,
             urlid: this.urlid,
@@ -253,7 +270,10 @@ export class InvIssReportComponent implements OnInit {
             page_count: response.page_count,
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
-            records: response.list
+            records: response.list,
+            filename: this.SearchData.filename,
+            filetype: this.SearchData.filetype,
+            filedisplayname: this.SearchData.filedisplayname
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
@@ -279,6 +299,15 @@ export class InvIssReportComponent implements OnInit {
     this.CUSTRECORD.subtype = '';
     this.CUSTRECORD.id = '';
     this.CUSTRECORD.code = '';
+
+    this.PARENTRECORD = new SearchTable();
+    this.PARENTRECORD.controlname = 'PARENT';
+    this.PARENTRECORD.displaycolumn = 'NAME';
+    this.PARENTRECORD.type = 'OVERSEAAGENT';
+    this.PARENTRECORD.subtype = '';
+    this.PARENTRECORD.id = '';
+    this.PARENTRECORD.code = '';
+
   }
 
   LovSelected(_Record: SearchTable) {
@@ -290,6 +319,19 @@ export class InvIssReportComponent implements OnInit {
       this.cust_parent_id = _Record.id;
       this.cust_parent_name = _Record.name;
     }    
+  }
+
+  Print() {
+    this.errorMessage = "";
+    if (this.MainList.length <= 0) {
+      this.errorMessage = "List Not Found";
+      alert(this.errorMessage);
+      return;
+    }
+    this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
+  }
+  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }
 
 }

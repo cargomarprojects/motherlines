@@ -12,6 +12,9 @@ export interface ReportState{
     comp_type: string;
     report_type: string;
     report_shptype : string;
+    filename: string;
+    filetype: string;
+    filedisplayname: string;
     
     cust_id : string ;
     cust_name : string ;
