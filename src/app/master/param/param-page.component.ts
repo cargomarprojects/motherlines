@@ -33,6 +33,11 @@ export class ParamPageComponent implements OnInit, OnDestroy {
   title: string;
   isAdmin: boolean;
 
+  tab: string = 'main';
+  report_title: string;
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
 
   loading: boolean;
 
@@ -58,9 +63,9 @@ export class ParamPageComponent implements OnInit, OnDestroy {
       this.menuid = params.id;
       this.menu_param = params.menu_param;
       this.initPage();
-      
 
-      
+
+
     });
   }
 
@@ -79,7 +84,10 @@ export class ParamPageComponent implements OnInit, OnDestroy {
   }
 
   searchEvents(actions: any) {
-    this.store.dispatch(new fromparamactions.LoadParamRequest({ type: "SEARCH", Query: actions.searchQuery }))
+    // if (actions.outputformat == 'EXCEL')
+    //   this.Print('');
+    // else
+      this.store.dispatch(new fromparamactions.LoadParamRequest({ type: "SEARCH", Query: actions.searchQuery }))
   }
 
   pageEvents(actions: any) {
@@ -97,7 +105,7 @@ export class ParamPageComponent implements OnInit, OnDestroy {
       menuid: this.menuid,
       pkid: '',
       type: this.menu_param,
-      origin:'param-page',
+      origin: 'param-page',
       mode: 'ADD'
     };
     this.gs.Naviagete('Silver.Master/ParamEdit', JSON.stringify(parameter));
@@ -115,7 +123,7 @@ export class ParamPageComponent implements OnInit, OnDestroy {
       menuid: this.menuid,
       pkid: _record.param_pkid,
       type: _record.param_type,
-      origin:'param-page',      
+      origin: 'param-page',
       mode: 'EDIT'
     };
     this.gs.Naviagete('Silver.Master/ParamEdit', JSON.stringify(parameter));
@@ -129,5 +137,33 @@ export class ParamPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sub.unsubscribe;
   }
+
+  Print(_code: string) {
+
+    // if (this.MainList.length <= 0) {
+    //   this.errorMessage = "List Not Found";
+    //   alert(this.errorMessage);
+    //   return;
+    // }
+    // this.report_url = '';
+    // this.report_searchdata = this.gs.UserInfo;
+    // this.report_searchdata.pkid = '';
+    // this.report_menuid = this.menuid;
+
+    this.report_url = '/api/Master/Param/ParamPagePrint';
+    this.report_menuid = this.menuid;
+    this.report_searchdata.pkid = '';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.CODE = _code;
+    this.report_searchdata.TYPE = this.menu_param;
+    this.report_searchdata.STABLE = 'mast_param';
+
+    this.tab = 'report';
+  }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
+
 
 }

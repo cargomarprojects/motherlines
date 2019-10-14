@@ -79,7 +79,7 @@ export class ProfitReportComponent implements OnInit {
 
   SearchData: any = {};
 
-  CurrentState : Observable<ReportState>;
+  CurrentState: Observable<ReportState>;
 
   MainList: TBL_MBL_REPORT[];
 
@@ -111,7 +111,7 @@ export class ProfitReportComponent implements OnInit {
       if (this.menu_current.rights_admin == 'Y')
         this.isAdmin = true;
 
-        this.title =  this.menu_current.menu_name;
+      this.title = this.menu_current.menu_name;
     }
 
     this.isAdmin = false;
@@ -179,7 +179,7 @@ export class ProfitReportComponent implements OnInit {
           this.SearchData.COMP_CODE = this.gs.branch_codes;
         else
           this.SearchData.COMP_CODE = this.comp_type;
-          this.SearchData.COMP_NAME = this.gs.branch_name;
+        this.SearchData.COMP_NAME = this.gs.branch_name;
 
         this.SearchData.REPORT_TYPE = this.report_type;
 
@@ -278,7 +278,7 @@ export class ProfitReportComponent implements OnInit {
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       else
         this.SearchData.COMP_CODE = this.comp_type;
-this.SearchData.COMP_NAME = this.gs.branch_name;
+      this.SearchData.COMP_NAME = this.gs.branch_name;
 
       this.SearchData.REPORT_TYPE = this.report_type;
 
