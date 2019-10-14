@@ -32,7 +32,7 @@ export class InvIssReportComponent implements OnInit {
   report_category: string;
   sdate: string;
   edate: string;
-  mode  = '';
+  mode = '';
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
@@ -65,8 +65,8 @@ export class InvIssReportComponent implements OnInit {
 
   MainList: TBL_INV_ISSUE_RPT[];
 
-  CUSTRECORD: SearchTable = new SearchTable();
-  PARENTRECORD: SearchTable = new SearchTable();
+  // CUSTRECORD: SearchTable = new SearchTable();
+  // PARENTRECORD: SearchTable = new SearchTable();
 
   constructor(
     public gs: GlobalService,
@@ -136,14 +136,14 @@ export class InvIssReportComponent implements OnInit {
 
         this.SearchData.CUST_ID = this.cust_id;
         this.SearchData.CUST_NAME = this.cust_name;
-        this.CUSTRECORD.id = this.cust_id;
-        this.CUSTRECORD.name = this.cust_name;
+        // this.CUSTRECORD.id = this.cust_id;
+        // this.CUSTRECORD.name = this.cust_name;
 
 
         this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
         this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
-        this.PARENTRECORD.id = this.cust_parent_id;
-        this.PARENTRECORD.name = this.cust_parent_name;
+        // this.PARENTRECORD.id = this.cust_parent_id;
+        // this.PARENTRECORD.name = this.cust_parent_name;
 
 
 
@@ -208,6 +208,10 @@ export class InvIssReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
+      if (this.cust_parent_id != '') { //If Parent Exist then customer need to empty
+        this.cust_id = '';
+        this.cust_name = '';
+      }
 
       this.SearchData.JV_YEAR = this.gs.globalVariables.year_code;
       this.SearchData.REPORT_CATEGORY = this.report_category;
@@ -264,7 +268,7 @@ export class InvIssReportComponent implements OnInit {
             cust_id: this.SearchData.CUST_ID,
             cust_name: this.SearchData.CUST_NAME,
             cust_parent_id: this.SearchData.CUST_PARENT_ID,
-            cust_parent_name: this.SearchData.CUST_PAERNT_NAME,            
+            cust_parent_name: this.SearchData.CUST_PARENT_NAME,
             reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
@@ -292,22 +296,21 @@ export class InvIssReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-    this.CUSTRECORD = new SearchTable();
-    this.CUSTRECORD.controlname = 'CUSTOMER';
-    this.CUSTRECORD.displaycolumn = 'NAME';
-    this.CUSTRECORD.type = 'MASTER';
-    this.CUSTRECORD.subtype = '';
-    this.CUSTRECORD.id = '';
-    this.CUSTRECORD.code = '';
+    // this.CUSTRECORD = new SearchTable();
+    // this.CUSTRECORD.controlname = 'CUSTOMER';
+    // this.CUSTRECORD.displaycolumn = 'NAME';
+    // this.CUSTRECORD.type = 'MASTER';
+    // this.CUSTRECORD.subtype = '';
+    // this.CUSTRECORD.id = '';
+    // this.CUSTRECORD.code = '';
 
-    this.PARENTRECORD = new SearchTable();
-    this.PARENTRECORD.controlname = 'PARENT';
-    this.PARENTRECORD.displaycolumn = 'NAME';
-    this.PARENTRECORD.type = 'OVERSEAAGENT';
-    this.PARENTRECORD.subtype = '';
-    this.PARENTRECORD.id = '';
-    this.PARENTRECORD.code = '';
-
+    // this.PARENTRECORD = new SearchTable();
+    // this.PARENTRECORD.controlname = 'PARENT';
+    // this.PARENTRECORD.displaycolumn = 'NAME';
+    // this.PARENTRECORD.type = 'OVERSEAAGENT';
+    // this.PARENTRECORD.subtype = '';
+    // this.PARENTRECORD.id = '';
+    // this.PARENTRECORD.code = '';
   }
 
   LovSelected(_Record: SearchTable) {
@@ -318,7 +321,7 @@ export class InvIssReportComponent implements OnInit {
     if (_Record.controlname === 'PARENT') {
       this.cust_parent_id = _Record.id;
       this.cust_parent_name = _Record.name;
-    }    
+    }
   }
 
   Print() {

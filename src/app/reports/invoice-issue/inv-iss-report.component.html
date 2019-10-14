@@ -49,23 +49,26 @@
               </select>
             </div>
           </div>
-
-
-
         </div>
         <div class="col-md-3">
 
           <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm">Parent</label>
             <div class="col-8">
-              <app-autocomplete [inputdata]="PARENTRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete>
+              <!-- <app-autocomplete [inputdata]="PARENTRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete> -->
+              <app-autocomplete2 [controlname]="'PARENT'" [tabletype]="'OVERSEAAGENT'" [displaycolumn]="'NAME'"
+                [displaydata]="cust_parent_name" (ValueChanged)="LovSelected($event)">
+              </app-autocomplete2>
             </div>
           </div>
 
           <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm">Customer</label>
             <div class="col-8">
-              <app-autocomplete [inputdata]="CUSTRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete>
+              <!-- <app-autocomplete [inputdata]="CUSTRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete> -->
+              <app-autocomplete2 [controlname]="'CUSTOMER'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+                [displaydata]="cust_name" (ValueChanged)="LovSelected($event)">
+              </app-autocomplete2>
             </div>
           </div>
 
@@ -97,18 +100,18 @@
           <th>CUSTOMER</th>
           <th>ORDEDR#</th>
           <th>LOAD-COUNTRY</th>
-          <th>LOAD-POSTCODE</th>          
-          <th>LOAD-CITY</th>          
-          <th>LOAD-DATE</th>          
+          <th>LOAD-POSTCODE</th>
+          <th>LOAD-CITY</th>
+          <th>LOAD-DATE</th>
           <th>POL</th>
-          <th>POD</th>          
-          <th>RECEIVER-COUNTRY</th>          
-          <th>RECEIVER-CITY</th>          
-          <th>DELIVERY-DATE</th>          
-          <th>CNTR-TYPE</th>          
-          <th>CARRIER</th>          
-          <th>CURR</th>          
-          <th align='right'>INV-AMT</th>          
+          <th>POD</th>
+          <th>RECEIVER-COUNTRY</th>
+          <th>RECEIVER-CITY</th>
+          <th>DELIVERY-DATE</th>
+          <th>CNTR-TYPE</th>
+          <th>CARRIER</th>
+          <th>CURR</th>
+          <th align='right'>INV-AMT</th>
           <th>FREE-TIME</th>
         </tr>
       </thead>
@@ -133,7 +136,7 @@
           <td>{{carrier_name}}</td>
           <td>{{currency}}</td>
           <td align='right'>{{rec.inv_amt | number : '1.2-2'}}</td>
-          <td>{{rec.free_time}}</td>          
+          <td>{{rec.free_time}}</td>
         </tr>
       </tbody>
     </table>
