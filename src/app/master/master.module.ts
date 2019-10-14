@@ -27,6 +27,8 @@ import { PartyAddrListComponent } from './partyaddr/partyaddr-list.component';
 import { PartyAddrEditComponent } from './partyaddr/partyaddr-edit.component';
 import { BankInfoComponent } from './bankinfo/bankinfo.component';
 import { PartyParentEditComponent } from './party/edit/party-parent-edit.component';
+import { VendorHeaderComponent } from './vendor/vendor-header.component';
+import { VendorComponent } from './vendor/vendor.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { PartyParentEditComponent } from './party/edit/party-parent-edit.compone
     PartyAddrListComponent,
     PartyAddrEditComponent,
     BankInfoComponent,
-    PartyParentEditComponent
+    PartyParentEditComponent,
+    VendorHeaderComponent,
+    VendorComponent
   ],
   imports: [
     SharedModule,
