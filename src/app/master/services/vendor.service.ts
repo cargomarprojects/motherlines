@@ -23,9 +23,6 @@ export class VendorService {
 
     public title: string;
     public isAdmin: boolean;
-    public canAdd: boolean;
-    public canEdit: boolean;
-    public canSave: boolean;
     public isCompany: boolean;
 
     public initlialized: boolean;
@@ -47,7 +44,7 @@ export class VendorService {
         this.record = <PartyModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false,menuType:this.param_type },
+            searchQuery: <SearchQuery>{ searchString: 'ALL', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false,menuType:this.param_type },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -56,10 +53,7 @@ export class VendorService {
         this.isCompany = this.gs.IsCompany(this.menuid);
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
-        this.canAdd = this.gs.canAdd(this.menuid);
-        this.canEdit = this.gs.canEdit(this.menuid);
-        this.canSave = this.canAdd || this.canEdit;
-
+       
         this.initlialized = true;
 
     }
@@ -77,19 +71,9 @@ export class VendorService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-     
-        SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
-        SearchData.ISADMIN = this.isAdmin == true ? 'Y' : 'N';
-        SearchData.ISCOMPANY =  this.isCompany == true ? 'Y' : 'N';
-        SearchData.SORT = this.record.searchQuery.searchSort;
+        SearchData.TYPE = this.record.searchQuery.searchString;
         SearchData.STATE = this.record.searchQuery.searchState;
-        SearchData.CITY = this.record.searchQuery.searchCity;
-        SearchData.ZIP = this.record.searchQuery.searchZip;
-        SearchData.TEL = this.record.searchQuery.searchTel;
-        SearchData.FAX = this.record.searchQuery.searchFax;
-        SearchData.BLACK_ACCOUNT = this.record.searchQuery.searchBlackAc == true ? 'Y' : 'N';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
