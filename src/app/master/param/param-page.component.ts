@@ -14,6 +14,7 @@ import { PageQuery } from '../../shared/models/pageQuery';
 
 import * as fromparamactions from '../store/param/param-page.actions';
 import * as fromparamreducer from '../store/param/param-page.reducer';
+import { strictEqual } from 'assert';
 
 
 @Component({
@@ -63,9 +64,6 @@ export class ParamPageComponent implements OnInit, OnDestroy {
       this.menuid = params.id;
       this.menu_param = params.menu_param;
       this.initPage();
-
-
-
     });
   }
 
@@ -84,9 +82,12 @@ export class ParamPageComponent implements OnInit, OnDestroy {
   }
 
   searchEvents(actions: any) {
-    // if (actions.outputformat == 'EXCEL')
-    //   this.Print('');
-    // else
+    if (actions.outputformat == 'EXCEL') {
+      let _code: string = "";
+      _code = actions.searchQuery.searchString;
+      this.Print(_code);
+    }
+    else
       this.store.dispatch(new fromparamactions.LoadParamRequest({ type: "SEARCH", Query: actions.searchQuery }))
   }
 
@@ -109,15 +110,15 @@ export class ParamPageComponent implements OnInit, OnDestroy {
       mode: 'ADD'
     };
     this.gs.Naviagete('Silver.Master/ParamEdit', JSON.stringify(parameter));
-
   }
+
+
   edit(_record: TBL_MAST_PARAM) {
 
     if (!this.gs.canEdit(this.menuid)) {
       alert('Insufficient User Rights')
       return;
     }
-
 
     let parameter = {
       menuid: this.menuid,
@@ -139,17 +140,12 @@ export class ParamPageComponent implements OnInit, OnDestroy {
   }
 
   Print(_code: string) {
+    if (!this.gs.canPrint(this.menuid)) {
+      alert('Insufficient User Rights')
+      return;
+    }
 
-    // if (this.MainList.length <= 0) {
-    //   this.errorMessage = "List Not Found";
-    //   alert(this.errorMessage);
-    //   return;
-    // }
-    // this.report_url = '';
-    // this.report_searchdata = this.gs.UserInfo;
-    // this.report_searchdata.pkid = '';
-    // this.report_menuid = this.menuid;
-
+    this.report_title = this.title;
     this.report_url = '/api/Master/Param/ParamPagePrint';
     this.report_menuid = this.menuid;
     this.report_searchdata.pkid = '';
@@ -164,6 +160,5 @@ export class ParamPageComponent implements OnInit, OnDestroy {
   callbackevent() {
     this.tab = 'main';
   }
-
 
 }
