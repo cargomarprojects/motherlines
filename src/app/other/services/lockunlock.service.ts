@@ -76,11 +76,29 @@ export class LockUnlockService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
+       
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
+        SearchData.MODE = 'AIR IMPORT';
+        SearchData.CUST_ID = '';
+        SearchData.REF_NO = '';
+        SearchData.LOCK_TYPE = 'LOCKED';
+        // SearchData.COMP_TYPE = comp_type;
+        // if (comp_type === 'ALL') {
+        //   this.SearchData.COMP_CODE = this.gs.branch_codes;
+        // } else {
+        //   this.SearchData.COMP_CODE = this.comp_type;
+        // }
+        // this.SearchData.COMP_NAME = this.gs.branch_name;
+        SearchData.COMP_TYPE = 'ALL';
+        SearchData.COMP_CODE = this.gs.branch_codes;
+        SearchData.LOCK_DAYS_SEA = this.gs.LOCK_DAYS_SEA.toString();
+        SearchData.LOCK_DAYS_AIR = this.gs.LOCK_DAYS_AIR.toString();
+        SearchData.LOCK_DAYS_OTHERS= this.gs.LOCK_DAYS_OTHERS.toString();
+        SearchData.LOCK_DAYS_ADMIN = this.gs.LOCK_DAYS_ADMIN.toString();
+        SearchData.TODAYS_DATE =  this.gs.defaultValues.today;  //DateTime.Now.ToString("yyyy-MM-dd"));
+
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
