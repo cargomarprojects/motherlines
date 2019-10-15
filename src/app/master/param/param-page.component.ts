@@ -14,7 +14,6 @@ import { PageQuery } from '../../shared/models/pageQuery';
 
 import * as fromparamactions from '../store/param/param-page.actions';
 import * as fromparamreducer from '../store/param/param-page.reducer';
-import { strictEqual } from 'assert';
 
 
 @Component({
@@ -99,7 +98,7 @@ export class ParamPageComponent implements OnInit, OnDestroy {
   NewRecord() {
     if (!this.gs.canAdd(this.menuid)) {
       alert('Insufficient User Rights')
-      return;
+      return; 
     }
 
     let parameter = {
