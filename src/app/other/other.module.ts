@@ -33,6 +33,9 @@ import { OthGeneralExpenseComponent } from './generalexpense/oth-generalexpense.
 import { OthGeneralExpenseHeaderComponent } from './generalexpense/oth-generalexpense-header.component';
 import { OthGeneralExpenseEditComponent } from './generalexpense/edit/oth-generalexpense-edit.component';
 
+import { LockUnlockComponent } from './lockunlock/lockunlock.component';
+import { LockUnlockHeaderComponent } from './lockunlock/lockunlock-header.component';
+
 @NgModule({
   declarations: [
     OthGeneralComponent,
@@ -53,7 +56,9 @@ import { OthGeneralExpenseEditComponent } from './generalexpense/edit/oth-genera
     DeliveryOrderEditComponent,
     OthGeneralExpenseComponent,
     OthGeneralExpenseHeaderComponent,
-    OthGeneralExpenseEditComponent
+    OthGeneralExpenseEditComponent,
+    LockUnlockComponent,
+    LockUnlockHeaderComponent
   ],
   imports: [
     SharedModule,    
