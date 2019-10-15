@@ -1,3 +1,4 @@
+<div *ngIf="tab == 'main'">
 <div class="page-header">
     <div class="col">
         <label class="mr-1">{{title}}</label>
@@ -34,4 +35,9 @@
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 
 <br />
+</div>
+<div *ngIf="tab == 'report'">
+    <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"  
+        (callbackevent)="callbackevent($event)"></app-report>
+</div>
 

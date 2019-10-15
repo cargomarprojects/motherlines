@@ -33,6 +33,11 @@ export class ParamDetPageComponent implements OnInit, OnDestroy {
 
   title: string;
   isAdmin: boolean;
+  tab: string = 'main';
+  report_title: string;
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
 
 
   loading: boolean;
@@ -77,7 +82,13 @@ export class ParamDetPageComponent implements OnInit, OnDestroy {
   }
 
   searchEvents(actions: any) {
-    this.store.dispatch(new fromparamactions.LoadParamRequest({ type: "SEARCH", Query: actions.searchQuery }))
+    if (actions.outputformat == 'EXCEL') {
+      let _code: string = "";
+      _code = actions.searchQuery.searchString;
+      this.Print(_code);
+    }
+    else
+      this.store.dispatch(new fromparamactions.LoadParamRequest({ type: "SEARCH", Query: actions.searchQuery }))
   }
 
   pageEvents(actions: any) {
@@ -126,6 +137,27 @@ export class ParamDetPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe;
+  }
+  Print(_code: string) {
+    if (!this.gs.canPrint(this.menuid)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    this.report_title = this.title;
+    this.report_url = '/api/Master/Param/ParamPagePrint';
+    this.report_menuid = this.menuid;
+    this.report_searchdata.pkid = '';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.CODE = _code;
+    this.report_searchdata.TYPE = this.menu_param;
+    this.report_searchdata.STABLE = 'mast_paramdet';
+
+    this.tab = 'report';
+  }
+
+  callbackevent() {
+    this.tab = 'main';
   }
 
 }
