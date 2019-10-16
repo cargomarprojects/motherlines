@@ -26,6 +26,9 @@ export class LockUnlockComponent implements OnInit {
   pageQuery$ : Observable<PageQuery>;
   searchQuery$ : Observable<SearchQuery>;
 
+  lock_all:boolean =false;
+  unlock_all:boolean =false;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -59,5 +62,5 @@ export class LockUnlockComponent implements OnInit {
     this.location.back();
   }
 
- 
+  
 }

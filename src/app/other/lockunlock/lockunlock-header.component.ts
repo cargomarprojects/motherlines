@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter,SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
 import { SearchQuery } from '../models/tbl_cargo_general';
+import { SearchTable } from '../../shared/models/searchtable';
 
 @Component({
   selector: 'app-lockunlock-header',
@@ -33,5 +34,12 @@ export class LockUnlockHeaderComponent implements OnInit {
       this.searchQuery.todate = this.gs.defaultValues.today;
 
     this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
+  }
+
+  LovSelected(_Record: SearchTable) {
+    if (_Record.controlname == "AGENT") {
+      this.searchQuery.cust_id = _Record.id;
+      this.searchQuery.cust_name = _Record.name;
+    }
   }
 }

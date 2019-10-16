@@ -53,6 +53,7 @@ export interface Tbl_cargo_general {
     mbl_lock: string;
     mbl_unlock_date: string;
     mbl_lock_yn: string;
+    mbl_lock_yn_b: boolean;
     mbl_lock_status: string;
     rec_created_date: string;
     rec_created_by: string;
@@ -106,6 +107,7 @@ export interface Tbl_cargo_general {
     hbl_bltype: string;
     mbl_pending_status: string;
     mbl_unlock_yn: string;
+    mbl_unlock_yn_b: boolean;
     mbl_handled_email: string;
     hbl_it_no: string;
     hbl_it_date: string;
@@ -155,7 +157,7 @@ export interface Tbl_cargo_container {
     cntr_weight: number;
     rec_year: number;
     cntr_yn: string;
-    cntr_selected:boolean;
+    cntr_selected: boolean;
 }
 
 export interface vm_tbl_cargo_general {
@@ -164,13 +166,18 @@ export interface vm_tbl_cargo_general {
     cntrs: Tbl_cargo_container[];
     userinfo: any,
     filter: any;
-    operationmode:string;
+    operationmode: string;
 }
 
 export interface SearchQuery {
     searchString: string;
     fromdate: string;
     todate: string;
+    mode: string;
+    cust_id: string;
+    cust_name: string;
+    branch: string;
+    lock_type: string;
 }
 
 export interface OthGeneralModel {
