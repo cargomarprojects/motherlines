@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_cargo_general, OthGeneralModel } from '../models/tbl_cargo_general';
+import { Tbl_cargo_general, OthGeneralModel,vm_tbl_cargo_general } from '../models/tbl_cargo_general';
 import { SearchQuery } from '../models/tbl_cargo_general';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -66,6 +66,7 @@ export class LockUnlockService {
 
     Search(_searchdata: any, type: string = '') {
 
+        this.record.errormessage='';
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
         }
@@ -166,9 +167,50 @@ export class LockUnlockService {
             }
         })
     }
+    
 
-    List(SearchData: any) {
+    LockUnlockRecord() {
+
+        if (!this.Allvalid())
+          return;
+         
+        const saveRecord = <vm_tbl_cargo_general>{};
+        saveRecord.records = this.record.records ;
+        saveRecord.userinfo = this.gs.UserInfo;
+
+         this.Save(saveRecord)
+          .subscribe(response => {
+            if (response.retvalue == false) {
+             this.record.errormessage= response.error;
+            }
+            
+          }, error => {
+            this.record.errormessage = this.gs.getError(error);
+            alert( this.record.errormessage);
+          });
+      }
+    
+      private Allvalid(): boolean {
+    
+        var bRet = true;
+
+        // this.record = <OthGeneralModel>{
+        //     errormessage: "LIST NOT SAVE",
+        // }
+       
+        // this.record.errormessage= "LIST NOT SAVE";
+        // this.mdata$.next(this.record);
+        
+        // bRet = false;
+        return bRet;
+      }
+
+      List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/LockUnlock/List', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+      Save(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/LockUnlock/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }

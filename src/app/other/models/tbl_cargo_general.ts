@@ -163,6 +163,7 @@ export interface Tbl_cargo_container {
 export interface vm_tbl_cargo_general {
     mode: string;
     record: Tbl_cargo_general;
+    records: Tbl_cargo_general[];
     cntrs: Tbl_cargo_container[];
     userinfo: any,
     filter: any;

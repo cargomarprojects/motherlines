@@ -49,6 +49,10 @@ export class LockUnlockComponent implements OnInit {
   }
 
   searchEvents(actions: any) {
+    if (actions.outputformat == 'SAVE') {
+      this.mainservice.LockUnlockRecord();
+    }
+    else
     this.mainservice.Search(actions,  'SEARCH');
   }
 
@@ -60,5 +64,4 @@ export class LockUnlockComponent implements OnInit {
     this.location.back();
   }
 
-  
 }

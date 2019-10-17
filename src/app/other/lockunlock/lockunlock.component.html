@@ -6,7 +6,7 @@
   </div>
   
   <div *ngIf="errorMessage$ | async" class="alert alert-danger">
-    {{errorMessage}}
+    {{errorMessage$ | async}}
   </div>
   
   <app-lockunlock-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)" ></app-lockunlock-header>

@@ -36,6 +36,7 @@ export class LockUnlockHeaderComponent implements OnInit {
     this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
   }
 
+
   LovSelected(_Record: SearchTable) {
     if (_Record.controlname == "AGENT") {
       this.searchQuery.cust_id = _Record.id;
