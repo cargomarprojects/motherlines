@@ -25,9 +25,7 @@ export class LockUnlockComponent implements OnInit {
   records$ :  Observable<Tbl_cargo_general[]>;
   pageQuery$ : Observable<PageQuery>;
   searchQuery$ : Observable<SearchQuery>;
-
-  lock_all:boolean =false;
-  unlock_all:boolean =false;
+  
 
   constructor(
     private route: ActivatedRoute,

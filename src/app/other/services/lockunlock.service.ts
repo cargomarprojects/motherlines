@@ -27,7 +27,8 @@ export class LockUnlockService {
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
-
+    public lock_all: boolean = false;
+    public unlock_all: boolean = false;
     public initlialized: boolean;
 
 
@@ -132,7 +133,7 @@ export class LockUnlockService {
                 Rec.mbl_unlock_yn = 'N';
                 Rec.mbl_unlock_yn_b = false;
             }
-        })
+        })   
     }
 
     Unlock(_rec: Tbl_cargo_general) {
@@ -146,14 +147,18 @@ export class LockUnlockService {
         })
     }
 
-    ng (_type: string) {
+    LockUnlock(_type: string) {
         this.record.records.forEach(Rec => {
             if (_type === "LOCK") {
+                this.lock_all = true;
+                this.unlock_all = false;
                 Rec.mbl_lock_yn = 'Y';
                 Rec.mbl_lock_yn_b = true;
                 Rec.mbl_unlock_yn = 'N';
                 Rec.mbl_unlock_yn_b = false;
             } else if (_type === "UNLOCK") {
+                this.lock_all = false;
+                this.unlock_all = true;
                 Rec.mbl_lock_yn = 'N';
                 Rec.mbl_lock_yn_b = false;
                 Rec.mbl_unlock_yn = 'Y';
