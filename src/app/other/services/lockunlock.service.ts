@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_cargo_general, OthGeneralModel,vm_tbl_cargo_general } from '../models/tbl_cargo_general';
+import { Tbl_cargo_general, OthGeneralModel, vm_tbl_cargo_general } from '../models/tbl_cargo_general';
 import { SearchQuery } from '../models/tbl_cargo_general';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -38,8 +38,11 @@ export class LockUnlockService {
     ) { }
 
     public init(params: any) {
-        if (this.initlialized)
+        if (this.initlialized) {
+            this.record.errormessage = '';
+            this.mdata$.next(this.record);
             return;
+        }
 
         this.id = params.id;
         this.menuid = params.id;
@@ -66,7 +69,7 @@ export class LockUnlockService {
 
     Search(_searchdata: any, type: string = '') {
 
-        this.record.errormessage='';
+        this.record.errormessage = '';
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
         }
@@ -112,10 +115,11 @@ export class LockUnlockService {
         this.List(SearchData).subscribe(response => {
             this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
-            this.record.records.forEach(Rec => {
-                Rec.mbl_lock_yn_b = Rec.mbl_lock_yn == 'Y' ? true : false;
-                Rec.mbl_unlock_yn_b = Rec.mbl_unlock_yn == 'Y' ? true : false;
-            })
+            if (this.record.records != null)
+                this.record.records.forEach(Rec => {
+                    Rec.mbl_lock_yn_b = Rec.mbl_lock_yn == 'Y' ? true : false;
+                    Rec.mbl_unlock_yn_b = Rec.mbl_unlock_yn == 'Y' ? true : false;
+                })
             this.mdata$.next(this.record);
         }, error => {
             this.record = <OthGeneralModel>{
@@ -134,7 +138,7 @@ export class LockUnlockService {
                 Rec.mbl_unlock_yn = 'N';
                 Rec.mbl_unlock_yn_b = false;
             }
-        })   
+        })
     }
 
     Unlock(_rec: Tbl_cargo_general) {
@@ -167,51 +171,160 @@ export class LockUnlockService {
             }
         })
     }
-    
+
 
     LockUnlockRecord() {
 
         if (!this.Allvalid())
-          return;
-         
+            return;
+
         const saveRecord = <vm_tbl_cargo_general>{};
-        saveRecord.records = this.record.records ;
+        saveRecord.records = this.record.records;
         saveRecord.userinfo = this.gs.UserInfo;
 
-         this.Save(saveRecord)
-          .subscribe(response => {
-            if (response.retvalue == false) {
-             this.record.errormessage= response.error;
-            }
-            
-          }, error => {
-            this.record.errormessage = this.gs.getError(error);
-            alert( this.record.errormessage);
-          });
-      }
-    
-      private Allvalid(): boolean {
-    
+        this.Save(saveRecord)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    this.mdata$.next(this.record);
+                }
+                else {
+
+                    let sRemark: string = "";
+                    this.record.records.forEach(Rec => {
+                        sRemark = "";
+                        if (Rec.mbl_lock_status == "L") {
+                            if (Rec.mbl_unlock_yn == "Y") {
+                                sRemark = "UNLOCKED";
+                                Rec.mbl_lock_status = "U";
+                            }
+                        }
+                        else if (Rec.mbl_lock_status == "U") {
+                            if (Rec.mbl_lock_yn == "Y") {
+                                sRemark = "LOCKED";
+                                Rec.mbl_lock_status = "L";
+                            }
+                        }
+                        if (sRemark.trim() != "") {
+                            sRemark += "-";
+                            sRemark += this.getDispFormatDate(this.gs.defaultValues.today);
+                            // DateTime.Now.ToString(GLOBALCONTANTS.FRONTEND_DATEFORMAT);
+                            sRemark += "-";
+                            sRemark += this.gs.user_code;
+                            Rec.mbl_ulcode = sRemark;
+                        }
+
+                    })
+                    this.mdata$.next(this.record);
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
+    }
+
+    getDispFormatDate(_sDate) {
+
+        var tempdt = _sDate.split('-');
+        let yr: string = tempdt[0];
+        let mn: string = tempdt[1];
+        let dy: string = tempdt[2];
+
+        if (this.gs.FRONTEND_DATEFORMAT == "MM/dd/yyyy")
+            return mn + "/" + dy + "/" + yr;
+        else if (this.gs.FRONTEND_DATEFORMAT == "dd/MM/yyyy")
+            return dy + "/" + mn + "/" + yr;
+        else
+            return ''
+    }
+
+
+    private Allvalid(): boolean {
         var bRet = true;
 
-        // this.record = <OthGeneralModel>{
-        //     errormessage: "LIST NOT SAVE",
-        // }
-       
-        // this.record.errormessage= "LIST NOT SAVE";
-        // this.mdata$.next(this.record);
-        
-        // bRet = false;
-        return bRet;
-      }
+        if (this.record.records == null) {
+            bRet = false;
+            this.record.errormessage = "No List Found";
+        }
+        else if (this.record.records.length <= 0) {
+            bRet = false;
+            this.record.errormessage = "No List Found";
+        }
 
-      List(SearchData: any) {
+        if (bRet == false)
+            this.mdata$.next(this.record);
+        return bRet;
+    }
+
+    Instant_Lock_Unlock(_searchdata: any, type: string = '') {
+        var bRet = true;
+        if (this.gs.isBlank(this.record.searchQuery.fromdate)) {
+            bRet = false;
+            this.record.errormessage = "Invalid From Date";
+        }
+        if (this.gs.isBlank(this.record.searchQuery.todate)) {
+            bRet = false;
+            this.record.errormessage = "Invalid To Date";
+        }
+        if (this.gs.isBlank(this.record.searchQuery.branch)) {
+            bRet = false;
+            this.record.errormessage = "Branch cannot be null";
+        }
+
+        if (bRet == false) {
+            this.mdata$.next(this.record);
+            return bRet;
+        }
+
+        let Msg: string = "";
+        Msg = "THIS WILL " + type + " ALL DOCUMENTS OF ";
+        Msg += (this.record.searchQuery.branch == "ALL" ? "ALL BRANCHES" : this.record.searchQuery.branch) + " \nFROM ";
+        Msg += this.getDispFormatDate(this.record.searchQuery.fromdate) + " TO ";
+        Msg += this.getDispFormatDate(this.record.searchQuery.todate);
+
+        if (!confirm(Msg))
+            return;
+
+        this.record.errormessage = '';
+        this.record.searchQuery = _searchdata.searchQuery;
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.FDATE = this.record.searchQuery.fromdate;
+        SearchData.TDATE = this.record.searchQuery.todate;
+        SearchData.LOCK_TYPE = type;
+        SearchData.COMP_TYPE = this.record.searchQuery.branch;
+        if (this.record.searchQuery.branch === 'ALL') {
+            SearchData.COMP_CODE = this.gs.branch_codes;
+        } else {
+            SearchData.COMP_CODE = this.record.searchQuery.branch;
+        }
+
+        this.InstantLockUnlock(SearchData).subscribe(response => {
+            if (response.retvalue == false) {
+                this.record.errormessage = response.error;
+                this.mdata$.next(this.record);
+            }
+
+        }, error => {
+            this.record = <OthGeneralModel>{
+                records: [],
+                errormessage: this.gs.getError(error),
+            }
+            this.mdata$.next(this.record);
+        });
+    }
+
+
+    List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/LockUnlock/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
-      Save(SearchData: any) {
+    Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/LockUnlock/Save', SearchData, this.gs.headerparam2('authorized'));
     }
-
+    InstantLockUnlock(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/LockUnlock/InstantLockUnlock', SearchData, this.gs.headerparam2('authorized'));
+    }
 }
 

@@ -20,12 +20,12 @@ import { LockUnlockService } from '../services/lockunlock.service';
 export class LockUnlockComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
- 
-  errorMessage$ : Observable<string> ;
-  records$ :  Observable<Tbl_cargo_general[]>;
-  pageQuery$ : Observable<PageQuery>;
-  searchQuery$ : Observable<SearchQuery>;
-  
+
+  errorMessage$: Observable<string>;
+  records$: Observable<Tbl_cargo_general[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -40,10 +40,10 @@ export class LockUnlockComponent implements OnInit {
   }
 
   initPage() {
-    
+
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
-    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
+    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
 
   }
@@ -52,12 +52,18 @@ export class LockUnlockComponent implements OnInit {
     if (actions.outputformat == 'SAVE') {
       this.mainservice.LockUnlockRecord();
     }
+    else if (actions.outputformat == 'INSTANT-LOCK') {
+      this.mainservice.Instant_Lock_Unlock(actions, 'LOCK')
+    }
+    else if (actions.outputformat == 'INSTANT-UNLOCK') {
+      this.mainservice.Instant_Lock_Unlock(actions, 'UNLOCK')
+    }
     else
-    this.mainservice.Search(actions,  'SEARCH');
+      this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
-    this.mainservice.Search(actions,'PAGE');
+    this.mainservice.Search(actions, 'PAGE');
   }
 
   Close() {
