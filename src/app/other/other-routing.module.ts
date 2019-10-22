@@ -33,9 +33,9 @@ const routes: Routes = [
   { path : 'DeliveryOrderList', component : DeliveryOrderListComponent },
   { path : 'DeliveryOrderEdit', component : DeliveryOrderEditComponent },
   { path : 'GeneralExpensePage', component : OthGeneralExpenseComponent },
+  { path : 'OthGeneralExpenseEditPage', component : OthGeneralExpenseEditComponent },
   { path : 'LockUnlockPage', component : LockUnlockComponent },
-  { path : 'LockUnlockPage', component : AlertLogPageComponent },
-  { path : 'AlertLogPage', component : OthGeneralExpenseEditComponent }
+  { path : 'AlertLogPage', component : AlertLogPageComponent }
 ];
 
 @NgModule({
