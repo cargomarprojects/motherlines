@@ -36,6 +36,9 @@ import { OthGeneralExpenseEditComponent } from './generalexpense/edit/oth-genera
 import { LockUnlockComponent } from './lockunlock/lockunlock.component';
 import { LockUnlockHeaderComponent } from './lockunlock/lockunlock-header.component';
 
+import { AlertLogPageComponent } from './alertlogpage/alertlogpage.component';
+import { AlertLogPageHeaderComponent } from './alertlogpage/alertlogpage-header.component';
+
 @NgModule({
   declarations: [
     OthGeneralComponent,
@@ -58,7 +61,9 @@ import { LockUnlockHeaderComponent } from './lockunlock/lockunlock-header.compon
     OthGeneralExpenseHeaderComponent,
     OthGeneralExpenseEditComponent,
     LockUnlockComponent,
-    LockUnlockHeaderComponent
+    LockUnlockHeaderComponent,
+    AlertLogPageComponent,
+    AlertLogPageHeaderComponent
   ],
   imports: [
     SharedModule,    
