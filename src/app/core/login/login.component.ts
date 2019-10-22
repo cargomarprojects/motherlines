@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string = '';
  
-  software_version_string = '1.101';
+  software_version_string = '1.102';
   username: string = 'Admin';
   password: string = '123';
 
