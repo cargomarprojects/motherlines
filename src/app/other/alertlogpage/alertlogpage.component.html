@@ -1,47 +1,92 @@
-<div class="page-header">
-    <div class="col">
+<!-- <ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">Followup</a></li>
+  <li><a data-toggle="tab" href="#menu1">AR List</a></li>
+</ul> -->
+
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+      aria-selected="true">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+      aria-selected="false">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+      aria-selected="false">Contact</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">ABC</div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">DEF</div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">GHI</div>
+</div>
+
+<!-- <ul class="nav nav-pills">
+    <li class="nav-item">
+        <a data-toggle="tab" href="#home">Followup</a>
+    </li>
+    <li class="nav-item">
+        <a data-toggle="tab" href="#menu1">AR List</a>
+    </li>
+  </ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <div class="page-header">
+      <div class="col">
         <label class="mr-1">{{mainservice.title}}</label>
-          <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+        <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+      </div>
     </div>
-  </div>
-  
-  <div *ngIf="errorMessage$ | async" class="alert alert-danger">
-    {{errorMessage}}
-  </div>
-  
-  <app-alertlogpage-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)" ></app-alertlogpage-header>
-  
-  <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-  
-  <div class="page-body table-responsive">
-    <table class="table  table-hover table-sm">
+
+    <div *ngIf="errorMessage$ | async" class="alert alert-danger">
+      {{errorMessage}}
+    </div>
+
+    <app-alertlogpage-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+    </app-alertlogpage-header>
+
+    <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
+
+    <div class="page-body table-responsive">
+      <table class="table  table-hover table-sm">
         <thead class="page-body-thead">
-            <tr>
-                <th>REFNO</th>
-                <th>REF-DATE</th>
-                <th>HOUSE</th>
-                <th>SHIPMENT TYPE</th>
-                <th>ETA</th>
-                <th>REMARK</th>
-                <th>STATUS</th>      
-            </tr>
+          <tr>
+            <th>REFNO</th>
+            <th>REF-DATE</th>
+            <th>HOUSE</th>
+            <th>SHIPMENT TYPE</th>
+            <th>ETA</th>
+            <th>REMARK</th>
+            <th>STATUS</th>
+          </tr>
         </thead>
         <tbody class="page-body-tbody">
-            <tr *ngFor="let rec of records$ | async">
-                <td>{{rec.mbl_refno}}</td>
-                <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT}}</td>
-                <td>{{rec.hbl_houseno}}</td>
-                <td>{{rec.hbl_bltype}}</td>
-                <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT}}</td>
-                <td>{{rec.mbl_remarks}}</td>
-                <td>{{rec.mbl_pending_status}}</td>              
-            </tr>
+          <tr *ngFor="let rec of records$ | async">
+            <td>{{rec.mbl_refno}}</td>
+            <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT}}</td>
+            <td>{{rec.hbl_houseno}}</td>
+            <td>{{rec.hbl_bltype}}</td>
+            <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT}}</td>
+            <td>{{rec.mbl_remarks}}</td>
+            <td>{{rec.mbl_pending_status}}</td>
+          </tr>
         </tbody>
-    </table>
+      </table>
+    </div>
+
+    <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
+
+    <br />
   </div>
 
-  <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-  
-  <br />
+  <div id="menu1" class="tab-pane fade">
+    <h3>Menu 1</h3>
+    <p>Some content in menu 1.</p>
+  </div>
 
- 
+
+</div> -->

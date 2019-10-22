@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_cargo_general, OthGeneralModel} from '../models/tbl_cargo_general';
+import { Tbl_cargo_general, OthGeneralModel } from '../models/tbl_cargo_general';
 import { SearchQuery } from '../models/tbl_cargo_general';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -17,6 +17,7 @@ export class AlertLogPageService {
     }
     private record: OthGeneralModel;
 
+    public handled_name: string;
     public id: string;
     public menuid: string;
     public param_type: string;
@@ -44,7 +45,7 @@ export class AlertLogPageService {
         this.record = <OthGeneralModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{searchString : ''},
+            searchQuery: <SearchQuery>{ searchString: 'ALL', handled_id: '', handled_name: '', show_hide: false },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -53,7 +54,7 @@ export class AlertLogPageService {
         this.isCompany = this.gs.IsCompany(this.menuid);
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
-       
+
         this.initlialized = true;
 
     }
@@ -72,8 +73,12 @@ export class AlertLogPageService {
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.TYPE = this.record.searchQuery.searchString;
-        SearchData.STATE = this.record.searchQuery.searchString;
+
+        SearchData.CURRENT_DATE = this.gs.defaultValues.today;
+        SearchData.SHIPMENT_TYPE = this.record.searchQuery.searchString;
+        SearchData.IS_HIDDEN = this.record.searchQuery.show_hide == true ? 'Y' : 'N';
+        SearchData.HANDLED_ID = this.record.searchQuery.handled_id;
+
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -86,6 +91,7 @@ export class AlertLogPageService {
         }
 
         this.List(SearchData).subscribe(response => {
+            this.record.errormessage = '';
             this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
             this.mdata$.next(this.record);
