@@ -29,7 +29,7 @@ export class DeliveryAddrComponent implements OnInit {
     private title: string = '';
     private isAdmin: boolean;
 
-    private errorMessage: string;
+    errorMessage: string;
 
     IsLocked: boolean = false;
 

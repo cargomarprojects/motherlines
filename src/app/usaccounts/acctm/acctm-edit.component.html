@@ -78,7 +78,7 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Branch</label>
                 <div class="col-8">
-                    <select class="form-control form-control-sm" [(ngModel)]="acc_branch">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.acc_branch">
                         <option *ngFor="let rec of gs.CompanyList" [value]="rec.comp_code">{{rec.comp_name}}</option>
                     </select>
                 </div>
