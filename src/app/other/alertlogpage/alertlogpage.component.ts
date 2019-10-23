@@ -21,6 +21,7 @@ export class AlertLogPageComponent implements OnInit {
    01-07-2019 Created By Ajith  
   
   */
+    _artab:boolean=true;
 
     errorMessage$: Observable<string>;
     records$: Observable<Tbl_cargo_general[]>;

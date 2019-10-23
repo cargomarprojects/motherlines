@@ -11,7 +11,7 @@ import { SearchTable } from '../../shared/models/searchtable';
 export class AlertLogPageHeaderComponent implements OnInit {
   // Call By Value using Input Parameters
   searchQuery: SearchQuery;
-  
+
   @Input() set _query(value: SearchQuery) {
     this.searchQuery = Object.assign({}, value);
   }
@@ -22,6 +22,10 @@ export class AlertLogPageHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.searchQuery.searchString = 'ALL';
+    this.searchQuery.handled_id = '';
+    this.searchQuery.handled_name = '';
+    this.searchQuery.show_hide = false;
   }
 
   ngOnChanges(changes: SimpleChange) {
