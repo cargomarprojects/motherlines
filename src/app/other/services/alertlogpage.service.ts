@@ -15,6 +15,7 @@ export class AlertLogPageService {
     get data$(): Observable<OthGeneralModel> {
         return this.mdata$.asObservable();
     }
+
     private record: OthGeneralModel;
 
     public handled_name: string;
@@ -106,5 +107,12 @@ export class AlertLogPageService {
 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/AlertLogPage/List', SearchData, this.gs.headerparam2('authorized'));
+    }
+    FollowupList(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/AlertLogPage/FollowupList', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/AlertLogPage/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 }

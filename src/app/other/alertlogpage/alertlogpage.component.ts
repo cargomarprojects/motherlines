@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { GlobalService } from '../../core/services/global.service';
 import { Tbl_cargo_general } from '../models/tbl_cargo_general';
+import { Tbl_cargo_followup, vm_Tbl_cargo_followup } from '../models/tbl_cargo_followup';
 import { SearchQuery } from '../models/tbl_cargo_general';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -21,7 +22,9 @@ export class AlertLogPageComponent implements OnInit {
    01-07-2019 Created By Ajith  
   
   */
-    _artab:boolean=true;
+    frecords: Tbl_cargo_followup[]
+    ErrorMessage: string = "";
+    _artab: boolean = true;
 
     errorMessage$: Observable<string>;
     records$: Observable<Tbl_cargo_general[]>;
@@ -38,6 +41,18 @@ export class AlertLogPageComponent implements OnInit {
     ngOnInit() {
         this.mainservice.init(this.route.snapshot.queryParams);
         this.initPage();
+        this.List('SCREEN');
+    }
+
+    List(action: string = '') {
+        this.ErrorMessage = "";
+        var SearchData = this.gs.UserInfo;
+        this.mainservice.FollowupList(SearchData).subscribe(response => {
+            this.frecords = response.list;
+
+        }, error => {
+            this.ErrorMessage = this.gs.getError(error)
+        });
     }
 
     initPage() {
@@ -63,4 +78,53 @@ export class AlertLogPageComponent implements OnInit {
 
     ngOnDestroy() {
     }
+
+
+    RemoveRecord() {
+
+        let bChecked: boolean = false;
+        this.frecords.forEach(rec => {
+            rec.cf_yn = 'N';
+            if (rec.cf_yn_b) {
+                rec.cf_yn = 'Y';
+                bChecked = true;
+            }
+        });
+        
+        if (!bChecked) {
+            this.ErrorMessage = "No Records Selected";
+            alert(this.ErrorMessage);
+            return;
+        }
+
+        if (!confirm("Delete Selected Records")) {
+            return;
+        }
+
+        const saveRecord = <vm_Tbl_cargo_followup>{};
+        saveRecord.records = this.frecords;
+        saveRecord.userinfo = this.gs.UserInfo;
+        this.mainservice.DeleteRecord(saveRecord)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.ErrorMessage = response.error;
+                    alert(this.ErrorMessage);
+                } else {
+
+                    let flist: Tbl_cargo_followup[];
+                    flist = this.frecords;
+                    this.frecords = <Tbl_cargo_followup[]>[];
+                    flist.forEach(rec => {
+                        if (!rec.cf_yn_b)
+                            this.frecords.push(rec);
+                    });
+                }
+
+            }, error => {
+                this.ErrorMessage = this.gs.getError(error);
+                alert(this.ErrorMessage);
+            });
+    }
+
+
 }

@@ -41,4 +41,5 @@ export class AlertLogPageHeaderComponent implements OnInit {
       this.searchQuery.handled_name = _Record.name;
     }
   }
+  
 }
