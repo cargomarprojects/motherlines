@@ -22,10 +22,7 @@ export class AlertLogPageHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.searchQuery.searchString = 'ALL';
-    this.searchQuery.handled_id = '';
-    this.searchQuery.handled_name = '';
-    this.searchQuery.show_hide = false;
+   
   }
 
   ngOnChanges(changes: SimpleChange) {

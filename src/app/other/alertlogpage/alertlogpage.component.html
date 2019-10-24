@@ -100,7 +100,7 @@
             <td>{{rec.hbl_bltype}}</td>
             <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT}}</td>
             <td>{{rec.mbl_remarks}}</td>
-            <td>{{rec.mbl_pending_status}}</td>
+            <td (click)="mainservice.HideRecord(rec)">{{rec.mbl_pending_status}}</td>
           </tr>
         </tbody>
       </table>

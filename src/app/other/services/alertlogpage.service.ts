@@ -46,7 +46,7 @@ export class AlertLogPageService {
         this.record = <OthGeneralModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: 'ALL', handled_id: '', handled_name: '', show_hide: false },
+            searchQuery: <SearchQuery>{ searchString: 'ALL', handled_id: this.gs.user_handled_id, handled_name: this.gs.user_handled_name , show_hide: false },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -105,6 +105,29 @@ export class AlertLogPageService {
         });
     }
 
+    HideRecord(_rec:Tbl_cargo_general)
+    {
+        var SearchData = this.gs.UserInfo;
+        SearchData.STYPE = _rec.mbl_pending_status;
+        SearchData.MBLID = _rec.mbl_pkid;
+        this.HideARRecord(SearchData).subscribe(response => {
+            if (response.retvalue == false) {
+                this.record.errormessage = response.error;
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            } else {
+                this.record.records.filter(x => x.mbl_pkid === _rec.mbl_pkid).forEach(x => this.record.records.splice(this.record.records.indexOf(x), 1));
+            }
+            
+        }, error => {
+            this.record = <OthGeneralModel>{
+                records: [],
+                errormessage: this.gs.getError(error),
+            }
+            this.mdata$.next(this.record);
+        });
+    }
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/AlertLogPage/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -114,5 +137,9 @@ export class AlertLogPageService {
 
     DeleteRecord(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/AlertLogPage/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    HideARRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/AlertLogPage/HideARRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 }

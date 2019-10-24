@@ -545,13 +545,11 @@ export class Login2Component implements OnInit {
                 else if (Rec.param_name1 == "SHIPMENT-LOG-FORMAT")
                     this.GLOBALCONTANTS.SHIPMENTLOG_FORMAT = Rec.param_name3;
 
-                
-                else if (Rec.param_name1 == "SHIPMENT-LOCKED-DATE")
-                {
-                    if (Rec.param_name3 != "")
-                    {
-                        var sdata  = Rec.param_name3.Split('-');
-                        this.GLOBALCONTANTS.ACCOUNTS_LOCKED_DATE =Rec.param_name3;
+
+                else if (Rec.param_name1 == "SHIPMENT-LOCKED-DATE") {
+                    if (Rec.param_name3 != "") {
+                        var sdata = Rec.param_name3.Split('-');
+                        this.GLOBALCONTANTS.ACCOUNTS_LOCKED_DATE = Rec.param_name3;
                     }
                 }
             }
@@ -738,7 +736,7 @@ export class Login2Component implements OnInit {
             this.GLOBALCONTANTS.CHQ_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
         this.GLOBALCONTANTS.CHQ_FORMAT.push({ "code": 'NIL', "name": 'NIL' })
-        
+
 
         this.MainList.filter(a => a.param_type == 'CUSTOMER GROUP').sort(function (a, b) {
             return b.param_name1 < a.param_name1 ? 1 : -1;
@@ -747,6 +745,11 @@ export class Login2Component implements OnInit {
         });
 
 
+        this.MainList.filter(a => a.param_type == 'SALESMAN' && a.param_lookup_id == this.GLOBALCONTANTS.user_pkid).forEach(b => {
+            this.GLOBALCONTANTS.user_handled_id = b.param_pkid;
+            this.GLOBALCONTANTS.user_handled_code = b.param_code;
+            this.GLOBALCONTANTS.user_handled_name = b.param_name1;
+        });
 
         /*      public PARAM_FREIGHT_STATUS : any = [];
                 public PARAM_CARGO_MOVEMENT : any = [];

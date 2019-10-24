@@ -125,6 +125,6 @@ export class AlertLogPageComponent implements OnInit {
                 alert(this.ErrorMessage);
             });
     }
-
+    
 
 }
