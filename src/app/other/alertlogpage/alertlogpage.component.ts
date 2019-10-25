@@ -82,6 +82,9 @@ export class AlertLogPageComponent implements OnInit {
 
     RemoveRecord() {
 
+        if (this.frecords == null)
+            return;
+
         let bChecked: boolean = false;
         this.frecords.forEach(rec => {
             rec.cf_yn = 'N';
@@ -90,7 +93,7 @@ export class AlertLogPageComponent implements OnInit {
                 bChecked = true;
             }
         });
-        
+
         if (!bChecked) {
             this.ErrorMessage = "No Records Selected";
             alert(this.ErrorMessage);
@@ -125,6 +128,6 @@ export class AlertLogPageComponent implements OnInit {
                 alert(this.ErrorMessage);
             });
     }
-    
+
 
 }
