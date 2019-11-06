@@ -6,12 +6,12 @@
   </div>
 </div>
 
-<div *ngIf="errorMessage$ | async" class="alert alert-danger">
+<div *ngIf="errorMessage$ | async as errorMessage" class="alert alert-danger">
   {{errorMessage}}
 </div>
 
-<app-acopen-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-</app-acopen-header>
+<acc-fundtransfer-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+</acc-fundtransfer-header>
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 

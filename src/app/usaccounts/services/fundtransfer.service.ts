@@ -75,12 +75,12 @@ export class FundTransferService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        SearchData.TYPE = this.param_type;
+        SearchData.TYPE = 'FT';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
 
         SearchData.FDATE = this.record.searchQuery.sdate;
-        SearchData.FDATE = this.record.searchQuery.edate;
+        SearchData.EDATE = this.record.searchQuery.edate;
         SearchData.YEAR = this.gs.year_code;
         
 
