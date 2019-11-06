@@ -37,8 +37,8 @@
       <tr *ngFor="let rec of records$ | async">
         <td (click)="edit(rec)">{{rec.pay_docno}}</td>
         <td>{{rec.pay_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-        <td>{{rec.pay_from_accname}} </td>
-        <td>{{rec.pay_to_accname}} </td>
+        <td>{{rec.pay_from_acc_name}} </td>
+        <td>{{rec.pay_to_acc_name}} </td>
         <td>{{rec.pay_amt}} </td>
         <td>{{rec.pay_narration}} </td>
         <td>{{rec.pay_mode}} </td>
