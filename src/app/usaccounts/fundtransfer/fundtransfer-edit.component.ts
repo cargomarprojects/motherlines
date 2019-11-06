@@ -27,6 +27,8 @@ export class FundTransferEditComponent implements OnInit {
     errorMessage: string;
     Foregroundcolor: string;
 
+    last_chqno = 0;
+
     title: string;
     isAdmin: boolean;
     refno: string = "";
@@ -95,6 +97,9 @@ export class FundTransferEditComponent implements OnInit {
         
         this.record.pay_type = 'FT';
         this.record.pay_year = +this.gs.year_code;
+
+
+        this.record.pay_mode  ='CHECK';
 
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
