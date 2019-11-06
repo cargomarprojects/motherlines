@@ -99,17 +99,10 @@ export class FundTransferEditComponent implements OnInit {
         this.record.pay_date = this.gs.year_start_date;
         
         this.record.pay_type = 'FT';
-
-
-
         this.record.pay_year = +this.gs.year_code;
-
-
 
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
-
-
 
     }
 
@@ -121,7 +114,6 @@ export class FundTransferEditComponent implements OnInit {
             .subscribe(response => {
                 this.record = <Tbl_Acc_Payment>response.record;
                 this.mode = 'EDIT';
-
                 this.errorMessage  ="";
                 if (this.record.pay_pkid == "Y") {
                     this.errorMessage  ="Invoice Settled, Cannot Edit";
@@ -130,7 +122,6 @@ export class FundTransferEditComponent implements OnInit {
                     this.isAccLocked = true;
                     this.errorMessage  ="Accoutning Period Locked";
                 }
-
             }, error => {
                 this.errorMessage = this.gs.getError(error);
             });
@@ -138,8 +129,6 @@ export class FundTransferEditComponent implements OnInit {
 
 
     private SaveParent() {
-
-
     }
 
 
@@ -186,8 +175,6 @@ export class FundTransferEditComponent implements OnInit {
         var bRet = true;
         this.errorMessage = "";
 
-
-
         if (this.gs.isBlank(this.pkid)) {
             bRet = false;
             this.errorMessage = "Invalid ID";
@@ -226,10 +213,6 @@ export class FundTransferEditComponent implements OnInit {
             return bRet;
         }
 
-
-
-
-
         return bRet;
     }
 
@@ -244,7 +227,6 @@ export class FundTransferEditComponent implements OnInit {
         if (_Record.controlname == "ACCTM") {
             this.record.pay_acc_id = _Record.id;
         }
-
 
     }
 
