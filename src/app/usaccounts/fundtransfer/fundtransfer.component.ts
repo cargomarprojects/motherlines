@@ -86,7 +86,7 @@ export class FundTransferComponent implements OnInit {
     this.gs.Naviagete('Silver.USAccounts.Master/OpenEditPage', JSON.stringify(parameter));
   }
 
-  Close() {
+  Close() {    
     this.location.back();
   }
 
