@@ -11,6 +11,8 @@ import { AcgroupEditComponent } from './acgroupm/acgroup-edit.component';
 import { BudgetComponent } from './budget/budget.component';
 import { AcopenComponent } from './acopening/acopen.component';
 import { AcopenEditComponent } from './acopening/acopen-edit.component';
+import { FundTransferComponent } from './fundtransfer/fundtransfer.component';
+
 
 
 const routes: Routes = [
@@ -24,6 +26,7 @@ const routes: Routes = [
   { path : 'AccBudgetPage', component : BudgetComponent },
   { path : 'OpeningPage', component : AcopenComponent },
   { path : 'OpenEditPage', component : AcopenEditComponent },
+  { path : 'AccPayment', component : FundTransferComponent },
 
 ];
 
