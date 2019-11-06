@@ -79,8 +79,8 @@ export class FundTransferService {
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
 
-        SearchData.FDATE = this.record.searchQuery.fdate;
-        SearchData.FDATE = this.record.searchQuery.fdate;
+        SearchData.FDATE = this.record.searchQuery.sdate;
+        SearchData.FDATE = this.record.searchQuery.edate;
         SearchData.YEAR = this.gs.year_code;
         
 
