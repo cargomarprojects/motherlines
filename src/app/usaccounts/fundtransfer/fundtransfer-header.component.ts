@@ -12,6 +12,8 @@ export class FundTransferHeaderComponent implements OnInit {
     searchQuery: SearchQuery;
     @Input() set _query(value: SearchQuery) {
         this.searchQuery = Object.assign({}, value);
+        this.initData();
+
     }
     @Output() searchEvents = new EventEmitter<any>();
 
@@ -19,6 +21,14 @@ export class FundTransferHeaderComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+
+    }
+
+    initData(){
+        if (this.gs.isBlank(this.searchQuery.sdate))
+            this.searchQuery.sdate = this.gs.defaultValues.lastmonthdate;        
+        if (this.gs.isBlank(this.searchQuery.edate))
+            this.searchQuery.edate = this.gs.defaultValues.today;        
     }
 
     ngOnChanges(changes: SimpleChange) {
