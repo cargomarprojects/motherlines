@@ -179,6 +179,9 @@ export interface SearchQuery {
     cust_name: string;
     branch: string;
     lock_type: string;
+    show_hide:boolean;
+    handled_id: string;
+    handled_name: string;
 }
 
 export interface OthGeneralModel {

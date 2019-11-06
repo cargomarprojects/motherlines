@@ -17,6 +17,7 @@ import { DeliveryOrderEditComponent } from './deliveryorder/edit/deliveryorder-e
 import { OthGeneralExpenseComponent } from './generalexpense/oth-generalexpense.component';
 import { OthGeneralExpenseEditComponent } from './generalexpense/edit/oth-generalexpense-edit.component';
 import { LockUnlockComponent } from './lockunlock/lockunlock.component';
+import { AlertLogPageComponent } from './alertlogpage/alertlogpage.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -32,8 +33,9 @@ const routes: Routes = [
   { path : 'DeliveryOrderList', component : DeliveryOrderListComponent },
   { path : 'DeliveryOrderEdit', component : DeliveryOrderEditComponent },
   { path : 'GeneralExpensePage', component : OthGeneralExpenseComponent },
+  { path : 'OthGeneralExpenseEditPage', component : OthGeneralExpenseEditComponent },
   { path : 'LockUnlockPage', component : LockUnlockComponent },
-  { path : 'OthGeneralExpenseEditPage', component : OthGeneralExpenseEditComponent }
+  { path : 'AlertLogPage', component : AlertLogPageComponent }
 ];
 
 @NgModule({
