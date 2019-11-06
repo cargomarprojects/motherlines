@@ -224,9 +224,16 @@ export class FundTransferEditComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
 
-        if (_Record.controlname == "ACCTM") {
-            this.record.pay_acc_id = _Record.id;
+        if (_Record.controlname == "FROM_ACCTM") {
+            this.record.pay_from_id = _Record.id;
+            this.record.pay_from_acc_code = _Record.code;
+            this.record.pay_from_acc_name = _Record.name;
         }
+        if (_Record.controlname == "TO_ACCTM") {
+            this.record.pay_to_id = _Record.id;
+            this.record.pay_to_acc_code = _Record.code;
+            this.record.pay_to_acc_name = _Record.name;
+        }        
 
     }
 
