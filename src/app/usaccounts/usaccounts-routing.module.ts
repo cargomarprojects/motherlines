@@ -12,6 +12,7 @@ import { BudgetComponent } from './budget/budget.component';
 import { AcopenComponent } from './acopening/acopen.component';
 import { AcopenEditComponent } from './acopening/acopen-edit.component';
 import { FundTransferComponent } from './fundtransfer/fundtransfer.component';
+import { FundTransferEditComponent } from './fundtransfer/fundtransfer-edit.component';
 
 
 
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path : 'OpeningPage', component : AcopenComponent },
   { path : 'OpenEditPage', component : AcopenEditComponent },
   { path : 'FundTransPage', component : FundTransferComponent },
+  { path : 'FundTransEditPage', component : FundTransferEditComponent },
 
 ];
 

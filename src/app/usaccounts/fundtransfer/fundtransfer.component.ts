@@ -64,10 +64,10 @@ export class FundTransferComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: '',
       type: this.mainservice.param_type,
-      origin: 'acopen-page',
+      origin: 'accpayment-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.USAccounts.Master/OpenEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.USAccounts.Trans/FundTransEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_Acc_Payment) {
@@ -83,7 +83,7 @@ export class FundTransferComponent implements OnInit {
       origin: 'acopen-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.USAccounts.Master/OpenEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.USAccounts.Trans/FundTransEditPage', JSON.stringify(parameter));
   }
 
   Close() {    

@@ -18,6 +18,7 @@ import { AcopenHeaderComponent } from './acopening/acopen-header.component';
 import { AcopenEditComponent } from './acopening/acopen-edit.component';
 import { FundTransferComponent } from './fundtransfer/fundtransfer.component';
 import { FundTransferHeaderComponent } from './fundtransfer/fundtransfer-header.component';
+import { FundTransferEditComponent } from './fundtransfer/fundtransfer-edit.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { FundTransferHeaderComponent } from './fundtransfer/fundtransfer-header.
   AcopenHeaderComponent,
   AcopenEditComponent,
   FundTransferComponent,
-  FundTransferHeaderComponent
+  FundTransferHeaderComponent,
+  FundTransferEditComponent
 
 ],
   imports: [

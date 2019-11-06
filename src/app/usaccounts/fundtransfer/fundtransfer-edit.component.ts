@@ -7,14 +7,9 @@ import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2
 import { InputBoxComponent } from '../../shared/input/inputbox.component';
 
 import { FundTransferService } from '../services/fundtransfer.service';
-
 import { User_Menu } from '../../core/models/menum';
-
 import { vm_tbl_accPayment, Tbl_Acc_Payment } from '../models/Tbl_Acc_Payment';
-
 import { SearchTable } from '../../shared/models/searchtable';
-
-
 
 @Component({
     selector: 'app-fundtransfer-edit',
