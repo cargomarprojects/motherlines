@@ -5,17 +5,17 @@ export interface ReportState {
     urlid: string,
     menuid: string;
     currentTab: string;
-    report_category: string;
-    sdate: string;
+    bank_id: string;
+    bank_name: string;
+    fdate: string;
     edate: string;
-    mode: string;
-    comp_type: string;
+    comp_name: string;
+    comp_code:string;
 
     filename: string;
     filetype: string;
     filedisplayname: string;
 
-    reportformat: string;
     page_rows: number;
     page_count: number;
     page_current: number;

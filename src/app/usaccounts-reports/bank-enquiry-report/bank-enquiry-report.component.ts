@@ -12,7 +12,6 @@ import * as myReducer from './store/bank-enquiry-report.reducer';
 import { ReportState } from './store/bank-enquiry-report.models'
 
 import { Observable } from 'rxjs';
-import { map, tap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bank-enquiry-report',
@@ -20,31 +19,27 @@ import { map, tap, filter } from 'rxjs/operators';
 })
 export class BankEnquiryReportComponent implements OnInit {
 
-  title = 'Bank Enquiry Report';
-
+  title = 'Bank Enquiry';
   pkid: string;
   urlid: string;
   url: string;
   menuid: string;
-
   currentTab = '';
 
-  report_category: string;
-  sdate: string;
-  edate: string;
-  bank_name:string;
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
 
-  mode = '';
-  comp_type: string = '';
-  report_type: string = '';
-  report_shptype: string = '';
+  fdate: string;
+  edate: string;
+  bank_id: string;
+  bank_name: string;
+  comp_name: string = '';
+  comp_code: string = '';
+
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
-
-   
-
-  reportformat = '';
 
   page_count: number = 0;
   page_current: number = 0;
@@ -53,16 +48,15 @@ export class BankEnquiryReportComponent implements OnInit {
 
   storesub: any;
   sub: any;
+  tab: string = 'main';
 
   loading: boolean = false;
   errorMessage: string = '';
-
   SearchData: any = {};
-
   Reportstate1: Observable<ReportState>;
-
   MainList: Tbl_Acc_Payment[];
- 
+  CompList: any[];
+
   constructor(
     public gs: GlobalService,
     private router: Router,
@@ -76,6 +70,7 @@ export class BankEnquiryReportComponent implements OnInit {
       this.urlid = params.id;
       this.menuid = params.menuid;
       this.InitPage();
+      this.LoadCompany();
     });
 
   }
@@ -89,16 +84,15 @@ export class BankEnquiryReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-        this.report_category = rec.report_category;
-        this.sdate = rec.sdate;
+        this.bank_id = rec.bank_id;
+        this.bank_name= rec.bank_name;
+        this.fdate = rec.fdate;
         this.edate = rec.edate;
-        this.mode = rec.mode;
-        this.comp_type = rec.comp_type;
+        this.comp_name = rec.comp_name;
+        this.comp_code = rec.comp_code;
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
-      
-        this.reportformat = rec.reportformat;
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -106,42 +100,32 @@ export class BankEnquiryReportComponent implements OnInit {
         this.page_rowcount = rec.page_rowcount;
 
         this.SearchData = this.gs.UserInfo;
-        this.SearchData.SDATE = this.sdate;
-        this.SearchData.EDATE = this.edate;
-        this.SearchData.MODE = this.mode;
-        this.SearchData.COMP_TYPE = this.comp_type;
-        if (this.comp_type === 'ALL') {
-          this.SearchData.COMP_CODE = this.gs.branch_codes;
-        } else {
-          this.SearchData.COMP_CODE = this.comp_type;
-        }
-        this.SearchData.COMP_NAME = this.gs.branch_name;
-        this.SearchData.REPORT_TYPE = this.report_type;
-        this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-  
-      } else {
-        this.MainList = Array<Tbl_Acc_Payment>();
 
+        this.SearchData.BANK_ID = this.bank_id;
+        this.SearchData.JV_YEAR = this.gs.year_code;
+        this.SearchData.FDATE = this.fdate;
+        this.SearchData.EDATE = this.edate;
+        this.SearchData.OPDATE = this.fdate;
+        this.SearchData.COMP_NAME = this.comp_name;
+       this.SearchData.BRANCH_CODE = this.comp_code;
+      } else {
+
+        this.MainList = Array<Tbl_Acc_Payment>();
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
         this.page_count = 0;
         this.page_current = 0;
         this.page_rowcount = 0;
 
         this.currentTab = 'LIST';
-
-        this.report_category = 'CONSIGNEE SHIPMENT REPORT';
-        this.sdate = this.gs.defaultValues.today;
+        this.bank_id = '';
+        this.bank_name = '';
+        this.fdate = this.gs.defaultValues.lastmonthdate;
         this.edate = this.gs.defaultValues.today;
-        this.mode = 'OCEAN IMPORT';
-        this.comp_type = this.gs.branch_code;
-        this.report_type = 'DETAIL';
-        this.report_shptype = 'ALL';
+        this.comp_code = this.gs.branch_code;
+        this.comp_name = this.gs.branch_name  ;
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
-
-        this.reportformat = 'DETAIL';
-
 
         this.SearchData = this.gs.UserInfo;
 
@@ -150,6 +134,13 @@ export class BankEnquiryReportComponent implements OnInit {
 
   }
 
+  LoadCompany() {
+    this.CompList = <any[]>[];
+    this.gs.CompanyList.forEach(Rec => {
+      if (Rec.comp_code != 'ALL')
+        this.CompList.push(Rec);
+    });
+  }
   ngOnInit() {
   }
 
@@ -164,6 +155,16 @@ export class BankEnquiryReportComponent implements OnInit {
 
   List(_outputformat: string, _action: string = 'NEW') {
 
+    this.errorMessage = "";
+    if (this.gs.isBlank(this.bank_id)) {
+      this.errorMessage = "Code Cannot be Blank";
+      alert(this.errorMessage);
+      return;
+    }
+    if (this.gs.isBlank(this.fdate)) {
+      this.fdate = this.gs.year_start_date;
+    }
+
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
@@ -173,27 +174,19 @@ export class BankEnquiryReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
-  
-      this.SearchData.JV_YEAR = this.gs.globalVariables.year_code;
-      this.SearchData.REPORT_CATEGORY = this.report_category;
-      this.SearchData.SDATE = this.sdate;
-      this.SearchData.EDATE = this.edate;
-      this.SearchData.MODE = this.mode;
-      this.SearchData.COMP_TYPE = this.comp_type;
 
-      if (this.comp_type === 'ALL') {
-        this.SearchData.COMP_CODE = this.gs.branch_codes;
-      } else {
-        this.SearchData.COMP_CODE = this.comp_type;
-      }
-      this.SearchData.COMP_NAME = this.gs.branch_name;
-      this.SearchData.REPORT_TYPE = this.report_type;
-      this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-  
+      this.SearchData.JV_YEAR = this.gs.year_code;
+      this.SearchData.BANK_ID = this.bank_id;
+      this.SearchData.BANK_NAME = this.bank_name;
+      this.SearchData.FDATE = this.fdate;
+      this.SearchData.EDATE = this.edate;
+      this.SearchData.OPDATE = this.fdate;
+      this.SearchData.BRANCH_CODE = this.comp_code; 
+      this.SearchData.COMP_NAME = this.comp_name;
+
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
-      this.reportformat = this.report_type;
     }
 
 
@@ -214,12 +207,12 @@ export class BankEnquiryReportComponent implements OnInit {
             urlid: this.urlid,
             menuid: this.menuid,
             currentTab: this.currentTab,
-            report_category: this.SearchData.REPORT_CATEGORY,
-            sdate: this.SearchData.SDATE,
+            bank_id: this.SearchData.BANK_ID,
+            bank_name: this.SearchData.BANK_NAME,
+            fdate: this.SearchData.FDATE,
             edate: this.SearchData.EDATE,
-            mode: this.SearchData.MODE,
-            comp_type: this.SearchData.COMP_TYPE,
-            reportformat: this.reportformat,
+            comp_name: this.SearchData.COMP_NAME,
+            comp_code: this.SearchData.BRANCH_CODE,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
@@ -246,14 +239,14 @@ export class BankEnquiryReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-   
+
   }
 
   LovSelected(_Record: SearchTable) {
-    // if (_Record.controlname === 'CUSTOMER') {
-    //   this.cust_id = _Record.id;
-    //   this.cust_name = _Record.name;
-    // }
+    if (_Record.controlname === 'ACCTM') {
+      this.bank_id = _Record.id;
+      this.bank_name = _Record.name;
+    }
     // if (_Record.controlname === 'PARENT') {
     //   this.cust_parent_id = _Record.id;
     //   this.cust_parent_name = _Record.name;
@@ -267,10 +260,18 @@ export class BankEnquiryReportComponent implements OnInit {
       alert(this.errorMessage);
       return;
     }
-    this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
+
+    // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
+
   }
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+  }
+
+  callbackevent() {
+    this.tab = 'main';
   }
 
 }
