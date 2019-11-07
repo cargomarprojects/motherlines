@@ -42,7 +42,7 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label col-form-label-sm">Code</label>
                         <div class="col-8">
-                            <app-autocomplete2 [controlname]="'PARENT'" [tabletype]="'ACC_ACCTM'"
+                            <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'"
                                 [displaycolumn]="'NAME'" [displaydata]="bank_name" (ValueChanged)="LovSelected($event)">
                             </app-autocomplete2>
                         </div>
@@ -81,9 +81,9 @@
                     <th>MEMO</th>
                     <th>DATE</th>
                     <th>CHECKNO</th>
-                    <th>RECD</th>
-                    <th>PAID</th>
-                    <th>BALANCE</th>
+                    <th style="text-align:right">RECD</th>
+                    <th style="text-align:right">PAID</th>
+                    <th style="text-align:right">BALANCE</th>
                 </tr>
             </thead>
             <tbody class="page-body-tbody" *ngFor="let rec of MainList">
@@ -93,8 +93,8 @@
                     <td>{{rec.pay_acc_name}}</td>
                     <td>{{rec.pay_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                     <td>{{rec.pay_chqno}}</td>
-                    <td align='right'>{{rec.pay_ar_total | number : '1.2-2'}}</td>
-                    <td align='right'>{{rec.pay_ap_total | number : '1.2-2'}}</td>
+                    <td style="text-align:right">{{rec.pay_ar_total | number : '1.2-2'}}</td>
+                    <td style="text-align:right">{{rec.pay_ap_total | number : '1.2-2'}}</td>
                     <td align='right'>{{rec.pay_diff | number : '1.2-2'}}</td>
                 </tr>
             </tbody>
