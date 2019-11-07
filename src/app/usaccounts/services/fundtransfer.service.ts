@@ -141,6 +141,11 @@ export class FundTransferService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    GetNextChqNo(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/GetNextChqNo', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/Save', SearchData, this.gs.headerparam2('authorized'));
     }
