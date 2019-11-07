@@ -12,7 +12,6 @@ import * as myReducer from './store/bank-enquiry-report.reducer';
 import { ReportState } from './store/bank-enquiry-report.models'
 
 import { Observable } from 'rxjs';
-import { map, tap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bank-enquiry-report',
@@ -20,33 +19,23 @@ import { map, tap, filter } from 'rxjs/operators';
 })
 export class BankEnquiryReportComponent implements OnInit {
 
-  title = 'Bank Enquiry Report';
-
+  title = 'Bank Enquiry';
   pkid: string;
   urlid: string;
   url: string;
   menuid: string;
-
   currentTab = '';
 
-  report_category: string;
-  sdate: string;
+  fdate: string;
   edate: string;
-  bank_id:string;
-  bank_name:string;
-
-  mode = '';
+  bank_id: string;
+  bank_name: string;
   comp_type: string = '';
   comp_code: string = '';
-  report_type: string = '';
-  report_shptype: string = '';
+
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
-
-   
-
-  reportformat = '';
 
   page_count: number = 0;
   page_current: number = 0;
@@ -58,13 +47,11 @@ export class BankEnquiryReportComponent implements OnInit {
 
   loading: boolean = false;
   errorMessage: string = '';
-
   SearchData: any = {};
-
   Reportstate1: Observable<ReportState>;
-
   MainList: Tbl_Acc_Payment[];
- 
+  CompList: any[];
+
   constructor(
     public gs: GlobalService,
     private router: Router,
@@ -78,6 +65,7 @@ export class BankEnquiryReportComponent implements OnInit {
       this.urlid = params.id;
       this.menuid = params.menuid;
       this.InitPage();
+      this.LoadCompany();
     });
 
   }
@@ -92,16 +80,13 @@ export class BankEnquiryReportComponent implements OnInit {
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
         this.bank_id = rec.bank_id;
-        this.sdate = rec.sdate;
+        this.fdate = rec.fdate;
         this.edate = rec.edate;
-        this.mode = rec.mode;
         this.comp_type = rec.comp_type;
         this.comp_code = rec.comp_code;
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
-      
-        
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -112,11 +97,9 @@ export class BankEnquiryReportComponent implements OnInit {
 
         this.SearchData.BANK_ID = this.bank_id;
         this.SearchData.JV_YEAR = this.gs.year_code;
-        this.SearchData.FDATE = this.sdate;
+        this.SearchData.FDATE = this.fdate;
         this.SearchData.EDATE = this.edate;
-        this.SearchData.OPDATE = this.sdate;
-
-        this.SearchData.MODE = this.mode;
+        this.SearchData.OPDATE = this.fdate;
         this.SearchData.COMP_TYPE = this.comp_type;
         if (this.comp_type === 'ALL') {
           this.SearchData.BRANCH_CODE = this.gs.branch_codes;
@@ -124,7 +107,7 @@ export class BankEnquiryReportComponent implements OnInit {
           this.SearchData.BRANCH_CODE = this.comp_type;
         }
         this.SearchData.COMP_NAME = this.gs.branch_name;
-  
+
       } else {
         this.MainList = Array<Tbl_Acc_Payment>();
 
@@ -134,13 +117,11 @@ export class BankEnquiryReportComponent implements OnInit {
         this.page_rowcount = 0;
 
         this.currentTab = 'LIST';
-
-        this.bank_id='';
-        this.sdate = this.gs.year_start_date;
+        this.bank_id = '';
+        this.fdate = this.gs.defaultValues.lastmonthdate;
         this.edate = this.gs.defaultValues.today;
-        this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
-       
+
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
@@ -152,6 +133,13 @@ export class BankEnquiryReportComponent implements OnInit {
 
   }
 
+  LoadCompany() {
+    this.CompList = <any[]>[];
+    this.gs.CompanyList.forEach(Rec => {
+      if (Rec.comp_code != 'ALL')
+        this.CompList.push(Rec);
+    });
+  }
   ngOnInit() {
   }
 
@@ -166,6 +154,16 @@ export class BankEnquiryReportComponent implements OnInit {
 
   List(_outputformat: string, _action: string = 'NEW') {
 
+    this.errorMessage = "";
+    if (this.gs.isBlank(this.bank_id)) {
+      this.errorMessage = "Code Cannot be Blank";
+      alert(this.errorMessage);
+      return;
+    }
+    if (this.gs.isBlank(this.fdate)) {
+      this.fdate = this.gs.year_start_date;
+    }
+
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
@@ -175,13 +173,12 @@ export class BankEnquiryReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
-  
+
       this.SearchData.JV_YEAR = this.gs.year_code;
       this.SearchData.BANK_ID = this.bank_id;
-      this.SearchData.FDATE = this.sdate;
+      this.SearchData.FDATE = this.fdate;
       this.SearchData.EDATE = this.edate;
-      this.SearchData.OPDATE = this.sdate;
-      this.SearchData.MODE = this.mode;
+      this.SearchData.OPDATE = this.fdate;
       this.SearchData.COMP_TYPE = this.comp_type;
 
       if (this.comp_type === 'ALL') {
@@ -190,11 +187,11 @@ export class BankEnquiryReportComponent implements OnInit {
         this.SearchData.BRANCH_CODE = this.comp_type;
       }
       this.SearchData.COMP_NAME = this.gs.branch_name;
-  
+
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
-   }
+    }
 
 
     this.loading = true;
@@ -214,12 +211,11 @@ export class BankEnquiryReportComponent implements OnInit {
             urlid: this.urlid,
             menuid: this.menuid,
             currentTab: this.currentTab,
-            bank_id:this.SearchData.BANK_ID,
-            sdate: this.SearchData.FDATE,
+            bank_id: this.SearchData.BANK_ID,
+            fdate: this.SearchData.FDATE,
             edate: this.SearchData.EDATE,
-            mode: this.SearchData.MODE,
             comp_type: this.SearchData.COMP_TYPE,
-            comp_code:this.SearchData.BRANCH_CODE,
+            comp_code: this.SearchData.BRANCH_CODE,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
@@ -246,7 +242,7 @@ export class BankEnquiryReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-   
+
   }
 
   LovSelected(_Record: SearchTable) {
