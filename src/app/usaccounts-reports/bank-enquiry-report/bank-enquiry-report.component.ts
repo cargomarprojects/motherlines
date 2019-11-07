@@ -26,6 +26,10 @@ export class BankEnquiryReportComponent implements OnInit {
   menuid: string;
   currentTab = '';
 
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+
   fdate: string;
   edate: string;
   bank_id: string;
@@ -44,6 +48,7 @@ export class BankEnquiryReportComponent implements OnInit {
 
   storesub: any;
   sub: any;
+  tab: string = 'main';
 
   loading: boolean = false;
   errorMessage: string = '';
@@ -263,10 +268,18 @@ export class BankEnquiryReportComponent implements OnInit {
       alert(this.errorMessage);
       return;
     }
-    this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
+
+    // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
+
   }
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+  }
+
+  callbackevent() {
+    this.tab = 'main';
   }
 
 }
