@@ -21,7 +21,8 @@ const routes: Routes = [
   
   { path: 'Silver.USAccounts.Trans', loadChildren: './usaccounts/usaccounts.module#USAccountsModule' }, 
   { path: 'Silver.USAccounts.Master', loadChildren: './usaccounts/usaccounts.module#USAccountsModule' }, 
-  
+  { path: 'Silver.USAccounts.Reports', loadChildren: './usaccounts-reports/usaccounts-reports.module#UsAccountsReportsModule' }, 
+
   { path: 'Silver.Library', loadChildren: './shared/shared.module#SharedModule' }, 
   { path: 'Silver.BusinessModule', loadChildren: './businessmodule/businessmodule.module#BusinessmoduleModule' }, 
   { path: 'Silver.Marketing.Quotation', loadChildren: './marketing/marketing.module#MarketingModule' }, 
