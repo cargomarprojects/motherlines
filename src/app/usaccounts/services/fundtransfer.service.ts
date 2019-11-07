@@ -26,6 +26,7 @@ export class FundTransferService {
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
+    public canDelete: boolean;
 
     public initlialized: boolean;
 
@@ -56,6 +57,7 @@ export class FundTransferService {
         this.title = this.gs.getTitle(this.menuid);
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
+        this.canDelete = this.gs.canDelete(this.menuid);        
         this.canSave = this.canAdd || this.canEdit;
 
         this.initlialized = true;
@@ -133,6 +135,36 @@ export class FundTransferService {
         }
     }
     
+    DeleteRow(_rec: Tbl_Acc_Payment) {
+
+        this.record.errormessage = '';
+        if (!confirm("DELETE " + _rec.pay_docno)) {
+            return;
+        }
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.pay_pkid;
+        SearchData.remarks = _rec.pay_narration;
+
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.pay_pkid == _rec.pay_pkid), 1);
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+            });
+    }
+
+
+
+
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -143,6 +175,11 @@ export class FundTransferService {
 
     GetNextChqNo(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/GetNextChqNo', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/Delete', SearchData, this.gs.headerparam2('authorized'));
     }
 
 
