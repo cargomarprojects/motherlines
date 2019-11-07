@@ -29,6 +29,8 @@ export class FundTransferEditComponent implements OnInit {
 
     next_chqno = 0;
 
+    CFNO = "";
+
     title: string;
     isAdmin: boolean;
     refno: string = "";
@@ -38,6 +40,8 @@ export class FundTransferEditComponent implements OnInit {
     isAccLocked = false;
 
     showchqdt = true;
+
+    where = "ACC_TYPE IN('BANK','CASH', 'PETTY CASH', 'CAPITAL', 'RETAINED-PROFIT')";
 
     constructor(
         private router: Router,
@@ -69,8 +73,6 @@ export class FundTransferEditComponent implements OnInit {
         if (this.gs.SHOW_CHECK_DATE == "N") {
             this.showchqdt = false;
         }
-
-        this.showchqdt = true;
 
     }
 
@@ -108,12 +110,24 @@ export class FundTransferEditComponent implements OnInit {
     init() {
 
         this.record.pay_pkid = this.pkid;
+        this.record.pay_vrno = '';
         this.record.pay_docno = '';
-        this.record.pay_date = this.gs.year_start_date;
+        this.record.pay_date = this.gs.defaultValues.today;
 
         this.record.pay_type = 'FT';
         this.record.pay_year = +this.gs.year_code;
 
+
+        this.record.pay_from_id=  '';
+        this.record.pay_from_acc_code=  '';
+        this.record.pay_from_acc_name = '';
+
+        this.record.pay_to_id=  '';
+        this.record.pay_to_acc_code=  '';
+        this.record.pay_to_acc_name = '';
+
+        this.record.pay_amt =0;
+        this.record.pay_narration = '';
 
         this.record.pay_mode = 'CHECK';
 
@@ -131,12 +145,9 @@ export class FundTransferEditComponent implements OnInit {
                 this.record = <Tbl_Acc_Payment>response.record;
                 this.mode = 'EDIT';
                 this.errorMessage = "";
-                if (this.record.pay_pkid == "Y") {
-                    this.errorMessage = "Invoice Settled, Cannot Edit";
-                }
-                else if (this.gs.IsDateLocked(this.record.pay_date)) {
+                if (this.gs.IsDateLocked(this.record.pay_date)) {
                     this.isAccLocked = true;
-                    this.errorMessage = "Accoutning Period Locked";
+                    this.errorMessage = "Accounting Period Locked";
                 }
             }, error => {
                 this.errorMessage = this.gs.getError(error);
@@ -165,10 +176,11 @@ export class FundTransferEditComponent implements OnInit {
                     alert(this.errorMessage);
                 }
                 else {
-                    this.mode = 'EDIT';
-
+                    
+                    this.record.pay_vrno = response.CFNO;
                     this.record.pay_docno = response.DOCNO;
 
+                    this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
                     alert(this.errorMessage);
@@ -224,14 +236,14 @@ export class FundTransferEditComponent implements OnInit {
             return bRet;
         }
 
-        if (this.gs.isBlank(this.record.pay_from_id)) {
+        if (this.gs.isBlank(this.record.pay_from_id) || this.gs.isBlank(this.record.pay_from_acc_code)) {
             bRet = false;
             this.errorMessage = "Invalid From A/c Code";
             alert(this.errorMessage);
             return bRet;
         }
 
-        if (this.gs.isBlank(this.record.pay_to_id)) {
+        if (this.gs.isBlank(this.record.pay_to_id) || this.gs.isBlank(this.record.pay_to_acc_code)) {
             bRet = false;
             this.errorMessage = "Invalid To A/c Code";
             alert(this.errorMessage);
@@ -259,7 +271,7 @@ export class FundTransferEditComponent implements OnInit {
 
         if (this.gs.isBlank(this.record.pay_narration)) {
             bRet = false;
-            this.errorMessage = "Invalid Amount";
+            this.errorMessage = "Remarks cannot be blank";
             alert(this.errorMessage);
             return bRet;
         }
@@ -332,7 +344,7 @@ export class FundTransferEditComponent implements OnInit {
         var sType = "PAYMENT";
         var sMode = "";
         this.errorMessage = '';
-        if (this.record.pay_mode === undefined) {
+        if ( this.gs.isBlank(this.record.pay_mode)) {
             alert('Pay mode Has to be selected');
             return;
         }

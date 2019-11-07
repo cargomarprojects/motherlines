@@ -36,6 +36,7 @@
                 <label class="col-3 col-form-label col-form-label-sm">From A/c</label>
                 <div class="col-9">
                     <app-autocomplete2 [controlname]="'FROM_ACCTM'" [tabletype]="'ACC_ACCTM'" [displaycolumn]="'CODE'"
+                        [where]="where"
                         [displaydata]="record.pay_from_acc_code" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
                 </div>
@@ -49,6 +50,7 @@
                 <label class="col-3 col-form-label col-form-label-sm">To A/c</label>
                 <div class="col-9">
                     <app-autocomplete2 [controlname]="'TO_ACCTM'" [tabletype]="'ACC_ACCTM'" [displaycolumn]="'CODE'"
+                        [where]="where"
                         [displaydata]="record.pay_to_acc_code" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
                 </div>
