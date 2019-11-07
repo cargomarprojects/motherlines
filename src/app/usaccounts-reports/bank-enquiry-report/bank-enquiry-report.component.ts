@@ -274,9 +274,9 @@ export class BankEnquiryReportComponent implements OnInit {
 
     if (_rec.pay_pkid == null)
       return;
-    if (_rec.pay_pkid == "OP")
+    if (_rec.pay_type === "OP")
       return;
-    if (_rec.pay_pkid == "CL")
+    if (_rec.pay_type === "CL")
       return;
 
       
