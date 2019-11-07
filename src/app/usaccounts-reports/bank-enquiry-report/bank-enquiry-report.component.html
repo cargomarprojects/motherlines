@@ -52,11 +52,11 @@
 
                     </div>
                     <div class="col-md-3">
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm"></label>
                             <div class="col-8">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm"></label>
                             <div class="col-8">
@@ -91,7 +91,7 @@
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                     <tr>
-                        <td>{{rec.pay_docno}}</td>
+                        <td (click)="PrintPayment(rec)">{{rec.pay_docno}}</td>
                         <td>{{rec.pay_cust_name}}</td>
                         <td>{{rec.pay_acc_name}}</td>
                         <td>{{rec.pay_date | date : gs.FRONTEND_DATEFORMAT }}</td>
@@ -118,6 +118,6 @@
     </div>
 </div>
 <div *ngIf="tab == 'report'">
-    <app-report [title]="'Bank Enquiry Report'"  [url]="" [searchdata]=""  [menuid]="report_menuid"  
+    <app-report [title]="report_title"  [url]="report_url" [searchdata]="report_searchdata"  [menuid]="report_menuid"  
     [filename]="filename"    [filetype]="filetype" [filedisplayname]="filedisplayname"  (callbackevent)="callbackevent($event)"></app-report>
 </div>

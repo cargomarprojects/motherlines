@@ -26,6 +26,7 @@ export class BankEnquiryReportComponent implements OnInit {
   menuid: string;
   currentTab = '';
 
+  report_title: string;
   report_url: string;
   report_searchdata: any = {};
   report_menuid: string;
@@ -85,7 +86,7 @@ export class BankEnquiryReportComponent implements OnInit {
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
         this.bank_id = rec.bank_id;
-        this.bank_name= rec.bank_name;
+        this.bank_name = rec.bank_name;
         this.fdate = rec.fdate;
         this.edate = rec.edate;
         this.comp_name = rec.comp_name;
@@ -107,7 +108,7 @@ export class BankEnquiryReportComponent implements OnInit {
         this.SearchData.EDATE = this.edate;
         this.SearchData.OPDATE = this.fdate;
         this.SearchData.COMP_NAME = this.comp_name;
-       this.SearchData.BRANCH_CODE = this.comp_code;
+        this.SearchData.BRANCH_CODE = this.comp_code;
       } else {
 
         this.MainList = Array<Tbl_Acc_Payment>();
@@ -122,7 +123,7 @@ export class BankEnquiryReportComponent implements OnInit {
         this.fdate = this.gs.defaultValues.lastmonthdate;
         this.edate = this.gs.defaultValues.today;
         this.comp_code = this.gs.branch_code;
-        this.comp_name = this.gs.branch_name  ;
+        this.comp_name = this.gs.branch_name;
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
@@ -181,7 +182,7 @@ export class BankEnquiryReportComponent implements OnInit {
       this.SearchData.FDATE = this.fdate;
       this.SearchData.EDATE = this.edate;
       this.SearchData.OPDATE = this.fdate;
-      this.SearchData.BRANCH_CODE = this.comp_code; 
+      this.SearchData.BRANCH_CODE = this.comp_code;
       this.SearchData.COMP_NAME = this.comp_name;
 
       this.SearchData.filename = "";
@@ -262,13 +263,33 @@ export class BankEnquiryReportComponent implements OnInit {
     }
 
     // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
+    this.report_title = 'Bank Enquiry Report';
+    this.report_url = undefined;
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
+  }
+
+  PrintPayment(_rec: Tbl_Acc_Payment) {
+
+    if (_rec.pay_pkid == null)
+      return;
+    if (_rec.pay_pkid == "OP")
+      return;
+    if (_rec.pay_pkid == "CL")
+      return;
+
+      
+    this.report_title = 'Bank Payment Details';
+    this.report_url = '/api/UsAccBankRpt/PaymentDetails';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.PKID = _rec.pay_pkid;
+    this.report_searchdata.TYPE = _rec.pay_type;
     this.report_menuid = this.menuid;
     this.tab = 'report';
 
   }
-  Downloadfile(filename: string, filetype: string, filedisplayname: string) {
-    this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
-  }
+
 
   callbackevent() {
     this.tab = 'main';
