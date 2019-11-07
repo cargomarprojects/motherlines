@@ -1354,6 +1354,12 @@ export class GlobalService {
     sessionStorage.setItem('FS_APP_FOLDER', JSON.stringify(this.FS_APP_FOLDER));
     sessionStorage.setItem('SEARCH_DATE_DIFF', JSON.stringify(this.SEARCH_DATE_DIFF));
 
+    sessionStorage.setItem('year_code', JSON.stringify(this.year_code));
+    sessionStorage.setItem('year_start_date', JSON.stringify(this.year_start_date));
+    sessionStorage.setItem('year_end_date', JSON.stringify(this.year_end_date));
+
+    
+
   }
 
 

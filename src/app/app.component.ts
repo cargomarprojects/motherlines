@@ -61,6 +61,10 @@ export class AppComponent {
         this.gs.MenuList = JSON.parse(sessionStorage.getItem('menulist'));
         this.gs.CompanyList = JSON.parse(sessionStorage.getItem('companylist'));
         this.gs.YearList = JSON.parse(sessionStorage.getItem('yearlist'));
+        this.gs.year_code = JSON.parse(sessionStorage.getItem('year_code'));
+
+        this.gs.year_start_date = JSON.parse(sessionStorage.getItem('year_start_date'));
+        this.gs.year_end_date = JSON.parse(sessionStorage.getItem('year_end_date'));
 
       }
 

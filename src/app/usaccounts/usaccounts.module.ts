@@ -16,6 +16,10 @@ import { BudgetComponent } from './budget/budget.component';
 import { AcopenComponent } from './acopening/acopen.component';
 import { AcopenHeaderComponent } from './acopening/acopen-header.component';
 import { AcopenEditComponent } from './acopening/acopen-edit.component';
+import { FundTransferComponent } from './fundtransfer/fundtransfer.component';
+import { FundTransferHeaderComponent } from './fundtransfer/fundtransfer-header.component';
+import { FundTransferEditComponent } from './fundtransfer/fundtransfer-edit.component';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { AcopenEditComponent } from './acopening/acopen-edit.component';
   BudgetComponent,
   AcopenComponent,
   AcopenHeaderComponent,
-  AcopenEditComponent
+  AcopenEditComponent,
+  FundTransferComponent,
+  FundTransferHeaderComponent,
+  FundTransferEditComponent
+
 ],
   imports: [
     SharedModule,
