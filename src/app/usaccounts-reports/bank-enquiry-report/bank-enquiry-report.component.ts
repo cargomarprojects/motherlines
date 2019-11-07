@@ -34,7 +34,7 @@ export class BankEnquiryReportComponent implements OnInit {
   edate: string;
   bank_id: string;
   bank_name: string;
-  comp_type: string = '';
+  comp_name: string = '';
   comp_code: string = '';
 
   filename: string = '';
@@ -85,9 +85,10 @@ export class BankEnquiryReportComponent implements OnInit {
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
         this.bank_id = rec.bank_id;
+        this.bank_name= rec.bank_name;
         this.fdate = rec.fdate;
         this.edate = rec.edate;
-        this.comp_type = rec.comp_type;
+        this.comp_name = rec.comp_name;
         this.comp_code = rec.comp_code;
         this.filename = rec.filename;
         this.filetype = rec.filetype;
@@ -105,17 +106,11 @@ export class BankEnquiryReportComponent implements OnInit {
         this.SearchData.FDATE = this.fdate;
         this.SearchData.EDATE = this.edate;
         this.SearchData.OPDATE = this.fdate;
-        this.SearchData.COMP_TYPE = this.comp_type;
-        if (this.comp_type === 'ALL') {
-          this.SearchData.BRANCH_CODE = this.gs.branch_codes;
-        } else {
-          this.SearchData.BRANCH_CODE = this.comp_type;
-        }
-        this.SearchData.COMP_NAME = this.gs.branch_name;
-
+        this.SearchData.COMP_NAME = this.comp_name;
+       this.SearchData.BRANCH_CODE = this.comp_code;
       } else {
-        this.MainList = Array<Tbl_Acc_Payment>();
 
+        this.MainList = Array<Tbl_Acc_Payment>();
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
         this.page_count = 0;
         this.page_current = 0;
@@ -123,10 +118,11 @@ export class BankEnquiryReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
         this.bank_id = '';
+        this.bank_name = '';
         this.fdate = this.gs.defaultValues.lastmonthdate;
         this.edate = this.gs.defaultValues.today;
-        this.comp_type = this.gs.branch_code;
-
+        this.comp_code = this.gs.branch_code;
+        this.comp_name = this.gs.branch_name  ;
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
@@ -181,17 +177,12 @@ export class BankEnquiryReportComponent implements OnInit {
 
       this.SearchData.JV_YEAR = this.gs.year_code;
       this.SearchData.BANK_ID = this.bank_id;
+      this.SearchData.BANK_NAME = this.bank_name;
       this.SearchData.FDATE = this.fdate;
       this.SearchData.EDATE = this.edate;
       this.SearchData.OPDATE = this.fdate;
-      this.SearchData.COMP_TYPE = this.comp_type;
-
-      if (this.comp_type === 'ALL') {
-        this.SearchData.BRANCH_CODE = this.gs.branch_codes;
-      } else {
-        this.SearchData.BRANCH_CODE = this.comp_type;
-      }
-      this.SearchData.COMP_NAME = this.gs.branch_name;
+      this.SearchData.BRANCH_CODE = this.comp_code; 
+      this.SearchData.COMP_NAME = this.comp_name;
 
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
@@ -217,9 +208,10 @@ export class BankEnquiryReportComponent implements OnInit {
             menuid: this.menuid,
             currentTab: this.currentTab,
             bank_id: this.SearchData.BANK_ID,
+            bank_name: this.SearchData.BANK_NAME,
             fdate: this.SearchData.FDATE,
             edate: this.SearchData.EDATE,
-            comp_type: this.SearchData.COMP_TYPE,
+            comp_name: this.SearchData.COMP_NAME,
             comp_code: this.SearchData.BRANCH_CODE,
             page_rows: response.page_rows,
             page_count: response.page_count,

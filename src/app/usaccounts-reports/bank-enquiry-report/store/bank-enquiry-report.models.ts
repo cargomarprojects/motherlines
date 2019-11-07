@@ -6,9 +6,10 @@ export interface ReportState {
     menuid: string;
     currentTab: string;
     bank_id: string;
+    bank_name: string;
     fdate: string;
     edate: string;
-    comp_type: string;
+    comp_name: string;
     comp_code:string;
 
     filename: string;
