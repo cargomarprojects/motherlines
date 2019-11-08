@@ -119,16 +119,9 @@ export class VoidCheckService {
             this.record.records.push(_rec);
         }
         else {
-            REC.pay_docno = _rec.pay_docno;
-            REC.pay_date = _rec.pay_date;
-            REC.pay_from_acc_name = _rec.pay_from_acc_name;
-            REC.pay_to_acc_name = _rec.pay_to_acc_name;
-            REC.pay_amt = _rec.pay_amt;
-            REC.pay_narration = _rec.pay_narration;
-            REC.pay_mode = _rec.pay_mode;
-            REC.pay_chqno = _rec.pay_chqno;
-            REC.pay_chq_date = _rec.pay_chq_date;
-
+            REC.void_vrno = _rec.void_vrno;
+            REC.void_docno = _rec.void_docno;
+            REC.void_memo = _rec.void_memo;
             REC.rec_created_by = _rec.rec_created_by;
             REC.rec_created_date = _rec.rec_created_date;
             REC.rec_closed = _rec.rec_closed;
@@ -138,7 +131,7 @@ export class VoidCheckService {
     DeleteRow(_rec: Tbl_VoidCheck) {
 
         this.record.errormessage = '';
-        if (!confirm("DELETE " + _rec.void_vrno )) {
+        if (!confirm("DELETE " + _rec.void_docno )) {
             return;
         }
 
@@ -165,25 +158,25 @@ export class VoidCheckService {
 
 
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetNextChqNo(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/GetNextChqNo', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/GetNextChqNo', SearchData, this.gs.headerparam2('authorized'));
     }
 
 
     DeleteRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/Delete', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/Delete', SearchData, this.gs.headerparam2('authorized'));
     }
 
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }
