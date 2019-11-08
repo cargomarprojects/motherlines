@@ -131,7 +131,7 @@ export class VoidCheckService {
     DeleteRow(_rec: Tbl_VoidCheck) {
 
         this.record.errormessage = '';
-        if (!confirm("DELETE " + _rec.void_docno )) {
+        if (!confirm("DELETE " + _rec.void_vrno )) {
             return;
         }
 
@@ -165,15 +165,10 @@ export class VoidCheckService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    GetNextChqNo(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/GetNextChqNo', SearchData, this.gs.headerparam2('authorized'));
-    }
-
 
     DeleteRecord(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/Delete', SearchData, this.gs.headerparam2('authorized'));
     }
-
 
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/VoidCheck/Save', SearchData, this.gs.headerparam2('authorized'));

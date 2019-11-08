@@ -30,7 +30,7 @@ export interface VoidCheckModel {
     records: Tbl_VoidCheck[]
 }
 
-export interface vm_tbl_accPayment {
+export interface vm_tbl_VoidCheck {
     mode: string;
     pkid: string;
     record: Tbl_VoidCheck;

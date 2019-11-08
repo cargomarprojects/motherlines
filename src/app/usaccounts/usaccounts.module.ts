@@ -19,6 +19,9 @@ import { AcopenEditComponent } from './acopening/acopen-edit.component';
 import { FundTransferComponent } from './fundtransfer/fundtransfer.component';
 import { FundTransferHeaderComponent } from './fundtransfer/fundtransfer-header.component';
 import { FundTransferEditComponent } from './fundtransfer/fundtransfer-edit.component';
+import { VoidCheckComponent } from './voidcheck/voidcheck.component';
+import { VoidCheckHeaderComponent } from './voidcheck/voidcheck-header.component';
+import { VoidCheckEditComponent } from './voidcheck/voidcheck-edit.component';
 
 
 @NgModule({
@@ -38,7 +41,10 @@ import { FundTransferEditComponent } from './fundtransfer/fundtransfer-edit.comp
   AcopenEditComponent,
   FundTransferComponent,
   FundTransferHeaderComponent,
-  FundTransferEditComponent
+  FundTransferEditComponent,
+  VoidCheckComponent,
+  VoidCheckHeaderComponent,
+  VoidCheckEditComponent
 
 ],
   imports: [

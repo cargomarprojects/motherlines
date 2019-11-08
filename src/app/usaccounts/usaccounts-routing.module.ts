@@ -13,7 +13,8 @@ import { AcopenComponent } from './acopening/acopen.component';
 import { AcopenEditComponent } from './acopening/acopen-edit.component';
 import { FundTransferComponent } from './fundtransfer/fundtransfer.component';
 import { FundTransferEditComponent } from './fundtransfer/fundtransfer-edit.component';
-
+import { VoidCheckEditComponent } from './voidcheck/voidcheck-edit.component';
+import { VoidCheckComponent } from './voidcheck/voidcheck.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,8 @@ const routes: Routes = [
   { path : 'OpenEditPage', component : AcopenEditComponent },
   { path : 'FundTransPage', component : FundTransferComponent },
   { path : 'FundTransEditPage', component : FundTransferEditComponent },
+  { path : 'VoidCheckPage', component : VoidCheckComponent },
+  { path : 'VoidCheckEditPage', component : VoidCheckEditComponent },
 
 ];
 
