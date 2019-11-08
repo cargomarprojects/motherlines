@@ -112,8 +112,7 @@ export class BankEnquiryReportComponent implements OnInit {
       } else {
 
         this.MainList = Array<Tbl_Acc_Payment>();
-        // this.page_rows = this.gs.ROWS_TO_DISPLAY;
-        this.page_rows = 3;
+        this.page_rows = this.gs.ROWS_TO_DISPLAY;
         this.page_count = 0;
         this.page_current = 0;
         this.page_rowcount = 0;
