@@ -18,6 +18,8 @@ import { OthGeneralExpenseComponent } from './generalexpense/oth-generalexpense.
 import { OthGeneralExpenseEditComponent } from './generalexpense/edit/oth-generalexpense-edit.component';
 import { LockUnlockComponent } from './lockunlock/lockunlock.component';
 import { AlertLogPageComponent } from './alertlogpage/alertlogpage.component';
+import { OblReleaseComponent } from './oblrelease/oblrelease.component';
+import { OblReleaseEditComponent } from './oblrelease/oblrelease-edit.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -35,7 +37,10 @@ const routes: Routes = [
   { path : 'GeneralExpensePage', component : OthGeneralExpenseComponent },
   { path : 'OthGeneralExpenseEditPage', component : OthGeneralExpenseEditComponent },
   { path : 'LockUnlockPage', component : LockUnlockComponent },
-  { path : 'AlertLogPage', component : AlertLogPageComponent }
+  { path : 'AlertLogPage', component : AlertLogPageComponent },
+  { path : 'OBLReleasedPage', component : OblReleaseComponent },
+  { path : 'OblReleaseEditPage', component : OblReleaseEditComponent },
+
 ];
 
 @NgModule({

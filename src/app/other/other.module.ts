@@ -38,6 +38,9 @@ import { LockUnlockHeaderComponent } from './lockunlock/lockunlock-header.compon
 
 import { AlertLogPageComponent } from './alertlogpage/alertlogpage.component';
 import { AlertLogPageHeaderComponent } from './alertlogpage/alertlogpage-header.component';
+import { OblReleaseComponent } from './oblrelease/oblrelease.component';
+import { OblReleaseEditComponent } from './oblrelease/oblrelease-edit.component';
+import { OblReleaseHeaderComponent } from './oblrelease/oblrelease-header.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,10 @@ import { AlertLogPageHeaderComponent } from './alertlogpage/alertlogpage-header.
     LockUnlockComponent,
     LockUnlockHeaderComponent,
     AlertLogPageComponent,
-    AlertLogPageHeaderComponent
+    AlertLogPageHeaderComponent,
+    OblReleaseComponent,
+    OblReleaseEditComponent,
+    OblReleaseHeaderComponent
   ],
   imports: [
     SharedModule,    

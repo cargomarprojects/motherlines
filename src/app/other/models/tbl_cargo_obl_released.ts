@@ -1,3 +1,12 @@
+import { PageQuery } from '../../shared/models/pageQuery';
+
+export interface SearchQuery {
+    balance: string;
+    searchString: string;
+    sdate: string;
+    edate: string;
+}
+
 export interface Tbl_cargo_obl_released {
     obl_pkid: string;
     obl_date: string;
@@ -17,3 +26,20 @@ export interface Tbl_cargo_obl_released {
     rec_created_date: string;
 
 }
+
+
+export interface OblReleaseModel {
+    errormessage: string;
+    searchQuery: SearchQuery;
+    pageQuery: PageQuery;
+    records: Tbl_cargo_obl_released[]
+}
+
+export interface vm_tbl_OblRelease {
+    mode: string;
+    pkid: string;
+    record: Tbl_cargo_obl_released;
+    userinfo: any,
+    filter: any;
+}
+
