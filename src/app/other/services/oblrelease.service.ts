@@ -174,4 +174,10 @@ export class OblReleaseService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/OblRelease/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    
+    GetHouseList(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/OblRelease/GetHouseDetails', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+
 }

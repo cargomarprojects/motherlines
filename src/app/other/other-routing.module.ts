@@ -39,7 +39,7 @@ const routes: Routes = [
   { path : 'LockUnlockPage', component : LockUnlockComponent },
   { path : 'AlertLogPage', component : AlertLogPageComponent },
   { path : 'OBLReleasedPage', component : OblReleaseComponent },
-  { path : 'OblReleaseEditPage', component : OblReleaseEditComponent },
+  { path : 'OBLReleasedEditPage', component : OblReleaseEditComponent },
 
 ];
 

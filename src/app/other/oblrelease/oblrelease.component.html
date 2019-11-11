@@ -10,8 +10,8 @@
   {{errorMessage}}
 </div>
 
-<acc-voidcheck-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-</acc-voidcheck-header>
+<acc-oblrelease-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+</acc-oblrelease-header>
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 

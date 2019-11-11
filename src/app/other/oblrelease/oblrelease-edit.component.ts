@@ -8,8 +8,9 @@ import { InputBoxComponent } from '../../shared/input/inputbox.component';
 
 import { OblReleaseService } from '../services/oblrelease.service';
 import { User_Menu } from '../../core/models/menum';
-import { vm_tbl_OblRelease  , Tbl_cargo_obl_released } from '../models/tbl_cargo_obl_released';
+import { vm_tbl_OblRelease, Tbl_cargo_obl_released } from '../models/tbl_cargo_obl_released';
 import { SearchTable } from '../../shared/models/searchtable';
+
 
 @Component({
     selector: 'app-oblrelease-edit',
@@ -42,6 +43,10 @@ export class OblReleaseEditComponent implements OnInit {
     showchqdt = true;
 
     where = " ACC_TYPE = 'BANK' ";
+
+    oldrefno = '';
+
+    HouseList: Tbl_cargo_obl_released[] = [];
 
     constructor(
         private router: Router,
@@ -111,6 +116,21 @@ export class OblReleaseEditComponent implements OnInit {
 
         this.record.obl_pkid = this.pkid;
         this.record.obl_date = this.gs.defaultValues.today;
+        this.record.obl_slno = null;
+        this.record.obl_refno = '';
+        this.record.obl_houseno = '';
+        this.record.obl_consignee_id = '';
+        this.record.obl_consignee_code = '';
+        this.record.obl_consignee_name = '';
+        this.record.obl_handled_id = '';
+        this.record.obl_handled_code = '';
+        this.record.obl_handled_name = '';
+        this.record.obl_remark   = '';
+
+        this.oldrefno = this.record.obl_refno;
+        
+        this.HouseList = [];
+
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
     }
@@ -122,6 +142,8 @@ export class OblReleaseEditComponent implements OnInit {
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
                 this.record = <Tbl_cargo_obl_released>response.record;
+                this.oldrefno = this.record.obl_refno;                
+                this.GetHouseDetails();                
                 this.mode = 'EDIT';
                 this.errorMessage = "";
             }, error => {
@@ -129,7 +151,18 @@ export class OblReleaseEditComponent implements OnInit {
             });
     }
 
-
+    GetHouseDetails() {
+        this.errorMessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData = { ...SearchData, "refno" : this.record.obl_refno ,  "comp_code": this.gs.company_code, "br_code": this.gs.branch_code };
+        this.mainService.GetHouseList(SearchData)
+            .subscribe(response => {
+                this.HouseList = response.list;
+            }, error => {
+                this.errorMessage = this.gs.getError(error);
+                alert(this.errorMessage);
+            });
+    }
 
     Save() {
 
@@ -151,8 +184,9 @@ export class OblReleaseEditComponent implements OnInit {
                     alert(this.errorMessage);
                 }
                 else {
-                    
-                    this.record.obl_slno = response.slno;
+
+                    if ( this.mode == 'ADD')
+                        this.record.obl_slno = response.slno;
                     this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
@@ -184,6 +218,21 @@ export class OblReleaseEditComponent implements OnInit {
             return bRet;
         }
 
+
+        if (this.gs.isBlank(this.record.obl_refno)) {
+            bRet = false;
+            this.errorMessage = "Invalid RefNo";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isBlank(this.record.obl_houseno)) {
+            bRet = false;
+            this.errorMessage = "Invalid House";
+            alert(this.errorMessage);
+            return bRet;
+        }        
+
         return bRet;
     }
 
@@ -195,13 +244,46 @@ export class OblReleaseEditComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
 
-        if (_Record.controlname == "BANK") {
+        if (_Record.controlname == "CONSIGNEE") {
             this.record.obl_consignee_id = _Record.id;
-            this.record.obl_consignee_id = _Record.code;
+            this.record.obl_consignee_code = _Record.code;
             this.record.obl_consignee_name = _Record.name;
         }
 
+        if (_Record.controlname == "HANLEDBY") {
+            this.record.obl_handled_id = _Record.id;
+            this.record.obl_handled_code = _Record.code;
+            this.record.obl_handled_name = _Record.name;
+        }
+
+
     }
+
+    onItmChange() {
+
+        this.record.obl_consignee_id= '';
+        this.record.obl_consignee_code = '';
+        this.record.obl_consignee_name = '';
+        this.record.obl_handled_id='';
+        this.record.obl_handled_code ='';
+        this.record.obl_handled_name = '';
+
+        this.HouseList.forEach(rec => {
+          if (rec.obl_houseno == this.record.obl_houseno) {
+            this.record.obl_consignee_id= rec.obl_consignee_id;
+            this.record.obl_consignee_code = rec.obl_consignee_code;
+            this.record.obl_consignee_name = rec.obl_consignee_name;
+            
+            this.record.obl_handled_id= rec.obl_handled_id;
+            this.record.obl_handled_code = rec.obl_handled_code;
+            this.record.obl_handled_name = rec.obl_handled_name;
+            
+          }
+        });
+      }
+
+      
+
 
     OnChange(field: string) {
     }
@@ -210,6 +292,12 @@ export class OblReleaseEditComponent implements OnInit {
     }
 
     onBlur(field: string) {
+        if (field == 'obl_refno') {
+            if (this.record.obl_refno != this.oldrefno) {
+                this.oldrefno = this.record.obl_refno;
+                this.GetHouseDetails();
+            }
+        }
     }
 
     onBlur2(cb: any) {

@@ -67,7 +67,7 @@ export class OblReleaseComponent implements OnInit {
       origin: 'oblrelease-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.USAccounts.Trans/OblRelaseEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/OBLReleasedEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_cargo_obl_released) {
@@ -83,7 +83,7 @@ export class OblReleaseComponent implements OnInit {
       origin: 'oblrelease-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.USAccounts.Trans/OblReleaseEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/OBLReleasedEditPage', JSON.stringify(parameter));
   }
 
   Close() {    
