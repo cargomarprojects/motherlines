@@ -10,8 +10,8 @@
   {{errorMessage}}
 </div>
 
-<acc-oblrelease-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-</acc-oblrelease-header>
+<acc-mblusage-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+</acc-mblusage-header>
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 

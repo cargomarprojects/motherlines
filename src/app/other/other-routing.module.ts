@@ -42,7 +42,7 @@ const routes: Routes = [
   { path : 'AlertLogPage', component : AlertLogPageComponent },
   { path : 'OBLReleasedPage', component : OblReleaseComponent },
   { path : 'OBLReleasedEditPage', component : OblReleaseEditComponent },
-  { path : 'MBLUsagePage', component : MblUsageComponent },
+  { path : 'OBLMBLUsagePage', component : MblUsageComponent },
   { path : 'MblUsageEditPage', component : MlbUsageEditComponent },
   
 ];

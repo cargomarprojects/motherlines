@@ -19,7 +19,7 @@
 
 
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">AGENT</label>
+                <label class="col-3 col-form-label col-form-label-sm">Agent</label>
                 <div class="col-9">
                     <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
                         [displaydata]="record.mu_agent_code" (ValueChanged)="LovSelected($event)">
@@ -39,16 +39,16 @@
 
 
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">BL-FROM</label>
+                <label class="col-3 col-form-label col-form-label-sm">BL-From</label>
                 <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('mu_bl_start_no')"
+                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('mu_bl_start_no')"
                         [(ngModel)]="record.mu_bl_start_no" maxlength="60" />
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">BL-TO</label>
+                <label class="col-3 col-form-label col-form-label-sm">BL-To</label>
                 <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('mu_bl_end_no')"
+                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('mu_bl_end_no')"
                         [(ngModel)]="record.mu_bl_end_no" maxlength="60" />
                 </div>
             </div>  
@@ -98,7 +98,7 @@
 
 
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">REMARK</label>
+                <label class="col-3 col-form-label col-form-label-sm">Rermarks</label>
                 <div class="col-9">
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('mu_remarks')"
                         [(ngModel)]="record.mu_remarks" maxlength="100" />
