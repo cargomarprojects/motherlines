@@ -44,7 +44,7 @@
                             <label class="col-4 col-form-label col-form-label-sm">Code</label>
                             <div class="col-8">
                                 <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'"
-                                    [displaycolumn]="'NAME'" [displaydata]="bank_name"
+                                    [displaycolumn]="'NAME'" [displaydata]="bank_name" [where]="lov_where" 
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>

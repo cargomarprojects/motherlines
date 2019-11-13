@@ -42,6 +42,8 @@ export class BankEnquiryReportComponent implements OnInit {
   filetype: string = '';
   filedisplayname: string = '';
 
+  lov_where: string = " ACC_TYPE in ('CASH', 'BANK') ";
+
   page_count: number = 0;
   page_current: number = 0;
   page_rows: number = 0;
@@ -274,9 +276,9 @@ export class BankEnquiryReportComponent implements OnInit {
 
     if (_rec.pay_pkid == null)
       return;
-    if (_rec.pay_type === "OP")
+    if (_rec.pay_pkid === "OP")
       return;
-    if (_rec.pay_type === "CL")
+    if (_rec.pay_pkid === "CL")
       return;
 
       
