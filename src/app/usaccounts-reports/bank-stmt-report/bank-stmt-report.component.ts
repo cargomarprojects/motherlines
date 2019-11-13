@@ -195,7 +195,7 @@ export class BankStmtReportComponent implements OnInit {
 
     this.loading = true;
 
-    this.mainservice.BankEnquiry(this.SearchData)
+    this.mainservice.BankStmt(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
