@@ -9,18 +9,23 @@ import { BankEnquiryReportReducer  } from './bank-enquiry-report/store/bank-enqu
 import { BankStmtReportComponent } from './bank-stmt-report/bank-stmt-report.component';
 import { BankStmtReportReducer  } from './bank-stmt-report/store/bank-stmt-report.reducer';
 
+import { BankBalReportComponent } from './bank-bal-report/bank-bal-report.component';
+import { BankBalReportReducer  } from './bank-bal-report/store/bank-bal-report.reducer';
+
 
 
 @NgModule({
     declarations :[
       BankEnquiryReportComponent,  
       BankStmtReportComponent,
+      BankBalReportComponent,
   ],
   imports: [
     SharedModule,
     UsAccountsReportsRoutingModule,
     StoreModule.forFeature('BankEnquiryReport',BankEnquiryReportReducer ),    
     StoreModule.forFeature('BankStmtReport',BankStmtReportReducer ),    
+    StoreModule.forFeature('BankBalReport',BankBalReportReducer ),    
   ],
   providers: [
   ]
