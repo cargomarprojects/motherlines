@@ -1,4 +1,3 @@
-
  export class Tbl_acc_ledger {
     jv_pkid: string;
     jv_vrno: string;
