@@ -52,14 +52,16 @@
         <table class="table  table-hover table-sm">
             <thead class="page-body-thead">
                 <tr>
-                    <th>BANK</th>
-                    <th style="text-align:right">BALANCE</th>
+                    <th width="30%">BANK</th>
+                    <th width="10%" style="text-align:right">BALANCE</th>
+                    <th width="60%" ></th>
                 </tr>
             </thead>
             <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                 <tr>
                     <td>{{rec.acc_name}}</td>
                     <td style="text-align:right">{{rec.jv_balance | number : '1.2-2'}}</td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>

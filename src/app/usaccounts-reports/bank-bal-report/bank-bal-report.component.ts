@@ -83,7 +83,7 @@ export class BankBalReportComponent implements OnInit {
 
                 this.SearchData = this.gs.UserInfo;
 
-                // this.SearchData.JV_ACC_ID = this.gs.year_code;
+                 this.SearchData.JV_ACC_ID = '';
                 this.SearchData.TDATE = this.tdate;
                 if (this.comp_code == 'ALL') {
                     this.SearchData.COMP_TYPE = 'ALL';
@@ -156,8 +156,10 @@ export class BankBalReportComponent implements OnInit {
             // this.SearchData.JV_YEAR = this.gs.year_code;
             // this.SearchData.BANK_ID = this.bank_id;
             // this.SearchData.BANK_NAME = this.bank_name;
+            this.SearchData.JV_ACC_ID = '';
             this.SearchData.TDATE = this.tdate;
-            this.SearchData.BRANCH_CODE = this.comp_code;
+            this.SearchData.COMP_CODE = this.gs.branch_codes;
+            this.SearchData.COMP_TYPE = 'ALL';
 
         }
 
