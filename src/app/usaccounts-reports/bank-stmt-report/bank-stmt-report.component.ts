@@ -7,19 +7,19 @@ import { Tbl_Acc_Payment } from '../models/Tbl_Acc_Payment';
 import { SearchTable } from '../../shared/models/searchtable';
 
 import { Store, State, select } from '@ngrx/store';
-import * as myActions from './store/bank-enquiry-report.actions';
-import * as myReducer from './store/bank-enquiry-report.reducer';
-import { ReportState } from './store/bank-enquiry-report.models'
+import * as myActions from './store/bank-stmt-report.actions';
+import * as myReducer from './store/bank-stmt-report.reducer';
+import { ReportState } from './store/bank-stmt-report.models'
 
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-bank-enquiry-report',
-  templateUrl: './bank-enquiry-report.component.html'
+  selector: 'app-bank-stmt-report',
+  templateUrl: './bank-stmt-report.component.html'
 })
-export class BankEnquiryReportComponent implements OnInit {
+export class BankStmtReportComponent implements OnInit {
 
-  title = 'Bank Enquiry';
+  title = 'Bank Statement';
   pkid: string;
   urlid: string;
   url: string;
@@ -195,7 +195,7 @@ export class BankEnquiryReportComponent implements OnInit {
 
     this.loading = true;
 
-    this.mainservice.BankEnquiry(this.SearchData)
+    this.mainservice.BankStmt(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
@@ -265,7 +265,7 @@ export class BankEnquiryReportComponent implements OnInit {
     }
 
     // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-    this.report_title = 'Bank Enquiry Report';
+    this.report_title = 'Bank Stmt Report';
     this.report_url = undefined;
     this.report_searchdata = this.gs.UserInfo;
     this.report_menuid = this.menuid;
@@ -283,7 +283,7 @@ export class BankEnquiryReportComponent implements OnInit {
 
       
     this.report_title = 'Bank Payment Details';
-    this.report_url = '/api/UsAccBankEnquiryRpt/PaymentDetails';
+    this.report_url = '/api/UsAccBankStmtRpt/PaymentDetails';
     this.report_searchdata = this.gs.UserInfo;
     this.report_searchdata.PKID = _rec.pay_pkid;
     this.report_searchdata.TYPE = _rec.pay_type;

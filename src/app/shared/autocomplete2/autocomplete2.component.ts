@@ -80,6 +80,10 @@ export class AutoComplete2Component {
   }
 
 
+  private _branchcode: string;
+  @Input() set branchcode(value: string) {
+    this._branchcode = value;
+  }
 
   private inputdata: SearchTable = new SearchTable();
 
@@ -175,8 +179,8 @@ export class AutoComplete2Component {
       parentid: this._parentid,
       searchstring: this._displaydata,
       where: this._where,
-      comp_code: this.gs.globalVariables.comp_code,
-      branch_code: this.gs.globalVariables.branch_code
+      comp_code: this.gs.company_code,
+      branch_code: this._branchcode 
     };
 
     this.loginservice.LovList(SearchData)

@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, OnDestroy, SimpleChange } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -35,13 +34,13 @@ export class ApprovedPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-   // this.mainservice.init(this.route.snapshot.queryParams);
-   this.sub = this.route.queryParams.subscribe(params => {
-    if (params["parameter"] != "") {
-      this.mainservice.init(params);
-    // this.mainservice.Search('SCREEN');
-    }
-  });
+    // this.mainservice.init(this.route.snapshot.queryParams);
+    this.sub = this.route.queryParams.subscribe(params => {
+      if (params["parameter"] != "") {
+        this.mainservice.init(params);
+        this.mainservice.Search('SCREEN');
+      }
+    });
 
     this.initPage();
   }
@@ -108,8 +107,11 @@ export class ApprovedPageComponent implements OnInit {
     this.location.back();
   }
 
-ngOnDestroy() {
+  ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
+  AttachRow(_rec: Tbl_Cargo_Approved) {
+
+  }
 }

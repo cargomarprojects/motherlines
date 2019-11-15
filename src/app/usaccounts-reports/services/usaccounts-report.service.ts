@@ -12,7 +12,14 @@ export class UsAccountReportService {
     }
 
     BankEnquiry(SearchData: any) {
-      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBankRpt/BankEnquiry", SearchData, this.gs.headerparam2('authorized'));
+      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBankEnquiryRpt/BankEnquiry", SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    BankStmt(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBankStmtRpt/BankStmt", SearchData, this.gs.headerparam2('authorized'));
+    }
+    BankBalance(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBankBalRpt/BankBalance", SearchData, this.gs.headerparam2('authorized'));
     }
 
 }
