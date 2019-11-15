@@ -41,6 +41,9 @@ import { AlertLogPageHeaderComponent } from './alertlogpage/alertlogpage-header.
 import { OblReleaseComponent } from './oblrelease/oblrelease.component';
 import { OblReleaseEditComponent } from './oblrelease/oblrelease-edit.component';
 import { OblReleaseHeaderComponent } from './oblrelease/oblrelease-header.component';
+import { MblUsageComponent } from './mblusage/mblusage.component';
+import { MblUsageHeaderComponent } from './mblusage/mblusage-header.component';
+import { MlbUsageEditComponent } from './mblusage/mblusage-edit.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +72,10 @@ import { OblReleaseHeaderComponent } from './oblrelease/oblrelease-header.compon
     AlertLogPageHeaderComponent,
     OblReleaseComponent,
     OblReleaseEditComponent,
-    OblReleaseHeaderComponent
+    OblReleaseHeaderComponent,
+    MblUsageComponent,
+    MblUsageHeaderComponent,
+    MlbUsageEditComponent
   ],
   imports: [
     SharedModule,    

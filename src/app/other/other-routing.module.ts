@@ -20,6 +20,8 @@ import { LockUnlockComponent } from './lockunlock/lockunlock.component';
 import { AlertLogPageComponent } from './alertlogpage/alertlogpage.component';
 import { OblReleaseComponent } from './oblrelease/oblrelease.component';
 import { OblReleaseEditComponent } from './oblrelease/oblrelease-edit.component';
+import { MblUsageComponent } from './mblusage/mblusage.component';
+import { MlbUsageEditComponent } from './mblusage/mblusage-edit.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -40,7 +42,9 @@ const routes: Routes = [
   { path : 'AlertLogPage', component : AlertLogPageComponent },
   { path : 'OBLReleasedPage', component : OblReleaseComponent },
   { path : 'OBLReleasedEditPage', component : OblReleaseEditComponent },
-
+  { path : 'OBLMBLUsagePage', component : MblUsageComponent },
+  { path : 'MblUsageEditPage', component : MlbUsageEditComponent },
+  
 ];
 
 @NgModule({

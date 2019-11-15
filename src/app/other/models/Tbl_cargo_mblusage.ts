@@ -19,6 +19,7 @@ export interface Tbl_cargo_mblusage {
     mu_origin : string;
     mu_courier_name : string;
     mu_tracking_no : string;
+    mu_sent_on : string;
     mu_remarks : string;
     rec_created_by : string;
     rec_created_date : string;
