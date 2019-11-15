@@ -3,11 +3,11 @@ import { GlobalService } from '../../core/services/global.service';
 import { SearchQuery } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
 
 @Component({
-    selector: 'acc-bankstate-header',
-    templateUrl: './bankstate-header.component.html',
+    selector: 'acc-genfileupload-header',
+    templateUrl: './genfileupload-header.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BankStateHeaderComponent implements OnInit {
+export class GenFileUploadHeaderComponent implements OnInit {
     // Call By Value using Input Parameters
     searchQuery: SearchQuery;
     @Input() set _query(value: SearchQuery) {

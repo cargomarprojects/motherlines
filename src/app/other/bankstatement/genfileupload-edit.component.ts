@@ -6,11 +6,11 @@ import { GlobalService } from '../../core/services/global.service';
 import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 import { InputBoxComponent } from '../../shared/input/inputbox.component';
 
-import { BankSateService } from '../services/bankstate.service';
+import { GenFileUploadService } from '../services/genfileupload.service';
 import { User_Menu } from '../../core/models/menum';
 import { vm_tbl_accPayment, Tbl_Acc_Payment } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
 import { SearchTable } from '../../shared/models/searchtable';
-import { Tbl_Acc_Opening } from 'src/app/usaccounts/models/Tbl_Acc_Opening';
+
 
 
 
@@ -55,7 +55,7 @@ export class BankStateEditComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
-        public mainService: BankSateService,
+        public mainService: GenFileUploadService,
     ) {
         this.decplace = this.gs.foreign_amt_dec;
     }

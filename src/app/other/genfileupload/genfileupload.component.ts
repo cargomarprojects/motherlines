@@ -5,22 +5,22 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { GlobalService } from '../../core/services/global.service';
-import { SearchQuery, AccPaymentModel , Tbl_Acc_Payment } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
+import { SearchQuery, Tbl_cargo_genfilesModel , Tbl_cargo_genfiles } from '../models/Tbl_cargo_genfiles';
 import { PageQuery } from '../../shared/models/pageQuery';
-import { BankSateService  } from '../services/bankstate.service';
+import { GenFileUploadService } from '../services/genfileupload.service';
 
 @Component({
-  selector: 'app-bankstate',
-  templateUrl: './bankstate.component.html'
+  selector: 'app-genfileupload',
+  templateUrl: './genfileupload.component.html'
 })
-export class BankStateComponent implements OnInit {
+export class GenFileUploadComponent implements OnInit {
 
   /*
    Joy
  */
 
   errorMessage$: Observable<string>;
-  records$: Observable<Tbl_Acc_Payment []>;
+  records$: Observable<Tbl_cargo_genfiles []>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
 
@@ -28,7 +28,7 @@ export class BankStateComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
-    public mainservice: BankSateService
+    public mainservice: GenFileUploadService
   ) { }
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class BankStateComponent implements OnInit {
     this.gs.Naviagete('Silver.Other.Trans/MblUsageEditPage', JSON.stringify(parameter));
 
   }
-  edit(_record: Tbl_Acc_Payment) {
+  edit(_record: Tbl_cargo_genfiles) {
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')
       return;
@@ -77,7 +77,7 @@ export class BankStateComponent implements OnInit {
 
     let parameter = {
       menuid: this.mainservice.menuid,
-      pkid: _record.pay_pkid ,
+      pkid: _record.gf_pkid ,
       type: '',
       origin: 'mblusage-page',
       mode: 'EDIT'

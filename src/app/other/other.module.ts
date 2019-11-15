@@ -44,9 +44,10 @@ import { OblReleaseHeaderComponent } from './oblrelease/oblrelease-header.compon
 import { MblUsageComponent } from './mblusage/mblusage.component';
 import { MblUsageHeaderComponent } from './mblusage/mblusage-header.component';
 import { MlbUsageEditComponent } from './mblusage/mblusage-edit.component';
-import { BankStateHeaderComponent } from './bankstatement/bankstate-header.component';
-import { BankStateEditComponent } from './bankstatement/bankstate-edit.component';
-import { BankStateComponent } from './bankstatement/bankstate.component';
+import { GenFileUploadComponent } from './genfileupload/genfileupload.component';
+import { GenFileUploadHeaderComponent } from './genfileupload/genfileupload-header.component';
+import { GenFileUploadEditComponent } from './genfileupload/genfileupload-edit.component';
+
 
 @NgModule({
   declarations: [
@@ -79,9 +80,10 @@ import { BankStateComponent } from './bankstatement/bankstate.component';
     MblUsageComponent,
     MblUsageHeaderComponent,
     MlbUsageEditComponent,
-    BankStateHeaderComponent,
-    BankStateEditComponent,
-    BankStateComponent
+    GenFileUploadComponent,
+    GenFileUploadHeaderComponent,
+    GenFileUploadEditComponent
+
   ],
   imports: [
     SharedModule,    

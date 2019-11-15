@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_Acc_Payment, AccPaymentModel } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
-import { SearchQuery } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
+import { Tbl_cargo_genfiles , Tbl_cargo_genfilesModel } from '../models/Tbl_cargo_genfiles';
+import { SearchQuery } from '../models/Tbl_cargo_genfiles';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 @Injectable({
     providedIn: 'root'
 })
-export class BankSateService {
+export class GenFileUploadService {
 
-    private mdata$ = new BehaviorSubject<AccPaymentModel>(null);
-    get data$(): Observable<AccPaymentModel> {
+    private mdata$ = new BehaviorSubject<Tbl_cargo_genfilesModel>(null);
+    get data$(): Observable<Tbl_cargo_genfilesModel> {
         return this.mdata$.asObservable();
     }
-    private record: AccPaymentModel;
+    private record: Tbl_cargo_genfilesModel;
 
     public id: string;
     public menuid: string;
@@ -44,7 +44,7 @@ export class BankSateService {
         this.menuid = params.id;
         this.param_type = params.param_type;
 
-        this.record = <AccPaymentModel>{
+        this.record = <Tbl_cargo_genfilesModel>{
             errormessage: '',
             records: [],
             searchQuery: <SearchQuery>{ searchString: ''},
@@ -103,7 +103,7 @@ export class BankSateService {
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
-            this.record = <AccPaymentModel>{
+            this.record = <Tbl_cargo_genfilesModel>{
                 records: [],
                 errormessage: this.gs.getError(error),
             }
@@ -111,21 +111,21 @@ export class BankSateService {
         });
     }
 
-    RefreshList(_rec: Tbl_Acc_Payment) {
+    RefreshList(_rec: Tbl_cargo_genfiles) {
         if (this.record.records == null)
             return;
-        var REC = this.record.records.find(rec => rec.pay_pkid == _rec.pay_pkid);
+        var REC = this.record.records.find(rec => rec.gf_pkid == _rec.gf_pkid);
         if (REC == null) {
             this.record.records.push(_rec);
         }
         else {
-            REC.pay_pkid = _rec.pay_pkid;
+            REC.gf_pkid = _rec.gf_pkid;
             REC.rec_created_by = _rec.rec_created_by;
             REC.rec_created_date = _rec.rec_created_date;
         }
     }
     
-    DeleteRow(_rec: Tbl_Acc_Payment) {
+    DeleteRow(_rec: Tbl_cargo_genfiles) {
 
         this.record.errormessage = '';
         if (!confirm("DELETE " )) {
@@ -133,7 +133,7 @@ export class BankSateService {
         }
 
         var SearchData = this.gs.UserInfo;
-        SearchData.pkid = _rec.pay_pkid;
+        SearchData.pkid = _rec.gf_pkid;
 
         this.DeleteRecord(SearchData)
             .subscribe(response => {
@@ -142,7 +142,7 @@ export class BankSateService {
                     alert(this.record.errormessage);
                 }
                 else {
-                    this.record.records.splice(this.record.records.findIndex(rec => rec.pay_pkid == _rec.pay_pkid), 1);
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.gf_pkid == _rec.gf_pkid), 1);
                 }
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
@@ -152,20 +152,20 @@ export class BankSateService {
 
 
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/BankState/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/GenFileUpload/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/BankState/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/GenFileUpload/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
 
     DeleteRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/BankState/Delete', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/GenFileUpload/Delete', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/BankState/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/GenFileUpload/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
 
