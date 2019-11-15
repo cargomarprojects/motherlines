@@ -7,8 +7,10 @@ export interface ReportState {
     currentTab: string;
 
     tdate: string;
+    comp_type:string;
     comp_name: string;
     comp_code:string;
+    bankids:string;
 
     page_rows: number;
     page_count: number;
