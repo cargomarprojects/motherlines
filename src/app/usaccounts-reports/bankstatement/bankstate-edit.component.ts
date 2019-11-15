@@ -6,10 +6,12 @@ import { GlobalService } from '../../core/services/global.service';
 import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 import { InputBoxComponent } from '../../shared/input/inputbox.component';
 
-import { MblUsageService} from '../services/mblusage.service';
+import { BankSateService } from '../services/bankstate.service';
 import { User_Menu } from '../../core/models/menum';
-import { vm_Tbl_cargo_mblusage, Tbl_cargo_mblusage } from '../models/Tbl_cargo_mblusage';
+import { vm_tbl_accPayment, Tbl_Acc_Payment } from '../models/Tbl_Acc_Payment';
 import { SearchTable } from '../../shared/models/searchtable';
+import { Tbl_Acc_Opening } from 'src/app/usaccounts/models/Tbl_Acc_Opening';
+
 
 
 @Component({
@@ -18,7 +20,7 @@ import { SearchTable } from '../../shared/models/searchtable';
 })
 export class BankSateEditComponent implements OnInit {
 
-    record: Tbl_cargo_mblusage  = <Tbl_cargo_mblusage>{};
+    record: Tbl_Acc_Payment  = <Tbl_Acc_Payment>{};
 
     tab: string = 'main';
 
@@ -46,14 +48,14 @@ export class BankSateEditComponent implements OnInit {
 
     oldrefno = '';
 
-    HouseList: Tbl_cargo_mblusage [] = [];
+    HouseList: Tbl_Acc_Payment   [] = [];
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
-        public mainService: MblUsageService,
+        public mainService: BankSateService,
     ) {
         this.decplace = this.gs.foreign_amt_dec;
     }
@@ -103,7 +105,7 @@ export class BankSateEditComponent implements OnInit {
         this.isAccLocked = false;
 
         if (this.mode == 'ADD') {
-            this.record = <Tbl_cargo_mblusage>{};
+            this.record = <Tbl_Acc_Payment>{};
             this.pkid = this.gs.getGuid();
             this.init();
         }
@@ -114,11 +116,9 @@ export class BankSateEditComponent implements OnInit {
 
     init() {
 
-        this.record.mu_pkid = this.pkid;
-        this.record.mu_sent_on = this.gs.defaultValues.today;
-
+        this.record.pay_pkid = this.pkid;
+        //this.record.mu_sent_on = this.gs.defaultValues.today;
         
-        this.HouseList = [];
 
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
@@ -130,7 +130,7 @@ export class BankSateEditComponent implements OnInit {
         SearchData.pkid = this.pkid;
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
-                this.record = <Tbl_cargo_mblusage>response.record;
+                this.record = <Tbl_Acc_Payment>response.record;
 
                 this.mode = 'EDIT';
                 this.errorMessage = "";
@@ -148,7 +148,7 @@ export class BankSateEditComponent implements OnInit {
         if (!this.Allvalid())
             return;
 
-        const saveRecord = <vm_Tbl_cargo_mblusage>{};
+        const saveRecord = <vm_tbl_accPayment>{};
         saveRecord.record = this.record;
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
@@ -189,12 +189,6 @@ export class BankSateEditComponent implements OnInit {
         }
 
 
-        if (this.gs.isBlank(this.record.mu_agent_id)) {
-            bRet = false;
-            this.errorMessage = "Invalid House";
-            alert(this.errorMessage);
-            return bRet;
-        }        
 
         return bRet;
     }
@@ -208,9 +202,7 @@ export class BankSateEditComponent implements OnInit {
     LovSelected(_Record: SearchTable) {
 
         if (_Record.controlname == "AGENT") {
-            this.record.mu_agent_id = _Record.id;
-            this.record.mu_agent_code = _Record.code;
-            this.record.mu_agent_name = _Record.name;
+
         }
 
 
@@ -256,7 +248,6 @@ export class BankSateEditComponent implements OnInit {
         this.record.op_amt = this.gs.roundNumber(nTot, 2);
         */
     }
-
 
 
 

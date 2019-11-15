@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { GlobalService } from '../../core/services/global.service';
-import { SearchQuery, Tbl_cargo_mblusageModel, Tbl_cargo_mblusage } from '../models/Tbl_cargo_mblusage';
+import { SearchQuery, AccPaymentModel , Tbl_Acc_Payment } from '../models/Tbl_Acc_Payment';
 import { PageQuery } from '../../shared/models/pageQuery';
-import { MblUsageService  } from '../services/mblusage.service';
+import { BankSateService  } from '../services/bankstate.service';
 
 @Component({
   selector: 'app-mblusage',
@@ -20,7 +20,7 @@ export class BankStateComponent implements OnInit {
  */
 
   errorMessage$: Observable<string>;
-  records$: Observable<Tbl_cargo_mblusage []>;
+  records$: Observable<Tbl_Acc_Payment []>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
 
@@ -28,7 +28,7 @@ export class BankStateComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
-    public mainservice: MblUsageService
+    public mainservice: BankSateService
   ) { }
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class BankStateComponent implements OnInit {
     this.gs.Naviagete('Silver.Other.Trans/MblUsageEditPage', JSON.stringify(parameter));
 
   }
-  edit(_record: Tbl_cargo_mblusage) {
+  edit(_record: Tbl_Acc_Payment) {
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')
       return;
@@ -77,7 +77,7 @@ export class BankStateComponent implements OnInit {
 
     let parameter = {
       menuid: this.mainservice.menuid,
-      pkid: _record.mu_pkid ,
+      pkid: _record.pay_pkid ,
       type: '',
       origin: 'mblusage-page',
       mode: 'EDIT'

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
-import { SearchQuery } from '../models/Tbl_cargo_mblusage';
+import { SearchQuery } from '../models/Tbl_Acc_Payment';
 
 @Component({
     selector: 'acc-mblusage-header',
