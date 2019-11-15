@@ -10,8 +10,8 @@ import { PageQuery } from '../../shared/models/pageQuery';
 import { BankSateService  } from '../services/bankstate.service';
 
 @Component({
-  selector: 'app-mblusage',
-  templateUrl: './mblusage.component.html'
+  selector: 'app-bankstate',
+  templateUrl: './bankstate.component.html'
 })
 export class BankStateComponent implements OnInit {
 

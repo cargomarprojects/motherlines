@@ -3,8 +3,8 @@ import { GlobalService } from '../../core/services/global.service';
 import { SearchQuery } from '../models/Tbl_Acc_Payment';
 
 @Component({
-    selector: 'acc-mblusage-header',
-    templateUrl: './mblusage-header.component.html',
+    selector: 'acc-bankstate-header',
+    templateUrl: './bankstate-header.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BankStateHeaderComponent implements OnInit {

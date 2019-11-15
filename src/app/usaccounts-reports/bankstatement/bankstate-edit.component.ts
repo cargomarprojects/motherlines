@@ -15,10 +15,10 @@ import { Tbl_Acc_Opening } from 'src/app/usaccounts/models/Tbl_Acc_Opening';
 
 
 @Component({
-    selector: 'app-mblusage-edit',
-    templateUrl: './mblusage-edit.component.html'
+    selector: 'app-bankstate-edit',
+    templateUrl: './bankstate-edit.component.html'
 })
-export class BankSateEditComponent implements OnInit {
+export class BankStateEditComponent implements OnInit {
 
     record: Tbl_Acc_Payment  = <Tbl_Acc_Payment>{};
 
