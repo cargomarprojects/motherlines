@@ -43,6 +43,7 @@ export class BankBalReportComponent implements OnInit {
     storesub: any;
     sub: any;
 
+    bankfullrecords: Tbl_Bank_List[] = [];
     bankrecords: Tbl_Bank_List[] = [];
     loading: boolean = false;
     errorMessage: string = '';
@@ -116,6 +117,7 @@ export class BankBalReportComponent implements OnInit {
                 this.comp_code = this.gs.branch_code;
                 this.comp_name = this.gs.branch_name;
                 this.SearchData = this.gs.UserInfo;
+                
             }
         });
 
@@ -124,7 +126,8 @@ export class BankBalReportComponent implements OnInit {
     LoadBank() {
         var SearchData = this.gs.UserInfo;
         this.mainservice.BankList(SearchData).subscribe(response => {
-            this.bankrecords = response.list;
+            this.bankfullrecords = response.list;
+            this.FillChkListBox(this.gs.branch_code);
         }, error => {
             this.errorMessage = this.gs.getError(error)
         });
@@ -204,8 +207,8 @@ export class BankBalReportComponent implements OnInit {
                         tdate: this.SearchData.TDATE,
                         comp_name: this.SearchData.COMP_NAME,
                         comp_code: this.SearchData.COMP_CODE,
-                        comp_type:this.SearchData.COMPANY_TYPE,
-                        bankids:this.SearchData.JV_ACC_ID,
+                        comp_type: this.SearchData.COMPANY_TYPE,
+                        bankids: this.SearchData.JV_ACC_ID,
 
                         page_rows: response.page_rows,
                         page_count: response.page_count,
@@ -253,6 +256,34 @@ export class BankBalReportComponent implements OnInit {
             Rec.bnk_checked = this.selectdeselect;
             this.allbankchecked = this.selectdeselect;
         })
+    }
+
+    onChange(field: string) {
+
+       this.FillChkListBox(this.comp_type);
+      }
+
+    FillChkListBox(sCode: string) {
+        this.bankrecords = <Tbl_Bank_List[]>[];
+        if (sCode.trim() == "ALL") {
+            this.bankfullrecords.forEach(Rec => {
+                Rec.bnk_checked = false;
+                this.bankrecords.push(Rec);
+            })
+        }
+        else {
+
+            this.bankfullrecords.filter(rec => rec.bnk_acc_branch == sCode || rec.bnk_acc_branch == "ALL").forEach(Rec => {
+                Rec.bnk_checked = false;
+                this.bankrecords.push(Rec);
+            })
+
+            // for (let Rec of this.bankfullrecords.filter(rec => rec.bnk_acc_branch == sCode || rec.bnk_acc_branch == "ALL")) {
+            //     Rec.bnk_checked = false;
+            //     this.bankrecords.push(Rec);
+            // }
+        }
+
     }
 
 }
