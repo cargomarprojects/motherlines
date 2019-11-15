@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_cargo_mblusage, Tbl_cargo_mblusageModel } from '../models/Tbl_cargo_mblusage';
-import { SearchQuery } from '../models/Tbl_cargo_mblusage';
+import { Tbl_Acc_Payment, AccPaymentModel } from '../models/Tbl_Acc_Payment';
+import { SearchQuery } from '../models/Tbl_Acc_Payment';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 @Injectable({
     providedIn: 'root'
 })
-export class MblUsageService {
+export class BankSateService {
 
-    private mdata$ = new BehaviorSubject<Tbl_cargo_mblusageModel>(null);
-    get data$(): Observable<Tbl_cargo_mblusageModel> {
+    private mdata$ = new BehaviorSubject<AccPaymentModel>(null);
+    get data$(): Observable<AccPaymentModel> {
         return this.mdata$.asObservable();
     }
-    private record: Tbl_cargo_mblusageModel;
+    private record: AccPaymentModel;
 
     public id: string;
     public menuid: string;
@@ -44,7 +44,7 @@ export class MblUsageService {
         this.menuid = params.id;
         this.param_type = params.param_type;
 
-        this.record = <Tbl_cargo_mblusageModel>{
+        this.record = <AccPaymentModel>{
             errormessage: '',
             records: [],
             searchQuery: <SearchQuery>{ searchString: ''},
@@ -103,7 +103,7 @@ export class MblUsageService {
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
-            this.record = <Tbl_cargo_mblusageModel>{
+            this.record = <AccPaymentModel>{
                 records: [],
                 errormessage: this.gs.getError(error),
             }
@@ -111,37 +111,29 @@ export class MblUsageService {
         });
     }
 
-    RefreshList(_rec: Tbl_cargo_mblusage) {
+    RefreshList(_rec: Tbl_Acc_Payment) {
         if (this.record.records == null)
             return;
-        var REC = this.record.records.find(rec => rec.mu_pkid == _rec.mu_pkid);
+        var REC = this.record.records.find(rec => rec.pay_pkid == _rec.pay_pkid);
         if (REC == null) {
             this.record.records.push(_rec);
         }
         else {
-            REC.mu_agent_name = _rec.mu_agent_name;
-            REC.mu_bl_start_no = _rec.mu_bl_start_no;
-            REC.mu_bl_end_no = _rec.mu_bl_end_no;
-            REC.mu_bl_tot = _rec.mu_bl_tot;
-            REC.mu_origin = _rec.mu_origin;
-            REC.mu_courier_name = _rec.mu_courier_name;
-            REC.mu_tracking_no = _rec.mu_tracking_no;
-            REC.mu_sent_on = _rec.mu_sent_on;
-            REC.mu_remarks = _rec.mu_remarks;
+            REC.pay_pkid = _rec.pay_pkid;
             REC.rec_created_by = _rec.rec_created_by;
             REC.rec_created_date = _rec.rec_created_date;
         }
     }
     
-    DeleteRow(_rec: Tbl_cargo_mblusage) {
+    DeleteRow(_rec: Tbl_Acc_Payment) {
 
         this.record.errormessage = '';
-        if (!confirm("DELETE " + _rec.mu_tracking_no )) {
+        if (!confirm("DELETE " )) {
             return;
         }
 
         var SearchData = this.gs.UserInfo;
-        SearchData.pkid = _rec.mu_pkid;
+        SearchData.pkid = _rec.pay_pkid;
 
         this.DeleteRecord(SearchData)
             .subscribe(response => {
@@ -150,7 +142,7 @@ export class MblUsageService {
                     alert(this.record.errormessage);
                 }
                 else {
-                    this.record.records.splice(this.record.records.findIndex(rec => rec.mu_pkid == _rec.mu_pkid), 1);
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.pay_pkid == _rec.pay_pkid), 1);
                 }
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
@@ -160,20 +152,20 @@ export class MblUsageService {
 
 
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/MblUsage/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/BankState/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/MblUsage/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/BankState/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
 
     DeleteRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/MblUsage/Delete', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/BankState/Delete', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/MblUsage/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/BankState/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
 

@@ -1,3 +1,12 @@
+import { PageQuery } from '../../shared/models/pageQuery';
+
+export interface SearchQuery {
+    balance : string ;
+    searchString: string;
+    sdate : string ;
+    edate : string;
+}
+
 export class Tbl_Acc_Payment {
     pay_pkid: string;
     pay_vrno: string;
@@ -92,3 +101,20 @@ export class Tbl_Acc_Payment {
     rec_files_attached: string;
     rec_files_attached_chk: string;
 }
+
+
+export interface AccPaymentModel {
+    errormessage: string;
+    searchQuery: SearchQuery;
+    pageQuery: PageQuery;
+    records: Tbl_Acc_Payment[]
+}
+
+export interface vm_tbl_accPayment {
+    mode: string;
+    pkid: string;
+    record: Tbl_Acc_Payment;
+    userinfo: any,
+    filter: any;
+}
+
