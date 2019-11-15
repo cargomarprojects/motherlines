@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
-import { SearchQuery } from '../models/Tbl_Acc_Payment';
+import { SearchQuery } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
 
 @Component({
     selector: 'acc-bankstate-header',

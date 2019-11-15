@@ -10,7 +10,7 @@ import { BankSateService } from '../services/bankstate.service';
 import { User_Menu } from '../../core/models/menum';
 import { vm_tbl_accPayment, Tbl_Acc_Payment } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
 import { SearchTable } from '../../shared/models/searchtable';
-import { Tbl_Acc_Opening } from './node_modules/src/app/usaccounts/models/Tbl_Acc_Opening';
+import { Tbl_Acc_Opening } from 'src/app/usaccounts/models/Tbl_Acc_Opening';
 
 
 

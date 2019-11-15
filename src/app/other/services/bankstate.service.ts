@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_Acc_Payment, AccPaymentModel } from '../models/Tbl_Acc_Payment';
-import { SearchQuery } from '../models/Tbl_Acc_Payment';
+import { Tbl_Acc_Payment, AccPaymentModel } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
+import { SearchQuery } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 @Injectable({

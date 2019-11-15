@@ -3,15 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { BankEnquiryReportComponent } from './bank-enquiry-report/bank-enquiry-report.component';
 import { BankStmtReportComponent } from './bank-stmt-report/bank-stmt-report.component';
 import { BankBalReportComponent } from './bank-bal-report/bank-bal-report.component';
-import { BankStateComponent } from './bankstatement/bankstate.component';
-import { BankStateEditComponent } from './bankstatement/bankstate-edit.component';
 
 const routes: Routes = [
   { path :'BankPage', component : BankEnquiryReportComponent },
   { path :'BankStmtPage', component : BankStmtReportComponent },
   { path :'BankBalancePage', component : BankBalReportComponent },
-  { path :'PaySearchPage', component : BankStateComponent },
-  { path :'PaySearchEditPage', component : BankStateEditComponent },
 ];
 
 @NgModule({
