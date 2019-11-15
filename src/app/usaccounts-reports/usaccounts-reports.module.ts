@@ -11,14 +11,24 @@ import { BankStmtReportReducer  } from './bank-stmt-report/store/bank-stmt-repor
 
 import { BankBalReportComponent } from './bank-bal-report/bank-bal-report.component';
 import { BankBalReportReducer  } from './bank-bal-report/store/bank-bal-report.reducer';
+import { BankStateComponent } from './bankstatement/bankstate.component';
+import { BankStateEditComponent } from './bankstatement/bankstate-edit.component';
+import { BankStateHeaderComponent } from './bankstatement/bankstate-header.component';
 
 
 
 @NgModule({
     declarations :[
+
+      BankStateComponent,
+      BankStateEditComponent,
+      BankStateHeaderComponent,
+
       BankEnquiryReportComponent,  
       BankStmtReportComponent,
       BankBalReportComponent,
+
+
   ],
   imports: [
     SharedModule,
