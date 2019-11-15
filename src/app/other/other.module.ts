@@ -44,6 +44,9 @@ import { OblReleaseHeaderComponent } from './oblrelease/oblrelease-header.compon
 import { MblUsageComponent } from './mblusage/mblusage.component';
 import { MblUsageHeaderComponent } from './mblusage/mblusage-header.component';
 import { MlbUsageEditComponent } from './mblusage/mblusage-edit.component';
+import { BankStateHeaderComponent } from './bankstatement/bankstate-header.component';
+import { BankStateEditComponent } from './bankstatement/bankstate-edit.component';
+import { BankStateComponent } from './bankstatement/bankstate.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +78,10 @@ import { MlbUsageEditComponent } from './mblusage/mblusage-edit.component';
     OblReleaseHeaderComponent,
     MblUsageComponent,
     MblUsageHeaderComponent,
-    MlbUsageEditComponent
+    MlbUsageEditComponent,
+    BankStateHeaderComponent,
+    BankStateEditComponent,
+    BankStateComponent
   ],
   imports: [
     SharedModule,    

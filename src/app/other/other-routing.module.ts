@@ -22,6 +22,8 @@ import { OblReleaseComponent } from './oblrelease/oblrelease.component';
 import { OblReleaseEditComponent } from './oblrelease/oblrelease-edit.component';
 import { MblUsageComponent } from './mblusage/mblusage.component';
 import { MlbUsageEditComponent } from './mblusage/mblusage-edit.component';
+import { BankStateComponent } from './bankstatement/bankstate.component';
+import { BankStateEditComponent } from './bankstatement/bankstate-edit.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -44,6 +46,8 @@ const routes: Routes = [
   { path : 'OBLReleasedEditPage', component : OblReleaseEditComponent },
   { path : 'OBLMBLUsagePage', component : MblUsageComponent },
   { path : 'MblUsageEditPage', component : MlbUsageEditComponent },
+  { path : 'GeneralFileUpload', component : BankStateComponent },
+  { path : 'GeneralFileEdit', component : BankStateEditComponent },
   
 ];
 
