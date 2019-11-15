@@ -10,6 +10,7 @@ import { GenFileUploadService } from '../services/genfileupload.service';
 import { User_Menu } from '../../core/models/menum';
 import { vm_tbl_accPayment, Tbl_Acc_Payment } from '../../usaccounts-reports/models/Tbl_Acc_Payment';
 import { SearchTable } from '../../shared/models/searchtable';
+import { vm_Tbl_cargo_genfiles, Tbl_cargo_genfiles, Tbl_cargo_genfilesModel } from '../models/Tbl_cargo_genfiles';
 
 
 
@@ -20,7 +21,7 @@ import { SearchTable } from '../../shared/models/searchtable';
 })
 export class BankStateEditComponent implements OnInit {
 
-    record: Tbl_Acc_Payment  = <Tbl_Acc_Payment>{};
+    record: Tbl_cargo_genfiles  = <Tbl_cargo_genfiles>{};
 
     tab: string = 'main';
 
@@ -105,7 +106,7 @@ export class BankStateEditComponent implements OnInit {
         this.isAccLocked = false;
 
         if (this.mode == 'ADD') {
-            this.record = <Tbl_Acc_Payment>{};
+            this.record = <Tbl_cargo_genfiles>{};
             this.pkid = this.gs.getGuid();
             this.init();
         }
@@ -116,7 +117,7 @@ export class BankStateEditComponent implements OnInit {
 
     init() {
 
-        this.record.pay_pkid = this.pkid;
+        this.record.gf_pkid = this.pkid;
         //this.record.mu_sent_on = this.gs.defaultValues.today;
         
 
@@ -130,8 +131,7 @@ export class BankStateEditComponent implements OnInit {
         SearchData.pkid = this.pkid;
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
-                this.record = <Tbl_Acc_Payment>response.record;
-
+                this.record = <Tbl_cargo_genfiles>response.record;
                 this.mode = 'EDIT';
                 this.errorMessage = "";
             }, error => {
@@ -148,7 +148,7 @@ export class BankStateEditComponent implements OnInit {
         if (!this.Allvalid())
             return;
 
-        const saveRecord = <vm_tbl_accPayment>{};
+        const saveRecord = <vm_Tbl_cargo_genfiles>{};
         saveRecord.record = this.record;
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
