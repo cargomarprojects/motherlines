@@ -8,7 +8,7 @@ import { InputBoxComponent } from '../../shared/input/inputbox.component';
 
 import { GenFileUploadService } from '../services/genfileupload.service';
 import { User_Menu } from '../../core/models/menum';
-import { vm_Tbl_cargo_genfiles , Tbl_cargo_genfiles, Tbl_cargo_genfilesModel } from '../models/Tbl_cargo_genfiles';
+import { vm_Tbl_cargo_genfiles, Tbl_cargo_genfiles, Tbl_cargo_genfilesModel } from '../models/Tbl_cargo_genfiles';
 import { SearchTable } from '../../shared/models/searchtable';
 
 
@@ -18,7 +18,7 @@ import { SearchTable } from '../../shared/models/searchtable';
 })
 export class GenFileUploadEditComponent implements OnInit {
 
-    record: Tbl_cargo_genfiles  = <Tbl_cargo_genfiles>{};
+    record: Tbl_cargo_genfiles = <Tbl_cargo_genfiles>{};
 
     tab: string = 'main';
 
@@ -46,7 +46,7 @@ export class GenFileUploadEditComponent implements OnInit {
 
     oldrefno = '';
 
-    HouseList: Tbl_cargo_genfiles   [] = [];
+    HouseList: Tbl_cargo_genfiles[] = [];
 
     constructor(
         private router: Router,
@@ -115,8 +115,9 @@ export class GenFileUploadEditComponent implements OnInit {
     init() {
 
         this.record.gf_pkid = this.pkid;
-        //this.record.mu_sent_on = this.gs.defaultValues.today;
-        
+        this.record.gf_slno = 0;
+        this.record.gf_type = 'BANK STATEMENT';
+
 
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
@@ -129,7 +130,7 @@ export class GenFileUploadEditComponent implements OnInit {
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
                 this.record = <Tbl_cargo_genfiles>response.record;
-
+                this.ProcessData();
                 this.mode = 'EDIT';
                 this.errorMessage = "";
             }, error => {
@@ -137,6 +138,23 @@ export class GenFileUploadEditComponent implements OnInit {
             });
     }
 
+    ProcessData() {
+        if (this.record.gf_mmyy != null) {
+            if (this.record.gf_mmyy.toString().indexOf("/") >= 0) {
+                var sdata = this.record.gf_mmyy.toString().split('/');
+                this.record.gf_month = +sdata[0];
+                this.record.gf_year = +sdata[1];
+            }
+        }
+    }
+
+    SaveParent() {
+        if (this.record.gf_month.toString().trim() != "" && this.record.gf_year.toString().trim() != "")
+            this.record.gf_mmyy = this.record.gf_month.toString().trim().padStart(2, '0') + "/" + this.record.gf_year.toString().trim();
+        else
+            this.record.gf_mmyy = "";
+        this.record.gf_category = "BANK STATEMENT";
+    }
 
 
     Save() {
@@ -146,6 +164,7 @@ export class GenFileUploadEditComponent implements OnInit {
         if (!this.Allvalid())
             return;
 
+        this.SaveParent();
         const saveRecord = <vm_Tbl_cargo_genfiles>{};
         saveRecord.record = this.record;
         saveRecord.pkid = this.pkid;
@@ -198,15 +217,12 @@ export class GenFileUploadEditComponent implements OnInit {
 
 
     LovSelected(_Record: SearchTable) {
-
-        if (_Record.controlname == "AGENT") {
-
+        if (_Record.controlname == "ACCTM") {
+            this.record.gf_name = _Record.name;
         }
-
-
     }
 
-      
+
 
 
     OnChange(field: string) {
