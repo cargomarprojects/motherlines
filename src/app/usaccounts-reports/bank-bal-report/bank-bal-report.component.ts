@@ -12,6 +12,7 @@ import * as myReducer from './store/bank-bal-report.reducer';
 import { ReportState } from './store/bank-bal-report.models'
 
 import { Observable } from 'rxjs';
+import { Tbl_Bank_List } from '../models/Tbl_Bank_List';
 
 @Component({
     selector: 'app-bank-bal-report',
@@ -27,7 +28,10 @@ export class BankBalReportComponent implements OnInit {
     currentTab = '';
 
     tdate: string;
+    allbankchecked: boolean = false;
+    selectdeselect: boolean = false;
 
+    comp_type: string = '';
     comp_name: string = '';
     comp_code: string = '';
 
@@ -39,6 +43,8 @@ export class BankBalReportComponent implements OnInit {
     storesub: any;
     sub: any;
 
+    bankfullrecords: Tbl_Bank_List[] = [];
+    bankrecords: Tbl_Bank_List[] = [];
     loading: boolean = false;
     errorMessage: string = '';
     SearchData: any = {};
@@ -58,7 +64,7 @@ export class BankBalReportComponent implements OnInit {
             this.urlid = params.id;
             this.menuid = params.menuid;
             this.InitPage();
-            //   this.LoadCompany();
+            this.LoadBank();
         });
 
     }
@@ -73,6 +79,7 @@ export class BankBalReportComponent implements OnInit {
                 this.pkid = rec.pkid;
                 this.currentTab = rec.currentTab;
                 this.tdate = rec.tdate;
+                this.comp_type = rec.comp_type;
                 this.comp_name = rec.comp_name;
                 this.comp_code = rec.comp_code;
 
@@ -83,15 +90,16 @@ export class BankBalReportComponent implements OnInit {
 
                 this.SearchData = this.gs.UserInfo;
 
-                 this.SearchData.JV_ACC_ID = '';
                 this.SearchData.TDATE = this.tdate;
-                if (this.comp_code == 'ALL') {
+                this.SearchData.JV_ACC_ID = rec.bankids;
+                this.SearchData.COMPANY_TYPE = this.comp_type;
+                if (this.comp_type == 'ALL') {
                     this.SearchData.COMP_TYPE = 'ALL';
                     this.SearchData.COMP_CODE = this.gs.branch_codes;
                 }
                 else {
                     this.SearchData.COMP_TYPE = 'SINGLE';
-                    this.SearchData.COMP_CODE = this.comp_code;
+                    this.SearchData.COMP_CODE = this.comp_type;
                 }
 
             } else {
@@ -104,22 +112,29 @@ export class BankBalReportComponent implements OnInit {
 
                 this.currentTab = 'LIST';
                 this.tdate = this.gs.defaultValues.today;
+
+                this.comp_type = this.gs.branch_code;
                 this.comp_code = this.gs.branch_code;
                 this.comp_name = this.gs.branch_name;
                 this.SearchData = this.gs.UserInfo;
+                
             }
         });
 
     }
 
-    LoadCompany() {
-        // this.CompList = <any[]>[];
-        // this.gs.CompanyList.forEach(Rec => {
-        //     if (Rec.comp_code != 'ALL')
-        //         this.CompList.push(Rec);
-        // });
+    LoadBank() {
+        var SearchData = this.gs.UserInfo;
+        this.mainservice.BankList(SearchData).subscribe(response => {
+            this.bankfullrecords = response.list;
+            this.FillChkListBox(this.gs.branch_code);
+        }, error => {
+            this.errorMessage = this.gs.getError(error)
+        });
     }
+
     ngOnInit() {
+
     }
 
     ngOnDestroy() {
@@ -133,16 +148,26 @@ export class BankBalReportComponent implements OnInit {
 
     List(_outputformat: string, _action: string = 'NEW') {
 
-        this.errorMessage = "";
-        // if (this.gs.isBlank(this.bank_id)) {
-        //     this.errorMessage = "Code Cannot be Blank";
-        //     alert(this.errorMessage);
-        //     return;
-        // }
         if (this.gs.isBlank(this.tdate)) {
             this.tdate = this.gs.defaultValues.today;
         }
 
+        let BANK_IDS: string = "";
+        this.bankrecords.forEach(Rec => {
+            if (Rec.bnk_checked) {
+                if (BANK_IDS.trim() != "")
+                    BANK_IDS += ",";
+                BANK_IDS += "'" + Rec.bnk_acc_pkid.trim() + "'";
+            }
+        })
+
+        if (BANK_IDS.trim() == "") {
+            this.errorMessage = "No banks selected";
+            alert(this.errorMessage);
+            return;
+        }
+
+        this.errorMessage = "";
         this.SearchData.outputformat = _outputformat;
         this.SearchData.pkid = this.urlid;
         this.SearchData.action = _action;
@@ -153,14 +178,17 @@ export class BankBalReportComponent implements OnInit {
 
         if (_outputformat === 'SCREEN' && _action === 'NEW') {
 
-            // this.SearchData.JV_YEAR = this.gs.year_code;
-            // this.SearchData.BANK_ID = this.bank_id;
-            // this.SearchData.BANK_NAME = this.bank_name;
-            this.SearchData.JV_ACC_ID = '';
+            this.SearchData.JV_ACC_ID = BANK_IDS;
             this.SearchData.TDATE = this.tdate;
-            this.SearchData.COMP_CODE = this.gs.branch_codes;
-            this.SearchData.COMP_TYPE = 'ALL';
-
+            this.SearchData.COMPANY_TYPE = this.comp_type;
+            if (this.comp_type == 'ALL') {
+                this.SearchData.COMP_TYPE = 'ALL';
+                this.SearchData.COMP_CODE = this.gs.branch_codes;
+            }
+            else {
+                this.SearchData.COMP_TYPE = 'SINGLE';
+                this.SearchData.COMP_CODE = this.comp_type;
+            }
         }
 
 
@@ -170,7 +198,7 @@ export class BankBalReportComponent implements OnInit {
             .subscribe(response => {
 
                 if (_outputformat === 'SCREEN') {
-                     
+
                     const state: ReportState = {
                         pkid: this.pkid,
                         urlid: this.urlid,
@@ -178,7 +206,10 @@ export class BankBalReportComponent implements OnInit {
                         currentTab: this.currentTab,
                         tdate: this.SearchData.TDATE,
                         comp_name: this.SearchData.COMP_NAME,
-                        comp_code: this.SearchData.BRANCH_CODE,
+                        comp_code: this.SearchData.COMP_CODE,
+                        comp_type: this.SearchData.COMPANY_TYPE,
+                        bankids: this.SearchData.JV_ACC_ID,
+
                         page_rows: response.page_rows,
                         page_count: response.page_count,
                         page_current: response.page_current,
@@ -207,7 +238,7 @@ export class BankBalReportComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
         if (_Record.controlname === 'ACCTM') {
-       
+
         }
         // if (_Record.controlname === 'PARENT') {
         //   this.cust_parent_id = _Record.id;
@@ -215,5 +246,44 @@ export class BankBalReportComponent implements OnInit {
         // }
     }
 
+    SelectBank(_rec: Tbl_Bank_List) {
+        _rec.bnk_checked = true;
+    }
+
+    SelectDeselect() {
+        this.selectdeselect = !this.selectdeselect;
+        this.bankrecords.forEach(Rec => {
+            Rec.bnk_checked = this.selectdeselect;
+            this.allbankchecked = this.selectdeselect;
+        })
+    }
+
+    onChange(field: string) {
+
+       this.FillChkListBox(this.comp_type);
+      }
+
+    FillChkListBox(sCode: string) {
+        this.bankrecords = <Tbl_Bank_List[]>[];
+        if (sCode.trim() == "ALL") {
+            this.bankfullrecords.forEach(Rec => {
+                Rec.bnk_checked = false;
+                this.bankrecords.push(Rec);
+            })
+        }
+        else {
+
+            this.bankfullrecords.filter(rec => rec.bnk_acc_branch == sCode || rec.bnk_acc_branch == "ALL").forEach(Rec => {
+                Rec.bnk_checked = false;
+                this.bankrecords.push(Rec);
+            })
+
+            // for (let Rec of this.bankfullrecords.filter(rec => rec.bnk_acc_branch == sCode || rec.bnk_acc_branch == "ALL")) {
+            //     Rec.bnk_checked = false;
+            //     this.bankrecords.push(Rec);
+            // }
+        }
+
+    }
 
 }
