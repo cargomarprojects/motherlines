@@ -76,6 +76,8 @@ export class BankBalReportComponent implements OnInit {
             if (rec) {
 
                 this.MainList = rec.records;
+                // this.bankfullrecords = rec.bankfullrecords;
+                // this.bankrecords = rec.bankrecords;
                 this.pkid = rec.pkid;
                 this.currentTab = rec.currentTab;
                 this.tdate = rec.tdate;
@@ -105,6 +107,8 @@ export class BankBalReportComponent implements OnInit {
             } else {
 
                 this.MainList = Array<Tbl_acc_ledger>();
+                // this.bankrecords = Array<Tbl_Bank_List>();
+                // this.bankfullrecords = Array<Tbl_Bank_List>();
                 this.page_rows = this.gs.ROWS_TO_DISPLAY;
                 this.page_count = 0;
                 this.page_current = 0;
@@ -117,7 +121,6 @@ export class BankBalReportComponent implements OnInit {
                 this.comp_code = this.gs.branch_code;
                 this.comp_name = this.gs.branch_name;
                 this.SearchData = this.gs.UserInfo;
-                
             }
         });
 
@@ -265,6 +268,8 @@ export class BankBalReportComponent implements OnInit {
 
     FillChkListBox(sCode: string) {
         this.bankrecords = <Tbl_Bank_List[]>[];
+        this.allbankchecked=false;
+        this.selectdeselect = false;
         if (sCode.trim() == "ALL") {
             this.bankfullrecords.forEach(Rec => {
                 Rec.bnk_checked = false;

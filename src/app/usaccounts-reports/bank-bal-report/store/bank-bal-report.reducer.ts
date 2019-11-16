@@ -24,6 +24,8 @@ export const initialState: ReportState = {
     page_current: 0,
     page_rowcount: 0,
     records: []
+    // bankrecords:[],
+    // bankfullrecords:[]
 };
 
 export function BankBalReportReducer(state: ReportState[] = [initialState], action: myActions.Actions): ReportState[] {

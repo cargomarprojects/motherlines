@@ -1,4 +1,5 @@
 import { Tbl_acc_ledger } from '../../models/Tbl_acc_ledger';
+import { Tbl_Bank_List } from '../../models/Tbl_Bank_List';
 export interface ReportState {
 
     pkid: string,
@@ -17,4 +18,6 @@ export interface ReportState {
     page_current: number;
     page_rowcount: number;
     records: Tbl_acc_ledger[];
+    // bankrecords: Tbl_Bank_List[];
+    // bankfullrecords: Tbl_Bank_List[];
 }
