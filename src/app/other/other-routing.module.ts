@@ -46,8 +46,8 @@ const routes: Routes = [
   { path : 'OBLReleasedEditPage', component : OblReleaseEditComponent },
   { path : 'OBLMBLUsagePage', component : MblUsageComponent },
   { path : 'MblUsageEditPage', component : MlbUsageEditComponent },
-  { path : 'GeneralFileUpload', component : GenFileUploadComponent },
-  { path : 'GeneralFileUploadEdit', component : GenFileUploadEditComponent  },
+  { path : 'GeneralFileUploadPage', component : GenFileUploadComponent },
+  { path : 'GeneralFileUploadEditPage', component : GenFileUploadEditComponent  },
   
 ];
 

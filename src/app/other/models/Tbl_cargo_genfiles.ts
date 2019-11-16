@@ -17,6 +17,8 @@ export interface Tbl_cargo_genfiles {
     gf_name: string;
     gf_accno: string;
     gf_mmyy: string;
+    gf_month: number;
+    gf_year: number;
     gf_remarks: string;
     rec_created_by: string;
     rec_created_date: string;

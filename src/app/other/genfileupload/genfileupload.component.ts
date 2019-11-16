@@ -63,10 +63,10 @@ export class GenFileUploadComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: '',
       type: this.mainservice.param_type,
-      origin: 'mblusage-page',
+      origin: 'genfileupload-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.Other.Trans/MblUsageEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/GeneralFileUploadEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_cargo_genfiles) {
@@ -79,10 +79,10 @@ export class GenFileUploadComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: _record.gf_pkid ,
       type: '',
-      origin: 'mblusage-page',
+      origin: 'genfileupload-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.Other.Trans/MblUsageEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/GeneralFileUploadEditPage', JSON.stringify(parameter));
   }
 
   Close() {    
