@@ -18,12 +18,17 @@ export class UsAccountReportService {
     BankStmt(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBankStmtRpt/BankStmt", SearchData, this.gs.headerparam2('authorized'));
     }
+    
     BankBalance(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBankBalRpt/BankBalance", SearchData, this.gs.headerparam2('authorized'));
     }
 
     BankList(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBankBalRpt/BankList", SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    AgingReport(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccAgingRpt/AgingReport", SearchData, this.gs.headerparam2('authorized'));
     }
     
 }

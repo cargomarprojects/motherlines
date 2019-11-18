@@ -12,6 +12,9 @@ import { BankStmtReportReducer  } from './bank-stmt-report/store/bank-stmt-repor
 import { BankBalReportComponent } from './bank-bal-report/bank-bal-report.component';
 import { BankBalReportReducer  } from './bank-bal-report/store/bank-bal-report.reducer';
 
+import { AgingReportComponent } from './aging-report/aging-report.component';
+import { AgingReportReducer  } from './aging-report/store/aging-report.reducer';
+
 
 
 
@@ -22,7 +25,7 @@ import { BankBalReportReducer  } from './bank-bal-report/store/bank-bal-report.r
       BankEnquiryReportComponent,  
       BankStmtReportComponent,
       BankBalReportComponent,
-
+      AgingReportComponent,
 
   ],
   imports: [
@@ -31,6 +34,7 @@ import { BankBalReportReducer  } from './bank-bal-report/store/bank-bal-report.r
     StoreModule.forFeature('BankEnquiryReport',BankEnquiryReportReducer ),    
     StoreModule.forFeature('BankStmtReport',BankStmtReportReducer ),    
     StoreModule.forFeature('BankBalReport',BankBalReportReducer ),    
+    StoreModule.forFeature('AgingReport',AgingReportReducer ),    
   ],
   providers: [
   ]
