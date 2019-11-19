@@ -10,6 +10,7 @@ import { GenFileUploadService } from '../services/genfileupload.service';
 import { User_Menu } from '../../core/models/menum';
 import { vm_Tbl_cargo_genfiles, Tbl_cargo_genfiles, Tbl_cargo_genfilesModel } from '../models/Tbl_cargo_genfiles';
 import { SearchTable } from '../../shared/models/searchtable';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -179,6 +180,8 @@ export class GenFileUploadEditComponent implements OnInit {
                 }
                 else {
 
+                    if ( this.mode === 'ADD')
+                        this.record.gf_slno = response.slno;
 
                     this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
@@ -204,6 +207,36 @@ export class GenFileUploadEditComponent implements OnInit {
             alert(this.errorMessage);
             return bRet;
         }
+
+        if (this.gs.isBlank(this.record.gf_name)) {
+            bRet = false;
+            this.errorMessage = "Invalid Bank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isBlank(this.record.gf_accno)) {
+            bRet = false;
+            this.errorMessage = "Invalid A/c No";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isZero(this.record.gf_month)) {
+            bRet = false;
+            this.errorMessage = "Invalid Month";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isZero(this.record.gf_year)) {
+            bRet = false;
+            this.errorMessage = "Invalid Year";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+
 
 
 
