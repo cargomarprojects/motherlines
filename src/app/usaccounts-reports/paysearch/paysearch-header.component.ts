@@ -39,6 +39,6 @@ export class PaySearchHeaderComponent implements OnInit {
             this.searchQuery.sdate = this.gs.year_start_date;
         if (this.gs.isBlank(this.searchQuery.edate))
             this.searchQuery.edate = this.gs.defaultValues.today;
-        this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
+        this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery});
     }
 }
