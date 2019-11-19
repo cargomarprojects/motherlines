@@ -40,13 +40,13 @@ export class AgingReportComponent implements OnInit {
     comp_type: string = '';
     report_arap: string = '';
     currency: string = '';
-    radio_cust: string = 'CUSTOMER';
+    radio_cust: string = 'MASTER';
     showall: boolean = false;
     cust_name: string = '';
     show_advance: boolean = false;
     group_by_parent: boolean = false;
     report_type: string = '';
-    radio_days: string = '30_60';
+    radio_days: string = '30to60';
     filename: string = '';
     filetype: string = '';
     filedisplayname: string = '';
@@ -149,7 +149,7 @@ export class AgingReportComponent implements OnInit {
                 this.SearchData.RPTTYPE = this.report_type;
                 this.SearchData.SHOWALL = this.showall == true ? 'Y' : 'N';
 
-                this.SearchData.ISCUSTOMER = this.radio_cust === 'CUSTOMER' ? 'Y' : 'N';
+                this.SearchData.ISCUSTOMER = this.radio_cust === 'MASTER' ? 'Y' : 'N';
                 this.SearchData.ISPARENT = this.group_by_parent == true ? 'Y' : 'N';
                 this.SearchData.SHOW_ADVANCE = this.show_advance == true ? 'Y' : 'N';
 
@@ -185,14 +185,14 @@ export class AgingReportComponent implements OnInit {
                 this.comp_name = this.gs.branch_name;
                 this.report_arap = 'AR';
                 this.currency = '';
-                this.radio_cust = 'CUSTOMER';
+                this.radio_cust = 'MASTER';
                 this.showall = false;
                 this.cust_name = '';
                 this.cust_id = '';
                 this.show_advance = false;
                 this.group_by_parent = false;
                 this.report_type = 'SUMMARY';
-                this.radio_days = '30_60';
+                this.radio_days = '30to60';
                 this.iscustomer = 'N';
                 this.isparent = 'N';
                 this.hide_payroll = this.gs.user_hide_payroll;
@@ -254,11 +254,13 @@ export class AgingReportComponent implements OnInit {
             this.SearchData.RPTTYPE = this.report_type;
             this.SearchData.SHOWALL = this.showall == true ? 'Y' : 'N';
 
-            this.SearchData.ISCUSTOMER = this.radio_cust === 'CUSTOMER' ? 'Y' : 'N';
+            this.SearchData.ISCUSTOMER = this.radio_cust === 'MASTER' ? 'Y' : 'N';
             this.SearchData.ISPARENT = this.group_by_parent == true ? 'Y' : 'N';
             this.SearchData.SHOW_ADVANCE = this.show_advance == true ? 'Y' : 'N';
 
             this.SearchData.BASEDON = this.basedon;
+            this.SearchData.radio_cust = this.radio_cust;
+            this.SearchData.radio_days = this.radio_days;
 
             this.SearchData.HIDE_PAYROLL = this.gs.user_hide_payroll;
 
@@ -296,14 +298,14 @@ export class AgingReportComponent implements OnInit {
                         comp_name:this.SearchData.COMP_NAME,
                         report_arap:this.SearchData.ARAP,
                         currency: this.SearchData.CURRENCY,
-                        radio_cust:this.SearchData.ISCUSTOMER=='Y'?'CUSTOMER':'PARENT',
+                        radio_cust:this.SearchData.ISCUSTOMER=='Y'?'MASTER':'OVERSEAAGENT',
                         showall :this.SearchData.SHOWALL=='Y'?true:false,
                         cust_name:'',
                         cust_id:this.SearchData.CUST_ID,
                         show_advance:this.SearchData.SHOW_ADVANCE=='Y'?true:false,
                         group_by_parent:this.SearchData.ISPARENT=='Y'?true:false, 
                         report_type: this.SearchData.RPTTYPE,
-                        radio_days :'30_60',
+                        radio_days : this.SearchData.radio_days,
                         iscustomer:this.SearchData.ISCUSTOMER,
                         isparent:this.SearchData.ISPARENT,
                         hide_payroll:this.SearchData.HIDE_PAYROLL,
