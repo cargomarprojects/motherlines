@@ -132,8 +132,11 @@ export class GenFileUploadService {
             return;
         }
 
+        var fPath = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\Files\\";
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = _rec.gf_pkid;
+        SearchData.filepath = fPath;
+
 
         this.DeleteRecord(SearchData)
             .subscribe(response => {
