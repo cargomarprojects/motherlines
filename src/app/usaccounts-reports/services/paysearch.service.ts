@@ -134,20 +134,6 @@ export class PaySearchService {
 
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = _rec.pay_pkid;
-
-        this.DeleteRecord(SearchData)
-            .subscribe(response => {
-                if (response.retvalue == false) {
-                    this.record.errormessage = response.error;
-                    alert(this.record.errormessage);
-                }
-                else {
-                    this.record.records.splice(this.record.records.findIndex(rec => rec.pay_pkid == _rec.pay_pkid), 1);
-                }
-            }, error => {
-                this.record.errormessage = this.gs.getError(error);
-                alert(this.record.errormessage);
-            });
     }
 
 
