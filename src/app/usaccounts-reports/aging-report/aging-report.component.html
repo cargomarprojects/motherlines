@@ -170,7 +170,7 @@
             [PageData]={page_count:page_count,page_current:page_current,page_rows:page_rows,page_rowcount:page_rowcount}
             (PageEvents)="PageEvents($event)"></App-Page>
 
-        <!-- <div *ngIf="report_type=='DETAIL'" class="page-body table-responsive">
+        <div *ngIf="report_type=='DETAIL'" class="page-body table-responsive">
             <table class="table  table-hover table-sm">
                 <thead class="page-body-thead">
                     <tr>
@@ -217,29 +217,29 @@
                     </tr>
                 </tbody>
             </table>
-        </div> -->
+        </div>
 
         <div *ngIf="report_type=='SUMMARY'" class="page-body table-responsive">
             <table class="table  table-hover table-sm">
                 <thead class="page-body-thead">
                     <tr>
-                        <th>CUSTOMER </th>
-                         <th style="text-align:right;">TOTAL</th>
-                         <th style="text-align:right;">PAID</th>
-                         <th style="text-align:right;">BALANCE</th>
-                         <th style="text-align:right;">UN-DEPOSITED</th>
-                         <th style="text-align:right;">UPTO 30</th>
-                         <th style="text-align:right;">31-60</th>
-                         <th style="text-align:right;">>60</th>
-                         <th style="text-align:right;">61-90</th>
-                         <th style="text-align:right;">91-180</th>
-                         <th style="text-align:right;">181-365</th>
-                         <th style="text-align:right;">>365</th>
+                        <th style="text-align:left;">CUSTOMER </th>
+                        <th style="text-align:right;">TOTAL</th>
+                        <th style="text-align:right;">PAID</th>
+                        <th style="text-align:right;">BALANCE</th>
+                        <th style="text-align:right;">UN-DEPOSITED</th>
+                        <th style="text-align:right;">UPTO 30</th>
+                        <th style="text-align:right;">31-60</th>
+                        <th style="text-align:right;">>60</th>
+                        <th style="text-align: right;">61-90</th>
+                         <th style="text-align: right;">91-180</th>
+                         <th style="text-align: right;">181-365</th>
+                         <th style="text-align: right;">>365</th>
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                     <tr>
-                        <td>{{rec.inv_cust_name}}</td>
+                        <td style="text-align: left;">{{rec.inv_cust_name}}</td>
                         <td style="text-align: right;">{{rec.inv_total | number: '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_paid | number: '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_bal | number: '1.2-2'}}</td>
@@ -247,21 +247,18 @@
                         <td style="text-align: right;">{{rec.inv_bal_below30 | number: '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_bal_30to60 | number: '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_bal_above60 | number: '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_60to90 | number: '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_90to180 | number: '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_180to365 | number: '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_above365 | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_60to90 | number : '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_90to180 | number : '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_180to365 | number : '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_above365 | number : '1.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-
         <App-Page
             [PageData]={page_count:page_count,page_current:page_current,page_rows:page_rows,page_rowcount:page_rowcount}
             (PageEvents)="PageEvents($event)"></App-Page>
-
-
     </div>
 
     <br />
