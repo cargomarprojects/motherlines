@@ -9,6 +9,10 @@
   {{errorMessage}}
 </div>
 
+<acc-paysearch-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+  </acc-paysearch-header>
+  
+
 
 <div class="page-body table-responsive">
   <table class="table  table-hover table-sm">
