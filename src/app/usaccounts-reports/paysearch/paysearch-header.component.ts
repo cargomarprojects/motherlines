@@ -13,7 +13,6 @@ export class PaySearchHeaderComponent implements OnInit {
     @Input() set _query(value: SearchQuery) {
         this.searchQuery = Object.assign({}, value);
         this.initData();
-
     }
     @Output() searchEvents = new EventEmitter<any>();
 
