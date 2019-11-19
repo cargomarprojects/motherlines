@@ -170,7 +170,7 @@
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr>
+                    <tr [style.color]="rec.inv_cust_name=='TOTAL'?'Red':'Black'"   [style.font-weight]="rec.inv_cust_name=='TOTAL'?'bold':'normal'">
                         <td style="text-align: left;">{{rec.inv_branch}}</td>
                         <td style="text-align: left;">{{rec.inv_no}}</td>
                         <td style="text-align: left;">{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT}}</td>
@@ -218,7 +218,7 @@
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr>
+                    <tr >
                         <td style="text-align: left;">{{rec.inv_cust_name}}</td>
                         <td style="text-align: right;">{{rec.inv_total | number: '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_paid | number: '1.2-2'}}</td>
