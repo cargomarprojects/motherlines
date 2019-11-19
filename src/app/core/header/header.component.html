@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
       <ul class="navbar-nav mr-auto">
-        <div *ngFor="let rech of gs.Modules; ">
+        <div *ngFor="let rech of gs.Modules">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,8 +18,10 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <div *ngFor="let rec of gs.MenuList" class="menulist">
-                <a *ngIf="rech.module_name == rec.module_name && rec.menu_hiden==='N'" class="dropdown-item"
-                  (click)="LoadPage(rec)">{{rec.menu_name}}</a>
+                <div *ngIf="rech.module_name == rec.module_name && rec.menu_hiden==='N'">
+                  <a class="dropdown-item border-bottom" (click)="LoadPage(rec)">{{rec.menu_name}}</a>
+                </div>
+
               </div>
             </div>
 
