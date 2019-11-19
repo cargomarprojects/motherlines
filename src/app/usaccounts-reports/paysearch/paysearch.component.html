@@ -1,0 +1,51 @@
+<div class="page-header">
+  <div class="col">
+    <label class="mr-1">{{mainservice.title}}</label>
+    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+  </div>
+</div>
+
+<div *ngIf="errorMessage$ | async as errorMessage" class="alert alert-danger">
+  {{errorMessage}}
+</div>
+
+
+<div class="page-body table-responsive">
+  <table class="table  table-hover table-sm">
+    <thead class="page-body-thead">
+      <tr>
+        <th>AGENT</th>
+        <th>B/L FROM</th>
+        <th>B/L TO</th>
+        <th>TOT-BLs</th>
+        <th>ORIGIN</th>
+        <th>COURIER</th>
+        <th>TRACKING#</th>
+        <th>SENTON</th>
+        <th>REMARK</th>
+        <th>CREATED-BY</th>
+        <th>CREATE-DT</th>
+
+      </tr>
+    </thead>
+    <tbody class="page-body-tbody">
+      <tr *ngFor="let rec of records$ | async">
+        <td >{{rec.mu_agent_name}}</td>
+        <td>{{rec.mu_bl_start_no}} </td>
+        <td>{{rec.mu_bl_end_no}} </td>
+        <td>{{rec.mu_bl_tot}} </td>
+        <td>{{rec.mu_origin}} </td>
+        <td>{{rec.mu_courier_name}} </td>
+        <td>{{rec.mu_tracking_no}} </td>
+        <td>{{rec.mu_sent_on | date : gs.FRONTEND_DATEFORMAT }}</td>
+        <td>{{rec.mu_remarks}} </td>
+        <td>{{rec.rec_created_by}} </td>
+        <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<br />

@@ -14,19 +14,15 @@ import { BankBalReportReducer  } from './bank-bal-report/store/bank-bal-report.r
 
 import { AgingReportComponent } from './aging-report/aging-report.component';
 import { AgingReportReducer  } from './aging-report/store/aging-report.reducer';
-
-
-
+import { PaySearchComponent } from './paysearch/paysearch.component';
 
 @NgModule({
     declarations :[
-
-
       BankEnquiryReportComponent,  
       BankStmtReportComponent,
       BankBalReportComponent,
       AgingReportComponent,
-
+      PaySearchComponent
   ],
   imports: [
     SharedModule,
