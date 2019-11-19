@@ -15,15 +15,15 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">AsOn</label>
-                            <div class="col-8">
+                            <label class="col-2 col-form-label col-form-label-sm">AsOn</label>
+                            <div class="col-10">
                                 <app-date [inputdate]="edate" (ValueChanged)="edate=$event"></app-date>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">BasedOn</label>
-                            <div class="col-8">
+                            <label class="col-2 col-form-label col-form-label-sm">BasedOn</label>
+                            <div class="col-10">
                                 <select class="form-control form-control-sm" [(ngModel)]="basedon">
                                     <option [value]="'INVOICE DATE'">INVOICE DATE</option>
                                     <option [value]="'MASTER REF. DATE'">MASTER REF. DATE</option>
@@ -31,8 +31,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">Branch</label>
-                            <div class="col-8">
+                            <label class="col-2 col-form-label col-form-label-sm">Branch</label>
+                            <div class="col-10">
                                 <select class="form-control form-control-sm" [(ngModel)]="comp_type">
                                     <option *ngFor="let rec of gs.CompanyList" [value]="rec.comp_code">{{rec.comp_name}}
                                     </option>
@@ -43,16 +43,16 @@
                     <div class="col-md-3">
 
                         <div class="form-group row">
-                            <label class="col-3 col-form-label col-form-label-sm">Type</label>
-                            <div class="col-3">
+                            <label class="col-2 col-form-label col-form-label-sm">Type</label>
+                            <div class="col-4">
                                 <select class="form-control form-control-sm" [(ngModel)]="report_arap"
                                     (change)="OnChange('report_category')">
                                     <option [value]="'AR'">AR</option>
                                     <option [value]="'AP'">AP</option>
                                 </select>
                             </div>
-                            <label class="col-3 col-form-label col-form-label-sm">Currency</label>
-                            <div class="col-3">
+                            <label class="col-2 col-form-label col-form-label-sm">Currency</label>
+                            <div class="col-4">
                                 <app-autocomplete2 [controlname]="'CURR'" [tabletype]="'PARAM'" [subtype]="'CURRENCY'"
                                     [displaycolumn]="'CODE'" [displaydata]="currency"
                                     (ValueChanged)="LovSelected($event)">
@@ -61,17 +61,17 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-3">
-                                <input type="radio" [(ngModel)]="radio_cust" [value]="'CUSTOMER'" />
+                            <div class="col-4">
+                                <input type="radio" [(ngModel)]="radio_cust" [value]="'CUSTOMER'" name="optcust" />
                                 <span>Customer</span>
                             </div>
-                            <div class="col-3">
-                                <input type="radio" [(ngModel)]="radio_cust" [value]="'PARENT'" />
-                                <span>Parent Group</span>
+                            <div class="col-4">
+                                <input type="radio" [(ngModel)]="radio_cust" [value]="'PARENT'" name="optcust" />
+                                <span>ParentGroup</span>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-check"> <input type="checkbox" class="form-check-input"
-                                        [(ngModel)]="showall"><span>Show All</span></div>
+                                        [(ngModel)]="showall"><span>ShowAll</span></div>
                             </div>
                         </div>
 
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
 
 
 
@@ -105,7 +105,7 @@
                         </div>
                         <div class="form-group row">
                             <!-- <label class="col-3 col-form-label col-form-label-sm">Type</label> -->
-                            <div class="col-12">
+                            <div class="col-6">
                                 <select class="form-control form-control-sm" [(ngModel)]="report_type">
                                     <option [value]="'DETAIL'">DETAIL</option>
                                     <option [value]="'SUMMARY'">SUMMARY</option>
@@ -128,18 +128,18 @@
                     <div class="col-md-3">
                         <div class="form-group row">
                             <div class="col-12">
-                                <input type="radio" [(ngModel)]="radio_days" [value]="'30_60'"/>
+                                <input type="radio" [(ngModel)]="radio_days" [value]="'30_60'" name="optdays" />
                                 <span>30-60</span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-12">
-                                <input type="radio" [(ngModel)]="radio_days" [value]="'30_365'"/>
+                                <input type="radio" [(ngModel)]="radio_days" [value]="'30_365'" name="optdays" />
                                 <span>30-60-90-180-365</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm"></label>
+                            <!-- <label class="col-4 col-form-label col-form-label-sm"></label> -->
                             <div class="col-8">
                                 <button [disabled]="loading" (click)="List('SCREEN')"
                                     class="btn btn-primary btn-sm mr-1">Search</button>
@@ -170,7 +170,7 @@
             [PageData]={page_count:page_count,page_current:page_current,page_rows:page_rows,page_rowcount:page_rowcount}
             (PageEvents)="PageEvents($event)"></App-Page>
 
-        <div *ngIf="report_type=='DETAIL'" class="page-body table-responsive">
+        <!-- <div *ngIf="report_type=='DETAIL'" class="page-body table-responsive">
             <table class="table  table-hover table-sm">
                 <thead class="page-body-thead">
                     <tr>
@@ -210,48 +210,47 @@
                         <td style="text-align: right;">{{rec.inv_bal_below30 | number : '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_bal_30to60 | number : '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_bal_above60 | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_60to90} | number : '1.2-2'}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_90to180} | number : '1.2-2'}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_60to90 | number : '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_90to180 | number : '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_bal_180to365 | number : '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_bal_above365 | number : '1.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-
+        </div> -->
 
         <div *ngIf="report_type=='SUMMARY'" class="page-body table-responsive">
             <table class="table  table-hover table-sm">
                 <thead class="page-body-thead">
                     <tr>
                         <th>CUSTOMER </th>
-                          <th style="text-align: right;">TOTAL</th>
-                         <th style="text-align: right;">PAID</th>
-                         <th style="text-align: right;">BALANCE</th>
-                         <th style="text-align: right;">UN-DEPOSITED</th>
-                         <th style="text-align: right;">UPTO 30</th>
-                         <th style="text-align: right;">31-60</th>
-                         <th style="text-align: right;">>60</th>
-                         <th style="text-align: right;">61-90</th>
-                         <th style="text-align: right;">91-180</th>
-                         <th style="text-align: right;">181-365</th>
-                         <th style="text-align: right;">>365</th>
+                         <th style="text-align:right;">TOTAL</th>
+                         <th style="text-align:right;">PAID</th>
+                         <th style="text-align:right;">BALANCE</th>
+                         <th style="text-align:right;">UN-DEPOSITED</th>
+                         <th style="text-align:right;">UPTO 30</th>
+                         <th style="text-align:right;">31-60</th>
+                         <th style="text-align:right;">>60</th>
+                         <th style="text-align:right;">61-90</th>
+                         <th style="text-align:right;">91-180</th>
+                         <th style="text-align:right;">181-365</th>
+                         <th style="text-align:right;">>365</th>
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                     <tr>
                         <td>{{rec.inv_cust_name}}</td>
-                        <td style="text-align: right;">{{rec.inv_total | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_paid | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_undeposited | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_below30 | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_30to60 | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_above60 | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_60to90} | number : '1.2-2'}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_90to180} | number : '1.2-2'}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_180to365 | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_above365 | number : '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_total | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_paid | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_undeposited | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_below30 | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_30to60 | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_above60 | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_60to90 | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_90to180 | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_180to365 | number: '1.2-2'}}</td>
+                        <td style="text-align: right;">{{rec.inv_bal_above365 | number: '1.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>
