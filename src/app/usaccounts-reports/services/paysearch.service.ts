@@ -98,10 +98,7 @@ export class PaySearchService {
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
-            this.record = <AccPaymentModel>{
-                records: [],
-                errormessage: this.gs.getError(error),
-            }
+            this.record.errormessage = this.gs.getError(error),
             this.mdata$.next(this.record);
         });
     }
