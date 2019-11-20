@@ -13,7 +13,8 @@ const routes: Routes = [
   { path :'BankStmtPage', component : BankStmtReportComponent },
   { path :'BankBalancePage', component : BankBalReportComponent },
   { path :'AgingReport', component : AgingReportComponent },
-  { path :'PaySearchPage', component : PaySearchComponent },
+  { path :'PaySearchPage', component : PaySearchComponent }, 
+  { path :'CustStmtPage', component : CustStmtReportComponent }, 
 ];
 
 @NgModule({
