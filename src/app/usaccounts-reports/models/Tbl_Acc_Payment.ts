@@ -3,6 +3,7 @@ import { PageQuery } from '../../shared/models/pageQuery';
 export interface SearchQuery {
     balance : string ;
     searchString: string;
+    searchType : string ;
     sdate : string ;
     edate : string;
 }
