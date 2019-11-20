@@ -21,6 +21,5 @@ const routes: Routes = [
 })
 export class UsAccountsReportsRoutingModule { 
 
-  test : number;
   
 }
