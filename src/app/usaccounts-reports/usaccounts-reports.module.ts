@@ -15,18 +15,18 @@ import { BankBalReportReducer  } from './bank-bal-report/store/bank-bal-report.r
 import { AgingReportComponent } from './aging-report/aging-report.component';
 import { AgingReportReducer  } from './aging-report/store/aging-report.reducer';
 
+import { CustStmtReportComponent } from './cust-stmt-report/cust-stmt-report.component';
+import { CustStmtReportReducer  } from './cust-stmt-report/store/cust-stmt-report.reducer';
 
 
 
 @NgModule({
     declarations :[
-
-
       BankEnquiryReportComponent,  
       BankStmtReportComponent,
       BankBalReportComponent,
       AgingReportComponent,
-
+      CustStmtReportComponent,
   ],
   imports: [
     SharedModule,
@@ -35,6 +35,7 @@ import { AgingReportReducer  } from './aging-report/store/aging-report.reducer';
     StoreModule.forFeature('BankStmtReport',BankStmtReportReducer ),    
     StoreModule.forFeature('BankBalReport',BankBalReportReducer ),    
     StoreModule.forFeature('AgingReport',AgingReportReducer ),    
+    StoreModule.forFeature('CustStmtReport',CustStmtReportReducer ),    
   ],
   providers: [
   ]

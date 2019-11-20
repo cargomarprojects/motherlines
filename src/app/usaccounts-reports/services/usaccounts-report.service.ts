@@ -30,7 +30,10 @@ export class UsAccountReportService {
     AgingReport(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccAgingRpt/AgingReport", SearchData, this.gs.headerparam2('authorized'));
     }
-    
+
+    CustStmt(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccCustStmtRpt/CustStmt", SearchData, this.gs.headerparam2('authorized'));
+    }
 }
 
 
