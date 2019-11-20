@@ -10,7 +10,16 @@ export interface ReportState {
     adate: string;
     ddate: string;
     comp_name: string;
-    comp_code:string;
+    comp_code: string;
+
+    comp_type: string;
+    bank_id: string;
+    bank_name: string;
+    radio_cust: string;
+    showall: boolean;
+    showprofit: boolean;
+    sortname: string;
+    hide_payroll: string;
 
     filename: string;
     filetype: string;
