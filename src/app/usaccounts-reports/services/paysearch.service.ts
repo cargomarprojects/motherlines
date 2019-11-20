@@ -75,17 +75,9 @@ export class PaySearchService {
 
         var SearchData = this.gs.UserInfo;
         SearchData.outputformat = 'SCREEN';
-        SearchData.action = 'NEW';
-        SearchData.pkid = this.id;
-        SearchData.TYPE = 'FT';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
-
-        SearchData.FDATE = this.record.searchQuery.sdate;
-        SearchData.EDATE = this.record.searchQuery.edate;
-        SearchData.YEAR = this.gs.year_code;
-        
-
+        SearchData.TYPE = this.record.searchQuery.searchType;
+        SearchData.DATA = this.record.searchQuery.searchString;
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
