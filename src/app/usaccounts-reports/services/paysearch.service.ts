@@ -75,17 +75,12 @@ export class PaySearchService {
 
         var SearchData = this.gs.UserInfo;
         SearchData.outputformat = 'SCREEN';
-        SearchData.action = 'NEW';
-        SearchData.pkid = this.id;
-        SearchData.TYPE = 'FT';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
+        SearchData.TYPE = this.record.searchQuery.searchType;
+        SearchData.DATA = this.record.searchQuery.searchString;
 
-        SearchData.FDATE = this.record.searchQuery.sdate;
-        SearchData.EDATE = this.record.searchQuery.edate;
-        SearchData.YEAR = this.gs.year_code;
+
         
-
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
@@ -103,10 +98,7 @@ export class PaySearchService {
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
-            this.record = <AccPaymentModel>{
-                records: [],
-                errormessage: this.gs.getError(error),
-            }
+            this.record.errormessage = this.gs.getError(error),
             this.mdata$.next(this.record);
         });
     }
