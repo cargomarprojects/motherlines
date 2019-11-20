@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
 
                         <div class="form-group row">
                             <label class="col-2 col-form-label col-form-label-sm">Type</label>
@@ -146,53 +146,54 @@
             (PageEvents)="PageEvents($event)"></App-Page>
 
         <div *ngIf="report_type=='DETAIL'" class="page-body table-responsive">
-            <table class="table  table-hover table-sm">
+            <table class="table table-hover table-sm">
                 <thead class="page-body-thead">
                     <tr>
-                         <th style="text-align: left;">BRANCH</th>
-                         <th style="text-align: left;">INV.NO</th>
-                         <th style="text-align: left;">INV.DATE</th>
-                         <th style="text-align: left;">REFNO</th>
-                         <th style="text-align: left;">HOUSE</th>
-                         <th style="text-align: left;">REFNO</th>
-                         <th style="text-align: left;">CUSTOMER</th>
-                         <th style="text-align: right;">TOTAL</th>
-                         <th style="text-align: right;">PAID</th>
-                         <th style="text-align: right;">BALANCE</th>
-                         <th style="text-align: right;">UN-DEPOSITED</th>
-                         <th style="text-align: right;">UPTO 30</th>
-                         <th style="text-align: right;">31-60</th>
-                         <th *ngIf="radio_days=='30to60'" style="text-align: right;">>60</th>
-                         <th *ngIf="radio_days=='30to365'" style="text-align: right;">61-90</th>
-                         <th *ngIf="radio_days=='30to365'" style="text-align: right;">91-180</th>
-                         <th *ngIf="radio_days=='30to365'" style="text-align: right;">181-365</th>
-                         <th *ngIf="radio_days=='30to365'" style="text-align: right;">>365</th>
+                        <th style="text-align:left;">BRANCH</th>
+                        <th style="text-align:left;">INV.NO</th>
+                        <th style="text-align:left;">INV.DATE</th>
+                        <th style="text-align:left;">REFNO</th>
+                        <th style="text-align:left;">HOUSE</th>
+                        <th style="text-align:left;">REFNO</th>
+                        <th style="text-align:left;">CUSTOMER</th>
+                        <th style="text-align:right;">TOTAL</th>
+                        <th style="text-align:right;">PAID</th>
+                        <th style="text-align:right;">BALANCE</th>
+                        <th style="text-align:right;">UN-DEPOSITED</th>
+                        <th style="text-align:right;">UPTO 30</th>
+                        <th style="text-align:right;">31-60</th>
+                        <th *ngIf="radio_days=='30to60'" style="text-align:right;">>60</th>
+                        <th *ngIf="radio_days=='30to365'" style="text-align:right;">61-90</th>
+                        <th *ngIf="radio_days=='30to365'" style="text-align:right;">91-180</th>
+                        <th *ngIf="radio_days=='30to365'" style="text-align:right;">181-365</th>
+                        <th *ngIf="radio_days=='30to365'" style="text-align:right;"> >365</th>
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr [style.color]="rec.inv_cust_name=='TOTAL'?'Red':'Black'"   [style.font-weight]="rec.inv_cust_name=='TOTAL'?'bold':'normal'">
-                        <td style="text-align: left;">{{rec.inv_branch}}</td>
-                        <td style="text-align: left;">{{rec.inv_no}}</td>
-                        <td style="text-align: left;">{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT}}</td>
-                        <td style="text-align: left;">{{rec.inv_mrefno}}</td>
-                        <td style="text-align: left;">{{rec.inv_hrefno}}</td>
-                        <td style="text-align: left;">{{rec.inv_refno}}</td>
-                        <td style="text-align: left;">{{rec.inv_cust_name}}</td>
-                        <td style="text-align: right;">{{rec.inv_total | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_paid | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_undeposited | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_below30 | number : '1.2-2'}}</td>
-                        <td style="text-align: right;">{{rec.inv_bal_30to60 | number : '1.2-2'}}</td>
-                        <td *ngIf="radio_days=='30to60'" style="text-align: right;">
+                    <tr [style.color]="rec.inv_cust_name=='TOTAL'?'Red':'Black'"
+                        [style.font-weight]="rec.inv_cust_name=='TOTAL'?'bold':'normal'">
+                        <td style="text-align:left;">{{rec.inv_branch}}</td>
+                        <td style="text-align:left;">{{rec.inv_no}}</td>
+                        <td style="text-align:left;">{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT}}</td>
+                        <td style="text-align:left;">{{rec.inv_mrefno}}</td>
+                        <td style="text-align:left;">{{rec.inv_hrefno}}</td>
+                        <td style="text-align:left;">{{rec.inv_refno}}</td>
+                        <td style="text-align:left;">{{rec.inv_cust_name}}</td>
+                        <td style="text-align:right;">{{rec.inv_total | number : '1.2-2'}}</td>
+                        <td style="text-align:right;">{{rec.inv_paid | number : '1.2-2'}}</td>
+                        <td style="text-align:right;">{{rec.inv_bal | number : '1.2-2'}}</td>
+                        <td style="text-align:right;">{{rec.inv_undeposited | number : '1.2-2'}}</td>
+                        <td style="text-align:right;">{{rec.inv_bal_below30 | number : '1.2-2'}}</td>
+                        <td style="text-align:right;">{{rec.inv_bal_30to60 | number : '1.2-2'}}</td>
+                        <td *ngIf="radio_days=='30to60'" style="text-align:right;">
                             {{rec.inv_bal_above60 | number : '1.2-2'}}</td>
-                        <td *ngIf="radio_days=='30to365'" style="text-align: right;">
+                        <td *ngIf="radio_days=='30to365'" style="text-align:right;">
                             {{rec.inv_bal_60to90 | number : '1.2-2'}}</td>
-                        <td *ngIf="radio_days=='30to365'" style="text-align: right;">
+                        <td *ngIf="radio_days=='30to365'" style="text-align:right;">
                             {{rec.inv_bal_90to180 | number : '1.2-2'}}</td>
-                        <td *ngIf="radio_days=='30to365'" style="text-align: right;">
+                        <td *ngIf="radio_days=='30to365'" style="text-align:right;">
                             {{rec.inv_bal_180to365 | number : '1.2-2'}}</td>
-                        <td *ngIf="radio_days=='30to365'" style="text-align: right;">
+                        <td *ngIf="radio_days=='30to365'" style="text-align:right;">
                             {{rec.inv_bal_above365 | number : '1.2-2'}}</td>
                     </tr>
                 </tbody>
@@ -210,15 +211,15 @@
                         <th style="text-align:right;">UN-DEPOSITED</th>
                         <th style="text-align:right;">UPTO 30</th>
                         <th style="text-align:right;">31-60</th>
-                        <th *ngIf="radio_days=='30to60'" style="text-align:right;">>60</th>
+                        <th *ngIf="radio_days=='30to60'" style="text-align: right;">>60</th>
                         <th *ngIf="radio_days=='30to365'" style="text-align: right;">61-90</th>
-                         <th *ngIf="radio_days=='30to365'" style="text-align: right;">91-180</th>
-                         <th *ngIf="radio_days=='30to365'" style="text-align: right;">181-365</th>
-                         <th *ngIf="radio_days=='30to365'" style="text-align: right;">>365</th>
+                        <th *ngIf="radio_days=='30to365'" style="text-align: right;">91-180</th>
+                        <th *ngIf="radio_days=='30to365'" style="text-align: right;">181-365</th>
+                        <th *ngIf="radio_days=='30to365'" style="text-align: right;">>365</th>
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr >
+                    <tr>
                         <td style="text-align: left;">{{rec.inv_cust_name}}</td>
                         <td style="text-align: right;">{{rec.inv_total | number: '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_paid | number: '1.2-2'}}</td>
