@@ -26,4 +26,8 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UsAccountsReportsRoutingModule { }
+export class UsAccountsReportsRoutingModule { 
+
+  test : number;
+  
+}
