@@ -532,7 +532,8 @@ export class GlobalService {
       "~GLOBAL_REPORT_FOLDER": this.GLOBAL_REPORT_FOLDER,
       "~AIRPORTDISPLAYCOLUMN": this.AIRPORTDISPLAYCOLUMN,
       "~BRANCH_REGION": this.BRANCH_REGION,
-      "~FILES_FOLDER": this.FILES_FOLDER
+      "~FILES_FOLDER": this.FILES_FOLDER,
+      "HIDE_PAYROLL" : this.user_hide_payroll
     }
 
   }

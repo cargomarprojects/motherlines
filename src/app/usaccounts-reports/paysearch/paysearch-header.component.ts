@@ -24,10 +24,6 @@ export class PaySearchHeaderComponent implements OnInit {
     }
 
     initData() {
-        if (this.gs.isBlank(this.searchQuery.sdate))
-            this.searchQuery.sdate = this.gs.defaultValues.lastmonthdate;
-        if (this.gs.isBlank(this.searchQuery.edate))
-            this.searchQuery.edate = this.gs.defaultValues.today;
     }
 
     ngOnChanges(changes: SimpleChange) {

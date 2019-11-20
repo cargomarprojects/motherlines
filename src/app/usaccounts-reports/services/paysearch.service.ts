@@ -79,6 +79,9 @@ export class PaySearchService {
         SearchData.TYPE = this.record.searchQuery.searchType;
         SearchData.DATA = this.record.searchQuery.searchString;
 
+
+        
+
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;

@@ -138,6 +138,9 @@ export class Login2Component implements OnInit {
         this.GLOBALCONTANTS.year_end_date = this.GLOBALCONTANTS.replaceAll(this.Year_Row.fy_end_date, "/", "-");
         this.GLOBALCONTANTS.year_islocked = this.Year_Row.fy_islocked;
 
+        
+
+
         this.GLOBALCONTANTS.InitUserInfo();
 
         this.SetupYearList();
