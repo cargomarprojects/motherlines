@@ -229,7 +229,6 @@ export class AgingReportComponent implements OnInit {
         //   return;
         // }
 
-        this.ResetControls();
 
         this.SearchData.outputformat = _outputformat;
         this.SearchData.pkid = this.urlid;
@@ -342,6 +341,8 @@ export class AgingReportComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
 
+        this.cust_id = _Record.id;
+        this.cust_name = _Record.name;
     }
     OnChange(field: string) {
         if (field == 'report_category') {
@@ -362,31 +363,7 @@ export class AgingReportComponent implements OnInit {
         }
     }
 
-    rdbtnclick() {
-        this.group_by_parent = false;
-    }
-    ResetControls() {
-        // if (this.radio_exp == 'EXPENSE')
-        //     this.report_amt_caption = "EXPENSE";
-        // if (this.radio_exp == "REVENUE")
-        //     this.report_amt_caption = "REVENUE";
-        // if (this.radio_exp == "PROFIT")
-        //     this.report_amt_caption = "PROFIT";
-        // if (this.radio_exp == "TEU")
-        //     this.report_amt_caption = "TEU";
-        // if (this.radio_exp == "TONNAGE")
-        //     this.report_amt_caption = "TONNAGE";
-        // if (this.radio_exp == "TOTHOUSE")
-        //     this.report_amt_caption = "NO OF HOUSE";
-
-        // if (this.report_type == "DETAIL") {
-        //     this.reportformat = "DETAIL";
-        // }
-        // else if (this.report_type == "SUMMARY") {
-        //     this.reportformat = "SUMMARY";
-        // }
-    }
-
+    
     Print() {
         this.errorMessage = "";
         if (this.MainList.length <= 0) {
