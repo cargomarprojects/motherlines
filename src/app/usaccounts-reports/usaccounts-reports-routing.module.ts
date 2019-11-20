@@ -1,3 +1,4 @@
+
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BankEnquiryReportComponent } from './bank-enquiry-report/bank-enquiry-report.component';
@@ -15,11 +16,7 @@ const routes: Routes = [
   { path :'BankStmtPage', component : BankStmtReportComponent },
   { path :'BankBalancePage', component : BankBalReportComponent },
   { path :'AgingReport', component : AgingReportComponent },
-<<<<<<< HEAD
-  { path :'CustStmtPage', component : CustStmtReportComponent },
-=======
   { path :'PaySearchPage', component : PaySearchComponent },
->>>>>>> 199a30b947ab2a80f2d8b152317cd460756ff768
 ];
 
 @NgModule({
