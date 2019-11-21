@@ -25,6 +25,7 @@ export class CustStmtReportComponent implements OnInit {
   url: string;
   menuid: string;
   currentTab = '';
+  chk_profitvisible: boolean = false;
 
   report_title: string;
   report_url: string;
@@ -46,7 +47,8 @@ export class CustStmtReportComponent implements OnInit {
   showprofit: boolean = false;
   sortname: string = 'inv_date';
   hide_payroll: string = 'N';
-  currency:string='';
+  currency: string = '';
+  GT_UNIQUE_ID: string = this.gs.getGuid();
 
   filename: string = '';
   filetype: string = '';
@@ -83,7 +85,14 @@ export class CustStmtReportComponent implements OnInit {
       this.urlid = params.id;
       this.menuid = params.menuid;
       this.InitPage();
-      this.LoadCompany();
+
+      if (this.gs.BRANCH_REGION == "USA" && this.gs.company_code == "100") {
+        if (this.gs.IsAdmin(this.menuid))
+          this.chk_profitvisible = true;
+        else
+          this.chk_profitvisible = false;
+      }
+      this.GT_UNIQUE_ID = this.gs.getGuid();
     });
 
   }
@@ -103,14 +112,14 @@ export class CustStmtReportComponent implements OnInit {
         this.ddate = rec.ddate;
         this.comp_name = rec.comp_name;
         this.comp_code = rec.comp_code;
-        this.comp_type= rec.comp_type;
-        this.bank_id= rec.bank_id;
-        this.bank_name= rec.bank_name;
-        this.radio_cust= rec.radio_cust;
-        this.showall= rec.showall;
-        this.showprofit= rec.showprofit;
-        this.sortname= rec.sortname;
-        this.hide_payroll= rec.hide_payroll;
+        this.comp_type = rec.comp_type;
+        this.bank_id = rec.bank_id;
+        this.bank_name = rec.bank_name;
+        this.radio_cust = rec.radio_cust;
+        this.showall = rec.showall;
+        this.showprofit = rec.showprofit;
+        this.sortname = rec.sortname;
+        this.hide_payroll = rec.hide_payroll;
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
@@ -121,21 +130,31 @@ export class CustStmtReportComponent implements OnInit {
         this.page_rowcount = rec.page_rowcount;
 
         this.SearchData = this.gs.UserInfo;
-
-
-
         this.SearchData.CUST_ID = this.cust_id;
+        this.SearchData.BANK_ID = this.bank_id;
+        this.SearchData.BANK_NAME = this.bank_name;
+        this.SearchData.RADIO_CUST = this.radio_cust;
         this.SearchData.JV_YEAR = this.gs.year_code;
         this.SearchData.EDATE = this.adate;
+        this.SearchData.DUEDATE = this.ddate;
         this.SearchData.ARAP = 'BOTH';
-        this.SearchData.SHOWALL = 'Y';
-        this.SearchData.ISCUSTOMER = 'Y';
-        this.SearchData.GT_UNIQUE_ID = ' ';
-        this.SearchData.CURRENCY = ' ';
-        this.SearchData.ISBASECURRENCY = 'Y';
-        this.SearchData.HIDE_PAYROLL = 'Y';
-        this.SearchData.SORT = 'inv_date';
+        this.SearchData.SHOWALL = this.showall == true ? 'Y' : 'N';
+        this.SearchData.ISCUSTOMER = this.radio_cust == 'MASTER' ? 'Y' : 'N';
+        this.SearchData.GT_UNIQUE_ID = this.gs.getGuid();
 
+        if (this.currency == undefined || this.currency === '')
+          this.currency = this.gs.base_cur_code;
+        if (this.gs.IS_SINGLE_CURRENCY == true || this.currency.trim().length <= 0 || this.currency == this.gs.base_cur_code) {
+          this.SearchData.CURRENCY = '';
+          this.SearchData.ISBASECURRENCY = 'Y';
+        }
+        else {
+          this.SearchData.CURRENCY = this.currency;
+          this.SearchData.ISBASECURRENCY = 'N';
+        }
+        this.SearchData.HIDE_PAYROLL = this.gs.user_hide_payroll;
+
+        this.SearchData.SORT = this.sortname;
         this.SearchData.COMP_NAME = this.comp_name;
         this.SearchData.COMP_TYPE = this.comp_type;
         if (this.comp_type == 'ALL')
@@ -155,11 +174,11 @@ export class CustStmtReportComponent implements OnInit {
         this.cust_id = '';
         this.cust_name = '';
         this.adate = this.gs.defaultValues.today;
-        this.ddate = this.gs.defaultValues.today;
+        this.ddate = '';
         this.comp_code = this.gs.branch_code;
         this.comp_name = this.gs.branch_name;
-        this.comp_type='ALL';
-        this.sortname='inv_date';
+        this.comp_type = 'ALL';
+        this.sortname = 'inv_date';
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
@@ -171,12 +190,8 @@ export class CustStmtReportComponent implements OnInit {
 
   }
 
-  LoadCompany() {
-    this.CompList = <any[]>[];
-    this.gs.CompanyList.forEach(Rec => {
-      this.CompList.push(Rec);
-    });
-  }
+
+  
   ngOnInit() {
   }
 
@@ -192,13 +207,14 @@ export class CustStmtReportComponent implements OnInit {
   List(_outputformat: string, _action: string = 'NEW') {
 
     this.errorMessage = "";
-    // if (this.gs.isBlank(this.cust_id)) {
-    //   this.errorMessage = "Code Cannot be Blank";
-    //   alert(this.errorMessage);
-    //   return;
-    // }
+    if (this.gs.isBlank(this.cust_id.trim())) {
+      this.errorMessage = "Customer Cannot be Blank";
+      alert(this.errorMessage);
+      return;
+    }
+
     if (this.gs.isBlank(this.adate)) {
-      this.adate = this.gs.year_end_date;
+      this.adate = this.gs.defaultValues.today;
     }
 
     this.SearchData.outputformat = _outputformat;
@@ -212,6 +228,7 @@ export class CustStmtReportComponent implements OnInit {
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
 
       this.SearchData.CUST_ID = this.cust_id;
+      this.SearchData.CUST_NAME = this.cust_name;
       this.SearchData.BANK_ID = this.bank_id;
       this.SearchData.BANK_NAME = this.bank_name;
       this.SearchData.RADIO_CUST = this.radio_cust;
@@ -219,13 +236,23 @@ export class CustStmtReportComponent implements OnInit {
       this.SearchData.EDATE = this.adate;
       this.SearchData.DUEDATE = this.ddate;
       this.SearchData.ARAP = 'BOTH';
-      this.SearchData.SHOWALL = 'Y';
-      this.SearchData.ISCUSTOMER = 'Y';
+      this.SearchData.SHOWALL = this.showall == true ? 'Y' : 'N';
+      this.SearchData.ISCUSTOMER = this.radio_cust == 'MASTER' ? 'Y' : 'N';
       this.SearchData.GT_UNIQUE_ID = this.gs.getGuid();
-      this.SearchData.CURRENCY = ' ';
-      this.SearchData.ISBASECURRENCY = 'Y';
-      this.SearchData.HIDE_PAYROLL = 'Y';
-      this.SearchData.SORT = 'inv_date';
+
+      if (this.currency == undefined || this.currency === '')
+        this.currency = this.gs.base_cur_code;
+      if (this.gs.IS_SINGLE_CURRENCY == true || this.currency.trim().length <= 0 || this.currency == this.gs.base_cur_code) {
+        this.SearchData.CURRENCY = '';
+        this.SearchData.ISBASECURRENCY = 'Y';
+      }
+      else {
+        this.SearchData.CURRENCY = this.currency;
+        this.SearchData.ISBASECURRENCY = 'N';
+      }
+      this.SearchData.HIDE_PAYROLL = this.gs.user_hide_payroll;
+
+      this.SearchData.SORT = this.sortname;
       this.SearchData.COMP_NAME = this.comp_name;
       this.SearchData.COMP_TYPE = this.comp_type;
       if (this.comp_type == 'ALL')
@@ -236,6 +263,7 @@ export class CustStmtReportComponent implements OnInit {
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
+
     }
 
 
@@ -304,10 +332,10 @@ export class CustStmtReportComponent implements OnInit {
       this.cust_id = _Record.id;
       this.cust_name = _Record.name;
     }
-    // if (_Record.controlname === 'PARENT') {
-    //   this.cust_parent_id = _Record.id;
-    //   this.cust_parent_name = _Record.name;
-    // }
+    if (_Record.controlname === 'BANK') {
+      this.bank_id = _Record.id;
+      this.bank_name = _Record.name;
+    }
   }
 
   Print() {
@@ -319,7 +347,7 @@ export class CustStmtReportComponent implements OnInit {
     }
 
     // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-    this.report_title = 'Bank Stmt Report';
+    this.report_title = 'Customer Stmt Report';
     this.report_url = undefined;
     this.report_searchdata = this.gs.UserInfo;
     this.report_menuid = this.menuid;
@@ -346,9 +374,13 @@ export class CustStmtReportComponent implements OnInit {
 
   }
 
-
   callbackevent() {
     this.tab = 'main';
+  }
+
+  rdbclick() {
+    this.cust_id = '';
+    this.cust_name = '';
   }
 
 }
