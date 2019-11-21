@@ -190,9 +190,7 @@ export class CustStmtReportComponent implements OnInit {
 
   }
 
-
-  
-  ngOnInit() {
+  ngOnInit() {  
   }
 
   ngOnDestroy() {
@@ -346,12 +344,14 @@ export class CustStmtReportComponent implements OnInit {
       return;
     }
 
-    // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-    this.report_title = 'Customer Stmt Report';
-    this.report_url = undefined;
-    this.report_searchdata = this.gs.UserInfo;
-    this.report_menuid = this.menuid;
-    this.tab = 'report';
+    this.tab = 'osreport';
+
+     
+    // this.report_title = 'Customer Stmt Report';
+    // this.report_url = undefined;
+    // this.report_searchdata = this.gs.UserInfo;
+    // this.report_menuid = this.menuid;
+    // this.tab = 'report';
   }
 
   PrintPayment(_rec: Tbl_OS_REPORT) {

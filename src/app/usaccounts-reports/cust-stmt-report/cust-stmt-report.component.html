@@ -147,8 +147,8 @@
                         <th>HOUSE B/L</th>
                         <th style="text-align:right">DR</th>
                         <th style="text-align:right">CR</th>
-                        <th style="text-align:right">M.PROFIT</th>
-                        <th style="text-align:right">H.PROFIT</th>
+                        <th *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit" style="text-align:right">M.PROFIT</th>
+                        <th *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit" style="text-align:right">H.PROFIT</th>
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
@@ -162,8 +162,8 @@
                         <td>{{rec.inv_hrefno}}</td>
                         <td style="text-align:right">{{rec.inv_ar | number : '1.2-2'}}</td>
                         <td style="text-align:right">{{rec.inv_ap | number : '1.2-2'}}</td>
-                        <td style="text-align:right">{{rec.inv_mbl_profit | number : '1.2-2'}}</td>
-                        <td style="text-align:right">{{rec.inv_hbl_profit | number : '1.2-2'}}</td>
+                        <td *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit" style="text-align:right">{{rec.inv_mbl_profit | number : '1.2-2'}}</td>
+                        <td *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit" style="text-align:right">{{rec.inv_hbl_profit | number : '1.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -186,3 +186,8 @@
         [filename]="filename" [filetype]="filetype" [filedisplayname]="filedisplayname"
         (callbackevent)="callbackevent($event)"></app-report>
 </div>
+
+<div *ngIf="tab == 'osreport'">
+        <app-cust-stmt-osinv-report  [RecordList]="MainList"  ></app-cust-stmt-osinv-report>
+
+    </div>

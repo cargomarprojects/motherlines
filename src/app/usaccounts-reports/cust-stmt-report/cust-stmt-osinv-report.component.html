@@ -1,0 +1,39 @@
+<div class="page-header">
+    <div class="row  align-items-center justify-content-left p-1">
+        <label class="mr-1">{{title}}</label>
+        <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
+        <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    </div>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+    {{errorMessage}}
+</div>
+<div class="page-body table-responsive">
+    <table class="table  table-hover table-sm">
+        <thead class="page-body-thead">
+            <tr>
+                <th>INV.NO</th>
+                <th>INV.DATE</th>
+                <th>REFNO</th>
+                <th>CUST REFNO</th>
+                <th>MASTER B/L</th>
+                <th>HOUSE B/L</th>
+                <th style="text-align:right">DR</th>
+                <th style="text-align:right">CR</th>
+            </tr>
+        </thead>
+        <tbody class="page-body-tbody">
+            <tr *ngFor="let rec of RecordList">
+                <td>{{rec.inv_no}}</td>
+                <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+                <td>{{rec.inv_mrefno}}</td>
+                <td>{{rec.inv_refno}}</td>
+                <td>{{rec.inv_mblno}}</td>
+                <td>{{rec.inv_hrefno}}</td>
+                <td style="text-align:right">{{rec.inv_ar | number : '1.2-2'}}</td>
+                <td style="text-align:right">{{rec.inv_ap | number : '1.2-2'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
