@@ -22,6 +22,9 @@ import { FundTransferEditComponent } from './fundtransfer/fundtransfer-edit.comp
 import { VoidCheckComponent } from './voidcheck/voidcheck.component';
 import { VoidCheckHeaderComponent } from './voidcheck/voidcheck-header.component';
 import { VoidCheckEditComponent } from './voidcheck/voidcheck-edit.component';
+import { DepositComponent } from './deposit/deposit.component';
+import { DepositEditComponent } from './deposit/deposit-edit.component';
+import { DepositHeaderComponent } from './deposit/deposit-header.component';
 
 
 @NgModule({
@@ -44,7 +47,10 @@ import { VoidCheckEditComponent } from './voidcheck/voidcheck-edit.component';
   FundTransferEditComponent,
   VoidCheckComponent,
   VoidCheckHeaderComponent,
-  VoidCheckEditComponent
+  VoidCheckEditComponent,
+  DepositComponent,
+  DepositEditComponent,
+  DepositHeaderComponent
 
 ],
   imports: [

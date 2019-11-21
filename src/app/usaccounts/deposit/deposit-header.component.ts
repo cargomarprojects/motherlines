@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
-import { SearchQuery } from '../models/Tbl_cargo_genfiles';
+import { SearchQuery } from '../models/Tbl_Acc_Payment';
 
 @Component({
-    selector: 'acc-genfileupload-header',
-    templateUrl: './genfileupload-header.component.html',
+    selector: 'acc-deposit-header',
+    templateUrl: './deposit-header.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GenFileUploadHeaderComponent implements OnInit {
+export class DepositHeaderComponent implements OnInit {
     // Call By Value using Input Parameters
     searchQuery: SearchQuery;
     @Input() set _query(value: SearchQuery) {
