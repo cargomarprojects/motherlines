@@ -15,6 +15,8 @@ import { FundTransferComponent } from './fundtransfer/fundtransfer.component';
 import { FundTransferEditComponent } from './fundtransfer/fundtransfer-edit.component';
 import { VoidCheckEditComponent } from './voidcheck/voidcheck-edit.component';
 import { VoidCheckComponent } from './voidcheck/voidcheck.component';
+import { DepositComponent } from './deposit/deposit.component';
+import { DepositEditComponent } from './deposit/deposit-edit.component';
 
 
 const routes: Routes = [
@@ -32,6 +34,9 @@ const routes: Routes = [
   { path : 'FundTransEditPage', component : FundTransferEditComponent },
   { path : 'VoidCheckPage', component : VoidCheckComponent },
   { path : 'VoidCheckEditPage', component : VoidCheckEditComponent },
+  { path : 'DepositPage', component : DepositComponent },
+  { path : 'DepositEditPage', component : DepositEditComponent },
+
 
 ];
 
