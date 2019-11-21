@@ -10,8 +10,8 @@
   {{errorMessage}}
 </div>
 
-<acc-genfileupload-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-</acc-genfileupload-header>
+<acc-deposit-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+</acc-deposit-header>
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 
