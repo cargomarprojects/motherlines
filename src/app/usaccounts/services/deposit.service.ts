@@ -121,14 +121,11 @@ export class DepositService {
         else {
             REC.pay_docno = _rec.pay_docno;
             REC.pay_date = _rec.pay_date;
-            REC.pay_from_acc_name = _rec.pay_from_acc_name;
-            REC.pay_to_acc_name = _rec.pay_to_acc_name;
-            REC.pay_amt = _rec.pay_amt;
+            REC.pay_acc_name = _rec.pay_acc_name;
+            REC.pay_diff = _rec.pay_diff;
+            REC.pay_tot_chq = _rec.pay_tot_chq;
+            REC.pay_posted = _rec.pay_posted;
             REC.pay_narration = _rec.pay_narration;
-            REC.pay_mode = _rec.pay_mode;
-            REC.pay_chqno = _rec.pay_chqno;
-            REC.pay_chq_date = _rec.pay_chq_date;
-
             REC.rec_created_by = _rec.rec_created_by;
             REC.rec_created_date = _rec.rec_created_date;
             REC.rec_closed = _rec.rec_closed;
