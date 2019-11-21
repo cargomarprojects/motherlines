@@ -47,7 +47,7 @@ export class DepositService {
         this.record = <AccPaymentModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: ''},
+            searchQuery: <SearchQuery>{ searchString: 'pay_docno'},
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -77,15 +77,12 @@ export class DepositService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        SearchData.TYPE = 'FT';
+        SearchData.TYPE = 'DEPOSIT';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
-
         SearchData.FDATE = this.record.searchQuery.sdate;
         SearchData.EDATE = this.record.searchQuery.edate;
         SearchData.YEAR = this.gs.year_code;
-        
-
+        SearchData.SORT = this.record.searchQuery.searchString;        
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
