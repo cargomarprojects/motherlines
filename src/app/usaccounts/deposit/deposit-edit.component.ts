@@ -120,11 +120,11 @@ export class DepositEditComponent implements OnInit {
 
         if (this.mode == 'ADD') {
             this.record = <Tbl_Acc_Payment>{};
+            this.arPendingList = <Tbl_Acc_Payment[]>[];
+            this.DetailList = <Tbl_Acc_Payment[]>[];
+            this.total_amount = 0;
             this.pkid = this.gs.getGuid();
             this.init();
-        }
-        if (this.mode == 'EDIT') {
-            this.GetRecord();
         }
     }
 
@@ -141,20 +141,7 @@ export class DepositEditComponent implements OnInit {
         this.record.rec_created_date = this.gs.defaultValues.today;
     }
 
-    GetRecord() {
-        this.errorMessage = '';
-        var SearchData = this.gs.UserInfo;
-        SearchData.pkid = this.pkid;
-        this.mainService.GetRecord(SearchData)
-            .subscribe(response => {
-                this.record = <Tbl_Acc_Payment>response.record;
-                this.ProcessData();
-                this.mode = 'EDIT';
-                this.errorMessage = "";
-            }, error => {
-                this.errorMessage = this.gs.getError(error);
-            });
-    }
+
 
     ProcessData() {
     }
@@ -190,6 +177,8 @@ export class DepositEditComponent implements OnInit {
         this.SaveParent();
         const saveRecord = <vm_tbl_accPayment>{};
         saveRecord.record = this.record;
+        saveRecord.records = this.DetailList;
+
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
         saveRecord.userinfo = this.gs.UserInfo;
@@ -202,13 +191,11 @@ export class DepositEditComponent implements OnInit {
                 }
                 else {
 
-                    if (this.mode === 'ADD')
-                        this.record.pay_vrno = response.vrno;
-
-                    this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
                     alert(this.errorMessage);
+                    this.mode = "ADD";
+                    this.actionHandler();
                 }
 
             }, error => {
@@ -249,7 +236,7 @@ export class DepositEditComponent implements OnInit {
         }
 
         var nAmt = 0;
-        
+        this.iTotChq = 0;
 
         this.DetailList = <Tbl_Acc_Payment[]>[];
 
@@ -261,7 +248,7 @@ export class DepositEditComponent implements OnInit {
                 DetailRow.pay_total = Record.pay_total;
                 nAmt += Record.pay_total;
                 nAmt =  this.gs.roundNumber( nAmt ,2);                
-                iTotChq++;
+                this.iTotChq++;
                 this.DetailList.push(DetailRow);
             }
         });

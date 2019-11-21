@@ -88,6 +88,7 @@ export interface vm_tbl_accPayment {
     mode: string;
     pkid: string;
     record: Tbl_Acc_Payment;
+    records: Tbl_Acc_Payment[];
     userinfo: any,
     filter: any;
 }
