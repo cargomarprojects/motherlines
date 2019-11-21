@@ -29,9 +29,12 @@ export class DepositEditComponent implements OnInit {
     errorMessage: string;
     Foregroundcolor: string;
 
+    total_amount = 0;
+    iTotChq = 0;
 
     docno = '';
     sdate = '';
+    id = '';
     code = '';
     name = '';
     remarks = '';
@@ -55,6 +58,8 @@ export class DepositEditComponent implements OnInit {
     oldrefno = '';
 
     arPendingList: Tbl_Acc_Payment[] = [];
+
+    DetailList: Tbl_Acc_Payment[] = [];
 
 
 
@@ -127,6 +132,10 @@ export class DepositEditComponent implements OnInit {
 
         this.record.pay_pkid = this.pkid;
         this.record.pay_vrno = '';
+        this.id = '';
+        this.code = '';
+        this.name = '';
+        this.remarks = '';
 
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
@@ -151,13 +160,25 @@ export class DepositEditComponent implements OnInit {
     }
 
     SaveParent() {
+        
+        this.record = <Tbl_Acc_Payment>{};
+        this.record.pay_pkid = this.pkid;
+        this.record.pay_cust_id = "";
+        this.record.pay_acc_id = this.id;
+        this.record.pay_date = this.sdate;
+        this.record.pay_narration = this.remarks;
+        this.record.pay_type = "DEPOSIT";
+        this.record.pay_year = +this.gs.year_code;
+        this.record.pay_total = this.total_amount ;
+        this.record.pay_status = "POSTED";
+        this.record.pay_posted = "Y";
+        this.record.pay_memo = "";
+        this.record.pay_tot_chq = this.iTotChq;
+
     }
 
 
-    swapSelection(rec : Tbl_Acc_Payment){
-        rec.pay_flag2 = !rec.pay_flag2 ;
 
-    }
 
     Save() {
 
@@ -202,11 +223,52 @@ export class DepositEditComponent implements OnInit {
         var bRet = true;
         this.errorMessage = "";
 
-        if (this.gs.isBlank(this.pkid)) {
+        if (this.gs.isBlank(this.sdate)) {
             bRet = false;
-            this.errorMessage = "Invalid ID";
+            this.errorMessage = "Invalid Date";
             alert(this.errorMessage);
             return bRet;
+        }
+
+        if (this.gs.isBlank(this.id) || this.gs.isBlank(this.code) || this.gs.isBlank(this.name)) {
+            bRet = false;
+            this.errorMessage = "Invalid Bank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        var iCtr = 0;
+        this.arPendingList.forEach(Record => {
+            if (Record.pay_flag2) {
+                iCtr++;
+            }
+        });
+        if (iCtr == 0) {
+            alert("No Detail Rows To Save")
+            return;
+        }
+
+        var nAmt = 0;
+        
+
+        this.DetailList = <Tbl_Acc_Payment[]>[];
+
+        this.arPendingList.forEach(Record => {
+
+            if (Record.pay_flag2 && Record.pay_total > 0) {
+                var DetailRow = <Tbl_Acc_Payment>{};
+                DetailRow.pay_pkid = Record.pay_pkid;
+                DetailRow.pay_total = Record.pay_total;
+                nAmt += Record.pay_total;
+                nAmt =  this.gs.roundNumber( nAmt ,2);                
+                iTotChq++;
+                this.DetailList.push(DetailRow);
+            }
+        });
+
+        if (nAmt != this.total_amount) {
+            alert("Difference in Total Amount And selected Amount");
+            return false;
         }
         return bRet;
     }
@@ -216,14 +278,28 @@ export class DepositEditComponent implements OnInit {
         SearchData.pkid = this.pkid;
         this.mainService.DepositPendingList(SearchData).subscribe(
             res => {
-                this.arPendingList =  res.list;
+                this.arPendingList = res.list;
 
             },
             err => {
                 this.errorMessage = this.gs.getError(err);
                 alert(this.errorMessage);
             });
+
     }
+
+    swapSelection(rec: Tbl_Acc_Payment) {
+        rec.pay_flag2 = !rec.pay_flag2;
+        this.total_amount = 0;
+        this.arPendingList.forEach(Record => {
+            if (Record.pay_flag2) {
+                this.total_amount += Record.pay_total;
+                this.total_amount =  this.gs.roundNumber( this.total_amount,2);                
+            }
+        })
+        
+    }
+
 
     Close() {
         this.location.back();
@@ -232,6 +308,8 @@ export class DepositEditComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
         if (_Record.controlname == "ACCTM") {
+            this.id = _Record.id;
+            this.code = _Record.code;
             this.name = _Record.name;
         }
     }

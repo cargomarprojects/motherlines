@@ -53,8 +53,11 @@
 
         </div>
 
-        <div class="col-md-6 testbox  px-0 mx-0">
-
+        <div class="col-md-4 testbox  px-0 mx-0">
+            <div class="form-group row">
+                <label class="col-2 col-form-label col-form-label-sm">Total</label>
+                <label class="col-8 col-form-label col-form-label-sm">{{total_amount}}</label>
+            </div>
         </div>
 
     </div>
@@ -77,10 +80,9 @@
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of arPendingList">
                 <td>
-                    <div class="form-check"> 
-                        <input type="checkbox" class="form-check-input"
-                        (click)="swapSelection(rec)" #chkbox
-                         [(ngModel)]="rec.pay_flag2"></div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" (click)="swapSelection(rec)" #chkbox
+                            [(ngModel)]="rec.pay_flag2"></div>
                 </td>
                 <td>{{rec.pay_docno}}</td>
                 <td>{{rec.pay_date | date : gs.FRONTEND_DATEFORMAT }}</td>
