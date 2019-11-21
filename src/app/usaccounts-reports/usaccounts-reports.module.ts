@@ -22,6 +22,8 @@ import { CustStmtReportReducer  } from './cust-stmt-report/store/cust-stmt-repor
 import { PaySearchComponent } from './paysearch/paysearch.component';
 import { PaySearchHeaderComponent } from './paysearch/paysearch-header.component';
 
+import { CustStmtOsinvReportComponent } from './cust-stmt-report/cust-stmt-osinv-report.component';
+
 @NgModule({
     declarations :[
       BankEnquiryReportComponent,  
@@ -30,7 +32,8 @@ import { PaySearchHeaderComponent } from './paysearch/paysearch-header.component
       AgingReportComponent,
       CustStmtReportComponent,
       PaySearchComponent,
-      PaySearchHeaderComponent
+      PaySearchHeaderComponent,
+      CustStmtOsinvReportComponent
   ],
   imports: [
     SharedModule,

@@ -15,22 +15,22 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">AsOn</label>
-                            <div class="col-8">
+                            <label class="col-2 col-form-label col-form-label-sm">AsOn</label>
+                            <div class="col-10">
                                 <app-date [inputdate]="adate" (ValueChanged)="adate=$event"></app-date>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">DueOn</label>
-                            <div class="col-8">
+                            <label class="col-2 col-form-label col-form-label-sm">DueOn</label>
+                            <div class="col-10">
                                 <app-date [inputdate]="ddate" (ValueChanged)="ddate=$event"></app-date>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">Branch</label>
-                            <div class="col-8">
+                            <label class="col-2 col-form-label col-form-label-sm">Branch</label>
+                            <div class="col-10">
                                 <select class="form-control form-control-sm" [(ngModel)]="comp_type">
-                                    <option *ngFor="let rec of CompList" [value]="rec.comp_code">{{rec.comp_name}}
+                                    <option *ngFor="let rec of gs.CompanyList" [value]="rec.comp_code">{{rec.comp_name}}
                                     </option>
                                 </select>
                             </div>
@@ -39,27 +39,27 @@
                     <div class="col-md-3">
 
                         <div class="form-group row">
-                            <label class="col-4 col-form-label col-form-label-sm">Bank</label>
-                            <div class="col-8">
-                                <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'"
+                            <label class="col-2 col-form-label col-form-label-sm">Bank</label>
+                            <div class="col-10">
+                                <app-autocomplete2 [controlname]="'BANK'" [tabletype]="'ACC_ACCTM'"
                                     [displaycolumn]="'NAME'" [displaydata]="bank_name" [where]="lov_where"
                                       (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="offset-4 col-4">
-                                <input type="radio" [(ngModel)]="radio_cust" [value]="'MASTER'" name="optcust" />
+                            <div class="offset-2 col-4">
+                                <input type="radio" [(ngModel)]="radio_cust" [value]="'MASTER'" name="optcust" (click)="rdbclick()" />
                                 <span>Customer</span>
                             </div>
-                            <div class="col-4">
-                                <input type="radio" [(ngModel)]="radio_cust" [value]="'OVERSEAAGENT'" name="optcust" />
+                            <div class="col-6">
+                                <input type="radio" [(ngModel)]="radio_cust" [value]="'OVERSEAAGENT'" name="optcust" (click)="rdbclick()" />
                                 <span>ParentGroup</span>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <div class="offset-4 col-8">
+                            <div class="offset-2 col-10">
                                 <app-autocomplete2 [controlname]="'CUST-AGENT'" [tabletype]="radio_cust"
                                     [displaycolumn]="'NAME'" [displaydata]="cust_name"
                                     (ValueChanged)="LovSelected($event)">
@@ -69,7 +69,7 @@
 
                     </div>
                     <div class="col-md-3">
-                        <div class="form-group row">
+                        <div *ngIf="!gs.IS_SINGLE_CURRENCY" class="form-group row">
                             <label class="col-2 col-form-label col-form-label-sm">Currency</label>
                             <div class="col-10">
                                 <app-autocomplete2 [controlname]="'CURR'" [tabletype]="'PARAM'" [subtype]="'CURRENCY'"
@@ -80,11 +80,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="offset-2 col-4">
+                               <label class="col-2 col-form-label col-form-label-sm"></label>
+                            <div *ngIf="chk_profitvisible" class="col-5">
                                 <div class="form-check"> <input type="checkbox" class="form-check-input"
-                                        [(ngModel)]="showall"><span>ShowProfit</span></div>
+                                        [(ngModel)]="showprofit"><span>ShowProfit</span></div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-5">
                                 <div class="form-check"> <input type="checkbox" class="form-check-input"
                                         [(ngModel)]="showall"><span>ShowAll</span></div>
                             </div>
@@ -110,7 +111,7 @@
                             </div> -->
                         <div class="form-group row">
                             <!-- <label class="col-4 col-form-label col-form-label-sm"></label> -->
-                            <div class="col-8">
+                            <div class="offset-2 col-8">
                                 <button [disabled]="loading" (click)="List('SCREEN')"
                                     class="btn btn-primary btn-sm mr-1">Search</button>
                                 <button [disabled]="loading" (click)="Print()"
@@ -119,7 +120,7 @@
                         </div>
                         <div class="form-group row">
                                 <!-- <label class="col-4 col-form-label col-form-label-sm"></label> -->
-                                <div class="col-8">
+                                <div class="offset-2 col-8">
                                     <button [disabled]="loading" (click)="Print()"
                                         class="btn btn-primary btn-sm">Print O/S Invoices</button>
                                 </div>
@@ -146,8 +147,8 @@
                         <th>HOUSE B/L</th>
                         <th style="text-align:right">DR</th>
                         <th style="text-align:right">CR</th>
-                        <th style="text-align:right">M.PROFIT</th>
-                        <th style="text-align:right">H.PROFIT</th>
+                        <th *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit" style="text-align:right">M.PROFIT</th>
+                        <th *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit" style="text-align:right">H.PROFIT</th>
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
@@ -161,8 +162,8 @@
                         <td>{{rec.inv_hrefno}}</td>
                         <td style="text-align:right">{{rec.inv_ar | number : '1.2-2'}}</td>
                         <td style="text-align:right">{{rec.inv_ap | number : '1.2-2'}}</td>
-                        <td style="text-align:right">{{rec.inv_mbl_profit | number : '1.2-2'}}</td>
-                        <td style="text-align:right">{{rec.inv_hbl_profit | number : '1.2-2'}}</td>
+                        <td *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit" style="text-align:right">{{rec.inv_mbl_profit | number : '1.2-2'}}</td>
+                        <td *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit" style="text-align:right">{{rec.inv_hbl_profit | number : '1.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -185,3 +186,8 @@
         [filename]="filename" [filetype]="filetype" [filedisplayname]="filedisplayname"
         (callbackevent)="callbackevent($event)"></app-report>
 </div>
+
+<div *ngIf="tab == 'osreport'">
+        <app-cust-stmt-osinv-report  [RecordList]="MainList"  ></app-cust-stmt-osinv-report>
+
+    </div>
