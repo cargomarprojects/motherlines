@@ -119,6 +119,7 @@ export class DepositService {
             REC.pay_docno = _rec.pay_docno;
             REC.pay_date = _rec.pay_date;
             REC.pay_acc_name = _rec.pay_acc_name;
+            
             REC.pay_diff = _rec.pay_diff;
             REC.pay_tot_chq = _rec.pay_tot_chq;
             REC.pay_posted = _rec.pay_posted;

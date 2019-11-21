@@ -188,6 +188,13 @@ export class DepositEditComponent implements OnInit {
                 }
                 else {
 
+                    this.record.pay_docno =  response.DOCNO;
+                    this.record.pay_date = this.sdate ;
+                    this.record.pay_acc_name = this.name ;
+                    this.record.pay_diff = this.total_amount ;
+                    this.record.pay_tot_chq = this.iTotChq ;
+                    this.record.pay_posted = "Y" ;
+                    this.record.pay_narration = this.remarks ;
                     this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
                     alert(this.errorMessage);
