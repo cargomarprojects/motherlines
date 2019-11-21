@@ -70,7 +70,7 @@ export class CustStmtReportComponent implements OnInit {
   SearchData: any = {};
   Reportstate1: Observable<ReportState>;
   MainList: Tbl_OS_REPORT[];
-  CompList: any[];
+  osinvList: Tbl_OS_REPORT[];
 
   constructor(
     public gs: GlobalService,
@@ -190,7 +190,7 @@ export class CustStmtReportComponent implements OnInit {
 
   }
 
-  ngOnInit() {  
+  ngOnInit() {
   }
 
   ngOnDestroy() {
@@ -344,24 +344,39 @@ export class CustStmtReportComponent implements OnInit {
       return;
     }
 
-    this.tab = 'osreport';
-
-     
-    // this.report_title = 'Customer Stmt Report';
-    // this.report_url = undefined;
-    // this.report_searchdata = this.gs.UserInfo;
-    // this.report_menuid = this.menuid;
-    // this.tab = 'report';
+    this.report_title = 'Customer Stmt Report';
+    this.report_url = undefined;
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
   }
 
-  PrintPayment(_rec: Tbl_OS_REPORT) {
+  PrintOsInvoice() {
 
-    // if (_rec.pay_pkid == null)
-    //   return;
-    // if (_rec.pay_pkid === "OP")
-    //   return;
-    // if (_rec.pay_pkid === "CL")
-    //   return;
+    this.errorMessage = "";
+    if (this.MainList.length <= 0) {
+      this.errorMessage = "List Not Found";
+      alert(this.errorMessage);
+      return;
+    }
+
+    this.osinvList = <Tbl_OS_REPORT[]>[];
+
+    this.MainList.forEach(Rec => {
+      // Rec.inv_flag_b = false;
+      if (Rec.ROW_TYPE != "TOTAL" && Rec.ROW_TYPE != "BALANCE") {
+        //this.osinvList.push(Rec);
+        this.NewOsInvRec(Rec);
+      }
+
+    })
+
+    // this.osinvList.forEach(Rec => {
+    //    Rec.inv_flag_b = false;
+    // })
+
+    this.tab = 'osinvreport';
+
 
 
     // this.report_title = 'Bank Payment Details';
@@ -374,6 +389,20 @@ export class CustStmtReportComponent implements OnInit {
 
   }
 
+  NewOsInvRec(_rec: Tbl_OS_REPORT) {
+    var rec = <Tbl_OS_REPORT>{};
+    rec.inv_flag_b = false;
+    rec.inv_no = _rec.inv_no;
+    rec.inv_date = _rec.inv_date;
+    rec.inv_mrefno = _rec.inv_mrefno;
+    rec.inv_refno = _rec.inv_refno;
+    rec.inv_mblno = _rec.inv_mblno;
+    rec.inv_hrefno = _rec.inv_hrefno;
+    rec.inv_ar = _rec.inv_ar;
+    rec.inv_ap = _rec.inv_ap;
+    this.osinvList.push(rec);
+  }
+
   callbackevent() {
     this.tab = 'main';
   }
@@ -381,6 +410,10 @@ export class CustStmtReportComponent implements OnInit {
   rdbclick() {
     this.cust_id = '';
     this.cust_name = '';
+  }
+
+  osinvcallbackevent() {
+    this.tab = 'main';
   }
 
 }

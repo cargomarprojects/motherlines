@@ -43,4 +43,6 @@ export class Tbl_OS_REPORT {
     inv_mbl_profit: number;
     inv_hbl_profit: number;
 
+    inv_flag_b: boolean;
+
 }
