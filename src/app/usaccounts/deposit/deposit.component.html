@@ -38,7 +38,7 @@
     </thead>
     <tbody class="page-body-tbody">
       <tr *ngFor="let rec of records$ | async">
-        <td (click)="edit(rec)">{{rec.pay_docno}}</td>
+        <td>{{rec.pay_docno}}</td>
         <td>{{rec.pay_date | date : gs.FRONTEND_DATEFORMAT }}</td>
         <td>{{rec.pay_acc_name}} </td>
         <td>{{rec.pay_diff | number : '1.2-2'}} </td>        

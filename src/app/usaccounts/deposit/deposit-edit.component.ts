@@ -29,6 +29,13 @@ export class DepositEditComponent implements OnInit {
     errorMessage: string;
     Foregroundcolor: string;
 
+
+    docno = '';
+    sdate = '';
+    code = '';
+    name = '';
+    remarks = '';
+
     next_chqno = 0;
 
     CFNO = "";
@@ -204,7 +211,7 @@ export class DepositEditComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
         if (_Record.controlname == "ACCTM") {
-
+            this.name = _Record.name;
         }
     }
 

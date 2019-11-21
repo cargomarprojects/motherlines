@@ -1,6 +1,6 @@
 <div class="page-header">
     <div class="row align-items-center justify-content-left p-1">
-        <label class="mr-3">Bank Statement ({{mode}})</label>
+        <label class="mr-3">A/R Deposit ({{mode}})</label>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
     </div>
@@ -17,65 +17,37 @@
 
         <div class="col-md-6 testbox  px-0 mx-0">
 
-
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">SL#</label>
+                <label class="col-3 col-form-label col-form-label-sm">Date</label>
                 <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('gf_slno')" [disabled]=true
-                        [(ngModel)]="record.gf_slno" maxlength="50" />
+                    <app-date [inputdate]="sdate" (ValueChanged)="sdate=$event">
+                    </app-date>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Type</label>
-                <div class="col-9">
-                    <select class="form-control form-control-sm" [(ngModel)]="record.gf_type">
-                        <option [value]="'BANK STATEMENT'">BANK STATEMENT</option>
-                        <option [value]="'GENERAL'">GENERAL</option>
-                    </select>
-                </div>
-            </div>
 
             <div class="form-group row">
                 <label class="col-3 col-form-label col-form-label-sm">Bank</label>
                 <div class="col-9">
-                    <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'" [displaycolumn]="'NAME'"
-                        [where]="where"
-                        [displaydata]="record.gf_name" (ValueChanged)="LovSelected($event)">
+                    <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'" [displaycolumn]="'CODE'"
+                        [where]="where" [displaydata]="code" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
                 </div>
             </div>
 
+            <div
+             class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm"></label>             
+                <label class="col-9 col-form-label col-form-label-sm">{{name}}</label>
+            </div>
+
+
 
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">A/c#</label>
+                <label class="col-3 col-form-label col-form-label-sm">Remarks</label>
                 <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('gf_accno')"
-                        [(ngModel)]="record.gf_accno" maxlength="60" />
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Month</label>
-                <div class="col-2">
-                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('gf_month')"
-                        [(ngModel)]="record.gf_month" maxlength="60" />
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Year</label>
-                <div class="col-2">
-                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('gf_year')"
-                        [(ngModel)]="record.gf_year" maxlength="60" />
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Rermarks</label>
-                <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('gf_remarks')"
-                        [(ngModel)]="record.gf_remarks" maxlength="100" />
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('remarks')"
+                        [(ngModel)]="remarks" maxlength="100" />
                 </div>
             </div>
 
@@ -83,7 +55,11 @@
         </div>
 
         <div class="col-md-6 testbox  px-0 mx-0">
-
+            <div class="form-group row">
+                <div class="col-4">
+                  <button (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Search</button>
+                </div>
+              </div>
         </div>
 
     </div>
