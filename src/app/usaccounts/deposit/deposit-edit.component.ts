@@ -10,7 +10,7 @@ import { DepositService } from '../services/deposit.service';
 import { User_Menu } from '../../core/models/menum';
 import { Tbl_Acc_Payment, vm_tbl_accPayment, AccPaymentModel } from '../models/Tbl_Acc_Payment';
 import { SearchTable } from '../../shared/models/searchtable';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 
 
 @Component({
@@ -54,7 +54,9 @@ export class DepositEditComponent implements OnInit {
 
     oldrefno = '';
 
-    HouseList: Tbl_Acc_Payment [] = [];
+    arPendingList: Tbl_Acc_Payment[] = [];
+
+
 
     constructor(
         private router: Router,
@@ -64,6 +66,7 @@ export class DepositEditComponent implements OnInit {
         public mainService: DepositService,
     ) {
         this.decplace = this.gs.foreign_amt_dec;
+        this.sdate = this.gs.defaultValues.today;
     }
 
     ngOnInit() {
@@ -151,6 +154,11 @@ export class DepositEditComponent implements OnInit {
     }
 
 
+    swapSelection(rec : Tbl_Acc_Payment){
+        rec.pay_flag2 = !rec.pay_flag2 ;
+
+    }
+
     Save() {
 
         this.FindTotal();
@@ -173,7 +181,7 @@ export class DepositEditComponent implements OnInit {
                 }
                 else {
 
-                    if ( this.mode === 'ADD')
+                    if (this.mode === 'ADD')
                         this.record.pay_vrno = response.vrno;
 
                     this.mode = 'EDIT';
@@ -203,6 +211,19 @@ export class DepositEditComponent implements OnInit {
         return bRet;
     }
 
+    pendingList() {
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = this.pkid;
+        this.mainService.DepositPendingList(SearchData).subscribe(
+            res => {
+                this.arPendingList =  res.list;
+
+            },
+            err => {
+                this.errorMessage = this.gs.getError(err);
+                alert(this.errorMessage);
+            });
+    }
 
     Close() {
         this.location.back();

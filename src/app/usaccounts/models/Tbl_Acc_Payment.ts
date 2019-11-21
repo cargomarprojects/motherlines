@@ -23,6 +23,7 @@ export interface Tbl_Acc_Payment {
     pay_status  :string;
     pay_posted  : string;
     pay_flag : string;
+    pay_flag2 : boolean;
     pay_signature : string;
     pay_cust_type : string;
     pay_is_payroll : string;
