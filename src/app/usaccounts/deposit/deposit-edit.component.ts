@@ -132,9 +132,6 @@ export class DepositEditComponent implements OnInit {
 
         this.record.pay_pkid = this.pkid;
         this.record.pay_vrno = '';
-        this.id = '';
-        this.code = '';
-        this.name = '';
         this.remarks = '';
 
         this.record.rec_created_by = this.gs.user_code;
@@ -217,12 +214,23 @@ export class DepositEditComponent implements OnInit {
             return bRet;
         }
 
+        
         if (this.gs.isBlank(this.id) || this.gs.isBlank(this.code) || this.gs.isBlank(this.name)) {
             bRet = false;
             this.errorMessage = "Invalid Bank";
             alert(this.errorMessage);
             return bRet;
         }
+
+
+        if (this.gs.isZero( this.total_amount) ) {
+            bRet = false;
+            this.errorMessage = "No Rows Selected";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+
 
         var iCtr = 0;
         this.arPendingList.forEach(Record => {
