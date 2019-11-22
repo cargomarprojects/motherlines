@@ -35,7 +35,8 @@ export const initialState: ReportState = {
     page_count: 0,
     page_current: 0,
     page_rowcount: 0,
-    records: []
+    records: [],
+    idlist:[]
 };
 
 export function CustStmtReportReducer(state: ReportState[] = [initialState], action: myActions.Actions): ReportState[] {

@@ -30,4 +30,5 @@ export interface ReportState {
     page_current: number;
     page_rowcount: number;
     records: Tbl_OS_REPORT[];
+    idlist:any[];
 }

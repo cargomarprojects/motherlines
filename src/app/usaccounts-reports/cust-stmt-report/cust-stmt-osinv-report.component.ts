@@ -15,6 +15,7 @@ export class CustStmtOsinvReportComponent implements OnInit {
   title = 'OS Invoices Details';
 
   @Input() public RecordList: Tbl_OS_REPORT[] = [];
+  @Input() public IdList: any[] = [];
   @Output() osinvcallbackevent = new EventEmitter<any>();
 
   InitCompleted: boolean = false;
@@ -26,7 +27,7 @@ export class CustStmtOsinvReportComponent implements OnInit {
 
   allchecked: boolean = false;
   selectdeselect: boolean = false;
-
+  selected_invids: string = '';
   ErrorMessage = "";
   InfoMessage = "";
 
@@ -64,20 +65,42 @@ export class CustStmtOsinvReportComponent implements OnInit {
 
   }
 
+  Save() {
+    this.ErrorMessage = "";
+
+    this.selected_invids = '';
+    this.RecordList.forEach(Rec => {
+      if (Rec.inv_flag_b) {
+        if (this.selected_invids != "")
+          this.selected_invids += ',';
+        this.selected_invids += Rec.inv_pkid;
+      }
+    })
+
+    if (this.gs.isBlank(this.selected_invids)) {
+      this.ErrorMessage = "No Records Selected.";
+      alert(this.ErrorMessage);
+      return;
+    }
+
+
+    if (this.osinvcallbackevent)
+      this.osinvcallbackevent.emit({ action: 'SAVE', ids: this.selected_invids });
+  }
   // Save Data
   OnBlur(field: string) {
 
   }
   Close() {
     if (this.osinvcallbackevent)
-      this.osinvcallbackevent.emit({ action: 'CLOSE' });
+      this.osinvcallbackevent.emit({ action: 'CLOSE', ids: '' });
   }
 
   SelectDeselect() {
     this.selectdeselect = !this.selectdeselect;
     this.RecordList.forEach(Rec => {
-        Rec.inv_flag_b = this.selectdeselect;
-        this.allchecked = this.selectdeselect;
+      Rec.inv_flag_b = this.selectdeselect;
+      this.allchecked = this.selectdeselect;
     })
-}
+  }
 }

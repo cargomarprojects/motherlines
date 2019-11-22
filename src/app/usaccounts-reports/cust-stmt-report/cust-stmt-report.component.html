@@ -194,6 +194,6 @@
 </div>
 
 <div *ngIf="tab == 'osinvreport'">
-    <app-cust-stmt-osinv-report [RecordList]="osinvList" (osinvcallbackevent)="osinvcallbackevent($event)">
+    <app-cust-stmt-osinv-report [RecordList]="osinvList" [IdList]="invpkids" (osinvcallbackevent)="osinvcallbackevent($event)">
     </app-cust-stmt-osinv-report>
 </div>
