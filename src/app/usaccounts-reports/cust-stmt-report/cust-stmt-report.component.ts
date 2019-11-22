@@ -12,6 +12,7 @@ import * as myReducer from './store/cust-stmt-report.reducer';
 import { ReportState } from './store/cust-stmt-report.models'
 
 import { Observable } from 'rxjs';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cust-stmt-report',
@@ -71,6 +72,7 @@ export class CustStmtReportComponent implements OnInit {
   Reportstate1: Observable<ReportState>;
   MainList: Tbl_OS_REPORT[];
   osinvList: Tbl_OS_REPORT[];
+  invpkids: any[];
 
   constructor(
     public gs: GlobalService,
@@ -104,6 +106,7 @@ export class CustStmtReportComponent implements OnInit {
       if (rec) {
 
         this.MainList = rec.records;
+        this.invpkids = rec.idlist;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
         this.cust_id = rec.cust_id;
@@ -165,6 +168,7 @@ export class CustStmtReportComponent implements OnInit {
       } else {
 
         this.MainList = Array<Tbl_OS_REPORT>();
+        this.invpkids = Array<any>();
         this.page_rows = this.gs.ROWS_TO_DISPLAY;
         this.page_count = 0;
         this.page_current = 0;
@@ -301,6 +305,7 @@ export class CustStmtReportComponent implements OnInit {
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
             records: response.list,
+            idlist: response.idlist,
             filename: this.SearchData.filename,
             filetype: this.SearchData.filetype,
             filedisplayname: this.SearchData.filedisplayname
@@ -361,37 +366,20 @@ export class CustStmtReportComponent implements OnInit {
     }
 
     this.osinvList = <Tbl_OS_REPORT[]>[];
-
     this.MainList.forEach(Rec => {
-      // Rec.inv_flag_b = false;
       if (Rec.ROW_TYPE != "TOTAL" && Rec.ROW_TYPE != "BALANCE") {
-        //this.osinvList.push(Rec);
         this.NewOsInvRec(Rec);
       }
 
     })
 
-    // this.osinvList.forEach(Rec => {
-    //    Rec.inv_flag_b = false;
-    // })
-
     this.tab = 'osinvreport';
-
-
-
-    // this.report_title = 'Bank Payment Details';
-    // this.report_url = '/api/UsAccBankStmtRpt/PaymentDetails';
-    // this.report_searchdata = this.gs.UserInfo;
-    // this.report_searchdata.PKID = _rec.pay_pkid;
-    // this.report_searchdata.TYPE = _rec.pay_type;
-    // this.report_menuid = this.menuid;
-    // this.tab = 'report';
-
   }
 
   NewOsInvRec(_rec: Tbl_OS_REPORT) {
     var rec = <Tbl_OS_REPORT>{};
     rec.inv_flag_b = false;
+    rec.inv_pkid = _rec.inv_pkid;
     rec.inv_no = _rec.inv_no;
     rec.inv_date = _rec.inv_date;
     rec.inv_mrefno = _rec.inv_mrefno;
@@ -412,8 +400,25 @@ export class CustStmtReportComponent implements OnInit {
     this.cust_name = '';
   }
 
-  osinvcallbackevent() {
-    this.tab = 'main';
+  osinvcallbackevent(params: any) {
+
+    if (params.action === "CLOSE")
+      this.tab = 'main';
+
+    if (params.action === "SAVE") {
+
+
+
+      
+      // this.report_title = 'Bank Payment Details';
+      // this.report_url = '/api/UsAccBankStmtRpt/PaymentDetails';
+      // this.report_searchdata = this.gs.UserInfo;
+      // this.report_searchdata.PKID = _rec.pay_pkid;
+      // this.report_searchdata.TYPE = _rec.pay_type;
+      // this.report_menuid = this.menuid;
+      this.tab = 'report';
+
+    }
   }
 
 }
