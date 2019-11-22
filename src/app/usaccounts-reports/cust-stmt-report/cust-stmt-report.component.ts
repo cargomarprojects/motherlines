@@ -66,12 +66,14 @@ export class CustStmtReportComponent implements OnInit {
   sub: any;
   tab: string = 'main';
 
+  allchecked: boolean = false;
+  selectdeselect: boolean = false;
+
   loading: boolean = false;
   errorMessage: string = '';
   SearchData: any = {};
   Reportstate1: Observable<ReportState>;
   MainList: Tbl_OS_REPORT[];
-  osinvList: Tbl_OS_REPORT[];
   invpkids: any[];
 
   constructor(
@@ -94,7 +96,7 @@ export class CustStmtReportComponent implements OnInit {
         else
           this.chk_profitvisible = false;
       }
-      this.GT_UNIQUE_ID = this.gs.getGuid();
+
     });
 
   }
@@ -105,7 +107,7 @@ export class CustStmtReportComponent implements OnInit {
       this.initLov();
       if (rec) {
 
-        this.MainList = rec.records;
+        this.MainList = JSON.parse(JSON.stringify(rec.records));
         this.invpkids = rec.idlist;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
@@ -143,7 +145,7 @@ export class CustStmtReportComponent implements OnInit {
         this.SearchData.ARAP = 'BOTH';
         this.SearchData.SHOWALL = this.showall == true ? 'Y' : 'N';
         this.SearchData.ISCUSTOMER = this.radio_cust == 'MASTER' ? 'Y' : 'N';
-        this.SearchData.GT_UNIQUE_ID = this.gs.getGuid();
+        this.SearchData.GT_UNIQUE_ID = this.GT_UNIQUE_ID;
 
         if (this.currency == undefined || this.currency === '')
           this.currency = this.gs.base_cur_code;
@@ -186,7 +188,7 @@ export class CustStmtReportComponent implements OnInit {
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
-
+        this.GT_UNIQUE_ID = this.gs.getGuid();
         this.SearchData = this.gs.UserInfo;
 
       }
@@ -207,7 +209,7 @@ export class CustStmtReportComponent implements OnInit {
   }
 
   List(_outputformat: string, _action: string = 'NEW') {
-
+    this.allchecked = false;
     this.errorMessage = "";
     if (this.gs.isBlank(this.cust_id.trim())) {
       this.errorMessage = "Customer Cannot be Blank";
@@ -240,7 +242,7 @@ export class CustStmtReportComponent implements OnInit {
       this.SearchData.ARAP = 'BOTH';
       this.SearchData.SHOWALL = this.showall == true ? 'Y' : 'N';
       this.SearchData.ISCUSTOMER = this.radio_cust == 'MASTER' ? 'Y' : 'N';
-      this.SearchData.GT_UNIQUE_ID = this.gs.getGuid();
+      this.SearchData.GT_UNIQUE_ID = this.GT_UNIQUE_ID;
 
       if (this.currency == undefined || this.currency === '')
         this.currency = this.gs.base_cur_code;
@@ -365,30 +367,42 @@ export class CustStmtReportComponent implements OnInit {
       return;
     }
 
-    this.osinvList = <Tbl_OS_REPORT[]>[];
-    this.MainList.forEach(Rec => {
-      if (Rec.ROW_TYPE != "TOTAL" && Rec.ROW_TYPE != "BALANCE") {
-        this.NewOsInvRec(Rec);
-      }
 
+    let unselectedids: string = "";
+    let selectedids: string = "";
+
+
+    selectedids = "";
+    this.MainList.forEach(Rec => {
+      if (Rec.inv_flag_b) {
+        if (selectedids != "")
+          selectedids += ',';
+        selectedids += Rec.inv_pkid;
+      }
     })
 
-    this.tab = 'osinvreport';
-  }
+    if (this.gs.isBlank(selectedids)) {
+      this.errorMessage = "No Records Selected.";
+      alert(this.errorMessage);
+      return;
+    }
 
-  NewOsInvRec(_rec: Tbl_OS_REPORT) {
-    var rec = <Tbl_OS_REPORT>{};
-    rec.inv_flag_b = false;
-    rec.inv_pkid = _rec.inv_pkid;
-    rec.inv_no = _rec.inv_no;
-    rec.inv_date = _rec.inv_date;
-    rec.inv_mrefno = _rec.inv_mrefno;
-    rec.inv_refno = _rec.inv_refno;
-    rec.inv_mblno = _rec.inv_mblno;
-    rec.inv_hrefno = _rec.inv_hrefno;
-    rec.inv_ar = _rec.inv_ar;
-    rec.inv_ap = _rec.inv_ap;
-    this.osinvList.push(rec);
+    unselectedids = "";
+    for (let sids of Object.values(this.invpkids)) {
+      if (unselectedids != "")
+        unselectedids += ",";
+      if (!selectedids.includes(sids))
+        unselectedids += sids;
+    }
+
+    this.report_title = 'OS Invoice Details';
+    this.report_url = '/api/UsAccCustStmtRpt/GetOsInvoice';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.PKID = this.GT_UNIQUE_ID;
+    this.report_searchdata.IDS = unselectedids;
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
+
   }
 
   callbackevent() {
@@ -400,25 +414,12 @@ export class CustStmtReportComponent implements OnInit {
     this.cust_name = '';
   }
 
-  osinvcallbackevent(params: any) {
 
-    if (params.action === "CLOSE")
-      this.tab = 'main';
-
-    if (params.action === "SAVE") {
-
-
-
-      
-      // this.report_title = 'Bank Payment Details';
-      // this.report_url = '/api/UsAccBankStmtRpt/PaymentDetails';
-      // this.report_searchdata = this.gs.UserInfo;
-      // this.report_searchdata.PKID = _rec.pay_pkid;
-      // this.report_searchdata.TYPE = _rec.pay_type;
-      // this.report_menuid = this.menuid;
-      this.tab = 'report';
-
-    }
+  SelectDeselect() {
+    this.selectdeselect = !this.selectdeselect;
+    this.MainList.forEach(Rec => {
+      Rec.inv_flag_b = this.selectdeselect;
+      this.allchecked = this.selectdeselect;
+    })
   }
-
 }
