@@ -24,6 +24,15 @@ export class DepositComponent implements OnInit {
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
 
+
+  
+  report_url: string;
+  report_searchdata: any = {};
+  report_menuid: string;
+  tab: string = 'main';
+
+
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -88,6 +97,23 @@ export class DepositComponent implements OnInit {
   Close() {    
     this.location.back();
   }
+
+  
+  Print ( rec : Tbl_Acc_Payment, _type : string ){
+   
+    this.report_url = '/api/Deposit/PrintSimple';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = rec.pay_pkid;
+    this.report_searchdata.dock_type = _type;
+    this.report_menuid = this.gs.MENU_AR_DEPOSIT ;
+    this.tab = 'report';
+    
+  }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
+
 
 
 }
