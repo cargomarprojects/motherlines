@@ -62,9 +62,15 @@
 
 </div>
 
-<div *ngIf="tab == 'report'">
+<div *ngIf="tab === 'report1'">
   <app-report [title]="'Bank Deposit List'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
 </div>
+
+<div *ngIf="tab === 'report2'">
+  <app-report [title]="'Bank Deposit List'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+</div>
+
+
 
 <br />
 

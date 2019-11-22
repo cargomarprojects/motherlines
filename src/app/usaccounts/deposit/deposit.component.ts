@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { GlobalService } from '../../core/services/global.service';
-import { SearchQuery, Tbl_Acc_Payment , AccPaymentModel } from '../models/Tbl_Acc_Payment';
+import { SearchQuery, Tbl_Acc_Payment, AccPaymentModel } from '../models/Tbl_Acc_Payment';
 import { PageQuery } from '../../shared/models/pageQuery';
 import { DepositService } from '../services/deposit.service';
 
@@ -20,12 +20,12 @@ export class DepositComponent implements OnInit {
  */
 
   errorMessage$: Observable<string>;
-  records$: Observable<Tbl_Acc_Payment []>;
+  records$: Observable<Tbl_Acc_Payment[]>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
 
 
-  
+
   report_url: string;
   report_searchdata: any = {};
   report_menuid: string;
@@ -86,7 +86,7 @@ export class DepositComponent implements OnInit {
 
     let parameter = {
       menuid: this.mainservice.menuid,
-      pkid: _record.pay_pkid ,
+      pkid: _record.pay_pkid,
       type: '',
       origin: 'deposit-page',
       mode: 'EDIT'
@@ -94,20 +94,30 @@ export class DepositComponent implements OnInit {
     this.gs.Naviagete('Silver.USaccounts.Trans/DepositEditPage', JSON.stringify(parameter));
   }
 
-  Close() {    
+  Close() {
     this.location.back();
   }
 
-  
-  Print ( rec : Tbl_Acc_Payment, _type : string ){
-   
-    this.report_url = '/api/Deposit/PrintSimple';
-    this.report_searchdata = this.gs.UserInfo;
-    this.report_searchdata.pkid = rec.pay_pkid;
-    this.report_searchdata.dock_type = _type;
-    this.report_menuid = this.gs.MENU_AR_DEPOSIT ;
-    this.tab = 'report';
-    
+
+  Print(rec: Tbl_Acc_Payment, _type: string) {
+
+    if (_type === 'simple') {
+      this.report_url = '/api/Deposit/PrintSimple';
+      this.report_searchdata = this.gs.UserInfo;
+      this.report_searchdata.pkid = rec.pay_pkid;
+      this.report_menuid = this.gs.MENU_AR_DEPOSIT;
+      this.tab = 'report1';
+    }
+
+    if (_type === 'detail') {
+      this.report_url = '/api/Deposit/PrintDetail';
+      this.report_searchdata = this.gs.UserInfo;
+      this.report_searchdata.pkid = rec.pay_pkid;
+      this.report_menuid = this.gs.MENU_AR_DEPOSIT;
+      this.tab = 'report2';
+    }
+
+
   }
 
   callbackevent() {
