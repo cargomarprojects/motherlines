@@ -34,6 +34,10 @@ export class UsAccountReportService {
     CustStmt(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccCustStmtRpt/CustStmt", SearchData, this.gs.headerparam2('authorized'));
     }
+
+    DailyTransaction(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccDayBookRpt/DailyTransaction", SearchData, this.gs.headerparam2('authorized'));
+    }
 }
 
 

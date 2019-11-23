@@ -7,6 +7,7 @@ import { BankBalReportComponent } from './bank-bal-report/bank-bal-report.compon
 import { AgingReportComponent } from './aging-report/aging-report.component';
 import { CustStmtReportComponent } from './cust-stmt-report/cust-stmt-report.component';
 import { PaySearchComponent } from './paysearch/paysearch.component';
+import { DayBookReportComponent } from './day-book-report/day-book-report.component';
 
 const routes: Routes = [
   { path :'BankPage', component : BankEnquiryReportComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path :'AgingReport', component : AgingReportComponent },
   { path :'PaySearchPage', component : PaySearchComponent }, 
   { path :'CustStmtPage', component : CustStmtReportComponent }, 
+  { path :'DayBookPage', component : DayBookReportComponent },
 ];
 
 @NgModule({

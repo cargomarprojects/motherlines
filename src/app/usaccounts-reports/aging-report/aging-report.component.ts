@@ -200,7 +200,7 @@ export class AgingReportComponent implements OnInit {
                 this.filetype = '';
                 this.filedisplayname = '';
 
-
+                
                 this.SearchData = this.gs.UserInfo;
 
             }
