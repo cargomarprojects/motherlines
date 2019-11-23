@@ -358,7 +358,7 @@ export class CustStmtReportComponent implements OnInit {
     this.tab = 'report';
   }
 
-  PrintOsInvoice() {
+  PrintOsInvoice(_type: string) {
 
     this.errorMessage = "";
     if (this.MainList.length <= 0) {
@@ -371,30 +371,31 @@ export class CustStmtReportComponent implements OnInit {
     let unselectedids: string = "";
     let selectedids: string = "";
 
+    if (_type != 'ALL') {
 
-    selectedids = "";
-    this.MainList.forEach(Rec => {
-      if (Rec.inv_flag_b) {
-        if (selectedids != "")
-          selectedids += ',';
-        selectedids += Rec.inv_pkid;
+      selectedids = "";
+      this.MainList.forEach(Rec => {
+        if (Rec.inv_flag_b) {
+          if (selectedids != "")
+            selectedids += ',';
+          selectedids += Rec.inv_pkid;
+        }
+      })
+
+      if (this.gs.isBlank(selectedids)) {
+        this.errorMessage = "No Records Selected.";
+        alert(this.errorMessage);
+        return;
       }
-    })
 
-    if (this.gs.isBlank(selectedids)) {
-      this.errorMessage = "No Records Selected.";
-      alert(this.errorMessage);
-      return;
+      unselectedids = "";
+      for (let sids of Object.values(this.invpkids)) {
+        if (unselectedids != "")
+          unselectedids += ",";
+        if (!selectedids.includes(sids))
+          unselectedids += sids;
+      }
     }
-
-    unselectedids = "";
-    for (let sids of Object.values(this.invpkids)) {
-      if (unselectedids != "")
-        unselectedids += ",";
-      if (!selectedids.includes(sids))
-        unselectedids += sids;
-    }
-
     this.report_title = 'OS Invoice Details';
     this.report_url = '/api/UsAccCustStmtRpt/GetOsInvoice';
     this.report_searchdata = this.gs.UserInfo;

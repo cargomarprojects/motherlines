@@ -121,10 +121,18 @@
                         </div>
                         <div class="form-group row">
                             <!-- <label class="col-4 col-form-label col-form-label-sm"></label> -->
-                            <div class="offset-2 col-8">
-                                <button [disabled]="loading" (click)="PrintOsInvoice()"
+                            <div class="offset-2 col-10">
+                                <button [disabled]="loading" (click)="PrintOsInvoice('ALL')"
                                     class="btn btn-primary btn-sm">Print O/S
-                                    Invoices</button>
+                                    Invoices All</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <!-- <label class="col-4 col-form-label col-form-label-sm"></label> -->
+                            <div class="offset-2 col-10">
+                                <button [disabled]="loading" (click)="PrintOsInvoice('')"
+                                    class="btn btn-primary btn-sm">Print O/S
+                                    Invoices Selected</button>
                             </div>
                         </div>
                     </div>
