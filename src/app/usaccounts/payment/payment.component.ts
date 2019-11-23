@@ -31,6 +31,8 @@ export class PaymentComponent implements OnInit {
   report_menuid: string;
   tab: string = 'main';
 
+  upload_pay_pkid = '';
+  upload_pay_docno = '';
 
 
   constructor(
@@ -98,27 +100,40 @@ export class PaymentComponent implements OnInit {
     this.location.back();
   }
 
-
   Print(rec: Tbl_Acc_Payment, _type: string) {
-
+    if (_type === 'chq') {
+      if (rec.pay_rp == "RECEIPT" || rec.pay_rp == "ADJUSTMENT") {
+        alert("Check Cannot Be Printed For Receipts");
+        return;
+      }
+      this.report_url = '/api/Payment/PrintCheque';
+      this.report_searchdata = this.gs.UserInfo;
+      this.report_searchdata.PKID = rec.pay_pkid;
+      this.report_searchdata.BANKID = rec.pay_acc_id;
+      this.report_searchdata.PRINT_SIGNATURE = "N";
+      this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+      this.tab = 'chq';
+    }
     if (_type === 'simple') {
-      this.report_url = '/api/Deposit/PrintSimple';
+      this.report_url = '/api/Payment/PrintSimple';
       this.report_searchdata = this.gs.UserInfo;
-      this.report_searchdata.pkid = rec.pay_pkid;
-      this.report_menuid = this.gs.MENU_AR_DEPOSIT;
-      this.tab = 'report1';
+      this.report_searchdata.PKID = rec.pay_pkid;
+      this.report_searchdata.TYPE = rec.pay_type;
+      this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+      this.tab = 'simple';
     }
-
-    if (_type === 'detail') {
-      this.report_url = '/api/Deposit/PrintDetail';
-      this.report_searchdata = this.gs.UserInfo;
-      this.report_searchdata.pkid = rec.pay_pkid;
-      this.report_menuid = this.gs.MENU_AR_DEPOSIT;
-      this.tab = 'report2';
-    }
-
 
   }
+
+
+
+
+  upload(rec: Tbl_Acc_Payment) {
+    this.upload_pay_pkid = rec.pay_pkid;
+    this.upload_pay_docno = rec.pay_docno;
+    this.tab = 'attachment';
+  }
+
 
   callbackevent() {
     this.tab = 'main';
