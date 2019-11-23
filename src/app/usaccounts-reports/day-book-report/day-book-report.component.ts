@@ -33,7 +33,7 @@ export class DayBookReportComponent implements OnInit {
 
   fdate: string;
   edate: string;
-  
+
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
@@ -95,7 +95,7 @@ export class DayBookReportComponent implements OnInit {
         this.SearchData = this.gs.UserInfo;
         this.SearchData.JV_YEAR = this.gs.year_code;
         this.SearchData.FDATE = this.fdate;
-        this.SearchData.EDATE = this.edate;
+        this.SearchData.TDATE = this.edate;
       } else {
 
         this.MainList = Array<Tbl_acc_ledger>();
@@ -105,9 +105,9 @@ export class DayBookReportComponent implements OnInit {
         this.page_rowcount = 0;
 
         this.currentTab = 'LIST';
-        this.fdate = this.gs.defaultValues.lastmonthdate;
+        this.fdate = this.gs.defaultValues.today;
         this.edate = this.gs.defaultValues.today;
-        
+
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
@@ -137,10 +137,15 @@ export class DayBookReportComponent implements OnInit {
 
     this.errorMessage = "";
     if (this.gs.isBlank(this.fdate)) {
-        this.fdate = this.gs.defaultValues.today;
-      }
+      this.errorMessage = 'From Date cannot be empty';
+      alert(this.errorMessage);
+      return;
+    }
+    
     if (this.gs.isBlank(this.edate)) {
-      this.edate = this.gs.defaultValues.today;
+      this.errorMessage = 'To Date cannot be empty';
+      alert(this.errorMessage);
+      return;
     }
 
     this.SearchData.outputformat = _outputformat;
@@ -154,7 +159,7 @@ export class DayBookReportComponent implements OnInit {
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
       this.SearchData.JV_YEAR = this.gs.year_code;
       this.SearchData.FDATE = this.fdate;
-      this.SearchData.EDATE = this.edate;
+      this.SearchData.TDATE = this.edate;
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
@@ -177,7 +182,7 @@ export class DayBookReportComponent implements OnInit {
             menuid: this.menuid,
             currentTab: this.currentTab,
             fdate: this.SearchData.FDATE,
-            edate: this.SearchData.EDATE,
+            edate: this.SearchData.TDATE,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
