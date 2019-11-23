@@ -10,7 +10,7 @@ import { GenFileUploadService } from '../services/genfileupload.service';
 import { User_Menu } from '../../core/models/menum';
 import { vm_Tbl_cargo_genfiles, Tbl_cargo_genfiles, Tbl_cargo_genfilesModel } from '../models/Tbl_cargo_genfiles';
 import { SearchTable } from '../../shared/models/searchtable';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 
 
 @Component({
@@ -296,9 +296,12 @@ export class GenFileUploadEditComponent implements OnInit {
         */
     }
 
+    Upload(){
+        this.tab = 'attachment';
+    }
 
-
-
-
+    callbackevent(event: any) {
+        this.tab = 'main';
+      }
 
 }
