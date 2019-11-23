@@ -2,7 +2,11 @@ import { PageQuery } from '../../shared/models/pageQuery';
 
 export interface SearchQuery {
     balance : string ;
+    searchType: string;
     searchString: string;
+    customerId : string;
+    customerCode : string;
+    customerName : string;
     sdate : string ;
     edate : string;
 }

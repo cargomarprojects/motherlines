@@ -47,7 +47,7 @@ export class PaymentService {
         this.record = <AccPaymentModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: 'pay_docno'},
+            searchQuery: <SearchQuery> { searchType : 'CHECK NO',  searchString: ''},
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -77,12 +77,17 @@ export class PaymentService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        SearchData.TYPE = 'DEPOSIT';
+        SearchData.TYPE = 'PAYMENT';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.FDATE = this.record.searchQuery.sdate;
         SearchData.EDATE = this.record.searchQuery.edate;
         SearchData.YEAR = this.gs.year_code;
-        SearchData.SORT = this.record.searchQuery.searchString;        
+        SearchData.SEARCHTYPE = this.record.searchQuery.searchType;        
+        SearchData.CODE = this.record.searchQuery.searchString;        
+        SearchData.ISADMIN = 'N';
+        SearchData.BR_REGION = this.gs.BRANCH_REGION ;
+        SearchData.HIDE_PAYROLL = this.gs.user_hide_payroll;
+        SearchData.CUSTOMER_ID = '';
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
