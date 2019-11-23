@@ -161,7 +161,7 @@ export class DayBookReportComponent implements OnInit {
     }
 
     this.loading = true;
-    this.mainservice.BankEnquiry(this.SearchData)
+    this.mainservice.DailyTransaction(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
