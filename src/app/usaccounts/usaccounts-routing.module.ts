@@ -17,6 +17,8 @@ import { VoidCheckEditComponent } from './voidcheck/voidcheck-edit.component';
 import { VoidCheckComponent } from './voidcheck/voidcheck.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { DepositEditComponent } from './deposit/deposit-edit.component';
+import { PaymentComponent } from './payment/payment.component';
+import { PaymentEditComponent } from './payment/payment-edit.component';
 
 
 const routes: Routes = [
@@ -36,6 +38,9 @@ const routes: Routes = [
   { path : 'VoidCheckEditPage', component : VoidCheckEditComponent },
   { path : 'DepositPage', component : DepositComponent },
   { path : 'DepositEditPage', component : DepositEditComponent },
+
+  { path : 'PaymentPage', component : PaymentComponent },
+  { path : 'PaymentEditPage', component : PaymentEditComponent },
 
 
 ];

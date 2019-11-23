@@ -25,6 +25,9 @@ import { VoidCheckEditComponent } from './voidcheck/voidcheck-edit.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { DepositEditComponent } from './deposit/deposit-edit.component';
 import { DepositHeaderComponent } from './deposit/deposit-header.component';
+import { PaymentComponent } from './payment/payment.component';
+import { PaymentHeaderComponent } from './payment/payment-header.component';
+import { PaymentEditComponent } from './payment/payment-edit.component';
 
 
 @NgModule({
@@ -50,7 +53,11 @@ import { DepositHeaderComponent } from './deposit/deposit-header.component';
   VoidCheckEditComponent,
   DepositComponent,
   DepositEditComponent,
-  DepositHeaderComponent
+  DepositHeaderComponent,
+  PaymentComponent,
+  PaymentHeaderComponent,
+  PaymentEditComponent
+  
 
 ],
   imports: [
