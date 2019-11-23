@@ -423,6 +423,12 @@ a {
     top: 50%;
     left: 50%;
 }
+
+.hlink {
+    color: red;
+    text-decoration: underline;
+}
+
   
 .alias {
     cursor: alias;
@@ -654,5 +660,6 @@ input[type=number]::-webkit-outer-spin-button {
   transform: translate(-50%, -50%);
   border: 0px solid black;
 }
+
 
 
