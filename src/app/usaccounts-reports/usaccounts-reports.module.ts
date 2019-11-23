@@ -22,6 +22,10 @@ import { CustStmtReportReducer  } from './cust-stmt-report/store/cust-stmt-repor
 import { PaySearchComponent } from './paysearch/paysearch.component';
 import { PaySearchHeaderComponent } from './paysearch/paysearch-header.component';
 
+import { DayBookReportComponent } from './day-book-report/day-book-report.component';
+import { DayBookReportReducer  } from './day-book-report/store/day-book-report.reducer';
+
+
 
 @NgModule({
     declarations :[
@@ -31,7 +35,8 @@ import { PaySearchHeaderComponent } from './paysearch/paysearch-header.component
       AgingReportComponent,
       CustStmtReportComponent,
       PaySearchComponent,
-      PaySearchHeaderComponent
+      PaySearchHeaderComponent,
+      DayBookReportComponent
   ],
   imports: [
     SharedModule,
@@ -40,7 +45,8 @@ import { PaySearchHeaderComponent } from './paysearch/paysearch-header.component
     StoreModule.forFeature('BankStmtReport',BankStmtReportReducer ),    
     StoreModule.forFeature('BankBalReport',BankBalReportReducer ),    
     StoreModule.forFeature('AgingReport',AgingReportReducer ),    
-    StoreModule.forFeature('CustStmtReport',CustStmtReportReducer ),    
+    StoreModule.forFeature('CustStmtReport',CustStmtReportReducer ),  
+    StoreModule.forFeature('DayBookReport',DayBookReportReducer ),      
   ],
   providers: [
   ]
