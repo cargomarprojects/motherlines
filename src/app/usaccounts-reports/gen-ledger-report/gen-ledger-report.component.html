@@ -55,13 +55,13 @@
                     </div>
 
 
-                    <div class="col-md-3">
+                    <div *ngIf="gs.FY_MONTHS.length>1" class="col-md-3">
 
                         <div class="form-group row">
                             <label class="offset-4 col-8 col-form-label col-form-label-sm">FY-Start-Month</label>
                         </div>
 
-                        <!-- <div *ngIf="gs.FY_MONTHS.length>0" class="form-group row">
+                        <div class="form-group row">
                             <div class="offset-4 col-8">
                                     <select class="form-control form-control-sm"
                                     [(ngModel)]="fy_start_month">
@@ -69,8 +69,7 @@
                                     </option>
                                 </select>
                             </div>
-                        </div> -->
-
+                        </div>
 
                     </div>
 

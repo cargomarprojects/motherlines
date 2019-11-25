@@ -132,7 +132,7 @@ export class GlobalService {
   public DOC_FOOTER1 = "";
   public DOC_FOOTER2 = "";
 
-  public FY_START_MONTH = "1";
+  public FY_START_MONTH = "";
 
   public PAYROLL_INVOICE_CODE = "";
   public PAYROLL_ACC_CODE = "";
@@ -174,9 +174,11 @@ export class GlobalService {
   public AUTO_CLOSE_CHECK_PRINT = "N";
   public RE_PRINT_CHECK = "N";
 
-  public BUDGET_TYPE : any = [];
+  public FY_MONTHS: any = [];
 
-  public CHQ_FORMAT : any = [];
+  public BUDGET_TYPE: any = [];
+
+  public CHQ_FORMAT: any = [];
 
   public SHIPMENT_STAGE_OI: any;
   public SHIPMENT_STAGE_OE: any;
@@ -465,7 +467,7 @@ export class GlobalService {
   public GENERAL_BRANCH_CODE = "";
 
 
-  public ACCOUNTS_LOCKED_DATE ="";
+  public ACCOUNTS_LOCKED_DATE = "";
 
   public user_ua_pkid = "";
   public branch_code = "";
@@ -533,7 +535,7 @@ export class GlobalService {
       "~AIRPORTDISPLAYCOLUMN": this.AIRPORTDISPLAYCOLUMN,
       "~BRANCH_REGION": this.BRANCH_REGION,
       "~FILES_FOLDER": this.FILES_FOLDER,
-      "HIDE_PAYROLL" : this.user_hide_payroll
+      "HIDE_PAYROLL": this.user_hide_payroll
     }
 
   }
@@ -813,29 +815,25 @@ export class GlobalService {
   }
 
 
-  public IsDateLocked(sDate : string = '')
-  {
-      var bRet = false;
-      var IsNullVal = false;
-      try
-      {
-          IsNullVal = false;
-          if (sDate === "")
-              IsNullVal = true;
-          else if (sDate == null)
-              IsNullVal = true;
-          if (!IsNullVal)
-          {
-              if (sDate.replace('-','') <= this.ACCOUNTS_LOCKED_DATE.replace('-',''))
-                  bRet = true;
-          }
-      }
-      catch (Exception)
-      {
+  public IsDateLocked(sDate: string = '') {
+    var bRet = false;
+    var IsNullVal = false;
+    try {
+      IsNullVal = false;
+      if (sDate === "")
+        IsNullVal = true;
+      else if (sDate == null)
+        IsNullVal = true;
+      if (!IsNullVal) {
+        if (sDate.replace('-', '') <= this.ACCOUNTS_LOCKED_DATE.replace('-', ''))
           bRet = true;
-
       }
-      return bRet;
+    }
+    catch (Exception) {
+      bRet = true;
+
+    }
+    return bRet;
   }
 
 
@@ -878,7 +876,7 @@ export class GlobalService {
 
   public InitdefaultValues() {
 
-    var dt = new  Date();
+    var dt = new Date();
 
     this.defaultValues = new DefaultValues;
     this.defaultValues.today = dt.toISOString().slice(0, 10);
@@ -912,7 +910,7 @@ export class GlobalService {
     this.globalData.ledger_todate = this.defaultValues.today;
 
 
-    
+
 
 
   }
@@ -922,7 +920,7 @@ export class GlobalService {
       nDate.setDate(1);
     else
       nDate.setDate(nDate.getDate() - _days);
-      
+
     return nDate.toISOString().slice(0, 10);
   }
 
@@ -960,6 +958,42 @@ export class GlobalService {
   };
 
 
+  public GetMonth_Name(No: number, Abbr: boolean = true) {
+    let str: string = "";
+    if (No == 1) str = "JANUARY";
+    else if (No == 2) str = "FEBRUARY";
+    else if (No == 3) str = "MARCH";
+    else if (No == 4) str = "APRIL";
+    else if (No == 5) str = "MAY";
+    else if (No == 6) str = "JUNE";
+    else if (No == 7) str = "JULY";
+    else if (No == 8) str = "AUGUST";
+    else if (No == 9) str = "SEPTEMBER";
+    else if (No == 10) str = "OCTOBER";
+    else if (No == 11) str = "NOVEMBER";
+    else if (No == 12) str = "DECEMBER";
+    if (str.length >= 3 && Abbr == true)
+      str = str.substring(0, 3);
+    return str;
+  }
+
+  public GetMonth_Number(str: string) {
+    let No: number = 0;
+    if (str == "JANUARY" || str == "JAN") No = 1;
+    else if (str == "FEBRUARY" || str == "FEB") No = 2;
+    else if (str == "MARCH" || str == "MAR") No = 3;
+    else if (str == "APRIL" || str == "APR") No = 4;
+    else if (str == "MAY" || str == "MAY") No = 5;
+    else if (str == "JUNE" || str == "JUN") No = 6;
+    else if (str == "JULY" || str == "JUL") No = 7;
+    else if (str == "AUGUST" || str == "AUG") No = 8;
+    else if (str == "SEPTEMBER" || str == "SEP") No = 9;
+    else if (str == "OCTOBER" || str == "OCT") No = 10;
+    else if (str == "NOVEMBER" || str == "NOV") No = 11;
+    else if (str == "DECEMBER" || str == "DEC") No = 12;
+
+    return No;
+  }
 
   Naviagete(menu_route: string, jsonstring: string, _replaceurl: boolean = false) {
     this.router.navigate([menu_route], { queryParams: { parameter: jsonstring }, replaceUrl: _replaceurl });
@@ -1359,7 +1393,7 @@ export class GlobalService {
     sessionStorage.setItem('year_start_date', JSON.stringify(this.year_start_date));
     sessionStorage.setItem('year_end_date', JSON.stringify(this.year_end_date));
 
-    
+
 
   }
 

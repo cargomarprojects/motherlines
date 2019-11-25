@@ -143,8 +143,10 @@ export class GenLedgerReportComponent implements OnInit {
         this.radio_cust = 'ACC_ACCTM';
         this.is_ledger = 'Y';
         this.acc_parent_code = '';
-        this.fy_start_month = 0;
-
+        if (this.gs.FY_MONTHS.length > 0)
+          this.fy_start_month = +this.gs.FY_MONTHS[0].code;
+        else
+          this.fy_start_month = +this.gs.FY_START_MONTH;
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
@@ -193,11 +195,7 @@ export class GenLedgerReportComponent implements OnInit {
       alert(this.errorMessage);
       return;
     }
-
-    this.fy_start_month=1;
-
-
-
+ 
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
