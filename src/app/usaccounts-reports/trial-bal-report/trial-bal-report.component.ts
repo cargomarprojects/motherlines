@@ -33,15 +33,11 @@ export class TrialBalReportComponent implements OnInit {
 
   fdate: string;
   tdate: string;
-  cust_id: string;
-  cust_name: string;
+  basedon: string = 'INVOICE DATE';
   comp_name: string = '';
   comp_code: string = '';
-  radio_cust: string = 'ACC_ACCTM';
-  is_ledger: string = 'Y';
-  acc_parent_code: string = '';
+  showzerobal: boolean = false;
   fy_start_month: number = 0;
-
 
   filename: string = '';
   filetype: string = '';
@@ -93,17 +89,13 @@ export class TrialBalReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-        this.cust_id = rec.cust_id;
-        this.cust_name = rec.cust_name;
+        this.basedon = rec.basedon;
         this.fdate = rec.fdate;
         this.tdate = rec.tdate;
         this.comp_name = rec.comp_name;
         this.comp_code = rec.comp_code;
-        this.radio_cust = rec.radio_cust,
-          this.is_ledger = rec.is_ledger,
-          this.acc_parent_code = rec.acc_parent_code,
+        this.showzerobal = rec.showzerobal,
           this.fy_start_month = rec.fy_start_month,
-
           this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
@@ -114,15 +106,13 @@ export class TrialBalReportComponent implements OnInit {
         this.page_rowcount = rec.page_rowcount;
 
         this.SearchData = this.gs.UserInfo;
-        this.SearchData.JV_ACC_ID = this.cust_id;
         this.SearchData.JV_YEAR = this.gs.year_code;
         this.SearchData.FDATE = this.fdate;
         this.SearchData.TDATE = this.tdate;
-        this.SearchData.OPDATE = this.fdate;
         this.SearchData.BRCODE = this.comp_code;
-        this.SearchData.ISLEDGER = this.is_ledger;
+        this.SearchData.BASEDON = this.basedon;
+        this.SearchData.SHOW_ZERO_BAL = this.showzerobal == true ? 'Y' : 'N';
         this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
-        this.SearchData.ACC_PARENT_CODE = this.acc_parent_code;
         this.SearchData.FY_START_MONTH = this.fy_start_month;
 
       } else {
@@ -134,15 +124,13 @@ export class TrialBalReportComponent implements OnInit {
         this.page_rowcount = 0;
 
         this.currentTab = 'LIST';
-        this.cust_id = '';
-        this.cust_name = '';
+
+        this.basedon = this.gs.AC_REPORT_BASED_ON == "INVOICE DATE" ? 'INVOICE DATE' : 'MASTER REF. DATE';
         this.fdate = this.gs.defaultValues.lastmonthdate;
         this.tdate = this.gs.defaultValues.today;
         this.comp_code = this.gs.branch_code;
         this.comp_name = this.gs.branch_name;
-        this.radio_cust = 'ACC_ACCTM';
-        this.is_ledger = 'Y';
-        this.acc_parent_code = '';
+        this.showzerobal = false;
         if (this.gs.FY_MONTHS.length > 0)
           this.fy_start_month = +this.gs.FY_MONTHS[0].code;
         else
@@ -184,18 +172,18 @@ export class TrialBalReportComponent implements OnInit {
       this.tdate = this.gs.defaultValues.today;
 
     this.errorMessage = "";
-    if (this.gs.isBlank(this.cust_id)) {
-      this.errorMessage = "Code Cannot be Blank";
-      alert(this.errorMessage);
-      return;
-    }
+    // if (this.gs.isBlank(this.cust_id)) {
+    //   this.errorMessage = "Code Cannot be Blank";
+    //   alert(this.errorMessage);
+    //   return;
+    // }
 
-    if (this.is_ledger == "") {
-      this.errorMessage = "Invalid A/c Selected, pls re-enter the Account";
-      alert(this.errorMessage);
-      return;
-    }
- 
+    // if (this.is_ledger == "") {
+    //   this.errorMessage = "Invalid A/c Selected, pls re-enter the Account";
+    //   alert(this.errorMessage);
+    //   return;
+    // }
+
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
@@ -205,19 +193,14 @@ export class TrialBalReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
-      this.SearchData.JV_ACC_ID = this.cust_id;
-      this.SearchData.JV_ACC_NAME = this.cust_name;
       this.SearchData.JV_YEAR = this.gs.year_code;
       this.SearchData.FDATE = this.fdate;
       this.SearchData.TDATE = this.tdate;
-      this.SearchData.OPDATE = this.fdate;
       this.SearchData.BRCODE = this.comp_code;
-      this.SearchData.COMP_NAME = this.comp_name;
-      this.SearchData.ISLEDGER = this.is_ledger;
+      this.SearchData.BASEDON = this.basedon;
+      this.SearchData.SHOW_ZERO_BAL = this.showzerobal == true ? 'Y' : 'N';
       this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
-      this.SearchData.ACC_PARENT_CODE = this.acc_parent_code;
       this.SearchData.FY_START_MONTH = this.fy_start_month;
-      this.SearchData.RADIO_CUST = this.radio_cust;
 
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
@@ -225,7 +208,7 @@ export class TrialBalReportComponent implements OnInit {
     }
 
     this.loading = true;
-    this.mainservice.LedgerReport(this.SearchData)
+    this.mainservice.TrialBalance(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
@@ -240,15 +223,12 @@ export class TrialBalReportComponent implements OnInit {
             urlid: this.urlid,
             menuid: this.menuid,
             currentTab: this.currentTab,
-            cust_id: this.SearchData.JV_ACC_ID,
-            cust_name: this.SearchData.JV_ACC_NAME,
+            basedon: this.SearchData.BASEDON,
             fdate: this.SearchData.FDATE,
             tdate: this.SearchData.TDATE,
             comp_name: this.SearchData.COMP_NAME,
             comp_code: this.SearchData.BRCODE,
-            radio_cust: this.SearchData.RADIO_CUST,
-            is_ledger: this.SearchData.ISLEDGER,
-            acc_parent_code: this.SearchData.ACC_PARENT_CODE,
+            showzerobal: this.SearchData.SHOW_ZERO_BAL === "Y" ? true : false,
             fy_start_month: this.SearchData.FY_START_MONTH,
             page_rows: response.page_rows,
             page_count: response.page_count,
@@ -280,17 +260,17 @@ export class TrialBalReportComponent implements OnInit {
   }
 
   LovSelected(_Record: SearchTable) {
-    if (_Record.controlname === 'ACCTM-CUST') {
-      this.cust_id = _Record.id;
-      this.cust_name = _Record.name;
+    // if (_Record.controlname === 'ACCTM-CUST') {
+    //   this.cust_id = _Record.id;
+    //   this.cust_name = _Record.name;
 
-      this.is_ledger = "N";
-      if (this.radio_cust === "ACC_ACCTM")
-        this.is_ledger = "Y";
+    //   this.is_ledger = "N";
+    //   if (this.radio_cust === "ACC_ACCTM")
+    //     this.is_ledger = "Y";
 
-      this.acc_parent_code = _Record.col7.toString()
+    //   this.acc_parent_code = _Record.col7.toString()
 
-    }
+    // }
     // if (_Record.controlname === 'PARENT') {
     //   this.cust_parent_id = _Record.id;
     //   this.cust_parent_name = _Record.name;
@@ -312,7 +292,7 @@ export class TrialBalReportComponent implements OnInit {
     this.report_menuid = this.menuid;
     this.tab = 'report';
   }
- 
+
 
   callbackevent() {
     this.tab = 'main';
