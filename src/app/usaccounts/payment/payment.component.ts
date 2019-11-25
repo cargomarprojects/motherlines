@@ -122,6 +122,21 @@ export class PaymentComponent implements OnInit {
       this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
       this.tab = 'simple';
     }
+    if (_type === 'cash') {
+      this.report_url = '/api/Payment/PrintCash';
+      this.report_searchdata = this.gs.UserInfo;
+      this.report_searchdata.PKID = rec.pay_pkid;
+      this.report_searchdata.PAY_RP = rec.pay_rp;
+      this.report_searchdata.TYPE = rec.pay_type;
+      if (rec.pay_acc_name == "CASH")
+        this.report_searchdata.REPORT_CAPTION = "CASH " + rec.pay_rp;
+      else
+        this.report_searchdata.REPORT_CAPTION = "BANK " + rec.pay_rp;
+      
+
+      this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+      this.tab = 'simple';
+    }
 
   }
 
