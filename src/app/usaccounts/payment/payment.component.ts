@@ -78,12 +78,13 @@ export class PaymentComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: '',
       type: this.mainservice.param_type,
-      origin: 'deposit-page',
+      origin: 'payment-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.USAccounts.Trans/DepositEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.USAccounts.Trans/PaymentEditPage', JSON.stringify(parameter));
 
   }
+
   edit(_record: Tbl_Acc_Payment) {
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')
@@ -94,10 +95,10 @@ export class PaymentComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: _record.pay_pkid,
       type: '',
-      origin: 'deposit-page',
+      origin: 'payment-page',
       mode: 'EDIT'
     };
-    this.gs.Naviagete('Silver.USaccounts.Trans/DepositEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.USaccounts.Trans/PaymentEditPage', JSON.stringify(parameter));
   }
 
   Close() {
