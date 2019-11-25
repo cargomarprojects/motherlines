@@ -306,33 +306,13 @@ export class GenLedgerReportComponent implements OnInit {
     }
 
     // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-    this.report_title = 'Bank Enquiry Report';
+    this.report_title = 'Ledger Report';
     this.report_url = undefined;
     this.report_searchdata = this.gs.UserInfo;
     this.report_menuid = this.menuid;
     this.tab = 'report';
   }
-
-  PrintPayment(_rec: Tbl_acc_ledger) {
-
-    // if (_rec.pay_pkid == null)
-    //   return;
-    // if (_rec.pay_pkid === "OP")
-    //   return;
-    // if (_rec.pay_pkid === "CL")
-    //   return;
-
-
-    // this.report_title = 'Bank Payment Details';
-    // this.report_url = '/api/UsAccBankEnquiryRpt/PaymentDetails';
-    // this.report_searchdata = this.gs.UserInfo;
-    // this.report_searchdata.PKID = _rec.pay_pkid;
-    // this.report_searchdata.TYPE = _rec.pay_type;
-    // this.report_menuid = this.menuid;
-    // this.tab = 'report';
-
-  }
-
+ 
 
   callbackevent() {
     this.tab = 'main';
