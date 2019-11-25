@@ -38,6 +38,11 @@ export class UsAccountReportService {
     DailyTransaction(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccDayBookRpt/DailyTransaction", SearchData, this.gs.headerparam2('authorized'));
     }
+
+    LedgerReport(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccLedgerRpt/LedgerReport", SearchData, this.gs.headerparam2('authorized'));
+    }
+
 }
 
 

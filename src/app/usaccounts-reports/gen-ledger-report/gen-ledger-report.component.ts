@@ -32,17 +32,23 @@ export class GenLedgerReportComponent implements OnInit {
   report_menuid: string;
 
   fdate: string;
-  edate: string;
-  bank_id: string;
-  bank_name: string;
+  tdate: string;
+  cust_id: string;
+  cust_name: string;
   comp_name: string = '';
   comp_code: string = '';
+  radio_cust: string = 'ACC_ACCTM';
+  is_ledger: string = 'Y';
+  acc_parent_code: string = '';
+  fy_start_month: number = 0;
+
 
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
 
-  lov_where: string = " ACC_TYPE in ('CASH', 'BANK') ";
+  lov_where: string = "";
+
 
   page_count: number = 0;
   page_current: number = 0;
@@ -87,13 +93,18 @@ export class GenLedgerReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-        this.bank_id = rec.bank_id;
-        this.bank_name = rec.bank_name;
+        this.cust_id = rec.cust_id;
+        this.cust_name = rec.cust_name;
         this.fdate = rec.fdate;
-        this.edate = rec.edate;
+        this.tdate = rec.tdate;
         this.comp_name = rec.comp_name;
         this.comp_code = rec.comp_code;
-        this.filename = rec.filename;
+        this.radio_cust = rec.radio_cust,
+          this.is_ledger = rec.is_ledger,
+          this.acc_parent_code = rec.acc_parent_code,
+          this.fy_start_month = rec.fy_start_month,
+
+          this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
 
@@ -103,14 +114,17 @@ export class GenLedgerReportComponent implements OnInit {
         this.page_rowcount = rec.page_rowcount;
 
         this.SearchData = this.gs.UserInfo;
-
-        this.SearchData.BANK_ID = this.bank_id;
+        this.SearchData.JV_ACC_ID = this.cust_id;
         this.SearchData.JV_YEAR = this.gs.year_code;
         this.SearchData.FDATE = this.fdate;
-        this.SearchData.EDATE = this.edate;
+        this.SearchData.TDATE = this.tdate;
         this.SearchData.OPDATE = this.fdate;
-        this.SearchData.COMP_NAME = this.comp_name;
-        this.SearchData.BRANCH_CODE = this.comp_code;
+        this.SearchData.BRCODE = this.comp_code;
+        this.SearchData.ISLEDGER = this.is_ledger;
+        this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
+        this.SearchData.ACC_PARENT_CODE = this.acc_parent_code;
+        this.SearchData.FY_START_MONTH = this.fy_start_month;
+
       } else {
 
         this.MainList = Array<Tbl_acc_ledger>();
@@ -120,16 +134,22 @@ export class GenLedgerReportComponent implements OnInit {
         this.page_rowcount = 0;
 
         this.currentTab = 'LIST';
-        this.bank_id = '';
-        this.bank_name = '';
+        this.cust_id = '';
+        this.cust_name = '';
         this.fdate = this.gs.defaultValues.lastmonthdate;
-        this.edate = this.gs.defaultValues.today;
+        this.tdate = this.gs.defaultValues.today;
         this.comp_code = this.gs.branch_code;
         this.comp_name = this.gs.branch_name;
+        this.radio_cust = 'ACC_ACCTM';
+        this.is_ledger = 'Y';
+        this.acc_parent_code = '';
+        if (this.gs.FY_MONTHS.length > 0)
+          this.fy_start_month = +this.gs.FY_MONTHS[0].code;
+        else
+          this.fy_start_month = +this.gs.FY_START_MONTH;
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
-
         this.SearchData = this.gs.UserInfo;
 
       }
@@ -158,16 +178,24 @@ export class GenLedgerReportComponent implements OnInit {
 
   List(_outputformat: string, _action: string = 'NEW') {
 
+    if (this.gs.isBlank(this.fdate))
+      this.fdate = this.gs.year_start_date;
+    if (this.gs.isBlank(this.tdate))
+      this.tdate = this.gs.defaultValues.today;
+
     this.errorMessage = "";
-    if (this.gs.isBlank(this.bank_id)) {
+    if (this.gs.isBlank(this.cust_id)) {
       this.errorMessage = "Code Cannot be Blank";
       alert(this.errorMessage);
       return;
     }
-    if (this.gs.isBlank(this.fdate)) {
-      this.fdate = this.gs.year_start_date;
-    }
 
+    if (this.is_ledger == "") {
+      this.errorMessage = "Invalid A/c Selected, pls re-enter the Account";
+      alert(this.errorMessage);
+      return;
+    }
+ 
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
     this.SearchData.action = _action;
@@ -177,25 +205,27 @@ export class GenLedgerReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
-
+      this.SearchData.JV_ACC_ID = this.cust_id;
+      this.SearchData.JV_ACC_NAME = this.cust_name;
       this.SearchData.JV_YEAR = this.gs.year_code;
-      this.SearchData.BANK_ID = this.bank_id;
-      this.SearchData.BANK_NAME = this.bank_name;
       this.SearchData.FDATE = this.fdate;
-      this.SearchData.EDATE = this.edate;
+      this.SearchData.TDATE = this.tdate;
       this.SearchData.OPDATE = this.fdate;
-      this.SearchData.BRANCH_CODE = this.comp_code;
+      this.SearchData.BRCODE = this.comp_code;
       this.SearchData.COMP_NAME = this.comp_name;
+      this.SearchData.ISLEDGER = this.is_ledger;
+      this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
+      this.SearchData.ACC_PARENT_CODE = this.acc_parent_code;
+      this.SearchData.FY_START_MONTH = this.fy_start_month;
+      this.SearchData.RADIO_CUST = this.radio_cust;
 
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
     }
 
-
     this.loading = true;
-
-    this.mainservice.BankEnquiry(this.SearchData)
+    this.mainservice.LedgerReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
@@ -210,12 +240,16 @@ export class GenLedgerReportComponent implements OnInit {
             urlid: this.urlid,
             menuid: this.menuid,
             currentTab: this.currentTab,
-            bank_id: this.SearchData.BANK_ID,
-            bank_name: this.SearchData.BANK_NAME,
+            cust_id: this.SearchData.JV_ACC_ID,
+            cust_name: this.SearchData.JV_ACC_NAME,
             fdate: this.SearchData.FDATE,
-            edate: this.SearchData.EDATE,
+            tdate: this.SearchData.TDATE,
             comp_name: this.SearchData.COMP_NAME,
-            comp_code: this.SearchData.BRANCH_CODE,
+            comp_code: this.SearchData.BRCODE,
+            radio_cust: this.SearchData.RADIO_CUST,
+            is_ledger: this.SearchData.ISLEDGER,
+            acc_parent_code: this.SearchData.ACC_PARENT_CODE,
+            fy_start_month: this.SearchData.FY_START_MONTH,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
@@ -246,9 +280,16 @@ export class GenLedgerReportComponent implements OnInit {
   }
 
   LovSelected(_Record: SearchTable) {
-    if (_Record.controlname === 'ACCTM') {
-      this.bank_id = _Record.id;
-      this.bank_name = _Record.name;
+    if (_Record.controlname === 'ACCTM-CUST') {
+      this.cust_id = _Record.id;
+      this.cust_name = _Record.name;
+
+      this.is_ledger = "N";
+      if (this.radio_cust === "ACC_ACCTM")
+        this.is_ledger = "Y";
+
+      this.acc_parent_code = _Record.col7.toString()
+
     }
     // if (_Record.controlname === 'PARENT') {
     //   this.cust_parent_id = _Record.id;
@@ -265,33 +306,13 @@ export class GenLedgerReportComponent implements OnInit {
     }
 
     // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-    this.report_title = 'Bank Enquiry Report';
+    this.report_title = 'Ledger Report';
     this.report_url = undefined;
     this.report_searchdata = this.gs.UserInfo;
     this.report_menuid = this.menuid;
     this.tab = 'report';
   }
-
-  PrintPayment(_rec: Tbl_acc_ledger) {
-
-    // if (_rec.pay_pkid == null)
-    //   return;
-    // if (_rec.pay_pkid === "OP")
-    //   return;
-    // if (_rec.pay_pkid === "CL")
-    //   return;
-
-      
-    // this.report_title = 'Bank Payment Details';
-    // this.report_url = '/api/UsAccBankEnquiryRpt/PaymentDetails';
-    // this.report_searchdata = this.gs.UserInfo;
-    // this.report_searchdata.PKID = _rec.pay_pkid;
-    // this.report_searchdata.TYPE = _rec.pay_type;
-    // this.report_menuid = this.menuid;
-    // this.tab = 'report';
-
-  }
-
+ 
 
   callbackevent() {
     this.tab = 'main';

@@ -138,7 +138,7 @@ export class Login2Component implements OnInit {
         this.GLOBALCONTANTS.year_end_date = this.GLOBALCONTANTS.replaceAll(this.Year_Row.fy_end_date, "/", "-");
         this.GLOBALCONTANTS.year_islocked = this.Year_Row.fy_islocked;
 
-        
+
 
 
         this.GLOBALCONTANTS.InitUserInfo();
@@ -753,6 +753,25 @@ export class Login2Component implements OnInit {
             this.GLOBALCONTANTS.user_handled_code = b.param_code;
             this.GLOBALCONTANTS.user_handled_name = b.param_name1;
         });
+
+         
+        this.GLOBALCONTANTS.FY_MONTHS = <any[]>[];
+        if (this.GLOBALCONTANTS.FY_START_MONTH == "") {
+            var rec = <any>{};
+            rec.code = "1";
+            rec.name = this.GLOBALCONTANTS.GetMonth_Name(1);
+            this.GLOBALCONTANTS.FY_MONTHS.push(rec);
+        }
+        else {
+            
+            var Mon = this.GLOBALCONTANTS.FY_START_MONTH.toString().split(',');
+            for (let str of Object.values(Mon)) {
+                var rec = <any>{};
+                rec.code = str;
+                rec.name = this.GLOBALCONTANTS.GetMonth_Name(+str);
+                this.GLOBALCONTANTS.FY_MONTHS.push(rec);
+            }
+        }
 
         /*      public PARAM_FREIGHT_STATUS : any = [];
                 public PARAM_CARGO_MOVEMENT : any = [];
