@@ -35,6 +35,8 @@ export class PaymentComponent implements OnInit {
   upload_pay_docno = '';
 
 
+
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -45,6 +47,8 @@ export class PaymentComponent implements OnInit {
   ngOnInit() {
     this.mainservice.init(this.route.snapshot.queryParams);
     this.initPage();
+
+    
   }
 
   initPage() {
