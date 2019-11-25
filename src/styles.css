@@ -663,3 +663,32 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 
+.fixed_header{
+    table-layout: fixed;
+    width: 100%;    
+    border-collapse: collapse;
+    height: 400px;
+}
+
+.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow: auto;
+  height: 400px;
+}
+
+.fixed_header thead tr {
+   display: block;
+}
+
+.fixed_header thead {
+  color:#fff;
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+  width: 200px;
+}
+
+

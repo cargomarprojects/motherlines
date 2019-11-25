@@ -162,9 +162,6 @@ export class PaymentService {
     }
 
 
-
-
-
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Payment/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -174,10 +171,9 @@ export class PaymentService {
     }
 
 
-    DepositPendingList(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Payment/DepositPendingList', SearchData, this.gs.headerparam2('authorized'));
+    PendingList(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Payment/PendingList', SearchData, this.gs.headerparam2('authorized'));
     }
-
 
 
     DeleteRecord(SearchData: any) {

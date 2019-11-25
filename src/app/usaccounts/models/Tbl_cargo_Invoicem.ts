@@ -94,6 +94,8 @@ export interface Tbl_cargo_invoicem {
 
     inv_flag: string;
 
+    inv_flag2: boolean;
+
     rec_deleted: string;
     rec_created_by: string;
     rec_created_date: string;
