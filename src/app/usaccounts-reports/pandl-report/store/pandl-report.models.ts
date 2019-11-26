@@ -9,9 +9,7 @@ export interface ReportState {
     tdate: string;
     comp_name: string;
     comp_code:string;
-    showzerobal:boolean;
-    fy_start_month:number;
-  
+    
     filename: string;
     filetype: string;
     filedisplayname: string;

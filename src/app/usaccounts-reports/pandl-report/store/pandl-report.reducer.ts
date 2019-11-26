@@ -19,8 +19,6 @@ export const initialState: ReportState = {
     tdate: '',
     comp_name: '',
     comp_code: '',
-    showzerobal: false,
-    fy_start_month: 0,
     filename: '',
     filetype: '',
     filedisplayname: '',
