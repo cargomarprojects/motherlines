@@ -7,19 +7,19 @@ import { Tbl_acc_Trialbalance } from '../models/Tbl_acc_Trialbalance';
 import { SearchTable } from '../../shared/models/searchtable';
 
 import { Store, State, select } from '@ngrx/store';
-import * as myActions from './store/trial-bal-report.actions';
-import * as myReducer from './store/trial-bal-report.reducer';
-import { ReportState } from './store/trial-bal-report.models'
+import * as myActions from './store/pandl-report.actions';
+import * as myReducer from './store/pandl-report.reducer';
+import { ReportState } from './store/pandl-report.models'
 
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-trial-bal-report',
-  templateUrl: './trial-bal-report.component.html'
+  selector: 'app-pandl-report',
+  templateUrl: './pandl-report.component.html'
 })
-export class TrialBalReportComponent implements OnInit {
+export class PandLReportComponent implements OnInit {
 
-  title = 'Trial Balance Report';
+  title = 'P&L Report';
   pkid: string;
   urlid: string;
   url: string;
@@ -208,7 +208,7 @@ export class TrialBalReportComponent implements OnInit {
     }
 
     this.loading = true;
-    this.mainservice.TrialBalance(this.SearchData)
+    this.mainservice.PandLReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
@@ -286,7 +286,7 @@ export class TrialBalReportComponent implements OnInit {
     }
 
     // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-    this.report_title = 'Trial Balance Report';
+    this.report_title = 'P&L Report';
     this.report_url = undefined;
     this.report_searchdata = this.gs.UserInfo;
     this.report_menuid = this.menuid;
