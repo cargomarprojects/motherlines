@@ -13,6 +13,7 @@ import { SearchTable } from '../../shared/models/searchtable';
 import { Tbl_cargo_invoicem } from '../models/Tbl_cargo_Invoicem';
 
 
+
 @Component({
     selector: 'app-payment-edit',
     templateUrl: './payment-edit.component.html'
