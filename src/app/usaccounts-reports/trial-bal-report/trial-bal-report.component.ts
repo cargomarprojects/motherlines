@@ -95,8 +95,8 @@ export class TrialBalReportComponent implements OnInit {
         this.comp_name = rec.comp_name;
         this.comp_code = rec.comp_code;
         this.showzerobal = rec.showzerobal,
-          this.fy_start_month = rec.fy_start_month,
-          this.filename = rec.filename;
+        this.fy_start_month = rec.fy_start_month,
+        this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
 
@@ -110,6 +110,7 @@ export class TrialBalReportComponent implements OnInit {
         this.SearchData.FDATE = this.fdate;
         this.SearchData.TDATE = this.tdate;
         this.SearchData.BRCODE = this.comp_code;
+        this.SearchData.COMP_NAME = this.comp_name;
         this.SearchData.BASEDON = this.basedon;
         this.SearchData.SHOW_ZERO_BAL = this.showzerobal == true ? 'Y' : 'N';
         this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
@@ -122,9 +123,7 @@ export class TrialBalReportComponent implements OnInit {
         this.page_count = 0;
         this.page_current = 0;
         this.page_rowcount = 0;
-
         this.currentTab = 'LIST';
-
         this.basedon = this.gs.AC_REPORT_BASED_ON == "INVOICE DATE" ? 'INVOICE DATE' : 'MASTER REF. DATE';
         this.fdate = this.gs.defaultValues.lastmonthdate;
         this.tdate = this.gs.defaultValues.today;
@@ -197,6 +196,7 @@ export class TrialBalReportComponent implements OnInit {
       this.SearchData.FDATE = this.fdate;
       this.SearchData.TDATE = this.tdate;
       this.SearchData.BRCODE = this.comp_code;
+      this.SearchData.COMP_NAME = this.comp_name;
       this.SearchData.BASEDON = this.basedon;
       this.SearchData.SHOW_ZERO_BAL = this.showzerobal == true ? 'Y' : 'N';
       this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
@@ -286,7 +286,7 @@ export class TrialBalReportComponent implements OnInit {
     }
 
     // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-    this.report_title = 'Ledger Report';
+    this.report_title = 'Trial Balance Report';
     this.report_url = undefined;
     this.report_searchdata = this.gs.UserInfo;
     this.report_menuid = this.menuid;
