@@ -10,6 +10,7 @@ import { PaySearchComponent } from './paysearch/paysearch.component';
 import { DayBookReportComponent } from './day-book-report/day-book-report.component';
 import { GenLedgerReportComponent } from './gen-ledger-report/gen-ledger-report.component';
 import { TrialBalReportComponent } from './trial-bal-report/trial-bal-report.component';
+import { PandLReportComponent } from './pandl-report/pandl-report.component';
 
 const routes: Routes = [
   { path :'BankPage', component : BankEnquiryReportComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path :'DayBookPage', component : DayBookReportComponent },
   { path :'LedgerPage', component : GenLedgerReportComponent },
   { path :'TrialPage', component : TrialBalReportComponent },
+  { path :'PandLPage', component : PandLReportComponent },
 ];
 
 @NgModule({

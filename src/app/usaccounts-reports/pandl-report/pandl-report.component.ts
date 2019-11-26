@@ -208,7 +208,7 @@ export class PandLReportComponent implements OnInit {
     }
 
     this.loading = true;
-    this.mainservice.TrialBalance(this.SearchData)
+    this.mainservice.PandLReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {

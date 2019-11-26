@@ -31,6 +31,8 @@ import { GenLedgerReportReducer  } from './gen-ledger-report/store/gen-ledger-re
 import { TrialBalReportComponent } from './trial-bal-report/trial-bal-report.component';
 import { TrialBalReportReducer  } from './trial-bal-report/store/trial-bal-report.reducer';
 
+import { PandLReportComponent } from './pandl-report/pandl-report.component';
+import { PandLReportReducer  } from './pandl-report/store/pandl-report.reducer';
 
 @NgModule({
     declarations :[
@@ -43,7 +45,8 @@ import { TrialBalReportReducer  } from './trial-bal-report/store/trial-bal-repor
       PaySearchHeaderComponent,
       DayBookReportComponent,
       GenLedgerReportComponent,
-      TrialBalReportComponent
+      TrialBalReportComponent,
+      PandLReportComponent
   ],
   imports: [
     SharedModule,
@@ -56,6 +59,7 @@ import { TrialBalReportReducer  } from './trial-bal-report/store/trial-bal-repor
     StoreModule.forFeature('DayBookReport',DayBookReportReducer ),    
     StoreModule.forFeature('GenLedgerReport',GenLedgerReportReducer ),      
     StoreModule.forFeature('TrialBalReport',TrialBalReportReducer ),      
+    StoreModule.forFeature('PandLReport',PandLReportReducer ),      
   ],
   providers: [
   ]
