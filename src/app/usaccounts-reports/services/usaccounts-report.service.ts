@@ -54,6 +54,10 @@ export class UsAccountReportService {
     return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccPandLRpt/UpdatePandL", SearchData, this.gs.headerparam2('authorized'));
   }
 
+  BalanceSheet(SearchData: any) {
+    return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBalSheetRpt/BalanceSheet", SearchData, this.gs.headerparam2('authorized'));
+  }
+
 }
 
 

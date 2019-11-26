@@ -34,6 +34,9 @@ import { TrialBalReportReducer  } from './trial-bal-report/store/trial-bal-repor
 import { PandLReportComponent } from './pandl-report/pandl-report.component';
 import { PandLReportReducer  } from './pandl-report/store/pandl-report.reducer';
 
+import { BalSheetReportComponent } from './bal-sheet-report/bal-sheet-report.component';
+import { BalSheetReportReducer  } from './bal-sheet-report/store/bal-sheet-report.reducer';
+
 @NgModule({
     declarations :[
       BankEnquiryReportComponent,  
@@ -46,7 +49,8 @@ import { PandLReportReducer  } from './pandl-report/store/pandl-report.reducer';
       DayBookReportComponent,
       GenLedgerReportComponent,
       TrialBalReportComponent,
-      PandLReportComponent
+      PandLReportComponent,
+      BalSheetReportComponent
   ],
   imports: [
     SharedModule,
@@ -60,6 +64,7 @@ import { PandLReportReducer  } from './pandl-report/store/pandl-report.reducer';
     StoreModule.forFeature('GenLedgerReport',GenLedgerReportReducer ),      
     StoreModule.forFeature('TrialBalReport',TrialBalReportReducer ),      
     StoreModule.forFeature('PandLReport',PandLReportReducer ),      
+    StoreModule.forFeature('BalSheetReport',BalSheetReportReducer ),      
   ],
   providers: [
   ]

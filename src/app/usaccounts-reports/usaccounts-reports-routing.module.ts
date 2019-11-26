@@ -11,6 +11,8 @@ import { DayBookReportComponent } from './day-book-report/day-book-report.compon
 import { GenLedgerReportComponent } from './gen-ledger-report/gen-ledger-report.component';
 import { TrialBalReportComponent } from './trial-bal-report/trial-bal-report.component';
 import { PandLReportComponent } from './pandl-report/pandl-report.component';
+import { BalSheetReportComponent } from './bal-sheet-report/bal-sheet-report.component';
+
 
 const routes: Routes = [
   { path :'BankPage', component : BankEnquiryReportComponent },
@@ -23,6 +25,7 @@ const routes: Routes = [
   { path :'LedgerPage', component : GenLedgerReportComponent },
   { path :'TrialPage', component : TrialBalReportComponent },
   { path :'PandLPage', component : PandLReportComponent },
+  { path :'BSPage', component : BalSheetReportComponent },
 ];
 
 @NgModule({
