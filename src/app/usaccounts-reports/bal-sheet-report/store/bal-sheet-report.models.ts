@@ -1,5 +1,6 @@
 import { Tbl_acc_Trialbalance  } from '../../models/Tbl_acc_Trialbalance';
 export interface ReportState {
+
     pkid: string,
     urlid: string,
     menuid: string;
@@ -9,7 +10,9 @@ export interface ReportState {
     tdate: string;
     comp_name: string;
     comp_code:string;
-    
+    showzerobal:boolean;
+    fy_start_month:number;
+  
     filename: string;
     filetype: string;
     filedisplayname: string;

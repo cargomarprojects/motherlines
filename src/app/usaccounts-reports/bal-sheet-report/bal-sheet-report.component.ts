@@ -7,19 +7,19 @@ import { Tbl_acc_Trialbalance } from '../models/Tbl_acc_Trialbalance';
 import { SearchTable } from '../../shared/models/searchtable';
 
 import { Store, State, select } from '@ngrx/store';
-import * as myActions from './store/pandl-report.actions';
-import * as myReducer from './store/pandl-report.reducer';
-import { ReportState } from './store/pandl-report.models'
+import * as myActions from './store/bal-sheet-report.actions';
+import * as myReducer from './store/bal-sheet-report.reducer';
+import { ReportState } from './store/bal-sheet-report.models'
 
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-pandl-report',
-  templateUrl: './pandl-report.component.html'
+  selector: 'app-bal-sheet-report',
+  templateUrl: './bal-sheet-report.component.html'
 })
-export class PandLReportComponent implements OnInit {
+export class BalSheetReportComponent implements OnInit {
 
-  title = 'P&L Report';
+  title = 'Balance sheet Report';
   pkid: string;
   urlid: string;
   url: string;
@@ -36,13 +36,15 @@ export class PandLReportComponent implements OnInit {
   basedon: string = 'INVOICE DATE';
   comp_name: string = '';
   comp_code: string = '';
+  showzerobal: boolean = false;
+  fy_start_month: number = 0;
 
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
 
   lov_where: string = "";
-  lblupdate:string ="";
+
 
   page_count: number = 0;
   page_current: number = 0;
@@ -52,10 +54,6 @@ export class PandLReportComponent implements OnInit {
   storesub: any;
   sub: any;
   tab: string = 'main';
-
-  iStart: number = 1;
-
-  iInc: number = 250;
 
   loading: boolean = false;
   errorMessage: string = '';
@@ -96,6 +94,8 @@ export class PandLReportComponent implements OnInit {
         this.tdate = rec.tdate;
         this.comp_name = rec.comp_name;
         this.comp_code = rec.comp_code;
+        this.showzerobal = rec.showzerobal,
+        this.fy_start_month = rec.fy_start_month,
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
@@ -112,6 +112,9 @@ export class PandLReportComponent implements OnInit {
         this.SearchData.BRCODE = this.comp_code;
         this.SearchData.COMP_NAME = this.comp_name;
         this.SearchData.BASEDON = this.basedon;
+        this.SearchData.SHOW_ZERO_BAL = this.showzerobal == true ? 'Y' : 'N';
+        this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
+        this.SearchData.FY_START_MONTH = this.fy_start_month;
 
       } else {
 
@@ -126,6 +129,11 @@ export class PandLReportComponent implements OnInit {
         this.tdate = this.gs.defaultValues.today;
         this.comp_code = this.gs.branch_code;
         this.comp_name = this.gs.branch_name;
+        this.showzerobal = false;
+        if (this.gs.FY_MONTHS.length > 0)
+          this.fy_start_month = +this.gs.FY_MONTHS[0].code;
+        else
+          this.fy_start_month = +this.gs.FY_START_MONTH;
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
@@ -190,13 +198,17 @@ export class PandLReportComponent implements OnInit {
       this.SearchData.BRCODE = this.comp_code;
       this.SearchData.COMP_NAME = this.comp_name;
       this.SearchData.BASEDON = this.basedon;
+      this.SearchData.SHOW_ZERO_BAL = this.showzerobal == true ? 'Y' : 'N';
+      this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
+      this.SearchData.FY_START_MONTH = this.fy_start_month;
+
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
     }
 
     this.loading = true;
-    this.mainservice.PandLReport(this.SearchData)
+    this.mainservice.BalanceSheet(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
@@ -216,6 +228,8 @@ export class PandLReportComponent implements OnInit {
             tdate: this.SearchData.TDATE,
             comp_name: this.SearchData.COMP_NAME,
             comp_code: this.SearchData.BRCODE,
+            showzerobal: this.SearchData.SHOW_ZERO_BAL === "Y" ? true : false,
+            fy_start_month: this.SearchData.FY_START_MONTH,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
@@ -272,32 +286,12 @@ export class PandLReportComponent implements OnInit {
     }
 
     // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-    this.report_title = 'P&L Report'; 
+    this.report_title = 'Balance Sheet Report';
     this.report_url = undefined;
     this.report_searchdata = this.gs.UserInfo;
     this.report_menuid = this.menuid;
     this.tab = 'report';
   }
-
-
-  Update() {
-
-    this.errorMessage = '';
-    var SearchData = this.gs.UserInfo;
-    SearchData.ISTART = this.iStart;
-    SearchData.INC = this.iInc
-    this.mainservice.UpdatePandL(SearchData)
-      .subscribe(response => {
-
-        this.lblupdate = response.retvalue;
-        this.iStart += this.iInc;
-
-      }, error => {
-        this.errorMessage = this.gs.getError(error);
-      });
-
-  }
-
 
 
   callbackevent() {

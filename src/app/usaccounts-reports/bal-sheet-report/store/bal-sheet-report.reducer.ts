@@ -2,11 +2,11 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Tbl_acc_Trialbalance } from '../../models/Tbl_acc_Trialbalance';
 import { AppState } from '../../../reducer';
 
-import * as myActions from './pandl-report.actions';
-import { ReportState } from './pandl-report.models';
+import * as myActions from './bal-sheet-report.actions';
+import { ReportState } from './bal-sheet-report.models';
 
 export interface AppState extends AppState {
-    'PandLReport': ReportState
+    'BalSheetReport': ReportState
 }
 
 export const initialState: ReportState = {
@@ -19,6 +19,8 @@ export const initialState: ReportState = {
     tdate: '',
     comp_name: '',
     comp_code: '',
+    showzerobal: false,
+    fy_start_month: 0,
     filename: '',
     filetype: '',
     filedisplayname: '',
@@ -29,7 +31,7 @@ export const initialState: ReportState = {
     records: []
 };
 
-export function PandLReportReducer(state: ReportState[] = [initialState], action: myActions.Actions): ReportState[] {
+export function BalSheetReportReducer(state: ReportState[] = [initialState], action: myActions.Actions): ReportState[] {
     switch (action.type) {
         case myActions.ActionTypes.ADD:
             return [...state, action.payload];
@@ -42,7 +44,7 @@ export function PandLReportReducer(state: ReportState[] = [initialState], action
     }
 }
 
-export const getReducer = createFeatureSelector<ReportState[]>('PandLReport');
+export const getReducer = createFeatureSelector<ReportState[]>('BalSheetReport');
 
 export const getState = (urlid: string) => createSelector(
     getReducer,

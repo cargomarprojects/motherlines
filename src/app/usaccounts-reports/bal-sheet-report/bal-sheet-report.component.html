@@ -52,22 +52,42 @@
 
                     </div>
 
+
+                    <div *ngIf="gs.FY_MONTHS.length>1" class="col-md-3">
+
+                        <div class="form-group row">
+                            <label class="offset-4 col-8 col-form-label col-form-label-sm">FY-Start-Month</label>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="offset-4 col-8">
+                                <select class="form-control form-control-sm" [(ngModel)]="fy_start_month">
+                                    <option *ngFor="let rec of gs.FY_MONTHS" [value]="rec.code">{{rec.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
                     <div class="col-md-3">
 
+                        <div class="form-group row">
 
+                            <div class="offset-4 col-8">
+                                <div class="form-check"> <input type="checkbox" class="form-check-input"
+                                        [(ngModel)]="showzerobal"><span>Show Zero Balance</span></div>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-4 col-form-label col-form-label-sm"></label>
                             <div class="col-8">
                                 <button [disabled]="loading" (click)="List('SCREEN')"
                                     class="btn btn-primary btn-sm mr-1">Search</button>
                                 <button [disabled]="loading" (click)="Print()"
-                                    class="btn btn-primary btn-sm mr-1">Print</button>
-                                <button *ngIf="gs.user_isadmin=='Y'" [disabled]="loading" (click)="Update()"
-                                    class="btn btn-primary btn-sm mr-1">Update</button>
+                                    class="btn btn-primary btn-sm">Print</button>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="offset-4 col-8 col-form-label col-form-label-sm">{{lblupdate}}</label>
                         </div>
                     </div>
                 </div>
@@ -82,16 +102,18 @@
             <table class="table  table-hover table-sm">
                 <thead class="page-body-thead">
                     <tr>
-                        <th>PARTICULARS</th>
+                        <th>GROUP</th>
+                        <th>CODE</th>
                         <th>NAME</th>
                         <th style="text-align:right">DEBIT</th>
                         <th style="text-align:right">CREDIT</th>
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr [style.color]="rec.tb_row_status=='DIRECT'?'Blue': rec.tb_row_status=='INDIRECT'?'Brown':rec.tb_row_status=='LOSS'?'Red':rec.tb_row_status=='PROFIT'?'Green':'Black' "
-                        [style.font-weight]="(rec.tb_row_status=='DIRECT'||rec.tb_row_status=='INDIRECT'||rec.tb_row_status=='LOSS'||rec.tb_row_status=='PROFIT')?'bold':'normal'">
-                        <td>{{rec.tb_particulars}}</td>
+                    <tr [style.color]="rec.tb_acc_name=='TOTAL'?'Red':'Black'"
+                        [style.font-weight]="rec.tb_acc_name=='TOTAL'?'bold':'normal'">
+                        <td>{{rec.tb_sub_group}}</td>
+                        <td>{{rec.tb_acc_code}}</td>
                         <td>{{rec.tb_acc_name}}</td>
                         <td style="text-align:right">{{rec.tb_bal_debit | number : '1.2-2'}}</td>
                         <td style="text-align:right">{{rec.tb_bal_credit | number : '1.2-2'}}</td>
