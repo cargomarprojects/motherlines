@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="form-group row" *ngIf ="gs.IS_SINGLE_CURRENCY">
+            <div class="form-group row" *ngIf ="!gs.IS_SINGLE_CURRENCY">
                 <label class="col-3 col-form-label col-form-label-sm">CURRENCY</label>
                 <div class="col-4">
                     <app-autocomplete2 [controlname]="'CURRENCY'" [tabletype]="'PARAM'" [subtype]="'CURRENCY'"
