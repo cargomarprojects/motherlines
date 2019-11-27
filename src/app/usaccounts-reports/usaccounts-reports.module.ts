@@ -36,6 +36,7 @@ import { PandLReportReducer  } from './pandl-report/store/pandl-report.reducer';
 
 import { BalSheetReportComponent } from './bal-sheet-report/bal-sheet-report.component';
 import { BalSheetReportReducer  } from './bal-sheet-report/store/bal-sheet-report.reducer';
+import { LedgerAllReportComponent } from './ledger-all-report/ledger-all-report.component';
 
 @NgModule({
     declarations :[
@@ -50,7 +51,8 @@ import { BalSheetReportReducer  } from './bal-sheet-report/store/bal-sheet-repor
       GenLedgerReportComponent,
       TrialBalReportComponent,
       PandLReportComponent,
-      BalSheetReportComponent
+      BalSheetReportComponent,
+      LedgerAllReportComponent
   ],
   imports: [
     SharedModule,
