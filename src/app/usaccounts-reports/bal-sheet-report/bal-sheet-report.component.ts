@@ -71,6 +71,7 @@ export class BalSheetReportComponent implements OnInit {
     this.sub = this.activatedroute.queryParams.subscribe(params => {
       this.urlid = params.id;
       this.menuid = params.menuid;
+      this.title = this.gs.getTitle(this.menuid);
       this.InitPage();
       this.LoadCompany();
     });
