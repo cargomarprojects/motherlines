@@ -31,7 +31,7 @@ export class LedgerAllReportComponent implements OnInit {
     cust_name: string;
     comp_name: string = '';
     comp_code: string = '';
-    radio_cust: string = 'ACC_ACCTM';
+    radio_cust: string = 'LEDGER';
     is_ledger: string = 'Y';
     acc_parent_code: string = '';
     fy_start_month: number = 0;
@@ -69,6 +69,10 @@ export class LedgerAllReportComponent implements OnInit {
 
     InitPage() {
         this.initLov();
+        this.fdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
+        this.tdate = this.gs.defaultValues.today;
+        this.comp_code = this.gs.branch_code;
+        this.radio_cust = 'LEDGER';
         if (this.gs.FY_MONTHS.length > 0)
             this.fy_start_month = +this.gs.FY_MONTHS[0].code;
         else
@@ -90,68 +94,7 @@ export class LedgerAllReportComponent implements OnInit {
         this.sub.unsubscribe();
     }
 
-    PageEvents(actions) {
-        this.List(actions.outputformat, actions.action);
-    }
 
-    List(_outputformat: string, _action: string = 'NEW') {
-
-        if (this.gs.isBlank(this.fdate))
-            this.fdate = this.gs.year_start_date;
-        if (this.gs.isBlank(this.tdate))
-            this.tdate = this.gs.defaultValues.today;
-
-        this.errorMessage = "";
-        if (this.gs.isBlank(this.cust_id)) {
-            this.errorMessage = "Code Cannot be Blank";
-            alert(this.errorMessage);
-            return;
-        }
-
-        if (this.is_ledger == "") {
-            this.errorMessage = "Invalid A/c Selected, pls re-enter the Account";
-            alert(this.errorMessage);
-            return;
-        }
-
-        this.SearchData.outputformat = _outputformat;
-        this.SearchData.pkid = this.urlid;
-        this.SearchData.action = _action;
-
-
-        if (_outputformat === 'SCREEN' && _action === 'NEW') {
-            this.SearchData.JV_ACC_ID = this.cust_id;
-            this.SearchData.JV_ACC_NAME = this.cust_name;
-            this.SearchData.JV_YEAR = this.gs.year_code;
-            this.SearchData.FDATE = this.fdate;
-            this.SearchData.TDATE = this.tdate;
-            this.SearchData.OPDATE = this.fdate;
-            this.SearchData.BRCODE = this.comp_code;
-            this.SearchData.COMP_NAME = this.comp_name;
-            this.SearchData.ISLEDGER = this.is_ledger;
-            this.SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
-            this.SearchData.ACC_PARENT_CODE = this.acc_parent_code;
-            this.SearchData.FY_START_MONTH = this.fy_start_month;
-            this.SearchData.RADIO_CUST = this.radio_cust;
-
-            this.SearchData.filename = "";
-            this.SearchData.filedisplayname = "";
-            this.SearchData.filetype = "";
-        }
-
-        this.loading = true;
-        this.mainservice.LedgerReport(this.SearchData)
-            .subscribe(response => {
-
-
-
-                this.loading = false;
-            }, error => {
-                this.loading = false;
-                this.errorMessage = error.error.error_description;
-                alert(this.errorMessage);
-            });
-    }
 
     Close() {
         this.location.back();
@@ -162,42 +105,43 @@ export class LedgerAllReportComponent implements OnInit {
     }
 
     LovSelected(_Record: SearchTable) {
-        if (_Record.controlname === 'ACCTM-CUST') {
-            this.cust_id = _Record.id;
-            this.cust_name = _Record.name;
 
-            this.is_ledger = "N";
-            if (this.radio_cust === "ACC_ACCTM")
-                this.is_ledger = "Y";
-
-            this.acc_parent_code = _Record.col7.toString()
-
-        }
-        // if (_Record.controlname === 'PARENT') {
-        //   this.cust_parent_id = _Record.id;
-        //   this.cust_parent_name = _Record.name;
-        // }
     }
 
     Print() {
-        this.errorMessage = "";
-        // if (this.MainList.length <= 0) {
-        //   this.errorMessage = "List Not Found";
-        //   alert(this.errorMessage);
-        //   return;
-        // }
 
-        // this.Downloadfile(this.filename, this.filetype, this.filedisplayname);
-        this.report_title = 'Ledger Report';
-        this.report_url = undefined;
-        this.report_searchdata = this.gs.UserInfo;
-        this.report_menuid = this.menuid;
+        let IS_LEDGER: string = "N";
+        if (this.radio_cust === "LEDGER")
+            IS_LEDGER = "Y";
+        else if (this.radio_cust === "FIXEDASSET")
+            IS_LEDGER = "F";
+        else
+            IS_LEDGER = "N";
+
+        this.errorMessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.FDATE = this.fdate;
+        SearchData.TDATE = this.tdate;
+        SearchData.BRCODE = this.comp_code;
+        SearchData.IS_LEDGER = IS_LEDGER;
+        SearchData.FRONT_DATE_FORMAT = this.gs.FRONTEND_DATEFORMAT;
+        SearchData.USERNAME = this.gs.user_code;
+        SearchData.USERID = this.gs.MACADDRESS;
+        SearchData.RETAINED_PROFIT = this.gs.RETAINED_PROFIT_ID;
+        SearchData.FY_START_MONTH = this.fy_start_month;
+        // SURL += "&FY_START_DATE=" + FY_START_DATE;
+        // SURL += "&FY_END_DATE=" + FY_END_DATE;
+
+        this.mainservice.LedgerAllReport(SearchData)
+            .subscribe(response => {
+                this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
+            }, error => {
+                this.errorMessage = this.gs.getError(error);
+            });
 
     }
 
-
-    callbackevent() {
-
+    Downloadfile(filename: string, filetype: string, filedisplayname: string) {
+        this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
     }
-
 }
