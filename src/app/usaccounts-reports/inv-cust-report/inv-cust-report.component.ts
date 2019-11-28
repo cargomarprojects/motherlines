@@ -268,7 +268,14 @@ export class InvCustReportComponent implements OnInit {
     this.mainservice.UpdateBillingCustomer(SearchData)
       .subscribe(response => {
 
-       
+        if (response.retvalue) {
+          if (Inv_IDS.indexOf(",") > 0) {
+            var tempid = Inv_IDS.split(',');
+            for (var i = 0; i < tempid.length; i++)
+              this.MainList.splice(this.MainList.findIndex(rec => rec.inv_pkid == tempid[i]), 1);
+          } else
+            this.MainList.splice(this.MainList.findIndex(rec => rec.inv_pkid == Inv_IDS), 1);
+        }
 
       }, error => {
         this.errorMessage = this.gs.getError(error);
