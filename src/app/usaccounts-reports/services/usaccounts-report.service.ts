@@ -67,6 +67,10 @@ export class UsAccountReportService {
     return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccInvCustUpdate/InvoiceCustomer", SearchData, this.gs.headerparam2('authorized'));
   }
 
+  UpdateBillingCustomer(SearchData: any) {
+    return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccInvCustUpdate/UpdateBillingCustomer", SearchData, this.gs.headerparam2('authorized'));
+  }
+
 }
 
 

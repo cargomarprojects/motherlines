@@ -20,8 +20,7 @@
                             </app-autocomplete2>
                         </div>
                         <div class="col-6 pl-0">
-                            <input type="text" disabled class="form-control form-control-sm"
-                                [(ngModel)]="cust_name" />
+                            <input type="text" disabled class="form-control form-control-sm" [(ngModel)]="cust_name" />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -45,8 +44,26 @@
                     </div>
 
                 </div>
-                <div class="col-md-3">
-
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label col-form-label-sm">BillingCustomer</label>
+                        <div class="col-4 pr-2">
+                            <app-autocomplete2 [controlname]="'CUSTOMER2'" [tabletype]="'MASTER'"
+                                [displaycolumn]="'CODE'" [displaydata]="billcust_code"
+                                (ValueChanged)="LovSelected($event)">
+                            </app-autocomplete2>
+                        </div>
+                        <div class="col-6 pl-0">
+                            <input type="text" disabled class="form-control form-control-sm"
+                                [(ngModel)]="billcust_name" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-2 col-8">
+                            <button [disabled]="loading" (click)="Update()"
+                                class="btn btn-primary btn-sm mr-1">Update</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,14 +77,13 @@
         <table class="table  table-hover table-sm">
             <thead class="page-body-thead">
                 <tr>
-                    <th (click)="SelectDeselect()">
-                        <div class="form-check"> <input type="checkbox" class="form-check-input"
-                                [(ngModel)]="allchecked"><span>SELECT</span>
-                        </div>
-                    </th>
                     <th>CUSTOMER-CODE</th>
                     <th>CUSTOMER-NAME</th>
-                    <th>INV.NO</th>
+                    <th (click)="SelectDeselect()">
+                        <div class="form-check"> <input type="checkbox" class="form-check-input"
+                                [(ngModel)]="allchecked"><span>INV.NO</span>
+                        </div>
+                    </th>
                     <th>INV.DATE</th>
                     <th>REFNO</th>
                     <th>CUST REFNO</th>
@@ -75,14 +91,13 @@
             </thead>
             <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                 <tr>
-                    <td>
-                        <div class="form-check"> <input type="checkbox" class="form-check-input"
-                                [(ngModel)]="rec.inv_flag_b"><span></span>
-                        </div>
-                    </td>
                     <td>{{rec.inv_cust_code}}</td>
                     <td>{{rec.inv_cust_name}}</td>
-                    <td>{{rec.inv_no}}</td>
+                    <td>
+                        <div class="form-check"> <input type="checkbox" class="form-check-input"
+                                [(ngModel)]="rec.inv_flag_b"><span>{{rec.inv_no}}</span>
+                        </div>
+                    </td>
                     <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                     <td>{{rec.inv_mrefno}}</td>
                     <td>{{rec.inv_refno}}</td>

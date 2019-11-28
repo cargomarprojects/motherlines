@@ -25,6 +25,10 @@ export class InvCustReportComponent implements OnInit {
   menuid: string;
   currentTab = '';
 
+  billcust_id: string = '';
+  billcust_name: string = '';
+  billcust_code: string = '';
+
   cust_id: string;
   cust_name: string;
   cust_code: string;
@@ -195,6 +199,12 @@ export class InvCustReportComponent implements OnInit {
       this.cust_code = _Record.code;
       this.cust_name = _Record.name;
     }
+
+    if (_Record.controlname === 'CUSTOMER2') {
+      this.billcust_id = _Record.id;
+      this.billcust_code = _Record.code;
+      this.billcust_name = _Record.name;
+    }
   }
 
 
@@ -202,7 +212,69 @@ export class InvCustReportComponent implements OnInit {
     this.selectdeselect = !this.selectdeselect;
     this.MainList.forEach(Rec => {
       Rec.inv_flag_b = this.selectdeselect;
+      Rec.inv_flag = this.selectdeselect == true ? 'Y' : 'N';
       this.allchecked = this.selectdeselect;
     })
   }
+
+
+  Update() {
+
+    this.errorMessage = '';
+    if (this.MainList.length <= 0) {
+      this.errorMessage = "List Not Found";
+      alert(this.errorMessage);
+      return;
+    }
+
+    if (this.gs.isBlank(this.cust_id.trim())) {
+      this.errorMessage = "Customer Cannot be Blank";
+      alert(this.errorMessage);
+      return;
+    }
+
+    if (this.gs.isBlank(this.billcust_id) || this.gs.isBlank(this.billcust_name)) {
+      this.errorMessage = "Invalid Billing Customer";
+      alert(this.errorMessage);
+      return;
+    }
+
+    let Inv_IDS: string = "";
+    Inv_IDS = "";
+    this.MainList.forEach(Rec => {
+      if (Rec.inv_flag_b) {
+        if (Inv_IDS != "")
+          Inv_IDS += ',';
+        Inv_IDS += Rec.inv_pkid;
+      }
+    })
+
+    if (this.gs.isBlank(Inv_IDS)) {
+      this.errorMessage = "No Records Selected to Update";
+      alert(this.errorMessage);
+      return;
+    }
+
+    if (!confirm("Update Selected Record with Billing Customer " + this.billcust_name)) {
+      return;
+    }
+
+    var SearchData = this.gs.UserInfo;
+    SearchData.INV_IDS = Inv_IDS;
+    SearchData.OLD_CUST_ID = this.cust_id;
+    SearchData.NEW_CUST_ID = this.billcust_id;
+    SearchData.NEW_CUST_NAME = this.billcust_name;
+
+    this.mainservice.UpdateBillingCustomer(SearchData)
+      .subscribe(response => {
+
+       
+
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
+
+  }
+
+
 }
