@@ -42,6 +42,11 @@ export class UsAccountReportService {
   LedgerReport(SearchData: any) {
     return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccLedgerRpt/LedgerReport", SearchData, this.gs.headerparam2('authorized'));
   }
+  LedgerAllReport(SearchData: any) {
+    return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccLedgerRpt/LedgerAllReport", SearchData, this.gs.headerparam2('authorized'));
+  }
+
+  
   TrialBalance(SearchData: any) {
     return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccTrialBalRpt/TrialBalance", SearchData, this.gs.headerparam2('authorized'));
   }
@@ -57,6 +62,8 @@ export class UsAccountReportService {
   BalanceSheet(SearchData: any) {
     return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBalSheetRpt/BalanceSheet", SearchData, this.gs.headerparam2('authorized'));
   }
+
+  
 
 }
 

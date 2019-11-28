@@ -5,12 +5,9 @@ export interface ReportState {
     urlid: string,
     menuid: string;
     currentTab: string;
-    basedon: string;
-    fdate: string;
     tdate: string;
     comp_name: string;
     comp_code:string;
-    showzerobal:boolean;
     fy_start_month:number;
   
     filename: string;

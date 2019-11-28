@@ -88,6 +88,7 @@ export class CustStmtReportComponent implements OnInit {
     this.sub = this.activatedroute.queryParams.subscribe(params => {
       this.urlid = params.id;
       this.menuid = params.menuid;
+      this.title = this.gs.getTitle(this.menuid);
       this.InitPage();
 
       if (this.gs.BRANCH_REGION == "USA" && this.gs.company_code == "100") {

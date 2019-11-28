@@ -535,7 +535,8 @@ export class GlobalService {
       "~AIRPORTDISPLAYCOLUMN": this.AIRPORTDISPLAYCOLUMN,
       "~BRANCH_REGION": this.BRANCH_REGION,
       "~FILES_FOLDER": this.FILES_FOLDER,
-      "HIDE_PAYROLL": this.user_hide_payroll
+      "~SHOW_CTPAT_LOGO": this.SHOW_CTPAT_LOGO,
+      "~HIDE_PAYROLL": this.user_hide_payroll
     }
 
   }
@@ -1369,12 +1370,8 @@ export class GlobalService {
     sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify(this.BOE_IMPORT_REQUIRED));
     sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify(this.FRONTEND_DATEFORMAT));
     sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
-    sessionStorage.setItem('WWW_ROOT', JSON.stringify(this.WWW_ROOT));
+   
     sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
-    sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify(this.ADDRESS_LINE2));
-    sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify(this.ADDRESS_LINE3));
-    sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify(this.ADDRESS_LINE4));
-    sessionStorage.setItem('ADDRESS_LINE5', JSON.stringify(this.ADDRESS_LINE5));
     sessionStorage.setItem('user_name', JSON.stringify(this.user_name));
     sessionStorage.setItem('DOC_FOOTER1', JSON.stringify(this.DOC_FOOTER1));
     sessionStorage.setItem('DOC_FOOTER2', JSON.stringify(this.DOC_FOOTER2));
@@ -1392,8 +1389,8 @@ export class GlobalService {
     sessionStorage.setItem('year_code', JSON.stringify(this.year_code));
     sessionStorage.setItem('year_start_date', JSON.stringify(this.year_start_date));
     sessionStorage.setItem('year_end_date', JSON.stringify(this.year_end_date));
-
-
+    sessionStorage.setItem('SHOW_CTPAT_LOGO', JSON.stringify(this.SHOW_CTPAT_LOGO));
+    
 
   }
 
