@@ -63,7 +63,9 @@ export class UsAccountReportService {
     return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccBalSheetRpt/BalanceSheet", SearchData, this.gs.headerparam2('authorized'));
   }
 
-  
+  InvoiceCustomer(SearchData: any) {
+    return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccInvCustRpt/InvoiceCustomer", SearchData, this.gs.headerparam2('authorized'));
+  }
 
 }
 

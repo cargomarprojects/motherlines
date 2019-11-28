@@ -13,6 +13,7 @@ import { TrialBalReportComponent } from './trial-bal-report/trial-bal-report.com
 import { PandLReportComponent } from './pandl-report/pandl-report.component';
 import { BalSheetReportComponent } from './bal-sheet-report/bal-sheet-report.component';
 import { LedgerAllReportComponent } from './ledger-all-report/ledger-all-report.component';
+import { InvCustReportComponent } from './inv-cust-report/inv-cust-report.component';
 
 const routes: Routes = [
   { path :'BankPage', component : BankEnquiryReportComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path :'PandLPage', component : PandLReportComponent },
   { path :'BSPage', component : BalSheetReportComponent },
   { path :'LedgerPageAll', component : LedgerAllReportComponent },
+  { path :'InvCustUpdatePage', component : InvCustReportComponent },
 ];
 
 @NgModule({

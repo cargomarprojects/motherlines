@@ -38,6 +38,9 @@ import { BalSheetReportComponent } from './bal-sheet-report/bal-sheet-report.com
 import { BalSheetReportReducer  } from './bal-sheet-report/store/bal-sheet-report.reducer';
 import { LedgerAllReportComponent } from './ledger-all-report/ledger-all-report.component';
 
+import { InvCustReportComponent } from './inv-cust-report/inv-cust-report.component';
+import { InvCustReportReducer  } from './inv-cust-report/store/inv-cust-report.reducer';
+
 @NgModule({
     declarations :[
       BankEnquiryReportComponent,  
@@ -52,7 +55,8 @@ import { LedgerAllReportComponent } from './ledger-all-report/ledger-all-report.
       TrialBalReportComponent,
       PandLReportComponent,
       BalSheetReportComponent,
-      LedgerAllReportComponent
+      LedgerAllReportComponent,
+      InvCustReportComponent
   ],
   imports: [
     SharedModule,
@@ -67,6 +71,7 @@ import { LedgerAllReportComponent } from './ledger-all-report/ledger-all-report.
     StoreModule.forFeature('TrialBalReport',TrialBalReportReducer ),      
     StoreModule.forFeature('PandLReport',PandLReportReducer ),      
     StoreModule.forFeature('BalSheetReport',BalSheetReportReducer ),      
+    StoreModule.forFeature('InvCustReport',InvCustReportReducer ),      
   ],
   providers: [
   ]
