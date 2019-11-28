@@ -23,6 +23,7 @@ export interface Tbl_Acc_Payment {
     pay_cust_id  : string;
     pay_cust_name : string;
     pay_acc_id : string;
+    pay_acc_code : string 
     pay_acc_name : string;
     pay_status  :string;
     pay_posted  : string;

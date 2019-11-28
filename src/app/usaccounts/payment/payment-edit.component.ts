@@ -22,11 +22,13 @@ export class PaymentEditComponent implements OnInit {
 
     record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
     pendingList: Tbl_cargo_invoicem[] = [];
+    DetailList: Tbl_cargo_invoicem[] = [];
 
     Old_List: Tbl_cargo_invoicem[] = [];
 
-
     tab: string = 'main';
+
+    mPayRecord = {};
 
     pkid: string;
     menuid: string;
@@ -38,6 +40,8 @@ export class PaymentEditComponent implements OnInit {
     isAdmin: boolean;
 
     IsRefresh = "";
+
+    IsMultiCurrency = "N";
 
     txt_Bal_AR = 0;
     txt_Bal_AP = 0;
@@ -67,6 +71,8 @@ export class PaymentEditComponent implements OnInit {
     str_id = "";
     Search_Mode = "";
     showall: boolean = false;
+
+    Customer_ID = '';
 
 
 
@@ -172,6 +178,7 @@ export class PaymentEditComponent implements OnInit {
 
         SearchData.pkid = this.pkid;
         if (this.cust_id != '') {
+            this.Customer_ID = this.cust_id;
             this.str_id = this.cust_id;
             this.Search_Mode = "CUSTOMER";
             //this.Search_Mode = "GROUP";
@@ -283,53 +290,200 @@ export class PaymentEditComponent implements OnInit {
 
     Save() {
 
+
         this.FindTotal();
+        this.Allvalid();
 
-        if (!this.Allvalid())
-            return;
-
-        this.SaveParent();
-        const saveRecord = <vm_tbl_accPayment>{};
-        //        saveRecord.record = this.record;
-        //      saveRecord.records = this.DetailList;
-
-        saveRecord.pkid = this.pkid;
-        saveRecord.mode = this.mode;
-        saveRecord.userinfo = this.gs.UserInfo;
-
-        this.mainService.Save(saveRecord)
-            .subscribe(response => {
-                if (response.retvalue == false) {
-                    this.errorMessage = response.error;
-                    alert(this.errorMessage);
-                }
-                else {
-
-                    //this.mainService.RefreshList(this.record);
-                    this.errorMessage = 'Save Complete';
-                    alert(this.errorMessage);
-                }
-
-            }, error => {
-                this.errorMessage = this.gs.getError(error);
-                alert(this.errorMessage);
-            });
     }
 
 
-    private Allvalid(): boolean {
+    Allvalid() {
+        let bRet = true;
+        let iCtr = 0;
+        let sErrMsg = "";
 
-        var bRet = true;
-        this.errorMessage = "";
+        let IS_PAYROLL_RECORD = "N";
 
-        /*
-        if (this.gs.isBlank(this.sdate)) {
-            bRet = false;
-            this.errorMessage = "Invalid Date";
-            alert(this.errorMessage);
+        //if (Lib.ValidFinYear_IsLocked(GLOBALCONTANTS.year_code))
+        //{
+        //    MessageBox.Show("Financail Year Closed, No Changes Allowed", "Save", MessageBoxButton.OK);
+        //    return false;
+        //}
+
+        sErrMsg = "";
+        iCtr = 0;
+
+        this.pendingList.forEach(Record => {
+            if (Record.inv_flag == "Y") {
+                iCtr++;
+                if (Record.inv_pay_amt < 0) {
+                    sErrMsg = "Invalid Amount " + Record.inv_pay_amt.toString();
+                    //break;
+                }
+
+                if (this.gs.IS_SINGLE_CURRENCY == false) {
+                    if (this.cust_code != this.gs.base_cur_code) {
+                        if (Record.inv_pay_amt > Record.inv_balance) {
+                            sErrMsg = "Amount cannot be above available balance " + Record.inv_pay_amt.toString();
+                            //break;
+                        }
+                    }
+                }
+
+            }
+        });
+
+        if (iCtr == 0)
+            sErrMsg = "No Detail Rows To Save";
+
+        if (sErrMsg.length > 0) {
+            alert(sErrMsg);
             return bRet;
         }
-        */
+
+        let mID = "";
+        let IsSingleCustID = true;
+        let Customer_Type = "";
+
+        let nAr = 0;
+        let nAp = 0;
+
+        let nAr_Base = 0;
+        let nAp_Base = 0;
+
+        let nTotBase = 0;
+
+        let nDiff = 0;
+        let nDiff_Base = 0;
+
+        this.DetailList = this.pendingList.filter(Record => Record.inv_flag == "Y" && Record.inv_pay_amt > 0);
+
+
+        this.DetailList.forEach(Record => {
+
+            Record.inv_curr_code = this.curr_code;
+            if (Record.inv_type == "PR")
+                IS_PAYROLL_RECORD = "Y";
+
+
+
+
+            // MULTI-CURRENCY CHANGE
+            Record.inv_ar_pay_amt_base = 0;
+            Record.inv_ap_pay_amt_base = 0;
+            if (Record.inv_ar_total > 0) {
+                nTotBase = (Record.inv_pay_amt * Record.inv_exrate);
+                nTotBase = this.gs.roundNumber(nTotBase, 2);
+
+                Record.inv_ar_pay_amt_base = nTotBase;
+                Record.inv_pay_amt_base = nTotBase;
+            }
+            if (Record.inv_ap_total > 0) {
+                nTotBase = Record.inv_pay_amt * Record.inv_exrate;
+                nTotBase = this.gs.roundNumber(nTotBase, 2);
+                Record.inv_ap_pay_amt_base = nTotBase;
+                Record.inv_pay_amt_base = nTotBase;
+            }
+
+            if (IsSingleCustID == true) {
+                if (mID == "")
+                    mID = Record.inv_cust_id;
+                else if (mID != Record.inv_cust_id)
+                    IsSingleCustID = false;
+            }
+            if (Record.inv_ar_total > 0) {
+                nAr += Record.inv_pay_amt;
+                nAr_Base += Record.inv_ar_pay_amt_base;
+            }
+            else {
+                nAp += Record.inv_pay_amt;
+                nAp_Base += Record.inv_ap_pay_amt_base;
+            }
+
+        });
+
+
+        Customer_Type = this.Search_Mode;
+
+
+        if (this.Search_Mode != "CUSTOMER" && this.Search_Mode != "GROUP") {
+            if (IsSingleCustID == true) {
+                Customer_Type = "CUSTOMER";
+                this.Customer_ID = mID;
+            }
+            else {
+                //Customer_ID = "";
+                //Customer_Type = "MULTIPLE";
+                alert("Settlement with multiple customers not allowed");
+                return false;
+            }
+        }
+
+
+
+        nDiff = nAr - nAp;
+        nDiff_Base = nAr_Base - nAp_Base;
+
+        if (nAr != this.txt_tot_AR) {
+            alert("Mismatch in Total A/R");
+            return false;
+        }
+        if (nAp != this.txt_tot_AP) {
+            alert("Mismatch in Total A/P");
+            return false;
+        }
+        if (nDiff != this.txt_tot_diff) {
+            alert("Mismatch in Difference Amt");
+            return false;
+        }
+
+        if (this.Customer_ID == "") {
+            alert("Invalid Customer");
+            return false;
+        }
+
+
+        if (this.gs.IS_SINGLE_CURRENCY == true)
+            this.IsMultiCurrency = "N";
+        else {
+            if (this.curr_code == this.gs.base_cur_code)
+                this.IsMultiCurrency = "N";
+            else
+                this.IsMultiCurrency = "Y";
+        }
+
+        if (nDiff != 0) {
+            if (this.IsMultiCurrency == "Y") {
+                if (Math.sign(nDiff) != Math.sign(nDiff_Base)) {
+                    bRet = false;
+                    alert("Mismatch in Foreign Currency And Local Currency due to huge variation in Exchange Rate");
+                    return false;
+                }
+            }
+        }
+
+        this.mPayRecord = {
+            TOT_AR: nAr,
+            TOT_AP: nAp,
+            TOT_DIFF: nDiff,
+            TOT_AR_BASE: nAr_Base,
+            TOT_AP_BASE: nAp_Base,
+            TOT_DIFF_BASE: nDiff_Base,
+            // for single currency always currency code will be blank.
+            // for multi currency if the settlement is in base    currency, currency code will be base    currency code.
+            // for multi currency if the settlement is in foreign currency, currency code will be foreign currency code.
+            FCURR_CODE: this.curr_code,
+            IsMultiCurrency: this.IsMultiCurrency,
+            IS_PAYROLL_RECORD: IS_PAYROLL_RECORD,
+            DetailList: this.DetailList,
+            IsAdmin: this.isAdmin,
+            Customer_ID: this.Customer_ID,
+            Customer_Name: this.cust_name,
+            Customer_Type: Customer_Type,
+        };
+
+        //Process();
+        //Show();
         return bRet;
     }
 

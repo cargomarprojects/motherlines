@@ -28,6 +28,7 @@ import { DepositHeaderComponent } from './deposit/deposit-header.component';
 import { PaymentComponent } from './payment/payment.component';
 import { PaymentHeaderComponent } from './payment/payment-header.component';
 import { PaymentEditComponent } from './payment/payment-edit.component';
+import { PayFinalComponent } from './payfinal/payfinal.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { PaymentEditComponent } from './payment/payment-edit.component';
   DepositHeaderComponent,
   PaymentComponent,
   PaymentHeaderComponent,
-  PaymentEditComponent
+  PaymentEditComponent,
+  PayFinalComponent
   
 
 ],
