@@ -11,21 +11,27 @@
         <div class="page-search">
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group row">
                         <label class="col-2 col-form-label col-form-label-sm">Customer</label>
-                        <div class="col-10">
+                        <div class="col-4 pr-2">
                             <app-autocomplete2 [controlname]="'CUSTOMER'" [tabletype]="'MASTER'"
-                                [displaycolumn]="'NAME'" [displaydata]="cust_name" (ValueChanged)="LovSelected($event)">
+                                [displaycolumn]="'CODE'" [displaydata]="cust_code" (ValueChanged)="LovSelected($event)">
                             </app-autocomplete2>
+                        </div>
+                        <div class="col-6 pl-0">
+                            <input type="text" disabled class="form-control form-control-sm"
+                                [(ngModel)]="cust_name" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label col-form-label-sm">Sort</label>
                         <div class="col-10">
                             <select class="form-control form-control-sm" [(ngModel)]="sortname">
-                                <option [value]="'inv_date'">INVOICE DATE</option>
-                                <option [value]="'inv_no'">INVOICE NO</option>
+                                <option [value]="'inv_no'">INV.NO</option>
+                                <option [value]="'inv_date'">INV.DATE</option>
+                                <option [value]="'inv_mbl_refno'">REFNO</option>
+                                <option [value]="'inv_refno'">CUST REFNO</option>
                             </select>
                         </div>
                     </div>

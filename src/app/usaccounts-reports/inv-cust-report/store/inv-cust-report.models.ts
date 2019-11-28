@@ -5,6 +5,7 @@ export interface ReportState {
     menuid: string;
     currentTab: string;
     cust_id: string;
+    cust_code: string;
     cust_name: string;
     sortname: string;
 

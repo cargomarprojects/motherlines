@@ -27,7 +27,8 @@ export class InvCustReportComponent implements OnInit {
 
   cust_id: string;
   cust_name: string;
-  sortname: string = 'inv_date';
+  cust_code: string;
+  sortname: string = 'inv_no';
 
   page_count: number = 0;
   page_current: number = 0;
@@ -74,6 +75,7 @@ export class InvCustReportComponent implements OnInit {
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
         this.cust_id = rec.cust_id;
+        this.cust_code = rec.cust_code;
         this.cust_name = rec.cust_name;
         this.sortname = rec.sortname;
 
@@ -96,6 +98,7 @@ export class InvCustReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
         this.cust_id = '';
+        this.cust_code = '';
         this.cust_name = '';
         this.sortname = 'inv_date';
         this.SearchData = this.gs.UserInfo;
@@ -125,6 +128,8 @@ export class InvCustReportComponent implements OnInit {
       return;
     }
 
+    if (this.gs.isBlank(this.sortname))
+      this.sortname = "inv_no";
 
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
@@ -137,8 +142,8 @@ export class InvCustReportComponent implements OnInit {
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
 
       this.SearchData.CUST_ID = this.cust_id;
+      this.SearchData.CUST_CODE = this.cust_code;
       this.SearchData.CUST_NAME = this.cust_name;
-      this.SearchData.JV_YEAR = this.gs.year_code;
       this.SearchData.SORT = this.sortname;
     }
 
@@ -155,6 +160,7 @@ export class InvCustReportComponent implements OnInit {
             menuid: this.menuid,
             currentTab: this.currentTab,
             cust_id: this.SearchData.CUST_ID,
+            cust_code: this.SearchData.CUST_CODE,
             cust_name: this.SearchData.CUST_NAME,
             sortname: this.sortname,
             page_rows: response.page_rows,
@@ -186,14 +192,11 @@ export class InvCustReportComponent implements OnInit {
   LovSelected(_Record: SearchTable) {
     if (_Record.controlname === 'CUSTOMER') {
       this.cust_id = _Record.id;
+      this.cust_code = _Record.code;
       this.cust_name = _Record.name;
     }
   }
 
-  rdbclick() {
-    this.cust_id = '';
-    this.cust_name = '';
-  }
 
   SelectDeselect() {
     this.selectdeselect = !this.selectdeselect;

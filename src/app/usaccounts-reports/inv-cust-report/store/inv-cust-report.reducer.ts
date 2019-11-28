@@ -15,6 +15,7 @@ export const initialState: ReportState = {
     menuid: '',
     currentTab: '',
     cust_id: '',
+    cust_code: '',
     cust_name: '',
     sortname: '',
     page_rows: 0,
