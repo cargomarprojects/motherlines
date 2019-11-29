@@ -20,7 +20,7 @@
             <div class="form-group row">
                 <label class="col-2 col-form-label col-form-label-sm">Date</label>
                 <div class="col-4">
-                    <app-date [inputdate]="Dt_Date" (ValueChanged)="sdate=$event">
+                    <app-date [inputdate]="sdate" (ValueChanged)="sdate=$event">
                     </app-date>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <label class="col-2 col-form-label col-form-label-sm">Bank</label>
                 <div class="col-4">
                     <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'" [displaycolumn]="'CODE'"
-                        [where]="where" [displaydata]="Txt_Bank" (ValueChanged)="LovSelected($event)">
+                        [where]="where" [displaydata]="Txt_Bank_Code" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
                 </div>
             </div>
@@ -144,7 +144,16 @@
 
 
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Base Curr.Amt</label>
+                <label class="col-3 col-form-label col-form-label-sm">{{LBL_AMT}}</label>
+                <div class="col-9">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('Txt_Amt')"
+                        [(ngModel)]="TXT_AMT" maxlength="100" disabled />
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-3 col-form-label col-form-label-sm">{{LBL_BASE_CURR_AMT}}</label>
                 <div class="col-9">
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('Txt_Amt_Base')"
                         [(ngModel)]="Txt_Amt_Base" maxlength="100" disabled />
@@ -176,7 +185,7 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Bank</label>
+                <label class="col-3 col-form-label col-form-label-sm">{{LLB_BANK_PAID}}</label>
                 <div class="col-9">
                     <input class="form-control form-control-sm" type="number" (blur)="onBlur('TxT_Bank_Paid')"
                         [(ngModel)]="TxT_Bank_Paid" maxlength="100" />
@@ -184,7 +193,7 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-3 col-form-label col-form-label-sm">Bank Charges</label>
+                <label class="col-3 col-form-label col-form-label-sm">{{LBL_BANK_CHARGES}}</label>
                 <div class="col-9">
                     <input class="form-control form-control-sm" type="number" (blur)="onBlur('Txt_Bank_Charges')"
                         [(ngModel)]="Txt_Bank_Charges" maxlength="100" />

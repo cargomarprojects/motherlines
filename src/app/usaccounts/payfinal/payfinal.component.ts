@@ -12,12 +12,18 @@ import { Tbl_Acc_Payment, vm_tbl_accPayment, AccPaymentModel } from '../models/T
 import { SearchTable } from '../../shared/models/searchtable';
 
 
-
 @Component({
     selector: 'app-pay-final',
     templateUrl: './payfinal.component.html'
 })
 export class PayFinalComponent implements OnInit {
+
+    private payrecord: string;
+    @Input() set mpayrecrod(value: any) {
+        this.payrecord = value;
+        if (value != null)
+            this.Process();
+    }
 
     record: Tbl_Acc_Payment = <Tbl_Acc_Payment>{};
 
@@ -25,23 +31,11 @@ export class PayFinalComponent implements OnInit {
 
     pkid: string;
     menuid: string;
-    public mode: string = '';
+    mode: string = '';
     errorMessage: string;
     Foregroundcolor: string;
 
-    total_amount = 0;
-    iTotChq = 0;
 
-    docno = '';
-    sdate = '';
-    id = '';
-    code = '';
-    name = '';
-    remarks = '';
-
-    next_chqno = 0;
-
-    CFNO = "";
 
     title: string;
     isAdmin: boolean;
@@ -49,18 +43,110 @@ export class PayFinalComponent implements OnInit {
 
     decplace = 0;
 
-    isAccLocked = false;
 
     showchqdt = true;
+    sdate = "";
 
-    where = " ACC_TYPE = 'BANK' ";
+    where = " ACC_IS_PAYMENT_CODE = 'Y' AND ACC_BRANCH IN ('ALL','" + this.gs.branch_code + "')";
 
-    oldrefno = '';
 
     arPendingList: Tbl_Acc_Payment[] = [];
 
     DetailList: Tbl_Acc_Payment[] = [];
 
+
+    TOT_AR = 0;
+    TOT_AP = 0;
+    TOT_DIFF = 0;
+    TOT_AR_BASE = 0;
+    TOT_AP_BASE = 0;
+    TOT_DIFF_BASE = 0;
+    FCURR_CODE = "";
+    IsMultiCurrency = "N";
+    IS_PAYROLL_RECORD = "N";
+    Customer_ID = "";
+    Customer_Type = "";
+    IsPayment = "N";
+
+    nUSD = 0;
+    nBankUSD = 0;
+    nBank = 0;
+    nCharges = 0;
+    nParty = 0;
+    nExRate = 0;
+    nExDiff_Dr = 0;
+    nExDiff_Cr = 0;
+
+    nDr = 0;
+    nCr = 0;
+    nBal = 0;
+
+    Txt_Bank_Id = '';
+    Txt_Bank_Code = '';
+    Txt_Bank_Name = '';
+    Txt_Address1 = '';
+    Txt_Address2 = '';
+    Txt_Address3 = '';
+    Txt_Address4 = '';
+    paymode = 'CHECK NO';
+    Txt_Next_ChqNo = '';
+    Txt_ChqNo = '';
+    Dt_ChqDt = '';
+    Txt_Chq_Bank = '';
+    Txt_Memo = '';
+
+    LBL_AMT = 'Amount';
+    LBL_BASE_CURR_AMT = 'Base Currency Amt';
+    LBL_BANK_PAID = 'Bank';
+    LBL_BANK_CHARGES = 'Charges';
+
+
+    TXT_AMT = 0;
+    Txt_Amt_Base = 0;
+    Txt_Currency = '';
+    Txt_ExRate = 0;
+    TxT_Bank_Paid = 0;
+    Txt_Bank_Charges = 0;
+    LBL_BANK_DR = 0;
+    LBL_BANK_CR = 0;
+    LBL_CHARGES_DR = 0;
+    LBL_CHARGES_CR = 0;
+    LBL_PARTY_DR = 0;
+    LBL_PARTY_CR = 0;
+    LBL_EX_DIFF_DR = 0;
+    LBL_EX_DIFF_CR = 0;
+    LBL_TOTAL_DR = 0;
+    LBL_TOTAL_CR = 0;
+
+
+    paymode_disabled = true;
+    chqno_disabled = true;
+    next_chqno_disabled = true;
+    chqdt_disabled = true;
+    chq_bank_disabled = true;
+    memo_enabled = true;
+    amt_enabled = true;
+    amt_base_disabled = true;
+    currency_disabled = true;
+    exrate_disabled = true;
+    bank_paid_disabled = true;
+    bank_charges_disabled = true;
+    lbl_bank_dr_disabled = true;
+    lbl_bank_cr_disabled = true;
+    lbl_charges_dr_disabled = true;
+    lbl_charges_cr_disabled = true;
+    lbl_party_dr_disabled = true;
+    lbl_party_cr_disabled = true;
+    lbl_ex_diff_dr_disabled = true;
+    lbl_ex_diff_cr_disabled = true;
+    lbl_total_dr_disabled = true;
+    lbl_total_cr_disabled = true;
+
+    lbl_dr_disabled = true;
+    lbl_cr_disabled = true;
+
+    is_bank_Changed = true;
+    is_exrate_Changed = true;
 
 
     constructor(
@@ -116,7 +202,6 @@ export class PayFinalComponent implements OnInit {
 
     actionHandler() {
         this.errorMessage = '';
-        this.isAccLocked = false;
 
         if (this.mode == 'ADD') {
             this.record = <Tbl_Acc_Payment>{};
@@ -129,7 +214,6 @@ export class PayFinalComponent implements OnInit {
 
         this.record.pay_pkid = this.pkid;
         this.record.pay_vrno = '';
-        this.remarks = '';
 
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
@@ -137,11 +221,126 @@ export class PayFinalComponent implements OnInit {
 
 
 
-    ProcessData() {
+    Process() {
+
+        this.IsPayment = "Y";
+        //Txt_ChqNo.IsEnabled = true;
+        this.chqno_disabled = true;
+
+
+        this.memo_enabled = true;
+
+        if (this.TOT_DIFF >= 0) {
+            //Cmd_Next_Check_No.Visibility = System.Windows.Visibility.Collapsed;
+            //Txt_Next_ChqNo.Visibility = System.Windows.Visibility.Collapsed;
+            //LBL_MEMO.Visibility = System.Windows.Visibility.Collapsed;
+            //Txt_Memo.Visibility = System.Windows.Visibility.Collapsed;
+            this.memo_enabled = false;
+
+        }
+
+        if (this.TOT_DIFF == 0) {
+
+            this.paymode_disabled = true;
+            this.chqno_disabled = true;
+            this.next_chqno_disabled = true;
+            this.chqdt_disabled = true;
+            this.chq_bank_disabled = true;
+
+        }
+
+        if (this.TOT_DIFF >= 0)
+            this.IsPayment = "N";
+
+        this.sdate = this.gs.defaultValues.today;
+
+
+        this.TXT_AMT = Math.abs(this.TOT_DIFF);
+        this.Txt_Amt_Base = Math.abs(this.TOT_DIFF_BASE);
+        this.Txt_ExRate = 1;
+
+        if (this.TOT_DIFF != 0)
+            this.TxT_Bank_Paid = this.Txt_Amt_Base;
+
+
+
+        this.FindTotal("BANK");
+
+        /*
+        if ( this.IsPayment == "N")
+            Chk_Signature.Visibility = System.Windows.Visibility.Collapsed;
+        */
+
+        if (this.IsMultiCurrency == "N") {
+            this.amt_base_disabled = true;
+            this.exrate_disabled = true;
+            this.currency_disabled = true;
+
+            if (this.gs.IS_SINGLE_CURRENCY == false && this.FCURR_CODE != "") {
+                this.bank_charges_disabled = true;
+            }
+            if (this.gs.IS_SINGLE_CURRENCY == true || this.TOT_DIFF == 0) {
+                this.bank_paid_disabled = true;
+                this.bank_charges_disabled = true;
+                this.lbl_bank_dr_disabled = true;
+                this.lbl_bank_cr_disabled = true;
+                this.lbl_charges_dr_disabled = true;
+                this.lbl_charges_cr_disabled = true;
+                this.lbl_party_dr_disabled = true;
+                this.lbl_party_cr_disabled = true;
+                this.lbl_ex_diff_dr_disabled = true;
+                this.lbl_ex_diff_cr_disabled = true;
+                this.lbl_total_dr_disabled = true;
+                this.lbl_total_cr_disabled = true;
+                this.lbl_dr_disabled = true;
+                this.lbl_cr_disabled = true;
+            }
+        }
+        else {
+            this.amt_base_disabled = false;
+            this.exrate_disabled = false;
+
+            this.bank_paid_disabled = false;
+            this.bank_charges_disabled = false;
+            this.lbl_bank_dr_disabled = false;
+            this.lbl_bank_cr_disabled = false;
+            this.lbl_charges_dr_disabled = false;
+            this.lbl_charges_cr_disabled = false;
+            this.lbl_party_dr_disabled = false;
+            this.lbl_party_cr_disabled = false;
+            this.lbl_ex_diff_dr_disabled = false;
+            this.lbl_ex_diff_cr_disabled = false;
+            this.lbl_total_dr_disabled = false;
+            this.lbl_total_cr_disabled = false;
+            this.lbl_dr_disabled = false;
+            this.lbl_cr_disabled = false;
+            this.currency_disabled = false;
+        }
+
+        if (this.IsMultiCurrency == "N") {
+            this.LBL_AMT = "Amount(" + this.gs.base_cur_code + ")";
+            this.Txt_Currency = this.gs.base_cur_code;
+        }
+        else {
+            this.LBL_AMT = "Amount(" + this.FCURR_CODE + ")";
+            this.Txt_Currency = this.FCURR_CODE;
+
+            if (this.IsPayment == "N") {
+                this.LBL_BANK_PAID = this.gs.base_cur_code + "Amt Received";
+            }
+            else {
+                this.LBL_BANK_PAID = this.gs.base_cur_code + "Amt Paid";
+            }
+            this.LBL_BANK_CHARGES = "Charges In " + this.gs.base_cur_code + "";
+        }
+
+        this.LBL_BASE_CURR_AMT = "Amount In " + this.gs.base_cur_code + "";
+
+
     }
 
     SaveParent() {
-        
+
 
     }
 
@@ -194,7 +393,7 @@ export class PayFinalComponent implements OnInit {
             return bRet;
         }
 
-        
+
         return bRet;
     }
 
@@ -203,15 +402,18 @@ export class PayFinalComponent implements OnInit {
     }
 
 
+
     LovSelected(_Record: SearchTable) {
         if (_Record.controlname == "ACCTM") {
-            this.id = _Record.id;
-            this.code = _Record.code;
-            this.name = _Record.name;
+            this.Txt_Bank_Id = _Record.id;
+            this.Txt_Bank_Code = _Record.code;
+            this.Txt_Bank_Name = _Record.name;
+            this.Txt_Address1 = _Record.col3;
+            this.Txt_Address2 = _Record.col4;
+            this.Txt_Address3 = _Record.col5;
+            this.Txt_Address4 = _Record.col6;
         }
     }
-
-
 
 
     OnChange(field: string) {
@@ -229,5 +431,258 @@ export class PayFinalComponent implements OnInit {
             this.record.acc_group_name = this.record.acc_group_name.toUpperCase();
         */
     }
+
+    FindTotal(sType = "") {
+        if (this.IsMultiCurrency == "N" && this.FCURR_CODE == "")
+            return;
+
+        this.LBL_BANK_DR = null;
+        this.LBL_BANK_CR = null;
+        this.LBL_CHARGES_DR = null;
+        this.LBL_CHARGES_CR = null;
+        this.LBL_PARTY_DR = null;
+        this.LBL_PARTY_CR = null;
+        this.LBL_EX_DIFF_DR = null;
+        this.LBL_EX_DIFF_CR = null;
+        this.LBL_TOTAL_DR = null;
+        this.LBL_TOTAL_CR = null;
+
+
+        if (this.TOT_DIFF == 0) {
+
+            this.nExDiff_Dr = 0;
+            this.nExDiff_Cr = 0;
+            if (this.TOT_DIFF_BASE > 0) {
+                this.nExDiff_Dr = this.TOT_DIFF_BASE;
+                this.LBL_EX_DIFF_DR = this.nExDiff_Dr;
+            }
+            else if (this.TOT_DIFF_BASE < 0) {
+                this.nExDiff_Cr = Math.abs(this.TOT_DIFF_BASE);
+                this.LBL_EX_DIFF_CR = this.nExDiff_Cr;
+            }
+            return;
+        }
+
+        if (sType == "EXRATE") {
+            if (this.is_exrate_Changed) {
+                this.nExRate = this.Txt_ExRate;
+                this.nBankUSD = this.TXT_AMT;
+                this.nBank = this.TxT_Bank_Paid;
+
+                this.nBank = this.nBankUSD * this.nExRate;
+                this.nBank = this.gs.roundNumber(this.nBank, 2);
+                this.TxT_Bank_Paid = this.nBank;
+            }
+        }
+        if (sType == "BANK") {
+            if (this.is_bank_Changed) {
+
+                this.nExRate = this.Txt_ExRate;
+                this.nBankUSD = this.TXT_AMT;
+                this.nBank = this.TxT_Bank_Paid;
+
+                if (this.nBankUSD == 0)
+                    this.nBankUSD = 1;
+                this.nExRate = this.nBank / this.nBankUSD;
+                this.nExRate = this.gs.roundNumber(this.nExRate, 5);
+                this.Txt_ExRate = this.nExRate;
+            }
+        }
+
+
+        if (this.IsMultiCurrency == "N" && this.FCURR_CODE != "") {
+            this.nUSD = this.TXT_AMT;
+            this.nBank = this.TxT_Bank_Paid;
+            if (this.IsPayment == "Y")
+                this.nCharges = this.nBank - this.nUSD;
+            else
+                this.nCharges = this.nUSD - this.nBank;
+            this.Txt_Bank_Charges = this.nCharges;
+        }
+
+
+        this.nUSD = this.TXT_AMT;
+        this.nBankUSD = this.TXT_AMT;
+        this.nBank = this.TxT_Bank_Paid;
+        this.nCharges = this.Txt_Bank_Charges;
+        this.nParty = this.Txt_Amt_Base;
+
+
+        if (this.IsPayment == "N") {
+
+            this.nBal = (this.nBank + this.nCharges) - this.nParty;
+
+            this.nExDiff_Dr = 0;
+            this.nExDiff_Cr = 0;
+
+            if (this.nBal < 0)
+                this.nExDiff_Dr = Math.abs(this.nBal);
+            if (this.nBal > 0)
+                this.nExDiff_Cr = this.nBal;
+
+            this.nDr = this.nBank + this.nCharges + this.nExDiff_Dr;
+            this.nCr = this.nParty + this.nExDiff_Cr;
+            this.nBal = this.nDr - this.nCr;
+
+            if (this.nBank != 0)
+                this.LBL_BANK_DR = this.nBank;
+            if (this.nCharges != 0)
+                this.LBL_CHARGES_DR = this.nCharges;
+            if (this.nParty != 0)
+                this.LBL_PARTY_CR = this.nParty;
+            if (this.nExDiff_Dr != 0)
+                this.LBL_EX_DIFF_DR = this.nExDiff_Dr;
+            if (this.nExDiff_Cr != 0)
+                this.LBL_EX_DIFF_CR = this.nExDiff_Cr;
+
+            if (this.nDr != 0)
+                this.LBL_TOTAL_DR = this.nDr;
+            if (this.nCr != 0)
+                this.LBL_TOTAL_CR = this.nCr;
+        }
+        else {
+
+            this.nExDiff_Dr = 0;
+            this.nExDiff_Cr = 0;
+
+            this.nBal = (this.nBank - this.nCharges) - this.nParty;
+            if (this.nBal < 0)
+                this.nExDiff_Cr = Math.abs(this.nBal);
+            if (this.nBal > 0)
+                this.nExDiff_Dr = this.nBal;
+
+            this.nDr = this.nBank + this.nExDiff_Cr;
+            this.nCr = this.nParty + this.nCharges + this.nExDiff_Dr;
+            this.nBal = this.nDr - this.nCr;
+
+            if (this.nBank != 0)
+                this.LBL_BANK_CR = this.nBank;
+            if (this.nCharges != 0)
+                this.LBL_CHARGES_DR = this.nCharges;
+            if (this.nParty != 0)
+                this.LBL_PARTY_DR = this.nParty;
+            if (this.nExDiff_Dr != 0)
+                this.LBL_EX_DIFF_DR = this.nExDiff_Dr;
+            if (this.nExDiff_Cr != 0)
+                this.LBL_EX_DIFF_CR = this.nExDiff_Cr;
+
+            if (this.nDr != 0)
+                this.LBL_TOTAL_DR = this.nDr;
+            if (this.nCr != 0)
+                this.LBL_TOTAL_CR = this.nCr;
+
+        }
+
+    }
+
+
+    LoadNextChqNo() {
+        let sType = "";
+        if (this.TOT_DIFF > 0)
+            sType = "RECEIPT";
+        else if (this.TOT_DIFF < 0)
+            sType = "PAYMENT";
+        else
+            return;
+
+
+        if (this.paymode == null || this.paymode == '') {
+            alert("Pay mode Has to be selected");
+            return;
+        }
+        let sMode = this.paymode;
+        if (sMode == "CHECK") {
+            if (this.gs.isBlank(this.Txt_Bank_Id) || this.gs.isBlank(this.Txt_Bank_Code)) {
+                alert("Bank Has to be enterd");
+                return;
+            }
+        }
+
+        if (sMode == "CHECK" && sType == "RECEIPT")
+            return;
+
+
+        var searchData = this.gs.UserInfo;
+
+        searchData = {
+            ...searchData,
+            "DOCTYPE": sMode,
+            "TRANSTYPE": sType,
+            "DATE": this.sdate,
+            "pkid": this.Txt_Bank_Id,
+            "REC_COMPANY_CODE": this.gs.company_code,
+            "REC_BRANCH_CODE": this.gs.branch_code
+        }
+
+        this.mainService.GetNextChqNo(searchData).subscribe(
+            res => {
+                let iNo = res.chqno;
+                this.Txt_Next_ChqNo = iNo.ToString().Trim();
+                this.SetNextChqNo();
+
+            },
+            err => {
+                this.errorMessage = this.gs.getError(err);
+                alert(this.errorMessage);
+            }
+        )
+    }
+
+    SetNextChqNo() {
+
+        let nChq = 0;
+        let sPrefix = "";
+
+        //if (Cmb_Mode.SelectedItem.ToString() == "NA" || Cmb_Mode.SelectedItem.ToString() == "CHECK")
+        //  return;
+
+        if (this.paymode == "NA")
+            return;
+
+        if (this.paymode == "CHECK") {
+            this.Txt_ChqNo = (this.Txt_Next_ChqNo + 1).toString();
+            return;
+        }
+
+        if (this.TOT_DIFF > 0)
+            sPrefix = "R";
+
+        if (this.paymode == "WIRE TRANSFER")
+            sPrefix += "TT";
+        if (this.paymode == "CASH")
+            sPrefix += "CH";
+        if (this.paymode == "ONLINE/ACH PAYMENT")
+            sPrefix += "OP";
+        if (this.paymode == "CREDIT CARD")
+            sPrefix += "CC";
+        if (this.paymode == "OTHERS")
+            sPrefix += "OT";
+
+        var yymmdd = this.sdate.replace("-", "");
+        yymmdd = yymmdd.substring(2, 6);
+
+        if ( this.gs.isBlank(this.Txt_Next_ChqNo)  || this.gs.isZero(this.Txt_Next_ChqNo) )
+            this.Txt_ChqNo = sPrefix + yymmdd;
+        else {
+            var chqno = this.Txt_Next_ChqNo;
+            var sChar = chqno.charAt(chqno.length - 1);
+            var sCharCode = chqno.charCodeAt(chqno.length - 1) + 1;
+            if (sChar >= '0' && sChar <= '9')
+                this.record.pay_chqno = sPrefix + yymmdd + "A"; // Dt_Date.SelectedDate.Value.ToString("yyMMdd") + "A";
+            else {
+                //sChar++;
+                //Txt_ChqNo.Text = sPrefix + Dt_Date.SelectedDate.Value.ToString("yyMMdd") + sChar.ToString();
+                sChar = String.fromCharCode(sCharCode);
+                this.record.pay_chqno = sPrefix + yymmdd + sChar;
+            }
+        }
+
+
+    }
+
+
+
+
+
 
 }

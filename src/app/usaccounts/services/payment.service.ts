@@ -175,6 +175,11 @@ export class PaymentService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Payment/PendingList', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    GetNextChqNo(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/FundTransfer/GetNextChqNo', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    
 
     DeleteRecord(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Payment/Delete', SearchData, this.gs.headerparam2('authorized'));
