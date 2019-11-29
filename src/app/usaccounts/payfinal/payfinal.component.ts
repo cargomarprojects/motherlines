@@ -677,12 +677,7 @@ export class PayFinalComponent implements OnInit {
             }
         }
 
-
     }
-
-
-
-
 
 
 }
