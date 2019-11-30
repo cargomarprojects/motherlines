@@ -328,10 +328,11 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.ShipmentType = this.record.mbl_cntr_type;
 
         this.initDesc();
-        this.descrecords.forEach(Rec => {
-          this.ShowDesc(Rec);
-        })
-
+        if (this.descrecords != null) {
+          this.descrecords.forEach(Rec => {
+            this.ShowDesc(Rec);
+          })
+        }
         this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
 
         this.hbl_houseno_field.nativeElement.focus();
@@ -747,8 +748,8 @@ export class SeaImpHouseEditComponent implements OnInit {
       this.errorMessage.push("Handled By cannot be blank");
       bRet = false;
     }
-    
-    
+
+
     /*
     if (Txt_Salesman.TxtLovBox.Text.Trim().Length <= 0)
     {
@@ -759,8 +760,8 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
     */
 
-   if (!bRet)
-   alert('Error While Saving');
+    if (!bRet)
+      alert('Error While Saving');
 
     return bRet;
   }
@@ -1626,7 +1627,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     else if (_type == "Cft2Cbm")
       this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
   }
- 
+
 
   ISFUpload() {
 

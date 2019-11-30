@@ -3,19 +3,19 @@ import { Component, OnInit, ViewChild, ElementRef, ANALYZE_FOR_ENTRY_COMPONENTS 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { InputBoxComponent } from '../../shared/input/inputbox.component';
-import { InputBoxNumberComponent } from '../../shared/inputnumber/inputboxnumber.component';
+import { InputBoxComponent } from '../../../shared/input/inputbox.component';
+import { InputBoxNumberComponent } from '../../../shared/inputnumber/inputboxnumber.component';
 
-import { GlobalService } from '../../core/services/global.service';
-import { User_Menu } from '../../core/models/menum';
-import { SearchTable } from '../../shared/models/searchtable';
+import { GlobalService } from '../../../core/services/global.service';
+import { User_Menu } from '../../../core/models/menum';
+import { SearchTable } from '../../../shared/models/searchtable';
 
-import { HouseService } from '../services/house.service';
+import { HouseService } from '../../services/house.service';
 
-import { Tbl_cargo_exp_housem, vm_Tbl_cargo_exp_housem } from '../models/Tbl_cargo_exp_housem';
-import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
+import { Tbl_cargo_exp_housem, vm_Tbl_cargo_exp_housem } from '../../models/Tbl_cargo_exp_housem';
+import { Tbl_cargo_exp_desc } from '../../models/Tbl_cargo_exp_desc';
 import { Tbl_cargo_container } from 'src/app/other/models/tbl_cargo_general';
-import { Tbl_cargo_exp_container } from '../models/tbl_cargo_exp_masterm';
+import { Tbl_cargo_exp_container } from '../../models/tbl_cargo_exp_masterm';
 
 
 
@@ -255,7 +255,7 @@ export class HousePageComponent implements OnInit {
 
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
 
-
+        this.InitDesc();
         if (this.records != null) {
           this.records.forEach(rec => {
             this.ShowDesc(rec);
@@ -574,13 +574,26 @@ export class HousePageComponent implements OnInit {
 
 //     GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX, IsPol,IsPod,iStartNo,iStep
     saverec.record = this.record;
+    saverec.cntrs = this.cntrs;
     saverec.records = this.recorddet;
     saverec.userinfo = this.gs.UserInfo;
 
     this.mainService.Save(saverec).subscribe(response => {
 
-      if (response.retvalue) {
-        this.record.hbl_houseno = response.refno;
+      // if (response.retvalue) {
+
+      //   this.record.hbl_houseno = response.refno;
+      //   this.mode = 'EDIT';
+
+      // }
+
+      if (response.retvalue == false) {
+        this.errorMessage.push(response.error);
+        alert(this.errorMessage);
+      }
+      else {
+        if (this.mode == "ADD" && response.refno != '')
+          this.record.hbl_houseno = response.refno;
         this.mode = 'EDIT';
       }
 
