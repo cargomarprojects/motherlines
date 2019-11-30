@@ -75,9 +75,10 @@ export class HousePageListComponent implements OnInit {
       parentid :_record.hbl_mbl_id,
       type: '',
       origin: 'seaexp-house-page',
-      mode: 'EDIT'
+      mode: 'EDIT',
+      refno:_record.mbl_refno
     };
-    // this.gs.Naviagete('Silver.SeaExport/SeaExpHouseEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.SeaExport.Trans/SeaExpHouseEditPage', JSON.stringify(parameter));
   }
 
   Close() {

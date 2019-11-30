@@ -76,7 +76,6 @@ export class HousePageComponent implements OnInit {
     this.pkid = options.pkid;
     this.menuid = options.menuid;
     this.parentid = options.parentid;
-    this.pkid = options.pkid;
     this.mbl_refno = options.refno;
     this.type = options.type;
     this.mode = options.mode;
