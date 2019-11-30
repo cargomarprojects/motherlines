@@ -163,11 +163,9 @@ export class PayFinalComponent implements OnInit {
     ngOnInit() {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
 
-
         this.menuid = options.menuid;
         this.pkid = options.pkid;
         this.mode = options.mode;
-
 
         this.setup();
 
@@ -180,7 +178,6 @@ export class PayFinalComponent implements OnInit {
         if (this.gs.SHOW_CHECK_DATE == "N") {
             this.showchqdt = false;
         }
-
     }
 
 
