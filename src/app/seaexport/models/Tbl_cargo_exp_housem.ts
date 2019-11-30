@@ -1,6 +1,7 @@
 
 import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
 import { Tbl_cargo_exp_container } from './Tbl_cargo_exp_container';
+import { PageQuery } from '../../shared/models/pageQuery';
 
 export interface vm_Tbl_cargo_exp_housem {
         mode: string;
@@ -259,4 +260,18 @@ export interface Tbl_cargo_exp_housem {
 
 
 
+}
+
+export interface SearchQuery {
+    searchString: string;
+    fromdate: string;
+    todate: string;
+    mblid: string;
+}
+
+export interface SeaExpHouseModel {
+    errormessage: string;
+    searchQuery: SearchQuery;
+    pageQuery: PageQuery;
+    records: Tbl_cargo_exp_housem[]
 }

@@ -13,7 +13,8 @@ import { BookingComponent } from './booking/booking.component';
 import { MblPageComponent } from './mblpage/mblpage.component';
 import { DockPageComponent } from './dockpage/dockpage.component';
 import { HousePageComponent } from './housepage/edit/housepage.component';
-
+import { HousePageHeaderComponent } from './housepage/housepage-header.component';
+import { HousePageListComponent } from './housepage/housepage-list.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { HousePageComponent } from './housepage/edit/housepage.component';
     MblPageComponent,
     DockPageComponent,
     HousePageComponent,
+    HousePageHeaderComponent,
+    HousePageListComponent,
   ],
   imports: [
     SharedModule,    
