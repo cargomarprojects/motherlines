@@ -484,8 +484,15 @@ export class PaymentEditComponent implements OnInit {
 
         //Process();
         //Show();
+        this.tab = 'payment';
         return bRet;
     }
+
+
+    callbackevent() {
+        this.tab = 'main';
+    }
+
 
     Close() {
         this.location.back();
@@ -606,6 +613,8 @@ export class PaymentEditComponent implements OnInit {
 
     }
 
+
+  
 
 
 

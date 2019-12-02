@@ -18,12 +18,16 @@ import { SearchTable } from '../../shared/models/searchtable';
 })
 export class PayFinalComponent implements OnInit {
 
-    private payrecord: string;
+    private payrecord: any;
     @Input() set mpayrecrod(value: any) {
         this.payrecord = value;
-        if (value != null)
+        if (value != null) {
+            this.initdata();
             this.Process();
+        }
     }
+
+    @Output() callbackevent = new EventEmitter<any>();
 
     record: Tbl_Acc_Payment = <Tbl_Acc_Payment>{};
 
@@ -38,7 +42,7 @@ export class PayFinalComponent implements OnInit {
 
 
     title: string;
-    isAdmin: boolean;
+    IsAdmin: boolean;
     refno: string = "";
 
     decplace = 0;
@@ -65,6 +69,7 @@ export class PayFinalComponent implements OnInit {
     IsMultiCurrency = "N";
     IS_PAYROLL_RECORD = "N";
     Customer_ID = "";
+    Customer_Name = "";
     Customer_Type = "";
     IsPayment = "N";
 
@@ -118,32 +123,24 @@ export class PayFinalComponent implements OnInit {
     LBL_TOTAL_DR = 0;
     LBL_TOTAL_CR = 0;
 
+    
+    paymode_enabled = true;
+    chqno_enabled = true;
+    next_chqno_enabled = true;
+    
+    chqdt_enabled = false;
+    chq_bank_enabled = false;
 
-    paymode_disabled = true;
-    chqno_disabled = true;
-    next_chqno_disabled = true;
-    chqdt_disabled = true;
-    chq_bank_disabled = true;
     memo_enabled = true;
+    
     amt_enabled = true;
-    amt_base_disabled = true;
-    currency_disabled = true;
-    exrate_disabled = true;
-    bank_paid_disabled = true;
-    bank_charges_disabled = true;
-    lbl_bank_dr_disabled = true;
-    lbl_bank_cr_disabled = true;
-    lbl_charges_dr_disabled = true;
-    lbl_charges_cr_disabled = true;
-    lbl_party_dr_disabled = true;
-    lbl_party_cr_disabled = true;
-    lbl_ex_diff_dr_disabled = true;
-    lbl_ex_diff_cr_disabled = true;
-    lbl_total_dr_disabled = true;
-    lbl_total_cr_disabled = true;
-
-    lbl_dr_disabled = true;
-    lbl_cr_disabled = true;
+    amt_base_enabled = true;
+    currency_enabled = true;
+    exrate_enabled = true;
+    bank_paid_enabled = true;
+    bank_charges_enabled = true;
+    
+    posting_enabled = true ;
 
     is_bank_Changed = true;
     is_exrate_Changed = true;
@@ -173,6 +170,23 @@ export class PayFinalComponent implements OnInit {
         this.actionHandler();
     }
 
+    initdata() {
+        this.TOT_AR = this.payrecord.TOT_AR;
+        this.TOT_AP= this.payrecord.TOT_AP;
+        this.TOT_DIFF= this.payrecord.TOT_DIFF;
+        this.TOT_AR_BASE= this.payrecord.TOT_AR_BASE;
+        this.TOT_AP_BASE= this.payrecord.TOT_AP_BASE;
+        this.TOT_DIFF_BASE= this.payrecord.TOT_DIFF_BASE;
+        this.FCURR_CODE= this.payrecord.FCURR_CODE;
+        this.IsMultiCurrency= this.payrecord.IsMultiCurrency;
+        this.IS_PAYROLL_RECORD= this.payrecord.IS_PAYROLL_RECORD;
+        this.IsAdmin= this.payrecord.IsAdmin;
+        this.Customer_ID= this.payrecord.Customer_ID;
+        this.Customer_Name= this.payrecord.Customer_Name;
+        this.Customer_Type= this.payrecord.Customer_Type;
+        this.DetailList= this.payrecord.DetailList;
+    }
+
     setup() {
 
         if (this.gs.SHOW_CHECK_DATE == "N") {
@@ -182,8 +196,9 @@ export class PayFinalComponent implements OnInit {
 
 
     private initPage() {
-        this.isAdmin = this.gs.IsAdmin(this.menuid);
-        this.title = this.gs.getTitle(this.menuid);
+        //this.title = this.gs.getTitle(this.menuid);
+        this.title = 'Payment';
+
         this.errorMessage = '';
         this.LoadCombo();
     }
@@ -222,28 +237,19 @@ export class PayFinalComponent implements OnInit {
 
         this.IsPayment = "Y";
         //Txt_ChqNo.IsEnabled = true;
-        this.chqno_disabled = true;
-
-
-        this.memo_enabled = true;
+        this.chqno_enabled = true;
+        
 
         if (this.TOT_DIFF >= 0) {
-            //Cmd_Next_Check_No.Visibility = System.Windows.Visibility.Collapsed;
-            //Txt_Next_ChqNo.Visibility = System.Windows.Visibility.Collapsed;
-            //LBL_MEMO.Visibility = System.Windows.Visibility.Collapsed;
-            //Txt_Memo.Visibility = System.Windows.Visibility.Collapsed;
             this.memo_enabled = false;
-
         }
 
         if (this.TOT_DIFF == 0) {
-
-            this.paymode_disabled = true;
-            this.chqno_disabled = true;
-            this.next_chqno_disabled = true;
-            this.chqdt_disabled = true;
-            this.chq_bank_disabled = true;
-
+            this.paymode_enabled = false;
+            this.chqno_enabled = false;
+            this.next_chqno_enabled = false;
+            this.chqdt_enabled = false;
+            this.chq_bank_enabled = false;
         }
 
         if (this.TOT_DIFF >= 0)
@@ -269,49 +275,27 @@ export class PayFinalComponent implements OnInit {
         */
 
         if (this.IsMultiCurrency == "N") {
-            this.amt_base_disabled = true;
-            this.exrate_disabled = true;
-            this.currency_disabled = true;
+            
+            this.amt_base_enabled = false;
+            this.exrate_enabled = false;
+            this.currency_enabled = false;
 
             if (this.gs.IS_SINGLE_CURRENCY == false && this.FCURR_CODE != "") {
-                this.bank_charges_disabled = true;
+                this.bank_charges_enabled = false;
             }
             if (this.gs.IS_SINGLE_CURRENCY == true || this.TOT_DIFF == 0) {
-                this.bank_paid_disabled = true;
-                this.bank_charges_disabled = true;
-                this.lbl_bank_dr_disabled = true;
-                this.lbl_bank_cr_disabled = true;
-                this.lbl_charges_dr_disabled = true;
-                this.lbl_charges_cr_disabled = true;
-                this.lbl_party_dr_disabled = true;
-                this.lbl_party_cr_disabled = true;
-                this.lbl_ex_diff_dr_disabled = true;
-                this.lbl_ex_diff_cr_disabled = true;
-                this.lbl_total_dr_disabled = true;
-                this.lbl_total_cr_disabled = true;
-                this.lbl_dr_disabled = true;
-                this.lbl_cr_disabled = true;
+                this.bank_paid_enabled = false;
+                this.bank_charges_enabled = false;
+                this.posting_enabled = false ;
             }
         }
         else {
-            this.amt_base_disabled = false;
-            this.exrate_disabled = false;
-
-            this.bank_paid_disabled = false;
-            this.bank_charges_disabled = false;
-            this.lbl_bank_dr_disabled = false;
-            this.lbl_bank_cr_disabled = false;
-            this.lbl_charges_dr_disabled = false;
-            this.lbl_charges_cr_disabled = false;
-            this.lbl_party_dr_disabled = false;
-            this.lbl_party_cr_disabled = false;
-            this.lbl_ex_diff_dr_disabled = false;
-            this.lbl_ex_diff_cr_disabled = false;
-            this.lbl_total_dr_disabled = false;
-            this.lbl_total_cr_disabled = false;
-            this.lbl_dr_disabled = false;
-            this.lbl_cr_disabled = false;
-            this.currency_disabled = false;
+            this.amt_base_enabled = true;
+            this.exrate_enabled = true;
+            this.bank_paid_enabled = true;
+            this.bank_charges_enabled = true;
+            this.currency_enabled = true;
+            this.posting_enabled = true ;            
         }
 
         if (this.IsMultiCurrency == "N") {
@@ -395,7 +379,8 @@ export class PayFinalComponent implements OnInit {
     }
 
     Close() {
-        this.location.back();
+        if (this.callbackevent)
+            this.callbackevent.emit({ action: 'CLOSE', source: '' });
     }
 
 
