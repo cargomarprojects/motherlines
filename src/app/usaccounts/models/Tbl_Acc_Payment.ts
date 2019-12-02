@@ -1,4 +1,5 @@
 import { PageQuery } from '../../shared/models/pageQuery';
+import { Tbl_cargo_invoicem } from './Tbl_cargo_Invoicem';
 
 export interface SearchQuery {
     balance : string ;
@@ -94,6 +95,7 @@ export interface vm_tbl_accPayment {
     pkid: string;
     record: Tbl_Acc_Payment;
     records: Tbl_Acc_Payment[];
+    invoiceList: Tbl_cargo_invoicem [];
     userinfo: any,
     filter: any;
 }

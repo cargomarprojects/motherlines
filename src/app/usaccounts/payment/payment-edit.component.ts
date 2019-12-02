@@ -489,8 +489,14 @@ export class PaymentEditComponent implements OnInit {
     }
 
 
-    callbackevent() {
-        this.tab = 'main';
+    callbackevent(data: any) {
+
+
+        if (data.action == 'CLOSE')
+            this.tab = 'main';
+        if (data.action == 'PRINTCHECK')
+            this.tab = 'main';
+
     }
 
 
@@ -614,7 +620,7 @@ export class PaymentEditComponent implements OnInit {
     }
 
 
-  
+
 
 
 
