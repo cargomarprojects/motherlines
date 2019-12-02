@@ -215,6 +215,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
+    this.SaveContainer();
     this.record.mbl_direct = this.record.mbl_direct_bool ? 'Y' : 'N';
 
     const saveRecord = <vm_tbl_cargo_exp_masterm>{};
@@ -243,6 +244,17 @@ export class SeaexpMasterEditComponent implements OnInit {
       });
   }
 
+  private SaveContainer() {
+    let iCtr: number = 0;
+    this.records.forEach(Rec => {
+      iCtr++;
+      Rec.cntr_hblid = this.pkid.toString();
+      Rec.cntr_catg = "M";
+      Rec.cntr_order = iCtr;
+      Rec.cntr_weight_uom = "";
+      Rec.cntr_packages = 0;
+    })
+  }
 
   private Allvalid(): boolean {
 
@@ -380,14 +392,18 @@ export class SeaexpMasterEditComponent implements OnInit {
 
     var rec = <Tbl_cargo_exp_container>{};
     rec.cntr_pkid = this.gs.getGuid();
+    rec.cntr_hblid = this.pkid.toString();
+    rec.cntr_catg = "M";
     rec.cntr_no = "";
     rec.cntr_type = "";
     rec.cntr_sealno = '';
     rec.cntr_packages_uom = '';
     rec.cntr_movement = "";
     rec.cntr_weight = 0;
+    rec.cntr_tare_weight = 0;
     rec.cntr_pieces = 0;
     rec.cntr_cbm = 0;
+    rec.cntr_order = 1;
     this.records.push(rec);
   }
 
@@ -434,7 +450,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (_Record.controlname == "CONTAINER TYPE") {
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
-
+          rec.cntr_type = _Record.code;
         }
       });
     }
@@ -769,5 +785,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }
 
-
+  RemoveRow(_rec: Tbl_cargo_exp_container) {
+    this.records.splice(this.records.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
+  }
 }

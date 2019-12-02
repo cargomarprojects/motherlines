@@ -449,9 +449,9 @@ export class SeaImpMasterEditComponent implements OnInit {
     rec.cntr_pkid = this.gs.getGuid();
     rec.cntr_hblid = this.pkid.toString();
     rec.cntr_catg = "M";
-    rec.cntr_no = "",
-      rec.cntr_type = "",
-      rec.cntr_sealno = '';
+    rec.cntr_no = "";
+    rec.cntr_type = "";
+    rec.cntr_sealno = '';
     rec.cntr_pieces = 0;
     rec.cntr_packages_uom = '';
     rec.cntr_packages = 0;
@@ -708,14 +708,14 @@ export class SeaImpMasterEditComponent implements OnInit {
       case 'PROFITREPORT': {
         let prm = {
           menuid: this.gs.MENU_SI_MASTER_PROFIT_REPORT,
-          mbl_pkid:  this.pkid, 
-          mbl_refno : this.record.mbl_refno,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
           mbl_type: 'OI',
           origin: 'seaimp-master-page',
         };
-        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));
         break;
-      }      
+      }
       case 'HOUSE': {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE,

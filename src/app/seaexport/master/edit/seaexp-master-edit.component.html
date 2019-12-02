@@ -337,6 +337,7 @@
                     <th>WEIGHT</th>
                     <th>CBM</th>
                     <th>TARE-WT</th>
+                    <th class='text-center'>REMOVE</th>
                   </tr>
                 </thead>
                 <tbody class="page-body-tbody">
@@ -375,6 +376,8 @@
                       <InputBoxNumber [(inputModel)]="rec.cntr_tare_weight" [field]="'cntr_tare_weight'" [dec]="3"
                         [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
                     </td>
+                    <td class="p-0 text-center"><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
+                      (click)="RemoveRow(rec)"></i></td>
                   </tr>
                 </tbody>
               </table>

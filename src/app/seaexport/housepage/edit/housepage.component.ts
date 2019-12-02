@@ -552,7 +552,8 @@ export class HousePageComponent implements OnInit {
     this.record.hbl_print_kgs = (this.record._hbl_print_kgs) ? "Y" : "N";
     this.record.hbl_print_lbs = (this.record._hbl_print_lbs) ? "Y" : "N";
 
-
+    this.SaveParent();
+    this.SaveContainer();
     this.SaveDescList();
 
     const saverec = <vm_Tbl_cargo_exp_housem>{};
@@ -623,6 +624,7 @@ export class HousePageComponent implements OnInit {
     if (rec.controlname == 'CONSIGNEE') {
 
       this.record.hbl_consignee_id = rec.id;
+      this.record.hbl_consignee_code = rec.code;
       this.record.hbl_consigned_to1 = rec.name;
       this.record.hbl_consigned_to2 = rec.col1;
       this.record.hbl_consigned_to3 = rec.col2;
@@ -673,6 +675,7 @@ export class HousePageComponent implements OnInit {
     if (rec.controlname == "CONTAINER TYPE") {
       this.cntrs.forEach(mrec => {
         if (mrec.cntr_pkid == rec.uid) {
+          mrec.cntr_type = rec.code;
         }
       });
     }
@@ -694,7 +697,28 @@ export class HousePageComponent implements OnInit {
     this.location.back();
   }
 
+  private SaveParent() {
+    if (this.mode == "ADD") {
+      this.record.hbl_mbl_id = this.parentid;
+      this.record.rec_created_id = this.gs.user_pkid;
+    }
 
+    if (this.gs.BRANCH_REGION != "USA")
+      this.record.hbl_goods_nature = this.record.hbl_commodity;
+
+  }
+
+  private SaveContainer() {
+    let iCtr: number = 0;
+    this.cntrs.forEach(Rec => {
+      iCtr++;
+      Rec.cntr_hblid = this.pkid.toString();
+      Rec.cntr_catg = "H";
+      Rec.cntr_order = iCtr;
+      Rec.cntr_weight_uom = "";
+      Rec.cntr_packages = 0;
+    })
+  }
 
   SaveDescList() {
 
@@ -750,6 +774,8 @@ export class HousePageComponent implements OnInit {
     this.cntrs.push(rec);
   }
 
-
+  RemoveRow(_rec: Tbl_cargo_exp_container) {
+    this.cntrs.splice(this.cntrs.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
+  }
 
 }
