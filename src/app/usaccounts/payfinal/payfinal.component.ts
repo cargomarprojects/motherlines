@@ -568,10 +568,16 @@ export class PayFinalComponent implements OnInit {
             return;
 
 
-        if (this.paymode == null || this.paymode == '') {
+        if (  this.gs.isBlank(this.paymode) {
             alert("Pay mode Has to be selected");
             return;
         }
+
+        if ( this.gs.isBlank(this.Txt_Bank_Id)) {
+            alert("bank Has to be selected");
+            return;
+        }
+
         let sMode = this.paymode;
         if (sMode == "CHECK") {
             if (this.gs.isBlank(this.Txt_Bank_Id) || this.gs.isBlank(this.Txt_Bank_Code)) {
