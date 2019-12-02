@@ -27,6 +27,8 @@ export class PayFinalComponent implements OnInit {
         }
     }
 
+    @Output() callbackevent = new EventEmitter<any>();
+
     record: Tbl_Acc_Payment = <Tbl_Acc_Payment>{};
 
     tab: string = 'main';
@@ -125,9 +127,12 @@ export class PayFinalComponent implements OnInit {
     paymode_enabled = true;
     chqno_enabled = true;
     next_chqno_enabled = true;
-    chqdt_enabled = true;
-    chq_bank_enabled = true;
+    
+    chqdt_enabled = false;
+    chq_bank_enabled = false;
+
     memo_enabled = true;
+    
     amt_enabled = true;
     amt_base_enabled = true;
     currency_enabled = true;
@@ -191,7 +196,9 @@ export class PayFinalComponent implements OnInit {
 
 
     private initPage() {
-        this.title = this.gs.getTitle(this.menuid);
+        //this.title = this.gs.getTitle(this.menuid);
+        this.title = 'Payment';
+
         this.errorMessage = '';
         this.LoadCombo();
     }
@@ -231,21 +238,13 @@ export class PayFinalComponent implements OnInit {
         this.IsPayment = "Y";
         //Txt_ChqNo.IsEnabled = true;
         this.chqno_enabled = true;
-
-
-        this.memo_enabled = false;
+        
 
         if (this.TOT_DIFF >= 0) {
-            //Cmd_Next_Check_No.Visibility = System.Windows.Visibility.Collapsed;
-            //Txt_Next_ChqNo.Visibility = System.Windows.Visibility.Collapsed;
-            //LBL_MEMO.Visibility = System.Windows.Visibility.Collapsed;
-            //Txt_Memo.Visibility = System.Windows.Visibility.Collapsed;
             this.memo_enabled = false;
-
         }
 
         if (this.TOT_DIFF == 0) {
-
             this.paymode_enabled = false;
             this.chqno_enabled = false;
             this.next_chqno_enabled = false;
@@ -276,6 +275,7 @@ export class PayFinalComponent implements OnInit {
         */
 
         if (this.IsMultiCurrency == "N") {
+            
             this.amt_base_enabled = false;
             this.exrate_enabled = false;
             this.currency_enabled = false;
@@ -379,7 +379,8 @@ export class PayFinalComponent implements OnInit {
     }
 
     Close() {
-        this.location.back();
+        if (this.callbackevent)
+            this.callbackevent.emit({ action: 'CLOSE', source: '' });
     }
 
 
