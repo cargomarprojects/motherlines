@@ -74,8 +74,9 @@ export class PaymentEditComponent implements OnInit {
 
     Customer_ID = '';
 
-
-
+    report_url: string;
+    report_searchdata: any = {};
+    report_menuid: string;
 
     where = " ";
 
@@ -490,13 +491,33 @@ export class PaymentEditComponent implements OnInit {
 
 
     callbackevent(data: any) {
-
-
         if (data.action == 'CLOSE')
             this.tab = 'main';
-        if (data.action == 'PRINTCHECK')
-            this.tab = 'main';
-
+        if (data.action == 'PRINTCHECK') {
+            if (this.gs.BRANCH_REGION == "USA") {
+                if (data.printchq == 'Y') {
+                    this.report_url = '/api/Payment/PrintCheque';
+                    this.report_searchdata = this.gs.UserInfo;
+                    this.report_searchdata.PKID = data.pkid;
+                    this.report_searchdata.BANKID = data.bankid;
+                    this.report_searchdata.PRINT_SIGNATURE = "N";
+                    this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+                    this.tab = 'chq';
+                }
+            } else {
+                this.report_url = '/api/Payment/PrintCash';
+                this.report_searchdata = this.gs.UserInfo;
+                this.report_searchdata.PKID = data.pkid;
+                this.report_searchdata.PAY_RP = this.Pay_RP;
+                this.report_searchdata.TYPE =  "PAYMENT" //this.pay_type;
+                if (data.printcash == "Y")
+                    this.report_searchdata.REPORT_CAPTION = "CASH " + this.Pay_RP;
+                else
+                    this.report_searchdata.REPORT_CAPTION = "BANK " + this.Pay_RP;
+                this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+                this.tab = 'cash';
+            }
+        }
     }
 
 
@@ -619,6 +640,23 @@ export class PaymentEditComponent implements OnInit {
 
     }
 
+
+    Print(rec: Tbl_Acc_Payment, _type: string) {
+        if (_type === 'chq') {
+            if (rec.pay_rp == "RECEIPT" || rec.pay_rp == "ADJUSTMENT") {
+                alert("Check Cannot Be Printed For Receipts");
+                return;
+            }
+            this.report_url = '/api/Payment/PrintCheque';
+            this.report_searchdata = this.gs.UserInfo;
+            this.report_searchdata.PKID = rec.pay_pkid;
+            this.report_searchdata.BANKID = rec.pay_acc_id;
+            this.report_searchdata.PRINT_SIGNATURE = "N";
+            this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+            this.tab = 'chq';
+        }
+
+    }
 
 
 

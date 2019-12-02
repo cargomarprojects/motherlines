@@ -531,11 +531,11 @@ export class PayFinalComponent implements OnInit {
                         if (this.callbackevent != null) {
                             let data = {
                                 action : 'PRINTCHECK',
-                                print_chq: PrintChq,
+                                printchq: PrintChq,
                                 pkid: this.pkid,
-                                bank_id: this.Txt_Bank_Id,
-                                print_signature: print_signature,
-                                print_cash: 'N'
+                                bankid: this.Txt_Bank_Id,
+                                printsignature: print_signature,
+                                printcash: 'N'
                             }
                             this.callbackevent.emit(data);
                         }
@@ -545,11 +545,11 @@ export class PayFinalComponent implements OnInit {
                         if (this.callbackevent != null) {
                             let data = {
                                 action : 'PRINTCHECK',
-                                PrintChq: PrintChq,
+                                printchq: PrintChq,
                                 pkid: this.pkid,
-                                bank_id: this.Txt_Bank_Id,
-                                print_signature: print_signature,
-                                print_Cash: PrintCash
+                                bankid: this.Txt_Bank_Id,
+                                printsignature: print_signature,
+                                printcash: PrintCash
                             }
                             this.callbackevent.emit(data);
                         }

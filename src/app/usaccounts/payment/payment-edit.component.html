@@ -172,7 +172,14 @@
 </div>
 
 <div *ngIf="tab == 'payment'">
-    
-    <app-pay-final [mpayrecrod]="mPayRecord"  (callbackevent)="callbackevent($event)"></app-pay-final>
+    <app-pay-final [mpayrecrod]="mPayRecord" (callbackevent)="callbackevent($event)"></app-pay-final>
+</div>
 
+
+<div *ngIf="tab === 'chq'">
+    <app-report [title]="'Cheque Print'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+</div>
+
+<div *ngIf="tab === 'cash'">
+    <app-report [title]="'Cash/Bank Print'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
 </div>
