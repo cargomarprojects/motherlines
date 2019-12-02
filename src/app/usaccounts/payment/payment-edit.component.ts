@@ -504,16 +504,20 @@ export class PaymentEditComponent implements OnInit {
                     this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
                     this.tab = 'chq';
                 }
+                else {
+                    this.tab = 'main';
+                }
+
             } else {
                 this.report_url = '/api/Payment/PrintCash';
                 this.report_searchdata = this.gs.UserInfo;
                 this.report_searchdata.PKID = data.pkid;
-                this.report_searchdata.PAY_RP = this.Pay_RP;
+                this.report_searchdata.PAY_RP = data.payrp;
                 this.report_searchdata.TYPE =  "PAYMENT" //this.pay_type;
                 if (data.printcash == "Y")
-                    this.report_searchdata.REPORT_CAPTION = "CASH " + this.Pay_RP;
+                    this.report_searchdata.REPORT_CAPTION = "CASH " + data.payrp;
                 else
-                    this.report_searchdata.REPORT_CAPTION = "BANK " + this.Pay_RP;
+                    this.report_searchdata.REPORT_CAPTION = "BANK " + data.payrp;
                 this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
                 this.tab = 'cash';
             }

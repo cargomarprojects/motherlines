@@ -340,6 +340,8 @@ export class PayFinalComponent implements OnInit {
         let print_signature = "";
         let PrintCash = "";
 
+        let pay_rp = "";
+
 
 
         this.pkid = this.gs.getGuid();
@@ -470,10 +472,14 @@ export class PayFinalComponent implements OnInit {
 
         let Jv_Narration = "";
         Jv_Narration = "";
-        if (this.ParentRec.pay_diff > 0)
+        if (this.ParentRec.pay_diff > 0) {
             Jv_Narration = "RECVD " + this.ParentRec.pay_bank_amt + " FROM " + this.ParentRec.pay_cust_name;
-        else if (this.ParentRec.pay_diff < 0)
+            pay_rp = 'RECEIPT';
+        }
+        else if (this.ParentRec.pay_diff < 0) {
             Jv_Narration = "PAID " + this.ParentRec.pay_bank_amt + " TO " + this.ParentRec.pay_cust_name;
+            pay_rp = 'PAYMENT';
+        }
         else
             Jv_Narration = "ADJUSTMENT ( " + this.ParentRec.pay_cust_name + " )";
         Jv_Narration += this.ParentRec.pay_date != null ? " DATED: " + this.ParentRec.pay_date : "";
@@ -535,7 +541,8 @@ export class PayFinalComponent implements OnInit {
                                 pkid: this.pkid,
                                 bankid: this.Txt_Bank_Id,
                                 printsignature: print_signature,
-                                printcash: 'N'
+                                printcash: 'N',
+                                payrp : pay_rp
                             }
                             this.callbackevent.emit(data);
                         }
@@ -549,7 +556,8 @@ export class PayFinalComponent implements OnInit {
                                 pkid: this.pkid,
                                 bankid: this.Txt_Bank_Id,
                                 printsignature: print_signature,
-                                printcash: PrintCash
+                                printcash: PrintCash,
+                                payrp : pay_rp
                             }
                             this.callbackevent.emit(data);
                         }
