@@ -74,8 +74,9 @@ export class PaymentEditComponent implements OnInit {
 
     Customer_ID = '';
 
-
-
+    report_url: string;
+    report_searchdata: any = {};
+    report_menuid: string;
 
     where = " ";
 
@@ -289,11 +290,8 @@ export class PaymentEditComponent implements OnInit {
 
 
     Save() {
-
-
         this.FindTotal();
         this.Allvalid();
-
     }
 
 
@@ -489,9 +487,96 @@ export class PaymentEditComponent implements OnInit {
     }
 
 
-    callbackevent() {
-        this.tab = 'main';
+    callbackevent(data: any) {
+        if (data.action == 'CLOSE')
+            this.tab = 'main';
+        if (data.action == 'PRINTCHECK') {
+
+            this.ResetGrid();
+            this.FindPartyBalance();
+
+            if (this.gs.BRANCH_REGION == "USA") {
+                if (data.printchq == 'Y') {
+                    this.report_url = '/api/Payment/PrintCheque';
+                    this.report_searchdata = this.gs.UserInfo;
+                    this.report_searchdata.PKID = data.pkid;
+                    this.report_searchdata.BANKID = data.bankid;
+                    this.report_searchdata.PRINT_SIGNATURE = "N";
+                    this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+                    this.tab = 'chq';
+                }
+                else {
+                    this.tab = 'main';
+                }
+
+            } else {
+                this.report_url = '/api/Payment/PrintCash';
+                this.report_searchdata = this.gs.UserInfo;
+                this.report_searchdata.PKID = data.pkid;
+                this.report_searchdata.PAY_RP = data.payrp;
+                this.report_searchdata.TYPE = "PAYMENT" //this.pay_type;
+                if (data.printcash == "Y")
+                    this.report_searchdata.REPORT_CAPTION = "CASH " + data.payrp;
+                else
+                    this.report_searchdata.REPORT_CAPTION = "BANK " + data.payrp;
+                this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+                this.tab = 'cash';
+            }
+        }
     }
+
+
+    ResetGrid() {
+        let nAR = 0;
+        let nAP = 0;
+        let nPayAmt = 0;
+
+        this.pendingList.forEach(Rec => {
+
+            if (Rec.inv_flag == "Y") {
+                nPayAmt = Rec.inv_pay_amt;
+                if (Rec.inv_ar_total > 0) {
+                    nAR = Rec.inv_ar_total;
+                    nAR = nAR - nPayAmt;
+                    nAR = this.gs.roundNumber( nAR,2);
+                    Rec.inv_balance = Math.abs(nAR);
+                    if (nAR == 0)
+                        Rec.inv_ar_total = null;
+                    else if (nAR > 0)
+                        Rec.inv_ar_total = nAR;
+                    else {
+                        Rec.inv_ar_total = null;
+                        Rec.inv_ap_total = Math.abs(nAR);
+                    }
+                }
+                else {
+                    nAP = Rec.inv_ap_total;
+                    nAP = nAP - nPayAmt;
+                    nAP = this.gs.roundNumber( nAP,2);
+                    Rec.inv_balance = Math.abs(nAP);
+                    if (nAP == 0)
+                        Rec.inv_ap_total = null;
+                    else if (nAP > 0)
+                        Rec.inv_ap_total = nAP;
+                    else {
+                        Rec.inv_ap_total = null;
+                        Rec.inv_ar_total = Math.abs(nAP);
+                    }
+                }
+                Rec.inv_pay_amt = null;
+                Rec.inv_flag = "N";
+                Rec.inv_flag2  = false;
+
+            }
+        });
+
+        this.txt_tot_AR = 0;
+        this.txt_tot_AP = 0;
+        this.txt_tot_diff = 0;
+        this.LBL_STATUS = '';
+    }
+
+
 
 
     Close() {
@@ -545,6 +630,7 @@ export class PaymentEditComponent implements OnInit {
             if (Rec != null) {
                 if (Rec.inv_ar_total <= 0 && Rec.inv_ap_total <= 0) {
                     Rec.inv_flag = "N";
+                    Rec.inv_flag2 =  false;
                     return;
                 }
                 if (Rec.inv_flag == "Y")
@@ -614,7 +700,24 @@ export class PaymentEditComponent implements OnInit {
     }
 
 
-  
+    Print(rec: Tbl_Acc_Payment, _type: string) {
+        if (_type === 'chq') {
+            if (rec.pay_rp == "RECEIPT" || rec.pay_rp == "ADJUSTMENT") {
+                alert("Check Cannot Be Printed For Receipts");
+                return;
+            }
+            this.report_url = '/api/Payment/PrintCheque';
+            this.report_searchdata = this.gs.UserInfo;
+            this.report_searchdata.PKID = rec.pay_pkid;
+            this.report_searchdata.BANKID = rec.pay_acc_id;
+            this.report_searchdata.PRINT_SIGNATURE = "N";
+            this.report_menuid = this.gs.MENU_ACC_ARAP_SETTLMENT;
+            this.tab = 'chq';
+        }
+
+    }
+
+
 
 
 
