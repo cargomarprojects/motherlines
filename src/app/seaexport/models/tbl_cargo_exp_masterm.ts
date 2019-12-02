@@ -135,6 +135,7 @@ export interface Tbl_cargo_exp_container
     rec_year : number;
     cntr_rider : string;
     cntr_yn : string;
+    cntr_selected:boolean;
 }
 
 
