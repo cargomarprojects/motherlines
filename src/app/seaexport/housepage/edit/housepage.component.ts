@@ -3,19 +3,19 @@ import { Component, OnInit, ViewChild, ElementRef, ANALYZE_FOR_ENTRY_COMPONENTS 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { InputBoxComponent } from '../../shared/input/inputbox.component';
-import { InputBoxNumberComponent } from '../../shared/inputnumber/inputboxnumber.component';
+import { InputBoxComponent } from '../../../shared/input/inputbox.component';
+import { InputBoxNumberComponent } from '../../../shared/inputnumber/inputboxnumber.component';
 
-import { GlobalService } from '../../core/services/global.service';
-import { User_Menu } from '../../core/models/menum';
-import { SearchTable } from '../../shared/models/searchtable';
+import { GlobalService } from '../../../core/services/global.service';
+import { User_Menu } from '../../../core/models/menum';
+import { SearchTable } from '../../../shared/models/searchtable';
 
-import { HouseService } from '../services/house.service';
+import { HouseService } from '../../services/house.service';
 
-import { Tbl_cargo_exp_housem, vm_Tbl_cargo_exp_housem } from '../models/Tbl_cargo_exp_housem';
-import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
+import { Tbl_cargo_exp_housem, vm_Tbl_cargo_exp_housem } from '../../models/Tbl_cargo_exp_housem';
+import { Tbl_cargo_exp_desc } from '../../models/Tbl_cargo_exp_desc';
 import { Tbl_cargo_container } from 'src/app/other/models/tbl_cargo_general';
-import { Tbl_cargo_exp_container } from '../models/tbl_cargo_exp_masterm';
+import { Tbl_cargo_exp_container } from '../../models/tbl_cargo_exp_masterm';
 
 
 
@@ -27,15 +27,15 @@ export class HousePageComponent implements OnInit {
 
 
   pkid: string;
-   menuid: string;
-   mode: string = "ADD";
+  menuid: string;
+  mode: string = "ADD";
 
 
 
-   errorMessage: string[] = [];
+  errorMessage: string[] = [];
 
-   title: string;
-   isAdmin: boolean;
+  title: string;
+  isAdmin: boolean;
 
   record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
   records: Tbl_cargo_exp_desc[] = [];
@@ -56,11 +56,11 @@ export class HousePageComponent implements OnInit {
   is_locked: boolean = false;
   is_stage_locked = false;
 
-   parentid: string;
-   mbl_refno: string;
-   type: string;
+  parentid: string;
+  mbl_refno: string;
+  type: string;
 
-   refno: string;
+  refno: string;
 
   constructor(
     private router: Router,
@@ -76,7 +76,6 @@ export class HousePageComponent implements OnInit {
     this.pkid = options.pkid;
     this.menuid = options.menuid;
     this.parentid = options.parentid;
-    this.pkid = options.pkid;
     this.mbl_refno = options.refno;
     this.type = options.type;
     this.mode = options.mode;
@@ -255,7 +254,7 @@ export class HousePageComponent implements OnInit {
 
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
 
-
+        this.InitDesc();
         if (this.records != null) {
           this.records.forEach(rec => {
             this.ShowDesc(rec);
@@ -563,24 +562,37 @@ export class HousePageComponent implements OnInit {
 
     saverec.mode = this.mode;
     saverec.pkid = this.pkid;
-    saverec.HousePrefix=this.gs.AIR_EXPORT_HOUSE_PREFIX;
+    saverec.HousePrefix = this.gs.AIR_EXPORT_HOUSE_PREFIX;
     //saverec.IsPoL=this.gs.AIR_EXPORT_HOUSE_PREFIX_POL.toString();
-    saverec.IsPod=this.gs.AIR_EXPORT_HOUSE_PREFIX_POL.toString();
+    saverec.IsPod = this.gs.AIR_EXPORT_HOUSE_PREFIX_POL.toString();
 
-// IsPol = 
-//  IsPod = GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX_POD.ToString();
-//  iStartNo = Lib.Convert2Integer(GLOBALCONTANTS.AIR_EXPORT_HOUSE_STARTING_NO.ToString());
-//  iStep = Lib.Convert2Integer(GLOBALCONTANTS.AIR_EXPORT_HOUSE_INCR_BY.ToString()); 
+    // IsPol = 
+    //  IsPod = GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX_POD.ToString();
+    //  iStartNo = Lib.Convert2Integer(GLOBALCONTANTS.AIR_EXPORT_HOUSE_STARTING_NO.ToString());
+    //  iStep = Lib.Convert2Integer(GLOBALCONTANTS.AIR_EXPORT_HOUSE_INCR_BY.ToString()); 
 
-//     GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX, IsPol,IsPod,iStartNo,iStep
+    //     GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX, IsPol,IsPod,iStartNo,iStep
     saverec.record = this.record;
+    saverec.cntrs = this.cntrs;
     saverec.records = this.recorddet;
     saverec.userinfo = this.gs.UserInfo;
 
     this.mainService.Save(saverec).subscribe(response => {
 
-      if (response.retvalue) {
-        this.record.hbl_houseno = response.refno;
+      // if (response.retvalue) {
+
+      //   this.record.hbl_houseno = response.refno;
+      //   this.mode = 'EDIT';
+
+      // }
+
+      if (response.retvalue == false) {
+        this.errorMessage.push(response.error);
+        alert(this.errorMessage);
+      }
+      else {
+        if (this.mode == "ADD" && response.refno != '')
+          this.record.hbl_houseno = response.refno;
         this.mode = 'EDIT';
       }
 
@@ -730,12 +742,12 @@ export class HousePageComponent implements OnInit {
 
     var rec = <Tbl_cargo_exp_container>{};
     rec.cntr_pkid = this.gs.getGuid();
-    rec.cntr_no = "",
-      rec.cntr_type = "",
-      rec.cntr_sealno = '';
+    rec.cntr_no = "";
+    rec.cntr_type = "";
+    rec.cntr_sealno = '';
     rec.cntr_packages_uom = '';
-    rec.cntr_movement = "",
-      rec.cntr_weight = 0;
+    rec.cntr_movement = "";
+    rec.cntr_weight = 0;
     rec.cntr_pieces = 0;
     rec.cntr_cbm = 0;
     this.cntrs.push(rec);
