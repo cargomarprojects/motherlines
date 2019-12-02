@@ -76,7 +76,7 @@
                 <label class="col-4 col-form-label col-form-label-sm">Pay/Mode</label>
                 <div class="col-8">
                     <select class="form-control form-control-sm" [(ngModel)]="paymode">
-                        <option [value]="'CHECK NO'">CHECK</option>
+                        <option [value]="'CHECK'">CHECK</option>
                         <option [value]="'WIRE TRANSFER'">WIRE TRANSFER</option>
                         <option [value]="'CASH'">CASH</option>
                         <option [value]="'ONLINE/ACH PAYMENT'">ONLINE/ACH PAYMENT</option>
@@ -84,7 +84,6 @@
                         <option [value]="'CARGO SPRINT'" *ngIf="gs.GENERAL_BRANCH_CODE == 'MFDR'">CARGO SPRINT</option>
                         <option [value]="'PAY CARGO'" *ngIf="gs.GENERAL_BRANCH_CODE == 'MFDR'">PAY CARGO</option>
                         <option [value]="'OTHERS'">OTHERS</option>
-                        <option [value]="''">ONLINE/ACH PAYMENT</option>
                     </select>
                 </div>
             </div>

@@ -93,7 +93,7 @@ export class PayFinalComponent implements OnInit {
     Txt_Address2 = '';
     Txt_Address3 = '';
     Txt_Address4 = '';
-    paymode = 'CHECK NO';
+    paymode = 'CHECK';
     Txt_Next_ChqNo = '';
     Txt_ChqNo = '';
     Dt_ChqDt = '';
@@ -599,7 +599,7 @@ export class PayFinalComponent implements OnInit {
         this.mainService.GetNextChqNo(searchData).subscribe(
             res => {
                 let iNo = res.chqno;
-                this.Txt_Next_ChqNo = iNo.ToString().Trim();
+                this.Txt_Next_ChqNo = iNo;
                 this.SetNextChqNo();
 
             },
@@ -622,7 +622,7 @@ export class PayFinalComponent implements OnInit {
             return;
 
         if (this.paymode == "CHECK") {
-            this.Txt_ChqNo = (this.Txt_Next_ChqNo + 1).toString();
+            this.Txt_ChqNo = ( +this.Txt_Next_ChqNo + 1).toString();
             return;
         }
 
