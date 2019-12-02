@@ -8,6 +8,7 @@ import { MblPageComponent } from './mblpage/mblpage.component';
 import { DockPageComponent } from './dockpage/dockpage.component';
 import { HousePageComponent } from './housepage/edit/housepage.component';
 import { HousePageListComponent } from './housepage/housepage-list.component';
+import { CopyExpCntrPageComponent } from './copyexpcntrpage/copyexpcntrpage.component';
 
 const routes: Routes = [
   { path : 'SeaExpMasterPage', component : SeaexpMasterComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path : 'DockPage', component : DockPageComponent },
   { path : 'SeaExpHouseEditPage', component : HousePageComponent },
   { path : 'SeaExpHousePage', component : HousePageListComponent },
+  { path : 'CopyCntrPage', component : CopyExpCntrPageComponent }
 ];
 
 

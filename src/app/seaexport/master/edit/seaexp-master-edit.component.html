@@ -356,7 +356,7 @@
                         [uppercase]="true" (blur)="onBlur($event)"></InputBox>
                     </td>
                     <td class="p-0">
-                      <InputBoxNumber [(inputModel)]="record.cntr_pieces" [field]="'cntr_pieces'" [dec]="0"
+                      <InputBoxNumber [(inputModel)]="rec.cntr_pieces" [field]="'cntr_pieces'" [dec]="0"
                         [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
                     </td>
                     <td class="p-0">
@@ -364,15 +364,15 @@
                         [uppercase]="true" (blur)="onBlur($event)"></InputBox>
                     </td>
                     <td class="p-0">
-                      <InputBoxNumber [(inputModel)]="record.cntr_weight" [field]="'cntr_weight'" [dec]="3"
+                      <InputBoxNumber [(inputModel)]="rec.cntr_weight" [field]="'cntr_weight'" [dec]="3"
                         [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
                     </td>
                     <td class="p-0">
-                      <InputBoxNumber [(inputModel)]="record.cntr_cbm" [field]="'cntr_cbm'" [dec]="3" [maxlength]="15"
+                      <InputBoxNumber [(inputModel)]="rec.cntr_cbm" [field]="'cntr_cbm'" [dec]="3" [maxlength]="15"
                         (blur)="onBlur($event)"></InputBoxNumber>
                     </td>
                     <td class="p-0">
-                      <InputBoxNumber [(inputModel)]="record.cntr_tare_weight" [field]="'cntr_tare_weight'" [dec]="3"
+                      <InputBoxNumber [(inputModel)]="rec.cntr_tare_weight" [field]="'cntr_tare_weight'" [dec]="3"
                         [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
                     </td>
                   </tr>
@@ -382,7 +382,7 @@
               <div class="form-group row">
                 <div class="col-12 pl-1 pb-1">
                   <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Cntr</button>
-                  <button class="btn btn-success btn-sm mr-1" (click)="Copy2House()">Copy Cntr to House</button>
+                  <button class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('COPY-CNTR')">Copy Cntr to House</button>
                 </div>
               </div>
 

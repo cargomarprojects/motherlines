@@ -267,7 +267,7 @@ export class SeaexpMasterEditComponent implements OnInit {
       this.errorMessage = "Job Type cannot be blank";
       return bRet;
     }
-    
+
     if (this.record.mbl_shipment_stage == "") {
       bRet = false;
       this.errorMessage = "Shipment Stage cannot be blank";
@@ -380,12 +380,12 @@ export class SeaexpMasterEditComponent implements OnInit {
 
     var rec = <Tbl_cargo_exp_container>{};
     rec.cntr_pkid = this.gs.getGuid();
-    rec.cntr_no = "",
-      rec.cntr_type = "",
-      rec.cntr_sealno = '';
+    rec.cntr_no = "";
+    rec.cntr_type = "";
+    rec.cntr_sealno = '';
     rec.cntr_packages_uom = '';
-    rec.cntr_movement = "",
-      rec.cntr_weight = 0;
+    rec.cntr_movement = "";
+    rec.cntr_weight = 0;
     rec.cntr_pieces = 0;
     rec.cntr_cbm = 0;
     this.records.push(rec);
@@ -731,6 +731,15 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.report_searchdata.MBL_PKID = this.pkid;
         this.tab = 'report';
         break;
+      }case 'COPY-CNTR': {
+        let prm = {
+          menuid: this.gs.MENU_SE_MASTER,
+          pkid: this.pkid,
+          mbl_cntr_type: this.record.mbl_cntr_type,
+          origin: 'seaexp-master-page',
+        };
+        this.gs.Naviagete('Silver.SeaExport.Trans/CopyCntrPage', JSON.stringify(prm));
+        break;
       }
 
     }
@@ -759,7 +768,6 @@ export class SeaexpMasterEditComponent implements OnInit {
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
   }
-
 
 
 }

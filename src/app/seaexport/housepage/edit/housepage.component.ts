@@ -14,10 +14,7 @@ import { HouseService } from '../../services/house.service';
 
 import { Tbl_cargo_exp_housem, vm_Tbl_cargo_exp_housem } from '../../models/Tbl_cargo_exp_housem';
 import { Tbl_cargo_exp_desc } from '../../models/Tbl_cargo_exp_desc';
-import { Tbl_cargo_container } from 'src/app/other/models/tbl_cargo_general';
 import { Tbl_cargo_exp_container } from '../../models/tbl_cargo_exp_masterm';
-
-
 
 @Component({
   selector: 'app-housepage',

@@ -4,18 +4,19 @@ import { Tbl_cargo_exp_container } from './Tbl_cargo_exp_container';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 export interface vm_Tbl_cargo_exp_housem {
-        mode: string;
-        pkid: string;
-        HousePrefix : string;
-        IsPOL : string; 
-        IsPod : string;
-        iStartNo : number;
-        iStep  : number;
-        record : Tbl_cargo_exp_housem;
-        cntrs: Tbl_cargo_exp_container[];
-        records : Tbl_cargo_exp_desc[];
-        userinfo: any
-    }
+    mode: string;
+    pkid: string;
+    HousePrefix: string;
+    IsPOL: string;
+    IsPod: string;
+    iStartNo: number;
+    iStep: number;
+    record: Tbl_cargo_exp_housem;
+    cntrs: Tbl_cargo_exp_container[];
+    hbls: Tbl_cargo_exp_housem[];
+    records: Tbl_cargo_exp_desc[];
+    userinfo: any
+}
 
 
 
@@ -214,51 +215,50 @@ export interface Tbl_cargo_exp_housem {
     hbl_shipment_stage: string;
 
 
-    pkg1 : string ;
-    pkg2 : string ;
-    pkg3 : string ;
-  
-    mark1 : string ;
-    mark2 : string ;
-    mark3 : string ;
-    mark4 : string ;
-    mark5 : string ;
-    mark6 : string ;
-    mark7 : string ;
-    mark8 : string ;
-    mark9 : string ;
-    mark10 : string ;
-    mark11 : string ;
-    mark12 : string ;
-    mark13 : string ;
-    mark14 : string ;
-    mark15 : string ;
-    mark16 : string ;
-    mark17: string ;
-  
-  
-    desc1 : string ;
-    desc2 : string ;
-    desc3 : string ;
-    desc4 : string ;
-  
-    desc5 : string ;
-    desc6 : string ;
-    desc7 : string ;
-    desc8 : string ;
-    desc9 : string ;
-    desc10 : string ;
-  
-    desc11 : string ;
-    desc12 : string ;
-    desc13 : string ;
-    desc14 : string ;
-    desc15 : string ;
-    desc16 : string ;
-    desc17 : string ;
+    pkg1: string;
+    pkg2: string;
+    pkg3: string;
+
+    mark1: string;
+    mark2: string;
+    mark3: string;
+    mark4: string;
+    mark5: string;
+    mark6: string;
+    mark7: string;
+    mark8: string;
+    mark9: string;
+    mark10: string;
+    mark11: string;
+    mark12: string;
+    mark13: string;
+    mark14: string;
+    mark15: string;
+    mark16: string;
+    mark17: string;
 
 
+    desc1: string;
+    desc2: string;
+    desc3: string;
+    desc4: string;
 
+    desc5: string;
+    desc6: string;
+    desc7: string;
+    desc8: string;
+    desc9: string;
+    desc10: string;
+
+    desc11: string;
+    desc12: string;
+    desc13: string;
+    desc14: string;
+    desc15: string;
+    desc16: string;
+    desc17: string;
+
+    hbl_checked: boolean;
 
 }
 
