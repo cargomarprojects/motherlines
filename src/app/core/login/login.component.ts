@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   showloginbutton : Boolean = false;
 
   errorMessage: string = '';
- 
+  
+  
   software_version_string = '1.103';
   username: string = 'Admin';
   password: string = '123';
