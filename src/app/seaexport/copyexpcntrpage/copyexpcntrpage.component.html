@@ -29,8 +29,9 @@
                             <th>PCS</th>
                             <th>UNIT</th>
                             <th>KGS</th>
-                            <th *ngIf="this.gs.BRANCH_REGION != 'USA'">TARE-WT</th>
                             <th>CBM</th>
+                              <!-- <th *ngIf="this.gs.BRANCH_REGION != 'USA'">TARE-WT</th> -->
+                              <th >TARE-WT</th>
                             <!-- <th>PICKUP</th>
                             <th>EMPTY.RETURN</th> -->
                         </tr>
@@ -68,13 +69,17 @@
                                 <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_weight"
                                     (blur)="onBlur('cntr_weight',rec)" />
                             </td>
-                            <td class="p-0" *ngIf="this.gs.BRANCH_REGION != 'USA'">
-                                <input class="form-control form-control-sm" type="number"
-                                    [(ngModel)]="rec.cntr_tare_weight" (blur)="onBlur('cntr_tare_weight',rec)" />
-                            </td>
                             <td class="p-0">
                                 <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
                                     (blur)="onBlur('cntr_cbm',rec)" />
+                            </td>
+                            <!-- <td class="p-0" *ngIf="this.gs.BRANCH_REGION != 'USA'">
+                                <input class="form-control form-control-sm" type="number"
+                                    [(ngModel)]="rec.cntr_tare_weight" (blur)="onBlur('cntr_tare_weight',rec)" />
+                            </td> -->
+                            <td class="p-0" >
+                                <input class="form-control form-control-sm" type="number"
+                                    [(ngModel)]="rec.cntr_tare_weight" (blur)="onBlur('cntr_tare_weight',rec)" />
                             </td>
                             <!-- <td class="p-0">
                                 <app-date [inputdate]="rec.cntr_pick_date" (ValueChanged)="rec.cntr_pick_date=$event">
