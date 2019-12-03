@@ -104,6 +104,7 @@ export class HousePageComponent implements OnInit {
       this.record = <Tbl_cargo_exp_housem>{};
       this.cntrs = <Tbl_cargo_exp_container[]>[];
       this.records = <Tbl_cargo_exp_desc[]>[];
+      this.InitDesc();
       this.LoadData();
     }
     if (this.mode == 'EDIT')
@@ -310,6 +311,7 @@ export class HousePageComponent implements OnInit {
     this.mainService.GetDesc(SearchData).subscribe(response => {
 
       if (response.records != null) {
+        this.InitDesc();
         response.records.forEach(rec => {
           this.ShowDesc(rec);
         });
