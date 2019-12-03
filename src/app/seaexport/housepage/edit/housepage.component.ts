@@ -34,6 +34,11 @@ export class HousePageComponent implements OnInit {
 
   title: string;
   isAdmin: boolean;
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
 
   record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
   records: Tbl_cargo_exp_desc[] = [];
@@ -797,5 +802,44 @@ export class HousePageComponent implements OnInit {
   RemoveRow(_rec: Tbl_cargo_exp_container) {
     this.cntrs.splice(this.cntrs.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
+
+  BtnNavigation(action: string) {
+    switch (action) {
+      case 'HBLREPORT': {
+        this.report_title = 'HBL';
+        this.report_url = '/api/SeaExport/HousePage/GetHBLReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_menuid = this.gs.MENU_SE_HOUSE_PRINT_HBL;
+        this.tab = 'report';
+        break;
+      }
+      case 'BLANK': {
+        this.report_title = 'HBL LASER';
+        this.report_url = '/api/SeaExport/HousePage/GetHBLBlankReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.format_type = 'BLANK';
+        this.report_menuid = this.gs.MENU_SE_HOUSE_HBL_LASER;
+        this.tab = 'report';
+        break;
+      }
+      case 'DRAFT': {
+        this.report_title = 'HBL DRAFT';
+        this.report_url = '/api/SeaExport/HousePage/GetHBLBlankReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.format_type = 'DRAFT';
+        this.report_menuid = this.gs.MENU_SE_HOUSE;
+        this.tab = 'report';
+        break;
+      }
+     
+    }
+  }
+  callbackevent(event: any) {
+    this.tab = 'main';
+  }
+
 
 }
