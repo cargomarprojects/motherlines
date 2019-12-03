@@ -27,7 +27,8 @@ export class HousePageComponent implements OnInit {
   menuid: string;
   mode: string = "ADD";
 
-
+  iStartNo: number = 0;
+  iStep: number = 0;
 
   errorMessage: string[] = [];
 
@@ -44,7 +45,7 @@ export class HousePageComponent implements OnInit {
   ShipmentType: string = '';
 
   @ViewChild('hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
-
+  @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
 
   DESC_TYPE: string = "SE-DESC";
 
@@ -454,6 +455,27 @@ export class HousePageComponent implements OnInit {
   Allvalid() {
     let bret = true;
 
+    if (this.gs.isBlank(this.parentid)) {
+      this.errorMessage.push("Invalid MBL ID");
+      bret = false;
+    }
+
+    this.iStartNo = +this.gs.SEA_EXPORT_HOUSE_STARTING_NO;
+    this.iStep = +this.gs.SEA_EXPORT_HOUSE_INCR_BY;
+
+    if (this.iStartNo <= 0 || this.iStep <= 0) {
+      this.errorMessage.push("Invalid HBL Starting/Increment No");
+      bret = false;
+    }
+
+    if (!this.hbl_shipment_stage_field.nativeElement.disabled) {
+      if (this.gs.isBlank(this.record.hbl_shipment_stage)) {
+        this.errorMessage.push("Shipment Stage cannot be blank");
+        bret = false;
+      }
+    }
+
+
     if (this.gs.isBlank(this.record.hbl_shipper_id) || this.gs.isBlank(this.record.hbl_shipper_code)) {
       this.errorMessage.push("Shipper Code cannot be blank");
       bret = false;
@@ -562,16 +584,12 @@ export class HousePageComponent implements OnInit {
 
     saverec.mode = this.mode;
     saverec.pkid = this.pkid;
-    saverec.HousePrefix = this.gs.AIR_EXPORT_HOUSE_PREFIX;
-    //saverec.IsPoL=this.gs.AIR_EXPORT_HOUSE_PREFIX_POL.toString();
-    saverec.IsPod = this.gs.AIR_EXPORT_HOUSE_PREFIX_POL.toString();
+    saverec.HousePrefix = this.gs.SEA_EXPORT_HOUSE_PREFIX;
+    saverec.IsPol=this.gs.SEA_EXPORT_HOUSE_PREFIX_POL.toString();
+    saverec.IsPod = this.gs.SEA_EXPORT_HOUSE_PREFIX_POD.toString();
+    saverec.iStartNo = this.iStartNo;
+    saverec.iStep = this.iStep;
 
-    // IsPol = 
-    //  IsPod = GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX_POD.ToString();
-    //  iStartNo = Lib.Convert2Integer(GLOBALCONTANTS.AIR_EXPORT_HOUSE_STARTING_NO.ToString());
-    //  iStep = Lib.Convert2Integer(GLOBALCONTANTS.AIR_EXPORT_HOUSE_INCR_BY.ToString()); 
-
-    //     GLOBALCONTANTS.AIR_EXPORT_HOUSE_PREFIX, IsPol,IsPod,iStartNo,iStep
     saverec.record = this.record;
     saverec.cntrs = this.cntrs;
     saverec.records = this.recorddet;

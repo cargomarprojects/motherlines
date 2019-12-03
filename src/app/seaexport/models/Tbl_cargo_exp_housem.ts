@@ -7,7 +7,7 @@ export interface vm_Tbl_cargo_exp_housem {
     mode: string;
     pkid: string;
     HousePrefix: string;
-    IsPOL: string;
+    IsPol: string;
     IsPod: string;
     iStartNo: number;
     iStep: number;
