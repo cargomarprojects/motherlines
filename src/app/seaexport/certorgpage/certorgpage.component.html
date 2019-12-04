@@ -213,7 +213,7 @@
             <div class="col-md-4">
 
 
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Export Ref.</label>
                     <div class="col-8">
                         <InputBox [(inputModel)]="record.mbld_exp_ref1" [maxlength]="60" [uppercase]="true" #exp_ref1>
@@ -235,7 +235,7 @@
                         <InputBox [(inputModel)]="record.mbld_exp_ref3" [maxlength]="60" [uppercase]="true" #exp_ref3>
                         </InputBox>
                     </div>
-                </div>
+                </div> -->
 
 
                 <div class="form-group row">
@@ -249,7 +249,7 @@
 
 
 
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Origin State</label>
                     <div class="col-8">
                         <InputBox [(inputModel)]="record.mbld_origin" [maxlength]="60" [uppercase]="true" #origin>
@@ -298,7 +298,7 @@
                             #pre_carriage>
                         </InputBox>
                     </div>
-                </div>
+                </div> -->
 
 
                 <div class="form-group row">
@@ -337,35 +337,10 @@
                         </InputBox>
                     </div>
                 </div>
-
-
-
-
-            </div>
-
-            <div class="col-md-4">
-
                 <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Move Type</label>
                     <div class="col-8">
                         <InputBox [(inputModel)]="record.mbld_type_move" [maxlength]="60" [uppercase]="true" #type_move>
-                        </InputBox>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label col-form-label-sm">Load Terminal</label>
-                    <div class="col-8">
-                        <InputBox [(inputModel)]="record.mbld_terminal" [maxlength]="60" [uppercase]="true" #terminal>
-                        </InputBox>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label col-form-label-sm">Commodity</label>
-                    <div class="col-8">
-                        <InputBox [(inputModel)]="record.mbld_commodity" [maxlength]="100" [uppercase]="true"
-                            #commodity>
                         </InputBox>
                     </div>
                 </div>
@@ -392,7 +367,32 @@
                 </div>
 
 
+
+            </div>
+
+            <div class="col-md-4">
+
+               
+                <!-- <div class="form-group row">
+                    <label class="col-4 col-form-label col-form-label-sm">Load Terminal</label>
+                    <div class="col-8">
+                        <InputBox [(inputModel)]="record.mbld_terminal" [maxlength]="60" [uppercase]="true" #terminal>
+                        </InputBox>
+                    </div>
+                </div>
+
                 <div class="form-group row">
+                    <label class="col-4 col-form-label col-form-label-sm">Commodity</label>
+                    <div class="col-8">
+                        <InputBox [(inputModel)]="record.mbld_commodity" [maxlength]="100" [uppercase]="true"
+                            #commodity>
+                        </InputBox>
+                    </div>
+                </div> -->
+
+                
+
+                <!-- <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Send To</label>
                     <div class="col-8">
                         <app-autocomplete2 [controlname]="'SENDTO'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
@@ -478,7 +478,7 @@
                         <app-date [inputdate]="record.mbld_issued_date" (ValueChanged)="record.mbld_issues_date=$event">
                         </app-date>
                     </div>
-                </div>
+                </div> -->
 
 
 
@@ -783,7 +783,7 @@
                     </div>
                 </div>
 
-
+<!-- 
                 <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm"></label>
                     <div class="col-8">
@@ -811,7 +811,7 @@
                         <InputBox [(inputModel)]="record.mbld_clean" [maxlength]="10" [uppercase]="true" #notify_add4>
                         </InputBox>
                     </div>
-                </div>
+                </div> -->
 
 
 
