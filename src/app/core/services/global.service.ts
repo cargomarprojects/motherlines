@@ -208,7 +208,7 @@ export class GlobalService {
   public PARAM_UNIT: any = [];
   public PARAM_CUSTOMER_GROUP: any = [];
   public PARAM_FORM_CATEGORIES: any = [];
-
+  public PARAM_COO_FORMAT_BLANK: any = [];
 
   public SHIPMENT_STAGE1 = "WAITING FOR CARRIER'S A/N";
   public SHIPMENT_STAGE2 = "CARRIER A/N RECEIVED";

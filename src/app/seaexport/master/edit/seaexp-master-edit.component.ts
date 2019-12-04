@@ -140,6 +140,9 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.record.mbl_vessel = '';
     this.record.mbl_voyage = '';
 
+    if (this.gs.PARAM_COO_FORMAT_BLANK.length > 0) {
+      this.record.mbl_cooformat_id = this.gs.PARAM_COO_FORMAT_BLANK[0].code;
+    }
   }
 
   GetRecord() {
@@ -747,7 +750,7 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.report_searchdata.MBL_PKID = this.pkid;
         this.tab = 'report';
         break;
-      }case 'COPY-CNTR': {
+      } case 'COPY-CNTR': {
         let prm = {
           menuid: this.gs.MENU_SE_MASTER,
           pkid: this.pkid,

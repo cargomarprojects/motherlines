@@ -290,9 +290,6 @@
 
                 </div>
 
-
-
-
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Book.SL#</label>
                   <div class="col-4 pr-0">
@@ -304,14 +301,21 @@
                   </div>
                   <label class="col-2 col-form-label col-form-label-sm">Rotation#</label>
                   <div class="col-3 pl-0">
-
-
                     <InputBoxNumber [(inputModel)]="record.mbl_rotation_no" [field]="'mbl_rotation_no'" [dec]="0"
                       [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
 
-
                   </div>
                 </div>
+
+                <div *ngIf="gs.PARAM_COO_FORMAT_BLANK.length > 1" class="form-group row">
+                  <label class="col-3 col-form-label col-form-label-sm">COO</label>
+                  <div class="col-4 pr-0">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_cooformat_id" #mbl_cootype>
+                      <option *ngFor="let rec of gs.PARAM_COO_FORMAT_BLANK" [value]="rec.code">{{rec.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
 
               </div>
             </div>

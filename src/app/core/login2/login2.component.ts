@@ -747,6 +747,13 @@ export class Login2Component implements OnInit {
             this.GLOBALCONTANTS.PARAM_CUSTOMER_GROUP.push({ "code": a.param_pkid, "name": a.param_name1 })
         });
 
+        this.MainList.filter(a => a.param_type == 'COO-FORMAT').sort(function (a, b) {
+            return b.param_name1 < a.param_name1 ? 1 : -1;
+        }).forEach(a => {
+            this.GLOBALCONTANTS.PARAM_COO_FORMAT_BLANK.push({ "code": a.param_pkid, "name": a.param_name1 })
+        });
+
+
 
         this.MainList.filter(a => a.param_type == 'SALESMAN' && a.param_lookup_id == this.GLOBALCONTANTS.user_pkid).forEach(b => {
             this.GLOBALCONTANTS.user_handled_id = b.param_pkid;
