@@ -8,6 +8,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { Tbl_cargo_exp_masterm, seaExpMasterModel, vm_tbl_cargo_exp_masterm } from '../models/tbl_cargo_exp_masterm';
 import { SearchQuery } from '../models/tbl_cargo_exp_masterm';
 import { PageQuery } from '../../shared/models/pageQuery';
+import { Tbl_cargo_exp_housem } from 'src/app/airexport/models/tbl_cargo_exp_masterm';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class seaexpMasterService {
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
+    public canDelete: boolean;
 
     public initlialized: boolean;
 
@@ -60,7 +62,7 @@ export class seaexpMasterService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
-        
+        this.canDelete = this.gs.canDelete(this.menuid);
         this.initlialized = true;
 
     }
@@ -107,6 +109,33 @@ export class seaexpMasterService {
         });
     }
 
+
+    DeleteRow(_rec:Tbl_cargo_exp_masterm)
+    {
+        this.record.errormessage = '';
+        if (!confirm("DELETE " + _rec.mbl_refno)) {
+            return;
+        }
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.mbl_pkid;
+        SearchData.remarks = _rec.mbl_refno;
+
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.mbl_pkid == _rec.mbl_pkid), 1);
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+            });
+    }
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Master/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -128,5 +157,8 @@ export class seaexpMasterService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Master/SeaExportManifest', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Master/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
 
 }
