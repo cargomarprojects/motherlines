@@ -27,10 +27,14 @@ const routes: Routes = [
   { path: 'Silver.BusinessModule', loadChildren: './businessmodule/businessmodule.module#BusinessmoduleModule' }, 
   { path: 'Silver.Marketing.Quotation', loadChildren: './marketing/marketing.module#MarketingModule' }, 
   { path: 'Silver.Marketing.Master', loadChildren: './marketing/marketing.module#MarketingModule' }, 
+  
+  { path: 'Silver.UserAdmin', loadChildren: './useradmin/useradmin.module#UserAdminModule' },  
 
   { path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule' },
   { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },  
-  { path: 'seaexport', loadChildren: './seaexport/seaexport.module#SeaExportModule' },  
+  { path: 'seaexport', loadChildren: './seaexport/seaexport.module#SeaExportModule' },
+  
+
   { path: '', redirectTo: '', pathMatch: 'full' }
 ];
 
@@ -39,3 +43,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
