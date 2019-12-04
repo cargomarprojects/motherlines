@@ -1390,8 +1390,8 @@ export class GlobalService {
     sessionStorage.setItem('year_start_date', JSON.stringify(this.year_start_date));
     sessionStorage.setItem('year_end_date', JSON.stringify(this.year_end_date));
     sessionStorage.setItem('SHOW_CTPAT_LOGO', JSON.stringify(this.SHOW_CTPAT_LOGO));
+    sessionStorage.setItem('branch_prefix', JSON.stringify(this.branch_prefix));
     
-
   }
 
 
