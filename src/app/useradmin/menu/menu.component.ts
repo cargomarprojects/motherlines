@@ -11,8 +11,8 @@ import { PageQuery } from '../../shared/models/pageQuery';
 import { MenuService } from '../services/menum.service';
 
 @Component({
-  selector: 'app-modulem',
-  templateUrl: './modulem.component.html'
+  selector: 'app-menum',
+  templateUrl: './menu.component.html'
 })
 export class MenuComponent implements OnInit {
 

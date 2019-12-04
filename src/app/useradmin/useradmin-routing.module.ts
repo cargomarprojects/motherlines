@@ -7,7 +7,7 @@ import { MenuEditComponent } from './menu/menu-edit.component';
 
 const routes: Routes = [
   {path:'ModulePage', component : ModulemComponent},
-  {path:'ModulemEditPage', component : ModulemEditComponent}
+  {path:'ModulemEditPage', component : ModulemEditComponent},
   {path:'MenuPage', component : MenuComponent },
   {path:'MenuEditPage', component : MenuEditComponent}  
 ];
