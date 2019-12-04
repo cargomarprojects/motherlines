@@ -16,6 +16,7 @@ import { HousePageComponent } from './housepage/edit/housepage.component';
 import { HousePageHeaderComponent } from './housepage/housepage-header.component';
 import { HousePageListComponent } from './housepage/housepage-list.component';
 import { CopyExpCntrPageComponent } from './copyexpcntrpage/copyexpcntrpage.component';
+import { CertOrgPageComponent } from './certorgpage/certorgpage.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CopyExpCntrPageComponent } from './copyexpcntrpage/copyexpcntrpage.comp
     HousePageHeaderComponent,
     HousePageListComponent,
     CopyExpCntrPageComponent,
+    CertOrgPageComponent
   ],
   imports: [
     SharedModule,    
