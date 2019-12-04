@@ -170,9 +170,9 @@ export class MenuEditComponent implements OnInit {
         }
 
 
-        if (this.gs.isBlank(this.record.module_name)) {
+        if (this.gs.isBlank(this.record.menu_name)) {
             bRet = false;
-            this.errorMessage = "Module Name Cannot be blank";
+            this.errorMessage = "Menu Name Cannot be blank";
             alert(this.errorMessage);
             return bRet;
         }
