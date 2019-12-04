@@ -19,18 +19,16 @@
   <table class="table  table-hover table-sm">
     <thead class="page-body-thead">
       <tr>
-        <th>ORDER</th>
-        <th>MODULE NAME</th>
+        <th>NAME</th>
+        <th>ORDER</th>        
         <th>INSTALLED</th>
       </tr>
     </thead>
     <tbody class="page-body-tbody">
       <tr *ngFor="let rec of records$ | async">
-        <td (click)="edit(rec)">{{rec.module_order}}</td>
-        <td>{{rec.module_name}}</td>
+        <td (click)="edit(rec)">{{rec.module_name}}</td>
+        <td>{{rec.module_order}}</td>
         <td>{{rec.module_installed}}</td>
-        <td>{{rec.rec_created_by}}</td>
-        <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
       </tr>
     </tbody>
   </table>
