@@ -518,13 +518,13 @@ export class CertOrgPageComponent implements OnInit {
   }
 
 
-  Print (_type : string ){
+  Print (){
    
-    this.report_url = '/api/SeaExport/Mblpage/MblReport';
+    this.report_url = '/api/SeaExport/CertOrgPage/CertOrgBlankReport';
     this.report_searchdata = this.gs.UserInfo;
     this.report_searchdata.pkid = this.pkid;
-    this.report_searchdata.dock_type = _type;
-    this.report_menuid = this.gs.MENU_SE_MASTER_MBL_INSTRUCTION;
+    this.report_searchdata.dock_type = 'COODESC';
+    this.report_menuid = this.gs.MENU_SE_MASTER_CERTIFICATE_ORIGIN;
     this.tab = 'report';
     
   }
