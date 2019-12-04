@@ -14,7 +14,7 @@ import { MenuService } from '../services/menum.service';
   selector: 'app-modulem',
   templateUrl: './modulem.component.html'
 })
-export class ModulemComponent implements OnInit {
+export class MenuComponent implements OnInit {
 
   /*
    Joy
