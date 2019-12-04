@@ -1019,9 +1019,9 @@
   <div class="page-footer">
     <div class="row align-items-center justify-content-center p-1">
       <button class="btn btn-primary btn-md mr-1" *ngIf="canSave && !is_locked" (click)="Save()">Save</button>
-      <button class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('BLANK')">HBL(LASER)</button>
-      <button class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('DRAFT')">HBL(DRAFT)</button>
-      <button class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('HBLREPORT')">PRINT HBL</button>
+      <button *ngIf="canPrintBlank && mode =='EDIT'" class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('BLANK')">HBL(LASER)</button>
+      <button *ngIf="canPrintDraft && mode =='EDIT'" class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('DRAFT')">HBL(DRAFT)</button>
+      <button *ngIf="canPrintBL && mode =='EDIT'" class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('HBLREPORT')">PRINT HBL</button>
       <!-- <button class="btn btn-primary btn-md mr-1" (click)="Save()">RIDER</button> -->
     </div>
   </div>

@@ -55,6 +55,9 @@ export class HousePageComponent implements OnInit {
   DESC_TYPE: string = "SE-DESC";
 
   canSave: boolean = false;
+  canPrintBlank: boolean = false;
+  canPrintDraft: boolean = false;
+  canPrintBL: boolean = false;
 
   is_locked: boolean = false;
   is_stage_locked = false;
@@ -92,6 +95,9 @@ export class HousePageComponent implements OnInit {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
     this.canSave = this.gs.canSave(this.menuid, this.mode);
+    this.canPrintBL = this.gs.screenExists(this.gs.MENU_SE_HOUSE_PRINT_HBL);
+    this.canPrintBlank = this.gs.screenExists(this.gs.MENU_SE_HOUSE_HBL_LASER);
+    this.canPrintDraft = this.gs.screenExists(this.gs.MENU_SE_HOUSE_PRINT_HBL);
 
     this.errorMessage = [];
 
