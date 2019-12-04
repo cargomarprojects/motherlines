@@ -372,7 +372,7 @@
 
             <div class="col-md-4">
 
-               
+
                 <!-- <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Load Terminal</label>
                     <div class="col-8">
@@ -390,7 +390,7 @@
                     </div>
                 </div> -->
 
-                
+
 
                 <!-- <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Send To</label>
@@ -783,7 +783,7 @@
                     </div>
                 </div>
 
-<!-- 
+                <!-- 
                 <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm"></label>
                     <div class="col-8">
@@ -825,19 +825,12 @@
 
 
     <div class="page-footer">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label col-form-label-sm"></label>
-                    <div class="col-8">
-                        <button class="btn btn-primary btn-sm mr-1" *ngIf="canSave" (click)="Save()">Save</button>
-                        <button class="btn btn-primary btn-sm mr-1" *ngIf="canPrint && mode =='EDIT'"
-                            (click)="Print()">Print</button>
-                    </div>
-                </div>
-            </div>
+        <div class="row align-items-center justify-content-center p-1">
+            <button class="btn btn-primary btn-sm mr-1" *ngIf="canSave" (click)="Save()">Save</button>
+            <button class="btn btn-primary btn-sm mr-1" *ngIf="canPrint && mode =='EDIT'"  (click)="Print()">Print</button>
         </div>
     </div>
+
 
     <div>
         <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY:

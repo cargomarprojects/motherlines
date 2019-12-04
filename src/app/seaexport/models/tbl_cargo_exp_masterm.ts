@@ -112,6 +112,7 @@ export interface Tbl_cargo_exp_masterm {
     mbl_book_slno: number;
     mbl_ismemo_attached: string;
     mbl_cntr_desc: string;
+    mbl_cooformat_id:string;
 }
 
 export interface Tbl_cargo_exp_container
