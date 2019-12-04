@@ -10,8 +10,8 @@
   {{errorMessage}}
 </div>
 
-<app-modulem-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-</app-modulem-header>
+<app-modulem-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)"></app-modulem-header>
+
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 
