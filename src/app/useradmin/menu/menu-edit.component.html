@@ -17,19 +17,22 @@
 
         <div class="col-md-6 testbox  px-0 mx-0">
 
+
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Module</label>
                 <div class="col-8">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('module_name')"
-                        [(ngModel)]="record.module_name" maxlength="60" />
+                    <select class="form-control form-control-sm" [(ngModel)]="record.menu_module_id">
+                        <option *ngFor="let rec of modulelist" [value]="rec.pkid">{{rec.name}}</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Group</label>
                 <div class="col-8">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('menu_group_name')"
-                        [(ngModel)]="record.menu_group_name" maxlength="60" />
+                    <select class="form-control form-control-sm" [(ngModel)]="record.menu_group_id">
+                        <option *ngFor="let rec of headinglist" [value]="rec.pkid">{{rec.name}}</option>
+                    </select>
                 </div>
             </div>
 

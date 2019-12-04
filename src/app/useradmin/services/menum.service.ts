@@ -134,4 +134,10 @@ export class MenuService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Menum/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
+
+    getComboList(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/MenuModuleAndHeading', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+
 }

@@ -62,6 +62,7 @@ export class ModulemEditComponent implements OnInit {
 
     LoadCombo() {
 
+
     }
 
     NewRecord() {

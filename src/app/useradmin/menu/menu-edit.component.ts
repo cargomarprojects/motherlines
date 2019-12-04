@@ -29,6 +29,9 @@ export class MenuEditComponent implements OnInit {
     errorMessage: string;
     Foregroundcolor: string;
 
+    modulelist: any[];
+    headinglist: any[];
+
     title: string;
     isAdmin: boolean;
     refno: string = "";
@@ -60,7 +63,23 @@ export class MenuEditComponent implements OnInit {
         this.LoadCombo();
     }
 
+
+
     LoadCombo() {
+
+        this.errorMessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.CODE = "";
+        SearchData.TYPE = "MENU HEADING";
+
+        this.mainService.getComboList(SearchData)
+            .subscribe(response => {
+                this.modulelist = <any>response.module;
+                this.headinglist = <any>response.heading;
+
+            }, error => {
+                this.errorMessage = this.gs.getError(error);
+            });
 
     }
 
@@ -72,7 +91,7 @@ export class MenuEditComponent implements OnInit {
     actionHandler() {
         this.errorMessage = '';
         if (this.mode == 'ADD') {
-            this.record = <Tbl_User_Menum >{};
+            this.record = <Tbl_User_Menum>{};
             this.pkid = this.gs.getGuid();
             this.init();
         }
@@ -83,7 +102,7 @@ export class MenuEditComponent implements OnInit {
 
     init() {
 
-        this.record.menu_pkid= this.pkid;
+        this.record.menu_pkid = this.pkid;
         this.record.menu_name = '';
         this.record.module_name = '';
         this.record.rec_created_by = this.gs.user_code;
@@ -96,7 +115,7 @@ export class MenuEditComponent implements OnInit {
         SearchData.pkid = this.pkid;
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
-                this.record = <Tbl_User_Menum >response.record;
+                this.record = <Tbl_User_Menum>response.record;
                 this.mode = 'EDIT';
             }, error => {
                 this.errorMessage = this.gs.getError(error);
