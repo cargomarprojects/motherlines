@@ -257,8 +257,6 @@ export class HousePageComponent implements OnInit {
 
         this.ShipmentType = this.record.mbl_cntr_type;
 
-
-
         if (this.ShipmentType == "FCL" || this.ShipmentType == "LCL")
           this.is_stage_locked = true;
 

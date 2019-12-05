@@ -52,7 +52,7 @@ export class CertOrgPageComponent implements OnInit {
   @ViewChild('mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
 
 
-  DESC_TYPE: string = "MBLDESC";
+  DESC_TYPE: string = "COODESC";
 
   canSave : boolean = false;
   canPrint : boolean = false;

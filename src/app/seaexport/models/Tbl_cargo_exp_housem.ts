@@ -259,6 +259,7 @@ export interface Tbl_cargo_exp_housem {
     desc17: string;
 
     hbl_checked: boolean;
+    hbl_delivery_date:string;
 
 }
 
