@@ -11,6 +11,9 @@ import { MenuHeaderComponent } from './menu/menu-header.component';
 import { CompanyComponent } from './company/company.component';
 import { CompanyEditComponent } from './company/company-edit.component';
 import { CompanyHeaderComponent } from './company/company-header.component';
+import { BranchComponent } from './branch/branch.component';
+import { BranchEditComponent } from './branch/branch-edit.component';
+import { BranchHeaderComponent } from './branch/branch-header.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { CompanyHeaderComponent } from './company/company-header.component';
     MenuEditComponent,
     CompanyComponent,
     CompanyEditComponent,
-    CompanyHeaderComponent
+    CompanyHeaderComponent,
+    BranchComponent,
+    BranchEditComponent,
+    BranchHeaderComponent
 
   ],
   imports: [

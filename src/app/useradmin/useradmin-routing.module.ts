@@ -14,6 +14,8 @@ const routes: Routes = [
   {path:'MenuEditPage', component : MenuEditComponent}  ,
   {path:'CompanyPage', component : CompanyComponent },
   {path:'CompanyEditPage', component : CompanyEditComponent }    
+  {path:'BranchPage', component : CompanyComponent },
+  {path:'BranchEditPage', component : CompanyEditComponent }      
 ];
 
 @NgModule({
