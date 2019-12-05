@@ -1,3 +1,4 @@
+<div *ngIf="tab == 'main'">
 <div class="page-header">
     <div class="col">
         <label class="mr-3"> {{hideTracking=='N' ?'Tracking':'Internal Memo'}}</label>
@@ -174,4 +175,11 @@
             </div>
         </div>
     </div>
+</div>
+</div>
+<div *ngIf="tab=='attachment'">
+    <app-fileupload [title]="'File Upload Page'" [parentid]="attach_pkid" [subid]="" [type]="'INTERNAL MEMO'" [typelist]="attach_typelist"
+        [tablename]="'cargo_tracking_status'" [tablepkcolumn]="'param_id'" [refno]="" [customername]="" [updatecolumn]="'rec_files_attached'"
+        [viewonlysource]="" [viewonlyid]="" [filespath]="" [filespath2]="" (callbackevent)="callbackevent($event)">
+    </app-fileupload>
 </div>

@@ -21,6 +21,7 @@ export class OthTrackingPageComponent implements OnInit {
   trackmemorecords: Tbl_Cargo_Tracking_Status[] = [];
   // 15-07-2019 Created By Ajith  
 
+  parentTypememo: string;
   pkid: string;
   parentType: string;
   paramType: string;
@@ -39,6 +40,9 @@ export class OthTrackingPageComponent implements OnInit {
   lblSaveMemo: string = "Save";
   cmbNotes: string = "";
   MemoList: any[] = [];
+  tab: string = 'main';
+  attach_pkid: string = "";
+  attach_typelist: any = {};
 
   constructor(
     private router: Router,
@@ -58,6 +62,7 @@ export class OthTrackingPageComponent implements OnInit {
     this.oprgrp = options.oprgrp;
     this.refno = options.refno;
     // this.mode = 'ADD';
+    this.parentTypememo = this.parentType + "-MEMO";
     this.initPage();
     this.actionHandler();
   }
@@ -223,9 +228,48 @@ export class OthTrackingPageComponent implements OnInit {
   }
 
   AttachRow(_rec: Tbl_Cargo_Tracking_Status) {
-
+    let TypeList: any[] = [];
+    TypeList = [{ "code": "INTERNAL MEMO", "name": "INTERNAL MEMO" }];
+    this.attach_pkid = _rec.param_id;
+    this.attach_typelist = TypeList;
+    this.tab = 'attachment';
   }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
+
   RemoveRow(_rec: Tbl_Cargo_Tracking_Status) {
+
+    this.errorMessage = '';
+    if (this.gs.isBlank(_rec.param_id)) {
+      this.errorMessage = "Cannot Delete, ID Not Found";
+      alert(this.errorMessage);
+      return;
+    }
+
+    if (!confirm("DELETE " + _rec.remarks)) {
+      return;
+    }
+
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = _rec.param_id;
+    SearchData.parentType = this.parentTypememo;
+
+    this.mainService.DeleteRecord(SearchData)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage = response.error;
+          alert(this.errorMessage);
+        }
+        else {
+          this.trackmemorecords.splice(this.trackmemorecords.findIndex(rec => rec.param_id == _rec.param_id), 1);
+          this.NewRecord();
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+        alert(this.errorMessage);
+      });
 
   }
   //   RemoveRow(_rec: Tbl_cargo_imp_desc) {
@@ -243,7 +287,8 @@ export class OthTrackingPageComponent implements OnInit {
     this.lblSaveMemo = "Save";
     //Txtmemo.Focus();
   }
-  private EditRow(_rec: Tbl_Cargo_Tracking_Status) {
+
+  EditRow(_rec: Tbl_Cargo_Tracking_Status) {
     //Dt_Date.IsEnabled = false;
     this.Memo_Id = _rec.param_id.toString();
     this.Memo_Mode = "EDIT";
@@ -260,7 +305,7 @@ export class OthTrackingPageComponent implements OnInit {
     saveRecord.pkid = this.pkid;
     saveRecord.memoPkid = this.Memo_Id;
     saveRecord.memoMode = this.Memo_Mode;
-    saveRecord.parentType = this.parentType;
+    saveRecord.parentType = this.parentTypememo;
 
     this.mainService.SaveMemo(saveRecord)
       .subscribe(response => {
@@ -271,6 +316,7 @@ export class OthTrackingPageComponent implements OnInit {
         else {
 
           if (this.Memo_Mode == "ADD") {
+            this.trackmemorecord.date = response.memodate;
             this.trackmemorecords.push(this.trackmemorecord);
             // Grid_Memo.ScrollIntoView(memo_Record, Grid_Memo.Columns[0]);
             //Grid_Memo.Focus();
@@ -313,5 +359,6 @@ export class OthTrackingPageComponent implements OnInit {
           alert(this.errorMessage);
         });
   }
+
 
 }
