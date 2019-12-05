@@ -65,7 +65,7 @@ export class CompanyService {
 
     }
 
-    Search(_searchdata: any, type: string = '') {
+    Search(_searchdata: any, type: string = '', catg : string ) {
 
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
@@ -78,7 +78,7 @@ export class CompanyService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        SearchData.TYPE = "C";
+        SearchData.TYPE = catg;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
 

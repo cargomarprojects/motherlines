@@ -47,11 +47,11 @@ export class CompanyComponent implements OnInit {
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions, 'SEARCH');
+    this.mainservice.Search(actions, 'SEARCH', 'C');
   }
 
   pageEvents(actions: any) {
-    this.mainservice.Search(actions, 'PAGE');
+    this.mainservice.Search(actions, 'PAGE', 'C');
   }
 
   NewRecord() {
