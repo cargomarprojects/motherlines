@@ -253,8 +253,8 @@ export class SeaImpMasterEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          this.errorMessage.push('Save Complete');
-          alert(this.errorMessage);
+          // this.errorMessage.push('Save Complete');
+          // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
