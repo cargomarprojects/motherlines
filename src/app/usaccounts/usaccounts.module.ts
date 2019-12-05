@@ -29,6 +29,9 @@ import { PaymentComponent } from './payment/payment.component';
 import { PaymentHeaderComponent } from './payment/payment-header.component';
 import { PaymentEditComponent } from './payment/payment-edit.component';
 import { PayFinalComponent } from './payfinal/payfinal.component';
+import { AccSettingsComponent } from './accsettings/accsettings.component';
+import { AccSettingsEditComponent } from './accsettings/accsettings-edit.component';
+import { AccSettingsHeaderComponent } from './accsettings/accsettings-header.component';
 
 
 @NgModule({
@@ -58,7 +61,10 @@ import { PayFinalComponent } from './payfinal/payfinal.component';
   PaymentComponent,
   PaymentHeaderComponent,
   PaymentEditComponent,
-  PayFinalComponent
+  PayFinalComponent,
+  AccSettingsComponent,
+  AccSettingsEditComponent,
+  AccSettingsHeaderComponent
   
 
 ],

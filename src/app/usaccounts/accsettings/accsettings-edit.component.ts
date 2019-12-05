@@ -36,7 +36,7 @@ export class AccSettingsEditComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
-        public mainService: AcctmService,
+        public mainService: AccSettingsService,
     ){}
 
     ngOnInit() {
