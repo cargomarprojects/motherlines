@@ -10,7 +10,7 @@
   {{errorMessage}}
 </div>
 
-<app-company-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)"></app-company-header>
+<app-branch-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)"></app-branch-header>
 
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
