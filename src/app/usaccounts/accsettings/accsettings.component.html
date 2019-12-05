@@ -9,8 +9,8 @@
   {{errorMessage}}
 </div>
 
-<app-acctm-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-</app-acctm-header>
+<app-accsettings-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+</app-accsettings-header>
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
 
