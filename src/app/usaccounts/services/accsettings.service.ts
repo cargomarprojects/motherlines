@@ -48,7 +48,7 @@ export class AccSettingsService {
         this.record = <AcctmModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: ''},
+            searchQuery: <SearchQuery>{ searchString: '', showonlysettings : true},
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -80,6 +80,7 @@ export class AccSettingsService {
         SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
+        SearchData.SHOW_ONLY_SETTINGS = this.record.searchQuery.showonlysettings;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -129,7 +130,7 @@ export class AccSettingsService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Acctm/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    SaveAcctmSettingsSave(SearchData: any) {
+    Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Acctm/AcctmSettingsSave', SearchData, this.gs.headerparam2('authorized'));
     }
 

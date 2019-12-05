@@ -130,7 +130,7 @@ export class AccSettingsEditComponent implements OnInit {
         saveRecord.mode = this.mode;
         saveRecord.userinfo = this.gs.UserInfo;
 
-        this.mainService.Save(saveRecord)
+        this.mainService.Save (saveRecord)
             .subscribe(response => {
                 if (response.retvalue == false) {
                     this.errorMessage = response.error;
