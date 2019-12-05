@@ -155,13 +155,20 @@ export class CompanyEditComponent implements OnInit {
         }
 
 
+        if (this.gs.isBlank(this.record.comp_code)) {
+            bRet = false;
+            this.errorMessage = "Code Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+
         if (this.gs.isBlank(this.record.comp_name)) {
             bRet = false;
             this.errorMessage = "Name Cannot be blank";
             alert(this.errorMessage);
             return bRet;
         }
-
 
         if (this.gs.isZero(this.record.comp_order)) {
             bRet = false;
