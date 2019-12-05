@@ -406,7 +406,7 @@
           <label class="col-4 col-form-label col-form-label-sm">Nomination</label>
           <div class="col-8">
             <select class="form-control form-control-sm" [(ngModel)]="record.hbl_bltype" #hbl_bltype>
-              <option *ngFor="let rec of gs.PARAM_NOMINATION" [value]="rec.code">{{rec.name}}</option>
+              <option *ngFor="let rec of gs.PARAM_NOMINATION" [value]="rec.name">{{rec.name}}</option>
             </select>
           </div>
         </div>
@@ -969,7 +969,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">By</label>
           <div class="col-6">
-            <InputBox [(inputModel)]="record.hbl_by1" [maxlength]="60" [uppercase]="true" #remark1>
+            <InputBox [(inputModel)]="record.hbl_by1" [maxlength]="60" [uppercase]="true" #by1>
             </InputBox>
           </div>
         </div>
@@ -978,7 +978,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-6">
-            <InputBox [(inputModel)]="record.hbl_by2" [maxlength]="60" [uppercase]="true" #remark2>
+            <InputBox [(inputModel)]="record.hbl_by2" [maxlength]="60" [uppercase]="true" #by2>
             </InputBox>
           </div>
         </div>
@@ -986,7 +986,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Issued Place</label>
           <div class="col-6">
-            <InputBox [(inputModel)]="record.hbl_issued_place" [maxlength]="60" [uppercase]="true" #remark2>
+            <InputBox [(inputModel)]="record.hbl_issued_place" [maxlength]="60" [uppercase]="true" #issplace>
             </InputBox>
           </div>
         </div>
@@ -994,17 +994,21 @@
 
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Issue Date</label>
-          <div class="col-6">
+          <div class="col-4">
             <app-date [inputdate]="record.hbl_issued_date" (ValueChanged)="record.hbl_issued_date=$event"></app-date>
+          </div>
+          <label class="col-1 col-form-label col-form-label-sm pl-0">Originals</label>
+          <div class="col-1 pl-0">
+            <InputBoxNumber [(inputModel)]="record.hbl_originals" [maxlength]="60" [dec]="0" #originals>
+            </InputBoxNumber>
           </div>
         </div>
 
 
         <div class="form-group row">
-          <label class="col-4 col-form-label col-form-label-sm">Originals</label>
+          <label class="col-4 col-form-label col-form-label-sm">Actual Delivery Date</label>
           <div class="col-6">
-            <InputBoxNumber [(inputModel)]="record.hbl_originals" [maxlength]="60" [dec]="0" #remark2>
-            </InputBoxNumber>
+            <app-date [inputdate]="record.hbl_delivery_date" (ValueChanged)="record.hbl_delivery_date=$event"></app-date>
           </div>
         </div>
 

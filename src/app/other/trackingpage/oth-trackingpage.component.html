@@ -21,8 +21,8 @@
                         <div class="row">
                             <div class="col-md-6 testbox  px-0 mx-0">
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label col-form-label-sm">Ref No</label>
-                                    <div class="col-10">
+                                    <label class="col-1 col-form-label col-form-label-sm">Ref#</label>
+                                    <div class="col-11">
                                         <input disabled class="form-control form-control-sm" type="text"
                                             [(ngModel)]="refno" maxlength="500" (blur)="onBlur('refno',null)" />
                                     </div>
@@ -73,14 +73,8 @@
     </div>
 
     <div class="page-footer">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group row">
-                    <div class="col-8">
-                        <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
-                    </div>
-                </div>
-            </div>
+        <div class="row row justify-content-center p-1">
+            <button class="btn btn-primary btn-md" (click)="Save()">Save</button>
         </div>
     </div>
     <br>
@@ -119,21 +113,20 @@
                                 <label class="col-1 col-form-label col-form-label-sm"></label>
                                 <div class="col-7">
                                     <textarea rows="5" class="form-control form-control-sm"
-                                        [(ngModel)]="trackmemorecord.remarks" (blur)="onBlur('trackremarks')"
-                                        required maxlength="500"></textarea>
+                                        [(ngModel)]="trackmemorecord.remarks" (blur)="onBlur('trackremarks')" required
+                                        maxlength="500"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="offset-1 col-7 col-form-label col-form-label-sm">*Memo (Press ENTER Key to
                                     Add a New Line.)</label>
                                 <div class="col-4 p-0">
-                                    <button class="btn btn-primary btn-sm mr-1"
-                                        (click)="SaveMemo()">{{lblSaveMemo}}</button>
-                                        <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
+                                    <div class="row row justify-content-center p-1">
+                                        <button class="btn btn-primary btn-md mr-1"
+                                            (click)="SaveMemo()">{{lblSaveMemo}}</button>
+                                        <button class="btn btn-primary btn-md mr-1" (click)="NewRecord()">New</button>
+                                    </div>
                                 </div>
-                                <!-- <div class="col-1">
-                                    <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
-                                </div> -->
                             </div>
                         </div>
                     </div>
