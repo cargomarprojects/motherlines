@@ -33,6 +33,9 @@ export class CompanyEditComponent implements OnInit {
     isAdmin: boolean;
     refno: string = "";
 
+    where = " ACC_TYPE = 'BANK' ";
+
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -178,7 +181,9 @@ export class CompanyEditComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
 
-        if (_Record.controlname == "ACC_GROUPM") {
+        if (_Record.controlname == "ACCTM") {
+            this.record.comp_bankid = _Record.id;
+            this.record.comp_bank_name = _Record.name;
         }
 
     }

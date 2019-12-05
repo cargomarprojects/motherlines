@@ -17,6 +17,15 @@
 
         <div class="col-md-6 testbox  px-0 mx-0">
 
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Code</label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_code')"
+                        [(ngModel)]="record.comp_code" maxlength="4" [disabled]="mode!='ADD'" />
+                </div>
+            </div>            
+
             
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Name</label>
@@ -26,6 +35,38 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Address</label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_add1')"
+                        [(ngModel)]="record.comp_add1" maxlength="60" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_add2')"
+                        [(ngModel)]="record.comp_add2" maxlength="60" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_add3')"
+                        [(ngModel)]="record.comp_add3" maxlength="60" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_add4')"
+                        [(ngModel)]="record.comp_add4" maxlength="60" />
+                </div>
+            </div>                        
+
+
 
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Order</label>
@@ -34,6 +75,16 @@
                         [(ngModel)]="record.comp_order" maxlength="10" />
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Defualt Bank</label>
+                <div class="col-8">
+                    <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'" [displaycolumn]="'NAME'"
+                        [where]="where" [displaydata]="record.comp_bank_name" (ValueChanged)="LovSelected($event)">
+                    </app-autocomplete2>
+                </div>
+            </div>
+
 
         </div>
 
