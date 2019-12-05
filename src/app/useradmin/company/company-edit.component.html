@@ -1,7 +1,7 @@
 <div class="page-header">
     <div class="row align-items-center justify-content-left p-1">
         <label class="mr-3">Company Master ({{mode}})</label>
-        <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>
+        <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.user_isadmin == 'Y'" (click)="NewRecord()">New</button>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
     </div>
 </div>

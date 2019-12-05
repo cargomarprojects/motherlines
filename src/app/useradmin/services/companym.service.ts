@@ -122,6 +122,7 @@ export class CompanyService {
             REC.comp_add3 = _rec.comp_add3;
             REC.comp_add4 = _rec.comp_add4;
             REC.comp_order = _rec.comp_order;
+            REC.parent_name = _rec.parent_name;
         }
     }
     
