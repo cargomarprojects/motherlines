@@ -8,6 +8,9 @@ import { ModulemEditComponent } from './module/modulem-edit.component';
 import { MenuEditComponent } from './menu/menu-edit.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuHeaderComponent } from './menu/menu-header.component';
+import { CompanyComponent } from './company/company.component';
+import { CompanyEditComponent } from './company/company-edit.component';
+import { CompanyHeaderComponent } from './company/company-header.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { MenuHeaderComponent } from './menu/menu-header.component';
     MenuComponent,
     MenuHeaderComponent,
     MenuEditComponent,
+    CompanyComponent,
+    CompanyEditComponent,
+    CompanyHeaderComponent
 
   ],
   imports: [
