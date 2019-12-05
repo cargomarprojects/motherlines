@@ -156,6 +156,15 @@ export class MenuEditComponent implements OnInit {
 
     private SaveParent() {
 
+
+        var mRec =   this.modulelist.find( rec => rec.pkid == this.record.menu_module_id  );
+        if ( mRec )
+            this.record.module_name =  mRec.name;
+        var gRec =   this.modulelist.find( rec => rec.pkid == this.record.menu_group_id  );
+            if ( gRec )
+                this.record.menu_group_name =  mRec.name;
+
+
     }
     private Allvalid(): boolean {
 
