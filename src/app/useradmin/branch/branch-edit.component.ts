@@ -169,6 +169,11 @@ export class BranchEditComponent implements OnInit {
     }
 
     private SaveParent() {
+        
+        this.record.comp_type = 'B';
+        var mRec =   this.companyList.find( rec => rec.pkid == this.record.comp_parent_id  );
+        if ( mRec )
+            this.record.parent_name =  mRec.name;
 
     }
     private Allvalid(): boolean {

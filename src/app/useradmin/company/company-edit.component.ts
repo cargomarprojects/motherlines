@@ -141,6 +141,8 @@ export class CompanyEditComponent implements OnInit {
 
     private SaveParent() {
 
+        this.record.comp_type = 'C';
+
     }
     private Allvalid(): boolean {
 
