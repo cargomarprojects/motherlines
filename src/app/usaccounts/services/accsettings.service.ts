@@ -48,7 +48,7 @@ export class AccSettingsService {
         this.record = <AcctmModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', showonlysettings : true},
+            searchQuery: <SearchQuery>{ searchString: '', showonlysettings : 'Y'},
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -80,7 +80,9 @@ export class AccSettingsService {
         SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
-        SearchData.SHOW_ONLY_SETTINGS = this.record.searchQuery.showonlysettings;
+        if ( this.record.searchQuery.showonlysettings == 'Y')
+            SearchData.SHOW_ONLY_SETTINGS = this.record.searchQuery.showonlysettings;
+
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;

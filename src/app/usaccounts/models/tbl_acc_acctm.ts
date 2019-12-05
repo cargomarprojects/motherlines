@@ -3,7 +3,7 @@ import { PageQuery } from '../../shared/models/pageQuery';
 
 export interface SearchQuery {
      searchString: string;
-     showonlysettings : boolean
+     showonlysettings : string
 }
 
 export interface Tbl_acc_acctm {
