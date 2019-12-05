@@ -122,15 +122,20 @@ export class AccSettingsService {
     }
     
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AccSettings/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Acctm/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AccSettings/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Acctm/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/AccSettings/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Acctm/Save', SearchData, this.gs.headerparam2('authorized'));
     }
+
+    SaveAcctmSettingsSave(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Acctm/AcctmSettingsSave', SearchData, this.gs.headerparam2('authorized'));
+    }
+
 
 }
