@@ -29,7 +29,8 @@ export class SeaImpHouseService {
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
-    
+    public canDelete: boolean;
+
     public initlialized: boolean;
 
     constructor(
@@ -58,6 +59,7 @@ export class SeaImpHouseService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
+        this.canDelete = this.gs.canDelete(this.menuid);
         this.initlialized = true;
     }
 
@@ -105,6 +107,39 @@ export class SeaImpHouseService {
         });
     }
 
+    DeleteRow(_rec: Tbl_cargo_imp_housem) {
+        this.record.errormessage = '';
+        if (this.gs.isBlank(_rec.hbl_pkid) || this.gs.isBlank(_rec.hbl_mbl_id)) {
+            this.record.errormessage = "Cannot Delete, Reference Not Found";
+            alert(this.record.errormessage);
+            return;
+        }
+
+        if (!confirm("DELETE " + _rec.hbl_houseno)) {
+            return;
+        }
+
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.hbl_pkid;
+        SearchData.mblid = _rec.hbl_mbl_id;
+        SearchData.remarks = _rec.hbl_houseno;
+
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.hbl_pkid == _rec.hbl_pkid), 1);
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+            });
+    }
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -129,6 +164,9 @@ export class SeaImpHouseService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/LoadCha', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
     // GetArrivalNotice(SearchData: any) {
     //     return this.http2.post<any>(this.gs.baseUrl + '/api/SeaImport/House/GetArrivalNotice', SearchData, this.gs.headerparam2('authorized'));
     // }
