@@ -22,9 +22,8 @@
         <th>NAME</th>
         <th>GROUP</th>
         <th>TYPE</th>
-        <th>CREATED-BY</th>
-        <th>DATE</th>
-        <th>CLOSED</th>
+        <th>ARAP</th>
+        <th>PAYMENT</th>
       </tr>
     </thead>
     <tbody class="page-body-tbody">
@@ -33,9 +32,9 @@
         <td>{{rec.acc_name}}</td>
         <td>{{rec.acc_group_name}}</td>
         <td>{{rec.acc_type}}</td>
-        <td>{{rec.rec_created_by}}</td>
-        <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-        <td>{{rec.rec_closed}}</td>
+        <td>{{rec.acc_is_arap_code}}</td>
+        <td>{{rec.acc_is_payment_code}}</td>
+
       </tr>
     </tbody>
   </table>
