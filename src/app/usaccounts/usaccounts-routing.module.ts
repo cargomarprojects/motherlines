@@ -20,6 +20,8 @@ import { DepositEditComponent } from './deposit/deposit-edit.component';
 import { PaymentComponent } from './payment/payment.component';
 import { PaymentEditComponent } from './payment/payment-edit.component';
 import { PayFinalComponent } from './payfinal/payfinal.component';
+import { AccSettingsComponent } from './accsettings/accsettings.component';
+import { AccSettingsEditComponent } from './accsettings/accsettings-edit.component';
 
 
 const routes: Routes = [
@@ -42,6 +44,11 @@ const routes: Routes = [
   { path : 'PaymentPage', component : PaymentComponent },
   { path : 'PaymentEditPage', component : PaymentEditComponent },
   { path : 'PayFinalPage', component : PayFinalComponent },
+
+  { path : 'AccSettingsPage', component : AccSettingsComponent },
+  { path : 'AccSettingsEditPage', component : AccSettingsEditComponent },
+
+
 ];
 
 @NgModule({
