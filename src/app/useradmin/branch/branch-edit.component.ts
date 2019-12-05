@@ -89,6 +89,18 @@ export class BranchEditComponent implements OnInit {
 
         this.record.comp_pkid= this.pkid;
         this.record.comp_name = '';
+        this.record.comp_add1 = '';
+        this.record.comp_add2 = '';
+        this.record.comp_add3 = '';
+        this.record.comp_add4 = '';
+
+        this.record.comp_line1 = '';
+        this.record.comp_line2 = '';
+        this.record.comp_line3 = '';
+        this.record.comp_line4 = '';
+        this.record.comp_line5 = '';
+
+
         this.record.comp_order = 0;
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;

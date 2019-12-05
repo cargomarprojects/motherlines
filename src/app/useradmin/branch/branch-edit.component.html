@@ -24,9 +24,9 @@
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_code')"
                         [(ngModel)]="record.comp_code" maxlength="4" [disabled]="mode!='ADD'" />
                 </div>
-            </div>            
+            </div>
 
-            
+
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Name</label>
                 <div class="col-8">
@@ -64,7 +64,7 @@
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_add4')"
                         [(ngModel)]="record.comp_add4" maxlength="60" />
                 </div>
-            </div>                        
+            </div>
 
 
 
@@ -77,11 +77,64 @@
             </div>
 
             <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Doc Prefix</label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_prefix')"
+                        [(ngModel)]="record.comp_prefix" maxlength="2" />
+                </div>
+            </div>
+
+
+            <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm">Defualt Bank</label>
                 <div class="col-8">
                     <app-autocomplete2 [controlname]="'ACCTM'" [tabletype]="'ACC_ACCTM'" [displaycolumn]="'NAME'"
                         [where]="where" [displaydata]="record.comp_bank_name" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
+                </div>
+            </div>
+
+
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <label class="col-8 col-form-label col-form-label-sm">Printing Address</label>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Address</label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_line1')"
+                        [(ngModel)]="record.comp_line1" maxlength="100" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_line2')"
+                        [(ngModel)]="record.comp_line2" maxlength="100" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_line3')"
+                        [(ngModel)]="record.comp_line3" maxlength="100" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_line4')"
+                        [(ngModel)]="record.comp_line4" maxlength="100" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm"></label>
+                <div class="col-8">
+                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('comp_line5')"
+                        [(ngModel)]="record.comp_line5" maxlength="100" />
                 </div>
             </div>
 
