@@ -95,6 +95,18 @@
             </div>
 
 
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Company</label>
+                <div class="col-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.comp_parent_id" [disabled]="mode!='ADD'">
+                        <option *ngFor="let rec of companyList" [value]="rec.comp_pkid">{{rec.comp_name}}</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+
 
             <div class="form-group row">
                 <label class="col-4 col-form-label col-form-label-sm"></label>

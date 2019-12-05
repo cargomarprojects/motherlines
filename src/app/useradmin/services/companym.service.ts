@@ -138,8 +138,8 @@ export class CompanyService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Companym/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    getComboList(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/Companym', SearchData, this.gs.headerparam2('authorized'));
+    getCompanyList(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Auth/CompanyList', SearchData, this.gs.headerparam2('authorized'));
     }
 
 

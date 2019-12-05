@@ -35,6 +35,7 @@ export class BranchEditComponent implements OnInit {
 
     where = " ACC_TYPE = 'BANK' ";
 
+    companyList : any [];
 
     constructor(
         private router: Router,
@@ -65,8 +66,21 @@ export class BranchEditComponent implements OnInit {
 
     LoadCombo() {
 
+        this.errorMessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.CODE = "";
+        SearchData.TYPE = "USR_COMPANY";
+
+        this.mainService.getCompanyList(SearchData)
+            .subscribe(response => {
+                this.companyList = <any>response.list;
+
+            }, error => {
+                this.errorMessage = this.gs.getError(error);
+            });
 
     }
+
 
     NewRecord() {
         this.mode = 'ADD'
@@ -99,6 +113,9 @@ export class BranchEditComponent implements OnInit {
         this.record.comp_line3 = '';
         this.record.comp_line4 = '';
         this.record.comp_line5 = '';
+
+        this.record.comp_parent_id = '';
+        this.record.parent_name ='';
 
 
         this.record.comp_order = 0;
