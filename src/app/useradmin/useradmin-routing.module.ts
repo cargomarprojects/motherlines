@@ -6,6 +6,8 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuEditComponent } from './menu/menu-edit.component';
 import { CompanyComponent } from './company/company.component';
 import { CompanyEditComponent } from './company/company-edit.component';
+import { BranchComponent } from './branch/branch.component';
+import { BranchEditComponent } from './branch/branch-edit.component';
 
 const routes: Routes = [
   {path:'ModulePage', component : ModulemComponent},
@@ -13,9 +15,9 @@ const routes: Routes = [
   {path:'MenuPage', component : MenuComponent },
   {path:'MenuEditPage', component : MenuEditComponent}  ,
   {path:'CompanyPage', component : CompanyComponent },
-  {path:'CompanyEditPage', component : CompanyEditComponent }    
-  {path:'BranchPage', component : CompanyComponent },
-  {path:'BranchEditPage', component : CompanyEditComponent }      
+  {path:'CompanyEditPage', component : CompanyEditComponent }    ,
+  {path:'BranchPage', component : BranchComponent },
+  {path:'BranchEditPage', component : BranchEditComponent }      
 ];
 
 @NgModule({
