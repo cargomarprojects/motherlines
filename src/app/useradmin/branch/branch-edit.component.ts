@@ -227,6 +227,16 @@ export class BranchEditComponent implements OnInit {
             return bRet;
         }
 
+
+        if (this.gs.isBlank(this.record.comp_parent_id)) {
+            bRet = false;
+            this.errorMessage = "Company Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }        
+        
+
+
         return bRet;
     }
 

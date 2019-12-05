@@ -76,7 +76,7 @@ export class CompanyEditComponent implements OnInit {
     actionHandler() {
         this.errorMessage = '';
         if (this.mode == 'ADD') {
-            this.record = <Tbl_User_Companym >{};
+            this.record = <Tbl_User_Companym>{};
             this.pkid = this.gs.getGuid();
             this.init();
         }
@@ -87,9 +87,17 @@ export class CompanyEditComponent implements OnInit {
 
     init() {
 
-        this.record.comp_pkid= this.pkid;
+        this.record.comp_pkid = this.pkid;
         this.record.comp_name = '';
         this.record.comp_order = 0;
+
+
+        this.record.comp_scolor = 'WHITE';
+        this.record.comp_ecolor = 'GREEN';
+        this.record.comp_offset = 0;
+        this.record.comp_ncolor = "";
+        this.record.comp_linkcolor = 'RED';
+
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
     }
@@ -100,7 +108,7 @@ export class CompanyEditComponent implements OnInit {
         SearchData.pkid = this.pkid;
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
-                this.record = <Tbl_User_Companym >response.record;
+                this.record = <Tbl_User_Companym>response.record;
                 this.mode = 'EDIT';
             }, error => {
                 this.errorMessage = this.gs.getError(error);
@@ -183,9 +191,9 @@ export class CompanyEditComponent implements OnInit {
             this.errorMessage = "Address2 Cannot be blank";
             alert(this.errorMessage);
             return bRet;
-        }        
-        
-        
+        }
+
+
 
 
         if (this.gs.isZero(this.record.comp_order)) {
