@@ -6,20 +6,20 @@ import { GlobalService } from '../../core/services/global.service';
 import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 import { InputBoxComponent } from '../../shared/input/inputbox.component';
 
-import { MenuService } from '../services/menum.service';
+import { CompanyService } from '../services/companym.service';
 import { User_Menu } from '../../core/models/menum';
-import { vm_Tbl_User_Menum, Tbl_User_Menum } from '../models/Tbl_User_Menum';
+import { vm_Tbl_User_Companym, Tbl_User_Companym } from '../models/Tbl_User_Companym';
 
 import { SearchTable } from '../../shared/models/searchtable';
 
 
 @Component({
-    selector: 'app-menu-edit',
-    templateUrl: './menu-edit.component.html'
+    selector: 'app-company-edit',
+    templateUrl: './company-edit.component.html'
 })
-export class MenuEditComponent implements OnInit {
+export class CompanyEditComponent implements OnInit {
 
-    record: Tbl_User_Menum = <Tbl_User_Menum>{};
+    record: Tbl_User_Companym = <Tbl_User_Companym>{};
 
     tab: string = 'main';
 
@@ -29,19 +29,19 @@ export class MenuEditComponent implements OnInit {
     errorMessage: string;
     Foregroundcolor: string;
 
-    modulelist: any[];
-    headinglist: any[];
-
     title: string;
     isAdmin: boolean;
     refno: string = "";
+
+    where = " ACC_TYPE = 'BANK' ";
+
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
-        public mainService: MenuService,
+        public mainService: CompanyService,
     ) { }
 
     ngOnInit() {
@@ -63,23 +63,8 @@ export class MenuEditComponent implements OnInit {
         this.LoadCombo();
     }
 
-
-
     LoadCombo() {
 
-        this.errorMessage = '';
-        var SearchData = this.gs.UserInfo;
-        SearchData.CODE = "";
-        SearchData.TYPE = "MENU HEADING";
-
-        this.mainService.getComboList(SearchData)
-            .subscribe(response => {
-                this.modulelist = <any>response.module;
-                this.headinglist = <any>response.heading;
-
-            }, error => {
-                this.errorMessage = this.gs.getError(error);
-            });
 
     }
 
@@ -91,7 +76,7 @@ export class MenuEditComponent implements OnInit {
     actionHandler() {
         this.errorMessage = '';
         if (this.mode == 'ADD') {
-            this.record = <Tbl_User_Menum>{};
+            this.record = <Tbl_User_Companym >{};
             this.pkid = this.gs.getGuid();
             this.init();
         }
@@ -102,9 +87,9 @@ export class MenuEditComponent implements OnInit {
 
     init() {
 
-        this.record.menu_pkid = this.pkid;
-        this.record.menu_name = '';
-        this.record.module_name = '';
+        this.record.comp_pkid= this.pkid;
+        this.record.comp_name = '';
+        this.record.comp_order = 0;
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
     }
@@ -115,7 +100,7 @@ export class MenuEditComponent implements OnInit {
         SearchData.pkid = this.pkid;
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
-                this.record = <Tbl_User_Menum>response.record;
+                this.record = <Tbl_User_Companym >response.record;
                 this.mode = 'EDIT';
             }, error => {
                 this.errorMessage = this.gs.getError(error);
@@ -129,7 +114,7 @@ export class MenuEditComponent implements OnInit {
         if (!this.Allvalid())
             return;
         this.SaveParent();
-        const saveRecord = <vm_Tbl_User_Menum>{};
+        const saveRecord = <vm_Tbl_User_Companym>{};
         saveRecord.record = this.record;
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
@@ -156,15 +141,6 @@ export class MenuEditComponent implements OnInit {
 
     private SaveParent() {
 
-
-        var mRec =   this.modulelist.find( rec => rec.pkid == this.record.menu_module_id  );
-        if ( mRec )
-            this.record.module_name =  mRec.name;
-        var gRec =   this.modulelist.find( rec => rec.pkid == this.record.menu_group_id  );
-            if ( gRec )
-                this.record.menu_group_name =  mRec.name;
-
-
     }
     private Allvalid(): boolean {
 
@@ -179,13 +155,43 @@ export class MenuEditComponent implements OnInit {
         }
 
 
-        if (this.gs.isBlank(this.record.menu_name)) {
+        if (this.gs.isBlank(this.record.comp_code)) {
             bRet = false;
-            this.errorMessage = "Menu Name Cannot be blank";
+            this.errorMessage = "Code Cannot be blank";
             alert(this.errorMessage);
             return bRet;
         }
 
+
+        if (this.gs.isBlank(this.record.comp_name)) {
+            bRet = false;
+            this.errorMessage = "Name Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+
+        if (this.gs.isBlank(this.record.comp_add1)) {
+            bRet = false;
+            this.errorMessage = "Address1 Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
+        if (this.gs.isBlank(this.record.comp_add2)) {
+            bRet = false;
+            this.errorMessage = "Address2 Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }        
+        
+        
+
+
+        if (this.gs.isZero(this.record.comp_order)) {
+            bRet = false;
+            this.errorMessage = "Order Cannot be blank";
+            alert(this.errorMessage);
+            return bRet;
+        }
 
         return bRet;
     }
@@ -198,7 +204,9 @@ export class MenuEditComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
 
-        if (_Record.controlname == "ACC_GROUPM") {
+        if (_Record.controlname == "ACCTM") {
+            this.record.comp_bankid = _Record.id;
+            this.record.comp_bank_name = _Record.name;
         }
 
     }
