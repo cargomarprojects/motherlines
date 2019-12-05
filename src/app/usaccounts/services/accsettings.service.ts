@@ -7,6 +7,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { Tbl_acc_acctm, AcctmModel } from '../models/tbl_acc_acctm';
 import { SearchQuery } from '../models/tbl_acc_acctm';
 import { PageQuery } from '../../shared/models/pageQuery';
+import { AccSettingsEditComponent } from '../accsettings/accsettings-edit.component';
 
 @Injectable({
     providedIn: 'root'
@@ -73,7 +74,11 @@ export class AccSettingsService {
             this.record.pageQuery = _searchdata.pageQuery;
         }
 
-        var SearchData = this.gs.UserInfo;
+        
+        var SearchData = {...this.gs.UserInfo };
+
+        //var SearchData = this.gs.UserInfo;
+
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
