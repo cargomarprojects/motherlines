@@ -24,5 +24,7 @@ export class OthTrackingPageService {
     SaveMemo(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/TrackingPage/SaveMemo', SearchData, this.gs.headerparam2('authorized'));
     }
-
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/TrackingPage/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
 }
