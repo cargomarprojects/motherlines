@@ -113,8 +113,15 @@ export class CompanyService {
         if (REC == null) {
             this.record.records.push(_rec);
         }
-        else {
+        else
+        {
+            REC.comp_code = _rec.comp_code;
             REC.comp_name = _rec.comp_name;
+            REC.comp_add1 = _rec.comp_add1;
+            REC.comp_add2 = _rec.comp_add2;
+            REC.comp_add3 = _rec.comp_add3;
+            REC.comp_add4 = _rec.comp_add4;
+            REC.comp_order = _rec.comp_order;
         }
     }
     
