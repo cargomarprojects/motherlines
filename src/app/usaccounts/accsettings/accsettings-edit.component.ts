@@ -82,27 +82,7 @@ export class AccSettingsEditComponent implements OnInit {
     init() {
 
         this.record.acc_pkid = this.pkid;
-        this.record.acc_code = '';
-        this.record.acc_name = '';
-        this.record.acc_short_name = '';        
-        
-        this.record.acc_branch = '';        
 
-        this.record.acc_type = 'OTHERS';        
-
-        this.record.acc_budget_id = '';
-
-        this.record.acc_address1 = '';        
-        this.record.acc_address2 = '';        
-        this.record.acc_address3 = '';        
-        this.record.acc_address4 = '';        
-        this.record.acc_address5 = '';        
-
-        this.record.acc_chq_format_id = 'NIL';
-
-
-        this.record.rec_created_by = this.gs.user_code;
-        this.record.rec_created_date = this.gs.defaultValues.today;
     }
 
     GetRecord() {
@@ -112,6 +92,16 @@ export class AccSettingsEditComponent implements OnInit {
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
                 this.record = <Tbl_acc_acctm>response.record;
+
+                if ( this.gs.isBlank( this.record.acc_is_arap_code) ){
+                    this.record.acc_is_arap_code = 'N';
+                }
+
+                if ( this.gs.isBlank( this.record.acc_is_payment_code) ){
+                    this.record.acc_is_payment_code = 'N';
+                }
+
+
                 this.mode = 'EDIT';
             }, error => {
                 this.errorMessage = this.gs.getError(error);
@@ -157,42 +147,6 @@ export class AccSettingsEditComponent implements OnInit {
         var bRet = true;
         this.errorMessage = "";
 
-        if (this.gs.isBlank(this.pkid)) {
-            bRet = false;
-            this.errorMessage = "Invalid ID";
-            alert(this.errorMessage);
-            return bRet;
-        }
-
-        if (this.gs.isBlank(this.record.acc_code) || this.gs.isBlank(this.record.acc_name)) {
-            bRet = false;
-            this.errorMessage = "Code/Name Cannot be blank";
-            alert(this.errorMessage);
-            return bRet;
-        }
-        
-        if (this.gs.isBlank(this.record.acc_group_id)) {
-            bRet = false;
-            this.errorMessage = "Group Cannot be blank";
-            alert(this.errorMessage);
-            return bRet;
-        }
-
-        if (this.gs.isBlank(this.record.acc_type)) {
-            bRet = false;
-            this.errorMessage = "Type Cannot be blank";
-            alert(this.errorMessage);
-            return bRet;
-        }
-
-
-        if (this.gs.isBlank(this.record.acc_chq_format_id)) {
-            bRet = false;
-            this.errorMessage = "check Format Cannot be blank";
-            alert(this.errorMessage);
-            return bRet;
-        }
-
 
 
         return bRet;
@@ -221,28 +175,6 @@ export class AccSettingsEditComponent implements OnInit {
 
     onBlur(field: string) {
 
-        if (field === 'acc_code')
-            this.record.acc_code = this.record.acc_code.toUpperCase();
-        if (field === 'acc_name')
-            this.record.acc_name = this.record.acc_name.toUpperCase();
-        if (field === 'acc_short_name')
-            this.record.acc_short_name = this.record.acc_short_name.toUpperCase();
-
-
-        if (field === 'acc_address1')
-            this.record.acc_address1 = this.record.acc_address1.toUpperCase();
-
-        if (field === 'acc_address2')
-            this.record.acc_address2 = this.record.acc_address2.toUpperCase();
-
-        if (field === 'acc_address3')
-            this.record.acc_address3 = this.record.acc_address3.toUpperCase();
-
-        if (field === 'acc_address4')
-            this.record.acc_address4 = this.record.acc_address4.toUpperCase();
-
-        if (field === 'acc_address1')
-            this.record.acc_address5 = this.record.acc_address5.toUpperCase();
 
 
     }

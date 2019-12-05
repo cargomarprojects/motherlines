@@ -38,6 +38,35 @@
                 </div>
             </div>
 
+
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">AR/AP Code</label>
+                <div class="col-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.acc_is_arap_code">
+                        <option [value]="'N'">NIL</option>
+                        <option [value]="'R'">AR</option>
+                        <option [value]="'P'">AP</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label col-form-label-sm">Show In Payment Screen</label>
+                <div class="col-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="record.acc_is_payment_code">
+                        <option [value]="'Y'">YES</option>
+                        <option [value]="'N'">NO</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+
+
+
         </div>
 
         <div class="col-md-6 testbox  px-0 mx-0">
