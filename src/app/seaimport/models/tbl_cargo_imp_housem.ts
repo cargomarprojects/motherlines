@@ -149,6 +149,7 @@ export interface Tbl_cargo_imp_housem {
     hbl_is_delivery: string;
     hbl_paid_remarks: string;
     hbl_checked:boolean;
+    hbl_delivery_date:string;
 
 }
 export interface Tbl_desc {
@@ -240,8 +241,10 @@ export interface vm_tbl_cargo_imp_housem {
     cntrs: Tbl_cargo_imp_container[];
     desc: Tbl_cargo_imp_desc[];
     hbls: Tbl_cargo_imp_housem[];
-    userinfo: any,
+    userinfo: any;
     filter: any;
+    pickup_date: string;
+    empty_ret_date: string;
 }
 
 export interface SearchQuery {

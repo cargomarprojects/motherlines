@@ -287,6 +287,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.recorddet.hbl_cargo_description10 = "CARRIER NOT RESPONSIBLE FOR PACKING OF CARGO";
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
+    this.record.hbl_delivery_date = '';
 
   }
 
@@ -330,8 +331,8 @@ export class SeaImpHouseEditComponent implements OnInit {
           this.ISFBtnForegroundcolor = "red";
         else
           this.ISFBtnForegroundcolor = "white";
-        
-          if (this.record.rec_files_attached == "Y")
+
+        if (this.record.rec_files_attached == "Y")
           this.OHBLBtnForegroundcolor = "red";
         else
           this.OHBLBtnForegroundcolor = "white";
@@ -1668,7 +1669,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
   }
 
- 
+
 
   SearchRecord(controlname: string, _id: string = "", _type: string = "") {
     this.errorMessage = [];
@@ -1745,6 +1746,41 @@ export class SeaImpHouseEditComponent implements OnInit {
   RemoveRow(_rec: Tbl_cargo_imp_container) {
     this.cntrrecords.splice(this.cntrrecords.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
+
+  UpdatePuEr() {
+
+    this.errorMessage = [];
+    if (this.mode != 'EDIT') {
+      this.errorMessage.push('Please Save and Continue...');
+      return;
+    }
+
+    if (!confirm("Update P/U. & E/R.")) {
+      return;
+    }
+
+    const updateRecord = <vm_tbl_cargo_imp_housem>{};
+    updateRecord.pkid = this.record.hbl_pkid;
+    updateRecord.cntrs = this.cntrrecords;
+    updateRecord.userinfo = this.gs.UserInfo;
+    updateRecord.empty_ret_date = this.record.hbl_empty_ret_date;
+    updateRecord.pickup_date = this.record.hbl_pickup_date;
+
+    this.mainService.UpdatePuEr(updateRecord)
+      .subscribe(response => {
+        if (response.retvalue == false) {
+          this.errorMessage.push(response.error);
+          alert(this.errorMessage);
+        }
+        else {
+          this.errorMessage.push('Update P/U. & E/R. Complete');
+          alert(this.errorMessage);
+        }
+      }, error => {
+        this.errorMessage.push(this.gs.getError(error));
+      });
+  }
+
   /*
     GetArrivalNotice(_type:string) {
       this.errorMessage = '';

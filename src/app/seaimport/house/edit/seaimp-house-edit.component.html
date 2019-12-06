@@ -1052,9 +1052,13 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-6 col-form-label col-form-label-sm"></label>
+                  <label class="col-3 col-form-label col-form-label-sm">Actual.Delivery.Date</label>
+                  <div class="col-3">
+                    <app-date [inputdate]="record.hbl_delivery_date" (ValueChanged)="record.hbl_delivery_date=$event">
+                    </app-date>
+                  </div>
                   <div class="col-6">
-                    <button class=" col-12 btn btn-success btn-sm">Update E/R & P/U</button>
+                    <button class=" col-12 btn btn-success btn-sm" (click)="UpdatePuEr()">Update E/R & P/U</button>
                   </div>
                 </div>
               </div>
