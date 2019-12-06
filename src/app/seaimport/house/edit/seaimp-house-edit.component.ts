@@ -51,6 +51,15 @@ export class SeaImpHouseEditComponent implements OnInit {
   report_url: string = '';
   report_searchdata: any = {};
   report_menuid: string = '';
+  attach_pkid: string = '';
+  attach_type: string = '';
+  attach_tablename: string = '';
+  attach_pk_column: string = '';
+  attach_refno: string = '';
+  attach_update_column: string = '';
+
+  ISFBtnForegroundcolor: string;
+  OHBLBtnForegroundcolor: string;
 
 
   private parentid: string;
@@ -316,6 +325,17 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.cntrrecords = <Tbl_cargo_imp_container[]>response.cntrrecords;
         this.descrecords = <Tbl_cargo_imp_desc[]>response.descrecords;
         this.mode = 'EDIT';
+
+        if (this.record.hbl_isf_attached == "Y")
+          this.ISFBtnForegroundcolor = "red";
+        else
+          this.ISFBtnForegroundcolor = "white";
+        
+          if (this.record.rec_files_attached == "Y")
+          this.OHBLBtnForegroundcolor = "red";
+        else
+          this.OHBLBtnForegroundcolor = "white";
+
         if (this.gs.BRANCH_REGION == "USA") {
           if (this.record.hbl_telex_released == "NO") {
             if (this.record.hbl_bl_req.includes("RECEIVED"))
@@ -1610,6 +1630,26 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.tab = 'report';
         break;
       }
+      case 'ATTACH-ISFNO': {
+        this.attach_pkid = this.pkid;
+        this.attach_type = 'ISF FILE';
+        this.attach_tablename = 'cargo_housem';
+        this.attach_pk_column = 'hbl_pkid';
+        this.attach_refno = this.record.hbl_houseno;
+        this.attach_update_column = 'HBL_ISF_ATTACHED';
+        this.tab = 'attachment';
+        break;
+      }
+      case 'ATTACH-OHBL': {
+        this.attach_pkid = this.pkid;
+        this.attach_type = 'OHBL OR TELEX RLS';
+        this.attach_tablename = 'cargo_housem';
+        this.attach_pk_column = 'hbl_pkid';
+        this.attach_refno = this.record.hbl_houseno;
+        this.attach_update_column = '';
+        this.tab = 'attachment';
+        break;
+      }
     }
   }
 
@@ -1628,14 +1668,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       this.record.hbl_cbm = this.gs.Convert_Weight("CFT2CBM", this.record.hbl_cft, 3);
   }
 
-
-  ISFUpload() {
-
-  }
-
-  OHBLUpload() {
-
-  }
+ 
 
   SearchRecord(controlname: string, _id: string = "", _type: string = "") {
     this.errorMessage = [];
