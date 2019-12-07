@@ -90,11 +90,24 @@ export class UserEditComponent implements OnInit {
         this.record.usr_pkid = this.pkid;
         this.record.usr_name = '';
 
+        this.record.usr_isadmin = 'N';
+        this.record.usr_hide_payroll = 'N'
+        this.record.usr_confirm = 'N'
+        this.record.usr_islocked = 'N'
+        this.record.usr_disable_edit_si_mblstatus = 'N'
+        this.record.usr_email_auto_bcc = 'N'
+
         this.record.usr_scolor = 'WHITE';
         this.record.usr_ecolor = 'GREEN';
         this.record.usr_offset = 0;
         this.record.usr_ncolor = "";
         this.record.usr_linkcolor = 'RED';
+
+        this.record.usr_sign_font = 'Calibri';
+        this.record.usr_sign_size = '16';
+        this.record.usr_sign_color = 'BLACK';
+
+        this.record.usr_sign_bold = 'N';
 
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
@@ -207,7 +220,12 @@ export class UserEditComponent implements OnInit {
     }
 
     onBlur(field: string) {
-
+        if ( field == 'usr_code') {
+            this.record.usr_code = this.record.usr_code.toString().toUpperCase();
+        }
+        if ( field == 'usr_name') {
+            this.record.usr_name = this.record.usr_name.toString().toUpperCase();
+        }
     }
 
 
