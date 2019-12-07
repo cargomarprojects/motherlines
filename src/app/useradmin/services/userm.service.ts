@@ -74,13 +74,15 @@ export class UserService {
             this.record.pageQuery = _searchdata.pageQuery;
         }
 
-        var SearchData = this.gs.UserInfo;
+        var SearchData = { ...this.gs.UserInfo};
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
         SearchData.TYPE = '';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
+        SearchData.REC_DELETED = (this.record.searchQuery.deleted) ? "Y" : "N";
+        SearchData.ISADMIN =  (this.isAdmin) ? "Y" : "N";
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
@@ -142,3 +144,4 @@ export class UserService {
 
 
 }
+
