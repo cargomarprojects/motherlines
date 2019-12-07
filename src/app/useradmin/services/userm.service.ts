@@ -49,7 +49,7 @@ export class UserService {
         this.record = <User_Userm_Model>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '' , total_users :0, deleted : false },
+            searchQuery: <SearchQuery>{ searchString: '' , deleted : false },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 

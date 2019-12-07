@@ -3,7 +3,6 @@ import { PageQuery } from '../../shared/models/pageQuery';
 export interface SearchQuery {
     searchString: string;
     deleted : boolean;
-    total_users : number;
 }
 
 export class Tbl_User_Userm {
