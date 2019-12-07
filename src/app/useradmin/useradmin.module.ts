@@ -14,6 +14,9 @@ import { CompanyHeaderComponent } from './company/company-header.component';
 import { BranchComponent } from './branch/branch.component';
 import { BranchEditComponent } from './branch/branch-edit.component';
 import { BranchHeaderComponent } from './branch/branch-header.component';
+import { UserComponent } from './user/user.component';
+import { UserEditComponent } from './user/user-edit.component';
+import { UserHeaderComponent } from './user/user-header.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { BranchHeaderComponent } from './branch/branch-header.component';
     CompanyHeaderComponent,
     BranchComponent,
     BranchEditComponent,
-    BranchHeaderComponent
+    BranchHeaderComponent,
+    UserComponent,
+    UserEditComponent,
+    UserHeaderComponent
 
   ],
   imports: [
