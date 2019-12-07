@@ -23,6 +23,12 @@ export class SeaImpCargoPickupComponent implements OnInit {
   cntrrecords: Tbl_cargo_imp_container[] = [];
   // 17-07-2019 Created By Ajith  
 
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+
   pkid: string;
   menuid: string;
   mode: string;
@@ -737,6 +743,30 @@ export class SeaImpCargoPickupComponent implements OnInit {
       rec.cntr_selected = this.selectdeselect;
     }
     this.chkallselected = this.selectdeselect;
+  }
+
+  DeliveryRptPrint() {
+    let cntr2print = "";
+    if (this.cntrrecords != null) {
+      this.cntrrecords.forEach(Rec => {
+        if (Rec.cntr_selected) {
+          if (cntr2print != "")
+            cntr2print += ",";
+          cntr2print += Rec.cntr_no;
+        }
+      })
+    }
+    this.report_title = 'DELIVERY ORDER';
+    this.report_url = '/api/SeaImport/House/GetDeliveryReport';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.pkid;
+    this.report_searchdata.cntrs = cntr2print;
+    this.report_searchdata.invokefrom = 'HOUSE';
+    this.report_menuid = this.gs.MENU_SI_HOUSE_DELIVERY_ORDER;
+    this.tab = 'report';
+  }
+  callbackevent(event: any) {
+    this.tab = 'main';
   }
 
 }

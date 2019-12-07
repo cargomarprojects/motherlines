@@ -1,3 +1,4 @@
+<div *ngIf="tab=='main'">
 <div class="page-header">
   <div class="col">
     <label class="mr-3">Delivery Order</label>
@@ -660,7 +661,7 @@
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
           <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
-          <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1">Print</button>
+          <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="DeliveryRptPrint()">Print</button>
         </div>
       </div>
     </div>
@@ -671,3 +672,8 @@
   <label class="col-form-label col-form-label-sm" > CREATED BY: {{record.rec_created_by}} /
     {{record.rec_created_date}} </label>
 </div> -->
+</div>
+<div *ngIf="tab=='report'">
+  <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"
+    (callbackevent)="callbackevent($event)"></app-report>
+</div>

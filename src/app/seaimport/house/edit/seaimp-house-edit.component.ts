@@ -798,9 +798,9 @@ export class SeaImpHouseEditComponent implements OnInit {
     rec.cntr_pkid = this.gs.getGuid();
     rec.cntr_hblid = this.pkid.toString();
     rec.cntr_catg = "H";
-    rec.cntr_no = "",
-      rec.cntr_type = "",
-      rec.cntr_sealno = '';
+    rec.cntr_no = "";
+    rec.cntr_type = "";
+    rec.cntr_sealno = '';
     rec.cntr_pieces = 0;
     rec.cntr_packages_uom = '';
     rec.cntr_packages = 0;
