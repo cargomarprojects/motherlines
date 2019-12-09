@@ -32,26 +32,33 @@ export class ApprovedPageEditComponent implements OnInit {
   invrecords: Tbl_Cargo_Approved[] = [];
   detrecords: Tbl_Cargo_Approvedd[] = [];
 
+  Foregroundcolor_edit: string;
+  mbl_pkid: string;
+  mbl_refno: string;
+  doc_type: string;
+  req_type: string = "REQUEST";
 
-   mbl_pkid: string;
-   mbl_refno: string;
-   doc_type: string;
-   req_type: string = "REQUEST";
+  pkid: string;
+  menuid: string;
+  mode: string;
+  errorMessage: string;
+  closeCaption: string = 'Return';
 
-   pkid: string;
-   menuid: string;
-   mode: string;
-   errorMessage: string;
-   closeCaption: string = 'Return';
+  title: string;
+  isAdmin: boolean;
+  oprgrp: string = "GENERAL";
+  rdBtnChkedValue: string = "";
 
-   title: string;
-   isAdmin: boolean;
-   oprgrp: string = "GENERAL";
-   rdBtnChkedValue: string = "";
-
-   IsLocked: boolean = false;
-   RdbApproved: boolean = false;
-   RdbNotApproved: boolean = false;
+  IsLocked: boolean = false;
+  RdbApproved: boolean = false;
+  RdbNotApproved: boolean = false;
+  tab: string = 'main';
+  attach_pkid: string = "";
+  attach_typelist: any = {};
+  attach_type: string = "";
+  attach_tablename: string = "";
+  attach_tablepkcolumn: string = "";
+  attach_refno: string = "";
 
   constructor(
     private router: Router,
@@ -127,6 +134,7 @@ export class ApprovedPageEditComponent implements OnInit {
       Rec.ca_hbl_selected = false;
     })
     // this.csdate_field.Focus();
+    this.Foregroundcolor_edit = "white";
   }
 
   GetRecord() {
@@ -156,6 +164,12 @@ export class ApprovedPageEditComponent implements OnInit {
           else
             Rec.ca_inv_selected = false;
         })
+
+        if (this.record.rec_files_attached == "Y")
+        this.Foregroundcolor_edit = "red";
+    else
+        this.Foregroundcolor_edit = "white";
+
 
         // if (REQ_TYPE == "APPROVED")
         // Dispatcher.BeginInvoke(() => { RB_Approved.Focus(); });
@@ -392,16 +406,18 @@ export class ApprovedPageEditComponent implements OnInit {
 
   BtnNavigation(action: string) {
     switch (action) {
-      //   case 'CUSTOMSHOLD': {
-      //     let prm = {
-      //       menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
-      //       pkid: this.pkid,
-      //       origin: 'seaimp-House-page',
-      //     };
-      //     this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
-      //     break;
-      //   }
-
+      case 'ATTACHMENT': {
+        let TypeList: any[] = [];
+        TypeList = [{ "code": "APPROVAL REQUEST", "name": "APPROVAL REQUEST" }];
+        this.attach_pkid = this.pkid;
+        this.attach_type = 'APPROVAL REQUEST';
+        this.attach_typelist = TypeList;
+        this.attach_tablename = 'cargo_approved';
+        this.attach_tablepkcolumn = 'ca_pkid';
+        this.attach_refno = this.record.ca_req_no.toString();
+        this.tab = 'attachment';
+        break;
+      }
     }
   }
 
@@ -434,7 +450,7 @@ export class ApprovedPageEditComponent implements OnInit {
 
     if (!this.AllvalidDet())
       return;
-    
+
     const saveRecord = <vm_tbl_cargo_approved>{};
     saveRecord.detrecord = this.detrecord;
     saveRecord.mode = 'ADD';
@@ -474,7 +490,7 @@ export class ApprovedPageEditComponent implements OnInit {
     var bRet = true;
     this.errorMessage = "";
 
-    if (this.gs.isBlank(this.detrecord.cad_parent_id)||this.gs.isBlank(this.detrecord.cad_approvedby_id)) {
+    if (this.gs.isBlank(this.detrecord.cad_parent_id) || this.gs.isBlank(this.detrecord.cad_approvedby_id)) {
       bRet = false;
       this.errorMessage = "Invalid ID.";
       alert(this.errorMessage);
@@ -492,11 +508,25 @@ export class ApprovedPageEditComponent implements OnInit {
       if (Rec.cad_approvedby_id == this.gs.user_pkid && Rec.cad_is_approved == this.rdBtnChkedValue) {
         bRet = false;
         this.errorMessage = "Duplicate Record";
-        alert(this.errorMessage); 
+        alert(this.errorMessage);
         // RB_Approved.Focus();
         return bRet;
       }
     })
     return bRet;
   }
+
+
+  AttachRow(_rec: Tbl_Cargo_Approved) {
+    let TypeList: any[] = [];
+    TypeList = [{ "code": "INTERNAL MEMO", "name": "INTERNAL MEMO" }];
+    // this.attach_pkid = _rec.param_id;
+    // this.attach_typelist = TypeList;
+    this.tab = 'attachment';
+  }
+
+  callbackevent() {
+    this.tab = 'main';
+  }
+
 }
