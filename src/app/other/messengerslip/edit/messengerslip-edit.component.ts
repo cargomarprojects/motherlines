@@ -27,6 +27,12 @@ export class MessengerSlipEditComponent implements OnInit {
 
   record: Tbl_cargo_slip = <Tbl_cargo_slip>{};
 
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+
   mbl_pkid: string;
   pkid: string;
   menuid: string;
@@ -401,6 +407,21 @@ export class MessengerSlipEditComponent implements OnInit {
       //   }
 
     }
+  }
+
+  MessengerRptPrint() {
+    this.report_title = this.record.cs_is_pick === "Y" ? 'Pick Up' : 'Drop';
+    this.report_url = '/api/Other/MessengerSlip/GetMessengerReport';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.pkid;
+    this.report_searchdata.DEFAULT_MESSENGER_ID = this.gs.MESSENGER_PKID;
+    this.report_searchdata.MBL_ID = '';
+    this.report_menuid = this.menuid;
+    this.tab = 'report';
+  }
+
+  callbackevent(event: any) {
+    this.tab = 'main';
   }
 
 }
