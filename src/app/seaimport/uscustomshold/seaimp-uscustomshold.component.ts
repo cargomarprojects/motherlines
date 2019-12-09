@@ -30,6 +30,13 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
 
    errorMessage: string;
 
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+
+
   IsLocked: boolean = false;
 
   constructor(
@@ -237,4 +244,15 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
     }
   }
 
+  UsCustomsRptPrint() {
+    this.report_title = 'US CUSTOMS HOLD';
+    this.report_url = '/api/SeaImport/UsCustomshold/GetUsCustomsReport';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.pkid;
+    this.report_menuid = this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD;
+    this.tab = 'report';
+  }
+  callbackevent(event: any) {
+    this.tab = 'main';
+  }
 }
