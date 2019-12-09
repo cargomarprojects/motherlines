@@ -28,7 +28,11 @@ export class ApprovedPageListComponent implements OnInit {
   canEdit: boolean;
   canSave: boolean;
 
-
+  tab: string = 'main';
+  attach_pkid: string = "";
+  attach_typelist: any = {};
+  attach_type: string = "";
+  
   records: Tbl_Cargo_Approved[]
 
   constructor(
@@ -110,8 +114,16 @@ export class ApprovedPageListComponent implements OnInit {
     this.location.back();
   }
 
-  AttachRow(_rec: Tbl_Cargo_Approved) {
-
+ AttachRow(_rec: Tbl_Cargo_Approved) {
+    let TypeList: any[] = [];
+    TypeList = [{ "code": "APPROVAL REQUEST", "name": "APPROVAL REQUEST" }];
+     this.attach_pkid = _rec.ca_pkid;
+     this.attach_typelist = TypeList;
+     this.attach_type = 'APPROVAL REQUEST'
+    this.tab = 'attachment';
+  }
+  callbackevent() {
+    this.tab = 'main';
   }
 
 }

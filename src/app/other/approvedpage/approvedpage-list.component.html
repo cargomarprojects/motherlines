@@ -1,3 +1,4 @@
+<div *ngIf="tab == 'main'">
 <div class="page-header">
     <div class="col">
         <label class="mr-3">{{title}}</label>
@@ -56,7 +57,7 @@
                             <td>{{rec.ca_obl_recvd_date | date : gs.FRONTEND_DATEFORMAT}}</td>
                             <td>{{rec.ca_payment_recvd_date | date : gs.FRONTEND_DATEFORMAT}}</td>
                             <td class='text-center'><i class="fa fa-paperclip  fa-lg pointer"
-                                    style="font-size:24px;color:black" aria-hidden="true" (click)="AttachRow(rec)"></i>
+                                    style="font-size:24px"  [style.color]="rec.rec_files_attached=='Y'?'red':black" aria-hidden="true" (click)="AttachRow(rec)"></i>
                             </td>
 
                         </tr>
@@ -67,3 +68,11 @@
 
     </div>
 </div>
+</div>
+<div *ngIf="tab=='attachment'">
+    <app-fileupload [title]="'File Upload Page'" [parentid]="attach_pkid" [subid]="" [type]="attach_type"
+      [typelist]="attach_typelist" [tablename]="'cargo_approved'" [tablepkcolumn]="'ca_pkid'" [refno]="" [isviewonly]="flase"
+      [customername]="" [updatecolumn]="'rec_files_attached'" [viewonlysource]="" [viewonlyid]="" [filespath]=""
+      [filespath2]="" (callbackevent)="callbackevent($event)">
+    </app-fileupload>
+  </div>

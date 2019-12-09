@@ -66,7 +66,9 @@ export class ApprovedPageEditComponent implements OnInit {
     private location: Location,
     public gs: GlobalService,
     private mainService: ApprovedPageService,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -148,28 +150,30 @@ export class ApprovedPageEditComponent implements OnInit {
         this.record = <Tbl_Cargo_Approved>response.record;
         this.detrecords = <Tbl_Cargo_Approvedd[]>response.detrecords;
         this.mode = 'EDIT';
+        if (this.hblrecords != null) {
+          this.hblrecords.forEach(Rec => {
+            if (this.record.ca_hbl_no === Rec.ca_hbl_no)
+              Rec.ca_hbl_selected = true;
+            else
+              Rec.ca_hbl_selected = false;
+          })
+        }
+
+        if (this.invrecords != null) {
+          this.invrecords.forEach(Rec => {
+            if (this.record.ca_inv_no === Rec.ca_inv_no)
+              Rec.ca_inv_selected = true;
+            else
+              Rec.ca_inv_selected = false;
+          })
+        }
+
         this.record.ca_is_ar_issued_bool = this.record.ca_is_ar_issued == "Y" ? true : false;
         this.record.ca_req_no_str = this.record.ca_req_no.toString().padStart(6, '0');
-
-        this.hblrecords.forEach(Rec => {
-          if (this.record.ca_hbl_no == Rec.ca_hbl_no)
-            Rec.ca_hbl_selected = true;
-          else
-            Rec.ca_hbl_selected = false;
-        })
-
-        this.invrecords.forEach(Rec => {
-          if (this.record.ca_inv_no == Rec.ca_inv_no)
-            Rec.ca_inv_selected = true;
-          else
-            Rec.ca_inv_selected = false;
-        })
-
         if (this.record.rec_files_attached == "Y")
-        this.Foregroundcolor_edit = "red";
-    else
-        this.Foregroundcolor_edit = "white";
-
+          this.Foregroundcolor_edit = "red";
+        else
+          this.Foregroundcolor_edit = "white";
 
         // if (REQ_TYPE == "APPROVED")
         // Dispatcher.BeginInvoke(() => { RB_Approved.Focus(); });
@@ -191,6 +195,25 @@ export class ApprovedPageEditComponent implements OnInit {
       .subscribe(response => {
         this.hblrecords = <Tbl_Cargo_Approved[]>response.hblrecords;
         this.invrecords = <Tbl_Cargo_Approved[]>response.invrecords;
+
+        if (this.hblrecords != null && this.record != null) {
+          this.hblrecords.forEach(Rec => {
+            if (this.record.ca_hbl_no === Rec.ca_hbl_no)
+              Rec.ca_hbl_selected = true;
+            else
+              Rec.ca_hbl_selected = false;
+          })
+        }
+
+        if (this.invrecords != null && this.record != null) {
+          this.invrecords.forEach(Rec => {
+            if (this.record.ca_inv_no === Rec.ca_inv_no)
+              Rec.ca_inv_selected = true;
+            else
+              Rec.ca_inv_selected = false;
+          })
+        }
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -518,11 +541,7 @@ export class ApprovedPageEditComponent implements OnInit {
 
 
   AttachRow(_rec: Tbl_Cargo_Approved) {
-    let TypeList: any[] = [];
-    TypeList = [{ "code": "INTERNAL MEMO", "name": "INTERNAL MEMO" }];
-    // this.attach_pkid = _rec.param_id;
-    // this.attach_typelist = TypeList;
-    this.tab = 'attachment';
+  
   }
 
   callbackevent() {
