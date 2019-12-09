@@ -22,6 +22,12 @@ export class AirImpCargoPickupComponent implements OnInit {
 
   // 17-07-2019 Created By Ajith  
 
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+
   pkid: string;
   menuid: string;
   mode: string;
@@ -732,6 +738,19 @@ export class AirImpCargoPickupComponent implements OnInit {
   SelectDeselect() {
 
 
+  }
+
+  DeliveryRptPrint() {
+    this.report_title = 'DELIVERY ORDER';
+    this.report_url = '/api/AirImport/House/GetDeliveryReport';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.pkid;
+    this.report_menuid = this.gs.MENU_AI_HOUSE_DELIVERY_ORDER;
+    this.tab = 'report';
+  }
+
+  callbackevent(event: any) {
+    this.tab = 'main';
   }
 
 }

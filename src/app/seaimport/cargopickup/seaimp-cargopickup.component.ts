@@ -29,6 +29,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
   report_searchdata: any = {};
   report_menuid: string = '';
 
+  origin: string = '';
   pkid: string;
   menuid: string;
   mode: string;
@@ -51,6 +52,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.origin = options.origin;
     this.mode = 'EDIT';
     this.initPage();
     this.actionHandler();
@@ -174,6 +176,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
+    SearchData.origin = this.origin;
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.chkallselected = false;
@@ -226,54 +229,65 @@ export class SeaImpCargoPickupComponent implements OnInit {
     if (this.defaultrecord == null)
       return;
 
-    this.record.pick_orderno = this.defaultrecord.pick_orderno;
-    this.record.pick_order_date = this.gs.defaultValues.today;
-    this.record.pick_pickup = this.defaultrecord.pick_pickup;
-    this.record.pick_addr1 = this.defaultrecord.pick_addr1;
-    this.record.pick_addr2 = this.defaultrecord.pick_addr2;
-    this.record.pick_addr3 = this.defaultrecord.pick_addr3;
+    this.record.pick_orderno = this.GetStrVal(this.defaultrecord.pick_orderno);
+    this.record.pick_order_date = this.GetStrVal(this.gs.defaultValues.today);
+    this.record.pick_pickup = this.GetStrVal(this.defaultrecord.pick_pickup);
+    this.record.pick_addr1 = this.GetStrVal(this.defaultrecord.pick_addr1);
+    this.record.pick_addr2 = this.GetStrVal(this.defaultrecord.pick_addr2);
+    this.record.pick_addr3 = this.GetStrVal(this.defaultrecord.pick_addr3);
     this.record.pick_tel = this.GetTelNumberOnly(this.defaultrecord.pick_tel);
-    this.record.pick_from_id = this.defaultrecord.pick_from_id;
-    this.record.pick_from_code = this.defaultrecord.pick_from_code;
-    this.record.pick_fromname = this.defaultrecord.pick_fromname;
-    this.record.pick_fromaddr1 = this.defaultrecord.pick_fromaddr1;
-    this.record.pick_fromaddr2 = this.defaultrecord.pick_fromaddr2;
-    this.record.pick_fromaddr3 = this.defaultrecord.pick_fromaddr3;
-    this.record.pick_fromaddr4 = this.defaultrecord.pick_fromaddr4;
-    this.record.pick_to_id = this.defaultrecord.pick_to_id;
-    this.record.pick_to_code = this.defaultrecord.pick_to_code;
-    this.record.pick_toname = this.defaultrecord.pick_toname;
-    this.record.pick_toaddr1 = this.defaultrecord.pick_toaddr1;
-    this.record.pick_toaddr2 = this.defaultrecord.pick_toaddr2;
-    this.record.pick_toaddr3 = this.defaultrecord.pick_toaddr3;
-    this.record.pick_toaddr4 = this.defaultrecord.pick_toaddr4;
-    this.record.pick_desc1 = this.defaultrecord.pick_desc1;
-    this.record.pick_tot_piece1 = this.defaultrecord.pick_tot_piece1;
+    this.record.pick_from_id = this.GetStrVal(this.defaultrecord.pick_from_id);
+    this.record.pick_from_code = this.GetStrVal(this.defaultrecord.pick_from_code);
+    this.record.pick_fromname = this.GetStrVal(this.defaultrecord.pick_fromname);
+    this.record.pick_fromaddr1 = this.GetStrVal(this.defaultrecord.pick_fromaddr1);
+    this.record.pick_fromaddr2 = this.GetStrVal(this.defaultrecord.pick_fromaddr2);
+    this.record.pick_fromaddr3 = this.GetStrVal(this.defaultrecord.pick_fromaddr3);
+    this.record.pick_fromaddr4 = this.GetStrVal(this.defaultrecord.pick_fromaddr4);
+    this.record.pick_to_id = this.GetStrVal(this.defaultrecord.pick_to_id);
+    this.record.pick_to_code = this.GetStrVal(this.defaultrecord.pick_to_code);
+    this.record.pick_toname = this.GetStrVal(this.defaultrecord.pick_toname);
+    this.record.pick_toaddr1 = this.GetStrVal(this.defaultrecord.pick_toaddr1);
+    this.record.pick_toaddr2 = this.GetStrVal(this.defaultrecord.pick_toaddr2);
+    this.record.pick_toaddr3 = this.GetStrVal(this.defaultrecord.pick_toaddr3);
+    this.record.pick_toaddr4 = this.GetStrVal(this.defaultrecord.pick_toaddr4);
+    this.record.pick_desc1 = this.GetStrVal(this.defaultrecord.pick_desc1);
+    this.record.pick_tot_piece1 = this.GetNumVal(this.defaultrecord.pick_tot_piece1);
     if (this.gs.BRANCH_REGION == "USA")
-      this.record.pick_wt1 = this.defaultrecord.pick_wt1; // hbl_lbs;
+      this.record.pick_wt1 = this.GetNumVal(this.defaultrecord.pick_wt1); // hbl_lbs;
     else
-      this.record.pick_wt1 = this.defaultrecord.pick_wt2; // hbl_weight;
+      this.record.pick_wt1 = this.GetNumVal(this.defaultrecord.pick_wt2); // hbl_weight;
 
-    this.record.pick_cbm_cft1 = this.defaultrecord.pick_cbm_cft1;
-    this.record.pick_uom1 = this.defaultrecord.pick_uom1;
+    this.record.pick_cbm_cft1 = this.GetNumVal(this.defaultrecord.pick_cbm_cft1);
+    this.record.pick_uom1 = this.GetStrVal(this.defaultrecord.pick_uom1);
     this.record.pick_remark_1 = "PLEASE CONTACT CONSIGNEE FOR DELIVERY APPOINTMENT!";
-    this.record.pick_vessel = this.defaultrecord.pick_vessel;
-    this.record.pick_voyage = this.defaultrecord.pick_voyage;
-    this.record.pick_terms_ship = this.defaultrecord.pick_terms_ship;
+    this.record.pick_vessel = this.GetStrVal(this.defaultrecord.pick_vessel);
+    this.record.pick_voyage = this.GetStrVal(this.defaultrecord.pick_voyage);
+    this.record.pick_terms_ship = this.GetStrVal(this.defaultrecord.pick_terms_ship);
     if (this.gs.company_code != "MNYC") {
-      this.record.pick_truk_code = this.defaultrecord.pick_truk_code;
-      this.record.pick_truk_name = this.defaultrecord.pick_truk_name;
-      this.record.pick_truk_id = this.defaultrecord.pick_truk_id;
-      this.record.pick_truk_attn = this.defaultrecord.pick_truk_attn;
-      this.record.pick_truk_tel = this.defaultrecord.pick_truk_tel;
-      this.record.pick_truk_fax = this.defaultrecord.pick_truk_fax;
-      this.record.pick_truk_cc = this.defaultrecord.pick_truk_cc;
-      this.record.pick_remark_1 = this.defaultrecord.pick_remark_1;
-      this.record.pick_remark_2 = this.defaultrecord.pick_remark_2;
-      this.record.pick_remark_3 = this.defaultrecord.pick_remark_3;
-      this.record.pick_remark_4 = this.defaultrecord.pick_remark_4;
+      this.record.pick_truk_code = this.GetStrVal(this.defaultrecord.pick_truk_code);
+      this.record.pick_truk_name = this.GetStrVal(this.defaultrecord.pick_truk_name);
+      this.record.pick_truk_id = this.GetStrVal(this.defaultrecord.pick_truk_id);
+      this.record.pick_truk_attn = this.GetStrVal(this.defaultrecord.pick_truk_attn);
+      this.record.pick_truk_tel = this.GetStrVal(this.defaultrecord.pick_truk_tel);
+      this.record.pick_truk_fax = this.GetStrVal(this.defaultrecord.pick_truk_fax);
+      this.record.pick_truk_cc = this.GetStrVal(this.defaultrecord.pick_truk_cc);
+      this.record.pick_remark_1 = this.GetStrVal(this.defaultrecord.pick_remark_1);
+      this.record.pick_remark_2 = this.GetStrVal(this.defaultrecord.pick_remark_2);
+      this.record.pick_remark_3 = this.GetStrVal(this.defaultrecord.pick_remark_3);
+      this.record.pick_remark_4 = this.GetStrVal(this.defaultrecord.pick_remark_4);
     }
 
+  }
+
+  GetStrVal(_obj: any) {
+    if (_obj == null || _obj == undefined)
+      _obj = "";
+    return _obj;
+  }
+  GetNumVal(_obj: any) {
+    if (_obj == null || _obj == undefined)
+      _obj = 0;
+    return _obj;
   }
   private GetTelNumberOnly(sValue: string) {
     try {
@@ -761,8 +775,14 @@ export class SeaImpCargoPickupComponent implements OnInit {
     this.report_searchdata = this.gs.UserInfo;
     this.report_searchdata.pkid = this.pkid;
     this.report_searchdata.cntrs = cntr2print;
-    this.report_searchdata.invokefrom = 'HOUSE';
-    this.report_menuid = this.gs.MENU_SI_HOUSE_DELIVERY_ORDER;
+    if (this.origin == "seaimp-master-page") {
+      this.report_searchdata.invokefrom = 'MASTER';
+      this.report_menuid = this.gs.MENU_SI_MASTER_DELIVERY_ORDER;
+    } else {
+      this.report_searchdata.invokefrom = 'HOUSE';
+      this.report_menuid = this.gs.MENU_SI_HOUSE_DELIVERY_ORDER;
+    }
+
     this.tab = 'report';
   }
   callbackevent(event: any) {

@@ -536,7 +536,10 @@ export class GlobalService {
       "~BRANCH_REGION": this.BRANCH_REGION,
       "~FILES_FOLDER": this.FILES_FOLDER,
       "~SHOW_CTPAT_LOGO": this.SHOW_CTPAT_LOGO,
-      "~HIDE_PAYROLL": this.user_hide_payroll
+      "~HIDE_PAYROLL": this.user_hide_payroll,
+      "~USER_EMAIL": this.user_email,
+      "~SEA_ARVL_FORMAT": this.SEA_ARVL_FORMAT,
+      "~MESSENGER_SLIP_DROP_AT":this.MESSENGER_SLIP_DROP_AT
     }
 
   }
@@ -1391,6 +1394,9 @@ export class GlobalService {
     sessionStorage.setItem('year_end_date', JSON.stringify(this.year_end_date));
     sessionStorage.setItem('SHOW_CTPAT_LOGO', JSON.stringify(this.SHOW_CTPAT_LOGO));
     sessionStorage.setItem('branch_prefix', JSON.stringify(this.branch_prefix));
+    sessionStorage.setItem('USER_EMAIL', JSON.stringify(this.user_email));
+    sessionStorage.setItem('SEA_ARVL_FORMAT', JSON.stringify(this.SEA_ARVL_FORMAT));
+    sessionStorage.setItem('MESSENGER_SLIP_DROP_AT', JSON.stringify(this.MESSENGER_SLIP_DROP_AT));
     
   }
 
