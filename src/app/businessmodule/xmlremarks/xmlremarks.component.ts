@@ -148,6 +148,21 @@ export class XmlRemarksComponent implements OnInit {
     return bRet;
   }
 
+  BtnNavigation(action: string) {
+    switch (action) {
+        case 'HISTORY': {
+            let prm = {
+                menuid: this.menuid,
+                pkid: this.pkid,
+                source: this.source,
+                title: "History [" + this.source + "]",
+                origin: 'Xml-remark-page'
+            };
+            this.gs.Naviagete('Silver.BusinessModule/LogBookPage', JSON.stringify(prm));
+            break;
+        }
+    }
+}
 
   Close() {
     this.location.back();
