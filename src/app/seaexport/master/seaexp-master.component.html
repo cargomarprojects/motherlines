@@ -9,7 +9,7 @@
 </div>
 
 <div *ngIf="errorMessage$ | async" class="alert alert-danger">
-  {{errorMessage}}
+  {{errorMessage$ | async}}
 </div>
 
 <app-seaexp-master-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)" ></app-seaexp-master-header>
