@@ -109,7 +109,6 @@ export class seaexpMasterService {
         });
     }
 
-
     DeleteRow(_rec:Tbl_cargo_exp_masterm)
     {
         this.record.errormessage = '';
@@ -120,7 +119,6 @@ export class seaexpMasterService {
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = _rec.mbl_pkid;
         SearchData.remarks = _rec.mbl_refno;
-
         this.DeleteRecord(SearchData)
             .subscribe(response => {
                 if (response.retvalue == false) {
@@ -136,6 +134,7 @@ export class seaexpMasterService {
             });
     }
 
+    
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Master/List', SearchData, this.gs.headerparam2('authorized'));
     }

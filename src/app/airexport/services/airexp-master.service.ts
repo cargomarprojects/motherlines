@@ -28,6 +28,7 @@ export class AirExpMasterService {
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
+    public canDelete: boolean;
 
     public initlialized: boolean;
 
@@ -59,6 +60,7 @@ export class AirExpMasterService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
+        this.canDelete = this.gs.canDelete(this.menuid);
 
         this.initlialized = true;
 
@@ -129,6 +131,32 @@ export class AirExpMasterService {
         }
     }
 
+    DeleteRow(_rec:Tbl_cargo_exp_masterm)
+    {
+        this.record.errormessage = '';
+        if (!confirm("DELETE " + _rec.mbl_refno)) {
+            return;
+        }
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.mbl_pkid;
+        SearchData.remarks = _rec.mbl_refno;
+
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.mbl_pkid == _rec.mbl_pkid), 1);
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+            });
+    }
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/Master/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -144,5 +172,10 @@ export class AirExpMasterService {
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/Master/Save', SearchData, this.gs.headerparam2('authorized'));
     }
+
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/Master/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
+
 
 }

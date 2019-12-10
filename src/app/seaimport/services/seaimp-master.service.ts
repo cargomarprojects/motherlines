@@ -52,7 +52,8 @@ export class SeaImpMasterService {
             searchQuery : <SearchQuery>{searchString : '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today},
             pageQuery : <PageQuery>{action :'NEW',page_count :0,page_current :-1,page_rowcount:0,page_rows:0}
         };
-//this.gs.defaultValues.lastmonthdate
+
+        //this.gs.defaultValues.lastmonthdate
         this.mdata$.next(this.record);
 
         this.isAdmin = this.gs.IsAdmin(this.menuid);

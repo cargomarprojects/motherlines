@@ -93,5 +93,7 @@ export class SeaexpMasterComponent implements OnInit {
     this.location.back();
   }
 
+  
+
  
 }
