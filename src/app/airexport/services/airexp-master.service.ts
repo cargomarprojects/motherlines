@@ -67,7 +67,7 @@ export class AirExpMasterService {
     }
 
     Search(_searchdata: any, type: string = '') {
-
+        this.record.errormessage = '';
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
         }
@@ -147,6 +147,7 @@ export class AirExpMasterService {
                 if (response.retvalue == false) {
                     this.record.errormessage = response.error;
                     alert(this.record.errormessage);
+                    this.mdata$.next(this.record);
                 }
                 else {
                     this.record.records.splice(this.record.records.findIndex(rec => rec.mbl_pkid == _rec.mbl_pkid), 1);
@@ -154,6 +155,7 @@ export class AirExpMasterService {
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
                 alert(this.record.errormessage);
+                this.mdata$.next(this.record);
             });
     }
 
