@@ -21,9 +21,9 @@ export class seaexpMasterService {
     }
     private record: seaExpMasterModel;
 
-    public id : string;
-    public menuid : string;
-    public param_type : string ;
+    public id: string;
+    public menuid: string;
+    public param_type: string;
 
     public title: string;
     public isAdmin: boolean;
@@ -38,7 +38,7 @@ export class seaexpMasterService {
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
-    ) {}
+    ) { }
 
     public init(params: any) {
         if (this.initlialized)
@@ -49,10 +49,10 @@ export class seaexpMasterService {
         this.param_type = params.param_type;
 
         this.record = <seaExpMasterModel>{
-            errormessage : '',
-            records : [],
-            searchQuery : <SearchQuery>{searchString : '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today},
-            pageQuery : <PageQuery>{action :'NEW',page_count :0,page_current :-1,page_rowcount:0,page_rows:0}
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
         this.mdata$.next(this.record);
@@ -67,7 +67,7 @@ export class seaexpMasterService {
 
     }
 
-    Search( _searchdata : any, type: string = '') {
+    Search(_searchdata: any, type: string = '') {
         this.record.errormessage = '';
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
@@ -97,7 +97,7 @@ export class seaexpMasterService {
         }
 
         this.List(SearchData).subscribe(response => {
-            this.record.pageQuery = <PageQuery>{ action :'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
+            this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
@@ -109,13 +109,13 @@ export class seaexpMasterService {
         });
     }
 
-    DeleteRow(_rec:Tbl_cargo_exp_masterm)
-    {
-        this.record.errormessage = '';
+    DeleteRow(_rec: Tbl_cargo_exp_masterm) {
+
         if (!confirm("DELETE " + _rec.mbl_refno)) {
             return;
         }
 
+        this.record.errormessage = '';
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = _rec.mbl_pkid;
         SearchData.remarks = _rec.mbl_refno;
@@ -124,11 +124,11 @@ export class seaexpMasterService {
                 if (response.retvalue == false) {
                     this.record.errormessage = response.error;
                     alert(this.record.errormessage);
-                    this.mdata$.next(this.record);
                 }
                 else {
                     this.record.records.splice(this.record.records.findIndex(rec => rec.mbl_pkid == _rec.mbl_pkid), 1);
                 }
+                this.mdata$.next(this.record);
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
                 alert(this.record.errormessage);
@@ -136,7 +136,7 @@ export class seaexpMasterService {
             });
     }
 
-    
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/SeaExport/Master/List', SearchData, this.gs.headerparam2('authorized'));
     }

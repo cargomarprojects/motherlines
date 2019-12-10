@@ -133,7 +133,7 @@ export class AirExpHouseService {
     }
 
     DeleteRow(_rec: Tbl_cargo_exp_housem) {
-        this.record.errormessage = '';
+        
         if (this.gs.isBlank(_rec.hbl_pkid) || this.gs.isBlank(_rec.hbl_mbl_id)) {
             this.record.errormessage = "Cannot Delete, Reference Not Found";
             alert(this.record.errormessage);
@@ -145,7 +145,7 @@ export class AirExpHouseService {
             return;
         }
 
-
+        this.record.errormessage = '';
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = _rec.hbl_pkid;
         SearchData.mblid = _rec.hbl_mbl_id;
@@ -156,11 +156,11 @@ export class AirExpHouseService {
                 if (response.retvalue == false) {
                     this.record.errormessage = response.error;
                     alert(this.record.errormessage);
-                    this.mdata$.next(this.record);
                 }
                 else {
                     this.record.records.splice(this.record.records.findIndex(rec => rec.hbl_pkid == _rec.hbl_pkid), 1);
                 }
+                this.mdata$.next(this.record);
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
                 alert(this.record.errormessage);

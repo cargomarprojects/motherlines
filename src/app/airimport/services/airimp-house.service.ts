@@ -29,7 +29,8 @@ export class AirImpHouseService {
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
-    
+    public canDelete: boolean;
+
     public initlialized: boolean;
 
     constructor(
@@ -58,11 +59,13 @@ export class AirImpHouseService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
+        this.canDelete = this.gs.canDelete(this.menuid);
+
         this.initlialized = true;
     }
 
     Search(_searchdata: any, type: string = '') {
-
+        this.record.errormessage = '';
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
         }
@@ -99,7 +102,7 @@ export class AirImpHouseService {
         }, error => {
             this.record = <AirImpHouseModel>{
                 records: [],
-              errormessage: this.gs.getError(error),
+                errormessage: this.gs.getError(error),
             };
             this.mdata$.next(this.record);
         });
@@ -127,6 +130,40 @@ export class AirImpHouseService {
         }
     }
 
+    DeleteRow(_rec: Tbl_cargo_imp_housem) {
+        if (this.gs.isBlank(_rec.hbl_pkid) || this.gs.isBlank(_rec.hbl_mbl_id)) {
+            this.record.errormessage = "Cannot Delete, Reference Not Found";
+            alert(this.record.errormessage);
+            this.mdata$.next(this.record);
+            return;
+        }
+
+        if (!confirm("DELETE " + _rec.hbl_houseno)) {
+            return;
+        }
+
+        this.record.errormessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.hbl_pkid;
+        SearchData.mblid = _rec.hbl_mbl_id;
+        SearchData.remarks = _rec.hbl_houseno;
+
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.hbl_pkid == _rec.hbl_pkid), 1);
+                }
+                this.mdata$.next(this.record);
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
+    }
 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/List', SearchData, this.gs.headerparam2('authorized'));
@@ -152,6 +189,9 @@ export class AirImpHouseService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/LoadCha', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
     // GetArrivalNotice(SearchData: any) {
     //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirImport/House/GetArrivalNotice', SearchData, this.gs.headerparam2('authorized'));
     // }

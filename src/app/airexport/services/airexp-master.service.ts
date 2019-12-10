@@ -133,11 +133,12 @@ export class AirExpMasterService {
 
     DeleteRow(_rec:Tbl_cargo_exp_masterm)
     {
-        this.record.errormessage = '';
+        
         if (!confirm("DELETE " + _rec.mbl_refno)) {
             return;
         }
 
+        this.record.errormessage = '';
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = _rec.mbl_pkid;
         SearchData.remarks = _rec.mbl_refno;
@@ -147,11 +148,11 @@ export class AirExpMasterService {
                 if (response.retvalue == false) {
                     this.record.errormessage = response.error;
                     alert(this.record.errormessage);
-                    this.mdata$.next(this.record);
                 }
                 else {
                     this.record.records.splice(this.record.records.findIndex(rec => rec.mbl_pkid == _rec.mbl_pkid), 1);
                 }
+                this.mdata$.next(this.record);
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
                 alert(this.record.errormessage);
