@@ -1651,6 +1651,17 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.tab = 'attachment';
         break;
       }
+      case 'HOUSE-DEVAN': {
+        let prm = {
+          menuid: this.menuid,
+          pkid: this.pkid,
+          source: 'SEA-HOUSE-DEVAN',
+          title: 'Devanning Instruction',
+          origin: 'seaimp-House-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
+        break;
+      }
     }
   }
 
