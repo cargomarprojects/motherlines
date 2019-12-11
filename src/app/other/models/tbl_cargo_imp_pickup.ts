@@ -81,7 +81,8 @@ export interface Tbl_cargo_imp_pickup {
     rec_created_by: string;
     rec_created_date: string;
     rec_created_email: string;
-
+    pick_vessel:string;
+    pick_voyage:string;
 }
 
 export interface Tbl_cargo_imp_container {

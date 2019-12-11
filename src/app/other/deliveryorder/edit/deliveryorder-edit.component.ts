@@ -803,11 +803,13 @@ export class DeliveryOrderEditComponent implements OnInit {
   printDeliveryOrder() {
     this.deliveryCntrsToPrint = "";
     if (this.pickCategory == "OTHERS") {
-      for (let rec of this.cntrrecords) {
-        if (rec.cntr_selected) {
-          if (this.deliveryCntrsToPrint.trim() != "")
-            this.deliveryCntrsToPrint += ",";
-          this.deliveryCntrsToPrint += rec.cntr_no.toString();
+      if (this.cntrrecords != null) {
+        for (let rec of this.cntrrecords) {
+          if (rec.cntr_selected) {
+            if (this.deliveryCntrsToPrint.trim() != "")
+              this.deliveryCntrsToPrint += ",";
+            this.deliveryCntrsToPrint += rec.cntr_no.toString();
+          }
         }
       }
     }
