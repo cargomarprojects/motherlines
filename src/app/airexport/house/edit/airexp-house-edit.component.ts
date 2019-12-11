@@ -114,6 +114,7 @@ export class AirExpHouseEditComponent implements OnInit {
 
   }
   InitRecord() {
+    this.record.hbl_pkid = this.pkid;
     this.record.hbl_houseno = "";
     this.record.hbl_date = "";
     this.record.hbl_bltype = "";
@@ -434,7 +435,7 @@ export class AirExpHouseEditComponent implements OnInit {
         this.record = <Tbl_cargo_exp_housem>response.record;
         this.records = <Tbl_cargo_exp_desc[]>response.records;
         this.is_locked = this.gs.IsShipmentClosed("AIR EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
-
+        this.InitDesc();
         if (this.records != null) {
           this.records.forEach(rec => {
             this.ShowDesc(rec);
@@ -766,8 +767,8 @@ export class AirExpHouseEditComponent implements OnInit {
     this.mainService.Save(saverec).subscribe(response => {
 
       if (response.retvalue) {
-        if (this.mode === "ADD")
-          this.record.hbl_houseno = response.refno;
+        if (this.mode === "ADD" && response.code != '')
+          this.record.hbl_houseno = response.code;
         this.mode = 'EDIT';
         if (this.origin === "airexp-house-page")
           this.mainService.RefreshList(this.record);
@@ -873,6 +874,7 @@ export class AirExpHouseEditComponent implements OnInit {
     if (rec.controlname == 'CONSIGNEE') {
 
       this.record.hbl_consignee_id = rec.id;
+      this.record.hbl_consignee_code = rec.code;
       this.record.hbl_consigned_to1 = rec.name;
       this.record.hbl_consigned_to2 = rec.col1;
       this.record.hbl_consigned_to3 = rec.col2;

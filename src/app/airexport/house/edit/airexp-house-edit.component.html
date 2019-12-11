@@ -339,7 +339,7 @@
         <label class="col-4 col-form-label col-form-label-sm">Nomination</label>
         <div class="col-8">
           <select class="form-control form-control-sm" [(ngModel)]="record.hbl_bltype" #bltype>
-            <option *ngFor="let rec of gs.PARAM_NOMINATION" [value]="rec.code">{{rec.name}}</option>
+            <option *ngFor="let rec of gs.PARAM_NOMINATION" [value]="rec.name">{{rec.name}}</option>
           </select>
         </div>
       </div>
@@ -386,7 +386,7 @@
         <label class="col-4 col-form-label col-form-label-sm">Hbl Format</label>
         <div class="col-8">
           <select class="form-control form-control-sm" [(ngModel)]="record.hbl_format_id" #format_id>
-            <option *ngFor="let rec of gs.PARAM_HAWB_FORMAT_BLANK" [value]="rec.code">{{rec.name}}</option>
+            <option *ngFor="let rec of gs.PARAM_HAWB_FORMAT" [value]="rec.code">{{rec.name}}</option>
           </select>
         </div>
       </div>
