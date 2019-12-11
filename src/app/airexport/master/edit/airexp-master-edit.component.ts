@@ -164,6 +164,8 @@ export class AirExpMasterEditComponent implements OnInit {
     this.record.mbl_salesman_name = '';
     this.record.mbl_3rdparty = 'N';
     this.record.mbl_3rdparty_bool = false;
+    this.record.mbl_ismemo_attached='N';
+    this.record.rec_files_attached = 'N';
     if (this.gs.JOB_TYPE_AE.length > 0) {
       // if (JobList.Count > 0)
       //     Cmb_JobType.SelectedIndex = 0;
