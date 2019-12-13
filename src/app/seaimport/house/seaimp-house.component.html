@@ -40,7 +40,7 @@
             <tr *ngFor="let rec of records$ | async">
                 <td>{{rec.mbl_refno}}</td>
                 <td>{{rec.mbl_no}}</td>
-                <td (click)="edit(rec)">{{rec.hbl_houseno}}</td>
+                <td class='hlink' (click)="edit(rec)">{{rec.hbl_houseno}}</tdclass='hlink'>
                 <td>{{rec.hbl_shipper_name}}</td>
                 <td>{{rec.hbl_consignee_name}}</td>
                 <td class='text-right'>{{rec.hbl_packages}}</td>
