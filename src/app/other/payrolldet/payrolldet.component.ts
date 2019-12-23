@@ -60,7 +60,7 @@ export class PayrollDetComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: '',
-      type: this.mainservice.param_type,
+      type: this.mainservice.mbl_type,
       origin: 'oblrelease-page',
       mode: 'ADD'
     };
