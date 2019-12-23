@@ -5,6 +5,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { Tbl_Cargo_Payrolldet, PayrolldetModel } from '../models/tbl_cargo_payrolldet';
 import { SearchQuery } from '../models/tbl_cargo_payrolldet';
 import { PageQuery } from '../../shared/models/pageQuery';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,9 @@ export class PayrollDetService {
 
     public id: string;
     public menuid: string;
-    public param_type: string;
+    public mbl_type: string;
+    public mbl_refno: string;
+    public mbl_pkid: string;
 
     public title: string;
     public isAdmin: boolean;
@@ -40,14 +43,16 @@ export class PayrollDetService {
         if (this.initlialized)
             return;
 
-        this.id = params.id;
-        this.menuid = params.id;
-        this.param_type = params.param_type;
+        this.id = params.menuid;
+        this.menuid = params.menuid;
+        this.mbl_pkid = params.mbl_pkid;
+        this.mbl_refno = params.mbl_refno;
+        this.mbl_type = params.mbl_type;
 
         this.record = <PayrolldetModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: ''},
+            searchQuery: <SearchQuery>{ mbl_refno: this.mbl_refno,mblid:this.mbl_pkid,todate:'' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -81,10 +86,8 @@ export class PayrollDetService {
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
 
-      
-        SearchData.YEAR = this.gs.year_code;
-        
-
+        SearchData.MBL_ID = this.id;
+        SearchData.PDATE= this.record.searchQuery.todate;
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;

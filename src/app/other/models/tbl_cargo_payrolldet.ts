@@ -52,6 +52,7 @@ export interface vm_Tbl_Cargo_Payrolldet {
 
 export interface SearchQuery {
     searchString: string;
+    mbl_refno:string;
     todate: string;
     mblid: string;
 }
