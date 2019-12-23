@@ -441,6 +441,29 @@ export class OthGeneralExpenseEditComponent implements OnInit {
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
         break;
+        
+      }
+      case 'PROFITREPORT': {
+        let sid = this.gs.MENU_GENERAL_EXPENSE_PROFIT_REPORT;
+        if (this.EXPTYPE.trim() == "PR")
+          sid = this.gs.MENU_PAYROLL_EXPENSE_PROFIT_REPORT;
+        if (this.EXPTYPE.trim() == "CM")
+          sid = this.gs.MENU_1099_EXPENSE_PROFIT_REPORT;
+        if (this.EXPTYPE.trim() == "PS")
+          sid = this.gs.MENU_INTERNAL_PAYMENT_SETTLEMENT_PROFIT_REPORT;
+        if (this.EXPTYPE.trim() == "FA")
+          sid = this.gs.MENU_FILE_ADJUSTMENT_PROFIT_REPORT;
+
+        let prm = {
+          menuid: sid,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          mbl_type: this.EXPTYPE,
+          origin: 'other-generalexpense-page',
+        };
+        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));
+        break;
+
       }
 
 
