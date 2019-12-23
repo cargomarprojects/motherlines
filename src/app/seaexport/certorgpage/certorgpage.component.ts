@@ -332,10 +332,10 @@ export class CertOrgPageComponent implements OnInit {
       bret = false;
     }
 
-    if (this.gs.isBlank(this.record.mbld_sendto_id) || this.gs.isBlank(this.record.mbld_sendto_code)) {
-      this.errorMessage.push("Send To cannot be blank");
-      bret = false;
-    }
+    // if (this.gs.isBlank(this.record.mbld_sendto_id) || this.gs.isBlank(this.record.mbld_sendto_code)) {
+    //   this.errorMessage.push("Send To cannot be blank");
+    //   bret = false;
+    // }
 
 
     if (this.gs.BRANCH_REGION == "USA") {
@@ -426,6 +426,7 @@ export class CertOrgPageComponent implements OnInit {
     if (rec.controlname == 'CONSIGNEE') {
 
       this.record.mbld_consignee_id = rec.id;
+      this.record.mbld_consignee_code = rec.code;
       this.record.mbld_consigned_to1 = rec.name;
       this.record.mbld_consigned_to2 = rec.col1;
       this.record.mbld_consigned_to3 = rec.col2;
@@ -449,10 +450,12 @@ export class CertOrgPageComponent implements OnInit {
 
     if (rec.controlname == "AGENT") {
       this.record.mbld_agent_id = rec.id;
+      this.record.mbld_agent_code = rec.code;
     }
 
     if (rec.controlname == "HANDLEDBY") {
       this.record.mbld_handled_id = rec.id;
+      this.record.mbld_handled_code = rec.code;
     }
 
     if (rec.controlname == "SALEMSAN") {

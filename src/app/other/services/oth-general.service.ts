@@ -20,15 +20,16 @@ export class OthGeneralService {
     }
     private record: OthGeneralModel;
 
-    public id : string;
-    public menuid : string;
-    public param_type : string ;
+    public id: string;
+    public menuid: string;
+    public param_type: string;
 
     public title: string;
     public isAdmin: boolean;
     public canAdd: boolean;
     public canEdit: boolean;
     public canSave: boolean;
+    public canDelete: boolean;
 
     public initlialized: boolean;
 
@@ -36,7 +37,7 @@ export class OthGeneralService {
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
-    ) {}
+    ) { }
 
     public init(params: any) {
         if (this.initlialized)
@@ -47,10 +48,10 @@ export class OthGeneralService {
         this.param_type = params.param_type;
 
         this.record = <OthGeneralModel>{
-            errormessage : '',
-            records : [],
-            searchQuery : <SearchQuery>{searchString : '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today},
-            pageQuery : <PageQuery>{action :'NEW',page_count :0,page_current :-1,page_rowcount:0,page_rows:0}
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
         this.mdata$.next(this.record);
@@ -60,13 +61,13 @@ export class OthGeneralService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
-        
+        this.canDelete = this.gs.canDelete(this.menuid);
         this.initlialized = true;
 
     }
 
-    Search( _searchdata : any, type: string = '') {
-
+    Search(_searchdata: any, type: string = '') {
+        this.record.errormessage = '';
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
         }
@@ -95,7 +96,7 @@ export class OthGeneralService {
         }
 
         this.List(SearchData).subscribe(response => {
-            this.record.pageQuery = <PageQuery>{ action :'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
+            this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
@@ -105,6 +106,33 @@ export class OthGeneralService {
             }
             this.mdata$.next(this.record);
         });
+    }
+
+    DeleteRow(_rec: Tbl_cargo_general) {
+
+        if (!confirm("DELETE " + _rec.mbl_refno)) {
+            return;
+        }
+
+        this.record.errormessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.mbl_pkid;
+        SearchData.remarks = _rec.mbl_refno;
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.mbl_pkid == _rec.mbl_pkid), 1);
+                }
+                this.mdata$.next(this.record);
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
     }
 
     List(SearchData: any) {
@@ -123,5 +151,8 @@ export class OthGeneralService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/General/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/General/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
 
 }

@@ -289,9 +289,7 @@ export class OthGeneralEditComponent implements OnInit {
     if (!this.Allvalid())
       return;
 
-    this.record.hbl_is_pl = this.record.hbl_is_pl_bool ? 'Y' : 'N';
-    this.record.hbl_is_ci = this.record.hbl_is_ci_bool ? 'Y' : 'N';
-    this.record.hbl_is_carr_an = this.record.hbl_is_carr_an_bool ? 'Y' : 'N';
+    this.SaveParent();
     this.SaveContainer();
     this.FindTotTeus();
     const saveRecord = <vm_tbl_cargo_general>{};
@@ -376,6 +374,16 @@ export class OthGeneralEditComponent implements OnInit {
 
     // this.record.mbl_cntr_desc = sCntrType;
   }
+  private SaveParent() {
+    if (this.mode == "ADD") {
+      this.record.rec_created_id = this.gs.user_pkid;
+      this.record.hbl_pkid = this.gs.getGuid();
+      this.record.hbl_mbl_id = this.pkid;
+    }
+    this.record.hbl_is_pl = this.record.hbl_is_pl_bool ? 'Y' : 'N';
+    this.record.hbl_is_ci = this.record.hbl_is_ci_bool ? 'Y' : 'N';
+    this.record.hbl_is_carr_an = this.record.hbl_is_carr_an_bool ? 'Y' : 'N';
+  }
   private SaveContainer() {
     if (this.records == null) {
       this.records = <Tbl_cargo_container[]>[];
@@ -458,9 +466,9 @@ export class OthGeneralEditComponent implements OnInit {
     rec.cntr_pkid = this.gs.getGuid();
     rec.cntr_hblid = this.pkid.toString();
     rec.cntr_catg = "M";
-    rec.cntr_no = "",
-      rec.cntr_type = "",
-      rec.cntr_sealno = '';
+    rec.cntr_no = "";
+    rec.cntr_type = "";
+    rec.cntr_sealno = '';
     rec.cntr_pieces = 0;
     rec.cntr_packages_uom = '';
     rec.cntr_packages = 0;
