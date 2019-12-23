@@ -48,6 +48,9 @@ import { GenFileUploadComponent } from './genfileupload/genfileupload.component'
 import { GenFileUploadHeaderComponent } from './genfileupload/genfileupload-header.component';
 import { GenFileUploadEditComponent } from './genfileupload/genfileupload-edit.component';
 
+import {  PayrollDetComponent } from './payrolldet/payrolldet.component';
+// import { OblReleaseEditComponent } from './payrolldet/payrolldet-edit.component';
+import { PayrollDetHeaderComponent } from './payrolldet/payrolldet-header.component';
 
 @NgModule({
   declarations: [
@@ -82,8 +85,9 @@ import { GenFileUploadEditComponent } from './genfileupload/genfileupload-edit.c
     MlbUsageEditComponent,
     GenFileUploadComponent,
     GenFileUploadHeaderComponent,
-    GenFileUploadEditComponent
-
+    GenFileUploadEditComponent,
+    PayrollDetComponent,
+    PayrollDetHeaderComponent
   ],
   imports: [
     SharedModule,    

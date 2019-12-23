@@ -467,6 +467,22 @@ export class OthGeneralExpenseEditComponent implements OnInit {
       }
 
 
+      case 'PAYROLLDET': {
+        let sid = this.gs.MENU_GENERAL_EXPENSE_ARAP;
+        if (this.EXPTYPE.trim() == "PR")
+          sid =this.gs.MENU_PAYROLL_EXPENSE_ARAP;
+  
+        let prm = {
+          menuid: sid,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
+          mbl_type: this.EXPTYPE,
+          origin: 'other-generalexpense-page',
+        };
+        this.gs.Naviagete('Silver.Other.Trans/PayrollPage', JSON.stringify(prm));
+        break;
+
+      }
 
     }
   }

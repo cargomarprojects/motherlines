@@ -86,7 +86,7 @@
                     <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('PROFITREPORT')">Profit Report</button>
                 </div>
                 <div  *ngIf="gs.PAYROLL_ENABLED == 'Y' && EXPTYPE == 'PR'" class="form-group row">
-                    <button class=" col-12 btn btn-info btn-sm">Payroll</button>
+                    <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('PAYROLLDET')">Payroll</button>
                 </div>
             </div>
         </div>

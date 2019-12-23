@@ -24,6 +24,7 @@ import { MblUsageComponent } from './mblusage/mblusage.component';
 import { MlbUsageEditComponent } from './mblusage/mblusage-edit.component';
 import { GenFileUploadComponent } from './genfileupload/genfileupload.component';
 import { GenFileUploadEditComponent } from './genfileupload/genfileupload-edit.component';
+import {  PayrollDetComponent } from './payrolldet/payrolldet.component';
 
 const routes: Routes = [
   { path : 'GeneralPage', component : OthGeneralComponent },
@@ -48,7 +49,7 @@ const routes: Routes = [
   { path : 'MblUsageEditPage', component : MlbUsageEditComponent },
   { path : 'GeneralFileUploadPage', component : GenFileUploadComponent },
   { path : 'GeneralFileUploadEditPage', component : GenFileUploadEditComponent  },
-  
+  { path : 'PayrollPage', component : PayrollDetComponent  },
 ];
 
 @NgModule({

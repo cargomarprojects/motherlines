@@ -10,8 +10,8 @@
     {{errorMessage}}
   </div>
   
-  <payrolldet-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-  </payrolldet-header>
+  <app-payrolldet-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+  </app-payrolldet-header>
   
   <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
   
