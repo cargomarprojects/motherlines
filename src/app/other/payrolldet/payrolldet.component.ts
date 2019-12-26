@@ -60,11 +60,11 @@ export class PayrollDetComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: '',
-      type: this.mainservice.mbl_type,
-      origin: 'oblrelease-page',
-      mode: 'ADD'
+      mode: 'ADD',
+      emp_name:'',
+      origin: 'payrolldet-page'
     };
-    this.gs.Naviagete('Silver.Other.Trans/OBLReleasedEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/PayrollEditPage', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_Cargo_Payrolldet) {
@@ -76,11 +76,11 @@ export class PayrollDetComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.cpd_pkid,
-      type: '',
-      origin: 'oblrelease-page',
-      mode: 'EDIT'
+      mode: 'EDIT',
+      emp_name:_record.cpd_emp_name,
+      origin: 'payrolldet-page'
     };
-    this.gs.Naviagete('Silver.Other.Trans/OBLReleasedEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Other.Trans/PayrollEditPage', JSON.stringify(parameter));
   }
 
   Close() {    
