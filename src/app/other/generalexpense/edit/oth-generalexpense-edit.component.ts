@@ -465,8 +465,6 @@ export class OthGeneralExpenseEditComponent implements OnInit {
         break;
 
       }
-
-
       case 'PAYROLLDET': {
         let sid = this.gs.MENU_GENERAL_EXPENSE_ARAP;
         if (this.EXPTYPE.trim() == "PR")

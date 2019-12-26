@@ -52,7 +52,7 @@ export class PayrollDetService {
         this.record = <PayrolldetModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ mbl_refno: this.mbl_refno,mblid:this.mbl_pkid,todate:'' },
+            searchQuery: <SearchQuery>{ searchString: '', mbl_refno: this.mbl_refno, todate: this.gs.defaultValues.today, mblid: this.mbl_pkid },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -62,7 +62,7 @@ export class PayrollDetService {
         this.title = this.gs.getTitle(this.menuid);
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
-        this.canDelete = this.gs.canDelete(this.menuid);        
+        this.canDelete = this.gs.canDelete(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
 
         this.initlialized = true;
@@ -87,7 +87,7 @@ export class PayrollDetService {
         SearchData.CODE = this.record.searchQuery.searchString;
 
         SearchData.MBL_ID = this.id;
-        SearchData.PDATE= this.record.searchQuery.todate;
+        SearchData.PDATE = this.record.searchQuery.todate;
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
@@ -132,7 +132,7 @@ export class PayrollDetService {
             // REC.rec_created_date = _rec.rec_created_date;
         }
     }
-    
+
     DeleteRow(_rec: Tbl_Cargo_Payrolldet) {
 
         this.record.errormessage = '';
@@ -141,7 +141,7 @@ export class PayrollDetService {
         }
 
         var SearchData = this.gs.UserInfo;
-         SearchData.pkid = _rec.cpd_pkid;
+        SearchData.pkid = _rec.cpd_pkid;
 
         this.DeleteRecord(SearchData)
             .subscribe(response => {
