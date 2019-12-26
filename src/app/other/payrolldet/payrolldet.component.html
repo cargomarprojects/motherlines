@@ -1,7 +1,7 @@
 <div class="page-header">
     <div class="col">
       <label class="mr-1">{{mainservice.title}}</label>
-      <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
+      <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button> -->
       <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
     </div>
   </div>
@@ -30,7 +30,7 @@
           <th>MEDICAL</th>
           <th>IRC</th>
           <th>NET PAY</th>
-          <th>DELETE</th>
+          <th style="text-align:center">DELETE</th>
         </tr>
       </thead>
       <tbody class="page-body-tbody">

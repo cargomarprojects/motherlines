@@ -137,7 +137,7 @@ export class PayrollDetService {
 
         var SearchData = this.gs.UserInfo;
         SearchData.pkid = _rec.cpd_pkid;
-
+        SearchData.remarks = _rec.cpd_emp_name;
         this.DeleteRecord(SearchData)
             .subscribe(response => {
                 if (response.retvalue == false) {
@@ -153,6 +153,37 @@ export class PayrollDetService {
             });
     }
 
+    Generate(_searchdata: any) {
+
+        this.record.errormessage = '';
+        this.mdata$.next(this.record);
+        if (this.gs.isBlank(_searchdata.searchQuery.todate)) {
+            this.record.errormessage = 'Payroll Date cannot be blank';
+            this.mdata$.next(this.record);
+            return;
+        }
+
+        if (!confirm("Generate Records...")) {
+            return;
+        }
+
+        var SearchData = this.gs.UserInfo;
+        SearchData.MBL_ID = this.mbl_pkid;
+        SearchData.PDATE = _searchdata.searchQuery.todate;
+        this.GenerateRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.Search(_searchdata, 'SEARCH');
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+            });
+    }
 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollDet/List', SearchData, this.gs.headerparam2('authorized'));
@@ -169,6 +200,10 @@ export class PayrollDetService {
 
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollDet/Save', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    GenerateRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollDet/GenerateRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }

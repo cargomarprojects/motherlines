@@ -26,6 +26,7 @@ export class PayrollDetEditComponent implements OnInit {
     public mode: string = '';
     errorMessage: string;
     Foregroundcolor: string;
+    bValueChanged: Boolean = false;
 
     title: string;
     isAdmin: boolean;
@@ -212,11 +213,12 @@ export class PayrollDetEditComponent implements OnInit {
     }
 
 
-    OnChange(field: string) {
+    onChange(field: string) {
+        this.bValueChanged = true;
     }
 
-    onFocusout(field: string) {
-
+    onFocus(field: string) {
+        this.bValueChanged = false;
     }
 
     onBlur(field: string) {
@@ -226,22 +228,100 @@ export class PayrollDetEditComponent implements OnInit {
         //         this.GetHouseDetails();
         //     }
         // }
+        if (field == 'A1') {
+            this.record.A1 = this.gs.roundNumber(this.record.A1, 2)
+            this.FindTotal();
+        }
+        if (field == 'A2') {
+            this.record.A2 = this.gs.roundNumber(this.record.A2, 2)
+            this.FindTotal();
+        }
+        if (field == 'A3') {
+            this.record.A3 = this.gs.roundNumber(this.record.A3, 2)
+            this.FindTotal();
+        }
+        if (field == 'A4') {
+            this.record.A4 = this.gs.roundNumber(this.record.A4, 2)
+            this.FindTotal();
+        }
+        if (field == 'A5') {
+            this.record.A5 = this.gs.roundNumber(this.record.A5, 2)
+            this.FindTotal();
+        }
+        if (field == 'A6') {
+            this.record.A6 = this.gs.roundNumber(this.record.A6, 2)
+            this.FindTotal();
+        }
+        if (field == 'A7') {
+            this.record.A7 = this.gs.roundNumber(this.record.A7, 2)
+            this.FindTotal();
+        }
+        if (field == 'A8') {
+            this.record.A8 = this.gs.roundNumber(this.record.A8, 2)
+            this.FindTotal();
+        }
+
+        if (field == 'D1') {
+            this.record.D1 = this.gs.roundNumber(this.record.D1, 2)
+            this.FindTotal();
+        }
+        if (field == 'D2') {
+            this.record.D2 = this.gs.roundNumber(this.record.D2, 2)
+            this.FindTotal();
+        }
+        if (field == 'D3') {
+            this.record.D3 = this.gs.roundNumber(this.record.D3, 2)
+            this.FindTotal();
+        }
+        if (field == 'D4') {
+            this.record.D4 = this.gs.roundNumber(this.record.D4, 2)
+            this.FindTotal();
+        }
+        if (field == 'D5') {
+            this.record.D5 = this.gs.roundNumber(this.record.D5, 2)
+            this.FindTotal();
+        }
+        if (field == 'D6') {
+            this.record.D6 = this.gs.roundNumber(this.record.D6, 2)
+            this.FindTotal();
+        }
+        if (field == 'D7') {
+            this.record.D7 = this.gs.roundNumber(this.record.D7, 2)
+            this.FindTotal();
+        }
     }
 
     FindTotal() {
 
-        /*
-        var nTot = 0;
-        if (this.gs.IS_SINGLE_CURRENCY == true) {
-            this.record.pay_curr_code = this.gs.base_cur_code;
-            this.record.op_ex_rate = 1;
-        }
-        if (this.record.op_ex_rate <= 0)
-            this.record.op_ex_rate = 1;
+        if (this.bValueChanged == false)
+            return;
 
-        nTot = this.record.op_famt * this.record.op_ex_rate;
-        this.record.op_amt = this.gs.roundNumber(nTot, 2);
-        */
+        this.record.ATOT = 0;
+        this.record.DTOT = 0;
+        this.record.NET = 0;
+
+        this.record.ATOT = this.record.A1;
+        this.record.ATOT += this.record.A2;
+        this.record.ATOT += this.record.A3;
+        this.record.ATOT += this.record.A4;
+        this.record.ATOT += this.record.A5;
+        this.record.ATOT += this.record.A6;
+        this.record.ATOT += this.record.A7;
+        this.record.ATOT += this.record.A8;
+
+        this.record.DTOT = this.record.D1;
+        this.record.DTOT += this.record.D2;
+        this.record.DTOT += this.record.D3;
+        this.record.DTOT += this.record.D4;
+        this.record.DTOT += this.record.D5;
+        this.record.DTOT += this.record.D6;
+        this.record.DTOT += this.record.D7;
+
+        this.record.ATOT = this.gs.roundNumber(this.record.ATOT, 2);
+        this.record.DTOT = this.gs.roundNumber(this.record.DTOT, 2);
+
+        this.record.NET = this.record.ATOT - this.record.DTOT;
+        this.record.NET = this.gs.roundNumber(this.record.NET, 2);
     }
 
 

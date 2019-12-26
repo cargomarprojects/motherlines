@@ -26,7 +26,6 @@ export class PayrollDetHeaderComponent implements OnInit {
   }
 
   List(outputformat: string) {
- 
     this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
   }
 }

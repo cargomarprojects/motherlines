@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_Cargo_Payrolldet  } from '../models/tbl_cargo_payrolldet';
+import { Tbl_Cargo_Payrolldet } from '../models/tbl_cargo_payrolldet';
 import { SearchQuery } from '../models/tbl_cargo_payrolldet';
 import { PageQuery } from '../../shared/models/pageQuery';
 import { PayrollDetService } from '../services/payrolldet.service';
@@ -16,7 +16,7 @@ import { PayrollDetService } from '../services/payrolldet.service';
 })
 export class PayrollDetComponent implements OnInit {
 
-  
+
   errorMessage$: Observable<string>;
   records$: Observable<Tbl_Cargo_Payrolldet[]>;
   pageQuery$: Observable<PageQuery>;
@@ -44,7 +44,10 @@ export class PayrollDetComponent implements OnInit {
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions, 'SEARCH');
+    if (actions.outputformat == 'GENERATE')
+      this.mainservice.Generate(actions)
+    else
+      this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
@@ -61,7 +64,7 @@ export class PayrollDetComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: '',
       mode: 'ADD',
-      emp_name:'',
+      emp_name: '',
       origin: 'payrolldet-page'
     };
     this.gs.Naviagete('Silver.Other.Trans/PayrollEditPage', JSON.stringify(parameter));
@@ -77,13 +80,13 @@ export class PayrollDetComponent implements OnInit {
       menuid: this.mainservice.menuid,
       pkid: _record.cpd_pkid,
       mode: 'EDIT',
-      emp_name:_record.cpd_emp_name,
+      emp_name: _record.cpd_emp_name,
       origin: 'payrolldet-page'
     };
     this.gs.Naviagete('Silver.Other.Trans/PayrollEditPage', JSON.stringify(parameter));
   }
 
-  Close() {    
+  Close() {
     this.location.back();
   }
 
