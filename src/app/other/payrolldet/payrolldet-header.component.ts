@@ -27,8 +27,8 @@ export class PayrollDetHeaderComponent implements OnInit {
 
   List(outputformat: string) {
 
-    if (this.gs.isBlank(this.searchQuery.todate))
-      this.searchQuery.todate = this.gs.defaultValues.today;
+    // if (this.gs.isBlank(this.searchQuery.todate))
+    //   this.searchQuery.todate = this.gs.defaultValues.today;
 
     this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
   }

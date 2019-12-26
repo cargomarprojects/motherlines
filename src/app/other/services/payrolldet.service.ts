@@ -42,17 +42,17 @@ export class PayrollDetService {
     public init(params: any) {
         if (this.initlialized)
             return;
-
-        this.id = params.menuid;
-        this.menuid = params.menuid;
-        this.mbl_pkid = params.mbl_pkid;
-        this.mbl_refno = params.mbl_refno;
-        this.mbl_type = params.mbl_type;
+        const options = JSON.parse(params);
+        this.id = options.menuid;
+        this.menuid = options.menuid;
+        this.mbl_pkid = options.mbl_pkid;
+        this.mbl_refno = options.mbl_refno;
+        this.mbl_type = options.mbl_type;
 
         this.record = <PayrolldetModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', mbl_refno: this.mbl_refno, todate: this.gs.defaultValues.today, mblid: this.mbl_pkid },
+            searchQuery: <SearchQuery>{ searchString: '', mbl_refno: this.mbl_refno, todate: '', mblid: this.mbl_pkid },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -81,12 +81,8 @@ export class PayrollDetService {
         var SearchData = this.gs.UserInfo;
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
-        SearchData.pkid = this.id;
-        SearchData.TYPE = 'FT';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
-
-        SearchData.MBL_ID = this.id;
+        SearchData.MBL_ID = this.mbl_pkid;
         SearchData.PDATE = this.record.searchQuery.todate;
 
         SearchData.page_count = 0;
