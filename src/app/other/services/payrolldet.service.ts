@@ -84,7 +84,6 @@ export class PayrollDetService {
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.MBL_ID = this.mbl_pkid;
         SearchData.PDATE = this.record.searchQuery.todate;
-
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
