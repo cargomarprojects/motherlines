@@ -44,11 +44,11 @@ export class PayrollMasterService {
         const options = JSON.parse(params);
         this.id = options.menuid;
         this.menuid = options.menuid;
-     
+
         this.record = <PayrolldetModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', sort_parameter:'gen_name' },
+            searchQuery: <SearchQuery>{ searchString: '', sort_parameter: 'gen_name', mblid: '', mbl_refno: '' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
