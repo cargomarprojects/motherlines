@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_Cargo_Payrolldet, PayrolldetModel } from '../../other/models/tbl_cargo_payrolldet';
+import { Tbl_Cargo_Payrolldet, PayrollMasterModel } from '../../other/models/tbl_cargo_payrolldet';
 import { SearchQuery } from '../../other/models/tbl_cargo_payrolldet';
 import { PageQuery } from '../../shared/models/pageQuery';
+import {Tbl_Mast_Partym } from '../../master/models/Tbl_Mast_Partym';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PayrollMasterService {
 
-    private mdata$ = new BehaviorSubject<PayrolldetModel>(null);
-    get data$(): Observable<PayrolldetModel> {
+    private mdata$ = new BehaviorSubject<PayrollMasterModel>(null);
+    get data$(): Observable<PayrollMasterModel> {
         return this.mdata$.asObservable();
     }
-    private record: PayrolldetModel;
+    private record: PayrollMasterModel;
 
     public id: string;
     public menuid: string;
@@ -41,14 +42,14 @@ export class PayrollMasterService {
     public init(params: any) {
         if (this.initlialized)
             return;
-        const options = JSON.parse(params);
-        this.id = options.menuid;
-        this.menuid = options.menuid;
+        
+        this.id = params.menuid;
+        this.menuid = params.menuid;
 
-        this.record = <PayrolldetModel>{
+        this.record = <PayrollMasterModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', sort_parameter: 'gen_name', mblid: '', mbl_refno: '' },
+            searchQuery: <SearchQuery>{ searchString: '',mbl_refno: '', todate:'', mblid: '', sort_parameter: 'gen_name' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -96,7 +97,7 @@ export class PayrollMasterService {
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
-            this.record = <PayrolldetModel>{
+            this.record = <PayrollMasterModel>{
                 records: [],
                 errormessage: this.gs.getError(error),
             }
@@ -104,10 +105,10 @@ export class PayrollMasterService {
         });
     }
 
-    RefreshList(_rec: Tbl_Cargo_Payrolldet) {
+    RefreshList(_rec: Tbl_Mast_Partym) {
         if (this.record.records == null)
             return;
-        var REC = this.record.records.find(rec => rec.cpd_pkid == _rec.cpd_pkid);
+        var REC = this.record.records.find(rec => rec.gen_pkid == _rec.gen_pkid);
         if (REC == null) {
             this.record.records.push(_rec);
         }
@@ -124,16 +125,16 @@ export class PayrollMasterService {
         }
     }
 
-    DeleteRow(_rec: Tbl_Cargo_Payrolldet) {
+    DeleteRow(_rec: Tbl_Mast_Partym) {
 
         this.record.errormessage = '';
-        if (!confirm("DELETE " + _rec.cpd_emp_name)) {
+        if (!confirm("DELETE " + _rec.gen_name)) {
             return;
         }
 
         var SearchData = this.gs.UserInfo;
-        SearchData.pkid = _rec.cpd_pkid;
-        SearchData.remarks = _rec.cpd_emp_name;
+        SearchData.pkid = _rec.gen_pkid;
+        SearchData.remarks = _rec.gen_name;
         this.DeleteRecord(SearchData)
             .subscribe(response => {
                 if (response.retvalue == false) {
@@ -141,7 +142,7 @@ export class PayrollMasterService {
                     alert(this.record.errormessage);
                 }
                 else {
-                    this.record.records.splice(this.record.records.findIndex(rec => rec.cpd_pkid == _rec.cpd_pkid), 1);
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.gen_pkid == _rec.gen_pkid), 1);
                 }
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
@@ -150,19 +151,19 @@ export class PayrollMasterService {
     }
 
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollMaster/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Master/PayrollMaster/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollMaster/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Master/PayrollMaster/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
     DeleteRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollMaster/Delete', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Master/PayrollMaster/Delete', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollMaster/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Master/PayrollMaster/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }

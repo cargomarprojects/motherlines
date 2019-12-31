@@ -186,24 +186,24 @@ export class PayrollDetService {
     }
 
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollDet/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/PayrollDet/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollDet/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/PayrollDet/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
 
     DeleteRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollDet/Delete', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/PayrollDet/Delete', SearchData, this.gs.headerparam2('authorized'));
     }
 
     Save(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollDet/Save', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/PayrollDet/Save', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GenerateRecord(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PayrollDet/GenerateRecord', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/PayrollDet/GenerateRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }

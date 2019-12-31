@@ -1,4 +1,6 @@
 import { PageQuery } from '../../shared/models/pageQuery';
+import {Tbl_Mast_Partym } from '../../master/models/Tbl_Mast_Partym';
+
 export interface Tbl_Cargo_Payrolldet {
     cpd_pkid: string;
     cpd_emp_id: string;
@@ -74,4 +76,11 @@ export interface PayrolldetModel {
     searchQuery: SearchQuery;
     pageQuery: PageQuery;
     records: Tbl_Cargo_Payrolldet[]
+}
+
+export interface PayrollMasterModel {
+    errormessage: string;
+    searchQuery: SearchQuery;
+    pageQuery: PageQuery;
+    records: Tbl_Mast_Partym[]
 }

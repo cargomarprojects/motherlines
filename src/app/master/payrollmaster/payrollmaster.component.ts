@@ -5,10 +5,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_Cargo_Payrolldet } from '../../other/models/tbl_cargo_payrolldet';
+import { Tbl_Cargo_Payrolldet, } from '../../other/models/tbl_cargo_payrolldet';
 import { SearchQuery } from '../../other/models/tbl_cargo_payrolldet';
 import { PageQuery } from '../../shared/models/pageQuery';
 import { PayrollMasterService } from '../services/payrollmaster.service';
+import {Tbl_Mast_Partym } from '../../master/models/Tbl_Mast_Partym';
 
 @Component({
   selector: 'app-payrollmaster',
@@ -18,7 +19,7 @@ export class PayrollMasterComponent implements OnInit {
 
 
   errorMessage$: Observable<string>;
-  records$: Observable<Tbl_Cargo_Payrolldet[]>;
+  records$: Observable<Tbl_Mast_Partym[]>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
 
@@ -67,7 +68,7 @@ export class PayrollMasterComponent implements OnInit {
     this.gs.Naviagete('Silver.Other.Trans/PayrollEditPage', JSON.stringify(parameter));
 
   }
-  edit(_record: Tbl_Cargo_Payrolldet) {
+  edit(_record: Tbl_Mast_Partym) {
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')
       return;
@@ -75,9 +76,9 @@ export class PayrollMasterComponent implements OnInit {
 
     let parameter = {
       menuid: this.mainservice.menuid,
-      pkid: _record.cpd_pkid,
+      pkid: _record.gen_pkid,
       mode: 'EDIT',
-      emp_name: _record.cpd_emp_name,
+      emp_name: _record.gen_name,
       origin: 'payrollmaster-page'
     };
     this.gs.Naviagete('Silver.Other.Trans/PayrollEditPage', JSON.stringify(parameter));
