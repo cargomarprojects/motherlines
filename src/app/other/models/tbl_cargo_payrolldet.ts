@@ -4,6 +4,15 @@ export interface Tbl_Cargo_Payrolldet {
     cpd_emp_id: string;
     cpd_emp_name: string;
     cpd_mbl_id: string;
+    cpd_desc_id: string;
+    cpd_desc_code: string;
+    cpd_desc_name: string;
+    cpd_acc_id: string;
+    cpd_acc_code: string;
+    cpd_acc_name: string;
+    cpd_amt: number;
+    cpd_order: number;
+
     cpd_payroll_date: string;
     A1: number;
     A2: number;
@@ -40,6 +49,8 @@ export interface Tbl_Cargo_Payrolldet {
     ATOT: number;
     DTOT: number;
     NET: number;
+    cpd_include_payroll: string;
+    cpd_include_payroll_b: boolean;
 }
 
 export interface vm_Tbl_Cargo_Payrolldet {
@@ -52,9 +63,10 @@ export interface vm_Tbl_Cargo_Payrolldet {
 
 export interface SearchQuery {
     searchString: string;
-    mbl_refno:string;
+    mbl_refno: string;
     todate: string;
     mblid: string;
+    sort_parameter:string;
 }
 
 export interface PayrolldetModel {

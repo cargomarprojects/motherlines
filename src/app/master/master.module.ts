@@ -30,6 +30,9 @@ import { PartyParentEditComponent } from './party/edit/party-parent-edit.compone
 import { VendorHeaderComponent } from './vendor/vendor-header.component';
 import { VendorComponent } from './vendor/vendor.component';
 
+import { PayrollMasterComponent } from './payrollmaster/payrollmaster.component';
+import { PayrollMasterHeaderComponent } from './payrollmaster/payrollmaster-header.component';
+
 @NgModule({
   declarations: [
     ParamPageComponent,
@@ -48,7 +51,9 @@ import { VendorComponent } from './vendor/vendor.component';
     BankInfoComponent,
     PartyParentEditComponent,
     VendorHeaderComponent,
-    VendorComponent
+    VendorComponent,
+    PayrollMasterComponent,
+    PayrollMasterHeaderComponent
   ],
   imports: [
     SharedModule,
