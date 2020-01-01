@@ -110,25 +110,25 @@ export class PayrollMasterService {
         });
     }
 
-    RefreshList(_rec: Tbl_Mast_Partym) {
-        if (this.record.records == null)
-            return;
-        var REC = this.record.records.find(rec => rec.gen_pkid == _rec.gen_pkid);
-        if (REC == null) {
-            this.record.records.push(_rec);
-        }
-        else {
-            // REC.obl_slno = _rec.obl_slno;
-            // REC.obl_date = _rec.obl_date;
-            // REC.obl_refno = _rec.obl_refno;
-            // REC.obl_houseno = _rec.obl_houseno;
-            // REC.obl_consignee_name = _rec.obl_consignee_name;
-            // REC.obl_handled_name = _rec.obl_handled_name;
-            // REC.obl_remark = _rec.obl_remark;
-            // REC.rec_created_by = _rec.rec_created_by;
-            // REC.rec_created_date = _rec.rec_created_date;
-        }
-    }
+    // RefreshList(_rec: Tbl_Mast_Partym) {
+    //     if (this.record.records == null)
+    //         return;
+    //     var REC = this.record.records.find(rec => rec.gen_pkid == _rec.gen_pkid);
+    //     if (REC == null) {
+    //         this.record.records.push(_rec);
+    //     }
+    //     else {
+    //         // REC.obl_slno = _rec.obl_slno;
+    //         // REC.obl_date = _rec.obl_date;
+    //         // REC.obl_refno = _rec.obl_refno;
+    //         // REC.obl_houseno = _rec.obl_houseno;
+    //         // REC.obl_consignee_name = _rec.obl_consignee_name;
+    //         // REC.obl_handled_name = _rec.obl_handled_name;
+    //         // REC.obl_remark = _rec.obl_remark;
+    //         // REC.rec_created_by = _rec.rec_created_by;
+    //         // REC.rec_created_date = _rec.rec_created_date;
+    //     }
+    // }
 
     DeleteRow(_rec: Tbl_Mast_Partym) {
         this.record.errormessage = '';

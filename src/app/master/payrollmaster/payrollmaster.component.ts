@@ -65,7 +65,7 @@ export class PayrollMasterComponent implements OnInit {
       emp_name: '',
       origin: 'payrollmaster-page'
     };
-    this.gs.Naviagete('Silver.Other.Trans/PayrollEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Master/PayrollPageEditView', JSON.stringify(parameter));
 
   }
   edit(_record: Tbl_Mast_Partym) {
@@ -81,7 +81,7 @@ export class PayrollMasterComponent implements OnInit {
       emp_name: _record.gen_name,
       origin: 'payrollmaster-page'
     };
-    this.gs.Naviagete('Silver.Other.Trans/PayrollEditPage', JSON.stringify(parameter));
+    this.gs.Naviagete('Silver.Master/PayrollPageEditView', JSON.stringify(parameter));
   }
 
   Close() {

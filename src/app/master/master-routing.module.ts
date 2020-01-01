@@ -16,6 +16,7 @@ import { BankInfoComponent } from './bankinfo/bankinfo.component';
 import { PartyParentEditComponent } from './party/edit/party-parent-edit.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { PayrollMasterComponent } from './payrollmaster/payrollmaster.component';
+import { PayrollMasterEditComponent } from './payrollmaster/payrollmaster-edit.component';
 
 const routes: Routes = [
   {path:'ParamPage', component: ParamPageComponent},
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path:'PartyParentEditPage', component: PartyParentEditComponent},  
   {path:'VendorListPage', component: VendorComponent},  
   {path:'PayrollPageView', component: PayrollMasterComponent}, 
+  {path:'PayrollPageEditView', component: PayrollMasterEditComponent}, 
 ];
 
 @NgModule({
