@@ -34,6 +34,7 @@ export class seaexpMasterService {
 
     public initlialized: boolean;
 
+    public initlializedBrcode: string = ''
 
     constructor(
         private http2: HttpClient,
@@ -41,6 +42,12 @@ export class seaexpMasterService {
     ) { }
 
     public init(params: any) {
+
+        if (this.initlializedBrcode != this.gs.branch_code) {
+            this.initlialized = false;
+            this.initlializedBrcode = this.gs.branch_code;
+        }
+
         if (this.initlialized)
             return;
 
