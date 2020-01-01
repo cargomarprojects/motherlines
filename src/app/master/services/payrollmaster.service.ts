@@ -5,7 +5,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { Tbl_Cargo_Payrolldet, PayrollMasterModel } from '../../other/models/tbl_cargo_payrolldet';
 import { SearchQuery } from '../../other/models/tbl_cargo_payrolldet';
 import { PageQuery } from '../../shared/models/pageQuery';
-import {Tbl_Mast_Partym } from '../../master/models/Tbl_Mast_Partym';
+import { Tbl_Mast_Partym } from '../../master/models/Tbl_Mast_Partym';
 
 @Injectable({
     providedIn: 'root'
@@ -42,14 +42,14 @@ export class PayrollMasterService {
     public init(params: any) {
         if (this.initlialized)
             return;
-        
+
         this.id = params.menuid;
         this.menuid = params.menuid;
 
         this.record = <PayrollMasterModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '',mbl_refno: '', todate:'', mblid: '', sort_parameter: 'gen_name' },
+            searchQuery: <SearchQuery>{ searchString: '', mbl_refno: '', todate: '', mblid: '', sort_parameter: 'gen_name' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -69,6 +69,8 @@ export class PayrollMasterService {
     Search(_searchdata: any, type: string = '') {
 
         if (type == 'SEARCH') {
+            if (this.gs.isBlank(_searchdata.searchQuery.sort_parameter))
+                _searchdata.searchQuery.sort_parameter = "gen_name";
             this.record.searchQuery = _searchdata.searchQuery;
         }
         if (type == 'PAGE') {
@@ -79,8 +81,11 @@ export class PayrollMasterService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        // SearchData.MBL_ID = this.mbl_pkid;
-        // SearchData.PDATE = this.record.searchQuery.todate;
+
+        SearchData.CODE = this.record.searchQuery.searchString;
+        SearchData.TYPE = 'PARTYS';
+        SearchData.SORT = this.record.searchQuery.sort_parameter;
+
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -126,7 +131,6 @@ export class PayrollMasterService {
     }
 
     DeleteRow(_rec: Tbl_Mast_Partym) {
-
         this.record.errormessage = '';
         if (!confirm("DELETE " + _rec.gen_name)) {
             return;

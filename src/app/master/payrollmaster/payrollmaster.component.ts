@@ -31,7 +31,7 @@ export class PayrollMasterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.mainservice.init(this.route.snapshot.queryParams.parameter);
+    this.mainservice.init(this.route.snapshot.queryParams);
     this.initPage();
   }
 
