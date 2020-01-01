@@ -111,6 +111,7 @@ export class PayrollMasterEditComponent implements OnInit {
         this.record.DTOT = 0;;
         this.record.ATOT = 0;
         this.record.NET = 0;
+        this.record.cpd_include_payroll_b = false;
     }
 
     GetRecord() {
@@ -120,8 +121,15 @@ export class PayrollMasterEditComponent implements OnInit {
         this.mainService.GetRecord(SearchData)
             .subscribe(response => {
                 this.record = <Tbl_Cargo_Payrolldet>response.record;
-                this.mode = 'EDIT';
+                if (this.record.cpd_emp_id.trim().length <= 0) {
+                    this.mode = 'ADD';
+                    this.record.cpd_include_payroll_b = false;
+                }
+                else
+                    this.mode = 'EDIT';
+                this.record.cpd_include_payroll_b = (this.record.cpd_include_payroll == "Y") ? true : false;
                 this.errorMessage = "";
+
             }, error => {
                 this.errorMessage = this.gs.getError(error);
             });
@@ -130,7 +138,9 @@ export class PayrollMasterEditComponent implements OnInit {
     Save() {
 
         this.FindTotal();
-
+        this.record.cpd_pkid = this.pkid;
+        this.record.cpd_emp_id = this.pkid;
+        this.record.cpd_include_payroll = (this.record.cpd_include_payroll_b) ? "Y" : "N";
         if (!this.Allvalid())
             return;
 
@@ -148,7 +158,7 @@ export class PayrollMasterEditComponent implements OnInit {
                 }
                 else {
                     this.mode = 'EDIT';
-                   // this.mainService.RefreshList(this.record);
+                    // this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
                     alert(this.errorMessage);
                 }
