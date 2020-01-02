@@ -24,7 +24,6 @@ export class seaexpMasterService {
     public id: string;
     public menuid: string;
     public param_type: string;
-
     public title: string;
     public isAdmin: boolean;
     public canAdd: boolean;
@@ -33,9 +32,7 @@ export class seaexpMasterService {
     public canDelete: boolean;
 
     public initlialized: boolean;
-
-    public initlializedBrcode: string = ''
-
+    public initlializedBrcode: string = '';
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
@@ -44,8 +41,10 @@ export class seaexpMasterService {
     public init(params: any) {
 
         if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlialized = false;
             this.initlializedBrcode = this.gs.branch_code;
+            this.initlialized = false;
+            this.record = null;
+            this.mdata$.next(this.record);
         }
 
         if (this.initlialized)

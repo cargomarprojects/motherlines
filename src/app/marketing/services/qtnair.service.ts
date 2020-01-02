@@ -30,7 +30,7 @@ export class QtnAirService {
     public canPrint: boolean;
 
     public initlialized: boolean;
-
+    public initlializedBrcode: string = '';
 
     constructor(
         private http2: HttpClient,
@@ -38,6 +38,12 @@ export class QtnAirService {
     ) { }
 
     public init(params: any) {
+        if (this.initlializedBrcode != this.gs.branch_code) {
+            this.initlializedBrcode = this.gs.branch_code;
+            this.initlialized = false;
+            this.record = null;
+            this.mdata$.next(this.record);
+        }
         if (this.initlialized)
             return;
 
