@@ -29,7 +29,7 @@ export class PartyService {
     public isCompany: boolean;
 
     public initlialized: boolean;
-
+    public initlializedBrcode: string = '';
 
     constructor(
         private http2: HttpClient,
@@ -37,6 +37,17 @@ export class PartyService {
     ) { }
 
     public init(params: any) {
+        if (this.initlializedBrcode != this.gs.branch_code) {
+            this.initlializedBrcode = this.gs.branch_code;
+            this.initlialized = false;
+            this.record = null;
+            this.mdata$.next(this.record);
+        }else if (this.param_type != params.menu_param) { //calling same page with different menu
+            this.initlialized = false;
+            this.record = null;
+            this.mdata$.next(this.record);
+        }
+
         if (this.initlialized)
             return;
 
@@ -60,8 +71,9 @@ export class PartyService {
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
 
-        this.initlialized = false;
+        this.initlialized = true;
 
+        
     }
 
     Search(_searchdata: any, type: string = '') {
