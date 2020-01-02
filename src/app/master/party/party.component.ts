@@ -36,7 +36,7 @@ export class PartyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.mainservice.init(this.route.snapshot.queryParams);
+  //  this.mainservice.init(this.route.snapshot.queryParams);
     this.sub = this.route.queryParams.subscribe(params => {
       if (params["parameter"] != "") {
         this.mainservice.init(params);
@@ -107,7 +107,7 @@ export class PartyComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+     this.sub.unsubscribe();
   }
 
 }
