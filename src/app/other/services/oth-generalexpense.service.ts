@@ -20,9 +20,9 @@ export class OthGeneralExpenseService {
     }
     private record: OthGeneralModel;
 
-    public id : string;
-    public menuid : string;
-    public param_type : string ;
+    public id: string;
+    public menuid: string;
+    public param_type: string;
 
     public title: string;
     public isAdmin: boolean;
@@ -32,11 +32,12 @@ export class OthGeneralExpenseService {
 
     public initlialized: boolean;
 
+    menutype: string = '';
 
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
-    ) {}
+    ) { }
 
     public init(params: any) {
         if (this.initlialized)
@@ -46,26 +47,30 @@ export class OthGeneralExpenseService {
         this.menuid = params.menuid;
         this.param_type = params.menu_param;
 
-        this.record = <OthGeneralModel>{
-            errormessage : '',
-            records : [],
-            searchQuery : <SearchQuery>{searchString : '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today},
-            pageQuery : <PageQuery>{action :'NEW',page_count :0,page_current :-1,page_rowcount:0,page_rows:0}
-        };
+        if (this.menutype != this.param_type) {
+            this.menutype = this.param_type;
+            this.record = <OthGeneralModel>{
+                errormessage: '',
+                records: [],
+                searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
+                pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+            };
 
-        this.mdata$.next(this.record);
+            this.mdata$.next(this.record);
+        }
 
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
-        
+
+        //  this.initlialized = true;
         this.initlialized = false;
 
     }
 
-    Search( _searchdata : any, type: string = '') {
+    Search(_searchdata: any, type: string = '') {
 
         if (type == 'SEARCH') {
             this.record.searchQuery = _searchdata.searchQuery;
@@ -95,7 +100,7 @@ export class OthGeneralExpenseService {
         }
 
         this.List(SearchData).subscribe(response => {
-            this.record.pageQuery = <PageQuery>{ action :'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
+            this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
             this.mdata$.next(this.record);
         }, error => {
@@ -118,12 +123,12 @@ export class OthGeneralExpenseService {
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/GeneralExpense/Save', SearchData, this.gs.headerparam2('authorized'));
     }
-    
+
     Isblnoduplication(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/GeneralExpense/Isblnoduplication', SearchData, this.gs.headerparam2('authorized'));
     }
-    
-    
+
+
     GetFALockDetails(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/GeneralExpense/GetFALockDetails', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -131,5 +136,5 @@ export class OthGeneralExpenseService {
     GetHouseDetails(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/GeneralExpense/GetHouseDetails', SearchData, this.gs.headerparam2('authorized'));
     }
-    
+
 }

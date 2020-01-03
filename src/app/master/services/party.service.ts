@@ -71,6 +71,7 @@ export class PartyService {
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
 
+        // this.initlialized = true;
         this.initlialized = false;
 
         
@@ -134,15 +135,15 @@ export class PartyService {
             this.record.records.push(_rec);
         }
         else {
-            // REC.mbl_refno = _rec.mbl_refno;
-            // REC.mbl_no = _rec.mbl_no;
-            // REC.mbl_agent_name = _rec.mbl_agent_name;
-            // REC.mbl_liner_name = _rec.mbl_liner_name;
-            // REC.mbl_pol_name = _rec.mbl_pol_name;;
-            // REC.mbl_pol_etd = _rec.mbl_pol_etd;
-            // REC.mbl_pod_name = _rec.mbl_pod_name;
-            // REC.mbl_pod_eta = _rec.mbl_pod_eta;
-            // REC.mbl_handled_name = _rec.mbl_handled_name;
+            REC.gen_short_name = _rec.gen_short_name;
+            REC.gen_firm_code = _rec.gen_firm_code;
+            REC.gen_type2 = _rec.gen_type2;
+            REC.gen_address1 = _rec.gen_address1;
+            REC.gen_country_name = _rec.gen_country_name;;
+            REC.gen_state = _rec.gen_state;
+            REC.gen_contact = _rec.gen_contact;
+            REC.gen_tel = _rec.gen_tel;
+            REC.gen_fax = _rec.gen_fax;
             REC.rec_created_by = _rec.rec_created_by;
         }
     }
