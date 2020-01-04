@@ -40,8 +40,33 @@ export class OthGeneralExpenseService {
     ) { }
 
     public init(params: any) {
-        if (this.initlialized)
-            return;
+
+        // if (this.initlialized)
+        //     return;
+
+        /* this.id = params.id;
+         this.menuid = params.menuid;
+         this.param_type = params.menu_param;
+ 
+         this.record = <OthGeneralModel>{
+             errormessage: '',
+             records: [],
+             searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
+             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+         };
+ 
+         this.mdata$.next(this.record);
+ 
+         this.isAdmin = this.gs.IsAdmin(this.menuid);
+         this.title = this.gs.getTitle(this.menuid);
+         this.canAdd = this.gs.canAdd(this.menuid);
+         this.canEdit = this.gs.canEdit(this.menuid);
+         this.canSave = this.canAdd || this.canEdit;*/
+
+        //  this.initlialized = true;
+
+        /*********************************************** */
+
 
         this.id = params.id;
         this.menuid = params.menuid;
@@ -49,14 +74,37 @@ export class OthGeneralExpenseService {
 
         if (this.menutype != this.param_type) {
             this.menutype = this.param_type;
-            this.record = <OthGeneralModel>{
-                errormessage: '',
-                records: [],
-                searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
-                pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
-            };
+
+            if (this.menutype == 'GE' && !this.gs.isBlank(this.gs.GENERALEXPENSE_INIT_GE))
+                this.record = this.gs.GENERALEXPENSE_INIT_GE;
+            else if (this.menutype == 'PR' && !this.gs.isBlank(this.gs.GENERALEXPENSE_INIT_PR))
+                this.record = this.gs.GENERALEXPENSE_INIT_PR;
+            else if (this.menutype == 'CM' && !this.gs.isBlank(this.gs.GENERALEXPENSE_INIT_CM))
+                this.record = this.gs.GENERALEXPENSE_INIT_CM;
+            else if (this.menutype == 'PS' && !this.gs.isBlank(this.gs.GENERALEXPENSE_INIT_PS))
+                this.record = this.gs.GENERALEXPENSE_INIT_PS;
+            else if (this.menutype == 'FA' && !this.gs.isBlank(this.gs.GENERALEXPENSE_INIT_FA))
+                this.record = this.gs.GENERALEXPENSE_INIT_FA;
+            else
+                this.record = <OthGeneralModel>{
+                    errormessage: '',
+                    records: [],
+                    searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
+                    pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+                };
 
             this.mdata$.next(this.record);
+
+            if (this.menutype == 'GE')
+                this.gs.GENERALEXPENSE_INIT_GE = this.record;
+            else if (this.menutype == 'PR')
+                this.gs.GENERALEXPENSE_INIT_PR = this.record;
+            else if (this.menutype == 'CM')
+                this.gs.GENERALEXPENSE_INIT_CM = this.record;
+            else if (this.menutype == 'PS')
+                this.gs.GENERALEXPENSE_INIT_PS = this.record;
+            else if (this.menutype == 'FA')
+                this.gs.GENERALEXPENSE_INIT_FA = this.record;
         }
 
         this.isAdmin = this.gs.IsAdmin(this.menuid);
@@ -64,9 +112,6 @@ export class OthGeneralExpenseService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
-
-        //  this.initlialized = true;
-        this.initlialized = false;
 
     }
 

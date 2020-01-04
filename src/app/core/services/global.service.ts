@@ -187,6 +187,11 @@ export class GlobalService {
   public SHIPMENT_STAGE_OT: any;
   public INVOICE_STAGE: any;
 
+  public GENERALEXPENSE_INIT_GE: any;
+  public GENERALEXPENSE_INIT_PR: any;
+  public GENERALEXPENSE_INIT_CM: any;
+  public GENERALEXPENSE_INIT_PS: any;
+  public GENERALEXPENSE_INIT_FA: any;
 
   public JOB_TYPE_OI: any = [];
   public JOB_TYPE_OE: any = [];
