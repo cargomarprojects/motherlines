@@ -28,6 +28,9 @@ export class ApprovedPageService {
     public canSave: boolean;
 
     public initlialized: boolean;
+    public initlializedBrcode: string = '';
+    private menutype: string = '';
+
 
     constructor(
         private http2: HttpClient,
@@ -36,10 +39,63 @@ export class ApprovedPageService {
 
 
     public init(params: any) {
-        if (this.initlialized)
-            return;
+        // if (this.initlialized)
+        //     return;
+        /*  let usrid: string = '';
+          let usrname: string = '';
+          
+          this.id = params.id;
+          this.menuid = params.menuid;
+          this.param_type = params.menu_param;
+          if (this.param_type != 'APPROVED') {
+              usrid = this.gs.user_pkid;
+              usrname = this.gs.user_name;
+          }
+  
+          this.record = <ApprovedPageModel><unknown>{
+              errormessage: '',
+              records: [],
+              searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userName: usrname, userId: usrid, userLovDisabled: true, userLovCaption: 'Request./Aprvd.By' },
+              pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+          };
+  
+          this.mdata$.next(this.record);
+  
+  
+  
+  
+          this.isAdmin = this.gs.IsAdmin(this.menuid);
+          this.title = this.gs.getTitle(this.menuid);
+          this.canAdd = this.gs.canAdd(this.menuid);
+          this.canEdit = this.gs.canEdit(this.menuid);
+          this.canSave = this.canAdd || this.canEdit;
+  
+          this.record.searchQuery.userLovDisabled = true;
+          if (this.isAdmin || this.param_type == 'APPROVED')
+              this.record.searchQuery.userLovDisabled = false;
+  
+          this.record.searchQuery.userLovCaption = 'Request./Aprvd.By';
+          if (this.param_type == 'REQUEST REPORT')
+              this.record.searchQuery.userLovCaption = 'Request.By';
+          else if (this.param_type == 'APPROVED REPORT')
+              this.record.searchQuery.userLovCaption = 'Approved.By';
+  
+          //this.initlialized = true;*/
+
+        /****************************************************/
+
         let usrid: string = '';
         let usrname: string = '';
+        if (this.initlializedBrcode != this.gs.branch_code) {
+            this.initlializedBrcode = this.gs.branch_code;
+            this.menutype = '';
+            this.gs.APPROVEDPAGE_INIT_APPROVED = null;
+            this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT = null;
+            this.gs.APPROVEDPAGE_INIT_REQUESTREPORT = null;
+            this.record = null;
+            this.mdata$.next(this.record);
+        }
+
         this.id = params.id;
         this.menuid = params.menuid;
         this.param_type = params.menu_param;
@@ -47,14 +103,33 @@ export class ApprovedPageService {
             usrid = this.gs.user_pkid;
             usrname = this.gs.user_name;
         }
-        this.record = <ApprovedPageModel><unknown>{
-            errormessage: '',
-            records: [],
-            searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userName: usrname, userId: usrid, userLovDisabled: true, userLovCaption: 'Request./Aprvd.By' },
-            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
-        };
 
-        this.mdata$.next(this.record);
+        if (this.menutype != this.param_type) {
+            this.menutype = this.param_type;
+
+            if (this.menutype == 'APPROVED' && !this.gs.isBlank(this.gs.APPROVEDPAGE_INIT_APPROVED))
+                this.record = this.gs.APPROVEDPAGE_INIT_APPROVED;
+            else if (this.menutype == 'APPROVED REPORT' && !this.gs.isBlank(this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT))
+                this.record = this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT;
+            else if (this.menutype == 'REQUEST REPORT' && !this.gs.isBlank(this.gs.APPROVEDPAGE_INIT_REQUESTREPORT))
+                this.record = this.gs.APPROVEDPAGE_INIT_REQUESTREPORT;
+            else
+                this.record = <ApprovedPageModel><unknown>{
+                    errormessage: '',
+                    records: [],
+                    searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userName: usrname, userId: usrid, userLovDisabled: true, userLovCaption: 'Request./Aprvd.By' },
+                    pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+                };
+
+            this.mdata$.next(this.record);
+
+            if (this.menutype == 'APPROVED')
+                this.gs.APPROVEDPAGE_INIT_APPROVED = this.record;
+            else if (this.menutype == 'APPROVED REPORT')
+                this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT = this.record;
+            else if (this.menutype == 'REQUEST REPORT')
+                this.gs.APPROVEDPAGE_INIT_REQUESTREPORT = this.record;
+        }
 
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
@@ -71,9 +146,6 @@ export class ApprovedPageService {
             this.record.searchQuery.userLovCaption = 'Request.By';
         else if (this.param_type == 'APPROVED REPORT')
             this.record.searchQuery.userLovCaption = 'Approved.By';
-
-        //this.initlialized = true;
-        this.initlialized = false;
     }
 
     Search(_searchdata: any, type: string = '') {
