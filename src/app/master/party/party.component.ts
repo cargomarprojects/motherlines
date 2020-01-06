@@ -40,7 +40,7 @@ export class PartyComponent implements OnInit {
     this.sub = this.route.queryParams.subscribe(params => {
       if (params["parameter"] != "") {
         this.mainservice.init(params);
-        this.mainservice.Search('SCREEN');
+        // this.mainservice.Search('SCREEN');
       }
     });
     this.initPage();

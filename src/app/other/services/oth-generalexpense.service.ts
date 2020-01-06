@@ -32,7 +32,7 @@ export class OthGeneralExpenseService {
 
     public initlialized: boolean;
     public initlializedBrcode: string = '';
-    menutype: string = '';
+    private menutype: string = '';
 
     constructor(
         private http2: HttpClient,

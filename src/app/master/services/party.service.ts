@@ -30,6 +30,7 @@ export class PartyService {
 
     public initlialized: boolean;
     public initlializedBrcode: string = '';
+    private menutype: string = '';
 
     constructor(
         private http2: HttpClient,
@@ -37,32 +38,69 @@ export class PartyService {
     ) { }
 
     public init(params: any) {
-        // if (this.initlializedBrcode != this.gs.branch_code) {
-        //     this.initlializedBrcode = this.gs.branch_code;
-        //     this.initlialized = false;
-        //     this.record = null;
-        //     this.mdata$.next(this.record);
-        // }else if (this.param_type != params.menu_param) { 
-        //     this.initlialized = false;
-        //     this.record = null;
-        //     this.mdata$.next(this.record);
-        // }
 
-        if (this.initlialized)
-            return;
+        // if (this.initlialized)
+        //     return;
+
+        /* this.id = params.id;
+         this.menuid = params.id;
+         this.param_type = params.menu_param;
+ 
+         this.record = <PartyModel>{
+             errormessage: '',
+             records: [],
+             searchQuery: <SearchQuery>{ searchString: '', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false,menuType:this.param_type },
+             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+         };
+ 
+         this.mdata$.next(this.record);
+ 
+         this.isCompany = this.gs.IsCompany(this.menuid);
+         this.isAdmin = this.gs.IsAdmin(this.menuid);
+         this.title = this.gs.getTitle(this.menuid);
+         this.canAdd = this.gs.canAdd(this.menuid);
+         this.canEdit = this.gs.canEdit(this.menuid);
+         this.canSave = this.canAdd || this.canEdit;*/
+
+        // this.initlialized = true;
+        
+        /************************************* */
+
+        if (this.initlializedBrcode != this.gs.branch_code) {
+            this.initlializedBrcode = this.gs.branch_code;
+            this.menutype = '';
+            this.gs.PARTYPAGE_INIT_PARTYS = null;
+            this.gs.PARTYPAGE_INIT_OVERSEAAGENT = null;
+            this.record = null;
+            this.mdata$.next(this.record);
+        }
 
         this.id = params.id;
         this.menuid = params.id;
         this.param_type = params.menu_param;
 
-        this.record = <PartyModel>{
-            errormessage: '',
-            records: [],
-            searchQuery: <SearchQuery>{ searchString: '', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false,menuType:this.param_type },
-            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
-        };
+        if (this.menutype != this.param_type) {
+            this.menutype = this.param_type;
 
-        this.mdata$.next(this.record);
+            if (this.menutype == 'PARTYS' && !this.gs.isBlank(this.gs.PARTYPAGE_INIT_PARTYS))
+                this.record = this.gs.PARTYPAGE_INIT_PARTYS;
+            else if (this.menutype == 'OVERSEAAGENT' && !this.gs.isBlank(this.gs.PARTYPAGE_INIT_OVERSEAAGENT))
+                this.record = this.gs.PARTYPAGE_INIT_OVERSEAAGENT;
+            else
+                this.record = <PartyModel>{
+                    errormessage: '',
+                    records: [],
+                    searchQuery: <SearchQuery>{ searchString: '', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false, menuType: this.param_type },
+                    pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+                };
+
+            this.mdata$.next(this.record);
+
+            if (this.menutype == 'PARTYS')
+                this.gs.PARTYPAGE_INIT_PARTYS = this.record;
+            else if (this.menutype == 'OVERSEAAGENT')
+                this.gs.PARTYPAGE_INIT_OVERSEAAGENT = this.record;
+        }
 
         this.isCompany = this.gs.IsCompany(this.menuid);
         this.isAdmin = this.gs.IsAdmin(this.menuid);
@@ -71,10 +109,6 @@ export class PartyService {
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
 
-        // this.initlialized = true;
-        this.initlialized = false;
-
-        
     }
 
     Search(_searchdata: any, type: string = '') {
@@ -95,7 +129,7 @@ export class PartyService {
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
         SearchData.ISADMIN = this.isAdmin == true ? 'Y' : 'N';
-        SearchData.ISCOMPANY =  this.isCompany == true ? 'Y' : 'N';
+        SearchData.ISCOMPANY = this.isCompany == true ? 'Y' : 'N';
         SearchData.SORT = this.record.searchQuery.searchSort;
         SearchData.STATE = this.record.searchQuery.searchState;
         SearchData.CITY = this.record.searchQuery.searchCity;
