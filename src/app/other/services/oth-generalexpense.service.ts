@@ -31,7 +31,7 @@ export class OthGeneralExpenseService {
     public canSave: boolean;
 
     public initlialized: boolean;
-
+    public initlializedBrcode: string = '';
     menutype: string = '';
 
     constructor(
@@ -67,6 +67,17 @@ export class OthGeneralExpenseService {
 
         /*********************************************** */
 
+          if (this.initlializedBrcode != this.gs.branch_code) {
+            this.initlializedBrcode = this.gs.branch_code;
+            this.menutype ='';
+            this.gs.GENERALEXPENSE_INIT_GE = null;
+            this.gs.GENERALEXPENSE_INIT_PR = null;
+            this.gs.GENERALEXPENSE_INIT_CM = null;
+            this.gs.GENERALEXPENSE_INIT_PS = null;
+            this.gs.GENERALEXPENSE_INIT_FA = null;
+            this.record = null;
+            this.mdata$.next(this.record);
+        }
 
         this.id = params.id;
         this.menuid = params.menuid;

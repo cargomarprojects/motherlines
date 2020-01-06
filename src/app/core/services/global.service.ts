@@ -192,6 +192,8 @@ export class GlobalService {
   public GENERALEXPENSE_INIT_CM: any;
   public GENERALEXPENSE_INIT_PS: any;
   public GENERALEXPENSE_INIT_FA: any;
+  public PARTYPAGE_INIT_PARTYS: any;
+  public PARTYPAGE_INIT_OVERSEAAGENT: any;
 
   public JOB_TYPE_OI: any = [];
   public JOB_TYPE_OE: any = [];
