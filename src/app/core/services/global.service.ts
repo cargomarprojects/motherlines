@@ -549,7 +549,7 @@ export class GlobalService {
       "~HIDE_PAYROLL": this.user_hide_payroll,
       "~USER_EMAIL": this.user_email,
       "~SEA_ARVL_FORMAT": this.SEA_ARVL_FORMAT,
-      "~MESSENGER_SLIP_DROP_AT":this.MESSENGER_SLIP_DROP_AT
+      "~MESSENGER_SLIP_DROP_AT": this.MESSENGER_SLIP_DROP_AT
     }
 
   }
@@ -1054,7 +1054,7 @@ export class GlobalService {
 
   public IsShipmentClosed(OPR_MODE: string, REF_DATE: string, LOCK_STATUS: string, UNLOCK_DATE: string = "") {
     var bRet = false;
-    var Dt_Now: string;
+    // var Dt_Now: string;
     var Days = 0;
 
     var IsNullVal = false;
@@ -1062,9 +1062,8 @@ export class GlobalService {
     try {
 
       if (LOCK_STATUS == null || LOCK_STATUS == "") {
-        Dt_Now = this.defaultValues.today;
-
         //Days = Dt_Now.Subtract(REF_DATE).TotalDays;
+        Days = this.GetDays(REF_DATE);
 
         if ((OPR_MODE == "SEA EXPORT" || OPR_MODE == "SEA IMPORT") && Days > this.LOCK_DAYS_SEA && this.LOCK_DAYS_SEA > 0)
           bRet = true;
@@ -1093,12 +1092,15 @@ export class GlobalService {
         IsNullVal = false;
         if (UNLOCK_DATE == "")
           IsNullVal = true;
+        if (UNLOCK_DATE == undefined)
+          IsNullVal = true;
         if (UNLOCK_DATE == null)
           IsNullVal = true;
 
         if (!IsNullVal) {
-          Dt_Now = this.defaultValues.today;
+          //Dt_Now = this.defaultValues.today;
           //Days = Dt_Now.Subtract((DateTime)UNLOCK_DATE).TotalDays;
+          Days = this.GetDays(UNLOCK_DATE);
           if (Days >= 2)
             bRet = true;
         }
@@ -1109,6 +1111,29 @@ export class GlobalService {
     }
 
     return bRet;
+  }
+
+  GetDays(_refDate: string) {
+    let nDays: number = 0;
+    if (_refDate == "" || _refDate == null || _refDate == undefined)
+      nDays = 0;
+    else {
+
+      let nowDate = new Date();
+
+      var tempdt = _refDate.split('-');
+      let dtyr: number = +tempdt[0];
+      let dtmn: number = +tempdt[1];
+      let dtdy: number = + (tempdt[2].length > 2 ? tempdt[2].substring(0, 2) : tempdt[2]);
+      let refDate = new Date(dtyr, dtmn - 1, dtdy);
+
+      nowDate.setHours(0, 0, 0, 0);
+      refDate.setHours(0, 0, 0, 0);
+      var diff = Math.abs(nowDate.getTime() - refDate.getTime());
+      nDays = Math.floor(diff / (1000 * 3600 * 24));
+
+    }
+    return nDays;
   }
 
   public GetAirportCode(PortCode: string, PortName: string, CountryCode: string) {
@@ -1350,7 +1375,7 @@ export class GlobalService {
   public MENU_EX_MASTER_INTERNAL_MEMO: string = "222BC83B-15AB-466B-912E-ADDFB9FD1528";
   public MENU_EX_MASTER_REQUEST_APPROVAL: string = "597B0692-F1E6-4076-B6F9-FD744B09AF31";
   public MENU_FORMS_FILE_UPLOAD: string = "D068821C-B6AE-47BE-A91F-83BAA2C395F5";
-  public MENU_SE_MASTER_CERTIFICATE_ORIGIN:string = "A8F97344-12C3-44EE-A4E1-B738380ECDA5";
+  public MENU_SE_MASTER_CERTIFICATE_ORIGIN: string = "A8F97344-12C3-44EE-A4E1-B738380ECDA5";
 
   Save2LocalStorage() {
 
@@ -1383,7 +1408,7 @@ export class GlobalService {
     sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify(this.BOE_IMPORT_REQUIRED));
     sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify(this.FRONTEND_DATEFORMAT));
     sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
-   
+
     sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
     sessionStorage.setItem('user_name', JSON.stringify(this.user_name));
     sessionStorage.setItem('DOC_FOOTER1', JSON.stringify(this.DOC_FOOTER1));
@@ -1407,7 +1432,7 @@ export class GlobalService {
     sessionStorage.setItem('USER_EMAIL', JSON.stringify(this.user_email));
     sessionStorage.setItem('SEA_ARVL_FORMAT', JSON.stringify(this.SEA_ARVL_FORMAT));
     sessionStorage.setItem('MESSENGER_SLIP_DROP_AT', JSON.stringify(this.MESSENGER_SLIP_DROP_AT));
-    
+
   }
 
 

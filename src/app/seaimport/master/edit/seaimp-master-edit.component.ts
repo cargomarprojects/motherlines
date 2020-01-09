@@ -232,7 +232,6 @@ export class SeaImpMasterEditComponent implements OnInit {
 
 
   Save() {
-
     if (!this.Allvalid())
       return;
     this.SaveContainer();
