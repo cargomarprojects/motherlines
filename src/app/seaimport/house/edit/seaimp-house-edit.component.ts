@@ -163,6 +163,9 @@ export class SeaImpHouseEditComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    // this.hbl_agent_name_field.Focus();
+}
   InitRecord() {
     this.record.hbl_pkid = this.pkid;
     this.record.hbl_mbl_id = '';
@@ -309,7 +312,6 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.recorddet.hbl_cargo_description10 = "CARRIER NOT RESPONSIBLE FOR PACKING OF CARGO";
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
-
     if (this.parentid.trim() != "")
       this.LoadMasterData();
   }
@@ -357,6 +359,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
 
         this.hbl_houseno_field.nativeElement.focus();
+        // this.hbl_agent_name_field.Focus();
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });
