@@ -39,7 +39,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
   selectdeselect: boolean = false;
   errorMessage: string;
   IsLocked: boolean = false;
-
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -53,6 +53,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
     this.pkid = options.pkid;
     this.menuid = options.menuid;
     this.origin = options.origin;
+    this.IsLocked = options.is_locked;
     this.mode = 'EDIT';
     this.initPage();
     this.actionHandler();
@@ -219,7 +220,6 @@ export class SeaImpCargoPickupComponent implements OnInit {
           }
           this.SelectDeselect();
           //cmd_cntr_selectAll_Click(null, null);
-          this.CheckData();
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -312,20 +312,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
       return sValue;
     }
   }
-  CheckData() {
-    /*
-        if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
-        {
-            IsLocked = true;
-            LBL_LOCK.Content = "LOCKED";
-            CmdSave.IsEnabled = false;
-            CmdCopyCntr.IsEnabled = false;
-        }
-        else
-            LBL_LOCK.Content = "UNLOCKED";
-    
-    */
-  }
+   
 
 
 

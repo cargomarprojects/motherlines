@@ -42,6 +42,7 @@ export class SeaImpRiderPageComponent implements OnInit {
     this.pkid = options.pkid;
     this.source = options.source;
     this.menuid = options.menuid;
+    this.IsLocked = options.is_locked;
     this.mode = 'EDIT';
     this.initPage();
     this.actionHandler();

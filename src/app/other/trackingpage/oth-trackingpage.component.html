@@ -3,6 +3,7 @@
     <div class="col">
         <label class="mr-3"> {{hideTracking=='N' ?'Tracking':'Internal Memo'}}</label>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+        <label class="text-danger" *ngIf="IsLocked">LOCKED</label>
     </div>
 </div>
 
@@ -75,7 +76,7 @@
 
     <div class="page-footer">
         <div class="row row justify-content-center p-1">
-            <button class="btn btn-primary btn-md" (click)="Save()">Save</button>
+            <button class="btn btn-primary btn-md" *ngIf="!IsLocked" (click)="Save()">Save</button>
         </div>
     </div>
     <br>
@@ -123,8 +124,8 @@
                                     Add a New Line.)</label>
                                 <div class="col-4 p-0">
                                     <div class="row row justify-content-center p-1">
-                                        <button class="btn btn-primary btn-md mr-1"
-                                            (click)="SaveMemo()">{{lblSaveMemo}}</button>
+                                        <button class="btn btn-primary btn-md mr-1" 
+                                        *ngIf="!IsLocked"   (click)="SaveMemo()">{{lblSaveMemo}}</button>
                                         <button class="btn btn-primary btn-md mr-1" (click)="NewRecord()">New</button>
                                     </div>
                                 </div>

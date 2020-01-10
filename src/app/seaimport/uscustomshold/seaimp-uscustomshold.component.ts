@@ -36,7 +36,6 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
   report_searchdata: any = {};
   report_menuid: string = '';
 
-
   IsLocked: boolean = false;
 
   constructor(
@@ -51,6 +50,7 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.IsLocked = options.is_locked;
     this.mode = 'EDIT';
     this.initPage();
     this.actionHandler();

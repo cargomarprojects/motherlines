@@ -2,6 +2,7 @@
     <div class="col">
         <label>Rider Page</label>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+        <label class="text-danger" *ngIf="IsLocked">LOCKED</label>
     </div>
 </div>
 
@@ -87,7 +88,7 @@
 </div>
 
 
-<div class="page-footer">
+<!-- <div class="page-footer">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group row">
@@ -97,6 +98,13 @@
                 </div>
             </div>
         </div>
+    </div>
+</div> -->
+
+<div class="page-footer">
+    <div class="row row justify-content-center p-1">
+        <button class="btn btn-primary btn-md mr-1" *ngIf="!IsLocked"  (click)="Save()">Save</button>
+        <!-- <button class="btn btn-primary btn-md mr-1" >Print</button> -->
     </div>
 </div>
 

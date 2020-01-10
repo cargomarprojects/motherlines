@@ -61,6 +61,7 @@ export class OthTrackingPageComponent implements OnInit {
     this.hideTracking = options.hideTracking;
     this.oprgrp = options.oprgrp;
     this.refno = options.refno;
+    this.IsLocked = options.is_locked;
     // this.mode = 'ADD';
     this.parentTypememo = this.parentType + "-MEMO";
     this.initPage();

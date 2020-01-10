@@ -733,7 +733,8 @@ export class SeaImpMasterEditComponent implements OnInit {
           menuid: this.gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION,
           pkid: this.pkid,
           mbl_refno: this.record.mbl_refno,
-          origin: 'seaimp-master-page'
+          origin: 'seaimp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.SeaImport/DevanInstructionPage', JSON.stringify(prm));
         break;

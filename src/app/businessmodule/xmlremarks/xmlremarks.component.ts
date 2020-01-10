@@ -43,6 +43,7 @@ export class XmlRemarksComponent implements OnInit {
     this.pkid = options.pkid;
     this.source = options.source;
     this.title = options.title;
+    this.IsLocked = options.is_locked;
     this.initPage();
     this.actionHandler();
   }

@@ -2,6 +2,7 @@
     <div class="col">
         <label class="mr-3">{{title}}</label>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+        <label class="text-danger" *ngIf="IsLocked">LOCKED</label>
     </div>
 </div>
 
@@ -26,7 +27,7 @@
 </div>
 <div class="page-footer">
     <div class="row justify-content-center p-1">
-        <button class="btn btn-primary btn-md mr-1" (click)="Save()">Save</button>
+        <button class="btn btn-primary btn-md mr-1" *ngIf="!IsLocked" (click)="Save()">Save</button>
         <button class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('HISTORY')">History</button>
     </div>
 </div>

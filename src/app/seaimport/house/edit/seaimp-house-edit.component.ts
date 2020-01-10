@@ -165,7 +165,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   ngAfterViewInit() {
     // this.hbl_agent_name_field.Focus();
-}
+  }
   InitRecord() {
     this.record.hbl_pkid = this.pkid;
     this.record.hbl_mbl_id = '';
@@ -1557,6 +1557,7 @@ export class SeaImpHouseEditComponent implements OnInit {
           menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
           pkid: this.pkid,
           origin: 'seaimp-House-page',
+          is_locked: this.is_locked,
         };
         this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
         break;
@@ -1566,6 +1567,7 @@ export class SeaImpHouseEditComponent implements OnInit {
           menuid: this.gs.MENU_SI_HOUSE_DELIVERY_ORDER,
           pkid: this.pkid,
           origin: 'seaimp-House-page',
+          is_locked: this.is_locked,
         };
         this.gs.Naviagete('Silver.SeaImport/CargoPickupPage', JSON.stringify(prm));
         break;
@@ -1575,7 +1577,7 @@ export class SeaImpHouseEditComponent implements OnInit {
           menuid: this.gs.MENU_SI_HOUSE,
           pkid: this.pkid,
           source: 'SI-DESC-EX',
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'seaimp-House-page',
           canPrint: false
         };
@@ -1591,7 +1593,8 @@ export class SeaImpHouseEditComponent implements OnInit {
           oprgrp: 'SEA IMPORT',
           parentType: 'SEAIMP-SHIP',
           paramType: 'SHIP-MOVE-STATUS',
-          hideTracking: 'Y'
+          hideTracking: 'Y',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
@@ -1660,7 +1663,8 @@ export class SeaImpHouseEditComponent implements OnInit {
           pkid: this.pkid,
           source: 'SEA-HOUSE-DEVAN',
           title: 'Devanning Instruction',
-          origin: 'seaimp-House-page'
+          origin: 'seaimp-House-page',
+          is_locked: this.is_locked,
         };
         this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
         break;

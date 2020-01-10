@@ -39,7 +39,7 @@ export class DevanComponent implements OnInit {
     private errorMessage: string;
 
     IsLocked: boolean = false;
-
+    
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -53,6 +53,7 @@ export class DevanComponent implements OnInit {
         this.pkid = options.pkid;
         this.menuid = options.menuid;
         this.mbl_refno = options.mbl_refno;
+        this.IsLocked = options.is_locked;
         this.mode = 'EDIT';
         this.initPage();
         this.actionHandler();
