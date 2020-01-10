@@ -34,6 +34,7 @@ export class DockPageComponent implements OnInit {
 
   private title: string;
   private isAdmin: boolean;
+  is_locked: boolean = false;
 
   record: Tbl_cargo_exp_mbldet = <Tbl_cargo_exp_mbldet>{};
   records: Tbl_cargo_exp_desc[] = [];
@@ -57,7 +58,7 @@ export class DockPageComponent implements OnInit {
   report_searchdata: any = {};
   report_menuid: string;
   tab: string = 'main';
-  
+
 
 
   constructor(
@@ -73,6 +74,7 @@ export class DockPageComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.is_locked = options.is_locked;
     this.initPage();
     this.actionHandler();
   }
@@ -450,7 +452,7 @@ export class DockPageComponent implements OnInit {
 
 
 
-  Print(_type : string){
+  Print(_type: string) {
 
     this.report_url = '/api/SeaExport/Mblpage/MblReport';
     this.report_searchdata = this.gs.UserInfo;
@@ -461,7 +463,7 @@ export class DockPageComponent implements OnInit {
 
   }
 
-  
+
   callbackevent() {
     this.tab = 'main';
   }

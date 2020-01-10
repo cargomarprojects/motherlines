@@ -69,7 +69,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   private cmbList = {};
 
 
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
 
   hblid: string;
   hblmode: string;
@@ -107,6 +107,7 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   actionHandler() {
     this.errorMessage = '';
+    this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_exp_masterm>{};
       this.records = <Tbl_cargo_exp_container[]>[];
@@ -157,7 +158,7 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.records = <Tbl_cargo_exp_container[]>response.records;
         this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;
         this.mode = 'EDIT';
-        this.CheckData();
+        this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -580,6 +581,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           menuid: this.gs.MENU_SE_BOOKING,
           pkid: this.pkid,
           origin: 'seaexp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.SeaExport.Trans/BookingPage', JSON.stringify(prm));
         break;
@@ -604,6 +606,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           menuid: this.gs.MENU_SE_MASTER_MBL_INSTRUCTION,
           pkid: this.pkid,
           origin: 'seaexp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.SeaExport.Trans/MBLPage', JSON.stringify(prm));
         break;
@@ -614,6 +617,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           menuid: this.gs.MENU_SE_MASTER_DOCK_RECEIPT,
           pkid: this.pkid,
           origin: 'seaexp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.SeaExport.Trans/DockPage', JSON.stringify(prm));
         break;
@@ -652,7 +656,8 @@ export class SeaexpMasterEditComponent implements OnInit {
           cp_mode: 'SEA EXPORT',
           cp_ref_no: this.record.mbl_refno,
           islocked: false,
-          origin: 'seaexp-master-page'
+          origin: 'seaexp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
         break;
@@ -684,7 +689,8 @@ export class SeaexpMasterEditComponent implements OnInit {
           mbl_mode: 'SEA EXPORT',
           mbl_refno: this.record.mbl_refno,
           islocked: false,
-          origin: 'seaexp-master-page'
+          origin: 'seaexp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
         break;
@@ -696,7 +702,8 @@ export class SeaexpMasterEditComponent implements OnInit {
           master_refno: this.record.mbl_refno,
           master_refdate: this.record.mbl_ref_date,
           islocked: false,
-          origin: 'seaexp-master-page'
+          origin: 'seaexp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
         break;
@@ -708,7 +715,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           mbl_refno: this.record.mbl_refno,
           doc_type: 'SEA EXPORT',
           req_type: 'REQUEST',
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'seaexp-master-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
@@ -723,7 +730,8 @@ export class SeaexpMasterEditComponent implements OnInit {
           oprgrp: 'SEA EXPORT',
           parentType: 'SEAEXP-CNTR',
           paramType: 'CNTR-MOVE-STATUS',
-          hideTracking: 'Y'
+          hideTracking: 'Y',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
@@ -756,6 +764,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           pkid: this.pkid,
           mbl_cntr_type: this.record.mbl_cntr_type,
           origin: 'seaexp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.SeaExport.Trans/CopyCntrPage', JSON.stringify(prm));
         break;
@@ -765,6 +774,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           menuid: this.gs.MENU_SE_MASTER_CERTIFICATE_ORIGIN,
           pkid: this.pkid,
           origin: 'seaexp-master-page',
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.SeaExport.Trans/CertOriginPage', JSON.stringify(prm));
         break;

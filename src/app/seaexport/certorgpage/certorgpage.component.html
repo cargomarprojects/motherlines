@@ -4,6 +4,7 @@
         <div class="col">
             <label class="pr-1">{{title}} ({{mode}}) </label>
             <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+            <label class="text-danger" *ngIf="is_locked">LOCKED</label>
         </div>
 
     </div>
@@ -826,8 +827,8 @@
 
     <div class="page-footer">
         <div class="row align-items-center justify-content-center p-1">
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="canSave" (click)="Save()">Save</button>
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="canPrint && mode =='EDIT'"  (click)="Print()">Print</button>
+            <button class="btn btn-primary btn-md mr-1" *ngIf="canSave && !is_locked" (click)="Save()">Save</button>
+            <button class="btn btn-primary btn-md mr-1" *ngIf="canPrint && mode =='EDIT'"  (click)="Print()">Print</button>
         </div>
     </div>
 

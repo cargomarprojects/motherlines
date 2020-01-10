@@ -34,7 +34,7 @@ export class MblPageComponent implements OnInit {
 
   private title: string;
   private isAdmin: boolean;
-
+  is_locked: boolean = false;
 
   report_url: string;
   report_searchdata: any = {};
@@ -71,6 +71,7 @@ export class MblPageComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.is_locked = options.is_locked;
     this.initPage();
     this.actionHandler();
   }

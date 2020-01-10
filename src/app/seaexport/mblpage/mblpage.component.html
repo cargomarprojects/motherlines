@@ -7,6 +7,7 @@
     <div class="col">
       <label class="pr-1">{{title}} ({{mode}}) </label>
       <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+      <label class="text-danger" *ngIf="is_locked">LOCKED</label>
     </div>
 
   </div>
@@ -787,35 +788,32 @@
         </div>
 
 
-
-
-
       </div>
 
 
     </div>
   </div>
 
-
-
-
-  
-
-
-  <div class="page-footer">
+  <!-- <div class="page-footer">
     <div class="row">
       <div class="col-md-4">
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="canSave" (click)="Save()">Save</button>
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="canPrint && mode =='EDIT'"
-              (click)="Print('')">Print</button>
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="canPrint && mode =='EDIT'" (click)="Print('MBLDOCK')">Dock
-              Receipt</button>
+
           </div>
         </div>
       </div>
+    </div>
+  </div> -->
+
+
+  <div class="page-footer">
+    <div class="row justify-content-center p-1">
+      <button class="btn btn-primary btn-md mr-1" *ngIf="canSave && !is_locked" (click)="Save()">Save</button>
+      <button class="btn btn-primary btn-md mr-1" *ngIf="canPrint && mode =='EDIT'" (click)="Print('')">Print</button>
+      <button class="btn btn-primary btn-md mr-1" *ngIf="canPrint && mode =='EDIT'" (click)="Print('MBLDOCK')">Dock
+        Receipt</button>
     </div>
   </div>
 
@@ -828,5 +826,6 @@
 </div>
 
 <div *ngIf="tab == 'report'">
-  <app-report [title]="'Ocean Export MBL Instruction'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+  <app-report [title]="'Ocean Export MBL Instruction'" [url]="report_url" [searchdata]="report_searchdata"
+    [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
 </div>
