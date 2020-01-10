@@ -28,6 +28,7 @@ export class MessengerSlipListComponent implements OnInit {
 
 
   records: Tbl_cargo_slip[]
+  is_locked: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +44,7 @@ export class MessengerSlipListComponent implements OnInit {
     this.mbl_pkid = options.mbl_pkid;
     this.mbl_refno = options.mbl_refno;
     this.mbl_mode = options.mbl_mode;
+    this.is_locked = options.is_locked;
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
@@ -78,8 +80,8 @@ export class MessengerSlipListComponent implements OnInit {
       mode: 'ADD',
       mbl_pkid: this.mbl_pkid,
       mbl_refno: this.mbl_refno,
-      mbl_mode: this.mbl_mode
-
+      mbl_mode: this.mbl_mode,
+      is_locked:this.is_locked
     };
     this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
 
@@ -97,7 +99,8 @@ export class MessengerSlipListComponent implements OnInit {
       mode: 'EDIT',
       mbl_pkid: this.mbl_pkid,
       mbl_refno: this.mbl_refno,
-      mbl_mode: this.mbl_mode
+      mbl_mode: this.mbl_mode,
+      is_locked:this.is_locked
     };
     this.gs.Naviagete('Silver.Other.Trans/MessengerSlipEdit', JSON.stringify(parameter));
   }

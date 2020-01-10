@@ -2,6 +2,7 @@
   <div class="col">
     <label class="mr-3">Payment Request</label>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    <label class="text-danger" *ngIf="IsLocked">LOCKED</label>
   </div>
 </div>
 
@@ -87,7 +88,7 @@
           </app-date>
         </div>
         <div class="col-6">
-          <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
+          <button class="btn btn-primary btn-sm mr-1" *ngIf="!IsLocked" (click)="Save()">Save</button>
           <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
         </div>
       </div>

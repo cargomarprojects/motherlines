@@ -51,7 +51,7 @@ export class PaymentReqComponent implements OnInit {
     this.cp_source = options.cp_source;
     this.cp_mode = options.cp_mode;
     this.cp_ref_no = options.cp_ref_no;
-    this.IsLocked = options.islocked;
+    this.IsLocked = options.is_locked;
     this.mode = 'ADD';
     this.initPage();
     this.actionHandler();

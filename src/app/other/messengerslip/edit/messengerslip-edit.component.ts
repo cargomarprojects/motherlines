@@ -64,7 +64,8 @@ export class MessengerSlipEditComponent implements OnInit {
     this.oprgrp = options.mbl_mode;
     this.refno = options.mbl_refno;
     this.mode = options.mode;
-
+    this.IsLocked = options.is_locked;
+    
     this.initPage();
     this.actionHandler();
   }
