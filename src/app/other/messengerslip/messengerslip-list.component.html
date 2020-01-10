@@ -29,7 +29,7 @@
                     </thead>
                     <tbody class="page-body-tbody">
                         <tr *ngFor="let rec of records">
-                            <td (click)="edit(rec)">{{rec.cs_refno}}</td>
+                            <td class="hlink" (click)="edit(rec)">{{rec.cs_refno}}</td>
                             <td>{{rec.cs_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                             <td>{{rec.cs_to_name}}</td>
                             <td>{{rec.cs_to_tel}}</td>

@@ -50,6 +50,7 @@ export class FollowupComponent implements OnInit {
     this.cf_masterid = options.master_id;
     this.cf_refno = options.master_refno;
     this.cf_refdate = options.master_refdate;
+    this.IsLocked = options.is_locked;
     this.initPage();
     this.actionHandler();
   }

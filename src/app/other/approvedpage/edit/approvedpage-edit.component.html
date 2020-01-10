@@ -3,6 +3,7 @@
     <div class="col">
       <label class="mr-3">Request for Approval ({{mode}})</label>
       <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+      <label class="text-danger" *ngIf="IsLocked">LOCKED</label>
     </div>
   </div>
 
@@ -134,7 +135,7 @@
         <div *ngIf="req_type=='REQUEST'" class="form-group row border">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+            <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode) && !IsLocked" (click)="Save()">Save</button>
             <button [style.color]="Foregroundcolor_edit" *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="BtnNavigation('ATTACHMENT')">Attachments</button>
           </div>
         </div>
@@ -203,7 +204,7 @@
         <div *ngIf="req_type=='APPROVED'" class="form-group row border">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)"
+            <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode) && !IsLocked"
               (click)="SaveApproved()">Save</button>
             <!-- <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button> -->
           </div>

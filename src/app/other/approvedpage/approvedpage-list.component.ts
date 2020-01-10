@@ -34,6 +34,7 @@ export class ApprovedPageListComponent implements OnInit {
   attach_type: string = "";
   
   records: Tbl_Cargo_Approved[]
+  is_locked: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,6 +51,7 @@ export class ApprovedPageListComponent implements OnInit {
     this.mbl_refno = options.mbl_refno;
     this.doc_type = options.doc_type;
     this.req_type = options.req_type;
+    this.is_locked = options.is_locked;
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
@@ -86,7 +88,8 @@ export class ApprovedPageListComponent implements OnInit {
       mbl_pkid: this.mbl_pkid,
       mbl_refno: this.mbl_refno,
       doc_type: this.doc_type,
-      req_type: this.req_type
+      req_type: this.req_type,
+      is_locked:this.is_locked
     };
     this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
 
@@ -105,7 +108,8 @@ export class ApprovedPageListComponent implements OnInit {
       mbl_pkid: this.mbl_pkid,
       mbl_refno: this.mbl_refno,
       doc_type: this.doc_type,
-      req_type: this.req_type
+      req_type: this.req_type,
+      is_locked:this.is_locked
     };
     this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
   }

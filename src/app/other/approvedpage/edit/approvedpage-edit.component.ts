@@ -80,6 +80,7 @@ export class ApprovedPageEditComponent implements OnInit {
     this.doc_type = options.doc_type;
     this.req_type = options.req_type;
     this.mode = options.mode;
+    this.IsLocked = options.is_locked;
 
     this.initPage();
     this.actionHandler();
