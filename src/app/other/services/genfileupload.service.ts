@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_cargo_genfiles , Tbl_cargo_genfilesModel } from '../models/Tbl_cargo_genfiles';
+import { Tbl_cargo_genfiles, Tbl_cargo_genfilesModel } from '../models/Tbl_cargo_genfiles';
 import { SearchQuery } from '../models/Tbl_cargo_genfiles';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -53,7 +53,7 @@ export class GenFileUploadService {
         this.record = <Tbl_cargo_genfilesModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: ''},
+            searchQuery: <SearchQuery>{ searchString: '' ,accNo:''},
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -63,7 +63,7 @@ export class GenFileUploadService {
         this.title = this.gs.getTitle(this.menuid);
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
-        this.canDelete = this.gs.canDelete(this.menuid);        
+        this.canDelete = this.gs.canDelete(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
 
         this.initlialized = true;
@@ -85,12 +85,13 @@ export class GenFileUploadService {
         SearchData.pkid = this.id;
         SearchData.TYPE = 'FT';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
+        SearchData.CODE = '';
+        SearchData.ACC_NO = this.record.searchQuery.accNo;
 
-        SearchData.FDATE = this.record.searchQuery.sdate;
+        SearchData.SDATE = this.record.searchQuery.sdate;
         SearchData.EDATE = this.record.searchQuery.edate;
         SearchData.YEAR = this.gs.year_code;
-        
+
 
 
         SearchData.page_count = 0;
@@ -130,11 +131,11 @@ export class GenFileUploadService {
             REC.rec_created_date = _rec.rec_created_date;
         }
     }
-    
+
     DeleteRow(_rec: Tbl_cargo_genfiles) {
 
         this.record.errormessage = '';
-        if (!confirm("DELETE " )) {
+        if (!confirm("DELETE ")) {
             return;
         }
 

@@ -944,6 +944,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       return;
     }
 
+
     if (!confirm("Update P/U. & E/R.")) {
       return;
     }
@@ -985,6 +986,19 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
     }
   */
+
+  CopyCntrClipboard() {
+    let strcntr: string = "";
+    this.records.forEach(Rec => {
+      if (strcntr != "")
+        strcntr += ",";
+      strcntr += Rec.cntr_no.trim();
+    })
+    if (strcntr != "") {
+      alert(strcntr)
+      this.gs.copyToClipboard(strcntr);
+    }
+  }
 }
 
 

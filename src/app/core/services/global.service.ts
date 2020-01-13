@@ -1175,6 +1175,23 @@ export class GlobalService {
 
   }
 
+  public copyToClipboard(val: string) {
+    try {
+      const txtBox = document.createElement('textarea');
+      txtBox.style.position = 'fixed';
+      txtBox.style.left = '0';
+      txtBox.style.top = '0';
+      txtBox.style.opacity = '0';
+      txtBox.value = val;
+      document.body.appendChild(txtBox);
+      txtBox.focus();
+      txtBox.select();
+      document.execCommand('copy');
+      document.body.removeChild(txtBox);
+    }
+    catch (Exception) {
+    }
+  }
   // MENU CONSTANTS
 
 

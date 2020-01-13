@@ -6,6 +6,7 @@ export interface SearchQuery {
     searchString: string;
     sdate: string;
     edate: string;
+    accNo: string;
 }
 
 
