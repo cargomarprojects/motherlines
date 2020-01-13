@@ -4,6 +4,7 @@ export interface SearchQuery {
     balance : string ;
     searchString: string;
     searchType : string ;
+    status : string ;
     sdate : string ;
     edate : string;
 }

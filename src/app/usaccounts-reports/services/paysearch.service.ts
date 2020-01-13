@@ -47,7 +47,7 @@ export class PaySearchService {
         this.record = <AccPaymentModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', searchType: 'CHECK NO'},
+            searchQuery: <SearchQuery>{ searchString: '', searchType: 'CHECK NO', status: 'PAID' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -57,7 +57,7 @@ export class PaySearchService {
         this.title = this.gs.getTitle(this.menuid);
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
-        this.canDelete = this.gs.canDelete(this.menuid);        
+        this.canDelete = this.gs.canDelete(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
 
         this.initlialized = true;
@@ -78,9 +78,9 @@ export class PaySearchService {
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.TYPE = this.record.searchQuery.searchType;
         SearchData.DATA = this.record.searchQuery.searchString;
+        SearchData.STATUS = this.record.searchQuery.status;
+        SearchData.HIDE_PAYROLL = this.gs.user_hide_payroll;
 
-
-        
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
@@ -99,7 +99,7 @@ export class PaySearchService {
             this.mdata$.next(this.record);
         }, error => {
             this.record.errormessage = this.gs.getError(error),
-            this.mdata$.next(this.record);
+                this.mdata$.next(this.record);
         });
     }
 
@@ -116,11 +116,11 @@ export class PaySearchService {
             REC.rec_created_date = _rec.rec_created_date;
         }
     }
-    
+
     DeleteRow(_rec: Tbl_Acc_Payment) {
 
         this.record.errormessage = '';
-        if (!confirm("DELETE "  )) {
+        if (!confirm("DELETE ")) {
             return;
         }
 
