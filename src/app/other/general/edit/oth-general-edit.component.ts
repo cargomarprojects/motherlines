@@ -909,4 +909,17 @@ export class OthGeneralEditComponent implements OnInit {
   RemoveRow(_rec: Tbl_cargo_container) {
     this.records.splice(this.records.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
+
+  CopyCntrClipboard() {
+    let strcntr: string = "";
+    this.records.forEach(Rec => {
+      if (strcntr != "")
+        strcntr += ",";
+      strcntr += Rec.cntr_no.trim();
+    })
+    if (strcntr != "") {
+      alert(strcntr)
+      this.gs.copyToClipboard(strcntr);
+    }
+  }
 }
