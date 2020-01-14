@@ -95,6 +95,7 @@ export interface Tbl_cargo_imp_masterm {
     mbl_ombl_sent_ampm: string;
     mbl_ismemo_attached: string;
     mbl_cntr_desc: string;
+    mbl_of_sent_on:string;
 }
 
 export interface Tbl_cargo_imp_container {
@@ -119,6 +120,7 @@ export interface Tbl_cargo_imp_container {
     cntr_pick_date: string;
     cntr_return_date: string;
     cntr_selected:boolean;
+    cntr_lfd:number;
 }
 
 export interface Tbl_cargo_imp_housem {

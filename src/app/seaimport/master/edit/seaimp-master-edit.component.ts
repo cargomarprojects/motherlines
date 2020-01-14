@@ -174,6 +174,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.record.mbl_vessel = '';
     this.record.mbl_voyage = '';
     this.record.mbl_ombl_sent_on = '';
+    this.record.mbl_of_sent_on = '';
     var curr_date = new Date();
     var curr_hh = curr_date.getHours();
     if (curr_hh >= 12)
@@ -461,6 +462,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     rec.cntr_return_date = '';
     rec.cntr_weight_uom = '';
     rec.cntr_order = 1;
+    rec.cntr_lfd=0;
     this.records.push(rec);
   }
 
@@ -661,6 +663,10 @@ export class SeaImpMasterEditComponent implements OnInit {
       }
       case 'cntr_tare_weight': {
         rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
+        break;
+      }
+      case 'cntr_lfd': {
+        rec.cntr_lfd = this.gs.roundNumber(rec.cntr_lfd, 0);
         break;
       }
     }

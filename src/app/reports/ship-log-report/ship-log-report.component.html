@@ -306,7 +306,9 @@
                         <th  *ngIf="job_mode=='OCEAN EXPORT'"> BOOKING# </th>
                         <th> CONSIGNEE </th>
                         <th *ngIf="job_mode=='OCEAN EXPORT' || job_mode=='OCEAN IMPORT'"> TYPE </th>                        
-                        <th> ETA </th>                       
+                        <th> ETA </th>         
+                        <th> FIRM.CODE </th>     
+                        <th> IT.SHIPMENT </th>                   
                         <!-- <th> A </th>
                         <th> B </th>
                         <th> C </th>
@@ -322,7 +324,9 @@
                         <td  *ngIf="job_mode=='OCEAN EXPORT'">{{rec.mbl_liner_bookingno}}</td>                        
                         <td>{{rec.hbl_consignee_name}}</td>
                         <td *ngIf="job_mode=='OCEAN EXPORT' || job_mode=='OCEAN IMPORT'">{{rec.mbl_cntr_type}}</td>                        
-                        <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT }}</td>                     
+                        <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT }}</td>       
+                        <td>{{rec.mbl_cargo_loc_firmcode}}</td>
+                        <td>{{rec.hbl_is_itshipment}}</td>              
                         <!-- <td>{{rec.mbl_inv_stage_a}}</td>
                         <td>{{rec.mbl_inv_stage_b}}</td>
                         <td>{{rec.mbl_inv_stage_c}}</td>

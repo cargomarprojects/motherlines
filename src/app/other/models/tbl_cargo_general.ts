@@ -137,6 +137,8 @@ export interface Tbl_cargo_general {
     mbl_inv_stage_c: string;
     mbl_inv_stage_d: string;
     mbl_inv_stage_e: string;
+    mbl_cargo_loc_firmcode: string;
+    hbl_is_itshipment: string;
 }
 
 export interface Tbl_cargo_container {
