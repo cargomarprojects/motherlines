@@ -81,6 +81,23 @@ export class SeaImpHouseComponent implements OnInit {
     this.gs.Naviagete('Silver.SeaImport/SeaImpHouseEditPage', JSON.stringify(parameter));
   }
 
+  
+  editmaster(_record: Tbl_cargo_imp_housem) {
+    if (!this.gs.canEdit(this.gs.MENU_SI_MASTER)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+
+    let parameter = {
+      menuid: this.mainservice.menuid,
+      pkid: _record.hbl_mbl_id,
+      type: '',
+      origin: 'seaimp-house-page',
+      mode: 'EDIT'
+    };
+    this.gs.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(parameter));
+  }
+
   Close() {
     this.location.back();
   }

@@ -1545,6 +1545,10 @@ export class SeaImpHouseEditComponent implements OnInit {
         rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
         break;
       }
+      case 'cntr_lfd': {
+        rec.cntr_lfd = this.gs.roundNumber(rec.cntr_lfd, 0);
+        break;
+      }
     }
   }
 
