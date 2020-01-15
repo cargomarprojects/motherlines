@@ -17,15 +17,15 @@ import { AirExpHouseService } from '../services/airexp-house.service';
 })
 export class AirExpHouseComponent implements OnInit {
 
-    /*
-   01-07-2019 Created By Ajith  
+  /*
+ 01-07-2019 Created By Ajith  
 
- */
+*/
 
-  errorMessage$ : Observable<string> ;
-  records$ :  Observable<Tbl_cargo_exp_housem[]>;
-  pageQuery$ : Observable<PageQuery>;
-  searchQuery$ : Observable<SearchQuery>;
+  errorMessage$: Observable<string>;
+  records$: Observable<Tbl_cargo_exp_housem[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,20 +40,20 @@ export class AirExpHouseComponent implements OnInit {
   }
 
   initPage() {
-    
+
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
-    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
+    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
 
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions,  'SEARCH');
+    this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
-    this.mainservice.Search(actions,'PAGE');
+    this.mainservice.Search(actions, 'PAGE');
   }
 
   // NewRecord() {
@@ -81,7 +81,7 @@ export class AirExpHouseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.hbl_pkid,
-      parentid :_record.hbl_mbl_id,
+      parentid: _record.hbl_mbl_id,
       type: '',
       refno: '',
       origin: 'airexp-house-page',
@@ -90,9 +90,14 @@ export class AirExpHouseComponent implements OnInit {
     this.gs.Naviagete('Silver.AirExport.Trans/AirExpHouseEditPage', JSON.stringify(parameter));
   }
 
+  editmaster(_record: Tbl_cargo_exp_housem) {
+    this.gs.LinkPage('REFNO', 'AIR EXPORT', _record.mbl_refno, _record.hbl_mbl_id);
+  }
+
+
   Close() {
     this.location.back();
   }
 
- 
+
 }
