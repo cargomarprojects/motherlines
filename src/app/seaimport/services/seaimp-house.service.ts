@@ -89,6 +89,7 @@ export class SeaImpHouseService {
         SearchData.SDATE = this.record.searchQuery.fromdate;
         SearchData.EDATE = this.record.searchQuery.todate;
         SearchData.OVERRIDE_POD_ETA = this.gs.SEA_IMP_OVERRIDE_POD_ETA;
+        SearchData.BRANCH_REGION = this.gs.BRANCH_REGION;
         SearchData.PARENT_ID = '';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
