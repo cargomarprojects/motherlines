@@ -25,6 +25,8 @@ export class AlertLogPageComponent implements OnInit {
     frecords: Tbl_cargo_followup[]
     ErrorMessage: string = "";
     _artab: boolean = true;
+    chkallselected: boolean = false;
+    selectdeselect: boolean = false;
 
     errorMessage$: Observable<string>;
     records$: Observable<Tbl_cargo_general[]>;
@@ -46,6 +48,8 @@ export class AlertLogPageComponent implements OnInit {
 
     List(action: string = '') {
         this.ErrorMessage = "";
+        this.chkallselected = false;
+        this.selectdeselect = false;
         var SearchData = this.gs.UserInfo;
         this.mainservice.FollowupList(SearchData).subscribe(response => {
             this.frecords = response.list;
@@ -56,12 +60,10 @@ export class AlertLogPageComponent implements OnInit {
     }
 
     initPage() {
-
         this.records$ = this.mainservice.data$.pipe(map(res => res.records));
         this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
         this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
         this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
-
     }
 
     searchEvents(actions: any) {
@@ -127,6 +129,14 @@ export class AlertLogPageComponent implements OnInit {
                 this.ErrorMessage = this.gs.getError(error);
                 alert(this.ErrorMessage);
             });
+    }
+
+    SelectDeselect() {
+        this.selectdeselect = !this.selectdeselect;
+        for (let rec of this.frecords) {
+            rec.cf_yn_b = this.selectdeselect;
+        }
+        this.chkallselected = this.selectdeselect;
     }
 
 

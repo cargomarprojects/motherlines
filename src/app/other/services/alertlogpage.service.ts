@@ -29,6 +29,7 @@ export class AlertLogPageService {
 
     public initlialized: boolean;
     public initlializedBrcode: string = '';
+  
 
     constructor(
         private http2: HttpClient,
@@ -133,6 +134,7 @@ export class AlertLogPageService {
             this.mdata$.next(this.record);
         });
     }
+    
 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/AlertLogPage/List', SearchData, this.gs.headerparam2('authorized'));
