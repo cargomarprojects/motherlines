@@ -89,7 +89,7 @@ export class SeaImpHouseComponent implements OnInit {
     }
 
     let parameter = {
-      menuid: this.mainservice.menuid,
+      menuid: this.gs.MENU_SI_MASTER,
       pkid: _record.hbl_mbl_id,
       type: '',
       origin: 'seaimp-house-page',
