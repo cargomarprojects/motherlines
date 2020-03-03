@@ -91,7 +91,7 @@ export class AirExpHouseComponent implements OnInit {
   }
 
   editmaster(_record: Tbl_cargo_exp_housem) {
-    this.gs.LinkPage('REFNO', 'AIR EXPORT', _record.mbl_refno, _record.hbl_mbl_id);
+    this.gs.LinkPage('REFNO', 'AIR EXPORT', _record.mbl_refno, _record.hbl_mbl_id,_record.hbl_pkid);
   }
 
 

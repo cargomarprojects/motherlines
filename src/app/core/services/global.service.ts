@@ -1198,7 +1198,7 @@ export class GlobalService {
         return;
       }
 
-      if (INVOKETYPE == "INVNO") {
+      if (INVOKETYPE == "INVNO")  {
         if (INVID.trim() == "")
           alert("Cannot Load Details");
         else if (sType == "OI")
@@ -1290,7 +1290,7 @@ export class GlobalService {
               origin: INVOKETYPE,
               mode: 'EDIT'
             };
-            this.Naviagete('Silver.SeaExport.Trans/SeaExpMasterPage', JSON.stringify(prm));
+            this.Naviagete('Silver.SeaExport.Trans/SeaExpMasterEditPage', JSON.stringify(prm));
                 // InvokePage("Ocean Export Master", "Silver.SeaExport.Trans.xap", "Silver.SeaExport.Trans", "SeaExpMasterPage", SMENU_ID + "~" + MBLID);
           }
             else

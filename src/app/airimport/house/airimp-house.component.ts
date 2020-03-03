@@ -81,6 +81,10 @@ export class AirImpHouseComponent implements OnInit {
     this.gs.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(parameter));
   }
 
+  editmaster(_record: Tbl_cargo_imp_housem) {
+    this.gs.LinkPage('REFNO', 'AIR IMPORT', _record.mbl_refno, _record.hbl_mbl_id,_record.hbl_pkid);
+  }
+
   Close() {
     this.location.back();
   }

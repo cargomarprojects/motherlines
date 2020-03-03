@@ -32,7 +32,7 @@
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records$ | async">
-                <td (click)="edit(rec)" >{{rec.mbl_refno}}</td>
+                <td class='hlink'  (click)="edit(rec)" >{{rec.mbl_refno}}</td>
                 <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                 <td *ngIf="mainservice.param_type=='FA'">{{rec.mbl_cargo_loc_name}}</td>
                 <td *ngIf="mainservice.param_type=='FA'">{{rec.mbl_devan_loc_name}}</td>
