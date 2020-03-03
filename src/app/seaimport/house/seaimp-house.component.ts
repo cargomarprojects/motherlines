@@ -19,12 +19,12 @@ import { SeaImpHouseService } from '../services/seaimp-house.service';
 export class SeaImpHouseComponent implements OnInit {
 
   // 02-07-2019 Created By Ajith  
- 
 
-  errorMessage$ : Observable<string> ;
-  records$ :  Observable<Tbl_cargo_imp_housem[]>;
-  pageQuery$ : Observable<PageQuery>;
-  searchQuery$ : Observable<SearchQuery>;
+
+  errorMessage$: Observable<string>;
+  records$: Observable<Tbl_cargo_imp_housem[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,16 +41,16 @@ export class SeaImpHouseComponent implements OnInit {
   initPage() {
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
-    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
+    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions,  'SEARCH');
+    this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
-    this.mainservice.Search(actions,'PAGE');
+    this.mainservice.Search(actions, 'PAGE');
   }
 
   // NewRecord() {
@@ -73,7 +73,7 @@ export class SeaImpHouseComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.hbl_pkid,
-      parentid :_record.hbl_mbl_id,
+      parentid: _record.hbl_mbl_id,
       type: '',
       origin: 'seaimp-house-page',
       mode: 'EDIT'
@@ -81,26 +81,14 @@ export class SeaImpHouseComponent implements OnInit {
     this.gs.Naviagete('Silver.SeaImport/SeaImpHouseEditPage', JSON.stringify(parameter));
   }
 
-  
   editmaster(_record: Tbl_cargo_imp_housem) {
-    if (!this.gs.canEdit(this.gs.MENU_SI_MASTER)) {
-      alert('Insufficient User Rights')
-      return;
-    }
-
-    let parameter = {
-      menuid: this.gs.MENU_SI_MASTER,
-      pkid: _record.hbl_mbl_id,
-      type: '',
-      origin: 'seaimp-house-page',
-      mode: 'EDIT'
-    };
-    this.gs.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(parameter));
+   
+    this.gs.LinkPage("REFNO", "SEA IMPORT", _record.mbl_refno, _record.hbl_mbl_id, "", "");
   }
 
   Close() {
     this.location.back();
   }
 
- 
+
 }

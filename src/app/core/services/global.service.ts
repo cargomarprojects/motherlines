@@ -1283,20 +1283,38 @@ export class GlobalService {
           SMENU_ID = this.MENU_SE_MASTER;
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID))
           {
-
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              type: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.SeaExport.Trans/SeaExpMasterPage', JSON.stringify(prm));
                 // InvokePage("Ocean Export Master", "Silver.SeaExport.Trans.xap", "Silver.SeaExport.Trans", "SeaExpMasterPage", SMENU_ID + "~" + MBLID);
           }
             else
                alert("Insufficient Rights");
         }
-        // else if (sType == "OI")
-        // {
-        //   SMENU_ID = this.MENU_SI_MASTER;
-        //     if (GLOBALCONTANTS.SCREEN_CANEDIT(SMENU_ID) || GLOBALCONTANTS.SCREEN_CANVIEW(SMENU_ID))
-        //         InvokePage("Ocean Import Master", "Silver.SeaImport.xap", "Silver.SeaImport", "SeaImpMasterPage", SMENU_ID + "~" + MBLID);
-        //     else
-        //         MessageBox.Show("Insufficient Rights", "Search", MessageBoxButton.OK);
-        // }
+        else if (sType == "OI")
+        {
+          SMENU_ID = this.MENU_SI_MASTER;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID))
+          {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              type: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(prm));
+                // InvokePage("Ocean Import Master", "Silver.SeaImport.xap", "Silver.SeaImport", "SeaImpMasterPage", SMENU_ID + "~" + MBLID);
+          }
+            else
+               alert("Insufficient Rights");
+                  
+        }
         // else if (sType == "OT")
         // {
         //     SMENU_ID = GLOBALCONTANTS.MENU_OT_OPERATION;
