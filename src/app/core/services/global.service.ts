@@ -1198,7 +1198,7 @@ export class GlobalService {
         return;
       }
 
-      if (INVOKETYPE == "INVNO")  {
+      if (INVOKETYPE == "INVNO") {
         if (INVID.trim() == "")
           alert("Cannot Load Details");
         else if (sType == "OI")
@@ -1236,8 +1236,8 @@ export class GlobalService {
             mbl_pkid: MBLID,
             mbl_refno: REFNO,
             mbl_type: sType,
-            inv_arap :'',   
-            arrival_notice : '', 
+            inv_arap: '',
+            arrival_notice: '',
             origin: INVOKETYPE
           };
           this.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(prm));
@@ -1264,29 +1264,25 @@ export class GlobalService {
           else
             alert("Insufficient Rights");
         }
-        else if (sType == "AI")
-        {
-            SMENU_ID = this.MENU_AI_MASTER;
-            if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID))
-            {
-              let prm = {
-                menuid: SMENU_ID,
-                pkid: MBLID,
-                type: sType,
-                origin: INVOKETYPE,
-                mode: 'EDIT'
-              };
-              this.Naviagete('Silver.AirImport.Trans/AirImpMasterEditPage', JSON.stringify(prm));
-                // InvokePage("Air Import Master", "Silver.AirImport.Trans.xap", "Silver.AirImport.Trans", "AirImpMasterPage", SMENU_ID + "~" + MBLID);
-            }
-            else
-                alert("Insufficient Rights");
+        else if (sType == "AI") {
+          SMENU_ID = this.MENU_AI_MASTER;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              type: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.AirImport.Trans/AirImpMasterEditPage', JSON.stringify(prm));
+            // InvokePage("Air Import Master", "Silver.AirImport.Trans.xap", "Silver.AirImport.Trans", "AirImpMasterPage", SMENU_ID + "~" + MBLID);
+          }
+          else
+            alert("Insufficient Rights");
         }
-        else if (sType == "OE")
-        {
+        else if (sType == "OE") {
           SMENU_ID = this.MENU_SE_MASTER;
-          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID))
-          {
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
               pkid: MBLID,
@@ -1295,16 +1291,14 @@ export class GlobalService {
               mode: 'EDIT'
             };
             this.Naviagete('Silver.SeaExport.Trans/SeaExpMasterEditPage', JSON.stringify(prm));
-                // InvokePage("Ocean Export Master", "Silver.SeaExport.Trans.xap", "Silver.SeaExport.Trans", "SeaExpMasterPage", SMENU_ID + "~" + MBLID);
+            // InvokePage("Ocean Export Master", "Silver.SeaExport.Trans.xap", "Silver.SeaExport.Trans", "SeaExpMasterPage", SMENU_ID + "~" + MBLID);
           }
-            else
-               alert("Insufficient Rights");
+          else
+            alert("Insufficient Rights");
         }
-        else if (sType == "OI")
-        {
+        else if (sType == "OI") {
           SMENU_ID = this.MENU_SI_MASTER;
-          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID))
-          {
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
               pkid: MBLID,
@@ -1313,77 +1307,213 @@ export class GlobalService {
               mode: 'EDIT'
             };
             this.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(prm));
-                // InvokePage("Ocean Import Master", "Silver.SeaImport.xap", "Silver.SeaImport", "SeaImpMasterPage", SMENU_ID + "~" + MBLID);
+            // InvokePage("Ocean Import Master", "Silver.SeaImport.xap", "Silver.SeaImport", "SeaImpMasterPage", SMENU_ID + "~" + MBLID);
           }
-            else
-               alert("Insufficient Rights");
-                  
+          else
+            alert("Insufficient Rights");
         }
-        // else if (sType == "OT")
-        // {
-        //     SMENU_ID = GLOBALCONTANTS.MENU_OT_OPERATION;
-        //     if (GLOBALCONTANTS.SCREEN_CANEDIT(SMENU_ID) || GLOBALCONTANTS.SCREEN_CANVIEW(SMENU_ID))
-        //         InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~OTHERS");
-        //     else
-        //         MessageBox.Show("Insufficient Rights", "Search", MessageBoxButton.OK);
-        // }
-        // else if (sType == "EX")
-        // {
-        //     SMENU_ID = GLOBALCONTANTS.MENU_EX_OPERATION;
-        //     if (GLOBALCONTANTS.SCREEN_CANEDIT(SMENU_ID) || GLOBALCONTANTS.SCREEN_CANVIEW(SMENU_ID))
-        //         InvokePage("Extra Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~EXTRA");
-        //     else
-        //         MessageBox.Show("Insufficient Rights", "Search", MessageBoxButton.OK);
-        // }
-        // else if (sType == "GE")
-        // {
-        //     SMENU_ID = GLOBALCONTANTS.MENU_GENERAL_EXPENSE;
-        //     if (GLOBALCONTANTS.SCREEN_CANEDIT(SMENU_ID) || GLOBALCONTANTS.SCREEN_CANVIEW(SMENU_ID))
-        //         InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~GE");
-        //     else
-        //         MessageBox.Show("Insufficient Rights", "Search", MessageBoxButton.OK);
-        // }
-        // else if (sType == "CM")
-        // {
-        //     SMENU_ID = GLOBALCONTANTS.MENU_1099_EXPENSE;
-        //     if (GLOBALCONTANTS.SCREEN_CANEDIT(SMENU_ID) || GLOBALCONTANTS.SCREEN_CANVIEW(SMENU_ID))
-        //         InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~CM");
-        //     else
-        //         MessageBox.Show("Insufficient Rights", "Search", MessageBoxButton.OK);
-        // }
-        // else if (sType == "PR")
-        // {
-        //     SMENU_ID = GLOBALCONTANTS.MENU_PAYROLL_EXPENSE;
-        //     if (GLOBALCONTANTS.SCREEN_CANEDIT(SMENU_ID) || GLOBALCONTANTS.SCREEN_CANVIEW(SMENU_ID))
-        //         InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~PR");
-        //     else
-        //         MessageBox.Show("Insufficient Rights", "Search", MessageBoxButton.OK);
-        // }
-        // else if (sType == "FA")
-        // {
-        //     SMENU_ID = GLOBALCONTANTS.MENU_FILE_ADJUSTMENT;
-        //     if (GLOBALCONTANTS.SCREEN_CANEDIT(SMENU_ID) || GLOBALCONTANTS.SCREEN_CANVIEW(SMENU_ID))
-        //         InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~FA");
-        //     else
-        //         MessageBox.Show("Insufficient Rights", "Search", MessageBoxButton.OK);
-        // }
-        // else if (sType == "PS")
-        // {
-        //     SMENU_ID = GLOBALCONTANTS.MENU_INTERNAL_PAYMENT_SETTLEMENT;
-        //     if (GLOBALCONTANTS.SCREEN_CANEDIT(SMENU_ID) || GLOBALCONTANTS.SCREEN_CANVIEW(SMENU_ID))
-        //         InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~PS");
-        //     else
-        //         MessageBox.Show("Insufficient Rights", "Search", MessageBoxButton.OK);
-        // }
-        // else
-        // {
-        //     MessageBox.Show("Cannot Load Details", "Search", MessageBoxButton.OK);
-        // }
+        else if (sType == "OT") {
+          SMENU_ID = this.MENU_OT_OPERATION;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              type: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralEditPage', JSON.stringify(prm));
+            //InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~OTHERS");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "EX") {
+          SMENU_ID = this.MENU_EX_OPERATION;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              type: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralEditPage', JSON.stringify(prm));
+            // InvokePage("Extra Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~EXTRA");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "GE") {
+          SMENU_ID = this.MENU_GENERAL_EXPENSE;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              exptype: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
+            //InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~GE");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "CM") {
+          SMENU_ID = this.MENU_1099_EXPENSE;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              exptype: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
+            // InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~CM");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "PR") {
+          SMENU_ID = this.MENU_PAYROLL_EXPENSE;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              exptype: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
+            // InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~PR");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "FA") {
+          SMENU_ID = this.MENU_FILE_ADJUSTMENT;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              exptype: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
+            // InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~FA");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "PS") {
+          SMENU_ID = this.MENU_INTERNAL_PAYMENT_SETTLEMENT;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: MBLID,
+              exptype: sType,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
+            // InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~PS");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else {
+          alert("Cannot Load Details");
+        }
       }
+      else if (INVOKETYPE == "HOUSE") {
+        if (HBLID.trim() == "")
+          alert("Cannot Load Details");
+        else if (sType == "AE") {
+          SMENU_ID = this.MENU_AE_HOUSE;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: HBLID,
+              parentid: MBLID,
+              type: sType,
+              refno: '',
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.AirExport.Trans/AirExpHouseEditPage', JSON.stringify(prm));
+            //   InvokePage("Air Export House", "Silver.AirExport.Trans.xap", "Silver.AirExport.Trans", "AirExpHousePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~SEARCH~" + HBLID);
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "AI") {
+          SMENU_ID = this.MENU_AI_HOUSE;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: HBLID,
+              parentid: MBLID,
+              type: sType,
+              refno: REFNO,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(prm));
+            // InvokePage("Air Import House", "Silver.AirImport.Trans.xap", "Silver.AirImport.Trans", "AirImpHousePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~SEARCH~" + HBLID);
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "OE") {
+          SMENU_ID = this.MENU_SE_HOUSE;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
 
-
-
-
+            let prm = {
+              menuid: SMENU_ID,
+              pkid: HBLID,
+              parentid: MBLID,
+              type: sType,
+              refno: REFNO,
+              origin: INVOKETYPE,
+              mode: 'EDIT'
+            };
+            this.Naviagete('Silver.SeaExport.Trans/SeaExpHouseEditPage', JSON.stringify(prm));
+            //InvokePage("Sea Export House", "Silver.SeaExport.Trans.xap", "Silver.SeaExport.Trans", "SeaExpHousePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~SEARCH~" + HBLID);
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "OI") {
+          SMENU_ID = this.MENU_SI_HOUSE;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            //  InvokePage("Sea Import House", "Silver.SeaImport.xap", "Silver.SeaImport", "SeaImpHousePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~SEARCH~" + HBLID);
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "OT") {
+          SMENU_ID = this.MENU_OT_OPERATION;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            //   InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~OTHERS");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else if (sType == "EX") {
+          SMENU_ID = this.MENU_EX_OPERATION;
+          if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            //   InvokePage("Extra Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~EXTRA");
+          }
+          else
+            alert("Insufficient Rights");
+        }
+        else {
+          alert("Cannot Load Details");
+        }
+      }
 
     }
     catch (Exception) {
