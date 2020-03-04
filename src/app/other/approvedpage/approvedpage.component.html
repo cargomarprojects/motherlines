@@ -41,14 +41,14 @@
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records$ | async">
-                <td (click)="edit(rec)">{{rec.ca_reqno}}</td>
+                <td [class]="mainservice.param_type=='APPROVED'?'hlink':'text-left'" (click)="edit(rec)">{{rec.ca_reqno}}</td>
                 <td>{{rec.ca_user_name}}</td>
                 <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT}}</td>
                 <td>{{rec.ca_type}}</td>
-                <td>{{rec.ca_ref_no}}</td>
-                <td>{{rec.ca_hbl_no}}</td>
+                <td class='hlink' (click)="editmaster(rec)">{{rec.ca_ref_no}}</td>
+                <td class='hlink' (click)="edithouse(rec)">{{rec.ca_hbl_no}}</td>
                 <td>{{rec.ca_consignee_name}}</td>
-                <td>{{rec.ca_inv_no}}</td>
+                <td class='hlink'  (click)="editinvoice(rec)">{{rec.ca_inv_no}}</td>
                 <td>{{rec.ca_customer_name}}</td>
                 <td class='text-right'>{{rec.ca_inv_amt | number : '1.2-2'}}</td>
                 <td>{{rec.ca_approvedby_name}}</td>
@@ -58,7 +58,7 @@
                 <td>{{rec.ca_obl_recvd_date | date : gs.FRONTEND_DATEFORMAT}}</td>
                 <td>{{rec.ca_payment_recvd_date | date : gs.FRONTEND_DATEFORMAT}}</td>
                 <td class='text-center'><i class="fa fa-paperclip  fa-lg pointer"
-                        style="font-size:24px" [style.color]="rec.rec_files_attached=='Y'?'red':black" aria-hidden="true" (click)="AttachRow(rec)"></i>
+                        style="font-size:24px" [style.color]="rec.rec_files_attached=='Y'?'red':'black'" aria-hidden="true" (click)="AttachRow(rec)"></i>
                 </td>
 
             </tr>

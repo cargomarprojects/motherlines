@@ -1231,12 +1231,16 @@ export class GlobalService {
         if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
           let prm = {
             menuid: SMENU_ID,
+            pkid: INVID,
+            mode: 'EDIT',
             mbl_pkid: MBLID,
             mbl_refno: REFNO,
             mbl_type: sType,
+            inv_arap :'',   
+            arrival_notice : '', 
             origin: INVOKETYPE
           };
-          this.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
+          this.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(prm));
           // InvokePage("A/R & A/P", "Silver.USAccounts.Trans.xap", "Silver.USAccounts.Trans", "InvoicePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~" + sType + "~SEARCH~" + INVID);
         }
         else

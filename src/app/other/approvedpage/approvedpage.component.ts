@@ -10,6 +10,7 @@ import { SearchQuery } from '../models/tbl_cargo_approved';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 import { ApprovedPageService } from '../services/approvedpage.service';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class ApprovedPageComponent implements OnInit {
   attach_pkid: string = "";
   attach_typelist: any = {};
   attach_type: string = "";
- 
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -42,7 +43,7 @@ export class ApprovedPageComponent implements OnInit {
     this.sub = this.route.queryParams.subscribe(params => {
       if (params["parameter"] != "") {
         this.mainservice.init(params);
-       // this.mainservice.Search('SCREEN');
+        // this.mainservice.Search('SCREEN');
       }
     });
 
@@ -82,7 +83,6 @@ export class ApprovedPageComponent implements OnInit {
       origin: 'approved-page'
     };
     this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
-
   }
 
   edit(_record: Tbl_Cargo_Approved) {
@@ -107,6 +107,45 @@ export class ApprovedPageComponent implements OnInit {
     this.gs.Naviagete('Silver.Other.Trans/ApprovedPageEdit', JSON.stringify(parameter));
   }
 
+  editmaster(_record: Tbl_Cargo_Approved) {
+    let sID: string = (_record.ca_ref_id != null) ? _record.ca_ref_id.toString() : "";
+    let REFNO: string = _record.ca_ref_no != null ? _record.ca_ref_no.toString() : "";
+    let sMode: string = _record.ca_mode != null ? _record.ca_mode.toString() : "";
+    if (sID == "")
+    {
+      alert('Invalid Record Selected');
+        return;
+    }
+    this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+  }
+
+  edithouse(_record: Tbl_Cargo_Approved) {
+    let sID: string = (_record.ca_ref_id != null) ? _record.ca_ref_id.toString() : "";
+    let REFNO: string = _record.ca_ref_no != null ? _record.ca_ref_no.toString() : "";
+    let sMode: string = _record.ca_mode != null ? _record.ca_mode.toString() : "";
+    let HBLID: string = _record.ca_hbl_id != null ? _record.ca_hbl_id.toString() : "";
+    if (HBLID == "") {
+      alert('Invalid Record Selected');
+      return;
+    }
+    this.gs.LinkPage("HOUSE", sMode, REFNO, sID, HBLID);
+  }
+
+  editinvoice(_record: Tbl_Cargo_Approved) {
+
+    let sID: string = (_record.ca_ref_id != null) ? _record.ca_ref_id.toString() : "";
+    let REFNO: string = _record.ca_ref_no != null ? _record.ca_ref_no.toString() : "";
+    let sMode: string = _record.ca_mode != null ? _record.ca_mode.toString() : "";
+    let INVID: string = _record.ca_inv_id != null ? _record.ca_inv_id.toString() : "";
+    if (sID == "" || INVID == "") {
+      alert('Invalid Record Selected');
+      return;
+    }
+
+    this.gs.LinkPage("INVNO", sMode, REFNO, sID, "",INVID);
+  }
+
+
   Close() {
     this.location.back();
   }
@@ -118,9 +157,9 @@ export class ApprovedPageComponent implements OnInit {
   AttachRow(_rec: Tbl_Cargo_Approved) {
     let TypeList: any[] = [];
     TypeList = [{ "code": "APPROVAL REQUEST", "name": "APPROVAL REQUEST" }];
-     this.attach_pkid = _rec.ca_pkid;
-     this.attach_typelist = TypeList;
-     this.attach_type = 'APPROVAL REQUEST'
+    this.attach_pkid = _rec.ca_pkid;
+    this.attach_typelist = TypeList;
+    this.attach_type = 'APPROVAL REQUEST'
     this.tab = 'attachment';
   }
   callbackevent() {

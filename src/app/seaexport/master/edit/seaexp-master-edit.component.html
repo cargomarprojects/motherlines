@@ -33,14 +33,17 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Ref#</label>
                   <div class="col-9">
-                    <InputBox [(inputModel)]="record.mbl_refno" [maxlength]="15" [uppercase]="true" [disabled]='true'>
+                    <InputBox  [(inputModel)]="record.mbl_refno" [maxlength]="15" [uppercase]="true" [disabled]='true'>
                     </InputBox>
+                    <!-- <input class="form-control form-control-sm text-danger" type="text"
+                    [(ngModel)]="record.mbl_refno"
+                    [disabled]="true" maxlength="15" /> -->
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Ref Date</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="sdate=$event"></app-date>
+                    <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="record.mbl_ref_date=$event"></app-date>
                   </div>
                 </div>
               </div>
