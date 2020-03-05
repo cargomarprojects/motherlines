@@ -1253,10 +1253,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               type: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.AirExport.Trans/AirExpMasterEditPage', JSON.stringify(prm));
             // InvokePage("Air Export Master", "Silver.AirExport.Trans.xap", "Silver.AirExport.Trans", "AirExpMasterPage", SMENU_ID + "~" + MBLID);
@@ -1269,10 +1269,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               type: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.AirImport.Trans/AirImpMasterEditPage', JSON.stringify(prm));
             // InvokePage("Air Import Master", "Silver.AirImport.Trans.xap", "Silver.AirImport.Trans", "AirImpMasterPage", SMENU_ID + "~" + MBLID);
@@ -1285,10 +1285,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               type: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE            
             };
             this.Naviagete('Silver.SeaExport.Trans/SeaExpMasterEditPage', JSON.stringify(prm));
             // InvokePage("Ocean Export Master", "Silver.SeaExport.Trans.xap", "Silver.SeaExport.Trans", "SeaExpMasterPage", SMENU_ID + "~" + MBLID);
@@ -1301,10 +1301,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               type: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.SeaImport/SeaImpMasterEditPage', JSON.stringify(prm));
             // InvokePage("Ocean Import Master", "Silver.SeaImport.xap", "Silver.SeaImport", "SeaImpMasterPage", SMENU_ID + "~" + MBLID);
@@ -1317,10 +1317,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               type: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.Other.Trans/OthGeneralEditPage', JSON.stringify(prm));
             //InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~OTHERS");
@@ -1333,10 +1333,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               type: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.Other.Trans/OthGeneralEditPage', JSON.stringify(prm));
             // InvokePage("Extra Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~EXTRA");
@@ -1349,10 +1349,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               exptype: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
             //InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~GE");
@@ -1365,10 +1365,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               exptype: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
             // InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~CM");
@@ -1381,10 +1381,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               exptype: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
             // InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~PR");
@@ -1397,10 +1397,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               exptype: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
             // InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~FA");
@@ -1413,10 +1413,10 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: MBLID,
               exptype: sType,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.Other.Trans/OthGeneralExpenseEditPage', JSON.stringify(prm));
             // InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralExpensePage", SMENU_ID + "~" + MBLID + "~PS");
@@ -1436,12 +1436,12 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: HBLID,
               parentid: MBLID,
               type: sType,
               refno: '',
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.AirExport.Trans/AirExpHouseEditPage', JSON.stringify(prm));
             //   InvokePage("Air Export House", "Silver.AirExport.Trans.xap", "Silver.AirExport.Trans", "AirExpHousePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~SEARCH~" + HBLID);
@@ -1454,12 +1454,12 @@ export class GlobalService {
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: HBLID,
               parentid: MBLID,
               type: sType,
               refno: REFNO,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.AirImport.Trans/AirImpHouseEditPage', JSON.stringify(prm));
             // InvokePage("Air Import House", "Silver.AirImport.Trans.xap", "Silver.AirImport.Trans", "AirImpHousePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~SEARCH~" + HBLID);
@@ -1473,12 +1473,12 @@ export class GlobalService {
 
             let prm = {
               menuid: SMENU_ID,
+              mode: 'EDIT',
               pkid: HBLID,
               parentid: MBLID,
               type: sType,
               refno: REFNO,
-              origin: INVOKETYPE,
-              mode: 'EDIT'
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.SeaExport.Trans/SeaExpHouseEditPage', JSON.stringify(prm));
             //InvokePage("Sea Export House", "Silver.SeaExport.Trans.xap", "Silver.SeaExport.Trans", "SeaExpHousePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~SEARCH~" + HBLID);
@@ -1489,6 +1489,16 @@ export class GlobalService {
         else if (sType == "OI") {
           SMENU_ID = this.MENU_SI_HOUSE;
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              mode: 'EDIT',
+              pkid: HBLID,
+              parentid: MBLID,
+              type: sType,
+              refno: REFNO,
+              origin: INVOKETYPE
+            };
+            this.Naviagete('Silver.SeaImport/SeaImpHouseEditPage', JSON.stringify(prm));
             //  InvokePage("Sea Import House", "Silver.SeaImport.xap", "Silver.SeaImport", "SeaImpHousePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~SEARCH~" + HBLID);
           }
           else
@@ -1497,6 +1507,14 @@ export class GlobalService {
         else if (sType == "OT") {
           SMENU_ID = this.MENU_OT_OPERATION;
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              mode: 'EDIT',
+              pkid: MBLID,
+              type: sType,
+              origin: INVOKETYPE
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralEditPage', JSON.stringify(prm));
             //   InvokePage("Other Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~OTHERS");
           }
           else
@@ -1505,6 +1523,14 @@ export class GlobalService {
         else if (sType == "EX") {
           SMENU_ID = this.MENU_EX_OPERATION;
           if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+            let prm = {
+              menuid: SMENU_ID,
+              mode: 'EDIT',
+              pkid: MBLID,
+              type: sType,
+              origin: INVOKETYPE
+            };
+            this.Naviagete('Silver.Other.Trans/OthGeneralEditPage', JSON.stringify(prm));
             //   InvokePage("Extra Operations", "Silver.Other.Trans.xap", "Silver.Other.Trans", "GeneralPage", SMENU_ID + "~" + MBLID + "~EXTRA");
           }
           else
