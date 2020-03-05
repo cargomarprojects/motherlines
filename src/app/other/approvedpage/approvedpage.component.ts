@@ -165,4 +165,6 @@ export class ApprovedPageComponent implements OnInit {
   callbackevent() {
     this.tab = 'main';
   }
+
+   
 }

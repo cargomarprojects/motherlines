@@ -195,6 +195,55 @@ export class ApprovedPageService {
         });
     }
 
+    ShowHide(_rec: Tbl_Cargo_Approved) {
+
+        if (!confirm(_rec.ca_hide_status + " RECORD")) {
+            return;
+        }
+
+        this.record.errormessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.STYPE = _rec.ca_hide_status;
+        SearchData.REQ_TYPE = this.param_type;
+        SearchData.ISADMIN = this.isAdmin == true ? "Y" : "N";
+        SearchData.CA_ID = _rec.ca_pkid;
+        SearchData.CAD_ID = _rec.ca_cad_pkid;
+
+        this.ShowHideRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+
+                    let temprecords: Tbl_Cargo_Approved[];
+                    temprecords = <Tbl_Cargo_Approved[]>[];
+                    temprecords = <Tbl_Cargo_Approved[]>this.record.records;
+                    this.record.records = <Tbl_Cargo_Approved[]>[];
+                    if (temprecords != null) {
+                        temprecords.forEach(rec => {
+                            if ((this.param_type == "APPROVED" || this.param_type == "APPROVED REPORT") && this.isAdmin == false) {
+                                if (rec.ca_cad_pkid != _rec.ca_cad_pkid)
+                                    this.record.records.push(rec)
+                            }
+                            else {
+                                if (rec.ca_pkid != _rec.ca_pkid)
+                                    this.record.records.push(rec)
+                            }
+                        });
+                    }
+                }
+                this.mdata$.next(this.record);
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
+
+    }
+
+
     GeneralList(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/ApprovedPage/GeneralList', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -216,6 +265,10 @@ export class ApprovedPageService {
 
     GetHblInvList(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Other/ApprovedPage/GetHblInvList', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    ShowHideRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Other/ApprovedPage/ShowHideRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }
