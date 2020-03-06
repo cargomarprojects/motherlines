@@ -875,7 +875,21 @@ export class InvoiceEditComponent implements OnInit {
 
   }
 
-
+  BtnNavigation(action: string) {
+    switch (action) {
+        case 'HISTORY': {
+            let prm = {
+                menuid: this.menuid,
+                pkid: this.pkid,
+                source: "INVOICE",
+                title: "History [INVOICE NO : " + this.record.inv_no + "]",
+                origin: 'invoice-page'
+            };
+            this.gs.Naviagete('Silver.BusinessModule/LogBookPage', JSON.stringify(prm));
+            break;
+        }
+    }
+}
  
 
 
