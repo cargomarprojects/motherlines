@@ -37,7 +37,7 @@
                 <th>OBL.RECVD.DATE</th>
                 <th>PAY.RECVD.DATE</th>
                 <th class='text-center'>ATTACHMENTS</th>
-                <th class='text-center'>SHOW/HIDE</th>
+                <th *ngIf="((mainservice.param_type=='APPROVED' && mainservice.isAdmin)||mainservice.param_type=='APPROVED REPORT'||mainservice.param_type=='REQUEST REPORT')" class='text-center'>SHOW/HIDE</th>
             </tr>
         </thead>
         <tbody class="page-body-tbody">
@@ -61,7 +61,7 @@
                 <td class='text-center'><i class="fa fa-paperclip  fa-lg pointer"
                         style="font-size:24px" [style.color]="rec.rec_files_attached=='Y'?'red':'black'" aria-hidden="true" (click)="AttachRow(rec)"></i>
                 </td>
-                <td class='hlink'  (click)="mainservice.ShowHide(rec)">{{rec.ca_hide_status}}</td>
+                <td *ngIf="((mainservice.param_type=='APPROVED' && mainservice.isAdmin)||mainservice.param_type=='APPROVED REPORT'||mainservice.param_type=='REQUEST REPORT')" class='hlink'  (click)="mainservice.ShowHide(rec)">{{rec.ca_hide_status}}</td>
             </tr>
         </tbody>
     </table>
