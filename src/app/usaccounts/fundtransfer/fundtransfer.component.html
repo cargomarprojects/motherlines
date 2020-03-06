@@ -35,7 +35,7 @@
     </thead>
     <tbody class="page-body-tbody">
       <tr *ngFor="let rec of records$ | async">
-        <td (click)="edit(rec)">{{rec.pay_docno}}</td>
+        <td class='hlink' (click)="edit(rec)">{{rec.pay_docno}}</td>
         <td>{{rec.pay_date | date : gs.FRONTEND_DATEFORMAT }}</td>
         <td>{{rec.pay_from_acc_name}} </td>
         <td>{{rec.pay_to_acc_name}} </td>

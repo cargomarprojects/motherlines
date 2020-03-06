@@ -33,7 +33,7 @@
     </thead>
     <tbody class="page-body-tbody">
       <tr *ngFor="let rec of records$ | async">
-        <td (click)="edit(rec)">{{rec.obl_slno}}</td>
+        <td class='hlink' (click)="edit(rec)">{{rec.obl_slno}}</td>
         <td>{{rec.obl_date | date : gs.FRONTEND_DATEFORMAT }}</td>
         <td>{{rec.obl_refno}} </td>
         <td>{{rec.obl_houseno}} </td>

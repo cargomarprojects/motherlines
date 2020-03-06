@@ -34,7 +34,7 @@
             </thead>
             <tbody class="page-body-tbody">
                 <tr *ngFor="let rec of records$ | async">
-                    <td (click)="edit(rec)">{{rec.qtnm_no}}</td>
+                    <td class='hlink' (click)="edit(rec)">{{rec.qtnm_no}}</td>
                     <td>{{rec.qtnm_date | date : gs.FRONTEND_DATEFORMAT}}</td>
                     <td>{{rec.qtnm_to_name}}</td>
                     <td>{{rec.qtnm_quot_by}}</td>

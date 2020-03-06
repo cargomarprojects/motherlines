@@ -26,8 +26,8 @@
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of data$ | async">
-                <td (click)="edit(rec)" >{{rec.param_code}}</td>
-                <td (click)="edit(rec)" >{{rec.param_name1}}</td>
+                <td class='hlink'  (click)="edit(rec)" >{{rec.param_code}}</td>
+                <td >{{rec.param_name1}}</td>
             </tr>
         </tbody>
     </table>

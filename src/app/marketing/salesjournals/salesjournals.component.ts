@@ -93,19 +93,21 @@ export class SalesJournalsComponent implements OnInit {
     this.location.back();
   }
 
-  ShowFile(_rec: Tbl_Cargo_Journals_Master) {
-
-    let filepath = "Files_Folder\\" + this.gs.FILES_FOLDER + "\\Files\\";
-    let filename: string = "";
-    let filedisplayname: string = "";
-    //filename = this.gs.FS_APP_FOLDER + this.gs.WWW_FILES_URL + _rec.qtnr_file_id;
-    // filename = this.gs.FS_APP_FOLDER + filepath + _rec.qtnr_file_id;
-    // filedisplayname = _rec.qtnr_file_name;
-    this.Downloadfile(filename, "", filedisplayname);
+  ShowMemo(_rec: Tbl_Cargo_Journals_Master) {
+    let prm = {
+      menuid: this.mainservice.menuid,
+      pkid: _rec.cjm_pkid,
+      source: 'CONTACT-MEMO',
+      title: 'Memo',
+      origin: 'salesjournals-page'
+    };
+    this.gs.Naviagete('Silver.BusinessModule/XmlRemarksPage', JSON.stringify(prm));
+     
   }
 
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.FS_APP_FOLDER, filename, filetype, filedisplayname);
   }
+
 
 }

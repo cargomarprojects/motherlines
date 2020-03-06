@@ -23,7 +23,7 @@
       </thead>
       <tbody class="page-body-tbody">
         <tr *ngFor="let rec of records$ | async">
-          <td (click)="edit(rec)">{{rec.bm_name}}</td>
+          <td class='hlink' (click)="edit(rec)">{{rec.bm_name}}</td>
           <td>{{rec.bm_from_date | date : gs.FRONTEND_DATEFORMAT }}</td>
           <td>{{rec.bm_to_date | date : gs.FRONTEND_DATEFORMAT }}</td>
         </tr>

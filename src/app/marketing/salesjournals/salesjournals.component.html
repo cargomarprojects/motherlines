@@ -33,7 +33,7 @@
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records$ | async">
-                <td (click)="edit(rec)">{{rec.cjm_customer_code}}</td>
+                <td class='hlink' (click)="edit(rec)">{{rec.cjm_customer_code}}</td>
                 <td>{{rec.cjm_customer_name}}</td>
                 <td>{{rec.cjm_salesman_name}}</td>
                 <td>{{rec.cjm_city}}</td>
@@ -42,7 +42,7 @@
                 <td>{{rec.rec_created_by}}</td>
                 <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                 <td style="text-align:center"><i class="fa fa-sticky-note-o  fa-lg pointer"
-                    aria-hidden="true" (click)="mainservice.DeleteRow(rec)"></i></td>
+                    aria-hidden="true" (click)="ShowMemo(rec)"></i></td>
                 <td *ngIf="mainservice.canDelete" style="text-align:center"><i class="fa fa-trash  fa-lg pointer"
                     aria-hidden="true" (click)="mainservice.DeleteRow(rec)"></i></td>
             </tr>
