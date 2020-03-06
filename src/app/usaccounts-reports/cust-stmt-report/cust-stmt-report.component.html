@@ -178,10 +178,10 @@
                             </div>
                         </td>
                         <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-                        <td>{{rec.inv_mrefno}}</td>
+                        <td class='hlink' (click)="editmaster(rec)">{{rec.inv_mrefno}}</td>
                         <td>{{rec.inv_refno}}</td>
                         <td>{{rec.inv_mblno}}</td>
-                        <td>{{rec.inv_hrefno}}</td>
+                        <td class='hlink' (click)="edithouse(rec)">{{rec.inv_hrefno}}</td>
                         <td style="text-align:right">{{rec.inv_ar | number : '1.2-2'}}</td>
                         <td style="text-align:right">{{rec.inv_ap | number : '1.2-2'}}</td>
                         <td *ngIf="gs.BRANCH_REGION == 'USA' && gs.company_code == '100' && showprofit"

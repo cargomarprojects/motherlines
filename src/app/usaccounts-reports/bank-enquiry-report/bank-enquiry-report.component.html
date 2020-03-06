@@ -91,7 +91,7 @@
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                     <tr>
-                        <td (click)="PrintPayment(rec)">{{rec.pay_docno}}</td>
+                        <td class='hlink' (click)="PrintPayment(rec)">{{rec.pay_docno}}</td>
                         <td>{{rec.pay_cust_name}}</td>
                         <td>{{rec.pay_acc_name}}</td>
                         <td>{{rec.pay_date | date : gs.FRONTEND_DATEFORMAT }}</td>

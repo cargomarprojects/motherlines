@@ -424,4 +424,68 @@ export class CustStmtReportComponent implements OnInit {
       this.allchecked = this.selectdeselect;
     })
   }
+
+  editmaster(_record: Tbl_OS_REPORT) {
+
+    let sID: string = (_record.inv_mbl_id != null) ? _record.inv_mbl_id.toString() : "";
+    let REFNO: string = _record.inv_type != null ? _record.inv_type.toString() : "";
+    let sMode: string = "";
+    let branch_name: string = _record.inv_branch != null ? _record.inv_branch.toString() : "";
+
+    if (REFNO == "OI")
+      sMode = "SEA IMPORT";
+    else if (REFNO == "OE")
+      sMode = "SEA EXPORT";
+    else if (REFNO == "AI")
+      sMode = "AIR IMPORT";
+    else if (REFNO == "AE")
+      sMode = "AIR EXPORT";
+    else if (REFNO == "OT")
+      sMode = "OTHERS";
+
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_name == this.gs.branch_name) {
+      this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+
+  }
+
+  edithouse(_record: Tbl_OS_REPORT) {
+
+    let sID: string = (_record.inv_mbl_id != null) ? _record.inv_mbl_id.toString() : "";
+    let REFNO: string = _record.inv_type != null ? _record.inv_type.toString() : "";
+    let HBLID: string = _record.inv_hbl_id != null ? _record.inv_hbl_id.toString() : "";
+    let sMode: string = "";
+    let branch_name: string = _record.inv_branch != null ? _record.inv_branch.toString() : "";
+
+    if (REFNO == "OI")
+      sMode = "SEA IMPORT";
+    else if (REFNO == "OE")
+      sMode = "SEA EXPORT";
+    else if (REFNO == "AI")
+      sMode = "AIR IMPORT";
+    else if (REFNO == "AE")
+      sMode = "AIR EXPORT";
+    else if (REFNO == "OT")
+      sMode = "OTHERS";
+
+    if (HBLID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_name == this.gs.branch_name) {
+      this.gs.LinkPage("HOUSE", sMode, REFNO, sID, HBLID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+
+  }
+
 }
