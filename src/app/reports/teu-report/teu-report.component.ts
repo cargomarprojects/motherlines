@@ -150,7 +150,7 @@ export class TeuReportComponent implements OnInit {
         this.currentTab = 'LIST';
 
         this.report_category = "AGENT";
-        this.sdate = this.gs.defaultValues.today;
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);;
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
@@ -305,6 +305,26 @@ export class TeuReportComponent implements OnInit {
 
   callbackevent() {
     this.tab = 'main';
+  }
+
+  editmaster(_record: TBL_MBL_REPORT) {
+
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+    let sMode: string = _record.mbl_mode != null ? _record.mbl_mode.toString() : "";
+    let branch_name: string = _record.mbl_branch != null ? _record.mbl_branch.toString() : "";
+
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_name == this.gs.branch_name) {
+      this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+    
   }
 
 }

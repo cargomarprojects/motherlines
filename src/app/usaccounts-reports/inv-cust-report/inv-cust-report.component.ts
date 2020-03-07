@@ -283,5 +283,67 @@ export class InvCustReportComponent implements OnInit {
 
   }
 
+  editmaster(_record: Tbl_OS_REPORT) {
+
+    let sID: string = (_record.inv_mbl_id != null) ? _record.inv_mbl_id.toString() : "";
+    let REFNO: string = _record.inv_type != null ? _record.inv_type.toString() : "";
+    let sMode: string = "";
+    let branch_code: string = _record.inv_branch_code != null ? _record.inv_branch_code.toString() : "";
+
+    if (REFNO == "OI")
+      sMode = "SEA IMPORT";
+    else if (REFNO == "OE")
+      sMode = "SEA EXPORT";
+    else if (REFNO == "AI")
+      sMode = "AIR IMPORT";
+    else if (REFNO == "AE")
+      sMode = "AIR EXPORT";
+    else if (REFNO == "OT")
+      sMode = "OTHERS";
+
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_code == this.gs.branch_code) {
+      this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+  }
+
+  editinvoice(_record: Tbl_OS_REPORT) {
+
+    let sID: string = (_record.inv_mbl_id != null) ? _record.inv_mbl_id.toString() : "";
+    let REFNO: string = _record.inv_type != null ? _record.inv_type.toString() : "";
+    let sMode: string = "";
+    let branch_code: string = _record.inv_branch_code != null ? _record.inv_branch_code.toString() : "";
+    let INVID: string = (_record.inv_pkid != null) ? _record.inv_pkid.toString() : "";
+    let HBLID: string = (_record.inv_hbl_id != null) ? _record.inv_hbl_id.toString() : "";
+
+    if (REFNO == "OI")
+      sMode = "SEA IMPORT";
+    else if (REFNO == "OE")
+      sMode = "SEA EXPORT";
+    else if (REFNO == "AI")
+      sMode = "AIR IMPORT";
+    else if (REFNO == "AE")
+      sMode = "AIR EXPORT";
+    else if (REFNO == "OT")
+      sMode = "OTHERS";
+
+    if (INVID == "" || sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+
+    if (branch_code == this.gs.branch_code) {
+      this.gs.LinkPage("INVNO", sMode, REFNO, sID, HBLID, INVID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+  }
 
 }

@@ -1288,7 +1288,7 @@ export class GlobalService {
               mode: 'EDIT',
               pkid: MBLID,
               type: sType,
-              origin: INVOKETYPE            
+              origin: INVOKETYPE
             };
             this.Naviagete('Silver.SeaExport.Trans/SeaExpMasterEditPage', JSON.stringify(prm));
             // InvokePage("Ocean Export Master", "Silver.SeaExport.Trans.xap", "Silver.SeaExport.Trans", "SeaExpMasterPage", SMENU_ID + "~" + MBLID);
@@ -1539,6 +1539,50 @@ export class GlobalService {
         else {
           alert("Cannot Load Details");
         }
+      } else if (INVOKETYPE == "ARAP") {
+
+        if (MBLID.trim() == "")
+          alert("Cannot Load ARAP List");
+        else if (sType == "OI")
+          SMENU_ID = this.MENU_SI_MASTER_ARAP;
+        else if (sType == "OE")
+          SMENU_ID = this.MENU_SE_MASTER_ARAP;
+        else if (sType == "AI")
+          SMENU_ID = this.MENU_AI_MASTER_ARAP;
+        else if (sType == "AE")
+          SMENU_ID = this.MENU_AE_MASTER_ARAP;
+        else if (sType == "OT")
+          SMENU_ID = this.MENU_OT_OPERATION_ARAP;
+        else if (sType == "EX")
+          SMENU_ID = this.MENU_EX_OPERATION_ARAP;
+        else if (sType == "CM")
+          SMENU_ID = this.MENU_1099_EXPENSE_ARAP;
+        else if (sType == "PR")
+          SMENU_ID = this.MENU_PAYROLL_EXPENSE_ARAP;
+        else if (sType == "FA")
+          SMENU_ID = this.MENU_FILE_ADJUSTMENT_ARAP;
+        else if (sType == "GE")
+          SMENU_ID = this.MENU_GENERAL_EXPENSE_ARAP;
+        else if (sType == "PS")
+          SMENU_ID = this.MENU_INTERNAL_PAYMENT_SETTLEMENT_ARAP;
+        else {
+          alert("Cannot Load ARAP ");
+          return;
+        }
+
+        if (this.canEdit(SMENU_ID) || this.canView(SMENU_ID)) {
+          let prm = {
+            menuid: SMENU_ID,
+            mbl_pkid: MBLID,
+            mbl_refno: REFNO,
+            mbl_type: sType,
+            origin: INVOKETYPE
+          };
+          this.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
+          //InvokePage("A/R & A/P", "Silver.USAccounts.Trans.xap", "Silver.USAccounts.Trans", "InvoicePage", SMENU_ID + "~" + MBLID + "~" + REFNO + "~" + sType + "~MASTER~" + MBLID);
+        }
+        else
+          alert("Insufficient Rights");
       }
 
     }

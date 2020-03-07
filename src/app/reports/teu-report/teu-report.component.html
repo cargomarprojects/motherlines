@@ -142,7 +142,7 @@
         <tbody class="page-body-tbody" *ngFor="let rec of MainList">
           <tr>
             <td>{{rec.mbl_branch}}</td>
-            <td>{{rec.mbl_refno}}</td>
+            <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
             <td>{{rec.mbl_refdate | date : gs.FRONTEND_DATEFORMAT }}</td>
             <td>{{rec.mbl_agent_name}}</td>
             <td>{{rec.mbl_liner_name}}</td>

@@ -162,6 +162,7 @@
           <tr>
             <th>BRANCH</th>
             <th>REF#</th>
+            <th>ARAP</th>
             <th>MBL#</th>
             <th *ngIf="showstages">STAGE</th>
             <th>REF-DATE</th>
@@ -175,9 +176,11 @@
           </tr>
         </thead>
         <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-          <tr>
+          <tr [style.color]="rec.mbl_agent_name=='TOTAL'?'Red':'Black'"
+          [style.font-weight]="rec.mbl_agent_name=='TOTAL'?'bold':'normal'">
             <td>{{rec.mbl_branch}}</td>
-            <td>{{rec.mbl_refno}}</td>
+            <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
+            <td class='hlink' (click)="editarap(rec)">{{rec.ROW_TYPE=='DETAIL'?'ARAP':''}}</td>
             <td>{{rec.mbl_no}}</td>
             <td *ngIf="showstages">{{rec.shipment_stage}}</td>
             <td>{{rec.mbl_refdate | date : gs.FRONTEND_DATEFORMAT }}</td>
@@ -201,6 +204,7 @@
           <tr>
             <th>BRANCH</th>
             <th>REF#</th>
+            <th>ARAP</th>
             <th>MBL#</th>
             <th *ngIf="showstages">STAGE</th>
             <th>REF-DATE</th>
@@ -226,9 +230,11 @@
           </tr>
         </thead>
         <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-          <tr>
+          <tr [style.color]="rec.mbl_agent_name=='TOTAL'?'Red':'Black'"
+          [style.font-weight]="rec.mbl_agent_name=='TOTAL'?'bold':'normal'">
             <td>{{rec.mbl_branch}}</td>
-            <td>{{rec.mbl_refno}}</td>
+            <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
+            <td class='hlink' (click)="editarap(rec)">{{rec.ROW_TYPE=='DETAIL'?'ARAP':''}}</td>
             <td>{{rec.mbl_no}}</td>
             <td *ngIf="showstages">{{rec.shipment_stage}}</td>
             <td>{{rec.mbl_refdate | date : gs.FRONTEND_DATEFORMAT }}</td>
@@ -259,6 +265,7 @@
           <tr>
             <th>BRANCH</th>
             <th>REF#</th>
+            <th>ARAP</th>
             <th *ngIf="showstages">STAGE</th>
             <th>REF-DATE</th>
             <th>AGENT</th>
@@ -271,9 +278,11 @@
           </tr>
         </thead>
         <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-          <tr>
+          <tr [style.color]="rec.mbl_agent_name=='TOTAL'?'Red':'Black'"
+          [style.font-weight]="rec.mbl_agent_name=='TOTAL'?'bold':'normal'">
             <td>{{rec.mbl_branch}}</td>
-            <td>{{rec.mbl_refno}}</td>
+            <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
+            <td class='hlink' (click)="editarap(rec)">{{rec.ROW_TYPE=='DETAIL'?'ARAP':''}}</td>
             <td *ngIf="showstages">{{rec.shipment_stage}}</td>
             <td>{{rec.mbl_refdate | date : gs.FRONTEND_DATEFORMAT }}</td>
             <td>{{rec.mbl_agent_name}}</td>

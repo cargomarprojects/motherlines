@@ -161,7 +161,7 @@ export class TopCustomerReportComponent implements OnInit {
         this.currentTab = 'LIST';
 
         this.report_category = "OVERSEAS AGENT";
-        this.sdate = this.gs.defaultValues.today;
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.comp_type = this.gs.branch_code;
         this.report_type = "SUMMARY";
@@ -377,5 +377,46 @@ export class TopCustomerReportComponent implements OnInit {
   onBlur(field: string = '')
   {
 
+  }
+
+
+  editmaster(_record: TBL_MBL_REPORT) {
+
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+    let sMode: string = _record.mbl_mode != null ? _record.mbl_mode.toString() : "";
+    let branch_code: string = _record.mbl_branch != null ? _record.mbl_branch.toString() : "";
+
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_code == this.gs.branch_code) {
+      this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+     
+  }
+
+  edithouse(_record: TBL_MBL_REPORT) {
+
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+    let sMode: string = _record.mbl_mode != null ? _record.mbl_mode.toString() : "";
+    let HBLID: string = _record.hbl_pkid != null ? _record.hbl_pkid.toString() : "";
+    let branch_code: string = _record.mbl_branch != null ? _record.mbl_branch.toString() : "";
+
+    if (HBLID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_code == this.gs.branch_code) {
+      this.gs.LinkPage("HOUSE", sMode, REFNO, sID, HBLID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
   }
 }

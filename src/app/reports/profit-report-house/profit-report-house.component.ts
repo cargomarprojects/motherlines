@@ -165,7 +165,7 @@ export class ProfitReportHouseComponent implements OnInit {
           this.SearchData.COMP_CODE = this.gs.branch_codes;
         else
           this.SearchData.COMP_CODE = this.comp_type;
-          this.SearchData.COMP_NAME = this.gs.branch_name;
+        this.SearchData.COMP_NAME = this.gs.branch_name;
         this.SearchData.REPORT_TYPE = this.report_type;
 
         this.SearchData.CUST_ID = this.cust_id;
@@ -193,7 +193,7 @@ export class ProfitReportHouseComponent implements OnInit {
         this.currentTab = 'LIST';
 
         this.report_category = "AGENT";
-        this.sdate = this.gs.defaultValues.today;
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.mode = 'AIR IMPORT';
         this.comp_type = this.gs.branch_code;
@@ -256,7 +256,7 @@ export class ProfitReportHouseComponent implements OnInit {
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       else
         this.SearchData.COMP_CODE = this.comp_type;
-        this.SearchData.COMP_NAME = this.gs.branch_name;
+      this.SearchData.COMP_NAME = this.gs.branch_name;
 
       this.SearchData.REPORT_TYPE = this.report_type;
 
@@ -387,5 +387,43 @@ export class ProfitReportHouseComponent implements OnInit {
     this.tab = 'main';
   }
 
+  editmaster(_record: TBL_MBL_REPORT) {
+
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+    let sMode: string = _record.mbl_mode != null ? _record.mbl_mode.toString() : "";
+    let branch_name: string = _record.mbl_branch != null ? _record.mbl_branch.toString() : "";
+
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_name == this.gs.branch_name) {
+      this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+  }
+
+  edithouse(_record: TBL_MBL_REPORT) {
+
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+    let sMode: string = _record.mbl_mode != null ? _record.mbl_mode.toString() : "";
+    let HBLID: string = _record.hbl_pkid != null ? _record.hbl_pkid.toString() : "";
+    let branch_name: string = _record.mbl_branch != null ? _record.mbl_branch.toString() : "";
+
+    if (HBLID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_name == this.gs.branch_name) {
+      this.gs.LinkPage("HOUSE", sMode, REFNO, sID, HBLID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+  }
 
 }

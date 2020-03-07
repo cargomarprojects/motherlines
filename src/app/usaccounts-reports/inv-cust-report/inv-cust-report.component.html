@@ -93,13 +93,13 @@
                 <tr>
                     <td>{{rec.inv_cust_code}}</td>
                     <td>{{rec.inv_cust_name}}</td>
-                    <td>
+                    <td class='hlink' (click)="editinvoice(rec)">
                         <div class="form-check"> <input type="checkbox" class="form-check-input"
                                 [(ngModel)]="rec.inv_flag_b"><span>{{rec.inv_no}}</span>
                         </div>
                     </td>
                     <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-                    <td>{{rec.inv_mrefno}}</td>
+                    <td class='hlink' (click)="editmaster(rec)">{{rec.inv_mrefno}}</td>
                     <td>{{rec.inv_refno}}</td>
                 </tr>
             </tbody>
