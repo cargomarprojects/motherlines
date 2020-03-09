@@ -96,8 +96,8 @@
             <td>{{rec.sc_loss_approved}}</td>
             <td>{{rec.sc_memo}}</td>
             <td>{{rec.sc_profit}}</td>
-            <!-- <td>Attachments</td> -->
-            <td class='text-center'><i class="fa fa-paperclip fa-lg pointer" style="font-size:24px" [style.color]="'red'"  aria-hidden="true"
+            <!-- <td>Attachments</td> [style.color]="'red'"-->
+            <td class='text-center'><i class="fa fa-paperclip fa-lg pointer" style="font-size:24px"  aria-hidden="true"
                 (click)="AttachRow(rec)"></i>
           </tr>
         </tbody>
@@ -118,7 +118,7 @@
 </div>
 <div *ngIf="tab=='attachment'">
   <app-fileupload [title]="attach_title" [parentid]="attach_pkid" [subid]="" [type]="attach_type"
-    [typelist]="attach_typelist" [tablename]="'cargo_masterm'" [tablepkcolumn]="'mbl_pkid'" [refno]="" [isviewonly]="false" 
+    [typelist]="attach_typelist" [tablename]="'cargo_masterm'" [tablepkcolumn]="'mbl_pkid'" [refno]="" [uploadfiles]="false" 
     [customername]="" [updatecolumn]="'rec_files_attached'" [viewonlysource]="" [viewonlyid]="" [filespath]=""
     [filespath2]="" (callbackevent)="callbackevent($event)">
   </app-fileupload>

@@ -238,7 +238,7 @@ export class ShipCloseReportComponent implements OnInit {
     this.attach_pkid = _rec.sc_mbl_pkid;
     this.attach_typelist = TypeList;
     this.attach_type = 'PAYMENT SETTLEMENT'
-    this.attach_title = "Attachments [REF#: " + _rec.sc_mbl_refno + "]";
+    this.attach_title = "Shipment Closing Report Attachments [REF#: " + _rec.sc_mbl_refno + "]";
     this.tab = 'attachment';
   }
   callbackevent() {

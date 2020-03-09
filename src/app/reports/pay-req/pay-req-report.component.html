@@ -55,7 +55,7 @@
           <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm"></label>
             <div class="col-8">
-              <button [disabled]="loading" (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Process</button>
+              <button [disabled]="loading" (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Search</button>
             </div>
           </div>
         </div>
@@ -93,10 +93,10 @@
         <tr>
           <td>{{rec.rec_created_by}}</td>
           <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-          <td>{{rec.cp_master_refno}}</td>
+          <td class='hlink' (click)="editmaster(rec)">{{rec.cp_master_refno}}</td>
           <td>{{rec.cp_paytype_needed}}</td>
           <td>{{rec.cp_cust_name}}</td>
-          <td>{{rec.cp_inv_no}}</td>
+          <td class='hlink' (click)="editinvoice(rec)">{{rec.cp_inv_no}}</td>
           <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
           <td>{{rec.cp_pay_status}}</td>
           <td>{{rec.cp_spl_notes}}</td>

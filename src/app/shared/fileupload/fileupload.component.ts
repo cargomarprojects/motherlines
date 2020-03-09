@@ -87,7 +87,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   public canupload: boolean = true;
-  @Input() set isviewonly(value: boolean) {
+  @Input() set uploadfiles(value: boolean) {
     this.canupload = value;
   }
 

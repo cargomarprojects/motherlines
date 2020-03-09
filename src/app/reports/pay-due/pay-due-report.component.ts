@@ -158,7 +158,7 @@ export class PayDueReportComponent implements OnInit {
 
 
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
-        this.sdate = this.gs.defaultValues.today;
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.showsmode = "";
         this.comp_type = this.gs.branch_code;
@@ -226,45 +226,39 @@ export class PayDueReportComponent implements OnInit {
       this.SearchData.CUST_ID = this.cust_id;
       this.SearchData.CUST_NAME = this.cust_name;
 
-      this.mode ="";
-      if ( this.chk_air_import)
-      {
-          if (this.mode != "")
-              this.mode += ",";
-          this.mode += "'AIR IMPORT'";
+      this.mode = "";
+      if (this.chk_air_import) {
+        if (this.mode != "")
+          this.mode += ",";
+        this.mode += "'AIR IMPORT'";
       }
-      if ( this.chk_air_export)
-      {
-          if (this.mode != "")
-              this.mode += ",";
-          this.mode += "'AIR EXPORT'";
+      if (this.chk_air_export) {
+        if (this.mode != "")
+          this.mode += ",";
+        this.mode += "'AIR EXPORT'";
       }
-      if ( this.chk_sea_import)
-      {
-          if (this.mode != "")
-              this.mode += ",";
-          this.mode += "'SEA IMPORT'";
+      if (this.chk_sea_import) {
+        if (this.mode != "")
+          this.mode += ",";
+        this.mode += "'SEA IMPORT'";
       }
-      if ( this.chk_sea_export)
-      {
-          if (this.mode != "")
-              this.mode += ",";
-          this.mode += "'SEA EXPORT'";
+      if (this.chk_sea_export) {
+        if (this.mode != "")
+          this.mode += ",";
+        this.mode += "'SEA EXPORT'";
       }
-      if ( this.chk_others)
-      {
-          if (this.mode != "")
-              this.mode += ",";
-          this.mode += "'OTHERS'";
+      if (this.chk_others) {
+        if (this.mode != "")
+          this.mode += ",";
+        this.mode += "'OTHERS'";
       }
-      if ( this.chk_admin_expense)
-      {
-          if (this.mode != "")
-              this.mode += ",";
-          this.mode += "'CM','GE','PR','PS'";
+      if (this.chk_admin_expense) {
+        if (this.mode != "")
+          this.mode += ",";
+        this.mode += "'CM','GE','PR','PS'";
       }
-      this.showsmode  = this.mode;
-      this.SearchData.SHOWSMODE  = this.showsmode;
+      this.showsmode = this.mode;
+      this.SearchData.SHOWSMODE = this.showsmode;
 
     }
 
@@ -282,7 +276,7 @@ export class PayDueReportComponent implements OnInit {
             report_category: this.SearchData.REPORT_CATEGORY,
             sdate: this.SearchData.FDATE,
             edate: this.SearchData.TDATE,
-            
+
             comp_type: this.SearchData.COMP_TYPE,
 
             sdata: this.SearchData.SDATA,
@@ -336,6 +330,75 @@ export class PayDueReportComponent implements OnInit {
       this.cust_id = _Record.id;
       this.cust_name = _Record.name;
     }
+  }
+
+  editmaster(_record: Tbl_cargo_invoicem) {
+    this.FindRow("REFNO", _record);
+  }
+
+  edithouse(_record: Tbl_cargo_invoicem) {
+    this.FindRow("HOUSE", _record);
+  }
+
+  editinvoice(_record: Tbl_cargo_invoicem) {
+    this.FindRow("INVNO", _record);
+  }
+
+  FindRow(sCol: string, _record: Tbl_cargo_invoicem) {
+    let MBLID: string = "";
+    let REFNO: string = "";
+    let HBLID: string = "";
+    let INVID: string = "";
+    let STYPE: string = "";
+    let MBL_MODE: string = "";
+
+    MBL_MODE = _record.mbl_mode.toString();
+    MBLID = _record.mbl_pkid.toString().trim();
+    REFNO = _record.mbl_refno.toString().trim();
+    HBLID = _record.inv_hbl_id.toString().trim();
+
+    if (MBL_MODE == "CM" || MBL_MODE == "GE" || MBL_MODE == "PR" || MBL_MODE == "PS") {
+      alert("Cannot Load This Record");
+      return;
+    }
+
+    STYPE = REFNO;
+    if (STYPE.length >= 2)
+      STYPE = STYPE.substring(0, 2);
+    else
+      STYPE = "";
+
+    if (STYPE == "") {
+      alert("Cannot Load This Record");
+      return;
+    }
+    else {
+      if (sCol == "INVNO") {
+
+        INVID = _record.inv_pkid.toString();
+        if (MBLID == "" || INVID == "") {
+          alert("Invalid Record Selected");
+          return;
+        }
+        this.gs.LinkPage("INVNO", MBL_MODE, REFNO, MBLID, "", INVID);
+      }
+      else if (sCol == "REFNO") {
+        if (MBLID == "") {
+          alert("Invalid Record Selected");
+          return;
+        }
+        this.gs.LinkPage("REFNO", MBL_MODE, REFNO, MBLID);
+      }
+      else if (sCol == "HOUSE") {
+        if (HBLID == "") {
+          alert("Invalid Record Selected");
+          return;
+        }
+        this.gs.LinkPage("HOUSE", MBL_MODE, REFNO, MBLID, HBLID);
+      }
+    }
+
+
   }
 
 }

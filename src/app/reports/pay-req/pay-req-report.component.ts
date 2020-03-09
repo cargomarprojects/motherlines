@@ -137,7 +137,7 @@ export class PayReqReportComponent implements OnInit {
 
 
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
-        this.sdate = this.gs.defaultValues.today;
+        this.sdate =  this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.mode = 'PENDING';
         this.comp_type = this.gs.branch_code;
@@ -253,6 +253,30 @@ export class PayReqReportComponent implements OnInit {
     }
   }
 
+  editmaster(_record: Tbl_Cargo_Payrequest) {
+    let sID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
+    let REFNO: string = _record.cp_master_refno != null ? _record.cp_master_refno.toString() : "";
+    let sMode: string = _record.cp_mode != null ? _record.cp_mode.toString() : "";
+    if (sID == "")
+    {
+      alert('Invalid Record Selected');
+        return;
+    }
+    this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+ 
+  }
 
+  editinvoice(_record: Tbl_Cargo_Payrequest) {
+
+    let sID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
+    let REFNO: string = _record.cp_master_refno != null ? _record.cp_master_refno.toString() : "";
+    let sMode: string = _record.cp_mode != null ? _record.cp_mode.toString() : "";
+    let INVID: string = _record.cp_inv_id != null ? _record.cp_inv_id.toString() : "";
+    if (sID == "" || INVID == "") {
+      alert('Invalid Record Selected');
+      return;
+    }
+    this.gs.LinkPage("INVNO", sMode, REFNO, sID, "",INVID);
+  }
 
 }
