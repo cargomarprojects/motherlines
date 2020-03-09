@@ -176,8 +176,8 @@
           </tr>
         </thead>
         <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-          <tr [style.color]="rec.mbl_agent_name=='TOTAL'?'Red':'Black'"
-          [style.font-weight]="rec.mbl_agent_name=='TOTAL'?'bold':'normal'">
+          <tr [style.color]="rec.ROW_TYPE=='TOTAL'?'Red':'Black'"
+          [style.font-weight]="rec.ROW_TYPE=='TOTAL'?'bold':'normal'">
             <td>{{rec.mbl_branch}}</td>
             <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
             <td class='hlink' (click)="editarap(rec)">{{rec.ROW_TYPE=='DETAIL'?'ARAP':''}}</td>
@@ -230,8 +230,8 @@
           </tr>
         </thead>
         <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-          <tr [style.color]="rec.mbl_agent_name=='TOTAL'?'Red':'Black'"
-          [style.font-weight]="rec.mbl_agent_name=='TOTAL'?'bold':'normal'">
+          <tr [style.color]="rec.ROW_TYPE=='TOTAL'?'Red':'Black'"
+          [style.font-weight]="rec.ROW_TYPE=='TOTAL'?'bold':'normal'">
             <td>{{rec.mbl_branch}}</td>
             <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
             <td class='hlink' (click)="editarap(rec)">{{rec.ROW_TYPE=='DETAIL'?'ARAP':''}}</td>
@@ -278,8 +278,8 @@
           </tr>
         </thead>
         <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-          <tr [style.color]="rec.mbl_agent_name=='TOTAL'?'Red':'Black'"
-          [style.font-weight]="rec.mbl_agent_name=='TOTAL'?'bold':'normal'">
+          <tr [style.color]="rec.ROW_TYPE=='TOTAL'?'Red':'Black'"
+          [style.font-weight]="rec.ROW_TYPE=='TOTAL'?'bold':'normal'">
             <td>{{rec.mbl_branch}}</td>
             <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
             <td class='hlink' (click)="editarap(rec)">{{rec.ROW_TYPE=='DETAIL'?'ARAP':''}}</td>
@@ -322,7 +322,8 @@
           </tr>
         </thead>
         <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-          <tr>
+          <tr [style.color]="rec.ROW_TYPE=='TOTAL'?'Red':'Black'"
+          [style.font-weight]="rec.ROW_TYPE=='TOTAL' ?'bold':'normal'">
             <td>{{rec.mbl_branch}}</td>
             <td>{{rec.mbl_refno}}</td>
             <td>{{rec.mbl_refno_tot}}</td>

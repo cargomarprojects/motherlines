@@ -317,8 +317,8 @@
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                     <tr>
-                        <td>{{rec.mbl_refno}}</td>                         
-                        <td>{{rec.hbl_houseno}}</td>
+                        <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>                         
+                        <td class='hlink' (click)="edithouse(rec)">{{rec.hbl_houseno}}</td>
                         <td>{{rec.hbl_shipment_stage}}</td>
                         <td>{{rec.mbl_liner_name}}</td>
                         <td  *ngIf="job_mode=='OCEAN EXPORT'">{{rec.mbl_liner_bookingno}}</td>                        
@@ -374,9 +374,9 @@
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                     <tr>
-                        <td>{{rec.mbl_refno}}</td>
+                        <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
                         <!-- <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT }}</td> -->
-                        <td>{{rec.hbl_houseno}}</td>
+                        <td class='hlink' (click)="edithouse(rec)">{{rec.hbl_houseno}}</td>
                         <td>{{rec.hbl_shipment_stage}}</td>
                         <td>{{rec.mbl_liner_name}}</td>
                         <td *ngIf="job_mode=='OCEAN EXPORT'">{{rec.mbl_liner_bookingno}}</td>
@@ -447,9 +447,9 @@
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
                     <tr>
-                        <td>{{rec.mbl_refno}}</td>
+                        <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
                         <!-- <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT }}</td> -->
-                        <td>{{rec.hbl_houseno}}</td>
+                        <td class='hlink' (click)="edithouse(rec)">{{rec.hbl_houseno}}</td>
                         <!-- <td>{{rec.hbl_shipment_stage}}</td>
                         <td>{{rec.mbl_liner_name}}</td>
                         <td>{{rec.mbl_liner_bookingno}}</td> -->

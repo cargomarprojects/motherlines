@@ -150,7 +150,7 @@ export class TeuReportComponent implements OnInit {
         this.currentTab = 'LIST';
 
         this.report_category = "AGENT";
-        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);;
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;

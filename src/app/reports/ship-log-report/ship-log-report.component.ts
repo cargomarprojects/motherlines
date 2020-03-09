@@ -76,7 +76,7 @@ export class ShipmentLogReportComponent implements OnInit {
   printer_friendly: boolean = false;
 
   reportformat: string = '';
-   
+
 
   page_count: number = 0;
   page_current: number = 0;
@@ -183,7 +183,7 @@ export class ShipmentLogReportComponent implements OnInit {
 
         this.job_mode = 'OCEAN IMPORT';
         this.date_basedon = 'REF. DATE';
-        this.sdate = this.gs.defaultValues.today;
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.shipper_id = '';
         this.shipper_name = '';
@@ -319,7 +319,7 @@ export class ShipmentLogReportComponent implements OnInit {
             page_current: response.page_current,
             page_rowcount: response.page_rowcount,
             records: response.list
-         };
+          };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
 
@@ -528,5 +528,30 @@ export class ShipmentLogReportComponent implements OnInit {
         this.store.dispatch(new myActions.SingleSelectDeselect({ urlid: this.urlid, id: _code, flag: this.mChkBox15.nativeElement.checked }));
     }
 
+  }
+
+  editmaster(_record: Tbl_cargo_general) {
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+    let sMode: string = _record.mbl_mode != null ? _record.mbl_mode.toString() : "";
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+   this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+  }
+
+
+  edithouse(_record: Tbl_cargo_general) {
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+    let sMode: string = _record.mbl_mode != null ? _record.mbl_mode.toString() : "";
+    let HBLID: string = _record.hbl_pkid != null ? _record.hbl_pkid.toString() : "";
+
+    if (HBLID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    this.gs.LinkPage("HOUSE", sMode, REFNO, sID, HBLID);
   }
 }
