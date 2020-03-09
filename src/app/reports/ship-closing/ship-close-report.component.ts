@@ -32,7 +32,7 @@ export class ShipCloseReportComponent implements OnInit {
   report_category: string;
   sdate: string;
   edate: string;
-  mode  = '';
+  mode = '';
   comp_type: string = '';
   report_type: string = '';
   report_shptype: string = '';
@@ -52,6 +52,11 @@ export class ShipCloseReportComponent implements OnInit {
 
   storesub: any;
   sub: any;
+  tab: string = 'main';
+  attach_pkid: string = "";
+  attach_typelist: any = {};
+  attach_type: string = "";
+  attach_title: string = "";
 
   loading: boolean = false;
   errorMessage: string = '';
@@ -85,7 +90,7 @@ export class ShipCloseReportComponent implements OnInit {
   InitPage() {
 
     this.storesub = this.store.select(myReducer.getState(this.urlid)).subscribe(rec => {
-      
+
       if (rec) {
 
         this.MainList = rec.records;
@@ -126,7 +131,7 @@ export class ShipCloseReportComponent implements OnInit {
         this.currentTab = 'LIST';
 
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
-        this.sdate = this.gs.defaultValues.today;
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
@@ -177,7 +182,7 @@ export class ShipCloseReportComponent implements OnInit {
       this.SearchData.LOCK_DAYS_ADMIN = this.gs.LOCK_DAYS_ADMIN;
       this.SearchData.TODAYS_DATE = this.gs.defaultValues.today;
     }
-    
+
     this.loading = true;
 
     this.mainservice.ShipmentCloseReport(this.SearchData)
@@ -216,5 +221,28 @@ export class ShipCloseReportComponent implements OnInit {
     this.location.back();
   }
 
+  editmaster(_record: Tbl_shipment_close) {
+    let sID: string = (_record.sc_mbl_pkid != null) ? _record.sc_mbl_pkid.toString() : "";
+    let REFNO: string = _record.sc_mbl_refno != null ? _record.sc_mbl_refno.toString() : "";
+    let sMode: string = _record.sc_mbl_mode != null ? _record.sc_mbl_mode.toString() : "";
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+  }
+
+  AttachRow(_rec: Tbl_shipment_close) {
+    let TypeList: any[] = [];
+    TypeList = [{ "code": "EMAIL", "name": "E-MAIL" }, { "code": "HOUSEBL", "name": "HOUSE B/L" }, { "code": "MASTER", "name": "MASTER" }, { "code": "PAYMENT SETTLEMENT", "name": "OTHERS" }];
+    this.attach_pkid = _rec.sc_mbl_pkid;
+    this.attach_typelist = TypeList;
+    this.attach_type = 'PAYMENT SETTLEMENT'
+    this.attach_title = "Attachments [REF#: " + _rec.sc_mbl_refno + "]";
+    this.tab = 'attachment';
+  }
+  callbackevent() {
+    this.tab = 'main';
+  }
 
 }

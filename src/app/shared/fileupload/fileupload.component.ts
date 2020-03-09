@@ -29,12 +29,12 @@ export class FileUploadComponent implements OnInit {
     this.Files_Sub_Id = value;
   }
 
-   Files_Type: string = "";
+  Files_Type: string = "";
   @Input() set type(value: string) {
     this.Files_Type = value;
   }
 
-   Files_TypeList: any;
+  Files_TypeList: any;
   @Input() set typelist(value: any) {
     this.Files_TypeList = value;
   }
@@ -275,6 +275,7 @@ export class FileUploadComponent implements OnInit {
 
 
   List() {
+    let fTypeName: string = "";
     this.errorMessage = '';
     var SearchData = this.gs.UserInfo;
     SearchData.PKID = this.Files_Parent_Id;
@@ -291,7 +292,9 @@ export class FileUploadComponent implements OnInit {
           if (Rec.files_type == "XML-EDI") {
             Rec.file_uri = this.gs.WWW_ROOT_FILE_FOLDER + "/../" + Rec.files_path + Rec.file_id;
           }
-          Rec.files_type = this.GetFileType(Rec.files_type); //in database filestype  store code but the list wants to shows name, so to retreive name this fn is used;
+          fTypeName = this.GetFileType(Rec.files_type); //in database filestype  store code but the list wants to shows name, so to retreive name this fn is used;
+          if (fTypeName)
+            Rec.files_type = fTypeName;
           Rec.files_editrow = false;
         })
 
