@@ -139,5 +139,73 @@ export class AlertLogPageComponent implements OnInit {
         this.chkallselected = this.selectdeselect;
     }
 
+    editmasterfup(_record: Tbl_cargo_followup) {
+        let sID: string = (_record.cf_master_id != null) ? _record.cf_master_id.toString() : "";
+        let REFNO: string = _record.cf_refno != null ? _record.cf_refno.toString() : "";
+        let sMode: string = _record.cf_mbl_mode != null ? _record.cf_mbl_mode.toString() : "";
+        if (sID == "") {
+            alert('Invalid Record Selected');
+            return;
+        }
+        this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+
+    editfup(_record: Tbl_cargo_followup) {
+        
+        let IsLocked:boolean = false;
+        IsLocked=this.gs.IsShipmentClosed(_record.cf_mbl_mode,_record.cf_ref_date, _record.cf_mbl_lock, _record.cf_mbl_unlock_date);
+        let prm = {
+            menuid: this.mainservice.menuid,
+            master_id: _record.cf_master_id,
+            master_refno: _record.cf_refno,
+            master_refdate: _record.cf_ref_date,
+            is_locked: IsLocked,
+            origin: 'alert-log-page'
+          };
+          this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
+    }
+
+    editmaster(_record: Tbl_cargo_general) {
+        let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+        let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+        let sMode: string = this.getmode(REFNO);
+        if (sID == "") {
+            alert('Invalid Record Selected');
+            return;
+        }
+        this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+
+    edithouse(_record: Tbl_cargo_general) {
+        let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+        let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+        let sMode: string = this.getmode(REFNO);
+        let HBLID: string = _record.hbl_pkid != null ? _record.hbl_pkid.toString() : "";
+        if (HBLID == "") {
+            alert('Invalid Record Selected');
+            return;
+        }
+        this.gs.LinkPage("HOUSE", sMode, REFNO, sID, HBLID);
+    }
+
+    getmode(sRefno: string) {
+        let smode: string = "";
+        let sType: string = "";
+        if (sRefno.length >= 2)
+            sType = sRefno.substring(0, 2);
+
+        if (sType == "OI")
+            smode = "SEA IMPORT";
+        else if (sType == "OE")
+            smode = "SEA EXPORT";
+        else if (sType == "AI")
+            smode = "AIR IMPORT";
+        else if (sType == "AE")
+            smode = "AIR EXPORT";
+        else
+            smode = "OTHERS";
+
+        return smode;
+    }
 
 }
