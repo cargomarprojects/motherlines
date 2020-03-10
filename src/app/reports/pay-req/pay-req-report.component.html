@@ -44,7 +44,10 @@
           <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm">Req.By</label>
             <div class="col-8">
-              <app-autocomplete [inputdata]="USERRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete>
+              <!-- <app-autocomplete [inputdata]="USERRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete> -->
+              <app-autocomplete2 [controlname]="'USER'" [tabletype]="'USER'" [displaycolumn]="'NAME'"
+              [displaydata]="user_name" (ValueChanged)="LovSelected($event)" >
+          </app-autocomplete2>
             </div>
           </div>
 

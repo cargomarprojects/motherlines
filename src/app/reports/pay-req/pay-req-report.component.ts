@@ -65,7 +65,7 @@ export class PayReqReportComponent implements OnInit {
 
   MainList: Tbl_Cargo_Payrequest[];
 
-  USERRECORD: SearchTable = new SearchTable();
+  // USERRECORD: SearchTable = new SearchTable();
 
 
   constructor(
@@ -108,8 +108,8 @@ export class PayReqReportComponent implements OnInit {
         this.user_id = rec.user_id;
         this.user_name = rec.user_name;
 
-        this.USERRECORD.id = this.user_id;
-        this.USERRECORD.name = this.user_name;
+        // this.USERRECORD.id = this.user_id;
+        // this.USERRECORD.name = this.user_name;
 
         this.comp_type = rec.comp_type;
         this.page_rows = rec.page_rows;
@@ -148,8 +148,8 @@ export class PayReqReportComponent implements OnInit {
         this.mode = 'PENDING';
         this.comp_type = this.gs.branch_code;
 
-        this.user_id = '';
-        this.user_name = '';
+        this.user_id = this.gs.user_pkid;
+        this.user_name = this.gs.user_name;
 
         this.SearchData = this.gs.UserInfo;
 
@@ -242,13 +242,13 @@ export class PayReqReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-    this.USERRECORD = new SearchTable();
-    this.USERRECORD.controlname = "USER";
-    this.USERRECORD.displaycolumn = "NAME";
-    this.USERRECORD.type = "USER";
-    this.USERRECORD.subtype = "";
-    this.USERRECORD.id = "";
-    this.USERRECORD.code = "";
+    // this.USERRECORD = new SearchTable();
+    // this.USERRECORD.controlname = "USER";
+    // this.USERRECORD.displaycolumn = "NAME";
+    // this.USERRECORD.type = "USER";
+    // this.USERRECORD.subtype = "";
+    // this.USERRECORD.id = this.gs.user_pkid;
+    // this.USERRECORD.name = this.user_name;
 
   }
 
