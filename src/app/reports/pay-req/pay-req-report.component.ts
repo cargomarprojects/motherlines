@@ -13,6 +13,7 @@ import { ReportState } from './store/pay-req-report.models'
 
 import { Observable } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-pay-req-report',
@@ -42,8 +43,10 @@ export class PayReqReportComponent implements OnInit {
 
 
   reportformat = '';
-
-
+  payrefno = "";
+  paystatus = "";
+  paypkid = "";
+  modal: any;
 
   page_count: number = 0;
   page_current: number = 0;
@@ -66,6 +69,8 @@ export class PayReqReportComponent implements OnInit {
 
 
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     public gs: GlobalService,
     private router: Router,
     private activatedroute: ActivatedRoute,
@@ -73,6 +78,9 @@ export class PayReqReportComponent implements OnInit {
     private store: Store<myReducer.AppState>,
     private mainservice: ReportService
   ) {
+
+    modalconfig.backdrop = 'static'; //true/false/static
+    modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
 
     this.sub = this.activatedroute.queryParams.subscribe(params => {
       this.urlid = params.id;
@@ -88,7 +96,7 @@ export class PayReqReportComponent implements OnInit {
       this.initLov();
       if (rec) {
 
-        this.MainList = rec.records;
+        this.MainList = JSON.parse(JSON.stringify(rec.records));
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
 
@@ -134,10 +142,8 @@ export class PayReqReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
 
-
-
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
-        this.sdate =  this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.mode = 'PENDING';
         this.comp_type = this.gs.branch_code;
@@ -186,7 +192,7 @@ export class PayReqReportComponent implements OnInit {
       this.SearchData.STYPE = this.mode;
       this.SearchData.ISADMIN = 'N';
 
-      this.SearchData.REQUEST_ID= this.user_id;
+      this.SearchData.REQUEST_ID = this.user_id;
       this.SearchData.user_id = this.user_id;
       this.SearchData.user_name = this.user_name;
 
@@ -257,13 +263,12 @@ export class PayReqReportComponent implements OnInit {
     let sID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
     let REFNO: string = _record.cp_master_refno != null ? _record.cp_master_refno.toString() : "";
     let sMode: string = _record.cp_mode != null ? _record.cp_mode.toString() : "";
-    if (sID == "")
-    {
+    if (sID == "") {
       alert('Invalid Record Selected');
-        return;
+      return;
     }
     this.gs.LinkPage("REFNO", sMode, REFNO, sID);
- 
+
   }
 
   editinvoice(_record: Tbl_Cargo_Payrequest) {
@@ -276,7 +281,52 @@ export class PayReqReportComponent implements OnInit {
       alert('Invalid Record Selected');
       return;
     }
-    this.gs.LinkPage("INVNO", sMode, REFNO, sID, "",INVID);
+    this.gs.LinkPage("INVNO", sMode, REFNO, sID, "", INVID);
   }
 
+  UpdatePayStatus(_record: Tbl_Cargo_Payrequest, paymodal: any) {
+
+    if (this.gs.user_isadmin == "Y" || this.gs.canEdit(this.menuid)) {
+      this.paypkid = _record.cp_pkid;
+      this.payrefno = _record.cp_master_refno;
+      this.paystatus = _record.cp_pay_status;
+      if (this.paypkid.length > 0) {
+        this.modal = this.modalservice.open(paymodal, { centered: true });
+      } else
+        alert("Invalid ID");
+    } else
+      alert("Insufficient Rights");
+  }
+
+  UpdatePayment() {
+
+    if (this.paystatus == undefined || this.paystatus == null || this.paystatus == '') {
+      alert('Payment update status cannot be blank')
+      return;
+    }
+    this.errorMessage = '';
+    var searchData = this.gs.UserInfo;
+    searchData.CP_PKID = this.paypkid;
+    searchData.CP_PAY_STATUS = this.paystatus;
+    searchData.company_code = this.gs.company_code;
+    searchData.branch_code = this.gs.branch_code;
+
+    this.mainservice.PayReqUpdate(searchData)
+      .subscribe(response => {
+        if (response.retvalue) {
+          var REC = this.MainList.find(rec => rec.cp_pkid == this.paypkid);
+          if (REC != null)
+            REC.cp_pay_status = this.paystatus;
+          this.modal.close();
+        } else
+          this.errorMessage = response.error;
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+        alert(this.errorMessage);
+      });
+  }
+
+  CloseModal() {
+    this.modal.close();
+  }
 }
