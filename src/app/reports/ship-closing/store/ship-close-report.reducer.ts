@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Tbl_shipment_close } from '../../models/Tbl_shipment_close';
-import { AppState } from '../../../reducer';
+import { AppState as thisState } from '../../../reducer';
 
 import * as myActions from './ship-close-report.actions';
 import { ReportState } from './ship-close-report.models';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'ShipCloseReport': ReportState
 }
 

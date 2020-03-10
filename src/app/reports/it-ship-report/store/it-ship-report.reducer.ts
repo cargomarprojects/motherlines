@@ -1,11 +1,11 @@
 import { createFeatureSelector,createSelector } from '@ngrx/store';
 import { TBL_MBL_REPORT } from '../../models/tbl_mbl_report';
-import { AppState } from '../../../reducer';
+import { AppState as thisState } from '../../../reducer';
 
 import * as myActions from './it-ship-report.actions';
 import { ReportState } from './it-ship-report.models';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'ItShipReport': ReportState
 }
 

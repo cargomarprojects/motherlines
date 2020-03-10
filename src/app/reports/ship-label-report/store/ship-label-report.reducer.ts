@@ -1,13 +1,13 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { TBL_LABELM } from '../../models/tbl_label_report';
-import { AppState } from '../../../reducer';
+import { AppState as thisState } from '../../../reducer';
 
 import * as myActions from './ship-label-report.actions';
 import { ReportState } from './ship-label-report.models';
-import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
-import { isNgTemplate } from '@angular/compiler';
+// import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
+// import { isNgTemplate } from '@angular/compiler';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'ShipLabelReport': ReportState
 }
 

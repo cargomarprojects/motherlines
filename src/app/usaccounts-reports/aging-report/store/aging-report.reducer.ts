@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Tbl_acc_ledger } from '../../models/Tbl_acc_ledger';
-import { AppState } from '../../../reducer';
+import { AppState as thisState } from '../../../reducer';
 
 import * as myActions from './aging-report.actions';
 import { ReportState } from './aging-report.models';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'AgingReport': ReportState
 }
 

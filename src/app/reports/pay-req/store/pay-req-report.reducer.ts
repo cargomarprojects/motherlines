@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Tbl_Cargo_Payrequest } from '../../models/Tbl_Cargo_Payrequest';
-import { AppState } from '../../../reducer';
+import { AppState as thisState } from '../../../reducer';
 
 import * as myActions from './pay-req-report.actions';
 import { ReportState } from './pay-req-report.models';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'PayReqReport': ReportState
 }
 

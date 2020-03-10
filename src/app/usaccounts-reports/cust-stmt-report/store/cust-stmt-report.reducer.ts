@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Tbl_OS_REPORT } from '../../models/Tbl_OS_Report';
-import { AppState } from '../../../reducer';
+import { AppState as thisState } from '../../../reducer';
 
 import * as myActions from './cust-stmt-report.actions';
 import { ReportState } from './cust-stmt-report.models';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'CustStmtReport': ReportState
 }
 

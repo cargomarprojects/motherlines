@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Tbl_acc_Trialbalance } from '../../models/Tbl_acc_Trialbalance';
-import { AppState } from '../../../reducer';
+import { AppState as thisState } from '../../../reducer';
 
 import * as myActions from './bal-sheet-report.actions';
 import { ReportState } from './bal-sheet-report.models';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'BalSheetReport': ReportState
 }
 

@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Tbl_Acc_Payment } from '../../models/Tbl_Acc_Payment';
-import { AppState } from '../../../reducer';
+import { AppState as thisState } from '../../../reducer';
 
 import * as myActions from './bank-stmt-report.actions';
 import { ReportState } from './bank-stmt-report.models';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'BankStmtReport': ReportState
 }
 
