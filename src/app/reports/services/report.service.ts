@@ -70,6 +70,12 @@ export class ReportService {
     PayReqUpdate(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Other/Report/PayReqUpdate", SearchData, this.gs.headerparam2('authorized'));
     }
+    PayReqUploadHouseList(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/Other/Report/PayReqUploadHouseList", SearchData, this.gs.headerparam2('authorized'));
+    }
+    PayReqUploadInvoiceList(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/Other/Report/PayReqUploadInvoiceList", SearchData, this.gs.headerparam2('authorized'));
+    }
     PayDueReport(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Other/Report/PayDueReport", SearchData, this.gs.headerparam2('authorized'));
     }

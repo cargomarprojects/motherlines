@@ -33,6 +33,7 @@ import { ShipCloseReportComponent } from './ship-closing/ship-close-report.compo
 import { ShipCloseReportReducer } from './ship-closing/store/ship-close-report.reducer';
 import { PayReqReportComponent } from './pay-req/pay-req-report.component';
 import { PayReqReportReducer } from './pay-req/store/pay-req-report.reducer';
+import { PayUploadReportComponent } from './pay-req/pay-upload-report.component';
 import { PayDueReportComponent } from './pay-due/pay-due-report.component';
 import { PayDueReportReducer } from './pay-due/store/pay-due-report.reducer';
 
@@ -51,6 +52,7 @@ import { PayDueReportReducer } from './pay-due/store/pay-due-report.reducer';
     ItShipReportComponent,
     ShipCloseReportComponent,
     PayReqReportComponent,
+    PayUploadReportComponent,
     PayDueReportComponent,
   ],
   imports: [

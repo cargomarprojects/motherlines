@@ -46,8 +46,8 @@
             <div class="col-8">
               <!-- <app-autocomplete [inputdata]="USERRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete> -->
               <app-autocomplete2 [controlname]="'USER'" [tabletype]="'USER'" [displaycolumn]="'NAME'"
-              [displaydata]="user_name" (ValueChanged)="LovSelected($event)" >
-          </app-autocomplete2>
+                [displaydata]="user_name" (ValueChanged)="LovSelected($event)">
+              </app-autocomplete2>
             </div>
           </div>
 
@@ -103,8 +103,8 @@
           <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
           <td class='hlink' (click)="UpdatePayStatus(rec,paymodal)">{{rec.cp_pay_status}}</td>
           <td>{{rec.cp_spl_notes}}</td>
-          <td>ATTACHMENTS</td>
-          <td>CHECK COPY</td>
+          <td class='hlink' (click)="AttachedOhblFiles(rec,payupload)">ATTACHMENTS</td>
+          <td class='hlink' (click)="AttachedCheckFiles(rec,payupload)">CHECK COPY</td>
           <td>APPROVAL</td>
           <td>ARAP</td>
         </tr>
@@ -132,7 +132,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div> -->
-  <div class="modal-body" >
+  <div class="modal-body">
     <div class="page-body">
       <div class="row">
         <div class="col-md-6 testbox  px-0 mx-0">
@@ -145,8 +145,8 @@
           </div>
           <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm">Payment Status</label>
-            <div  class="col-8">
-              <select class="form-control form-control-sm" [(ngModel)]="paystatus" >
+            <div class="col-8">
+              <select class="form-control form-control-sm" [(ngModel)]="paystatus">
                 <option [value]="'PENDING'">PENDING</option>
                 <option [value]="'PAID'">PAID</option>
                 <option [value]="'CANCELLED'">CANCELLED</option>
@@ -168,4 +168,22 @@
   <!-- <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Update</button>
   </div> -->
+</ng-template>
+
+<ng-template #payupload let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12 testbox  px-0 mx-0">
+          <app-pay-upload-report [type]="Invoketype" [HouseList]="HouseList" [InvoiceList]="InvoiceList">
+          </app-pay-upload-report>
+        </div>
+      </div>
+      <div class="page-footer">
+        <div class="row justify-content-center p-1">
+          <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>

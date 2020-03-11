@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
 import { ReportService } from '../services/report.service';
 import { Tbl_Cargo_Payrequest } from '../models/Tbl_Cargo_Payrequest';
+import { Tbl_cargo_invoicem } from '../models/Tbl_cargo_invoicem';
+import { Tbl_cargo_general } from '../../other/models/tbl_cargo_general'
 import { SearchTable } from '../../shared/models/searchtable';
 
 import { Store, State, select } from '@ngrx/store';
@@ -64,6 +66,10 @@ export class PayReqReportComponent implements OnInit {
   Reportstate1: Observable<ReportState>;
 
   MainList: Tbl_Cargo_Payrequest[];
+
+  Invoketype: string = "";
+  HouseList: Tbl_cargo_general[];
+  InvoiceList: Tbl_cargo_invoicem[];
 
   // USERRECORD: SearchTable = new SearchTable();
 
@@ -324,6 +330,81 @@ export class PayReqReportComponent implements OnInit {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
       });
+  }
+
+
+  AttachedOhblFiles(_record: Tbl_Cargo_Payrequest, paymodal: any) {
+    this.HouseList = <Tbl_cargo_general[]>[];
+    let MBLID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
+    if (MBLID.trim() == "") {
+      alert("Invalid ID");
+      return;
+    }
+
+    this.errorMessage = '';
+    var searchData = this.gs.UserInfo;
+    searchData.MBLID = MBLID;
+    searchData.company_code = this.gs.company_code;
+    searchData.branch_code = this.gs.branch_code;
+
+    this.mainservice.PayReqUploadHouseList(searchData)
+      .subscribe(response => {
+        this.HouseList = response.list;
+        this.Invoketype="HOUSE-LIST";
+        if (this.HouseList != null) {
+          if (this.HouseList.length <= 0)
+            alert("House Not Found");
+          else if (this.HouseList.length == 1) {
+
+
+          } else {
+            this.modal = this.modalservice.open(paymodal, { centered: true });
+          }
+        } else
+          alert("House Not Found");
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+        alert(this.errorMessage);
+      });
+
+    // this.modal = this.modalservice.open(paymodal, { centered: true });
+  }
+
+  AttachedCheckFiles(_record: Tbl_Cargo_Payrequest, paymodal: any) {
+    this.InvoiceList = <Tbl_cargo_invoicem[]>[];
+    let MBLID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
+    if (MBLID.trim() == "") {
+      alert("Invalid ID");
+      return;
+    }
+
+    this.errorMessage = '';
+    var searchData = this.gs.UserInfo;
+    searchData.MBLID = MBLID;
+    searchData.company_code = this.gs.company_code;
+    searchData.branch_code = this.gs.branch_code;
+
+    this.mainservice.PayReqUploadInvoiceList(searchData)
+      .subscribe(response => {
+        this.InvoiceList = response.list;
+        this.Invoketype="INVOICE-LIST";
+        if (this.InvoiceList != null) {
+          if (this.InvoiceList.length <= 0)
+            alert("Invoice Not Found");
+          else if (this.InvoiceList.length == 1) {
+
+
+          } else {
+            this.modal = this.modalservice.open(paymodal, { centered: true });
+          }
+        } else
+          alert("Invoice Not Found");
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+        alert(this.errorMessage);
+      });
+
+    // this.modal = this.modalservice.open(paymodal, { centered: true });
   }
 
   CloseModal() {
