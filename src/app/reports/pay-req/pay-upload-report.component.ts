@@ -5,6 +5,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { Tbl_cargo_invoicem } from '../models/Tbl_cargo_invoicem';
 import { Tbl_cargo_general } from '../../other/models/tbl_cargo_general'
 import { ReportService } from '../services/report.service';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-pay-upload-report',
@@ -16,20 +17,35 @@ export class PayUploadReportComponent implements OnInit {
   @Input() public pkid: string;
   @Input() public menuid: string;
   @Input() public type: string;
+  @Input() public title: string='';
   @Input() public HouseList: Tbl_cargo_general[];
   @Input() public InvoiceList: Tbl_cargo_invoicem[];
  
-  title: string = '';
   isAdmin: boolean;
   errorMessage: string;
-    
+  attach_title: string = '';
+  attach_parentid: string = '';
+  attach_refno: string = '';
+  attach_type: string = '';
+  attach_typelist: any = {};
+  attach_tablename: string = '';
+  attach_tablepkcolumn: string = '';
+  attach_customername:string='';
+   
+  modal: any;
+
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
     private mainService: ReportService
-  ) { }
+  ) { 
+    modalconfig.backdrop = 'static'; //true/false/static
+    modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+  }
 
   ngOnInit() {
     this.initPage();
@@ -83,22 +99,33 @@ export class PayUploadReportComponent implements OnInit {
   }
 
 
-  AttachRowHouse(_rec: Tbl_cargo_general) {
+  AttachRowHouse(_rec: Tbl_cargo_general, payattachmodal: any) {
+   
     let TypeList: any[] = [];
-    // TypeList = [{ "code": "APPROVAL REQUEST", "name": "APPROVAL REQUEST" }];
-    // this.attach_pkid = _rec.ca_pkid;
-    // this.attach_typelist = TypeList;
-    // this.attach_type = 'APPROVAL REQUEST'
-    // this.tab = 'attachment';
+    this.attach_title = "File Uploaded";
+    this.attach_parentid = _rec.hbl_pkid;
+    this.attach_type = "OHBL OR TELEX RLS";
+    this.attach_typelist = TypeList;
+    this.attach_tablename = "cargo_housem";
+    this.attach_tablepkcolumn = "hbl_pkid"
+    this.attach_refno = _rec.hbl_houseno;
+    this.attach_customername="";
+    this.modal = this.modalservice.open(payattachmodal, { centered: true });
+
   }
 
-  AttachRowInvoice(_rec: Tbl_cargo_invoicem) {
+  AttachRowInvoice(_rec: Tbl_cargo_invoicem, payattachmodal: any) {
     let TypeList: any[] = [];
-    // TypeList = [{ "code": "APPROVAL REQUEST", "name": "APPROVAL REQUEST" }];
-    // this.attach_pkid = _rec.ca_pkid;
-    // this.attach_typelist = TypeList;
-    // this.attach_type = 'APPROVAL REQUEST'
-    // this.tab = 'attachment';
+    TypeList = [{ "code": "CHECK COPY", "name": "CHECK COPY" }];
+    this.attach_title = "File Uploaded";
+    this.attach_parentid = _rec.inv_pkid;
+    this.attach_type = "CHECK COPY";
+    this.attach_typelist = TypeList;
+    this.attach_tablename = "cargo_invoicem";
+    this.attach_tablepkcolumn = "inv_pkid"
+    this.attach_refno = _rec.inv_no;
+    this.attach_customername = _rec.inv_name;
+    this.modal = this.modalservice.open(payattachmodal, { centered: true });
   }
 
 
@@ -121,5 +148,7 @@ export class PayUploadReportComponent implements OnInit {
   Close() {
     this.location.back();
   }
-
+  CloseModal() {
+    this.modal.close();
+  }
 }

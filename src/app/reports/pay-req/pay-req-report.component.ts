@@ -43,6 +43,14 @@ export class PayReqReportComponent implements OnInit {
   user_id: string;
   user_name: string;
 
+  attach_title: string = '';
+  attach_parentid: string = '';
+  attach_refno: string = '';
+  attach_type: string = '';
+  attach_typelist: any = {};
+  attach_tablename: string = '';
+  attach_tablepkcolumn: string = '';
+  attach_customername: string = '';
 
   reportformat = '';
   payrefno = "";
@@ -67,6 +75,7 @@ export class PayReqReportComponent implements OnInit {
 
   MainList: Tbl_Cargo_Payrequest[];
 
+  Invoketitle: string = "";
   Invoketype: string = "";
   HouseList: Tbl_cargo_general[];
   InvoiceList: Tbl_cargo_invoicem[];
@@ -290,6 +299,29 @@ export class PayReqReportComponent implements OnInit {
     this.gs.LinkPage("INVNO", sMode, REFNO, sID, "", INVID);
   }
 
+
+  editapproval(_record: Tbl_Cargo_Payrequest) {
+    let sID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+
+    let SMENU_ID: string = "11815566-3D53-4DE6-9EBD-FFE83061AD76";// GLOBALCONTANTS.MENU_;
+    if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+      let parameter = {
+        menuid: '11815566-3D53-4DE6-9EBD-FFE83061AD76',
+        id: '11815566-3D53-4DE6-9EBD-FFE83061AD76',
+        menu_param: 'APPROVED-PAYMENT-REQUEST',
+        mblid: _record.cp_master_id
+      };
+      this.gs.Naviagete('Silver.Other.Trans/ApprovedPage', JSON.stringify(parameter));
+    }
+    else
+      alert("Insufficient Rights");
+  }
+
+
   UpdatePayStatus(_record: Tbl_Cargo_Payrequest, paymodal: any) {
 
     if (this.gs.user_isadmin == "Y" || this.gs.canEdit(this.menuid)) {
@@ -333,7 +365,7 @@ export class PayReqReportComponent implements OnInit {
   }
 
 
-  AttachedOhblFiles(_record: Tbl_Cargo_Payrequest, paymodal: any) {
+  AttachedOhblFiles(_record: Tbl_Cargo_Payrequest, payuploadmodal: any, payattachmodal: any) {
     this.HouseList = <Tbl_cargo_general[]>[];
     let MBLID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
     if (MBLID.trim() == "") {
@@ -350,15 +382,24 @@ export class PayReqReportComponent implements OnInit {
     this.mainservice.PayReqUploadHouseList(searchData)
       .subscribe(response => {
         this.HouseList = response.list;
-        this.Invoketype="HOUSE-LIST";
+        this.Invoketitle = "Attachments";
+        this.Invoketype = "HOUSE-LIST";
         if (this.HouseList != null) {
           if (this.HouseList.length <= 0)
             alert("House Not Found");
           else if (this.HouseList.length == 1) {
-
-
+            let TypeList: any[] = [];
+            this.attach_title = "File Uploaded";
+            this.attach_parentid = this.HouseList[0].hbl_pkid;
+            this.attach_type = "OHBL OR TELEX RLS";
+            this.attach_typelist = TypeList;
+            this.attach_tablename = "cargo_housem";
+            this.attach_tablepkcolumn = "hbl_pkid"
+            this.attach_refno = this.HouseList[0].hbl_houseno;
+            this.attach_customername = "";
+            this.modal = this.modalservice.open(payattachmodal, { centered: true });
           } else {
-            this.modal = this.modalservice.open(paymodal, { centered: true });
+            this.modal = this.modalservice.open(payuploadmodal, { centered: true });
           }
         } else
           alert("House Not Found");
@@ -370,7 +411,7 @@ export class PayReqReportComponent implements OnInit {
     // this.modal = this.modalservice.open(paymodal, { centered: true });
   }
 
-  AttachedCheckFiles(_record: Tbl_Cargo_Payrequest, paymodal: any) {
+  AttachedCheckFiles(_record: Tbl_Cargo_Payrequest, payuploadmodal: any, payattachmodal: any) {
     this.InvoiceList = <Tbl_cargo_invoicem[]>[];
     let MBLID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
     if (MBLID.trim() == "") {
@@ -387,15 +428,26 @@ export class PayReqReportComponent implements OnInit {
     this.mainservice.PayReqUploadInvoiceList(searchData)
       .subscribe(response => {
         this.InvoiceList = response.list;
-        this.Invoketype="INVOICE-LIST";
+        this.Invoketitle = "Check Copy";
+        this.Invoketype = "INVOICE-LIST";
         if (this.InvoiceList != null) {
           if (this.InvoiceList.length <= 0)
             alert("Invoice Not Found");
           else if (this.InvoiceList.length == 1) {
-
+            let TypeList: any[] = [];
+            TypeList = [{ "code": "CHECK COPY", "name": "CHECK COPY" }];
+            this.attach_title = "File Uploaded";
+            this.attach_parentid = this.InvoiceList[0].inv_pkid;
+            this.attach_type = "CHECK COPY";
+            this.attach_typelist = TypeList;
+            this.attach_tablename = "cargo_invoicem";
+            this.attach_tablepkcolumn = "inv_pkid"
+            this.attach_refno = this.InvoiceList[0].inv_no;
+            this.attach_customername = this.InvoiceList[0].inv_name;
+            this.modal = this.modalservice.open(payattachmodal, { centered: true });
 
           } else {
-            this.modal = this.modalservice.open(paymodal, { centered: true });
+            this.modal = this.modalservice.open(payuploadmodal, { centered: true });
           }
         } else
           alert("Invoice Not Found");
@@ -409,5 +461,8 @@ export class PayReqReportComponent implements OnInit {
 
   CloseModal() {
     this.modal.close();
+  }
+  callbackevent() {
+
   }
 }

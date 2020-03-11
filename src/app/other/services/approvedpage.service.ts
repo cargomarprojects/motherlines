@@ -20,6 +20,7 @@ export class ApprovedPageService {
     public id: string;
     public menuid: string;
     public param_type: string;
+    public mblid: string = '';
 
     public title: string;
     public isAdmin: boolean;
@@ -99,6 +100,13 @@ export class ApprovedPageService {
         this.id = params.id;
         this.menuid = params.menuid;
         this.param_type = params.menu_param;
+         if(this.param_type=="APPROVED-PAYMENT-REQUEST")//this is invoke from payment request report while clicking on Approval, that time only mblid parameter passed
+         {
+            this.param_type = "APPROVED";
+            this.mblid = params.mblid;
+            // this.doctype = params.mblid;
+         }
+
         if (this.param_type != 'APPROVED') {
             usrid = this.gs.user_pkid;
             usrname = this.gs.user_name;
@@ -173,7 +181,7 @@ export class ApprovedPageService {
         SearchData.SDATE = this.record.searchQuery.fromDate;
         SearchData.EDATE = this.record.searchQuery.toDate;
         SearchData.REQUEST_ID = this.record.searchQuery.userId;
-        SearchData.MBLID = '';
+        SearchData.MBLID = (this.mblid == null || this.mblid == undefined) ? '' : this.mblid;
 
         if (type == 'PAGE') {
             SearchData.action = this.record.pageQuery.action;

@@ -91,6 +91,10 @@ export class FileUploadComponent implements OnInit {
     this.canupload = value;
   }
 
+  public ismodal: boolean = false;
+  @Input() set modalview(value: boolean) {
+    this.ismodal = value;
+  }
   @Output() callbackevent = new EventEmitter<any>();
 
   txt_fileName: string = "";
