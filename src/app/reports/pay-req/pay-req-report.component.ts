@@ -319,11 +319,11 @@ export class PayReqReportComponent implements OnInit {
         origin: 'payment-req-page'
       };
       this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(parameter));
-      
+
     }
     else
       alert("Insufficient Rights");
- 
+
   }
 
 
@@ -336,7 +336,7 @@ export class PayReqReportComponent implements OnInit {
       if (this.paypkid.length > 0) {
         this.modal = this.modalservice.open(paymodal, { centered: true });
       } else
-        alert("Invalid ID");
+        alert("Invalid Record Selected");
     } else
       alert("Insufficient Rights");
   }
@@ -374,7 +374,7 @@ export class PayReqReportComponent implements OnInit {
     this.HouseList = <Tbl_cargo_general[]>[];
     let MBLID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
     if (MBLID.trim() == "") {
-      alert("Invalid ID");
+      alert("Invalid Record Selected");
       return;
     }
 
@@ -420,7 +420,7 @@ export class PayReqReportComponent implements OnInit {
     this.InvoiceList = <Tbl_cargo_invoicem[]>[];
     let MBLID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
     if (MBLID.trim() == "") {
-      alert("Invalid ID");
+      alert("Invalid Record Selected");
       return;
     }
 
@@ -460,8 +460,37 @@ export class PayReqReportComponent implements OnInit {
         this.errorMessage = this.gs.getError(error);
         alert(this.errorMessage);
       });
+  }
 
-    // this.modal = this.modalservice.open(paymodal, { centered: true });
+  ArApList(_record: Tbl_Cargo_Payrequest, payarapmodal: any) {
+    
+    this.InvoiceList = <Tbl_cargo_invoicem[]>[];
+    let MBLID: string = (_record.cp_master_id != null) ? _record.cp_master_id.toString() : "";
+    if (MBLID.trim() == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+
+    this.errorMessage = '';
+    var searchData = this.gs.UserInfo;
+    searchData.MBLID = MBLID;
+    searchData.company_code = this.gs.company_code;
+    searchData.branch_code = this.gs.branch_code;
+
+    this.mainservice.PayReqArApList(searchData)
+      .subscribe(response => {
+        this.InvoiceList = response.list;
+        if (this.InvoiceList != null) {
+          if (this.InvoiceList.length <= 0)
+            alert("Invoice Not Found");
+          else
+            this.modal = this.modalservice.open(payarapmodal, { centered: true });
+        } else
+          alert("Invoice Not Found");
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+        alert(this.errorMessage);
+      });
   }
 
   CloseModal() {

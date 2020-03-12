@@ -106,7 +106,7 @@
           <td class='hlink' (click)="AttachedOhblFiles(rec,payuploadmodal,payattachmodal)">ATTACHMENTS</td>
           <td class='hlink' (click)="AttachedCheckFiles(rec,payuploadmodal,payattachmodal)">CHECK COPY</td>
           <td class='hlink' (click)="editapproval(rec)">APPROVAL</td>
-          <td>ARAP</td>
+          <td class='hlink' (click)="ArApList(rec,payarapmodal)">ARAP</td>
         </tr>
       </tbody>
     </table>
@@ -197,6 +197,22 @@
             [uploadfiles]="flase" [customername]="attach_customername" [updatecolumn]="" [viewonlysource]=""
             [viewonlyid]="" [filespath]="" [filespath2]="" [modalview]="true" (callbackevent)="callbackevent($event)">
           </app-fileupload>
+        </div>
+      </div>
+      <div class="page-footer">
+        <div class="row justify-content-center p-1">
+          <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #payarapmodal let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12 testbox  px-0 mx-0">
+          <app-genlist [title]="'A/R & A/P List'" [type]="'INVOICE-LIST'" [InvoiceList]="InvoiceList"></app-genlist>
         </div>
       </div>
       <div class="page-footer">
