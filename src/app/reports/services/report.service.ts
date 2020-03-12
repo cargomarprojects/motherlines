@@ -77,7 +77,7 @@ export class ReportService {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Other/Report/PayReqUploadInvoiceList", SearchData, this.gs.headerparam2('authorized'));
     }
     PayReqArApList(SearchData: any) {
-      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccArApList/PayReqArApList", SearchData, this.gs.headerparam2('authorized'));
+      return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccRptArApList/PayReqArApList", SearchData, this.gs.headerparam2('authorized'));
     }
     PayDueReport(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Other/Report/PayDueReport", SearchData, this.gs.headerparam2('authorized'));

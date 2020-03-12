@@ -191,7 +191,7 @@ export class PaymentService {
     }
 
     InvoiceList(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccArApList/PayReqArApList", SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + "/api/UsAccRptArApList/PayReqArApList", SearchData, this.gs.headerparam2('authorized'));
       }
 
 }
