@@ -11,7 +11,7 @@ import { User_Menu } from '../../core/models/menum';
 import { Tbl_Acc_Payment, vm_tbl_accPayment, AccPaymentModel } from '../models/Tbl_Acc_Payment';
 import { SearchTable } from '../../shared/models/searchtable';
 import { Tbl_cargo_invoicem } from '../models/Tbl_cargo_Invoicem';
-
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -25,7 +25,9 @@ export class PaymentEditComponent implements OnInit {
     DetailList: Tbl_cargo_invoicem[] = [];
 
     Old_List: Tbl_cargo_invoicem[] = [];
+    InvoiceList: Tbl_cargo_invoicem[] = [];
 
+    modal: any;
     tab: string = 'main';
 
     mPayRecord = {};
@@ -82,6 +84,8 @@ export class PaymentEditComponent implements OnInit {
 
 
     constructor(
+        private modalconfig: NgbModalConfig,
+        private modalservice: NgbModal,
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
@@ -89,6 +93,8 @@ export class PaymentEditComponent implements OnInit {
         public mainService: PaymentService,
     ) {
         this.decplace = this.gs.foreign_amt_dec;
+        modalconfig.backdrop = 'static'; //true/false/static
+        modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
     }
 
     ngOnInit() {
@@ -538,7 +544,7 @@ export class PaymentEditComponent implements OnInit {
                 if (Rec.inv_ar_total > 0) {
                     nAR = Rec.inv_ar_total;
                     nAR = nAR - nPayAmt;
-                    nAR = this.gs.roundNumber( nAR,2);
+                    nAR = this.gs.roundNumber(nAR, 2);
                     Rec.inv_balance = Math.abs(nAR);
                     if (nAR == 0)
                         Rec.inv_ar_total = null;
@@ -552,7 +558,7 @@ export class PaymentEditComponent implements OnInit {
                 else {
                     nAP = Rec.inv_ap_total;
                     nAP = nAP - nPayAmt;
-                    nAP = this.gs.roundNumber( nAP,2);
+                    nAP = this.gs.roundNumber(nAP, 2);
                     Rec.inv_balance = Math.abs(nAP);
                     if (nAP == 0)
                         Rec.inv_ap_total = null;
@@ -565,7 +571,7 @@ export class PaymentEditComponent implements OnInit {
                 }
                 Rec.inv_pay_amt = null;
                 Rec.inv_flag = "N";
-                Rec.inv_flag2  = false;
+                Rec.inv_flag2 = false;
 
             }
         });
@@ -630,7 +636,7 @@ export class PaymentEditComponent implements OnInit {
             if (Rec != null) {
                 if (Rec.inv_ar_total <= 0 && Rec.inv_ap_total <= 0) {
                     Rec.inv_flag = "N";
-                    Rec.inv_flag2 =  false;
+                    Rec.inv_flag2 = false;
                     return;
                 }
                 if (Rec.inv_flag == "Y")
@@ -718,10 +724,90 @@ export class PaymentEditComponent implements OnInit {
     }
 
 
+    editmaster(_record: Tbl_cargo_invoicem) {
+        
+        let sID: string = (_record.inv_mbl_id != null) ? _record.inv_mbl_id.toString() : "";
+        let REFNO: string = _record.inv_mbl_refno != null ? _record.inv_mbl_refno.toString() : "";
+        let sType: string = _record.inv_type != null ? _record.inv_type.toString() : "";
+        let sMode: string = this.getmode(sType);
+        if (sID == "") {
+            alert('Invalid Record Selected');
+            return;
+        }
+        this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+
+    editinvoice(_record: Tbl_cargo_invoicem) {
+
+        let sID: string = (_record.inv_mbl_id != null) ? _record.inv_mbl_id.toString() : "";
+        let REFNO: string = _record.inv_mbl_refno != null ? _record.inv_mbl_refno.toString() : "";
+        let sType: string = _record.inv_type != null ? _record.inv_type.toString() : "";
+        let sMode: string = this.getmode(sType);
+        let INVID: string = _record.inv_pkid != null ? _record.inv_pkid.toString() : "";
+        if (sID == "" || INVID == "") {
+            alert('Invalid Record Selected');
+            return;
+        }
+        this.gs.LinkPage("INVNO", sMode, REFNO, sID, "", INVID);
+    }
 
 
+    ArApList(_record: Tbl_cargo_invoicem, arapmodal: any) {
+
+        this.InvoiceList = <Tbl_cargo_invoicem[]>[];
+        let MBLID: string = (_record.inv_mbl_id != null) ? _record.inv_mbl_id.toString() : "";
+        if (MBLID.trim() == "") {
+            alert("Invalid Record Selected");
+            return;
+        }
+
+        this.errorMessage = '';
+        var searchData = this.gs.UserInfo;
+        searchData.MBLID = MBLID;
+        searchData.company_code = this.gs.company_code;
+        searchData.branch_code = this.gs.branch_code;
+
+        this.mainService.InvoiceList(searchData)
+            .subscribe(response => {
+                this.InvoiceList = response.list;
+                if (this.InvoiceList != null) {
+                    if (this.InvoiceList.length <= 0)
+                        alert("Invoice Not Found");
+                    else
+                        this.modal = this.modalservice.open(arapmodal, { centered: true });
+                } else
+                    alert("Invoice Not Found");
+            }, error => {
+                this.errorMessage = this.gs.getError(error);
+                alert(this.errorMessage);
+            });
+    }
 
 
+    CloseModal() {
+        this.modal.close();
+    }
 
+    getmode(sType: string) {
+        let sMode: string = "";
+        if (sType == "OI")
+            sMode = "SEA IMPORT";
+        else if (sType == "OE")
+            sMode = "SEA EXPORT";
+        else if (sType == "AI")
+            sMode = "AIR IMPORT";
+        else if (sType == "AE")
+            sMode = "AIR EXPORT";
+        else if (sType == "OT")
+            sMode = "OTHERS";
+        else if (sType == "EX")
+            sMode = "EXTRA";
+        else if (sType == "CM" || sType == "PR" || sType == "FA" || sType == "GE" || sType == "PS")
+            sMode = sType.trim();
+        else
+            sMode = "";
+
+        return sMode;
+    }
 
 }
