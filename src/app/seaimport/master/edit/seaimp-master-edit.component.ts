@@ -192,8 +192,8 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_cargo_imp_masterm>response.record;
-        this.records = <Tbl_cargo_imp_container[]>response.records;
-        this.hrecords = <Tbl_cargo_imp_housem[]>response.hrecords;
+        this.records = (response.records == undefined || response.records == null) ? <Tbl_cargo_imp_container[]>[] : <Tbl_cargo_imp_container[]>response.records;
+        this.hrecords = (response.hrecords == undefined || response.hrecords == null) ? <Tbl_cargo_imp_housem[]>[] : <Tbl_cargo_imp_housem[]>response.hrecords;
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
 
@@ -462,7 +462,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     rec.cntr_return_date = '';
     rec.cntr_weight_uom = '';
     rec.cntr_order = 1;
-    rec.cntr_lfd=0;
+    rec.cntr_lfd = '';
     this.records.push(rec);
   }
 
@@ -663,10 +663,6 @@ export class SeaImpMasterEditComponent implements OnInit {
       }
       case 'cntr_tare_weight': {
         rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
-        break;
-      }
-      case 'cntr_lfd': {
-        rec.cntr_lfd = this.gs.roundNumber(rec.cntr_lfd, 0);
         break;
       }
     }

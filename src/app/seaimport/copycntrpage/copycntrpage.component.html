@@ -87,8 +87,8 @@
                                 </app-date>
                             </td>
                             <td class="p-0">
-                                <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_lfd"
-                                    (blur)="onBlur('cntr_lfd',rec)" />
+                                <app-date [inputdate]="rec.cntr_lfd" (ValueChanged)="rec.cntr_lfd=$event">
+                                </app-date>
                             </td>
                         </tr>
                     </tbody>

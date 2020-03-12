@@ -212,7 +212,7 @@ export interface Tbl_cargo_imp_container {
     cntr_pick_date: string;
     cntr_return_date: string;
     cntr_selected:boolean;
-    cntr_lfd:number;
+    cntr_lfd:string;
 }
 
 export interface Table_Address {

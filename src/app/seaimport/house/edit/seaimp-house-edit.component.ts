@@ -325,8 +325,8 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_cargo_imp_housem>response.record;
-        this.cntrrecords = <Tbl_cargo_imp_container[]>response.cntrrecords;
-        this.descrecords = <Tbl_cargo_imp_desc[]>response.descrecords;
+        this.cntrrecords = (response.cntrrecords == undefined || response.cntrrecords == null) ? <Tbl_cargo_imp_container[]>[] : <Tbl_cargo_imp_container[]>response.cntrrecords;
+        this.descrecords = (response.descrecords == undefined || response.descrecords == null) ? <Tbl_cargo_imp_desc[]>[] : <Tbl_cargo_imp_desc[]>response.descrecords;
         this.mode = 'EDIT';
 
         if (this.record.hbl_isf_attached == "Y")
@@ -812,6 +812,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     rec.cntr_cbm = 0;
     rec.cntr_pick_date = '';
     rec.cntr_return_date = '';
+    rec.cntr_lfd = '';
     rec.cntr_weight_uom = '';
     rec.cntr_order = 1;
     this.cntrrecords.push(rec);
@@ -1545,10 +1546,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         rec.cntr_tare_weight = this.gs.roundNumber(rec.cntr_tare_weight, 0);
         break;
       }
-      case 'cntr_lfd': {
-        rec.cntr_lfd = this.gs.roundNumber(rec.cntr_lfd, 0);
-        break;
-      }
+
     }
   }
 
