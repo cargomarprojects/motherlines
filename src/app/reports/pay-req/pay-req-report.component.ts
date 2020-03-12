@@ -307,18 +307,23 @@ export class PayReqReportComponent implements OnInit {
       return;
     }
 
-    let SMENU_ID: string = "11815566-3D53-4DE6-9EBD-FFE83061AD76";// GLOBALCONTANTS.MENU_;
+    let SMENU_ID: string = "11815566-3D53-4DE6-9EBD-FFE83061AD76";
     if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
       let parameter = {
-        menuid: '11815566-3D53-4DE6-9EBD-FFE83061AD76',
-        id: '11815566-3D53-4DE6-9EBD-FFE83061AD76',
-        menu_param: 'APPROVED-PAYMENT-REQUEST',
-        mblid: _record.cp_master_id
+        menuid: SMENU_ID,
+        mbl_pkid: sID,
+        mbl_refno: _record.cp_master_refno,
+        doc_type: _record.cp_mode,
+        req_type: 'APPROVED',
+        is_locked: false,
+        origin: 'payment-req-page'
       };
-      this.gs.Naviagete('Silver.Other.Trans/ApprovedPage', JSON.stringify(parameter));
+      this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(parameter));
+      
     }
     else
       alert("Insufficient Rights");
+ 
   }
 
 

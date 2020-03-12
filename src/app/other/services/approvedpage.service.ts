@@ -100,12 +100,12 @@ export class ApprovedPageService {
         this.id = params.id;
         this.menuid = params.menuid;
         this.param_type = params.menu_param;
-         if(this.param_type=="APPROVED-PAYMENT-REQUEST")//this is invoke from payment request report while clicking on Approval, that time only mblid parameter passed
-         {
-            this.param_type = "APPROVED";
-            this.mblid = params.mblid;
-            // this.doctype = params.mblid;
-         }
+        //  if(this.param_type=="APPROVED-PAYMENT-REQUEST")//this is invoke from payment request report while clicking on Approval, that time only mblid parameter passed
+        //  {
+        //     this.param_type = "APPROVED";
+        //     this.mblid = params.mblid;
+        //     // this.doctype = params.mblid;
+        //  }
 
         if (this.param_type != 'APPROVED') {
             usrid = this.gs.user_pkid;
