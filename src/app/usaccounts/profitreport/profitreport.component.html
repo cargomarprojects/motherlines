@@ -135,8 +135,9 @@
           <th class='text-right'>PROFIT</th>
         </tr>
       </thead>
-      <tbody class="page-body-tbody">
-        <tr *ngFor="let rec of records">
+      <tbody class="page-body-tbody" *ngFor="let rec of records">
+        <tr [style.color]="rec.inv_cust_name=='TOTAL'?'Red':'Black'"
+        [style.font-weight]="rec.inv_cust_name=='TOTAL' ?'bold':'normal'" >
           <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
           <td>{{rec.inv_no}}</td>
           <td>{{rec.inv_mbl_refno}}</td>
