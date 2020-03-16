@@ -81,7 +81,8 @@
                 </tr>
             </thead>
             <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                <tr>
+                <tr [style.color]="rec.acc_name=='BALANCE'?'Red':'Black'"
+                [style.font-weight]="rec.acc_name=='BALANCE' ?'bold':'normal'">
                     <td>{{rec.acc_name}}</td>
                     <td style="text-align:right">{{rec.jv_balance | number : '1.2-2'}}</td>
                     <td></td>

@@ -170,8 +170,8 @@
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr [style.color]="rec.inv_cust_name=='TOTAL'?'Red':'Black'"
-                        [style.font-weight]="rec.inv_cust_name=='TOTAL'?'bold':'normal'">
+                    <tr [style.color]="rec.ROW_TYPE=='TOTAL'?'Red':'Black'"
+                        [style.font-weight]="rec.ROW_TYPE=='TOTAL'?'bold':'normal'">
                         <td style="text-align:left;">{{rec.inv_branch}}</td>
                         <td style="text-align:left;">{{rec.inv_no}}</td>
                         <td style="text-align:left;">{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT}}</td>
