@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
   
   
   software_version_string = '1.104';
-  username: string = 'Admin';
-  password: string = '123';
+  username: string = '';
+  password: string = '';
 
   server_software_version_string = '';
 
@@ -53,6 +53,11 @@ export class LoginComponent implements OnInit {
    
     //this.username = this.GLOBALCONTANTS.user_code;
     //this.password = this.GLOBALCONTANTS.user_pwd;
+
+    if ( this.GLOBALCONTANTS.IsAutoLogin) {
+      this.username = this.GLOBALCONTANTS.user_code;
+      this.password = this.GLOBALCONTANTS.user_pwd;
+    }
     
     this.LoadCombo();
   }

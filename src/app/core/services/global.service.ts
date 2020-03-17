@@ -1755,7 +1755,8 @@ export class GlobalService {
       'company_pkid': this.company_pkid,
       'branch_pkid': this.branch_pkid,
       'user_code': this.user_code,
-      'user_name': this.user_name
+      'user_name': this.user_name,
+      'user_pwd': this.user_pwd,
     }
     localStorage.setItem('bts_settings', JSON.stringify(bts_settings));
   }

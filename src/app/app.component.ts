@@ -52,13 +52,14 @@ export class AppComponent {
         
         if (bts_settings) {
         
-          if ( bts_settings.access_token && bts_settings.company_pkid && bts_settings.branch_pkid && bts_settings.user_code && bts_settings.user_name) {
+          if ( bts_settings.access_token && bts_settings.company_pkid && bts_settings.branch_pkid && bts_settings.user_code && bts_settings.user_name && bts_settings.user_pwd) {
             this.gs.IsAutoLogin = true;
             this.gs.Access_Token = bts_settings.access_token;
             this.gs.company_pkid = bts_settings.company_pkid;
             this.gs.Auto_Branch_id = bts_settings.branch_pkid;
             this.gs.user_code = bts_settings.user_code;
             this.gs.user_name = bts_settings.user_name;
+            this.gs.user_pwd = bts_settings.user_pwd;
             this.router.navigate(['login']);
           }
           return;
