@@ -48,11 +48,14 @@ export class LoginComponent implements OnInit {
 
 
 
+
     //this.GLOBALCONTANTS.user_code = '';
     //this.GLOBALCONTANTS.user_pwd = '';
    
     //this.username = this.GLOBALCONTANTS.user_code;
     //this.password = this.GLOBALCONTANTS.user_pwd;
+
+    this.GLOBALCONTANTS.ReadLocalStorage();
 
     if ( this.GLOBALCONTANTS.IsAutoLogin) {
       this.username = this.GLOBALCONTANTS.user_code;

@@ -1761,6 +1761,25 @@ export class GlobalService {
     localStorage.setItem('bts_settings', JSON.stringify(bts_settings));
   }
 
+  ReadLocalStorage(){
+    if (localStorage.length > 0) {
+      const bts_settings = JSON.parse(localStorage.getItem('bts_settings'));
+      if (bts_settings) {
+        if (bts_settings.access_token && bts_settings.company_pkid && bts_settings.branch_pkid && bts_settings.user_code && bts_settings.user_name && bts_settings.user_pwd) {
+          this.IsAutoLogin = true;
+          this.Access_Token = bts_settings.access_token;
+          this.company_pkid = bts_settings.company_pkid;
+          this.Auto_Branch_id = bts_settings.branch_pkid;
+          this.user_code = bts_settings.user_code;
+          this.user_name = bts_settings.user_name;
+          this.user_pwd = bts_settings.user_pwd;
+          //this.router.navigate(['login']);
+        }
+      }
+    }
+
+
+  }
 
   Old_Save2LocalStorage() {
 
