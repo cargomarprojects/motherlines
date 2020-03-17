@@ -37,6 +37,7 @@ export class HeaderComponent {
     Logout() {
         this.loginservice.Logout();
         this.title = 'Pls Login';
+        localStorage.removeItem('bts_settings');        
         this.router.navigate(['login'], { replaceUrl: true });
     }
 

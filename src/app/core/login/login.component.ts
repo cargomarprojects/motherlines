@@ -86,6 +86,12 @@ export class LoginComponent implements OnInit {
           this.Company_Id = a.pkid;
         })
         
+        // Auto Login
+        if ( this.GLOBALCONTANTS.IsAutoLogin) {
+          this.Company_Id = this.GLOBALCONTANTS.company_pkid;
+          this.Login();
+        }
+
         
         this.loading = false;
       }, error => {

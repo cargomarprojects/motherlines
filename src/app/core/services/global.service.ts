@@ -27,6 +27,10 @@ export class GlobalService {
   public Token: string;
   public Company_Name: string;
   public IsLoginSuccess: boolean = false;
+
+  public IsAutoLogin: boolean = false;
+  public Auto_Branch_id: string = '';
+
   public IsAuthenticated: boolean = false;
   public Access_Token: string;
   public globalData: GlobalData;
@@ -36,8 +40,6 @@ export class GlobalService {
   /* public baseUrl: string = "http://localhost:5000"; */
   public baseUrl: string = "http://localhost:5000";
 
-
-
   // change this is false in production and update
   public isolderror: boolean = false;
 
@@ -46,140 +48,80 @@ export class GlobalService {
   public MenuList: User_Menu[] = [];
   public CompanyList: Companym[] = [];
   public YearList: any[];
-
   public AccGroupList: any[];
 
-
   public software_start_year: number = 0;
-
   public branch_codes: string = '';
-
   public history: Array<{ id: string, url: string }> = [];
-
-
   public DB_BACKEND = "SQLSERVER";
   public DB_USER = "DBO";
-
-
   public SOFTWARE_VERSION = "";
-
   public WWW_ROOT = "https://localhost/SilverApp.Web";
   public WWW_ROOT_FILE_FOLDER = "https://localhost/File_Folder";
   public FILES_FOLDER = "NewYork";
   public WWW_FILES_URL = "https://localhost/File_Folder/Newyork/Files";
-
-
   public FS_APP_FOLDER = "";
   public GLOBAL_FTP_FOLDER = "";
   public GLOBAL_REPORT_FOLDER = "D://motherlines.us//ftp//reports";
-
   public SEARCH_DATE_DIFF = 60;
-
   // Normal server or cloud server ...etc
-
   public AIRPORTDISPLAYCOLUMN = "CODE";
-
   public IsPWdBoxDisplayed = false;
   public IsMainPageLoaded = false;
-
-
-
   public user_handled_id = "";
   public user_handled_code = "";
   public user_handled_name = "";
-
-
-
   public PARENT_ADDRESS_REQUIRED = "Y";
-
-
   public user_party_name = "";
   public user_party_type = "";
-
-
-
-
-
   public user_is_external = false;
-
-
 
   public CAN_ACCESS_GENERAL_EXPENSE = "N";
   public CAN_ACCESS_1099_EXPENSE = "N";
   public CAN_ACCESS_PAYROLL_EXPENSE = "N";
   public CAN_ACCESS_INTERNAL_PAYMENT_SETTLEMENT = "N";
-
-
   public DEFAULT_HBL_FORMAT = "";
   public DEFAULT_HBL_DRAFTFORMAT = "";
-
-
-
   public SEA_IMP_OVERRIDE_POD_ETA = "N";
   public AIR_IMP_OVERRIDE_POD_ETA = "N";
-
   public SHIPMENTLOG_FORMAT = "OLD";
-
   public SEA_ARVL_FORMAT = "1";
-
   public SHOW_CHECK_DATE = "Y";
-
-
   public PACKAGE_TOTAL_BUTTON = "N";
-
   public OPTIONAL_DESCRIPTION = "N";
-
   public DOC_FOOTER1 = "";
   public DOC_FOOTER2 = "";
-
   public FY_START_MONTH = "";
-
   public PAYROLL_INVOICE_CODE = "";
   public PAYROLL_ACC_CODE = "";
   public PAYROLL_ENABLED = "N";
-
-
   public base_cur_pkid = "";
   public base_cur_code = "INR";
   public base_cur_name = "";
   public base_cur_exrate = "1";
-
   public foreign_cur_pkid = "";
   public foreign_cur_code = "USD";
   public foreign_cur_name = "";
   public foreign_cur_exrate = "1";
-
-
   public foreign_amt_dec = 2;
   public exrate_dec = 5;
   public base_amt_dec = 2;
-
   public foreign_amt_dec_fmt = "0.00";
   public exrate_dec_fmt = "0.00000";
   public base_amt_dec_fmt = "0.00";
-
-
   public date_display_fmt_with_time = "MM/dd/yyyy HH:mm:ss";
-
   public ROWS_TO_DISPLAY = 20;
-
-
   public LOCK_DAYS_SEA = 0;
   public LOCK_DAYS_AIR = 0;
   public LOCK_DAYS_OTHERS = 0;
   public LOCK_DAYS_ADMIN = 0;
-
   public IS_SINGLE_CURRENCY = true;
-
   public AUTO_CLOSE_CHECK_PRINT = "N";
   public RE_PRINT_CHECK = "N";
 
   public FY_MONTHS: any = [];
-
   public BUDGET_TYPE: any = [];
-
   public CHQ_FORMAT: any = [];
-
   public SHIPMENT_STAGE_OI: any;
   public SHIPMENT_STAGE_OE: any;
   public SHIPMENT_STAGE_AI: any;
@@ -203,7 +145,6 @@ export class GlobalService {
   public JOB_TYPE_AI: any = [];
   public JOB_TYPE_AE: any = [];
   public JOB_TYPE_OT: any = [];
-
 
   public PARAM_FREIGHT_STATUS: any = [];
   public PARAM_CARGO_MOVEMENT: any = [];
@@ -314,8 +255,6 @@ export class GlobalService {
   public EXPENSE_SI_NAME = "";
   public EXPENSE_OT_ID = "";
   public EXPENSE_OT_NAME = "";
-
-
 
   // VAT INVOICE DESCRIPTION
   public VAT_INVDESC_ID = "";
@@ -1809,7 +1748,20 @@ export class GlobalService {
   public MENU_FORMS_FILE_UPLOAD: string = "D068821C-B6AE-47BE-A91F-83BAA2C395F5";
   public MENU_SE_MASTER_CERTIFICATE_ORIGIN: string = "A8F97344-12C3-44EE-A4E1-B738380ECDA5";
 
+
   Save2LocalStorage() {
+    const bts_settings = {
+      'access_token': this.Access_Token,
+      'company_pkid': this.company_pkid,
+      'branch_pkid': this.branch_pkid,
+      'user_code': this.user_code,
+      'user_name': this.user_name
+    }
+    localStorage.setItem('bts_settings', JSON.stringify(bts_settings));
+  }
+
+
+  Old_Save2LocalStorage() {
 
     sessionStorage.setItem('access_token', this.Access_Token);
     sessionStorage.setItem('company_name', this.company_name);
@@ -1866,6 +1818,5 @@ export class GlobalService {
     sessionStorage.setItem('MESSENGER_SLIP_DROP_AT', JSON.stringify(this.MESSENGER_SLIP_DROP_AT));
 
   }
-
 
 }
