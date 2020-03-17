@@ -169,7 +169,8 @@
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr>
+                    <tr [style.color]="(rec.ROW_TYPE=='TOTAL'||rec.ROW_TYPE=='BALANCE')?'Red':'Black'"
+                    [style.font-weight]="(rec.ROW_TYPE=='TOTAL'||rec.ROW_TYPE=='BALANCE') ?'bold':'normal'">
                         <td>{{rec.inv_branch}}</td>
                         <td *ngIf="gs.BRANCH_REGION != 'USA'">{{rec.inv_no}}</td>
                         <td *ngIf="gs.BRANCH_REGION == 'USA'">
