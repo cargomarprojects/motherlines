@@ -148,8 +148,7 @@
         <div *ngIf="report_type=='DETAIL'" class="page-body table-responsive">
             <table class="table table-hover table-sm">
                 <thead class="page-body-thead">
-                    <tr>
-                        <th style="text-align:left;">BRANCH</th>
+                    <tr><th style="text-align:left;">BRANCH</th>
                         <th style="text-align:left;">INV.NO</th>
                         <th style="text-align:left;">INV.DATE</th>
                         <th style="text-align:left;">REFNO</th>
@@ -219,7 +218,8 @@
                     </tr>
                 </thead>
                 <tbody class="page-body-tbody" *ngFor="let rec of MainList">
-                    <tr>
+                    <tr [style.color]="rec.ROW_TYPE=='TOTAL'?'Red':'Black'"
+                    [style.font-weight]="rec.ROW_TYPE=='TOTAL'?'bold':'normal'">
                         <td style="text-align: left;">{{rec.inv_cust_name}}</td>
                         <td style="text-align: right;">{{rec.inv_total | number: '1.2-2'}}</td>
                         <td style="text-align: right;">{{rec.inv_paid | number: '1.2-2'}}</td>
