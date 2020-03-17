@@ -1,19 +1,19 @@
 <div *ngIf="tab=='main'">
-<div class="page-header">
-  <div class="row  align-items-center justify-content-left p-1">
-    <label class="mr-3">{{_title}}</label>
-    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
-    <button *ngIf="canDownload" class="btn btn-primary btn-sm mr-1" (click)="report('download')">Download</button>
-    <button *ngIf="canExcel" class="btn btn-primary btn-sm mr-1" (click)="report('excel')">Excel</button>
-    <button *ngIf="canEmail" class="btn btn-primary btn-sm mr-1" (click)="report('email')">Email</button>
+  <div class="page-header">
+    <div class="row  align-items-center justify-content-left p-1">
+      <label class="mr-3">{{_title}}</label>
+      <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+      <button *ngIf="canDownload" class="btn btn-primary btn-sm mr-1" (click)="report('download')">Download</button>
+      <button *ngIf="canExcel" class="btn btn-primary btn-sm mr-1" (click)="report('excel')">Excel</button>
+      <button *ngIf="canEmail" class="btn btn-primary btn-sm mr-1" (click)="report('email')">Email</button>
+    </div>
   </div>
-</div>
 
-<div *ngIf="errorMessage">
-  <div class="alert alert-primary">
-    {{errorMessage}}
+  <div *ngIf="errorMessage">
+    <div class="alert alert-primary">
+      {{errorMessage}}
+    </div>
   </div>
-</div>
 
 
   <div class="page-body" style="height:99vh">
@@ -25,5 +25,5 @@
 
 </div>
 <div *ngIf="tab=='email'">
-  <app-mail [pkid]="''"  [AttachList]="AttachList" (mailcallbackevent)="mailcallbackevent($event)"></app-mail>
+  <app-mail [pkid]="''" [AttachList]="AttachList" (mailcallbackevent)="mailcallbackevent($event)"></app-mail>
 </div>
