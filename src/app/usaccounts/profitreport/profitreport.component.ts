@@ -59,6 +59,9 @@ export class ProfitReportComponent implements OnInit {
   filename : string ;
   filetype  : string ;
   filedisplayname  : string ;
+  filename2 : string ;
+  filetype2  : string ;
+  filedisplayname2  : string ;
 
   tab: string = 'main';
 
@@ -107,7 +110,7 @@ export class ProfitReportComponent implements OnInit {
       SearchData.REP_BASEDON = '';
 
 
-    this.mainservice.ProfitReport(SearchData).subscribe(response => {
+     this.mainservice.ProfitReport(SearchData).subscribe(response => {
 
       this.records = response.list;
       this.refno = response.record.mbl_refno;
@@ -121,6 +124,9 @@ export class ProfitReportComponent implements OnInit {
       this.filename = response.filename;
       this.filetype = response.filetype;
       this.filedisplayname = response.filedisplayname;
+      this.filename2 = response.filename2;
+      this.filetype2 = response.filetype2;
+      this.filedisplayname2 = response.filedisplayname2;
 
     }, error => {
       this.errormessage = this.gs.getError(error)
