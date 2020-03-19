@@ -451,16 +451,21 @@ export class MblPageComponent implements OnInit {
 
     if (rec.controlname == "AGENT") {
       this.record.mbld_agent_id = rec.id;
+      this.record.mbld_agent_code = rec.code;
     }
 
     if (rec.controlname == "HANDLEDBY") {
       this.record.mbld_handled_id = rec.id;
+      this.record.mbld_handled_code = rec.code;
     }
 
     if (rec.controlname == "SALEMSAN") {
 
     }
-
+    if (rec.controlname == "SENDTO") {
+      this.record.mbld_sendto_id = rec.id;
+      this.record.mbld_sendto_code = rec.code;
+    }
   }
 
   FindWeight(_type: string) {

@@ -143,10 +143,15 @@ export class ReportComponent implements OnInit {
       this.AttachList.push({ filename: this._filename, filetype: this._filetype, filedisplayname: this._filedisplayname });
       this.tab = "email";
     }
-    if (action == "excel") {
+    else if (action == "excel") {
       if (this._filedisplayname2 == null || this._filedisplayname2 == undefined || this._filedisplayname2 == "")
         return;
       this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, this._filename2, this._filetype2, this._filedisplayname2);
+    }
+    else if (action == "download") {
+      if (this._filedisplayname == null || this._filedisplayname == undefined || this._filedisplayname == "")
+        return;
+      this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, this._filename, this._filetype, this._filedisplayname);
     }
   }
 
