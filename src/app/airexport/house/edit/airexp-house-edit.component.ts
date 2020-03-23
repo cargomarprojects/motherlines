@@ -37,6 +37,7 @@ export class AirExpHouseEditComponent implements OnInit {
 
   ShipmentType: string = '';
 
+  /*23/03/2020 */
   @ViewChild('hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
 
   tab: string = 'main';
