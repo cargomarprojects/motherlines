@@ -54,7 +54,9 @@ export class CustStmtReportComponent implements OnInit {
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
-
+  filename2: string = '';
+  filetype2: string = '';
+  filedisplayname2: string = '';
   lov_where: string = " ACC_TYPE in ('BANK') ";
 
   page_count: number = 0;
@@ -129,6 +131,9 @@ export class CustStmtReportComponent implements OnInit {
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
+        this.filename2 = rec.filename2;
+        this.filetype2 = rec.filetype2;
+        this.filedisplayname2 = rec.filedisplayname2;
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -189,6 +194,9 @@ export class CustStmtReportComponent implements OnInit {
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
+        this.filename2 = '';
+        this.filetype2 = '';
+        this.filedisplayname2 = '';
         this.GT_UNIQUE_ID = this.gs.getGuid();
         this.SearchData = this.gs.UserInfo;
 
@@ -268,7 +276,9 @@ export class CustStmtReportComponent implements OnInit {
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
-
+      this.SearchData.filename2 = "";
+      this.SearchData.filedisplayname2 = "";
+      this.SearchData.filetype2 = "";
     }
 
 
@@ -282,6 +292,9 @@ export class CustStmtReportComponent implements OnInit {
             this.SearchData.filename = response.filename;
             this.SearchData.filedisplayname = response.filedisplayname;
             this.SearchData.filetype = response.filetype;
+            this.SearchData.filename2 = response.filename2;
+            this.SearchData.filedisplayname2 = response.filedisplayname2;
+            this.SearchData.filetype2 = response.filetype2;
           }
 
           const state: ReportState = {
@@ -311,7 +324,10 @@ export class CustStmtReportComponent implements OnInit {
             idlist: response.idlist,
             filename: this.SearchData.filename,
             filetype: this.SearchData.filetype,
-            filedisplayname: this.SearchData.filedisplayname
+            filedisplayname: this.SearchData.filedisplayname,
+            filename2: this.SearchData.filename2,
+            filetype2: this.SearchData.filetype2,
+            filedisplayname2: this.SearchData.filedisplayname2
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }
