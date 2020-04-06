@@ -11,6 +11,10 @@ export interface ReportState {
     filename: string;
     filetype: string;
     filedisplayname: string;
+    filename2: string;
+    filetype2: string;
+    filedisplayname2: string;
+
 
     page_rows: number;
     page_count: number;
