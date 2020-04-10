@@ -43,6 +43,9 @@ export class ProfitReportHouseComponent implements OnInit {
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
+  filename2: string = '';
+  filetype2: string = '';
+  filedisplayname2: string = '';
 
   cust_id: string;
   cust_name: string;
@@ -148,6 +151,9 @@ export class ProfitReportHouseComponent implements OnInit {
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
+        this.filename2 = rec.filename2;
+        this.filetype2 = rec.filetype2;
+        this.filedisplayname2 = rec.filedisplayname2;
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -202,6 +208,9 @@ export class ProfitReportHouseComponent implements OnInit {
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
+        this.filename2 = '';
+        this.filetype2 = '';
+        this.filedisplayname2 = '';
 
         this.cust_id = "";
         this.cust_name = "";
@@ -287,6 +296,9 @@ export class ProfitReportHouseComponent implements OnInit {
             this.SearchData.filename = response.filename;
             this.SearchData.filedisplayname = response.filedisplayname;
             this.SearchData.filetype = response.filetype;
+            this.SearchData.filename2 = response.filename2;
+            this.SearchData.filedisplayname2 = response.filedisplayname2;
+            this.SearchData.filetype2 = response.filetype2;
           }
 
           const state: ReportState = {
@@ -317,7 +329,10 @@ export class ProfitReportHouseComponent implements OnInit {
             records: response.list,
             filename: this.SearchData.filename,
             filetype: this.SearchData.filetype,
-            filedisplayname: this.SearchData.filedisplayname
+            filedisplayname: this.SearchData.filedisplayname,
+            filename2: this.SearchData.filename2,
+            filetype2: this.SearchData.filetype2,
+            filedisplayname2: this.SearchData.filedisplayname2
           };
           this.store.dispatch(new myActions.Update({ id: this.urlid, changes: state }));
         }

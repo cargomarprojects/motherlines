@@ -16,7 +16,9 @@ export interface ReportState{
     filename: string;
     filetype: string;
     filedisplayname: string;
-    
+    filename2: string;
+    filetype2: string;
+    filedisplayname2: string;
     agent_id : string ;
     agent_name : string ;
     reportformat : string ;

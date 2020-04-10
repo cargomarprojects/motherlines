@@ -23,7 +23,10 @@ export interface ReportState{
     filename: string;
     filetype: string;
     filedisplayname: string;
-    
+    filename2: string;
+    filetype2: string;
+    filedisplayname2: string;
+
     _report_category: string;
     _report_type: string;
     

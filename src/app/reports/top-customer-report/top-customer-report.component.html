@@ -211,6 +211,8 @@
 </div>
 
 <div *ngIf="tab == 'report'">
-    <app-report [title]="'Top Customer Report'" [url]="" [searchdata]="" [menuid]="report_menuid" [filename]="filename"
-        [filetype]="filetype" [filedisplayname]="filedisplayname" (callbackevent)="callbackevent($event)"></app-report>
+    <app-report [title]="'Top Customer Report'" [url]="" [searchdata]="" [menuid]="report_menuid" 
+    [filename]="filename"  [filetype]="filetype" [filedisplayname]="filedisplayname"
+    [filename2]="filename2"  [filetype2]="filetype2" [filedisplayname2]="filedisplayname2"
+     (callbackevent)="callbackevent($event)"></app-report>
 </div>

@@ -34,7 +34,9 @@ export const initialState: ReportState = {
     filename: '',
     filetype: '',
     filedisplayname: '',
-    
+    filename2: '',
+    filetype2: '',
+    filedisplayname2: '',
     _report_category : '',
     _report_type :'',
     page_rows :0,

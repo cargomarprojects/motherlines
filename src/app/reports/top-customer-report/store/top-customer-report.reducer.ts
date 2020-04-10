@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { TBL_MBL_REPORT } from '../../models/tbl_mbl_report';
-import { AppState } from '../../../reducer';
+import { AppState as thisState  } from '../../../reducer';
 
 import * as myActions from './top-customer-report.actions';
 import { ReportState } from './top-customer-report.models';
 
-export interface AppState extends AppState {
+export interface AppState extends thisState {
     'TopCustomerReport': ReportState
 }
 
@@ -28,6 +28,9 @@ export const initialState: ReportState = {
     filename: '',
     filetype: '',
     filedisplayname: '',
+    filename2: '',
+    filetype2: '',
+    filedisplayname2: '',
     page_rows: 0,
     page_count: 0,
     page_current: 0,
