@@ -25,7 +25,7 @@ export class InvoiceEditComponent implements OnInit {
 
   errorMessage: string;
 
-  mode: string;
+   mode: string;
    mbl_pkid: string;
    hbl_pkid: string;
    mbl_refno: string;
@@ -48,7 +48,12 @@ export class InvoiceEditComponent implements OnInit {
    canEdit: boolean;
    canSave: boolean;
 
-
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
+  
    acc_id: string = '';
    acc_code: string = '';
    acc_name: string = '';
@@ -888,10 +893,24 @@ export class InvoiceEditComponent implements OnInit {
             this.gs.Naviagete('Silver.BusinessModule/LogBookPage', JSON.stringify(prm));
             break;
         }
+        case 'INVOICE-PRINT': {
+        this.report_title = 'Invoice';
+        this.report_url = '/api/USAccounts/Invoice/InvoiceReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.PKID = this.pkid;
+        this.report_searchdata.INV_TYPE = this.mbl_type;
+        this.report_searchdata.INV_ARAP = this.inv_arap;
+        this.report_menuid = this.menuid;
+        this.tab = 'report';
+        break;
+      }
+        
     }
 }
  
-
+callbackevent(event: any) {
+  this.tab = 'main';
+}
 
   Close() {
     this.location.back();
