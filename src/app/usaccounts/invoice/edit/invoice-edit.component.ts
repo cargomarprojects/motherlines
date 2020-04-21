@@ -894,12 +894,15 @@ export class InvoiceEditComponent implements OnInit {
             break;
         }
         case 'INVOICE-PRINT': {
+         let sPath:string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
         this.report_title = 'Invoice';
         this.report_url = '/api/USAccounts/Invoice/InvoiceReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.PKID = this.pkid;
         this.report_searchdata.INV_TYPE = this.mbl_type;
         this.report_searchdata.INV_ARAP = this.inv_arap;
+        this.report_searchdata.BRANCH_REGION = this.gs.BRANCH_REGION;
+        this.report_searchdata.FILE_PATH = sPath;
         this.report_menuid = this.menuid;
         this.tab = 'report';
         break;
@@ -915,9 +918,5 @@ callbackevent(event: any) {
   Close() {
     this.location.back();
   }
-
-
-
-
 
 }
