@@ -194,7 +194,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="sdate=$event"></app-date>
+                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
                   </div>
                 </div>
 
@@ -212,7 +212,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="sdate=$event"></app-date>
+                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
                   </div>
                 </div>
 
@@ -237,7 +237,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Final.ETA</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_pofd_eta" (ValueChanged)="sdate=$event"></app-date>
+                    <app-date [inputdate]="record.mbl_pofd_eta" (ValueChanged)="record.mbl_pofd_eta=$event"></app-date>
                   </div>
                 </div>
 
