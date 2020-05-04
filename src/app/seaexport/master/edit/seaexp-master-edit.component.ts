@@ -59,7 +59,8 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   private mode: string;
 
-  private errorMessage: string;
+  // private errorMessage: string;
+  private errorMessage: string[] = [];
 
   private closeCaption: string = 'Return';
 
@@ -96,7 +97,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage = '';
+    this.errorMessage = [];
   }
 
 
@@ -106,7 +107,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_exp_masterm>{};
@@ -148,7 +149,7 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
@@ -157,10 +158,14 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.record = <Tbl_cargo_exp_masterm>response.record;
         this.records = <Tbl_cargo_exp_container[]>response.records;
         this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;
+        if (this.records == null)
+          this.records = <Tbl_cargo_exp_container[]>[];
+        if (this.hrecords == null)
+          this.hrecords = <Tbl_cargo_exp_housem[]>[];
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
@@ -187,7 +192,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (no == '')
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.blno = no;
@@ -199,16 +204,15 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.mainService.Isblnoduplication(SearchData)
       .subscribe(response => {
         if (response.retvalue) {
-          this.errorMessage = response.retstring;
+          this.errorMessage.push(response.retstring);
           if (stype == 'BOOKING')
             this.mbl_liner_bookingno_field.focus(); ''
           if (stype == 'MBL')
             this.mbl_no_field.focus();
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
-
   }
 
 
@@ -232,19 +236,19 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
-          alert(this.errorMessage);
+          this.errorMessage.push(response.error);
+          alert(this.errorMessage[0]);
         }
         else {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          this.errorMessage.push('Save Complete');
+          alert(this.errorMessage[0]);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
-        alert(this.errorMessage);
+        this.errorMessage.push(this.gs.getError(error));
+        alert(this.errorMessage[0]);
       });
   }
 
@@ -263,13 +267,10 @@ export class SeaexpMasterEditComponent implements OnInit {
   private Allvalid(): boolean {
 
     var bRet = true;
-
-
-    this.errorMessage = "";
-    if (this.record.mbl_ref_date == "") {
+    this.errorMessage = [];
+    if (this.record.mbl_ref_date == "" || this.record.mbl_ref_date == undefined) {
       bRet = false;
-      this.errorMessage = "Ref Date cannot be blank";
-      return bRet;
+      this.errorMessage.push("Ref Date cannot be blank");
     }
     /*
     if (this.record.mbl_jobtype_id == "") {
@@ -278,92 +279,76 @@ export class SeaexpMasterEditComponent implements OnInit {
       return bRet;
     }
     */
-    if (this.gs.JOB_TYPE_OE.length > 0 && this.record.mbl_jobtype_id == "") {
+    if (this.gs.JOB_TYPE_OE.length > 0 && (this.record.mbl_jobtype_id == "" || this.record.mbl_jobtype_id == undefined)) {
       bRet = false;
-      this.errorMessage = "Job Type cannot be blank";
-      return bRet;
+      this.errorMessage.push("Job Type cannot be blank");
     }
 
-    if (this.record.mbl_shipment_stage == "") {
+    if (this.record.mbl_shipment_stage == "" || this.record.mbl_shipment_stage == undefined) {
       bRet = false;
-      this.errorMessage = "Shipment Stage cannot be blank";
-      return bRet;
+      this.errorMessage.push("Shipment Stage cannot be blank");
     }
-    if (this.record.mbl_agent_id == "") {
+    if (this.record.mbl_agent_id == "" || this.record.mbl_agent_id == undefined) {
       bRet = false;
-      this.errorMessage = "Master Agent cannot be blank"
-      return bRet;
+      this.errorMessage.push("Master Agent cannot be blank");
     }
-    if (this.record.mbl_liner_id == "") {
+    if (this.record.mbl_liner_id == "" || this.record.mbl_liner_id == undefined) {
       bRet = false;
-      this.errorMessage = "Carrier cannot be blank"
-      return bRet;
+      this.errorMessage.push("Carrier cannot be blank");
     }
 
-    if (this.record.mbl_handled_id == "") {
+    if (this.record.mbl_handled_id == ""|| this.record.mbl_handled_id == undefined) {
       bRet = false;
-      this.errorMessage = "A/N Handled By cannot be blank"
-      return bRet;
+      this.errorMessage.push("A/N Handled By cannot be blank");
     }
 
-    if (this.record.mbl_frt_status == "") {
+    if (this.record.mbl_frt_status == ""||this.record.mbl_frt_status ==undefined) {
       bRet = false;
-      this.errorMessage = "Freight status cannot be blank"
-      return bRet;
+      this.errorMessage.push("Freight status cannot be blank");
     }
 
-    if (this.record.mbl_ship_term_id == "") {
+    if (this.record.mbl_ship_term_id == ""||this.record.mbl_ship_term_id == undefined) {
       bRet = false;
-      this.errorMessage = "Shipping Term cannot be blank"
-      return bRet;
+      this.errorMessage.push("Shipping Term cannot be blank");
     }
-    if (this.record.mbl_cntr_type == "") {
+    if (this.record.mbl_cntr_type == ""||this.record.mbl_cntr_type ==undefined) {
       bRet = false;
-      this.errorMessage = "Container Type cannot be blank"
-      return bRet;
+      this.errorMessage.push("Container Type cannot be blank");
     }
-    if (this.record.mbl_pol_id == "") {
+    if (this.record.mbl_pol_id == ""||this.record.mbl_pol_id ==undefined) {
       bRet = false;
-      this.errorMessage = "Port of Loading cannot be blank"
-      return bRet;
+      this.errorMessage.push("Port of Loading cannot be blank");
     }
-    if (this.record.mbl_pol_etd == "") {
+    if (this.record.mbl_pol_etd == ""||this.record.mbl_pol_etd == undefined) {
       bRet = false;
-      this.errorMessage = "ETD cannot be blank"
-      return bRet;
+      this.errorMessage.push("ETD cannot be blank");
     }
-    if (this.record.mbl_pod_id == "") {
+    if (this.record.mbl_pod_id == ""||this.record.mbl_pod_id == undefined) {
       bRet = false;
-      this.errorMessage = "Port of Discharge cannot be blank"
-      return bRet;
+      this.errorMessage.push("Port of Discharge cannot be blank");
     }
-    if (this.record.mbl_pod_eta == "") {
+    if (this.record.mbl_pod_eta == ""||this.record.mbl_pod_eta ==undefined) {
       bRet = false;
-      this.errorMessage = "ETA cannot be blank"
-      return bRet;
+      this.errorMessage.push("ETA cannot be blank");
     }
-    if (this.record.mbl_pofd_id == "") {
+    if (this.record.mbl_pofd_id == ""||this.record.mbl_pofd_id==undefined) {
       bRet = false;
-      this.errorMessage = "Final Destination cannot be blank"
-      return bRet;
+      this.errorMessage.push("Final Destination cannot be blank");
     }
 
-    if (this.record.mbl_country_id == "") {
+    if (this.record.mbl_country_id == ""||this.record.mbl_country_id == undefined) {
       bRet = false;
-      this.errorMessage = "Country Cannot be blank"
-      return bRet;
+      this.errorMessage.push("Country Cannot be blank");
     }
 
 
-    if (this.record.mbl_vessel == "") {
+    if (this.record.mbl_vessel == ""||this.record.mbl_vessel == undefined) {
       bRet = false;
-      this.errorMessage = "Vessel cannot be blank"
-      return bRet;
+      this.errorMessage.push("Vessel cannot be blank");
     }
-    if (this.record.mbl_voyage == "") {
+    if (this.record.mbl_voyage == ""||this.record.mbl_voyage == undefined) {
       bRet = false;
-      this.errorMessage = "Voyage cannot be blank"
-      return bRet;
+      this.errorMessage.push("Voyage cannot be blank");
     }
 
 
@@ -373,16 +358,18 @@ export class SeaexpMasterEditComponent implements OnInit {
 
         if (Rec.cntr_no.length != 11) {
           bRet = false;
-          this.errorMessage = "cntr No cannot be Blank"
-          return bRet;
+          this.errorMessage.push("cntr No cannot be Blank");
         }
         if (Rec.cntr_type.length <= 0) {
           bRet = false;
-          this.errorMessage = "Container( " + Rec.cntr_no + " ) Type Has to be selected"
-          return bRet;
+          this.errorMessage.push("Container( " + Rec.cntr_no + " ) Type Has to be selected");
         }
       })
     }
+
+    if (!bRet)
+      alert('Error While Saving');
+
     return bRet;
   }
 
@@ -788,7 +775,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   }
 
   getManiFestReport1() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
 
     SearchData.pkid = this.pkid;
@@ -799,7 +786,7 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.Downloadfile(response.filename, response.filetype, response.filedisplayname);
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
@@ -810,7 +797,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   RemoveRow(_rec: Tbl_cargo_exp_container) {
     this.records.splice(this.records.findIndex(rec => rec.cntr_pkid == _rec.cntr_pkid), 1);
   }
-  
+
   CopyCntrClipboard() {
     let strcntr: string = "";
     this.records.forEach(Rec => {

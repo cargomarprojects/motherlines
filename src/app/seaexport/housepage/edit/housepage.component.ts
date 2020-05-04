@@ -253,7 +253,10 @@ export class HousePageComponent implements OnInit {
         this.record = <Tbl_cargo_exp_housem>response.record;
         this.cntrs = <Tbl_cargo_exp_container[]>response.cntrs;
         this.records = <Tbl_cargo_exp_desc[]>response.records;
-
+        if (this.cntrs == null)
+          this.cntrs = <Tbl_cargo_exp_container[]>[];
+        if (this.records == null)
+          this.records = <Tbl_cargo_exp_desc[]>[];
 
         this.ShipmentType = this.record.mbl_cntr_type;
 
@@ -594,7 +597,7 @@ export class HousePageComponent implements OnInit {
     saverec.mode = this.mode;
     saverec.pkid = this.pkid;
     saverec.HousePrefix = this.gs.SEA_EXPORT_HOUSE_PREFIX;
-    saverec.IsPol=this.gs.SEA_EXPORT_HOUSE_PREFIX_POL.toString();
+    saverec.IsPol = this.gs.SEA_EXPORT_HOUSE_PREFIX_POL.toString();
     saverec.IsPod = this.gs.SEA_EXPORT_HOUSE_PREFIX_POD.toString();
     saverec.iStartNo = this.iStartNo;
     saverec.iStep = this.iStep;
@@ -838,7 +841,7 @@ export class HousePageComponent implements OnInit {
         this.tab = 'report';
         break;
       }
-     
+
     }
   }
   callbackevent(event: any) {
