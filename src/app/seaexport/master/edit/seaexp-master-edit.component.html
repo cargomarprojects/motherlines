@@ -454,7 +454,7 @@
 
               <div class="form-group row">
                 <div class="col-12 pl-0 pb-1">
-                  <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked" (click)="AddHouse()">Add House</button>
+                  <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked && gs.screenExists(gs.MENU_SE_HOUSE)" (click)="AddHouse()">Add House</button>
                 </div>
               </div>
 
@@ -473,62 +473,62 @@
         <div *ngIf="mode=='EDIT'" class="col-md-12 p-2 border">
 
           <div class="form-group row">
-            <button class="col-12 btn btn-info btn-sm" (click)="BtnNavigation('BOOKING')">Booking</button>
+            <button class="col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_BOOKING)" (click)="BtnNavigation('BOOKING')">Booking</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MBLPAGE')">MBL Instruction</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_MBL_INSTRUCTION)" (click)="BtnNavigation('MBLPAGE')">MBL Instruction</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('DOCKPAGE')">Dock Receipt</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_DOCK_RECEIPT)" (click)="BtnNavigation('DOCKPAGE')">Dock Receipt</button>
           </div>
 
           <div class="form-group row">
 
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MANIFEST')">Manifest</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_MANIFEST)" (click)="BtnNavigation('MANIFEST')">Manifest</button>
 
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('ARAP')">AR & AP</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_ARAP)" (click)="BtnNavigation('ARAP')">AR & AP</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('PROFITREPORT')">Profit Report</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_PROFIT_REPORT)" (click)="BtnNavigation('PROFITREPORT')">Profit Report</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('SHIP-LABEL-PRINT')">Shipment Label</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SHIPMENT_LABEL)" (click)="BtnNavigation('SHIP-LABEL-PRINT')">Shipment Label</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('MESSENGER-SLIP')">Messenger
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MESSENGER_SLIP)" (click)="BtnNavigation('MESSENGER-SLIP')">Messenger
               Slip</button>
           </div>
 
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_PAYMENT_REQUEST)" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
               Request</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('ATTACHMENT')">Attachments</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_ATTACHMENTS)" (click)="BtnNavigation('ATTACHMENT')">Attachments</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER)" (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_INTERNAL_MEMO)" (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('REQUEST-APPROVAL')">Request For
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_REQUEST_APPROVAL)" (click)="BtnNavigation('REQUEST-APPROVAL')">Request For
               Approval</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CERTIFICATE-ORIGIN')">Certificate Of Origin</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_CERTIFICATE_ORIGIN)" (click)="BtnNavigation('CERTIFICATE-ORIGIN')">Certificate Of Origin</button>
           </div>
 
         </div>
