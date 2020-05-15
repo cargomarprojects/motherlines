@@ -123,24 +123,74 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   init() {
     this.record.mbl_pkid = this.pkid;
-    this.record.mbl_shipment_stage = 'NIL';
     this.record.mbl_cntr_type = 'FCL';
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
     this.record.mbl_ref_date = this.gs.defaultValues.today;
     this.record.mbl_direct = "N";
+    this.record.mbl_direct_bool = false;
     this.record.mbl_shipment_stage = "NIL";
     this.record.mbl_prefix = this.gs.SEA_EXPORT_REFNO_PREFIX;
     this.record.mbl_startingno = this.gs.SEA_EXPORT_REFNO_STARTING_NO;
-
     this.record.mbl_no = '';
     this.record.mbl_liner_bookingno = '';
     this.record.mbl_sub_houseno = '';
-
     this.record.mbl_por = '';
-
     this.record.mbl_vessel = '';
     this.record.mbl_voyage = '';
+
+
+    this.record.mbl_refno = '';
+    this.record.mbl_date = '';
+    this.record.mbl_frt_status = '';
+    this.record.mbl_ship_term = '';
+    this.record.mbl_ship_term_id = '';
+    this.record.mbl_liner_id = '';
+    this.record.mbl_liner_name = '';
+    this.record.mbl_liner_code = '';
+    this.record.mbl_agent_id = '';
+    this.record.mbl_agent_name = '';
+    this.record.mbl_agent_code = '';
+    this.record.mbl_pod_id = '';
+    this.record.mbl_pod_code = '';
+    this.record.mbl_pod_name = '';
+    this.record.mbl_pofd_id = '';
+    this.record.mbl_pofd_code = '';
+    this.record.mbl_pofd_name = '';
+    this.record.mbl_pol_id = '';
+    this.record.mbl_pol_code = '';
+    this.record.mbl_pol_name = '';
+    this.record.mbl_country_id = '';
+    this.record.mbl_country_name = '';
+    this.record.mbl_pol_etd = '';
+    this.record.mbl_pod_eta = '';
+    this.record.mbl_pofd_eta = '';
+    this.record.mbl_handled_id = '';
+    this.record.mbl_handled_name = '';
+    this.record.mbl_cargo_loc_id = '';
+    this.record.mbl_devan_loc_id = '';
+    this.record.mbl_cargo_loccode = '';
+    this.record.mbl_cargo_locname = '';
+    this.record.mbl_cargo_locaddr1 = '';
+    this.record.mbl_cargo_locaddr2 = '';
+    this.record.mbl_cargo_locaddr3 = '';
+    this.record.mbl_cargo_locaddr4 = '';
+    this.record.mbl_devan_loccode = '';
+    this.record.mbl_devan_locname = '';
+    this.record.mbl_devan_locaddr1 = '';
+    this.record.mbl_devan_locaddr2 = '';
+    this.record.mbl_devan_locaddr3 = '';
+    this.record.mbl_devan_locaddr4 = '';
+    //this.record.mbl_is_held 	='';
+    this.record.mbl_it_no = '';
+    this.record.mbl_it_port = '';
+    this.record.mbl_it_date = '';
+    this.record.mbl_jobtype_id = '';
+    this.record.mbl_jobtype_name = '';
+    this.record.mbl_salesman_id = '';
+    this.record.mbl_salesman_name = '';
+    this.record.mbl_rotation_no = '';
+    this.record.mbl_ismemo_attached = '';
 
     if (this.gs.PARAM_COO_FORMAT_BLANK.length > 0) {
       this.record.mbl_cooformat_id = this.gs.PARAM_COO_FORMAT_BLANK[0].code;
@@ -268,7 +318,7 @@ export class SeaexpMasterEditComponent implements OnInit {
 
     var bRet = true;
     this.errorMessage = [];
-    if (this.record.mbl_ref_date == "" || this.record.mbl_ref_date == undefined) {
+    if (this.record.mbl_ref_date == "") {
       bRet = false;
       this.errorMessage.push("Ref Date cannot be blank");
     }
@@ -284,69 +334,69 @@ export class SeaexpMasterEditComponent implements OnInit {
       this.errorMessage.push("Job Type cannot be blank");
     }
 
-    if (this.record.mbl_shipment_stage == "" || this.record.mbl_shipment_stage == undefined) {
+    if (this.record.mbl_shipment_stage == "") {
       bRet = false;
       this.errorMessage.push("Shipment Stage cannot be blank");
     }
-    if (this.record.mbl_agent_id == "" || this.record.mbl_agent_id == undefined) {
+    if (this.record.mbl_agent_id == "") {
       bRet = false;
       this.errorMessage.push("Master Agent cannot be blank");
     }
-    if (this.record.mbl_liner_id == "" || this.record.mbl_liner_id == undefined) {
+    if (this.record.mbl_liner_id == "" ) {
       bRet = false;
       this.errorMessage.push("Carrier cannot be blank");
     }
 
-    if (this.record.mbl_handled_id == ""|| this.record.mbl_handled_id == undefined) {
+    if (this.record.mbl_handled_id == "") {
       bRet = false;
       this.errorMessage.push("A/N Handled By cannot be blank");
     }
 
-    if (this.record.mbl_frt_status == ""||this.record.mbl_frt_status ==undefined) {
+    if (this.record.mbl_frt_status == "" ) {
       bRet = false;
       this.errorMessage.push("Freight status cannot be blank");
     }
 
-    if (this.record.mbl_ship_term_id == ""||this.record.mbl_ship_term_id == undefined) {
+    if (this.record.mbl_ship_term_id == "") {
       bRet = false;
       this.errorMessage.push("Shipping Term cannot be blank");
     }
-    if (this.record.mbl_cntr_type == ""||this.record.mbl_cntr_type ==undefined) {
+    if (this.record.mbl_cntr_type == "" ) {
       bRet = false;
       this.errorMessage.push("Container Type cannot be blank");
     }
-    if (this.record.mbl_pol_id == ""||this.record.mbl_pol_id ==undefined) {
+    if (this.record.mbl_pol_id == "" ) {
       bRet = false;
       this.errorMessage.push("Port of Loading cannot be blank");
     }
-    if (this.record.mbl_pol_etd == ""||this.record.mbl_pol_etd == undefined) {
+    if (this.record.mbl_pol_etd == "" ) {
       bRet = false;
       this.errorMessage.push("ETD cannot be blank");
     }
-    if (this.record.mbl_pod_id == ""||this.record.mbl_pod_id == undefined) {
+    if (this.record.mbl_pod_id == "" ) {
       bRet = false;
       this.errorMessage.push("Port of Discharge cannot be blank");
     }
-    if (this.record.mbl_pod_eta == ""||this.record.mbl_pod_eta ==undefined) {
+    if (this.record.mbl_pod_eta == "") {
       bRet = false;
       this.errorMessage.push("ETA cannot be blank");
     }
-    if (this.record.mbl_pofd_id == ""||this.record.mbl_pofd_id==undefined) {
+    if (this.record.mbl_pofd_id == "") {
       bRet = false;
       this.errorMessage.push("Final Destination cannot be blank");
     }
 
-    if (this.record.mbl_country_id == ""||this.record.mbl_country_id == undefined) {
+    if (this.record.mbl_country_id == "") {
       bRet = false;
       this.errorMessage.push("Country Cannot be blank");
     }
 
 
-    if (this.record.mbl_vessel == ""||this.record.mbl_vessel == undefined) {
+    if (this.record.mbl_vessel == "") {
       bRet = false;
       this.errorMessage.push("Vessel cannot be blank");
     }
-    if (this.record.mbl_voyage == ""||this.record.mbl_voyage == undefined) {
+    if (this.record.mbl_voyage == "" ) {
       bRet = false;
       this.errorMessage.push("Voyage cannot be blank");
     }
