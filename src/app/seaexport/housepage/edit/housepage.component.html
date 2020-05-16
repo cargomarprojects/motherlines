@@ -1008,7 +1008,8 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Actual Delivery Date</label>
           <div class="col-6">
-            <app-date [inputdate]="record.hbl_delivery_date" (ValueChanged)="record.hbl_delivery_date=$event"></app-date>
+            <app-date [inputdate]="record.hbl_delivery_date" (ValueChanged)="record.hbl_delivery_date=$event">
+            </app-date>
           </div>
         </div>
 
@@ -1017,15 +1018,28 @@
     </div>
   </div>
 
-
+  <!-- <div class="col-8 ">
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="record._hbl_is_cntrized" />
+      <span>Is Containerized</span>
+    </div>
+  </div> -->
 
 
   <div class="page-footer">
     <div class="row align-items-center justify-content-center p-1">
       <button class="btn btn-primary btn-md mr-1" *ngIf="canSave && !is_locked" (click)="Save()">Save</button>
-      <button *ngIf="canPrintBlank && mode =='EDIT'" class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('BLANK')">HBL(LASER)</button>
-      <button *ngIf="canPrintDraft && mode =='EDIT'" class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('DRAFT')">HBL(DRAFT)</button>
-      <button *ngIf="canPrintBL && mode =='EDIT'" class="btn btn-primary btn-md mr-1" (click)="BtnNavigation('HBLREPORT')">PRINT HBL</button>
+      <div class="form-check mr-1">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="cntr_seal_hrzprint" /><span>Cntr#/ Seal#</span>
+      </div>
+      <button *ngIf="canPrintBlank && mode =='EDIT'" class="btn btn-primary btn-md mr-1"
+        (click)="BtnNavigation('BLANK')">{{gs.company_code=='MNYC'?'HBL (ORIGINAL)':'HBL(LASER)'}}</button>
+      <button *ngIf="canPrintDraft && gs.company_code=='MNYC' && mode =='EDIT'" class="btn btn-primary btn-md mr-1"
+        (click)="BtnNavigation('TELEX')">HBL(TELEX)</button>
+      <button *ngIf="canPrintDraft && mode =='EDIT'" class="btn btn-primary btn-md mr-1"
+        (click)="BtnNavigation('DRAFT')">HBL(DRAFT)</button>
+      <button *ngIf="canPrintBL && mode =='EDIT'" class="btn btn-primary btn-md mr-1"
+        (click)="BtnNavigation('HBLREPORT')">PRINT HBL</button>
       <!-- <button class="btn btn-primary btn-md mr-1" (click)="Save()">RIDER</button> -->
     </div>
   </div>

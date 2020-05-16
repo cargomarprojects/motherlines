@@ -39,7 +39,7 @@ export class HousePageComponent implements OnInit {
   report_url: string = '';
   report_searchdata: any = {};
   report_menuid: string = '';
-
+  cntr_seal_hrzprint: boolean = true;
   record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
   records: Tbl_cargo_exp_desc[] = [];
 
@@ -827,6 +827,7 @@ export class HousePageComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.format_type = 'BLANK';
+        this.report_searchdata.cntr_seal_hrzprint = this.cntr_seal_hrzprint == true ? 'Y' : 'N';
         this.report_menuid = this.gs.MENU_SE_HOUSE_HBL_LASER;
         this.tab = 'report';
         break;
@@ -837,7 +838,19 @@ export class HousePageComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.format_type = 'DRAFT';
-        this.report_menuid = this.gs.MENU_SE_HOUSE;
+        this.report_searchdata.cntr_seal_hrzprint = this.cntr_seal_hrzprint == true ? 'Y' : 'N';
+        this.report_menuid = this.gs.MENU_SE_HOUSE_HBL_LASER;
+        this.tab = 'report';
+        break;
+      }
+      case 'TELEX': {
+        this.report_title = 'HBL TELEX';
+        this.report_url = '/api/SeaExport/HousePage/GetHBLBlankReport';
+        this.report_searchdata = this.gs.UserInfo;
+        this.report_searchdata.pkid = this.pkid;
+        this.report_searchdata.format_type = 'TELEX';
+        this.report_searchdata.cntr_seal_hrzprint = this.cntr_seal_hrzprint == true ? 'Y' : 'N';
+        this.report_menuid = this.gs.MENU_SE_HOUSE_HBL_LASER;
         this.tab = 'report';
         break;
       }
