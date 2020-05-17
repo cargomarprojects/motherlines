@@ -373,6 +373,8 @@ export class AirImpMasterEditComponent implements OnInit {
       this.errorMessage.push( "Invalid Master BL#");
        
     }
+    if (!bRet)
+    alert('Error While Saving');
 
     return bRet;
 

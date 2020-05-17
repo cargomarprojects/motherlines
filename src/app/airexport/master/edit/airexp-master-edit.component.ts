@@ -631,7 +631,8 @@ export class AirExpMasterEditComponent implements OnInit {
           oprgrp: 'AIR EXPORT',
           parentType: 'AIREXP-CNTR',
           paramType: 'AIREXP-CNTR-MOVE-STATUS',
-          hideTracking: 'Y'
+          hideTracking: 'Y',
+          is_locked:this.is_locked
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;

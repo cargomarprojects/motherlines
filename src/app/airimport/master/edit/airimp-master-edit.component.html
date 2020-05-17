@@ -341,7 +341,7 @@
                             </table>
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked"
+                                    <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked && gs.screenExists(gs.MENU_AI_HOUSE)"
                                         (click)="AddHouse()">Add House</button>
                                 </div>
                             </div>

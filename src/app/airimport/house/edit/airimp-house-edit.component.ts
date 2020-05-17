@@ -60,8 +60,8 @@ export class AirImpHouseEditComponent implements OnInit {
   private mode: string;
 
   private ShipmentType: string;
-  private errorMessage: string;
-
+  //private errorMessage: string;
+  private errorMessage: string[] = [];
   private closeCaption: string = 'Return';
 
   private title: string;
@@ -98,7 +98,7 @@ export class AirImpHouseEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage = '';
+    this.errorMessage = [];
     this.LoadCombo();
   }
 
@@ -139,7 +139,7 @@ export class AirImpHouseEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_imp_housem>{};
@@ -305,7 +305,7 @@ export class AirImpHouseEditComponent implements OnInit {
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
@@ -328,7 +328,7 @@ export class AirImpHouseEditComponent implements OnInit {
 
         // this.hbl_houseno_field.nativeElement.focus();
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
   private initDesc() {
@@ -440,7 +440,7 @@ export class AirImpHouseEditComponent implements OnInit {
   }
 
   LoadMasterData() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.parentid;
     this.mainService.LoadMasterData(SearchData)
@@ -450,7 +450,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.init();
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
@@ -461,7 +461,7 @@ export class AirImpHouseEditComponent implements OnInit {
     if (no == '')
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.blno = no;
@@ -473,12 +473,12 @@ export class AirImpHouseEditComponent implements OnInit {
     this.mainService.Isblnoduplication(SearchData)
       .subscribe(response => {
         if (response.retvalue) {
-          this.errorMessage = response.retstring;
+          this.errorMessage.push(response.retstring);
           // if (stype == 'HBL')
           //   this.hbl_houseno_field.nativeElement.focus();
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
@@ -499,8 +499,8 @@ export class AirImpHouseEditComponent implements OnInit {
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
-          alert(this.errorMessage);
+          this.errorMessage.push(response.error);
+          alert(this.errorMessage[0]);
         }
         else {
           if (this.mode == "ADD" && response.code != '')
@@ -508,12 +508,12 @@ export class AirImpHouseEditComponent implements OnInit {
           this.mode = 'EDIT';
           if (this.origin === "airimp-house-page")
             this.mainService.RefreshList(this.record);
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          this.errorMessage.push('Save Complete');
+          alert(this.errorMessage[0]);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
-        alert(this.errorMessage);
+        this.errorMessage.push(this.gs.getError(error));
+        alert(this.errorMessage[0]);
       });
   }
 
@@ -574,76 +574,51 @@ export class AirImpHouseEditComponent implements OnInit {
   private Allvalid(): boolean {
 
     var bRet = true;
-    this.errorMessage = "";
+    this.errorMessage = [];
 
     if (this.gs.isBlank(this.parentid)) {
       bRet = false;
-      this.errorMessage = "Invalid MBL ID";
-      alert(this.errorMessage);
-      return bRet;
+      this.errorMessage.push("Invalid MBL ID");
     }
 
     if (this.gs.isBlank(this.record.hbl_houseno)) {
       bRet = false;
-      this.errorMessage = "House BL# cannot be blank";
-      alert(this.errorMessage);
-      // this.hbl_houseno_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("House BL# cannot be blank");
     }
 
     if (!this.shipment_stage_field.nativeElement.disabled) {
       if (this.gs.isBlank(this.record.hbl_shipment_stage)) {
         bRet = false;
-        this.errorMessage = "Shipment Stage cannot be blank";
-        alert(this.errorMessage);
-        this.shipment_stage_field.nativeElement.focus();
-        return bRet;
+        this.errorMessage.push("Shipment Stage cannot be blank");
       }
     }
 
     if (this.gs.isBlank(this.record.hbl_shipper_id)) {
       bRet = false;
-      this.errorMessage = "Shipper Code can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_shipper_code_field.Focus();
-      return bRet;
+      this.errorMessage.push("Shipper Code can't be blank");
     }
     if (this.gs.isBlank(this.record.hbl_shipper_add1)) {
       bRet = false;
-      this.errorMessage = "Shipper Address can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_shipper_add1_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("Shipper Address can't be blank");
     }
     if (this.gs.isBlank(this.record.hbl_consignee_code)) {
       bRet = false;
-      this.errorMessage = "Consignee Code can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_consignee_code_field.Focus();
-      return bRet;
+      this.errorMessage.push("Consignee Code can't be blank");
+
     }
     if (this.gs.isBlank(this.record.hbl_consignee_add1)) {
       bRet = false;
-      this.errorMessage = "Consignee Address can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_consignee_add1_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("Consignee Address can't be blank");
     }
 
     if (this.gs.BRANCH_REGION == "USA")
       if (this.gs.isBlank(this.record.hbl_location_id)) {
         bRet = false;
-        this.errorMessage = "Location Details cannot be blank";
-        alert(this.errorMessage);
-        //  this.hbl_agent_name_field.Focus();
-        return bRet;
+        this.errorMessage.push("Location Details cannot be blank");
       }
     if (this.gs.isBlank(this.record.hbl_agent_id)) {
       bRet = false;
-      this.errorMessage = "Agent can't be blank";
-      alert(this.errorMessage);
-      //  this.hbl_agent_name_field.Focus();
-      return bRet;
+      this.errorMessage.push("Agent can't be blank");
     }
 
     // if (!this.gs.isBlank(this.record.hbl_cha_code)) {
@@ -659,92 +634,59 @@ export class AirImpHouseEditComponent implements OnInit {
 
     if (this.gs.isBlank(this.record.hbl_place_final)) {
       bRet = false;
-      this.errorMessage = "Final Destination can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_uom_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("Final Destination can't be blank");
     }
     if (this.gs.isBlank(this.record.hbl_plf_eta)) {
       bRet = false;
-      this.errorMessage = "Final date can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_uom_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("Final date can't be blank");
     }
 
 
 
     if (this.gs.isZero(this.record.hbl_packages)) {
       bRet = false;
-      this.errorMessage = "No. of packages can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_packages_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("No. of packages can't be blank");
     }
     if (this.gs.isBlank(this.record.hbl_uom)) {
       bRet = false;
-      this.errorMessage = "Unit of packages can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_uom_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("Unit of packages can't be blank");
     }
     if (this.gs.isZero(this.record.hbl_weight)) {
       bRet = false;
-      this.errorMessage = "Weight can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_weight_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("Weight can't be blank");
     }
     if (this.gs.isZero(this.record.hbl_chwt)) {
       bRet = false;
-      this.errorMessage = "CH. Weight can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_weight_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("CH. Weight can't be blank");
     }
 
 
     if (this.gs.BRANCH_REGION == "USA") {
       if (this.gs.isZero(this.record.hbl_lbs)) {
         bRet = false;
-        this.errorMessage = "LBS can't be blank";
-        alert(this.errorMessage);
-        //  this.hbl_lbs_field.nativeElement.focus();
-        return bRet;
+        this.errorMessage.push("LBS can't be blank");
       }
       if (this.gs.isZero(this.record.hbl_chwt_lbs)) {
         bRet = false;
-        this.errorMessage = "CH.WT / LBS can't be blank";
-        alert(this.errorMessage);
-        //  this.hbl_cft_field.nativeElement.focus();
-        return bRet;
+        this.errorMessage.push("CH.WT / LBS can't be blank");
       }
     }
 
     if (this.gs.OPTIONAL_DESCRIPTION == "N") {
       if (this.gs.isBlank(this.record.hbl_commodity)) {
         bRet = false;
-        this.errorMessage = "Goods description can't be blank";
-        alert(this.errorMessage);
-        // this.hbl_commodity_field.nativeElement.focus();
-        return bRet;
+        this.errorMessage.push("Goods description can't be blank");
       }
     }
 
     if (this.gs.isBlank(this.record.hbl_frt_status)) {
       bRet = false;
-      this.errorMessage = "Freight Status can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_frt_status_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("Freight Status can't be blank");
     }
 
     if (this.gs.isBlank(this.record.hbl_bltype)) {
       bRet = false;
-      this.errorMessage = "Nomination Type can't be blank";
-      alert(this.errorMessage);
-      // this.hbl_bltype_field.nativeElement.focus();
-      return bRet;
+      this.errorMessage.push("Nomination Type can't be blank");
     }
 
 
@@ -752,10 +694,7 @@ export class AirImpHouseEditComponent implements OnInit {
 
     if (this.gs.isBlank(this.record.hbl_handled_id)) {
       bRet = false;
-      this.errorMessage = "Handled By cannot be blank";
-      alert(this.errorMessage);
-      //  this.hbl_handled_name_field.Focus();
-      return bRet;
+      this.errorMessage.push("Handled By cannot be blank");
     }
     /*
     if (Txt_Salesman.TxtLovBox.Text.Trim().Length <= 0)
@@ -766,6 +705,8 @@ export class AirImpHouseEditComponent implements OnInit {
         return bRet;
     }
     */
+    if (!bRet)
+      alert('Error While Saving');
 
     return bRet;
   }
@@ -1268,7 +1209,8 @@ export class AirImpHouseEditComponent implements OnInit {
           oprgrp: 'AIR IMPORT',
           parentType: 'AIRIMP-SHIP',
           paramType: 'SHIP-MOVE-STATUS',
-          hideTracking: 'Y'
+          hideTracking: 'Y',
+          is_locked:this.is_locked
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
@@ -1403,7 +1345,7 @@ export class AirImpHouseEditComponent implements OnInit {
     if (this.gs.isBlank(this.record.hbl_consignee_id))
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.record.hbl_consignee_id;
     this.mainService.LoadCha(SearchData)
@@ -1425,7 +1367,7 @@ export class AirImpHouseEditComponent implements OnInit {
         }
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
