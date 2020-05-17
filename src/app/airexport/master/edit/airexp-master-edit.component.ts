@@ -182,6 +182,8 @@ export class AirExpMasterEditComponent implements OnInit {
       .subscribe(response => {
         this.record = <Tbl_cargo_exp_masterm>response.record;
         this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;
+        this.record.mbl_direct_bool = this.record.mbl_direct === "Y" ? true : false;
+        this.record.mbl_3rdparty_bool = this.record.mbl_3rdparty === "Y" ? true : false;
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed("AIR EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
         // this.CheckData();
