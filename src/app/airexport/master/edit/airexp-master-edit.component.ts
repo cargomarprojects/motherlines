@@ -52,8 +52,8 @@ export class AirExpMasterEditComponent implements OnInit {
 
   private mode: string;
 
-  private errorMessage: string;
-
+  //private errorMessage: string;
+  private errorMessage: string[] = [];
   private closeCaption: string = 'Return';
 
   private title: string;
@@ -85,7 +85,7 @@ export class AirExpMasterEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage = '';
+    this.errorMessage = [];
   }
 
 
@@ -95,7 +95,7 @@ export class AirExpMasterEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_exp_masterm>{};
@@ -164,7 +164,7 @@ export class AirExpMasterEditComponent implements OnInit {
     this.record.mbl_salesman_name = '';
     this.record.mbl_3rdparty = 'N';
     this.record.mbl_3rdparty_bool = false;
-    this.record.mbl_ismemo_attached='N';
+    this.record.mbl_ismemo_attached = 'N';
     this.record.rec_files_attached = 'N';
     if (this.gs.JOB_TYPE_AE.length > 0) {
       // if (JobList.Count > 0)
@@ -174,7 +174,7 @@ export class AirExpMasterEditComponent implements OnInit {
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
@@ -184,9 +184,9 @@ export class AirExpMasterEditComponent implements OnInit {
         this.hrecords = <Tbl_cargo_exp_housem[]>response.hrecords;
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed("AIR EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
-       // this.CheckData();
+        // this.CheckData();
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
@@ -213,7 +213,7 @@ export class AirExpMasterEditComponent implements OnInit {
     if (no == '')
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.blno = no;
@@ -230,7 +230,7 @@ export class AirExpMasterEditComponent implements OnInit {
             this.mbl_no_field.nativeElement.focus();
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
@@ -258,13 +258,13 @@ export class AirExpMasterEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          this.errorMessage = 'Save Complete';
+          this.errorMessage.push('Save Complete');
           alert(this.errorMessage);
           this.mainService.RefreshList(this.record);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
-        alert(this.errorMessage);
+        this.errorMessage.push(this.gs.getError(error));
+        alert(this.errorMessage[0]);
       });
   }
 
@@ -273,71 +273,61 @@ export class AirExpMasterEditComponent implements OnInit {
 
     var bRet = true;
 
-    this.errorMessage = "";
-    if (this.record.mbl_ref_date == "") {
+    this.errorMessage = [];
+    if (this.gs.isBlank(this.record.mbl_ref_date)) {
       bRet = false;
-      this.errorMessage = "Ref Date cannot be blank";
-      return bRet;
+      this.errorMessage.push("Ref Date cannot be blank");
     }
 
-    if (this.gs.JOB_TYPE_AE.length > 0 && this.record.mbl_jobtype_id == "") {
+    if (this.gs.JOB_TYPE_AE.length > 0 && this.gs.isBlank(this.record.mbl_jobtype_id)) {
       bRet = false;
-      this.errorMessage = "Job Type cannot be blank";
-      return bRet;
+      this.errorMessage.push("Job Type cannot be blank");
     }
 
-    if (this.record.mbl_shipment_stage == "") {
+    if (this.gs.isBlank(this.record.mbl_shipment_stage)) {
       bRet = false;
-      this.errorMessage = "Shipment Stage cannot be blank";
-      return bRet;
+      this.errorMessage.push("Shipment Stage cannot be blank");
     }
-    if (this.record.mbl_no == "") {
+    if (this.gs.isBlank(this.record.mbl_no)) {
       bRet = false;
-      this.errorMessage = "Master BL# can't be blank"
-      return bRet;
+      this.errorMessage.push("Master BL# can't be blank");
     }
 
-    if (this.record.mbl_agent_id == "") {
+    if (this.gs.isBlank(this.record.mbl_agent_id)) {
       bRet = false;
-      this.errorMessage = "Master Agent cannot be blank"
-      return bRet;
+      this.errorMessage.push("Master Agent cannot be blank");
     }
-    if (this.record.mbl_liner_id == "") {
+    if (this.gs.isBlank(this.record.mbl_liner_id)) {
       bRet = false;
-      this.errorMessage = "Carrier cannot be blank"
-      return bRet;
+      this.errorMessage.push("Carrier cannot be blank");
+
     }
-    if (this.record.mbl_handled_id == "") {
+    if (this.gs.isBlank(this.record.mbl_handled_id)) {
       bRet = false;
-      this.errorMessage = "A/N Handled By cannot be blank"
-      return bRet;
+      this.errorMessage.push("A/N Handled By cannot be blank");
     }
 
-    if (this.record.mbl_frt_status == "") {
+    if (this.gs.isBlank(this.record.mbl_frt_status)) {
       bRet = false;
-      this.errorMessage = "Freight status cannot be blank"
-      return bRet;
+      this.errorMessage.push("Freight status cannot be blank");
     }
 
-    if (this.record.mbl_pol_id == "") {
+    if (this.gs.isBlank(this.record.mbl_pol_id)) {
       bRet = false;
-      this.errorMessage = "Port of Loading cannot be blank"
-      return bRet;
+      this.errorMessage.push("Port of Loading cannot be blank");
     }
-    if (this.record.mbl_pol_etd == "") {
+    if (this.gs.isBlank(this.record.mbl_pol_etd)) {
       bRet = false;
-      this.errorMessage = "ETD cannot be blank"
-      return bRet;
+      this.errorMessage.push("ETD cannot be blank");
     }
-    if (this.record.mbl_pod_id == "") {
+    if (this.gs.isBlank(this.record.mbl_pod_id)) {
       bRet = false;
-      this.errorMessage = "Port of Discharge cannot be blank"
-      return bRet;
+      this.errorMessage.push("Port of Discharge cannot be blank");
     }
-    if (this.record.mbl_pod_eta == "") {
+    if (this.gs.isBlank(this.record.mbl_pod_eta)) {
       bRet = false;
-      this.errorMessage = "ETA cannot be blank"
-      return bRet;
+      this.errorMessage.push("ETA cannot be blank");
+
     }
     // if (this.record.mbl_pofd_id == "") {
     //   bRet = false;
@@ -345,37 +335,33 @@ export class AirExpMasterEditComponent implements OnInit {
     //   return bRet;
     // }
 
-    if (this.record.mbl_country_id == "") {
+    if (this.gs.isBlank(this.record.mbl_country_id)) {
       bRet = false;
-      this.errorMessage = "Country Cannot be blank"
-      return bRet;
+      this.errorMessage.push("Country Cannot be blank");
     }
-    if (this.record.mbl_currency == "") {
+    if (this.gs.isBlank(this.record.mbl_currency)) {
       bRet = false;
-      this.errorMessage = "Currency cannot be blank"
-      return bRet;
+      this.errorMessage.push("Currency cannot be blank");
     }
 
-    if (this.record.mbl_mawb_weight <= 0) {
+    if (this.gs.isZero(this.record.mbl_mawb_weight)) {
       bRet = false;
-      this.errorMessage = "Invalid Weight"
-      return bRet;
+      this.errorMessage.push("Invalid Weight");
     }
 
-    if (this.record.mbl_mawb_chwt <= 0) {
+    if (this.gs.isZero(this.record.mbl_mawb_chwt)) {
       bRet = false;
-      this.errorMessage = "Invalid Ch.Weight"
-      return bRet;
+      this.errorMessage.push("Invalid Ch.Weight");
     }
 
     if (!this.IsValidAWB(this.record.mbl_no)) {
       bRet = false;
-      this.errorMessage = "Invalid Master BL#"
-      return bRet;
+      this.errorMessage.push("Invalid Master BL#");
     }
 
+    if (!bRet)
+      alert('Error While Saving');
     return bRet;
-
   }
 
   IsValidAWB(Awb: string) {
@@ -542,14 +528,14 @@ export class AirExpMasterEditComponent implements OnInit {
       case 'PROFITREPORT': {
         let prm = {
           menuid: this.gs.MENU_AE_MASTER_PROFIT_REPORT,
-          mbl_pkid:  this.pkid, 
-          mbl_refno : this.record.mbl_refno,
+          mbl_pkid: this.pkid,
+          mbl_refno: this.record.mbl_refno,
           mbl_type: 'AE',
           origin: 'airexp-master-page',
         };
-        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));        
+        this.gs.Naviagete('Silver.USAccounts.Trans/ProfitReportPage', JSON.stringify(prm));
         break;
-      }      
+      }
       case 'HOUSE': {
         let prm = {
           menuid: this.gs.MENU_AE_HOUSE,

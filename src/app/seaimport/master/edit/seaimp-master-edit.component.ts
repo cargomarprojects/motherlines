@@ -333,82 +333,82 @@ export class SeaImpMasterEditComponent implements OnInit {
     var bRet = true;
     this.errorMessage = [];
 
-    if (this.record.mbl_no == "") {
+    if (this.gs.isBlank(this.record.mbl_no)) {
       bRet = false;
       this.errorMessage.push("Master BL# cannot be blank");;
     }
-    if (this.record.mbl_ref_date == "") {
+    if (this.gs.isBlank(this.record.mbl_ref_date)) {
       bRet = false;
       this.errorMessage.push("Ref Date cannot be blank");;
     }
-    if (this.gs.JOB_TYPE_OI.length > 0 && this.record.mbl_jobtype_id == "") {
+    if (this.gs.JOB_TYPE_OI.length > 0 && this.gs.isBlank(this.record.mbl_jobtype_id)) {
       bRet = false;
       this.errorMessage.push("Job Type cannot be blank");;
     }
-    if (this.record.mbl_shipment_stage == "") {
+    if (this.gs.isBlank(this.record.mbl_shipment_stage)) {
       bRet = false;
       this.errorMessage.push("Shipment Stage cannot be blank");;
     }
-    if (this.record.mbl_agent_id == "") {
+    if (this.gs.isBlank(this.record.mbl_agent_id)) {
       bRet = false;
       this.errorMessage.push("Master Agent cannot be blank");
     }
-    if (this.record.mbl_liner_id == "") {
+    if (this.gs.isBlank(this.record.mbl_liner_id)) {
       bRet = false;
       this.errorMessage.push("Carrier cannot be blank");
     }
 
-    if (this.record.mbl_handled_id == "") {
+    if (this.gs.isBlank(this.record.mbl_handled_id)) {
       bRet = false;
       this.errorMessage.push("A/N Handled By cannot be blank");
     }
 
-    if (this.record.mbl_frt_status == "") {
+    if (this.gs.isBlank(this.record.mbl_frt_status)) {
       bRet = false;
       this.errorMessage.push("Freight status cannot be blank");
     }
 
-    if (this.record.mbl_ship_term_id == "") {
+    if (this.gs.isBlank(this.record.mbl_ship_term_id)) {
       bRet = false;
       this.errorMessage.push("Shipping Term cannot be blank");
     }
-    if (this.record.mbl_cntr_type == "") {
+    if (this.gs.isBlank(this.record.mbl_cntr_type)) {
       bRet = false;
       this.errorMessage.push("Container Type cannot be blank");
     }
-    if (this.record.mbl_pol_id == "") {
+    if (this.gs.isBlank(this.record.mbl_pol_id)) {
       bRet = false;
       this.errorMessage.push("Port of Loading cannot be blank");
     }
-    if (this.record.mbl_pol_etd == "") {
+    if (this.gs.isBlank(this.record.mbl_pol_etd)) {
       bRet = false;
       this.errorMessage.push("ETD cannot be blank");
     }
-    if (this.record.mbl_pod_id == "") {
+    if (this.gs.isBlank(this.record.mbl_pod_id)) {
       bRet = false;
       this.errorMessage.push("Port of Discharge cannot be blank");
     }
-    if (this.record.mbl_pod_eta == "") {
+    if (this.gs.isBlank(this.record.mbl_pod_eta)) {
       bRet = false;
       this.errorMessage.push("ETA cannot be blank");
     }
 
-    if (this.record.mbl_country_id == "") {
+    if (this.gs.isBlank(this.record.mbl_country_id)) {
       bRet = false;
       this.errorMessage.push("Country Cannot be blank");
     }
 
-    if (this.record.mbl_vessel == "") {
+    if (this.gs.isBlank(this.record.mbl_vessel)) {
       bRet = false;
       this.errorMessage.push("Vessel cannot be blank");
     }
-    if (this.record.mbl_voyage == "") {
+    if (this.gs.isBlank(this.record.mbl_voyage)) {
       bRet = false;
       this.errorMessage.push("Voyage cannot be blank");
     }
 
     if (this.record.mbl_status.toString().trim() == "OMBL SENT TO CARRIER") {
-      if (this.record.mbl_ombl_sent_on.toString().trim() == "") {
+      if (this.gs.isBlank(this.record.mbl_ombl_sent_on.toString().trim())) {
         bRet = false;
         this.errorMessage.push("OMBL Sent Date cannot be blank");
       }

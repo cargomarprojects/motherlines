@@ -1077,50 +1077,50 @@
       </div>
       <div class="col-md-2 p-1 testbox">
 
-        <div class="col-md-12 p-2 border">
+        <div *ngIf="mode=='EDIT'" class="col-md-12 p-2 border">
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
+          <div  class="form-group row">
             <button class=" col-12 btn btn-info btn-sm">Invoice</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('ARRIVAL-NOTICE')">Arrival
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_HOUSE_ARRIVAL_NOTICE)"  (click)="BtnNavigation('ARRIVAL-NOTICE')">Arrival
               Notice</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('FREIGHT-INVOICE')">Arrival Notice(Frt
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_HOUSE_ARRIVAL_NOTICE)"  (click)="BtnNavigation('FREIGHT-INVOICE')">Arrival Notice(Frt
               Invoice)</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('PRE-ADVISE')">Pre-Advice</button>
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_HOUSE_PRE_ADVISE)"  (click)="BtnNavigation('PRE-ADVISE')">Pre-Advice</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('TURNOVER-LETTER')">Turnover
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_HOUSE_TURNOVER_LETTER)"  (click)="BtnNavigation('TURNOVER-LETTER')">Turnover
               Letter</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CARGOPICKUP')">Delivery Order</button>
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_HOUSE_DELIVERY_ORDER)"  (click)="BtnNavigation('CARGOPICKUP')">Delivery Order</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('CUSTOMSHOLD')">US Custom Hold</button>
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_HOUSE_US_CUSTOM_HOLD)"  (click)="BtnNavigation('CUSTOMSHOLD')">US Custom Hold</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('HOUSE-DEVAN')">Devan/Instructions</button>
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_HOUSE_DEVAN_INSTRUCTION)"  (click)="BtnNavigation('HOUSE-DEVAN')">Devan/Instructions</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('SHIPMOVEMENT')">House Internal
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_SHIPMENT_MOVEMENT)"  (click)="BtnNavigation('SHIPMOVEMENT')">House Internal
               Memo</button>
           </div>
 
-          <div *ngIf="mode=='EDIT'" class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" (click)="BtnNavigation('RIDERPAGE')">Rider Page</button>
+          <div class="form-group row">
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_HOUSE)"  (click)="BtnNavigation('RIDERPAGE')">Rider Page</button>
           </div>
 
         </div>
