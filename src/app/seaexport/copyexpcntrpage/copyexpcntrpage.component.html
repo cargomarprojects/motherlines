@@ -2,6 +2,7 @@
     <div class="col">
         <label class="mr-3">Copy Container</label>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+        <label class="text-danger" *ngIf="is_locked">LOCKED</label>
     </div>
 </div>
 
@@ -133,7 +134,7 @@
 
 <div class="page-footer">
     <div class="row row justify-content-center p-1">
-       <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,'ADD')" (click)="Save()">Save</button>
+       <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,'ADD') && !is_locked" (click)="Save()">Save</button>
     </div>
 </div>
 

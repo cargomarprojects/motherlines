@@ -213,6 +213,7 @@ export class SeaexpMasterEditComponent implements OnInit {
         if (this.hrecords == null)
           this.hrecords = <Tbl_cargo_exp_housem[]>[];
         this.mode = 'EDIT';
+        this.record.mbl_direct_bool = this.record.mbl_direct==='Y' ? true : false;
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -293,8 +294,8 @@ export class SeaexpMasterEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          this.errorMessage.push('Save Complete');
-          alert(this.errorMessage[0]);
+          // this.errorMessage.push('Save Complete');
+          // alert(this.errorMessage[0]);
         }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));

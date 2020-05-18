@@ -25,7 +25,8 @@ export class BookingComponent implements OnInit {
   private pkid: string;
   private menuid: string;
   private mode: string;
-  private errorMessage: string;
+  //private errorMessage: string;
+  private errorMessage: string[] = [];
 
   private title: string;
   private isAdmin: boolean;
@@ -34,7 +35,7 @@ export class BookingComponent implements OnInit {
   report_searchdata: any = {};
   report_menuid: string;
   tab: string = 'main';
-
+  is_locked: boolean = false;
 
   record: Tbl_cargo_exp_bookingm = <Tbl_cargo_exp_bookingm>{};
 
@@ -55,6 +56,7 @@ export class BookingComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.is_locked = options.is_locked;
     this.initPage();
     this.actionHandler();
   }
@@ -64,14 +66,13 @@ export class BookingComponent implements OnInit {
 
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage = '';
+    this.errorMessage = [];
 
   }
 
   actionHandler() {
 
-    this.errorMessage = '';
-
+    this.errorMessage = [];
     this.record = <Tbl_cargo_exp_bookingm>{};
     this.GetRecord();
 
@@ -79,7 +80,7 @@ export class BookingComponent implements OnInit {
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage  = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     this.mainService.GetRecord(SearchData)
@@ -93,46 +94,50 @@ export class BookingComponent implements OnInit {
           this.mode = "EDIT";
 
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 
 
   Allvalid() {
     let bRet = true;
+    this.errorMessage  = [];
     if (this.gs.isBlank(this.record.book_date)) {
-      this.errorMessage = "Date cannot be empty";
-      return false;
+      bRet=false;
+      this.errorMessage.push("Date cannot be Empty");   
     }
 
     if (this.gs.isBlank(this.record.book_refno)) {
-      this.errorMessage = "Ref# cannot be empty";
-      return false;
+      bRet=false;
+      this.errorMessage.push("Ref# cannot be Empty");
     }
 
     if (this.gs.isBlank(this.record.book_shipper_id)) {
-      this.errorMessage = "Shipper Code Cannot Be Emppy";
-      return false;
+      bRet=false;
+      this.errorMessage.push("Shipper Code Cannot Be Empty");
     }
 
 
     if (this.gs.isBlank(this.record.book_shipper_name)) {
-      this.errorMessage = "Shipper Name Cannot Be Emppy";
-      return false;
+      bRet=false;
+      this.errorMessage.push("Shipper Name Cannot Be Empty");
     }
 
 
     if (this.gs.isBlank(this.record.book_shipper_add1)) {
-      this.errorMessage = "Shipper Address1 Cannot Be Emppy";
-      return false;
+      bRet=false;
+      this.errorMessage.push("Shipper Address1 Cannot Be Empty");
     }
 
     if (this.gs.isBlank(this.record.book_handled_id)) {
-      this.errorMessage = "Handled By Cannot Be Emppy";
-      return false;
+      bRet=false;
+      this.errorMessage.push("Handled By Cannot Be Empty");
     }
 
-    return bRet;
+    if (!bRet)
+    alert('Error While Saving');
+
+  return bRet;
   }
 
   onBlur(field: string) {
@@ -157,7 +162,7 @@ export class BookingComponent implements OnInit {
         this.mode = 'EDIT';
 
     }, error => {
-      this.errorMessage = this.gs.getError(error);
+      this.errorMessage.push(this.gs.getError(error));
     }
     );
 

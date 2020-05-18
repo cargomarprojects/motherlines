@@ -32,7 +32,7 @@ export class CopyExpCntrPageComponent implements OnInit {
   errorMessage: string;
   mbl_cntr_type: string;
 
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
 
   constructor(
     private router: Router,
@@ -47,6 +47,7 @@ export class CopyExpCntrPageComponent implements OnInit {
     this.pkid = options.pkid;
     this.menuid = options.menuid;
     this.mbl_cntr_type = options.mbl_cntr_type;
+    this.is_locked=options.is_locked;
     this.initPage();
     this.actionHandler();
   }
