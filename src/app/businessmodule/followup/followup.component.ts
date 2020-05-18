@@ -30,7 +30,7 @@ export class FollowupComponent implements OnInit {
   isAdmin: boolean;
   errorMessage: string;
   selectedRowIndex: number = -1;
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
   lblSave: string = "Save";
   cmbNotes: string = "";
   FollowupList: any[] = [];
@@ -50,7 +50,7 @@ export class FollowupComponent implements OnInit {
     this.cf_masterid = options.master_id;
     this.cf_refno = options.master_refno;
     this.cf_refdate = options.master_refdate;
-    this.IsLocked = options.is_locked;
+    this.is_locked = options.is_locked;
     this.initPage();
     this.actionHandler();
   }

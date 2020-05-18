@@ -24,7 +24,7 @@ export class LogBookComponent implements OnInit {
     title: string = '';
     isAdmin: boolean;
     errorMessage: string;
-    IsLocked: boolean = false;
+    is_locked: boolean = false;
     report_format: string = 'LOGBOOK';
 
     constructor(

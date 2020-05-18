@@ -45,7 +45,7 @@ export class MessengerSlipEditComponent implements OnInit {
   oprgrp: string = "GENERAL";
   refno: string = "";
 
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
 
   constructor(
     private router: Router,
@@ -64,7 +64,7 @@ export class MessengerSlipEditComponent implements OnInit {
     this.oprgrp = options.mbl_mode;
     this.refno = options.mbl_refno;
     this.mode = options.mode;
-    this.IsLocked = options.is_locked;
+    this.is_locked = options.is_locked;
     
     this.initPage();
     this.actionHandler();
@@ -218,7 +218,7 @@ export class MessengerSlipEditComponent implements OnInit {
     /*
         if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
         {
-            IsLocked = true;
+            is_locked = true;
             LBL_LOCK.Content = "LOCKED";
             CmdSave.IsEnabled = false;
             CmdCopyCntr.IsEnabled = false;

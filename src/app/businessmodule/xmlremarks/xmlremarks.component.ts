@@ -26,7 +26,7 @@ export class XmlRemarksComponent implements OnInit {
   title: string = '';
   isAdmin: boolean;
   errorMessage: string;
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
   remarks: string = "";
 
   constructor(
@@ -43,7 +43,7 @@ export class XmlRemarksComponent implements OnInit {
     this.pkid = options.pkid;
     this.source = options.source;
     this.title = options.title;
-    this.IsLocked = options.is_locked;
+    this.is_locked = options.is_locked;
     this.initPage();
     this.actionHandler();
   }

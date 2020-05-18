@@ -36,7 +36,7 @@ export class AirImpCargoPickupComponent implements OnInit {
   chkallselected: boolean = false;
   selectdeselect: boolean = false;
   errorMessage: string;
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
 
   constructor(
     private router: Router,

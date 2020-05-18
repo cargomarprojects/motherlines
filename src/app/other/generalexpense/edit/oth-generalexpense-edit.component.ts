@@ -44,7 +44,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
   refnoDisabled: boolean = false;
   refnoMaxLength: Number = 8;
   refnoFormat: string = 'Format -  GEYYYYMM'
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
 
   constructor(
     private router: Router,
@@ -160,7 +160,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
     /*
         if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
         {
-            IsLocked = true;
+            is_locked = true;
             LBL_LOCK.Content = "LOCKED";
             CmdSave.IsEnabled = false;
             CmdCopyCntr.IsEnabled = false;
@@ -413,7 +413,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
       //     menuid: this.gs.MENU_OT_OPERATION_DELIVERY_ORDER,
       //     parentid: this.pkid,
       //     pickCategory:'OTHERS',
-      //     islocked: false,
+      //     is_locked: false,
       //     origin: 'other-general-page'
       //   };
       //   this.gs.Naviagete('Silver.Other.Trans/DeliveryOrderList', JSON.stringify(prm));

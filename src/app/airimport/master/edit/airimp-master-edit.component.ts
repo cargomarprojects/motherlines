@@ -63,7 +63,7 @@ export class AirImpMasterEditComponent implements OnInit {
   private cmbList = {};
 
 
-  //IsLocked: boolean = false;
+   
   is_locked: boolean = false;
 
   constructor(

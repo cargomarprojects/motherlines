@@ -3,7 +3,7 @@
     <div class="col">
       <label class="mr-3">Request for Approval ({{mode}})</label>
       <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
-      <label class="text-danger" *ngIf="IsLocked">LOCKED</label>
+      <label class="text-danger" *ngIf="is_locked">LOCKED</label>
     </div>
   </div>
 
@@ -135,7 +135,7 @@
         <!-- <div *ngIf="req_type=='REQUEST'" class="form-group row border">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode) && !IsLocked"
+            <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode) && !is_locked"
               (click)="Save()">Save</button>
             <button [style.color]="Foregroundcolor_edit" *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1"
               (click)="BtnNavigation('ATTACHMENT')">Attachments</button>
@@ -143,7 +143,7 @@
         </div> -->
         <div *ngIf="req_type=='REQUEST'" class="page-footer">
           <div class="row justify-content-center p-1">
-            <button class="btn btn-primary btn-md mr-1" *ngIf="gs.canSave(menuid,mode) && !IsLocked"
+            <button class="btn btn-primary btn-md mr-1" *ngIf="gs.canSave(menuid,mode) && !is_locked"
               (click)="Save()">Save</button>
             <button [style.color]="Foregroundcolor_edit" *ngIf="mode=='EDIT'" class="btn btn-primary btn-md mr-1"
               (click)="BtnNavigation('ATTACHMENT')">Attachments</button>
@@ -199,14 +199,14 @@
         <!-- <div *ngIf="req_type=='APPROVED'" class="form-group row border">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <button class="btn btn-primary btn-md mr-1" *ngIf="gs.canSave(menuid,mode) && !IsLocked"
+            <button class="btn btn-primary btn-md mr-1" *ngIf="gs.canSave(menuid,mode) && !is_locked"
               (click)="SaveApproved()">Save</button>
           </div>
         </div> -->
 
         <div *ngIf="req_type=='APPROVED'" class="page-footer">
           <div class="row justify-content-center p-1">
-            <button class="btn btn-primary btn-md mr-1" *ngIf="gs.canSave(menuid,mode) && !IsLocked"
+            <button class="btn btn-primary btn-md mr-1" *ngIf="gs.canSave(menuid,mode) && !is_locked"
               (click)="SaveApproved()">Save</button>
           </div>
         </div>

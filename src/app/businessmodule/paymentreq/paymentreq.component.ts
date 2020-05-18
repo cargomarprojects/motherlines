@@ -34,7 +34,7 @@ export class PaymentReqComponent implements OnInit {
   title: string = '';
   isAdmin: boolean;
   errorMessage: string;
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
 
   constructor(
     private router: Router,
@@ -51,7 +51,7 @@ export class PaymentReqComponent implements OnInit {
     this.cp_source = options.cp_source;
     this.cp_mode = options.cp_mode;
     this.cp_ref_no = options.cp_ref_no;
-    this.IsLocked = options.is_locked;
+    this.is_locked = options.is_locked;
     this.mode = 'ADD';
     this.initPage();
     this.actionHandler();
@@ -276,7 +276,7 @@ export class PaymentReqComponent implements OnInit {
   RemoveRow(_rec: Table_Cargo_Payrequest) {
     this.errorMessage = '';
 
-    if (this.IsLocked) {
+    if (this.is_locked) {
       this.errorMessage = "Cannot Delete, Locked";
       alert(this.errorMessage);
       return;

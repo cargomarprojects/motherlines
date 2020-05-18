@@ -34,7 +34,7 @@ export class OthTrackingPageComponent implements OnInit {
   isAdmin: boolean;
   errorMessage: string;
   selectedRowIndex: number = -1;
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
   Memo_Mode: string = "ADD";
   Memo_Id: string = "";
   lblSaveMemo: string = "Save";
@@ -61,7 +61,7 @@ export class OthTrackingPageComponent implements OnInit {
     this.hideTracking = options.hideTracking;
     this.oprgrp = options.oprgrp;
     this.refno = options.refno;
-    this.IsLocked = options.is_locked;
+    this.is_locked = options.is_locked;
     // this.mode = 'ADD';
     this.parentTypememo = this.parentType + "-MEMO";
     this.initPage();
@@ -127,7 +127,7 @@ export class OthTrackingPageComponent implements OnInit {
     /*
         if (Lib.IsShipmentClosed("SEA EXPORT", (DateTime)ParentRec.mbl_ref_date, ParentRec.mbl_lock,ParentRec.mbl_unlock_date))
         {
-            IsLocked = true;
+            is_locked = true;
             LBL_LOCK.Content = "LOCKED";
             CmdSave.IsEnabled = false;
             CmdCopyCntr.IsEnabled = false;

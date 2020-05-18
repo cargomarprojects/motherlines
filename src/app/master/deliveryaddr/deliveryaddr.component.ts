@@ -31,7 +31,7 @@ export class DeliveryAddrComponent implements OnInit {
 
     errorMessage: string;
 
-    IsLocked: boolean = false;
+    is_locked: boolean = false;
 
     constructor(
         private router: Router,

@@ -28,7 +28,7 @@ export class PartyAddrEditComponent implements OnInit {
   isAdmin: boolean;
   errorMessage: string;
   selectedRowIndex: number = -1;
-  IsLocked: boolean = false;
+  is_locked: boolean = false;
   lblSave: string = "Save";
   party_name: string;
   checkAddress: string = "Use this address while printing";
