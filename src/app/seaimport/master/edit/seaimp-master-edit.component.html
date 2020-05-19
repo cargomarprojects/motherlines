@@ -600,14 +600,14 @@
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_ATTACHMENTS)" (click)="BtnNavigation('ATTACHMENT')">Attachments</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_ATTACHMENTS)" [style.color]="record.rec_files_attached=='Y'?'red':black" (click)="BtnNavigation('ATTACHMENT')">Attachments</button>
           </div>
 
           <div class="form-group row">
             <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER)" (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_INTERNAL_MEMO)" (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_INTERNAL_MEMO)" [style.color]="record.mbl_ismemo_attached=='Y'?'red':black" (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
           </div>
           <div class="form-group row">
             <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_REQUEST_APPROVAL)" (click)="BtnNavigation('REQUEST-APPROVAL')">Request For

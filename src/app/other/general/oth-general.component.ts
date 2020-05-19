@@ -80,7 +80,7 @@ export class OthGeneralComponent implements OnInit {
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.mbl_pkid,
-      type: '',
+      type: this.mainservice.param_type,
       origin: 'oth-general-page',
       mode: 'EDIT'
     };

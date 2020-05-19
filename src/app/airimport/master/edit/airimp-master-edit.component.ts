@@ -573,7 +573,7 @@ export class AirImpMasterEditComponent implements OnInit {
           cp_source: 'AIR-MASTER',
           cp_mode: 'AIR IMPORT',
           cp_ref_no: this.record.mbl_refno,
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'airimp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
@@ -605,7 +605,7 @@ export class AirImpMasterEditComponent implements OnInit {
           mbl_pkid: this.pkid,
           mbl_mode: 'AIR IMPORT',
           mbl_refno: this.record.mbl_refno,
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'airimp-master-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
@@ -617,7 +617,7 @@ export class AirImpMasterEditComponent implements OnInit {
           master_id: this.pkid,
           master_refno: this.record.mbl_refno,
           master_refdate: this.record.mbl_ref_date,
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'airimp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
@@ -630,7 +630,7 @@ export class AirImpMasterEditComponent implements OnInit {
           mbl_refno: this.record.mbl_refno,
           doc_type: 'AIR IMPORT',
           req_type: 'REQUEST',
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'airimp-master-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
@@ -645,6 +645,7 @@ export class AirImpMasterEditComponent implements OnInit {
           oprgrp: 'AIR IMPORT',
           parentType: 'AIRIMP-CNTR',
           paramType: 'AIRIMP-CNTR-MOVE-STATUS',
+          is_locked: this.is_locked,
           hideTracking: 'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));

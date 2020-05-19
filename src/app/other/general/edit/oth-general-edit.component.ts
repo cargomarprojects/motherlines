@@ -78,6 +78,7 @@ export class OthGeneralEditComponent implements OnInit {
     this.pkid = options.pkid;
     this.menuid = options.menuid;
     this.mode = options.mode;
+    this.OPERATION_MODE = options.type;
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
@@ -232,7 +233,7 @@ export class OthGeneralEditComponent implements OnInit {
         this.record.hbl_is_carr_an_bool = this.record.hbl_is_carr_an == "Y" ? true : false;
         this.records = <Tbl_cargo_container[]>response.records;
         this.mode = 'EDIT';
-        this.CheckData();
+        this.is_locked = this.gs.IsShipmentClosed(this.OPERATION_MODE, this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -773,7 +774,7 @@ export class OthGeneralEditComponent implements OnInit {
           menuid: this.gs.MENU_OT_OPERATION_DELIVERY_ORDER,
           parentid: this.pkid,
           pickCategory: 'OTHERS',
-          is_locked: false,
+          is_locked: this.is_locked,
           origin: 'other-general-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/DeliveryOrderList', JSON.stringify(prm));
@@ -809,7 +810,7 @@ export class OthGeneralEditComponent implements OnInit {
           cp_source: 'OTHER OPERATION',
           cp_mode: 'OTHERS',
           cp_ref_no: this.record.mbl_refno,
-          is_locked: false,
+          is_locked: this.is_locked,
           origin: 'other-general-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
@@ -841,7 +842,7 @@ export class OthGeneralEditComponent implements OnInit {
           mbl_pkid: this.pkid,
           mbl_mode: 'OTHERS',
           mbl_refno: this.record.mbl_refno,
-          is_locked: false,
+          is_locked: this.is_locked,
           origin: 'other-general-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
@@ -853,7 +854,7 @@ export class OthGeneralEditComponent implements OnInit {
           master_id: this.pkid,
           master_refno: this.record.mbl_refno,
           master_refdate: this.record.mbl_ref_date,
-          is_locked: false,
+          is_locked: this.is_locked,
           origin: 'other-general-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
@@ -866,7 +867,7 @@ export class OthGeneralEditComponent implements OnInit {
           mbl_refno: this.record.mbl_refno,
           doc_type: 'OTHERS',
           req_type: 'REQUEST',
-          is_locked: false,
+          is_locked: this.is_locked,
           origin: 'other-general-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
@@ -881,6 +882,7 @@ export class OthGeneralEditComponent implements OnInit {
           oprgrp: 'OTHERS',
           parentType: 'OTH-CNTR',
           paramType: 'OTH-CNTR-MOVE-STATUS',
+          is_locked: this.is_locked,
           hideTracking: 'Y'
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));

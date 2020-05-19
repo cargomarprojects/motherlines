@@ -35,6 +35,9 @@ export class OthGeneralExpenseEditComponent implements OnInit {
 
   title: string;
   isAdmin: boolean;
+  CanArAp: boolean = false;
+  CanProfitReport: boolean = false;
+  CanPayroll: boolean = false;
 
   cmbList = {};
   EXPTYPE: string = "";
@@ -68,7 +71,6 @@ export class OthGeneralExpenseEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-
     this.refnoFormat = "Format - " + this.EXPTYPE.trim() + "YYYYMM";
     this.refnoMaxLength = 8;
     this.refnoDisabled = false;
@@ -78,11 +80,43 @@ export class OthGeneralExpenseEditComponent implements OnInit {
       if (this.EXPTYPE.trim() == "FA")
         this.refnoDisabled = true;
     }
-
+    this.SetUserRights();
     this.errorMessage = [];
     this.LoadCombo();
   }
 
+  SetUserRights() {
+
+    this.CanProfitReport = false;
+    if (this.gs.screenExists(this.gs.MENU_GENERAL_EXPENSE_PROFIT_REPORT) && this.EXPTYPE.trim() == "GE")
+      this.CanProfitReport = true;
+    if (this.gs.screenExists(this.gs.MENU_PAYROLL_EXPENSE_PROFIT_REPORT) && this.EXPTYPE.trim() == "PR")
+      this.CanProfitReport = true;
+    if (this.gs.screenExists(this.gs.MENU_1099_EXPENSE_PROFIT_REPORT) && this.EXPTYPE.trim() == "CM")
+      this.CanProfitReport = true;
+    if (this.gs.screenExists(this.gs.MENU_INTERNAL_PAYMENT_SETTLEMENT_PROFIT_REPORT) && this.EXPTYPE.trim() == "PS")
+      this.CanProfitReport = true;
+    if (this.gs.screenExists(this.gs.MENU_FILE_ADJUSTMENT_PROFIT_REPORT) && this.EXPTYPE.trim() == "FA")
+      this.CanProfitReport = true;
+
+    this.CanArAp = false;
+    if (this.gs.screenExists(this.gs.MENU_GENERAL_EXPENSE_ARAP) && this.EXPTYPE.trim() == "GE")
+      this.CanArAp = true;
+    if (this.gs.screenExists(this.gs.MENU_PAYROLL_EXPENSE_ARAP) && this.EXPTYPE.trim() == "PR")
+      this.CanArAp = true;
+    if (this.gs.screenExists(this.gs.MENU_1099_EXPENSE_ARAP) && this.EXPTYPE.trim() == "CM")
+      this.CanArAp = true;
+    if (this.gs.screenExists(this.gs.MENU_INTERNAL_PAYMENT_SETTLEMENT_ARAP) && this.EXPTYPE.trim() == "PS")
+      this.CanArAp = true;
+    if (this.gs.screenExists(this.gs.MENU_FILE_ADJUSTMENT_ARAP) && this.EXPTYPE.trim() == "FA")
+      this.CanArAp = true;
+
+    this.CanPayroll = false;
+    if (this.gs.PAYROLL_ENABLED == "Y") {
+      if (this.gs.screenExists(this.gs.MENU_PAYROLL_EXPENSE_ARAP) && this.EXPTYPE.trim() == "PR")
+        this.CanPayroll = true;
+    }
+  }
   LoadCombo() {
 
     // if (this.gs.company_name == "MOTHERLINES INC USA") {
@@ -141,7 +175,10 @@ export class OthGeneralExpenseEditComponent implements OnInit {
       .subscribe(response => {
         this.record = <Tbl_cargo_general>response.record;
         this.mode = 'EDIT';
-
+        let sOPr_Mode: string = "ADMIN";
+        if (this.EXPTYPE.trim() == "FA")
+          sOPr_Mode = "OTHERS";
+        this.is_locked = this.gs.IsShipmentClosed(sOPr_Mode, this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
         this.HouseList = <Tbl_cargo_obl_released[]>[];
         if (!this.gs.isBlank(this.record.mbl_devan_loc_id)) {
           var rec = <Tbl_cargo_obl_released>{};
@@ -441,7 +478,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
         break;
-        
+
       }
       case 'PROFITREPORT': {
         let sid = this.gs.MENU_GENERAL_EXPENSE_PROFIT_REPORT;
@@ -468,8 +505,8 @@ export class OthGeneralExpenseEditComponent implements OnInit {
       case 'PAYROLLDET': {
         let sid = this.gs.MENU_GENERAL_EXPENSE_ARAP;
         if (this.EXPTYPE.trim() == "PR")
-          sid =this.gs.MENU_PAYROLL_EXPENSE_ARAP;
-  
+          sid = this.gs.MENU_PAYROLL_EXPENSE_ARAP;
+
         let prm = {
           menuid: sid,
           mbl_pkid: this.pkid,

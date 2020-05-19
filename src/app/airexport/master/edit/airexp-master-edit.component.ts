@@ -486,7 +486,10 @@ export class AirExpMasterEditComponent implements OnInit {
         this.record.mbl_mawb_chwt = this.gs.roundNumber(this.record.mbl_mawb_chwt, 3);
         break;
       }
-
+      case 'mbl_currency': {
+        this.record.mbl_currency = this.record.mbl_currency.toUpperCase();
+        break;
+      }
     }
   }
 
@@ -559,7 +562,7 @@ export class AirExpMasterEditComponent implements OnInit {
           cp_source: 'AIR-MASTER',
           cp_mode: 'AIR EXPORT',
           cp_ref_no: this.record.mbl_refno,
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/PaymentRequestPage', JSON.stringify(prm));
@@ -591,7 +594,7 @@ export class AirExpMasterEditComponent implements OnInit {
           mbl_pkid: this.pkid,
           mbl_mode: 'AIR EXPORT',
           mbl_refno: this.record.mbl_refno,
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/MessengerSlipList', JSON.stringify(prm));
@@ -603,7 +606,7 @@ export class AirExpMasterEditComponent implements OnInit {
           master_id: this.pkid,
           master_refno: this.record.mbl_refno,
           master_refdate: this.record.mbl_ref_date,
-          islocked: false,
+          is_locked:this.is_locked,
           origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
@@ -616,7 +619,7 @@ export class AirExpMasterEditComponent implements OnInit {
           mbl_refno: this.record.mbl_refno,
           doc_type: 'AIR EXPORT',
           req_type: 'REQUEST',
-          islocked: false,
+          is_locked:this.is_locked,
           origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
@@ -651,6 +654,7 @@ export class AirExpMasterEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_AE_MASTER_PRINT_MAWB,
           pkid: this.pkid,
+          is_locked:this.is_locked,
           origin: 'airexp-master-page',
         };
         this.gs.Naviagete('Silver.AirExport.Trans/MawbPage', JSON.stringify(prm));
@@ -663,6 +667,7 @@ export class AirExpMasterEditComponent implements OnInit {
           pkid: this.pkid,
           mbl_no: this.record.mbl_no,
           mbl_refno: this.record.mbl_refno,
+          is_locked:this.is_locked,
           origin: 'airexp-master-page',
         };
         this.gs.Naviagete('Silver.AirExport.Trans/ManifestPage', JSON.stringify(prm));
