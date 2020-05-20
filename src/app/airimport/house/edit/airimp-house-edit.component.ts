@@ -1174,6 +1174,7 @@ export class AirImpHouseEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_SI_HOUSE_US_CUSTOM_HOLD,
           pkid: this.pkid,
+          is_locked: this.is_locked,
           origin: 'seaimp-House-page',
         };
         this.gs.Naviagete('Silver.SeaImport/USCustomsHoldPage', JSON.stringify(prm));
@@ -1183,6 +1184,7 @@ export class AirImpHouseEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_AI_HOUSE_DELIVERY_ORDER,
           pkid: this.pkid,
+          is_locked: this.is_locked,
           origin: 'airimp-House-page',
         };
         this.gs.Naviagete('Silver.AirImport.Trans/AirCargoPickupPage', JSON.stringify(prm));
@@ -1193,7 +1195,7 @@ export class AirImpHouseEditComponent implements OnInit {
           menuid: this.gs.MENU_SI_HOUSE,
           pkid: this.pkid,
           source: 'SI-DESC-EX',
-          islocked: false,
+          is_locked: this.is_locked,
           origin: 'seaimp-House-page',
           canPrint: false
         };

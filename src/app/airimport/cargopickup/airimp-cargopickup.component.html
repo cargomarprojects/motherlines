@@ -3,6 +3,7 @@
     <div class="col">
       <label>Delivery Order</label>
       <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+      <label class="text-danger" *ngIf="is_locked">LOCKED</label>
     </div>
   </div>
   
@@ -615,7 +616,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-            <button class="btn btn-primary btn-sm mr-1" (click)="Save()">Save</button>
+            <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode) && !is_locked"  (click)="Save()">Save</button>
             <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="DeliveryRptPrint()">Print</button>
           </div>
         </div>

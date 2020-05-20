@@ -50,6 +50,7 @@ export class AirImpCargoPickupComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.is_locked = options.is_locked;
     this.mode = 'EDIT';
     this.initPage();
     this.actionHandler();
