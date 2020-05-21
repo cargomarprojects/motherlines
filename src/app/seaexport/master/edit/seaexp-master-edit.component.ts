@@ -720,7 +720,6 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.attach_viewonlyid = '';
         this.attach_filespath = '';
         this.attach_filespath2 = '';
-        //this.tab = 'attachment';
         this.modal = this.modalservice.open(attachmodal, { centered: true });
         break;
       }
