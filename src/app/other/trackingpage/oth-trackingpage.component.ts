@@ -7,8 +7,8 @@ import { OthTrackingPageService } from '../services/oth-trackingpage.service';
 import { User_Menu } from '../../core/models/menum';
 import { Tbl_Cargo_Tracking_Status, vm_Tbl_Cargo_Tracking_Status } from '../models/tbl_cargo_tracking_status';
 import { SearchTable } from '../../shared/models/searchtable';
-import { strictEqual } from 'assert';
-
+// import { strictEqual } from 'assert';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-oth-trackingpage',
   templateUrl: './oth-trackingpage.component.html'
@@ -43,14 +43,20 @@ export class OthTrackingPageComponent implements OnInit {
   tab: string = 'main';
   attach_pkid: string = "";
   attach_typelist: any = {};
+  modal: any;
 
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
     private mainService: OthTrackingPageService
-  ) { }
+  ) { 
+    modalconfig.backdrop = 'static'; //true/false/static
+    modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+  }
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -228,12 +234,12 @@ export class OthTrackingPageComponent implements OnInit {
     this.selectedRowIndex = _indx;
   }
 
-  AttachRow(_rec: Tbl_Cargo_Tracking_Status) {
+  AttachRow(_rec: Tbl_Cargo_Tracking_Status, attachmodal: any = null) {
     let TypeList: any[] = [];
     TypeList = [{ "code": "INTERNAL MEMO", "name": "INTERNAL MEMO" }];
     this.attach_pkid = _rec.param_id;
     this.attach_typelist = TypeList;
-    this.tab = 'attachment';
+    this.modal = this.modalservice.open(attachmodal, { centered: true });
   }
 
   callbackevent() {
@@ -360,6 +366,8 @@ export class OthTrackingPageComponent implements OnInit {
           alert(this.errorMessage);
         });
   }
-
+  CloseModal() {
+    this.modal.close();
+  }
 
 }

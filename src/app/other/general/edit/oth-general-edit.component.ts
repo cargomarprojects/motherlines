@@ -7,9 +7,10 @@ import { OthGeneralService } from '../../services/oth-general.service';
 import { User_Menu } from '../../../core/models/menum';
 import { Tbl_cargo_general, Tbl_cargo_container, vm_tbl_cargo_general } from '../../models/tbl_cargo_general';
 import { SearchTable } from '../../../shared/models/searchtable';
-import { strictEqual } from 'assert';
-import { forEach } from '@angular/router/src/utils/collection';
-import { TBL_MBL_REPORT } from 'src/app/reports/models/tbl_mbl_report';
+// import { strictEqual } from 'assert';
+// import { forEach } from '@angular/router/src/utils/collection';
+// import { TBL_MBL_REPORT } from 'src/app/reports/models/tbl_mbl_report';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-oth-general-edit',
@@ -50,7 +51,7 @@ export class OthGeneralEditComponent implements OnInit {
   private menuid: string;
 
   private mode: string;
-
+  modal: any;
   private errorMessage: string;
 
   private closeCaption: string = 'Return';
@@ -59,19 +60,24 @@ export class OthGeneralEditComponent implements OnInit {
   private isAdmin: boolean;
 
   private cmbList = {};
-  OPERATION_MODE: string = "";
+  OPERATION_MODE: string = "OTHERS";
   MblStatusList: any[] = [];
   BlStatusList: any[] = [];
 
   is_locked: boolean = false;
 
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
     private mainService: OthGeneralService,
-  ) { }
+  ) { 
+    modalconfig.backdrop = 'static'; //true/false/static
+    modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+  }
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -79,6 +85,8 @@ export class OthGeneralEditComponent implements OnInit {
     this.menuid = options.menuid;
     this.mode = options.mode;
     this.OPERATION_MODE = options.type;
+    if (this.gs.isBlank(this.OPERATION_MODE))
+      this.OPERATION_MODE = "OTHERS";
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
@@ -766,7 +774,7 @@ export class OthGeneralEditComponent implements OnInit {
       this.record.hbl_chwt = this.gs.Convert_Weight("LBS2KG", this.record.hbl_chwt_lbs, 3);
   }
 
-  BtnNavigation(action: string) {
+  BtnNavigation(action: string, attachmodal: any = null) {
 
     switch (action) {
       case 'DELIVERY-ORDER': {
@@ -833,7 +841,7 @@ export class OthGeneralEditComponent implements OnInit {
         this.attach_viewonlyid = '';
         this.attach_filespath = '';
         this.attach_filespath2 = '';
-        this.tab = 'attachment';
+        this.modal = this.modalservice.open(attachmodal, { centered: true });
         break;
       }
       case 'MESSENGER-SLIP': {
@@ -923,5 +931,8 @@ export class OthGeneralEditComponent implements OnInit {
       alert(strcntr)
       this.gs.copyToClipboard(strcntr);
     }
+  }
+  CloseModal() {
+    this.modal.close();
   }
 }

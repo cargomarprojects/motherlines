@@ -7,8 +7,9 @@ import { AirExpMasterService } from '../../services/airexp-master.service';
 import { User_Menu } from '../../../core/models/menum';
 import { Tbl_cargo_exp_masterm, Tbl_cargo_exp_housem, vm_tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
 import { SearchTable } from '../../../shared/models/searchtable';
-import { isNumber } from 'util';
-import { flatMap } from 'rxjs/operators';
+// import { isNumber } from 'util';
+// import { flatMap } from 'rxjs/operators';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-airexp-master-edit',
@@ -51,7 +52,7 @@ export class AirExpMasterEditComponent implements OnInit {
   private hbl_mode: string = '';
 
   private mode: string;
-
+  modal: any;
   //private errorMessage: string;
   private errorMessage: string[] = [];
   private closeCaption: string = 'Return';
@@ -65,12 +66,17 @@ export class AirExpMasterEditComponent implements OnInit {
   //IsLocked: boolean = false;
   is_locked: boolean = false;
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
     private mainService: AirExpMasterService,
-  ) { }
+  ) {
+    modalconfig.backdrop = 'static'; //true/false/static
+    modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+   }
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -516,7 +522,7 @@ export class AirExpMasterEditComponent implements OnInit {
     this.BtnNavigation('HOUSE')
   }
 
-  BtnNavigation(action: string) {
+  BtnNavigation(action: string, attachmodal: any = null) {
 
     switch (action) {
       case 'ARAP': {
@@ -585,7 +591,7 @@ export class AirExpMasterEditComponent implements OnInit {
         this.attach_viewonlyid = '';
         this.attach_filespath = '';
         this.attach_filespath2 = '';
-        this.tab = 'attachment';
+        this.modal = this.modalservice.open(attachmodal, { centered: true });
         break;
       }
       case 'MESSENGER-SLIP': {
@@ -692,6 +698,8 @@ export class AirExpMasterEditComponent implements OnInit {
   callbackevent(event: any) {
     this.tab = 'main';
   }
-
+  CloseModal() {
+    this.modal.close();
+  }
 
 }
