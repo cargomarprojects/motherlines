@@ -1,4 +1,3 @@
-
 <div *ngIf="tab=='main'">
 
   <div class="page-header">
@@ -45,7 +44,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Ref#</label>
                   <div class="col-9">
-                    <InputBox  [(inputModel)]="record.mbl_refno" [maxlength]="15" [uppercase]="true" [disabled]='true'>
+                    <InputBox [(inputModel)]="record.mbl_refno" [maxlength]="15" [uppercase]="true" [disabled]='true'>
                     </InputBox>
                     <!-- <input class="form-control form-control-sm text-danger" type="text"
                     [(ngModel)]="record.mbl_refno"
@@ -397,7 +396,7 @@
                         [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
                     </td>
                     <td class="p-0 text-center"><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
-                      (click)="RemoveRow(rec)"></i></td>
+                        (click)="RemoveRow(rec)"></i></td>
                   </tr>
                 </tbody>
               </table>
@@ -405,8 +404,9 @@
               <div class="form-group row">
                 <div class="col-12 pl-1 pb-1">
                   <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked" (click)="AddRow()">Add Cntr</button>
-                  <button class="btn btn-success btn-sm mr-1"  (click)="BtnNavigation('COPY-CNTR')">Copy Cntr to House</button>
-                  <button class="btn btn-success btn-sm mr-1"  (click)="CopyCntrClipboard()">Copy Containers</button>
+                  <button class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('COPY-CNTR')">Copy Cntr to
+                    House</button>
+                  <button class="btn btn-success btn-sm mr-1" (click)="CopyCntrClipboard()">Copy Containers</button>
                 </div>
               </div>
 
@@ -439,7 +439,7 @@
                 </thead>
                 <tbody class="page-body-tbody">
                   <tr *ngFor="let rec of hrecords">
-                    <td  class='hlink' (click)="EditHouse(rec)">{{rec.hbl_houseno}}</td>
+                    <td class='hlink' (click)="EditHouse(rec)">{{rec.hbl_houseno}}</td>
                     <td>{{rec.hbl_shipper_name}}</td>
                     <td>{{rec.hbl_consignee_name}}</td>
                     <td>{{rec.hbl_packages}}</td>
@@ -454,7 +454,8 @@
 
               <div class="form-group row">
                 <div class="col-12 pl-0 pb-1">
-                  <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked && gs.screenExists(gs.MENU_SE_HOUSE)" (click)="AddHouse()">Add House</button>
+                  <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked && gs.screenExists(gs.MENU_SE_HOUSE)"
+                    (click)="AddHouse()">Add House</button>
                 </div>
               </div>
 
@@ -473,62 +474,78 @@
         <div *ngIf="mode=='EDIT'" class="col-md-12 p-2 border">
 
           <div class="form-group row">
-            <button class="col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_BOOKING)" (click)="BtnNavigation('BOOKING')">Booking</button>
+            <button class="col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_BOOKING)"
+              (click)="BtnNavigation('BOOKING')">Booking</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_MBL_INSTRUCTION)" (click)="BtnNavigation('MBLPAGE')">MBL Instruction</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_MBL_INSTRUCTION)"
+              (click)="BtnNavigation('MBLPAGE')">MBL Instruction</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_DOCK_RECEIPT)" (click)="BtnNavigation('DOCKPAGE')">Dock Receipt</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_DOCK_RECEIPT)"
+              (click)="BtnNavigation('DOCKPAGE')">Dock Receipt</button>
           </div>
 
           <div class="form-group row">
 
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_MANIFEST)" (click)="BtnNavigation('MANIFEST')">Manifest</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_MANIFEST)"
+              (click)="BtnNavigation('MANIFEST')">Manifest</button>
 
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_ARAP)" (click)="BtnNavigation('ARAP')">AR & AP</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_ARAP)"
+              (click)="BtnNavigation('ARAP')">AR & AP</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_PROFIT_REPORT)" (click)="BtnNavigation('PROFITREPORT')">Profit Report</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_PROFIT_REPORT)"
+              (click)="BtnNavigation('PROFITREPORT')">Profit Report</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SHIPMENT_LABEL)" (click)="BtnNavigation('SHIP-LABEL-PRINT')">Shipment Label</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SHIPMENT_LABEL)"
+              (click)="BtnNavigation('SHIP-LABEL-PRINT')">Shipment Label</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MESSENGER_SLIP)" (click)="BtnNavigation('MESSENGER-SLIP')">Messenger
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MESSENGER_SLIP)"
+              (click)="BtnNavigation('MESSENGER-SLIP')">Messenger
               Slip</button>
           </div>
 
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_PAYMENT_REQUEST)" (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_PAYMENT_REQUEST)"
+              (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
               Request</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_ATTACHMENTS)" [style.color]="record.rec_files_attached=='Y'?'red':black" (click)="BtnNavigation('ATTACHMENT')">Attachments</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_ATTACHMENTS)"
+              [style.color]="record.rec_files_attached=='Y'?'red':black"
+              (click)="BtnNavigation('ATTACHMENT',attachmodal)">Attachments</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER)" (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER)"
+              (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_INTERNAL_MEMO)" [style.color]="record.mbl_ismemo_attached=='Y'?'red':black" (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_INTERNAL_MEMO)"
+              [style.color]="record.mbl_ismemo_attached=='Y'?'red':black"
+              (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_REQUEST_APPROVAL)" (click)="BtnNavigation('REQUEST-APPROVAL')">Request For
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_REQUEST_APPROVAL)"
+              (click)="BtnNavigation('REQUEST-APPROVAL')">Request For
               Approval</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_CERTIFICATE_ORIGIN)" (click)="BtnNavigation('CERTIFICATE-ORIGIN')">Certificate Of Origin</button>
+            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SE_MASTER_CERTIFICATE_ORIGIN)"
+              (click)="BtnNavigation('CERTIFICATE-ORIGIN')">Certificate Of Origin</button>
           </div>
 
         </div>
@@ -543,7 +560,8 @@
 
   <div class="page-footer">
     <div class="row justify-content-center p-1">
-      <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode) && !is_locked" (click)="Save()">Save</button>
+      <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode) && !is_locked"
+        (click)="Save()">Save</button>
     </div>
   </div>
 
@@ -555,12 +573,29 @@
 
 </div>
 
-<div  *ngIf="tab=='report'">
-  <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+<div *ngIf="tab=='report'">
+  <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"
+    (callbackevent)="callbackevent($event)"></app-report>
 </div>
-<div *ngIf="tab=='attachment'">
-  <app-fileupload  [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid" [type]="attach_type" [typelist]="attach_typelist" [tablename]="attach_tablename"
-  [tablepkcolumn]="attach_tablepkcolumn" [refno]="attach_refno" [customername]="attach_customername" [updatecolumn]="attach_updatecolumn" 
-  [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath" [filespath2]="attach_filespath2" 
-  (callbackevent)="callbackevent($event)"></app-fileupload>
-</div>
+
+<ng-template #attachmodal let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12 testbox  px-0 mx-0">
+          <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid"
+            [type]="attach_type" [typelist]="attach_typelist" [tablename]="attach_tablename"
+            [tablepkcolumn]="attach_tablepkcolumn" [refno]="attach_refno" [customername]="attach_customername"
+            [updatecolumn]="attach_updatecolumn" [viewonlysource]="attach_viewonlysource"
+            [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath" [filespath2]="attach_filespath2"
+            [modalview]="true" (callbackevent)="callbackevent($event)"></app-fileupload>
+        </div>
+      </div>
+      <div class="page-footer">
+        <div class="row justify-content-center p-1">
+          <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

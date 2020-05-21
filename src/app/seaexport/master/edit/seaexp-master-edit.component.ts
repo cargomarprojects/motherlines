@@ -14,7 +14,7 @@ import { SearchTable } from '../../../shared/models/searchtable';
 import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 
 import { InputBoxNumberComponent } from '../../../shared/inputnumber/inputboxnumber.component';
-
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-seaexp-master-edit',
@@ -68,7 +68,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   private isAdmin: boolean;
 
   private cmbList = {};
-
+  modal: any;
 
   is_locked: boolean = false;
 
@@ -77,12 +77,17 @@ export class SeaexpMasterEditComponent implements OnInit {
 
 
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
     private mainService: seaexpMasterService,
-  ) { }
+  ) {
+    modalconfig.backdrop = 'static'; //true/false/static
+    modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+  }
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -213,7 +218,7 @@ export class SeaexpMasterEditComponent implements OnInit {
         if (this.hrecords == null)
           this.hrecords = <Tbl_cargo_exp_housem[]>[];
         this.mode = 'EDIT';
-        this.record.mbl_direct_bool = this.record.mbl_direct==='Y' ? true : false;
+        this.record.mbl_direct_bool = this.record.mbl_direct === 'Y' ? true : false;
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -608,7 +613,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   }
 
 
-  BtnNavigation(action: string) {
+  BtnNavigation(action: string, attachmodal: any = null) {
 
     switch (action) {
 
@@ -715,7 +720,8 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.attach_viewonlyid = '';
         this.attach_filespath = '';
         this.attach_filespath2 = '';
-        this.tab = 'attachment';
+        //this.tab = 'attachment';
+        this.modal = this.modalservice.open(attachmodal, { centered: true });
         break;
       }
       case 'MESSENGER-SLIP': {
@@ -858,5 +864,9 @@ export class SeaexpMasterEditComponent implements OnInit {
       alert(strcntr)
       this.gs.copyToClipboard(strcntr);
     }
+  }
+
+  CloseModal() {
+    this.modal.close();
   }
 }
