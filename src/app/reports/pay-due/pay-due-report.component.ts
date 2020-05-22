@@ -158,7 +158,7 @@ export class PayDueReportComponent implements OnInit {
 
 
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
-        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
+        this.sdate = this.gs.getPreviousDate(30);
         this.edate = this.gs.defaultValues.today;
         this.showsmode = "";
         this.comp_type = this.gs.branch_code;
@@ -318,7 +318,7 @@ export class PayDueReportComponent implements OnInit {
     this.CUSTRECORD = new SearchTable();
     this.CUSTRECORD.controlname = "CUSTOMER";
     this.CUSTRECORD.displaycolumn = "NAME";
-    this.CUSTRECORD.type = "CUSTOMER";
+    this.CUSTRECORD.type = "MASTER";
     this.CUSTRECORD.subtype = "";
     this.CUSTRECORD.id = "";
     this.CUSTRECORD.code = "";

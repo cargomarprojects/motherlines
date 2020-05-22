@@ -103,6 +103,13 @@
             </div>
           </div>
           <div class="form-group row">
+            <label class="col-4 col-form-label col-form-label-sm">Ref No.</label>
+            <div class="col-8">
+              <InputBox [(inputModel)]="sdata" [field]="'sdata'" [maxlength]="100"
+                        [uppercase]="true" (blur)="onBlur($event)"></InputBox>
+            </div>
+          </div>
+          <div class="form-group row">
             <label class="col-4 col-form-label col-form-label-sm"></label>
             <div class="col-8">
               <button [disabled]="loading" (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Search</button>

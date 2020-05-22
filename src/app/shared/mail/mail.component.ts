@@ -19,7 +19,10 @@ export class MailComponent implements OnInit {
 
   @Input() public pkid: string = '';
   @Input() public AttachList = new Array<any>();
-
+  public ismodal: boolean = false;
+  @Input() set modalview(value: boolean) {
+    this.ismodal = value;
+  }
   @Output() mailcallbackevent = new EventEmitter<any>();
   chkReadRecipt: boolean = false;
   chkDelivReceipt: boolean = false;
@@ -144,7 +147,7 @@ export class MailComponent implements OnInit {
     let str: string = "";
     this.errorMessage = [];
     let filename: string = "";
-    let filedisplayname: string = "";  
+    let filedisplayname: string = "";
 
     this.cc_ids = this.cc_ids.trim();
     if (this.cc_ids2.trim().length > 0 && this.cc_ids != "")
@@ -155,16 +158,16 @@ export class MailComponent implements OnInit {
     Htm += " <head>";
     Htm += " <style type='text/css'> ";
     Htm += " body { ";
-    Htm += " font-family:" + this.gs.user_email_sign_font +  ";";
-    Htm += " color:" +  this.gs.user_email_sign_color +  ";";
-    Htm += " font-size:" +  this.gs.user_email_sign_size  + "px;";
-    if (  this.gs.user_email_sign_bold == "Y") 
-        Htm += " font-weight:bold;";
+    Htm += " font-family:" + this.gs.user_email_sign_font + ";";
+    Htm += " color:" + this.gs.user_email_sign_color + ";";
+    Htm += " font-size:" + this.gs.user_email_sign_size + "px;";
+    if (this.gs.user_email_sign_bold == "Y")
+      Htm += " font-weight:bold;";
     Htm += " } ";
     Htm += " </style> ";
     Htm += " </head> ";
     Htm += " <body> ";
-    
+
     str = this.message.toString().replace("\r\n", "<BR>");
     str = str.replace("\r", "<BR>");
     str = str.replace("\n", "<BR>");
@@ -260,8 +263,10 @@ export class MailComponent implements OnInit {
     this.lovService.GetEmailIds(SearchData)
       .subscribe(response => {
         this.EmailList = <Table_Email[]>response.list;
+        if (this.gs.isBlank(this.EmailList))
+          alert('Email IDs Not Found');
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
       });
   }
 

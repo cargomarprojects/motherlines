@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from '../../core/services/global.service';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-report',
@@ -71,11 +72,17 @@ export class ReportComponent implements OnInit {
   }
   @Output() callbackevent = new EventEmitter<any>();
 
+  Mail_Pkid: string = '';
   AttachList: any[] = [];
+  modal: any;
 
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     private http2: HttpClient,
     private gs: GlobalService) {
+      modalconfig.backdrop = 'static'; //true/false/static
+      modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
   }
 
   ngOnInit() {
@@ -136,12 +143,13 @@ export class ReportComponent implements OnInit {
 
   }
 
-  report(action: string) {
+  report(action: string, emailmodal: any = null) {
 
     if (action == "email") {
+      this.Mail_Pkid = this.gs.getGuid();
       this.AttachList = new Array<any>();
       this.AttachList.push({ filename: this._filename, filetype: this._filetype, filedisplayname: this._filedisplayname });
-      this.tab = "email";
+      this.modal = this.modalservice.open(emailmodal, { centered: true });
     }
     else if (action == "excel") {
       if (this._filedisplayname2 == null || this._filedisplayname2 == undefined || this._filedisplayname2 == "")
@@ -156,7 +164,7 @@ export class ReportComponent implements OnInit {
   }
 
   mailcallbackevent(event: any) {
-    this.tab = 'main';
+    this.modal.close();
     this.AutoLoad();
   }
 

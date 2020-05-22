@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { GlobalService } from '../../core/services/global.service';
 import { LovService } from '../services/lov.service';
 import { Table_Mast_Files } from '../models/table_mast_files';
-import { stringify } from 'querystring';
-
+// import { stringify } from 'querystring';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-fileupload',
   templateUrl: './fileupload.component.html'
@@ -113,13 +113,19 @@ export class FileUploadComponent implements OnInit {
   loading = false;
   myFiles: string[] = [];
   sMsg: string = '';
+  AttachList: any[] = [];
+  Mail_Pkid: string = '';
+  modal: any;
 
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     private gs: GlobalService,
     private lovService: LovService,
     private http2: HttpClient,
   ) {
-
+    modalconfig.backdrop = 'static'; //true/false/static
+    modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
   }
 
   @ViewChild('fileinput') private fileinput: ElementRef;
@@ -364,9 +370,15 @@ export class FileUploadComponent implements OnInit {
     this.gs.DownloadFile(this.gs.FS_APP_FOLDER, filename, filetype, filedisplayname);
   }
 
-  Sendmail(_rec: Table_Mast_Files) {
+  Sendmail(_rec: Table_Mast_Files, emailmodal: any = null) {
 
-
+    this.Mail_Pkid = this.gs.getGuid();
+    let DispName: string = "document";
+    if (_rec.file_desc != "")
+    DispName = this.gs.ProperFileName(_rec.file_desc);
+    this.AttachList = new Array<any>();
+    this.AttachList.push({ filename: _rec.file_id, filetype: 'PDF', filedisplayname: DispName });
+    this.modal = this.modalservice.open(emailmodal, { centered: true });
   }
 
   RemoveRow(_rec: Table_Mast_Files) {
@@ -423,6 +435,10 @@ export class FileUploadComponent implements OnInit {
     if (_rec.file_id !== '') {
       _rec.files_editrow = !_rec.files_editrow;
     }
+  }
+   
+  mailcallbackevent(event: any) {
+    this.modal.close();
   }
 
 }

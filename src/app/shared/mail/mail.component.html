@@ -1,7 +1,7 @@
 <div class="page-header">
   <div class="row align-items-center justify-content-left p-1">
     <label class="mr-3">Mail</label>
-    <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    <button *ngIf="!ismodal" class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
   </div>
 </div>
 <div *ngIf="errorMessage.length >0">
@@ -18,7 +18,7 @@
   <div class="row border">
     <div class="col-md-12">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group row">
             <label class="col-2 col-form-label col-form-label-sm">Party</label>
             <div class="col-4">
@@ -79,8 +79,8 @@
                 </table>
                 <div class="form-group row">
                   <div class="col-12">
-                    <button class="btn btn-success btn-sm mr-1"  (click)="SaveIds()">Ok</button>
-                    <button class="btn btn-success btn-sm mr-1"  (click)="CancelList()">Cancel</button>
+                    <button class="btn btn-success btn-sm mr-1" (click)="SaveIds()">Ok</button>
+                    <button class="btn btn-success btn-sm mr-1" (click)="CancelList()">Cancel</button>
                   </div>
                 </div>
               </div>
@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group row">
             <label class="col-md-2 col-form-label col-form-label-sm">To</label>
             <div class="col-md-10">
@@ -170,18 +170,23 @@
   </div>
 </div>
 
-<div class="page-box">
+<!-- <div class="page-box">
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
           <div class="offset-md-2 col-md-10">
             <button [disabled]="loading" (click)="SendMail()" class="btn btn-primary btn-sm mr-1">Send Mail</button>
-            <button [disabled]="loading" (click)="Close()" class="btn btn-primary btn-sm mr-1">Return</button>
-            <i *ngIf="loading" class="fa fa-spinner"></i>
+            <button [disabled]="loading" *ngIf="!ismodal" (click)="Close()" class="btn btn-primary btn-sm mr-1">Return</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div> -->
+<div class="page-footer">
+  <div class="row justify-content-center p-1">
+    <button class="btn btn-primary btn-md  mr-1" (click)="SendMail()">Send Mail</button>
+    <button class="btn btn-primary btn-md  mr-1" (click)="Close()">{{ismodal==true?'Close':'Return'}}</button>
   </div>
 </div>

@@ -46,7 +46,7 @@ export class MessengerSlipEditComponent implements OnInit {
   refno: string = "";
 
   is_locked: boolean = false;
-
+  chk_bl_click: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -65,12 +65,13 @@ export class MessengerSlipEditComponent implements OnInit {
     this.refno = options.mbl_refno;
     this.mode = options.mode;
     this.is_locked = options.is_locked;
-    
+
     this.initPage();
     this.actionHandler();
   }
 
   private initPage() {
+    this.chk_bl_click = false;
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = '';
@@ -93,6 +94,7 @@ export class MessengerSlipEditComponent implements OnInit {
   init() {
     var curr_date = new Date();
     var curr_hh = curr_date.getHours();
+    this.chk_bl_click = false;
 
     if (this.mode == "ADD")
       this.pkid = this.gs.getGuid();
@@ -206,8 +208,9 @@ export class MessengerSlipEditComponent implements OnInit {
   }
 
   ChkBLClick() {
+    this.chk_bl_click = !this.chk_bl_click;
     if (this.mode == "ADD" && this.record.cs_mbl_no != null) {
-      if (this.record.cs_is_bl_bool == true)
+      if (this.chk_bl_click == true)//this.record.cs_is_bl_bool //this is browser depend
         this.record.cs_bl_det = this.record.cs_mbl_no;
       else
         this.record.cs_bl_det = "";

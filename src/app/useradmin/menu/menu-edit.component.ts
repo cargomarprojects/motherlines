@@ -105,6 +105,7 @@ export class MenuEditComponent implements OnInit {
         this.record.menu_pkid = this.pkid;
         this.record.menu_name = '';
         this.record.module_name = '';
+        this.record.menu_param = '';
         this.record.rec_created_by = this.gs.user_code;
         this.record.rec_created_date = this.gs.defaultValues.today;
     }
