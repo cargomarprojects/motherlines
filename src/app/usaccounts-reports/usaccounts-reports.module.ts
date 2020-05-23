@@ -41,6 +41,9 @@ import { LedgerAllReportComponent } from './ledger-all-report/ledger-all-report.
 import { InvCustReportComponent } from './inv-cust-report/inv-cust-report.component';
 import { InvCustReportReducer  } from './inv-cust-report/store/inv-cust-report.reducer';
 
+import { BankReconComponent } from './bankrecon/bankrecon.component';
+import { BankReconHeaderComponent } from './bankrecon/bankrecon-header.component';
+
 @NgModule({
     declarations :[
       BankEnquiryReportComponent,  
@@ -56,7 +59,9 @@ import { InvCustReportReducer  } from './inv-cust-report/store/inv-cust-report.r
       PandLReportComponent,
       BalSheetReportComponent,
       LedgerAllReportComponent,
-      InvCustReportComponent
+      InvCustReportComponent,
+      BankReconComponent,
+      BankReconHeaderComponent
   ],
   imports: [
     SharedModule,

@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_Acc_Payment, AccPaymentModel } from '../models/Tbl_Acc_Payment';
-import { SearchQuery } from '../models/Tbl_Acc_Payment';
+import { Tbl_acc_ledger, BankReconModel } from '../models/Tbl_acc_ledger';
+import { SearchQuery } from '../models/Tbl_acc_ledger';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PaySearchService {
+export class BankReconService {
 
-    private mdata$ = new BehaviorSubject<AccPaymentModel>(null);
-    get data$(): Observable<AccPaymentModel> {
+    private mdata$ = new BehaviorSubject<BankReconModel>(null);
+    get data$(): Observable<BankReconModel> {
         return this.mdata$.asObservable();
     }
-    private record: AccPaymentModel;
+    private record: BankReconModel;
 
     public id: string;
     public menuid: string;
@@ -44,10 +44,10 @@ export class PaySearchService {
         this.menuid = params.id;
         this.param_type = params.param_type;
 
-        this.record = <AccPaymentModel>{
+        this.record = <BankReconModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', searchType: 'CHECK NO', status: 'PAID' },
+            searchQuery: <SearchQuery>{ sdate: '', edate: '',accId:'', accCode: '',accName:'' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -76,10 +76,10 @@ export class PaySearchService {
         var SearchData = this.gs.UserInfo;
         SearchData.outputformat = 'SCREEN';
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.TYPE = this.record.searchQuery.searchType;
-        SearchData.DATA = this.record.searchQuery.searchString;
-        SearchData.STATUS = this.record.searchQuery.status;
-        SearchData.HIDE_PAYROLL = this.gs.user_hide_payroll;
+        // SearchData.TYPE = this.record.searchQuery.searchType;
+        // SearchData.DATA = this.record.searchQuery.searchString;
+        // SearchData.STATUS = this.record.searchQuery.status;
+        // SearchData.HIDE_PAYROLL = this.gs.user_hide_payroll;
 
 
         SearchData.page_count = 0;
@@ -102,35 +102,10 @@ export class PaySearchService {
                 this.mdata$.next(this.record);
         });
     }
-
-    RefreshList(_rec: Tbl_Acc_Payment) {
-        if (this.record.records == null)
-            return;
-        var REC = this.record.records.find(rec => rec.pay_pkid == _rec.pay_pkid);
-        if (REC == null) {
-            this.record.records.push(_rec);
-        }
-        else {
-            REC.pay_pkid = _rec.pay_pkid;
-            REC.rec_created_by = _rec.rec_created_by;
-            REC.rec_created_date = _rec.rec_created_date;
-        }
-    }
-
-    DeleteRow(_rec: Tbl_Acc_Payment) {
-
-        this.record.errormessage = '';
-        if (!confirm("DELETE ")) {
-            return;
-        }
-
-        var SearchData = this.gs.UserInfo;
-        SearchData.pkid = _rec.pay_pkid;
-    }
-
+ 
 
     List(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/PaySearch/List', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/PaySearch/List1', SearchData, this.gs.headerparam2('authorized'));
     }
 
 

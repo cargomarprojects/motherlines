@@ -1,4 +1,6 @@
- export class Tbl_acc_ledger {
+import { PageQuery } from '../../shared/models/pageQuery';
+
+export class Tbl_acc_ledger {
     jv_pkid: string;
     jv_vrno: string;
     jv_docno: string;
@@ -50,4 +52,18 @@
     jv_posted_date: string;
     jv_reconciled_by: string;
     jv_reconciled_date: string;
+}
+
+export interface SearchQuery {
+    accId : string ;
+    accCode : string ;
+    accName : string ;
+    sdate : string ;
+    edate : string;
+}
+export interface BankReconModel {
+    errormessage: string;
+    searchQuery: SearchQuery;
+    pageQuery: PageQuery;
+    records: Tbl_acc_ledger[]
 }

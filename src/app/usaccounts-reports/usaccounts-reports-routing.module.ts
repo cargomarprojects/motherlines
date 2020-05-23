@@ -14,6 +14,7 @@ import { PandLReportComponent } from './pandl-report/pandl-report.component';
 import { BalSheetReportComponent } from './bal-sheet-report/bal-sheet-report.component';
 import { LedgerAllReportComponent } from './ledger-all-report/ledger-all-report.component';
 import { InvCustReportComponent } from './inv-cust-report/inv-cust-report.component';
+import { BankReconComponent } from './bankrecon/bankrecon.component';
 
 const routes: Routes = [
   { path :'BankPage', component : BankEnquiryReportComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path :'BSPage', component : BalSheetReportComponent },
   { path :'LedgerPageAll', component : LedgerAllReportComponent },
   { path :'InvCustUpdatePage', component : InvCustReportComponent },
+  { path :'BankReconPage', component : BankReconComponent },
 ];
 
 @NgModule({
