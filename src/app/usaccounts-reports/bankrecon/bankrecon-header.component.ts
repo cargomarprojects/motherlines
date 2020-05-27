@@ -11,6 +11,8 @@ import { SearchTable } from '../../shared/models/searchtable';
 export class BankReconHeaderComponent implements OnInit {
     // Call By Value using Input Parameters
     searchQuery: SearchQuery;
+    unchk: boolean = false;
+    
     @Input() set _query(value: SearchQuery) {
         this.searchQuery = Object.assign({}, value);
         this.initData();
@@ -36,9 +38,9 @@ export class BankReconHeaderComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
         if (_Record.controlname === 'ACCTM') {
-          this.searchQuery.accId = _Record.id;
-          this.searchQuery.accCode = _Record.code;
-          this.searchQuery.accName = _Record.name;
+            this.searchQuery.accId = _Record.id;
+            this.searchQuery.accCode = _Record.code;
+            this.searchQuery.accName = _Record.name;
         }
-      }
+    }
 }
