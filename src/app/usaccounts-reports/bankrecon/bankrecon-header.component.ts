@@ -11,8 +11,7 @@ import { SearchTable } from '../../shared/models/searchtable';
 export class BankReconHeaderComponent implements OnInit {
     // Call By Value using Input Parameters
     searchQuery: SearchQuery;
-    unchk: boolean = false;
-    
+
     @Input() set _query(value: SearchQuery) {
         this.searchQuery = Object.assign({}, value);
         this.initData();
@@ -33,6 +32,26 @@ export class BankReconHeaderComponent implements OnInit {
     }
 
     List(outputformat: string) {
+        if (outputformat == "PASSBOOK-BAL") {
+            if (this.gs.isBlank(this.searchQuery.sdate)) {
+                this.searchQuery.sdate = this.gs.year_start_date;
+            }
+            if (this.gs.isBlank(this.searchQuery.edate)) {
+                this.searchQuery.edate = this.gs.defaultValues.today;
+            }
+            if (this.gs.isBlank(this.searchQuery.accId)) {
+                alert("Code cannot be empty");
+                return;
+            }
+        }
+
+        if (outputformat == "SCREEN") {
+            if (this.searchQuery.chkreconciled == false && this.searchQuery.chkunreconciled == false) {
+                alert("Either Reconciled / Un-Reconciled should be selected");
+                return;
+            }
+        }
+
         this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
     }
 

@@ -55,11 +55,19 @@ export class Tbl_acc_ledger {
 }
 
 export interface SearchQuery {
-    accId : string ;
-    accCode : string ;
-    accName : string ;
-    sdate : string ;
-    edate : string;
+    accId: string;
+    accCode: string;
+    accName: string;
+    sdate: string;
+    edate: string;
+    sdate2: string;
+    edate2: string;
+    chkreconciled: boolean;
+    chkunreconciled: boolean;
+    lbl_op: string;
+    lbl_trans_dr: string;
+    lbl_trans_cr: string;
+    lbl_balance: string;
 }
 export interface BankReconModel {
     errormessage: string;
