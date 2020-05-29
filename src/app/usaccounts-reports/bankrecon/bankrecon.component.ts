@@ -8,6 +8,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { SearchQuery, BankReconModel, Tbl_acc_ledger } from '../models/Tbl_acc_ledger';
 import { PageQuery } from '../../shared/models/pageQuery';
 import { BankReconService  } from '../services/bankrecon.service';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'bankrecon',
@@ -18,18 +19,24 @@ export class BankReconComponent implements OnInit {
   /*
    Joy
  */
-
+  modal: any;
+  recon_date:string='';
   errorMessage$: Observable<string>;
   records$: Observable<Tbl_acc_ledger []>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
 
   constructor(
+    private modalconfig: NgbModalConfig,
+    private modalservice: NgbModal,
     private route: ActivatedRoute,
     private location: Location,
     public gs: GlobalService,
     public mainservice: BankReconService
-  ) { }
+  ) { 
+    modalconfig.backdrop = 'static'; //true/false/static
+    modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+  }
 
   ngOnInit() {
     this.mainservice.init(this.route.snapshot.queryParams);
@@ -88,6 +95,13 @@ export class BankReconComponent implements OnInit {
   Close() {    
     this.location.back();
   }
+  Reconcile(_rec:Tbl_acc_ledger, datemodal: any = null){
 
+    this.modal = this.modalservice.open(datemodal, { centered: true });
+  }
+
+  CloseModal() {
+    this.modal.close();
+  }
 
 }

@@ -65,10 +65,11 @@ export class BankReconService {
     }
 
     Search(_searchdata: any, type: string = '') {
-        if (SearchData.outputformat === 'SCREEN')
+        if (_searchdata.outputformat === 'SCREEN')
             this.New_Search = "N";
-        else if (SearchData.outputformat === 'PASSBOOK-BAL') {
+        else if (_searchdata.outputformat === 'PASSBOOK-BAL') {
             this.New_Search = "Y";
+            this.record.searchQuery = _searchdata.searchQuery;
             this.FindBankBalance();
             return;
         }
@@ -84,6 +85,9 @@ export class BankReconService {
 
         var SearchData = this.gs.UserInfo;
         SearchData.outputformat = 'SCREEN';
+        SearchData.action = 'NEW';
+        SearchData.pkid = this.id;
+        
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
 
         SearchData.ACC_ID = this.record.searchQuery.accId;
@@ -132,6 +136,7 @@ export class BankReconService {
                 // }
 
                 this.ShowBalance(response.nDebit_op, response.nCredit_op, response.nDr, response.nCr);
+                this.ResetPageControl();
                 this.mdata$.next(this.record);
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
@@ -141,7 +146,7 @@ export class BankReconService {
     }
 
     ShowBalance(nOPDR: number, nOPCR: number, nDR: number, nCR: number) {
-        
+
         let nAmt: number = 0;
 
         this.record.searchQuery.lbl_op = "";
@@ -166,6 +171,15 @@ export class BankReconService {
             this.record.searchQuery.lbl_balance = nAmt.toString() + " DR";
         else if (nAmt < 0)
             this.record.searchQuery.lbl_balance = Math.abs(nAmt).toString() + " CR";
+    }
+
+    ResetPageControl() {
+        this.record.records = <Tbl_acc_ledger[]>[];
+        this.record.pageQuery.action = 'NEW';
+        this.record.pageQuery.page_count = 0;
+        this.record.pageQuery.page_current = -1;
+        this.record.pageQuery.page_rowcount = 0;
+        this.record.pageQuery.page_rows = 0;
     }
 
     List(SearchData: any) {
