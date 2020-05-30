@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_acc_ledger, BankReconModel } from '../models/Tbl_acc_ledger';
+import { Tbl_acc_ledger, BankReconModel, vm_Tbl_acc_ledger } from '../models/Tbl_acc_ledger';
 import { SearchQuery } from '../models/Tbl_acc_ledger';
 import { PageQuery } from '../../shared/models/pageQuery';
+import { toDate } from '@angular/common/src/i18n/format_date';
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +29,21 @@ export class BankReconService {
     public canSave: boolean;
     public canDelete: boolean;
 
+    nOPDR: number = 0;
+    nOPCR: number = 0;
+    nDR: number = 0;
+    nCR: number = 0;
+
+    private selectedRec: Tbl_acc_ledger = null;
+    private THIS_POSTED_DATE: string = null;
+    private OLD_POSTED_DATE: string = null;
+    private OLD_POSTED: string = "N";
+    private old_debit: number = 0;
+    private old_credit: number = 0;
+
+    public recon_jv_date: string = '';
+    public Lbl_ReconCaption: string = '';
+
     public initlialized: boolean;
     private New_Search: string = 'N';
 
@@ -47,7 +63,7 @@ export class BankReconService {
         this.record = <BankReconModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ sdate: '', edate: '', accId: '', accCode: '', accName: '', sdate2: '', edate2: '', chkreconciled: false, chkunreconciled: false, lbl_balance: '', lbl_op: '', lbl_trans_cr: '', lbl_trans_dr: '' },
+            searchQuery: <SearchQuery>{ sdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), edate: this.gs.defaultValues.today, accId: '', accCode: '', accName: '', sdate2: '', edate2: '', chkreconciled: false, chkunreconciled: true, lbl_balance: '', lbl_op: '', lbl_trans_cr: '', lbl_trans_dr: '' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -87,7 +103,7 @@ export class BankReconService {
         SearchData.outputformat = 'SCREEN';
         SearchData.action = 'NEW';
         SearchData.pkid = this.id;
-        
+
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
 
         SearchData.ACC_ID = this.record.searchQuery.accId;
@@ -120,6 +136,10 @@ export class BankReconService {
 
     FindBankBalance() {
         this.record.errormessage = '';
+        this.nOPDR = 0;
+        this.nOPCR = 0;
+        this.nDR = 0;
+        this.nCR = 0;
         var SearchData = this.gs.UserInfo;
         SearchData.BRCODE = this.gs.branch_code;
         SearchData.ACCID = this.record.searchQuery.accId;
@@ -127,15 +147,12 @@ export class BankReconService {
         SearchData.EDATE = this.record.searchQuery.edate
         this.GetPassbookBalance(SearchData)
             .subscribe(response => {
-                // if (response.retvalue == false) {
-                //     this.record.errormessage = response.error;
-                //     alert(this.record.errormessage);
-                // }
-                // else {
-                //     this.record.records.splice(this.record.records.findIndex(rec => rec.mbl_pkid == _rec.mbl_pkid), 1);
-                // }
+                this.nOPDR = response.nDebit_op;
+                this.nOPCR = response.nCredit_op;
+                this.nDR = response.nDr;
+                this.nCR = response.nCr;
 
-                this.ShowBalance(response.nDebit_op, response.nCredit_op, response.nDr, response.nCr);
+                this.ShowBalance();
                 this.ResetPageControl();
                 this.mdata$.next(this.record);
             }, error => {
@@ -145,7 +162,7 @@ export class BankReconService {
             });
     }
 
-    ShowBalance(nOPDR: number, nOPCR: number, nDR: number, nCR: number) {
+    ShowBalance() {
 
         let nAmt: number = 0;
 
@@ -154,18 +171,20 @@ export class BankReconService {
         this.record.searchQuery.lbl_trans_cr = "";
         this.record.searchQuery.lbl_balance = "";
 
-        nAmt = nOPDR - nOPCR;
+        nAmt = this.nOPDR - this.nOPCR;
+        nAmt = this.gs.roundNumber(nAmt, 2);
         if (nAmt > 0)
             this.record.searchQuery.lbl_op = nAmt.toString() + " DR";
         else if (nAmt < 0)
             this.record.searchQuery.lbl_op = Math.abs(nAmt).toString() + " CR";
 
-        if (nDR != 0)
-            this.record.searchQuery.lbl_trans_dr = nDR.toString() + " DR";
-        if (nCR != 0)
-            this.record.searchQuery.lbl_trans_cr = nCR.toString() + " CR";
+        if (this.nDR != 0)
+            this.record.searchQuery.lbl_trans_dr = this.nDR.toString() + " DR";
+        if (this.nCR != 0)
+            this.record.searchQuery.lbl_trans_cr = this.nCR.toString() + " CR";
 
-        nAmt = (nDR + nOPDR) - (nCR + nOPCR);
+        nAmt = (this.nDR + this.nOPDR) - (this.nCR + this.nOPCR);
+        nAmt = this.gs.roundNumber(nAmt, 2);
 
         if (nAmt > 0)
             this.record.searchQuery.lbl_balance = nAmt.toString() + " DR";
@@ -182,12 +201,141 @@ export class BankReconService {
         this.record.pageQuery.page_rows = 0;
     }
 
+    ReconcileRecord(_rec: Tbl_acc_ledger) {
+        this.selectedRec = _rec;
+
+        if (_rec.jv_posted_date == null) {
+            this.OLD_POSTED_DATE = null;
+            this.OLD_POSTED = "N";
+        }
+        else {
+            this.OLD_POSTED_DATE = _rec.jv_posted_date;
+            this.OLD_POSTED = "Y";
+        }
+
+        this.old_debit = 0;
+        this.old_credit = 0;
+        if (_rec.jv_debit != null)
+            this.old_debit = _rec.jv_debit;
+        if (_rec.jv_credit != null)
+            this.old_credit = _rec.jv_credit;
+
+        if (this.OLD_POSTED_DATE == null) {
+            this.Lbl_ReconCaption = "Enter Date To Reconcile";
+            this.recon_jv_date = _rec.jv_date;
+        }
+        else {
+            this.Lbl_ReconCaption = "Reconciled, Remove the date to UN-Reconcile";
+            this.recon_jv_date = this.OLD_POSTED_DATE;
+        }
+
+    }
+
+    SaveDate() {
+        this.record.errormessage = '';
+        this.mdata$.next(this.record);
+        this.selectedRec.jv_posted_date = this.recon_jv_date;
+        this.THIS_POSTED_DATE = this.recon_jv_date;
+        const saveRecord = <vm_Tbl_acc_ledger>{};
+        saveRecord.record = this.selectedRec;
+        saveRecord.userinfo = this.gs.UserInfo;
+        this.SaveReconDate(saveRecord)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+
+                    this.ReCalculate();
+                    if (this.record.records != null) {
+                        var REC = this.record.records.find(rec => rec.jv_pkid == this.selectedRec.jv_pkid);
+                        if (REC != null) {
+                            REC.jv_posted_date = this.selectedRec.jv_posted_date;
+                            this.mdata$.next(this.record);
+                        }
+                    }
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
+    }
+    ReCalculate() {
+        if (this.OLD_POSTED == "N" && this.THIS_POSTED_DATE == null)
+            return;
+
+        if (this.OLD_POSTED == "Y") {
+
+            if (this.OLD_POSTED_DATE == "" || this.OLD_POSTED_DATE == null || this.OLD_POSTED_DATE == undefined)
+                return;
+            if (this.record.searchQuery.sdate == "" || this.record.searchQuery.sdate == null || this.record.searchQuery.sdate == undefined)
+                return;
+            if (this.record.searchQuery.edate == "" || this.record.searchQuery.edate == null || this.record.searchQuery.edate == undefined)
+                return;
+
+            let oldPostedDate = this.GetDates(this.OLD_POSTED_DATE);
+            let FromDate = this.GetDates(this.record.searchQuery.sdate);
+            let ToDate = this.GetDates(this.record.searchQuery.edate);
+
+            if (oldPostedDate < FromDate) {
+                this.nOPDR -= this.old_debit;
+                this.nOPCR -= this.old_credit;
+            }
+            else if (oldPostedDate >= FromDate && oldPostedDate <= ToDate) {
+                this.nDR -= this.old_debit;
+                this.nCR -= this.old_credit;
+            }
+            this.ShowBalance();
+        }
+        if (this.THIS_POSTED_DATE != null) {
+
+            if (this.THIS_POSTED_DATE == "" || this.THIS_POSTED_DATE == null || this.THIS_POSTED_DATE == undefined)
+                return;
+            if (this.record.searchQuery.sdate == "" || this.record.searchQuery.sdate == null || this.record.searchQuery.sdate == undefined)
+                return;
+            if (this.record.searchQuery.edate == "" || this.record.searchQuery.edate == null || this.record.searchQuery.edate == undefined)
+                return;
+
+            let ThisPostedDate = this.GetDates(this.THIS_POSTED_DATE);
+            let FromDate = this.GetDates(this.record.searchQuery.sdate);
+            let ToDate = this.GetDates(this.record.searchQuery.edate);
+
+
+            if (ThisPostedDate < FromDate) {
+                this.nOPDR += this.old_debit;
+                this.nOPCR += this.old_credit;
+            }
+            else if (ThisPostedDate >= FromDate && ThisPostedDate <= ToDate) {
+                this.nDR += this.old_debit;
+                this.nCR += this.old_credit;
+            }
+            this.ShowBalance();
+        }
+    }
+
+    GetDates(_refDate: string) {
+
+        var tempdt = _refDate.split('-');
+        let dtyr: number = +tempdt[0];
+        let dtmn: number = +tempdt[1];
+        let dtdy: number = + (tempdt[2].length > 2 ? tempdt[2].substring(0, 2) : tempdt[2]);
+        let sDate = new Date(dtyr, dtmn - 1, dtdy);
+
+        return sDate;
+    }
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/BankReconciled/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
     GetPassbookBalance(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/BankReconciled/GetPassbookBalance', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    SaveReconDate(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/BankReconciled/SaveReconDate', SearchData, this.gs.headerparam2('authorized'));
     }
 
 }

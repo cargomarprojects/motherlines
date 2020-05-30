@@ -51,13 +51,6 @@
     <div class="page-body">
       <div class="row">
         <div class="col-md-12 testbox  px-0 mx-0">
-
-          <!-- <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid"
-            [type]="attach_type" [typelist]="attach_typelist" [tablename]="attach_tablename"
-            [tablepkcolumn]="attach_tablepkcolumn" [refno]="attach_refno" [customername]="attach_customername"
-            [updatecolumn]="attach_updatecolumn" [viewonlysource]="attach_viewonlysource"
-            [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath" [filespath2]="attach_filespath2"
-            [modalview]="true" (callbackevent)="callbackevent($event)"></app-fileupload> -->
           <div class="page-body">
             <div class="row">
               <div class="col-md-6 p-1">
@@ -71,12 +64,12 @@
             <div class="row">
               <div class="col-md-6 p-1">
                 <div class="form-group row">
-                  <label class="col-12 col-form-label col-form-label-sm">Enter Date</label>
+                  <label class="col-12 col-form-label col-form-label-sm">{{mainservice.Lbl_ReconCaption}}</label>
                 </div>
                 <div class="form-group row">
                   <label class="col-2 col-form-label col-form-label-sm">Date</label>
                   <div class="col-4">
-                    <app-date [inputdate]="recon_date" (ValueChanged)="recon_date=$event"></app-date>
+                    <app-date [inputdate]="mainservice.recon_jv_date" (ValueChanged)="mainservice.recon_jv_date=$event"></app-date>
                   </div>
                 </div>
               </div>
@@ -86,6 +79,7 @@
       </div>
       <div class="page-footer">
         <div class="row justify-content-center p-1">
+          <button class="btn btn-primary btn-md mr-1" (click)="SaveReconDate()" >Save</button>
           <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
         </div>
       </div>

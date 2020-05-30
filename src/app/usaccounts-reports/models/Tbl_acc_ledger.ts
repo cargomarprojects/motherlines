@@ -75,3 +75,7 @@ export interface BankReconModel {
     pageQuery: PageQuery;
     records: Tbl_acc_ledger[]
 }
+export interface vm_Tbl_acc_ledger {
+    record: Tbl_acc_ledger;
+    userinfo: any;
+}

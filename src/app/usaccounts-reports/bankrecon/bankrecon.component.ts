@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { GlobalService } from '../../core/services/global.service';
 import { SearchQuery, BankReconModel, Tbl_acc_ledger } from '../models/Tbl_acc_ledger';
 import { PageQuery } from '../../shared/models/pageQuery';
-import { BankReconService  } from '../services/bankrecon.service';
+import { BankReconService } from '../services/bankrecon.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -20,9 +20,10 @@ export class BankReconComponent implements OnInit {
    Joy
  */
   modal: any;
-  recon_date:string='';
+
+
   errorMessage$: Observable<string>;
-  records$: Observable<Tbl_acc_ledger []>;
+  records$: Observable<Tbl_acc_ledger[]>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
 
@@ -33,7 +34,7 @@ export class BankReconComponent implements OnInit {
     private location: Location,
     public gs: GlobalService,
     public mainservice: BankReconService
-  ) { 
+  ) {
     modalconfig.backdrop = 'static'; //true/false/static
     modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
   }
@@ -84,7 +85,7 @@ export class BankReconComponent implements OnInit {
 
     let parameter = {
       menuid: this.mainservice.menuid,
-      pkid: _record.acc_name ,
+      pkid: _record.acc_name,
       type: '',
       origin: 'mblusage-page',
       mode: 'EDIT'
@@ -92,16 +93,23 @@ export class BankReconComponent implements OnInit {
     this.gs.Naviagete('Silver.Other.Trans/MblUsageEditPage', JSON.stringify(parameter));
   }
 
-  Close() {    
+  Close() {
     this.location.back();
   }
-  Reconcile(_rec:Tbl_acc_ledger, datemodal: any = null){
 
+  Reconcile(_rec: Tbl_acc_ledger, datemodal: any = null) {
+
+    this.mainservice.ReconcileRecord(_rec);
     this.modal = this.modalservice.open(datemodal, { centered: true });
   }
 
   CloseModal() {
     this.modal.close();
+  }
+  
+  SaveReconDate() {
+    this.mainservice.SaveDate();
+    this.CloseModal();
   }
 
 }
