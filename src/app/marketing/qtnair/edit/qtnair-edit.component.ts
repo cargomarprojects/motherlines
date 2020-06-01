@@ -9,6 +9,7 @@ import { User_Menu } from '../../../core/models/menum';
 import { Tbl_Cargo_Qtnm, vm_Tbl_Cargo_Qtnd_Air, Tbl_Cargo_Qtnd_Air } from '../../../marketing/models/tbl_cargo_qtnm';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-qtnair-edit',
@@ -48,6 +49,7 @@ export class QtnAirEditComponent implements OnInit {
     mode: string;
     errorMessage: string[] = [];
     Foregroundcolor: string;
+    modal: any;
 
     //details
     polId: string = '';
@@ -81,12 +83,17 @@ export class QtnAirEditComponent implements OnInit {
     refno: string = "";
 
     constructor(
+        private modalconfig: NgbModalConfig,
+        private modalservice: NgbModal,
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
         private mainService: QtnAirService,
-    ) { }
+    ) {
+        modalconfig.backdrop = 'static'; //true/false/static
+        modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+     }
 
     ngOnInit() {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -437,7 +444,7 @@ export class QtnAirEditComponent implements OnInit {
     }
 
 
-    BtnNavigation(action: string) {
+    BtnNavigation(action: string, attachmodal: any = null) {
         switch (action) {
             case 'ATTACHMENT': {
                 this.attach_title = 'Documents';
@@ -454,7 +461,7 @@ export class QtnAirEditComponent implements OnInit {
                 this.attach_viewonlyid = '';
                 this.attach_filespath = '';
                 this.attach_filespath2 = '';
-                this.tab = 'attachment';
+                this.modal = this.modalservice.open(attachmodal, { centered: true });
                 break;
             }
             case 'PRINT': {
@@ -556,5 +563,9 @@ export class QtnAirEditComponent implements OnInit {
         // });
         this.record.qtnm_tot_amt = nTot;
     }
+    
+    CloseModal() {
+        this.modal.close();
+      }
 
 }

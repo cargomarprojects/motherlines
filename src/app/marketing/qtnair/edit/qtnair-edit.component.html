@@ -270,8 +270,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-2  pl-0  pr-0">
-                                <InputBox [(inputModel)]="kmin" [maxlength]="25" [uppercase]="true"
-                                    #k_min>
+                                <InputBox [(inputModel)]="kmin" [maxlength]="25" [uppercase]="true" #k_min>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
@@ -317,8 +316,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-2  pl-0  pr-0">
-                                <InputBox [(inputModel)]="fsc" [maxlength]="15" [uppercase]="true"
-                                    #k_fsc>
+                                <InputBox [(inputModel)]="fsc" [maxlength]="15" [uppercase]="true" #k_fsc>
                                 </InputBox>
                             </div>
                             <div class="col-2 pl-0  pr-0">
@@ -341,7 +339,7 @@
 
                     </div>
                 </div>
-                    
+
                 <div class="page-body table-responsive">
                     <table class="table  table-hover table-sm">
                         <thead class="page-body-thead">
@@ -446,11 +444,12 @@
                     <div class="form-group row">
                         <label class="col-2 col-form-label col-form-label-sm"></label>
                         <div class="col-10">
-                            <button class="btn btn-primary btn-sm mr-1" *ngIf="mainService.canSave" (click)="Save()">Save</button>
-                            <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" 
+                            <button class="btn btn-primary btn-sm mr-1" *ngIf="mainService.canSave"
+                                (click)="Save()">Save</button>
+                            <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1"
                                 (click)="BtnNavigation('PRINT')">Print</button>
                             <button [style.color]="Foregroundcolor" *ngIf="mode=='EDIT'"
-                                class="btn btn-primary btn-sm mr-1" (click)="BtnNavigation('ATTACHMENT')">Supporting
+                                class="btn btn-primary btn-sm mr-1" (click)="BtnNavigation('ATTACHMENT',attachmodal)">Supporting
                                 Documents</button>
                         </div>
                     </div>
@@ -459,14 +458,30 @@
         </div>
     </div>
 </div>
-<div *ngIf="tab=='attachment'">
-    <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid" [type]="attach_type"
-        [typelist]="attach_typelist" [tablename]="attach_tablename" [tablepkcolumn]="attach_tablepkcolumn"
-        [refno]="attach_refno" [customername]="attach_customername" [updatecolumn]="attach_updatecolumn"
-        [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath"
-        [filespath2]="attach_filespath2" (callbackevent)="callbackevent($event)"></app-fileupload>
-</div>
 <div *ngIf="tab=='report'">
     <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"
         (callbackevent)="callbackevent($event)"></app-report>
 </div>
+
+<ng-template #attachmodal let-c="close" let-d="dismiss">
+    <div class="modal-body">
+        <div class="page-body">
+            <div class="row">
+                <div class="col-md-12 testbox  px-0 mx-0">
+                    <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid"
+                        [type]="attach_type" [typelist]="attach_typelist" [tablename]="attach_tablename"
+                        [tablepkcolumn]="attach_tablepkcolumn" [refno]="attach_refno"
+                        [customername]="attach_customername" [updatecolumn]="attach_updatecolumn"
+                        [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid"
+                        [filespath]="attach_filespath" [filespath2]="attach_filespath2" [modalview]="true"
+                        (callbackevent)="callbackevent($event)"></app-fileupload>
+                </div>
+            </div>
+            <div class="page-footer">
+                <div class="row justify-content-center p-1">
+                    <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
