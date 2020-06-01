@@ -77,7 +77,7 @@
         </div>
     </div>
     <div class="page-footer">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-4">
                 <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm"></label>
@@ -87,13 +87,34 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+        <div class="row justify-content-center p-1">
+            <button class="btn btn-primary btn-md mr-1" *ngIf="mainService.canSave" (click)="Save()">Save</button>
+            <button [style.color]="Foregroundcolor" *ngIf="mode=='EDIT'" class="btn btn-success btn-md mr-1"
+                (click)="BtnNavigation('ATTACHMENT',attachmodal)">File Upload</button>
         </div>
     </div>
 </div>
-<div *ngIf="tab=='attachment'">
-    <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid" [type]="attach_type"
-        [typelist]="attach_typelist" [tablename]="attach_tablename" [tablepkcolumn]="attach_tablepkcolumn"
-        [refno]="attach_refno" [customername]="attach_customername" [updatecolumn]="attach_updatecolumn"
-        [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid" [filespath]="attach_filespath"
-        [filespath2]="attach_filespath2" (callbackevent)="callbackevent($event)"></app-fileupload>
-</div>
+
+<ng-template #attachmodal let-c="close" let-d="dismiss">
+    <div class="modal-body">
+        <div class="page-body">
+            <div class="row">
+                <div class="col-md-12 testbox  px-0 mx-0">
+                    <app-fileupload [title]="attach_title" [parentid]="attach_parentid" [subid]="attach_subid"
+                        [type]="attach_type" [typelist]="attach_typelist" [tablename]="attach_tablename"
+                        [tablepkcolumn]="attach_tablepkcolumn" [refno]="attach_refno"
+                        [customername]="attach_customername" [updatecolumn]="attach_updatecolumn"
+                        [viewonlysource]="attach_viewonlysource" [viewonlyid]="attach_viewonlyid"
+                        [filespath]="attach_filespath" [filespath2]="attach_filespath2" [modalview]="true"
+                        (callbackevent)="callbackevent($event)"></app-fileupload>
+                </div>
+            </div>
+            <div class="page-footer">
+                <div class="row justify-content-center p-1">
+                    <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -10,6 +10,7 @@ import { vm_tbl_cargo_qtn_rates, Tbl_Cargo_Qtn_Rates } from '../../../marketing/
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Tbl_Cargo_Qtnd_Lcl } from '../../models/tbl_cargo_qtnm';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-qtnrate-edit',
@@ -36,6 +37,7 @@ export class QtnRateEditComponent implements OnInit {
     attach_filespath: string = '';
     attach_filespath2: string = '';
 
+    modal: any;
     mbl_pkid: string;
     pkid: string;
     menuid: string;
@@ -48,12 +50,17 @@ export class QtnRateEditComponent implements OnInit {
     refno: string = "";
 
     constructor(
+        private modalconfig: NgbModalConfig,
+        private modalservice: NgbModal,
         private router: Router,
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
         private mainService: QtnRateService,
-    ) { }
+    ) { 
+        modalconfig.backdrop = 'static'; //true/false/static
+        modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+    }
 
     ngOnInit() {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -230,7 +237,7 @@ export class QtnRateEditComponent implements OnInit {
     }
 
 
-    BtnNavigation(action: string) {
+    BtnNavigation(action: string, attachmodal: any = null) {
         switch (action) {
             case 'ATTACHMENT': {
                 this.attach_title = 'Documents';
@@ -247,7 +254,7 @@ export class QtnRateEditComponent implements OnInit {
                 this.attach_viewonlyid = '';
                 this.attach_filespath = '';
                 this.attach_filespath2 = '';
-                this.tab = 'attachment';
+                this.modal = this.modalservice.open(attachmodal, { centered: true });
                 break;
             }
         }
@@ -255,4 +262,8 @@ export class QtnRateEditComponent implements OnInit {
     callbackevent(event: any) {
         this.tab = 'main';
     }
+
+    CloseModal() {
+        this.modal.close();
+      }
 }
