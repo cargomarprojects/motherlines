@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
 import { SearchQuery } from '../models/tbl_cargo_qtnm';
+import { QtnLclService } from '../services/qtnlcl.service';
 
 @Component({
   selector: 'app-qtnlcl-header',
@@ -16,7 +17,8 @@ export class QtnLclHeaderComponent implements OnInit {
 
   @Output() searchEvents = new EventEmitter<any>();
 
-  constructor(public gs: GlobalService
+  constructor(public gs: GlobalService,
+    public mainservice: QtnLclService
   ) { }
 
   ngOnInit() {

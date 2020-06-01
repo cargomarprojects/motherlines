@@ -39,8 +39,7 @@
                     <div class="col-6">
                         <button (click)="List('SCREEN')"
                             class="btn btn-primary btn-sm mr-1">Search</button>
-                        <button  (click)="List('PRINT')"
-                                class="btn btn-primary btn-sm">Print</button>
+                        <button  (click)="List('PRINT')" *ngIf="mainservice.canPrint" class="btn btn-primary btn-sm">Print</button>
                     </div>
                 </div>
             </div>
