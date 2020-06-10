@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDet
 import { GlobalService } from '../../core/services/global.service';
 import { SearchQuery } from '../models/Tbl_acc_ledger';
 import { SearchTable } from '../../shared/models/searchtable';
+import { BankReconService } from '../services/bankrecon.service';
 
 @Component({
     selector: 'bankrecon-header',
@@ -18,7 +19,8 @@ export class BankReconHeaderComponent implements OnInit {
     }
     @Output() searchEvents = new EventEmitter<any>();
 
-    constructor(public gs: GlobalService
+    constructor(public gs: GlobalService,
+                public mainservice: BankReconService
     ) { }
 
     ngOnInit() {
@@ -62,4 +64,6 @@ export class BankReconHeaderComponent implements OnInit {
             this.searchQuery.accName = _Record.name;
         }
     }
+
+    
 }

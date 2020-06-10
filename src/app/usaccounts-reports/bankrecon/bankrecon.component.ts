@@ -20,6 +20,11 @@ export class BankReconComponent implements OnInit {
    Joy
  */
   modal: any;
+  tab: string = 'main';
+  report_title: string = '';
+  report_url: string = '';
+  report_searchdata: any = {};
+  report_menuid: string = '';
 
 
   errorMessage$: Observable<string>;
@@ -54,7 +59,10 @@ export class BankReconComponent implements OnInit {
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions, 'SEARCH');
+    if (actions.outputformat === "PRINT")
+      this.PrintRpt(actions);
+    else
+      this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
@@ -106,10 +114,35 @@ export class BankReconComponent implements OnInit {
   CloseModal() {
     this.modal.close();
   }
-  
+
   SaveReconDate() {
     this.mainservice.SaveDate();
     this.CloseModal();
   }
 
+  PrintRpt(_searchdata: any) {
+    if (!this.mainservice.canPrint) {
+      alert('Insufficient User Rights');
+      return;
+    }
+
+    if (!this.mainservice.RecordsExist()) {
+      alert('List Not Found');
+      return;
+    }
+
+    this.report_title = 'Bank Reconciliation';
+    this.report_url = '/api/BankReconciled/GetReconRpt';
+    this.report_searchdata = this.gs.UserInfo;
+    this.report_searchdata.pkid = this.gs.getGuid();
+    this.report_searchdata.ACC_ID = _searchdata.searchQuery.accId; 
+    this.report_searchdata.FDATE = _searchdata.searchQuery.sdate;
+    this.report_searchdata.EDATE = _searchdata.searchQuery.edate;
+    this.report_menuid = this.mainservice.menuid;
+    this.tab = 'report';
+
+  }
+  callbackevent(event: any) {
+    this.tab = 'main';
+  }
 }

@@ -28,6 +28,7 @@ export class BankReconService {
     public canEdit: boolean;
     public canSave: boolean;
     public canDelete: boolean;
+    public canPrint: boolean;
 
     nOPDR: number = 0;
     nOPCR: number = 0;
@@ -75,7 +76,7 @@ export class BankReconService {
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canDelete = this.gs.canDelete(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
-
+        this.canPrint = this.gs.canPrint(this.menuid);
         this.initlialized = true;
 
     }
@@ -324,6 +325,13 @@ export class BankReconService {
         let sDate = new Date(dtyr, dtmn - 1, dtdy);
 
         return sDate;
+    }
+
+    RecordsExist() {
+        if (this.record.records.length > 0)
+            return true;
+        else
+            return false;
     }
 
     List(SearchData: any) {
