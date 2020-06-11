@@ -136,8 +136,10 @@ export class BankReconComponent implements OnInit {
     this.report_searchdata = this.gs.UserInfo;
     this.report_searchdata.pkid = this.gs.getGuid();
     this.report_searchdata.ACC_ID = _searchdata.searchQuery.accId; 
+    this.report_searchdata.ACC_NAME = _searchdata.searchQuery.accName; 
     this.report_searchdata.FDATE = _searchdata.searchQuery.sdate;
     this.report_searchdata.EDATE = _searchdata.searchQuery.edate;
+    this.report_searchdata.COMP_NAME = this.gs.company_name;
     this.report_menuid = this.mainservice.menuid;
     this.tab = 'report';
 
