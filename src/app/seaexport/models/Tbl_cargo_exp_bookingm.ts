@@ -119,4 +119,6 @@ export class Tbl_cargo_exp_bookingm {
     rec_company_code: string;
     rec_branch_code: string;
     book_liner_name: string;
+    book_cntr_retdate_frm: string;
+    book_cntr_retdate_to: string;
 }

@@ -560,14 +560,25 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
           <div class="col-8">
-
             <InputBox [(inputModel)]="record.book_cntr_returnat4" [maxlength]="60" [uppercase]="true"
               #book_cntr_returnat4></InputBox>
-
-
-
           </div>
         </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label col-form-label-sm">Cntr. Return Period From</label>
+          <div class="col-3">
+            <app-date [inputdate]="record.book_cntr_retdate_frm" (ValueChanged)="record.book_cntr_retdate_frm=$event">
+            </app-date>
+          </div>
+          <label class="col-2 col-form-label col-form-label-sm">To</label>
+          <div class="col-3">
+            <app-date [inputdate]="record.book_cntr_retdate_to" (ValueChanged)="record.book_cntr_retdate_to=$event">
+            </app-date>
+          </div>
+        </div>
+
+
       </div>
 
       <div class="col-md-6">
