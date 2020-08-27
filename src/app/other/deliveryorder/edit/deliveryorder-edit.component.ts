@@ -617,7 +617,7 @@ export class DeliveryOrderEditComponent implements OnInit {
   }
 
   Save() {
-
+    this.errorMessage = [];
     if (!this.Allvalid())
       return;
 
