@@ -102,6 +102,12 @@ export class Tbl_Acc_Payment {
     rec_closed: string;
     rec_files_attached: string;
     rec_files_attached_chk: string;
+
+    pay_invid: string;
+    pay_mblid: string;
+    pay_invtype: string;
+    pay_hblid: string;
+
 }
 
 
