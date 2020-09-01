@@ -76,7 +76,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   ) {
     modalconfig.backdrop = 'static'; //true/false/static
     modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
-   }
+  }
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -181,6 +181,9 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.record.mbl_voyage = '';
     this.record.mbl_ombl_sent_on = '';
     this.record.mbl_of_sent_on = '';
+    this.record.mbl_coloader_code = '';
+    this.record.mbl_coloader_id = '';
+    this.record.mbl_coloader_name = '';
     var curr_date = new Date();
     var curr_hh = curr_date.getHours();
     if (curr_hh >= 12)
@@ -539,6 +542,10 @@ export class SeaImpMasterEditComponent implements OnInit {
 
     }
 
+    if (_Record.controlname == "COLOADER") {
+      this.record.mbl_coloader_id = _Record.id;
+      this.record.mbl_coloader_name = _Record.name;
+    }
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {

@@ -96,6 +96,9 @@ export interface Tbl_cargo_imp_masterm {
     mbl_ismemo_attached: string;
     mbl_cntr_desc: string;
     mbl_of_sent_on:string;
+    mbl_coloader_id:string;
+    mbl_coloader_name:string;
+    mbl_coloader_code:string;
 }
 
 export interface Tbl_cargo_imp_container {
