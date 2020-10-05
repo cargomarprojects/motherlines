@@ -472,6 +472,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     rec.cntr_weight_uom = '';
     rec.cntr_order = 1;
     rec.cntr_lfd = '';
+    rec.cntr_discharge_date = '';
     this.records.push(rec);
   }
 

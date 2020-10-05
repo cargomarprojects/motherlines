@@ -436,9 +436,10 @@
                         <th>KGS</th>
                         <th *ngIf="this.gs.BRANCH_REGION != 'USA'">TARE-WT</th>
                         <th>CBM</th>
+                        <th>DISCHARGE</th>
+                        <th>LFD</th>
                         <th>PICKUP</th>
                         <th>EMPTY.RETURN</th>
-                        <th>LFD</th>
                         <th class='text-center'>MOVEMENT</th>
                         <th class='text-center'>REMOVE</th>
                       </tr>
@@ -480,15 +481,19 @@
                             (blur)="onBlur('cntr_cbm',rec)" />
                         </td>
                         <td class="p-0">
+                          <app-date [inputdate]="rec.cntr_discharge_date" (ValueChanged)="rec.cntr_discharge_date=$event">
+                          </app-date>
+                        </td>
+                        <td class="p-0">
+                          <app-date [inputdate]="rec.cntr_lfd" (ValueChanged)="rec.cntr_lfd=$event">
+                          </app-date>
+                        </td>
+                        <td class="p-0">
                           <app-date [inputdate]="rec.cntr_pick_date" (ValueChanged)="rec.cntr_pick_date=$event">
                           </app-date>
                         </td>
                         <td class="p-0">
                           <app-date [inputdate]="rec.cntr_return_date" (ValueChanged)="rec.cntr_return_date=$event">
-                          </app-date>
-                        </td>
-                        <td class="p-0">
-                          <app-date [inputdate]="rec.cntr_lfd" (ValueChanged)="rec.cntr_lfd=$event">
                           </app-date>
                         </td>
                         <td class="p-0 text-center"><i class="fa fa-edit  fa-lg pointer" aria-hidden="true"

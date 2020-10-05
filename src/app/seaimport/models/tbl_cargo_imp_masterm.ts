@@ -124,6 +124,7 @@ export interface Tbl_cargo_imp_container {
     cntr_return_date: string;
     cntr_selected:boolean;
     cntr_lfd:string;
+    cntr_discharge_date:string;
 }
 
 export interface Tbl_cargo_imp_housem {
