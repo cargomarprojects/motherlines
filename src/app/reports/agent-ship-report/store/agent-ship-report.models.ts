@@ -5,16 +5,18 @@ export interface ReportState{
     urlid : string,
     menuid : string;
     currentTab : string ;
-    report_category: string;
     sdate: string;
     edate: string;
     mode : string;
     comp_type: string;
-    report_type: string;
-    report_shptype : string;
-    cons_id : string ;
-    cons_name : string ;
-    reportformat : string ;
+    cust_id : string ;
+    cust_name : string ;
+    cust_parent_id : string ;
+    cust_parent_name : string ;
+    consignee_id : string ;
+    consignee_name : string ;
+    shipper_id : string ;
+    shipper_name : string ;
     filename: string;
     filetype: string;
     filedisplayname: string;

@@ -79,4 +79,19 @@ export class TBL_MBL_REPORT {
 
     hbl_cntr_no: string;
     shipment_stage: string;
+
+    mbl_pol_code: string;
+    mbl_pod_code: string;
+    hbl_lfd_date: string;
+    hbl_remarks: string;
+    hbl_pld_eta: string;
+    hbl_pono: string;
+    hbl_delivery_date: string;
+
+    mbl_cntr_no: string;
+    mbl_cntr_seal: string;
+    mbl_cntr_pick_date: string;
+    mbl_cntr_return_date: string;
+    mbl_cntr_discharge_date: string;
+    hbl_custom_clear_date: string;
 }

@@ -29,20 +29,23 @@ export class AgentShipReportComponent implements OnInit {
 
   currentTab = '';
 
-  report_category: string;
   sdate: string;
   edate: string;
-  mode  = '';
+  mode = '';
   comp_type: string = '';
-  report_type: string = '';
-  report_shptype: string = '';
+
   filename: string = '';
   filetype: string = '';
   filedisplayname: string = '';
 
-  cons_id: string;
-  cons_name: string;
-  reportformat = '';
+  cust_id: string;
+  cust_name: string;
+  cust_parent_id: string;
+  cust_parent_name: string;
+  shipper_id: string;
+  shipper_name: string;
+  consignee_id: string;
+  consignee_name: string;
 
   page_count: number = 0;
   page_current: number = 0;
@@ -89,17 +92,18 @@ export class AgentShipReportComponent implements OnInit {
         this.MainList = rec.records;
         this.pkid = rec.pkid;
         this.currentTab = rec.currentTab;
-
-        this.report_category = rec.report_category;
         this.sdate = rec.sdate;
         this.edate = rec.edate;
         this.mode = rec.mode;
         this.comp_type = rec.comp_type;
-        this.report_type = rec.report_type;
-        this.report_shptype = rec.report_shptype;
-        this.cons_id = rec.cons_id;
-        this.cons_name = rec.cons_name;
-        this.reportformat = rec.reportformat;
+        this.cust_id = rec.cust_id;
+        this.cust_name = rec.cust_name;
+        this.cust_parent_id = rec.cust_parent_id;
+        this.cust_parent_name = rec.cust_parent_name;
+        this.shipper_id = rec.shipper_id;
+        this.shipper_name = rec.shipper_name;
+        this.consignee_id = rec.consignee_id;
+        this.consignee_name = rec.consignee_name;
         this.filename = rec.filename;
         this.filetype = rec.filetype;
         this.filedisplayname = rec.filedisplayname;
@@ -121,14 +125,15 @@ export class AgentShipReportComponent implements OnInit {
           this.SearchData.COMP_CODE = this.comp_type;
         }
         this.SearchData.COMP_NAME = this.gs.branch_name;
-        this.SearchData.REPORT_TYPE = this.report_type;
-        this.SearchData.REPORT_SHPTYPE = this.report_shptype;
 
-        this.SearchData.CONSIGNEE_ID = this.cons_id;
-        this.SearchData.CONSIGNEE_NAME = this.cons_name;
-
-        this.CONSRECORD.id = this.cons_id;
-        this.CONSRECORD.name = this.cons_name;
+        this.SearchData.SHIPPER_ID = this.shipper_id;
+        this.SearchData.SHIPPER_NAME = this.shipper_name;
+        this.SearchData.CONSIGNEE_ID = this.consignee_id;
+        this.SearchData.CONSIGNEE_NAME = this.consignee_name;
+        this.SearchData.CUST_ID = this.cust_id;
+        this.SearchData.CUST_NAME = this.cust_name;
+        this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
+        this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
 
       } else {
         this.MainList = Array<TBL_MBL_REPORT>();
@@ -140,20 +145,21 @@ export class AgentShipReportComponent implements OnInit {
 
         this.currentTab = 'LIST';
 
-        this.report_category = 'CONSIGNEE SHIPMENT REPORT';
-        this.sdate =  this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
-        this.report_type = 'DETAIL';
-        this.report_shptype = 'ALL';
-        this.cons_id = '';
-        this.cons_name = '';
-        this.reportformat = 'DETAIL';
+        this.shipper_id = '';
+        this.shipper_name = '';
+        this.consignee_id = '';
+        this.consignee_name = '';
+        this.cust_id = '';
+        this.cust_name = '';
+        this.cust_parent_id = '';
+        this.cust_parent_name = '';
         this.filename = '';
         this.filetype = '';
         this.filedisplayname = '';
-
         this.SearchData = this.gs.UserInfo;
 
       }
@@ -184,36 +190,36 @@ export class AgentShipReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat === 'SCREEN' && _action === 'NEW') {
-
+      if (this.cust_parent_id != '') { //If Parent Exist then customer need to empty
+        this.cust_id = '';
+        this.cust_name = '';
+      }
       this.SearchData.JV_YEAR = this.gs.globalVariables.year_code;
-      this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
       this.SearchData.MODE = this.mode;
       this.SearchData.COMP_TYPE = this.comp_type;
-
       if (this.comp_type === 'ALL') {
         this.SearchData.COMP_CODE = this.gs.branch_codes;
       } else {
         this.SearchData.COMP_CODE = this.comp_type;
       }
       this.SearchData.COMP_NAME = this.gs.branch_name;
-      this.SearchData.REPORT_TYPE = this.report_type;
-      this.SearchData.REPORT_SHPTYPE = this.report_shptype;
-
-      this.SearchData.CONSIGNEE_ID = this.cons_id;
-      this.SearchData.CONSIGNEE_NAME = this.cons_name;
-
-      this.reportformat = this.report_type;
+      this.SearchData.SHIPPER_ID = this.shipper_id;
+      this.SearchData.SHIPPER_NAME = this.shipper_name;
+      this.SearchData.CONSIGNEE_ID = this.consignee_id;
+      this.SearchData.CONSIGNEE_NAME = this.consignee_name;
+      this.SearchData.CUST_ID = this.cust_id;
+      this.SearchData.CUST_NAME = this.cust_name;
+      this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
+      this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
     }
 
-
     this.loading = true;
-
-    this.mainservice.ConsigneeShipmentReport(this.SearchData)
+    this.mainservice.AgentShipmentReport(this.SearchData)
       .subscribe(response => {
 
         if (_outputformat === 'SCREEN') {
@@ -230,16 +236,18 @@ export class AgentShipReportComponent implements OnInit {
             urlid: this.urlid,
             menuid: this.menuid,
             currentTab: this.currentTab,
-            report_category: this.SearchData.REPORT_CATEGORY,
             sdate: this.SearchData.SDATE,
             edate: this.SearchData.EDATE,
             mode: this.SearchData.MODE,
             comp_type: this.SearchData.COMP_TYPE,
-            report_type: this.SearchData.REPORT_TYPE,
-            report_shptype: this.SearchData.REPORT_SHPTYPE,
-            cons_id: this.SearchData.CONSIGNEE_ID,
-            cons_name: this.SearchData.CONSIGNEE_NAME,
-            reportformat: this.reportformat,
+            cust_id: this.SearchData.CUST_ID,
+            cust_name: this.SearchData.CUST_NAME,
+            cust_parent_id: this.SearchData.CUST_PARENT_ID,
+            cust_parent_name: this.SearchData.CUST_PARENT_NAME,
+            shipper_id: this.SearchData.SHIPPER_ID,
+            shipper_name: this.SearchData.SHIPPER_NAME,
+            consignee_id: this.SearchData.CONSIGNEE_ID,
+            consignee_name: this.SearchData.CONSIGNEE_NAME,
             page_rows: response.page_rows,
             page_count: response.page_count,
             page_current: response.page_current,
@@ -266,19 +274,31 @@ export class AgentShipReportComponent implements OnInit {
   }
 
   initLov(caption: string = '') {
-    this.CONSRECORD = new SearchTable();
-    this.CONSRECORD.controlname = 'CONSIGNEE';
-    this.CONSRECORD.displaycolumn = 'NAME';
-    this.CONSRECORD.type = 'MASTER';
-    this.CONSRECORD.subtype = '';
-    this.CONSRECORD.id = '';
-    this.CONSRECORD.code = '';
+    // this.CONSRECORD = new SearchTable();
+    // this.CONSRECORD.controlname = 'CONSIGNEE';
+    // this.CONSRECORD.displaycolumn = 'NAME';
+    // this.CONSRECORD.type = 'MASTER';
+    // this.CONSRECORD.subtype = '';
+    // this.CONSRECORD.id = '';
+    // this.CONSRECORD.code = '';
   }
 
   LovSelected(_Record: SearchTable) {
+    if (_Record.controlname === 'CUSTOMER') {
+      this.cust_id = _Record.id;
+      this.cust_name = _Record.name;
+    }
+    if (_Record.controlname === 'PARENT') {
+      this.cust_parent_id = _Record.id;
+      this.cust_parent_name = _Record.name;
+    }
+    if (_Record.controlname === 'SHIPPER') {
+      this.shipper_id = _Record.id;
+      this.shipper_name  = _Record.name;
+    }
     if (_Record.controlname === 'CONSIGNEE') {
-      this.cons_id = _Record.id;
-      this.cons_name = _Record.name;
+      this.consignee_id = _Record.id;
+      this.consignee_name  = _Record.name;
     }
   }
   Print() {
