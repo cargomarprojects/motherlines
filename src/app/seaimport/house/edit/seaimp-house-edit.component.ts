@@ -291,7 +291,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
     this.record.hbl_delivery_date = '';
-
+    this.record.hbl_custom_clear_date = '';
   }
 
   LoadData() {

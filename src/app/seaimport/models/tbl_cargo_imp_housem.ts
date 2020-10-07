@@ -150,7 +150,7 @@ export interface Tbl_cargo_imp_housem {
     hbl_paid_remarks: string;
     hbl_checked:boolean;
     hbl_delivery_date:string;
-
+    hbl_custom_clear_date:string;
 }
 export interface Tbl_desc {
    
