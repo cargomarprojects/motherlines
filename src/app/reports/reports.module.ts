@@ -24,6 +24,8 @@ import { TopCustomerReportReducer } from './top-customer-report/store/top-custom
 import { ConsShipReportReducer } from './cons-ship-report/store/cons-ship-report.reducer';
 import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
 import { ShipmentLogReportReducer } from './ship-log-report/store/ship-log-report.reducer';
+import { AgentShipReportReducer } from './agent-ship-report/store/agent-ship-report.reducer';
+import { AgentShipReportComponent } from './agent-ship-report/agent-ship-report.component';
 
 import { InvIssReportComponent } from './invoice-issue/inv-iss-report.component';
 import { InvIssReportReducer } from './invoice-issue/store/inv-iss-report.reducer';
@@ -46,6 +48,7 @@ import { PayDueReportReducer } from './pay-due/store/pay-due-report.reducer';
     ProfitReportHouseComponent,
     ShipLabelReportComponent,
     ConsShipReportComponent,
+    AgentShipReportComponent,
     TopCustomerReportComponent,
     ShipmentLogReportComponent,
     InvIssReportComponent,
@@ -65,6 +68,7 @@ import { PayDueReportReducer } from './pay-due/store/pay-due-report.reducer';
     StoreModule.forFeature('ProfitReportHouse',ProfitReportHouseReducer ), 
     StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ),
     StoreModule.forFeature('ConsShipReport',ConsShipReportReducer ),
+    StoreModule.forFeature('AgentShipReport',AgentShipReportReducer ),
     StoreModule.forFeature('ShipLabelReport',ShipLabelReportReducer ),
     StoreModule.forFeature('TopCustomerReport',TopCustomerReportReducer ),   
     StoreModule.forFeature('ShipmentLogReport',ShipmentLogReportReducer ),

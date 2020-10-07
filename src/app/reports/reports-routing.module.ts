@@ -8,6 +8,7 @@ import { ProfitReportComponent } from './profit-report/profit-report.component';
 import { ProfitReportHouseComponent } from './profit-report-house/profit-report-house.component';
 import { ShipLabelReportComponent } from './ship-label-report/ship-label-report.component';
 import { ConsShipReportComponent } from './cons-ship-report/cons-ship-report.component';
+import { AgentShipReportComponent } from './agent-ship-report/agent-ship-report.component';
 
 import { TopCustomerReportComponent } from './top-customer-report/top-customer-report.component';
 import { ShipmentLogReportComponent } from './ship-log-report/ship-log-report.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
    { path :'HouseProfitReport', component : ProfitReportHouseComponent },
    { path :'ShipLabelPage', component : ShipLabelReportComponent },
    { path :'ConsigneeShipmentReport', component : ConsShipReportComponent },
+   { path :'AgentShipmentReport', component : AgentShipReportComponent },
    { path :'TopCustomerReport', component : TopCustomerReportComponent },
    { path :'ShipmentLogPage', component : ShipmentLogReportComponent },
    { path :'InvoiceIssueReport', component : InvIssReportComponent },
