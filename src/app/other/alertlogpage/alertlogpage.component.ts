@@ -143,17 +143,24 @@ export class AlertLogPageComponent implements OnInit {
         let sID: string = (_record.cf_master_id != null) ? _record.cf_master_id.toString() : "";
         let REFNO: string = _record.cf_refno != null ? _record.cf_refno.toString() : "";
         let sMode: string = _record.cf_mbl_mode != null ? _record.cf_mbl_mode.toString() : "";
+        let branch_code: string = _record.cf_branch_code != null ? _record.cf_branch_code.toString() : "";
         if (sID == "") {
             alert('Invalid Record Selected');
             return;
         }
-        this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+        if (branch_code == this.gs.branch_code) {
+            this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+        }
+        else {
+            alert("Cannot Show Details from another Branch");
+        }
     }
 
     editfup(_record: Tbl_cargo_followup) {
-        
-        let IsLocked:boolean = false;
-        IsLocked=this.gs.IsShipmentClosed(_record.cf_mbl_mode,_record.cf_ref_date, _record.cf_mbl_lock, _record.cf_mbl_unlock_date);
+
+        let branch_code: string = _record.cf_branch_code != null ? _record.cf_branch_code.toString() : "";
+        let IsLocked: boolean = false;
+        IsLocked = this.gs.IsShipmentClosed(_record.cf_mbl_mode, _record.cf_ref_date, _record.cf_mbl_lock, _record.cf_mbl_unlock_date);
         let prm = {
             menuid: this.mainservice.menuid,
             master_id: _record.cf_master_id,
@@ -161,19 +168,30 @@ export class AlertLogPageComponent implements OnInit {
             master_refdate: _record.cf_ref_date,
             is_locked: IsLocked,
             origin: 'alert-log-page'
-          };
-          this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
+        };
+        if (branch_code == this.gs.branch_code) {
+            this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
+        }
+        else {
+            alert("Cannot Show Details from another Branch");
+        }
     }
 
     editmaster(_record: Tbl_cargo_general) {
         let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
         let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+        let branch_code: string = _record.mbl_branch != null ? _record.mbl_branch.toString() : "";
         let sMode: string = this.getmode(REFNO);
         if (sID == "") {
             alert('Invalid Record Selected');
             return;
         }
-        this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+        if (branch_code == this.gs.branch_code) {
+            this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+        }
+        else {
+            alert("Cannot Show Details from another Branch");
+        }
     }
 
     edithouse(_record: Tbl_cargo_general) {
@@ -181,11 +199,18 @@ export class AlertLogPageComponent implements OnInit {
         let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
         let sMode: string = this.getmode(REFNO);
         let HBLID: string = _record.hbl_pkid != null ? _record.hbl_pkid.toString() : "";
+        let branch_code: string = _record.mbl_branch != null ? _record.mbl_branch.toString() : "";
+
         if (HBLID == "") {
             alert('Invalid Record Selected');
             return;
         }
-        this.gs.LinkPage("HOUSE", sMode, REFNO, sID, HBLID);
+        if (branch_code == this.gs.branch_code) {
+            this.gs.LinkPage("HOUSE", sMode, REFNO, sID, HBLID);
+        }
+        else {
+            alert("Cannot Show Details from another Branch");
+        }
     }
 
     getmode(sRefno: string) {

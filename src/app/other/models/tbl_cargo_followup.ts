@@ -14,6 +14,7 @@ export interface Tbl_cargo_followup {
     cf_assigned_id: string;
     cf_assigned_code: string;
     cf_yn_b:boolean;
+    cf_branch_code:string;
 }
 
 export interface vm_Tbl_cargo_followup {

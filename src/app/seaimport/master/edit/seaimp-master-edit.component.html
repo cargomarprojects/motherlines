@@ -145,8 +145,6 @@
                       (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
 
-
-
                   </div>
                 </div>
 
@@ -440,7 +438,7 @@
                         <th>LFD</th>
                         <th>PICKUP</th>
                         <th>EMPTY.RETURN</th>
-                        <th class='text-center'>MOVEMENT</th>
+                        <th *ngIf="gs.screenExists(gs.MENU_SI_CONTAINER_MOVEMENT)"  class='text-center'>MOVEMENT</th>
                         <th class='text-center'>REMOVE</th>
                       </tr>
                     </thead>
@@ -496,7 +494,7 @@
                           <app-date [inputdate]="rec.cntr_return_date" (ValueChanged)="rec.cntr_return_date=$event">
                           </app-date>
                         </td>
-                        <td class="p-0 text-center"><i class="fa fa-edit  fa-lg pointer" aria-hidden="true"
+                        <td *ngIf="gs.screenExists(gs.MENU_SI_CONTAINER_MOVEMENT)"  class="p-0 text-center"><i class="fa fa-edit  fa-lg pointer" aria-hidden="true"
                             (click)="ShowCntrMovement(rec)"></i>
                         </td>
                         <td class="p-0 text-center"><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
