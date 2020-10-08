@@ -35,9 +35,9 @@ export class InvoiceComponent implements OnInit {
   ar_bal: number = 0;
   ap_bal: number = 0;
 
-  MBL_LOSS_APPROVED : boolean = false;
-  MBL_PROFIT_REQ : boolean = false;
-  MBL_LOSS_MEMO : string = '';
+  MBL_LOSS_APPROVED: boolean = false;
+  MBL_PROFIT_REQ: boolean = false;
+  MBL_LOSS_MEMO: string = '';
 
 
   records: Tbl_cargo_invoicem[]
@@ -98,8 +98,8 @@ export class InvoiceComponent implements OnInit {
       this.records = response.list;
 
       this.MBL_LOSS_APPROVED = response.MBL_LOSS_APPROVED;
-      this.MBL_PROFIT_REQ =response.MBL_PROFIT_REQ;
-      this.MBL_LOSS_MEMO =response.MBL_LOSS_MEMO;
+      this.MBL_PROFIT_REQ = response.MBL_PROFIT_REQ;
+      this.MBL_LOSS_MEMO = response.MBL_LOSS_MEMO;
 
       this.DisplayProfit();
     }, error => {
@@ -107,14 +107,14 @@ export class InvoiceComponent implements OnInit {
     });
   }
 
-  UpdateStatus(){
-    
+  UpdateStatus() {
+
     var SearchData = this.gs.UserInfo;
     SearchData.MBL_PKID = this.mbl_pkid;
 
     SearchData.MBL_LOSS_MEMO = this.MBL_LOSS_MEMO;
-    SearchData.MBL_PROFIT_REQ = ( this.MBL_PROFIT_REQ) ? 'Y' : 'N';
-    SearchData.MBL_LOSS_APPROVED =( this.MBL_LOSS_APPROVED) ? 'Y' : 'N';
+    SearchData.MBL_PROFIT_REQ = (this.MBL_PROFIT_REQ) ? 'Y' : 'N';
+    SearchData.MBL_LOSS_APPROVED = (this.MBL_LOSS_APPROVED) ? 'Y' : 'N';
 
     this.errorMessage = '';
     this.mainservice.MasterLoss_Status_Save(SearchData).subscribe(response => {
@@ -149,19 +149,19 @@ export class InvoiceComponent implements OnInit {
         }
       }
     })
-    
-        
-    nProfit = this.gs.roundNumber(nInc - nExp,2);
-    this.income = this.gs.roundNumber(nInc,2);
-    this.expense = this.gs.roundNumber(nExp,2);
-    this.profit = this.gs.roundNumber(nProfit,2);
-    this.ar_bal = this.gs.roundNumber(nAr_Bal,2);
-    this.ap_bal = this.gs.roundNumber(nAp_Bal,2);
-    
+
+
+    nProfit = this.gs.roundNumber(nInc - nExp, 2);
+    this.income = this.gs.roundNumber(nInc, 2);
+    this.expense = this.gs.roundNumber(nExp, 2);
+    this.profit = this.gs.roundNumber(nProfit, 2);
+    this.ar_bal = this.gs.roundNumber(nAr_Bal, 2);
+    this.ap_bal = this.gs.roundNumber(nAp_Bal, 2);
+
   }
 
 
-  NewRecord(arorap : string ) {
+  NewRecord(arorap: string) {
     if (!this.canAdd) {
       alert('Insufficient User Rights')
       return;
@@ -171,11 +171,11 @@ export class InvoiceComponent implements OnInit {
       menuid: this.menuid,
       pkid: '',
       mode: 'ADD',
-      mbl_pkid : this.mbl_pkid,
+      mbl_pkid: this.mbl_pkid,
       mbl_type: this.mbl_type,
-      mbl_refno : this.mbl_refno, 
-      inv_arap :arorap,     
-      arrival_notice : '',
+      mbl_refno: this.mbl_refno,
+      inv_arap: arorap,
+      arrival_notice: '',
       origin: 'invoice-list-page',
     };
     this.gs.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(parameter));
@@ -186,16 +186,23 @@ export class InvoiceComponent implements OnInit {
       alert('Insufficient User Rights')
       return;
     }
+ 
+    if (_record.inv_cust_name == "***") {
+      if (_record.rec_created_by != this.gs.user_code) {
+        alert("Cannot Load Details");
+        return;
+      }
+    }
 
     let parameter = {
       menuid: this.menuid,
       pkid: _record.inv_pkid,
       mode: 'EDIT',
-      mbl_pkid : this.mbl_pkid,      
-      mbl_type : this.mbl_type,
-      inv_arap :'',     
-      mbl_refno : this.mbl_refno,
-      arrival_notice : '',      
+      mbl_pkid: this.mbl_pkid,
+      mbl_type: this.mbl_type,
+      inv_arap: '',
+      mbl_refno: this.mbl_refno,
+      arrival_notice: '',
       origin: 'invoice-list-page',
     };
     this.gs.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(parameter));
