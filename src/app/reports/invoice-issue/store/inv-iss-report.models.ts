@@ -21,7 +21,8 @@ export interface ReportState{
 
     cust_parent_id : string ;
     cust_parent_name : string ;
-
+    datetype : string ;
+    
     reportformat : string ;
     page_rows :number;
     page_count :number;

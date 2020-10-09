@@ -1,5 +1,6 @@
 export class TBL_INV_ISSUE_RPT {
     mbl_refno: string;
+    mbl_refdate:string;
     inv_pkid: string;
     vendor_name: string;
     customer_name: string;
@@ -22,6 +23,11 @@ export class TBL_INV_ISSUE_RPT {
     inv_date: string;
     inv_amt: string;
     free_time: string;
+    mbl_pkid: string;
+    mbl_mode: string;
+    mbl_branch_code: string;
+    inv_type: string;
+    inv_hbl_id: string;
 }
 
 

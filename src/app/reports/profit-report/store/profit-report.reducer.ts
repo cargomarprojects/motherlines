@@ -28,7 +28,8 @@ export const initialState: ReportState = {
 
     cust_id :'',
     cust_name :'',
-
+    cust_parent_id : '',
+    cust_parent_name :'',
     sales_id :'',
     sales_name :'',    
     filename: '',

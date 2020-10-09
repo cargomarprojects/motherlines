@@ -13,6 +13,7 @@ import { ReportState } from './store/inv-iss-report.models'
 
 import { Observable } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 
 @Component({
   selector: 'app-invoice-issue-report',
@@ -45,6 +46,7 @@ export class InvIssReportComponent implements OnInit {
 
   cust_parent_id: string;
   cust_parent_name: string;
+  datetype: string = 'Inv-Date';
 
   reportformat = '';
 
@@ -110,7 +112,7 @@ export class InvIssReportComponent implements OnInit {
 
         this.cust_parent_id = rec.cust_parent_id;
         this.cust_parent_name = rec.cust_parent_name;
-
+        this.datetype = rec.datetype;
         this.reportformat = rec.reportformat;
 
 
@@ -144,7 +146,7 @@ export class InvIssReportComponent implements OnInit {
         this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
         // this.PARENTRECORD.id = this.cust_parent_id;
         // this.PARENTRECORD.name = this.cust_parent_name;
-
+        this.SearchData.DATE_TYPE = this.datetype;
 
 
 
@@ -159,7 +161,7 @@ export class InvIssReportComponent implements OnInit {
         this.currentTab = 'LIST';
 
         this.report_category = 'CONSIGNEE SHIPMENT REPORT';
-        this.sdate =   this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
+        this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
         this.mode = 'OCEAN IMPORT';
         this.comp_type = this.gs.branch_code;
@@ -174,7 +176,7 @@ export class InvIssReportComponent implements OnInit {
 
         this.cust_parent_id = '';
         this.cust_parent_name = '';
-
+        this.datetype = 'Inv-Date';
         this.reportformat = 'DETAIL';
 
 
@@ -198,6 +200,13 @@ export class InvIssReportComponent implements OnInit {
   }
 
   List(_outputformat: string, _action: string = 'NEW') {
+
+    this.errorMessage = '';
+    if (this.gs.isBlank(this.cust_id) && this.gs.isBlank(this.cust_parent_id)) {
+      this.errorMessage = 'Parent or Customer Cannot be Empty';
+      alert(this.errorMessage);
+      return;
+    }
 
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
@@ -234,6 +243,7 @@ export class InvIssReportComponent implements OnInit {
 
       this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
       this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
+      this.SearchData.DATE_TYPE = this.datetype;
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
@@ -269,6 +279,7 @@ export class InvIssReportComponent implements OnInit {
             cust_name: this.SearchData.CUST_NAME,
             cust_parent_id: this.SearchData.CUST_PARENT_ID,
             cust_parent_name: this.SearchData.CUST_PARENT_NAME,
+            datetype: this.SearchData.DATE_TYPE,
             reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
@@ -335,6 +346,57 @@ export class InvIssReportComponent implements OnInit {
   }
   Downloadfile(filename: string, filetype: string, filedisplayname: string) {
     this.gs.DownloadFile(this.gs.GLOBAL_REPORT_FOLDER, filename, filetype, filedisplayname);
+  }
+
+  editmaster(_record: TBL_INV_ISSUE_RPT) {
+
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.mbl_refno != null ? _record.mbl_refno.toString() : "";
+    let sMode: string = _record.mbl_mode != null ? _record.mbl_mode.toString() : "";
+    let branch_code: string = _record.mbl_branch_code != null ? _record.mbl_branch_code.toString() : "";
+
+    if (sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_code == this.gs.branch_code) {
+      this.gs.LinkPage("REFNO", sMode, REFNO, sID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
+  }
+
+  editinvoice(_record: TBL_INV_ISSUE_RPT) {
+
+    let sID: string = (_record.mbl_pkid != null) ? _record.mbl_pkid.toString() : "";
+    let REFNO: string = _record.inv_type != null ? _record.inv_type.toString() : "";
+    let sMode: string = "";
+    let INVID: string = (_record.inv_pkid != null) ? _record.inv_pkid.toString() : "";
+    let HBLID: string = (_record.inv_hbl_id != null) ? _record.inv_hbl_id.toString() : "";
+    let branch_code: string = _record.mbl_branch_code != null ? _record.mbl_branch_code.toString() : "";
+
+    if (REFNO == "OI")
+      sMode = "SEA IMPORT";
+    else if (REFNO == "OE")
+      sMode = "SEA EXPORT";
+    else if (REFNO == "AI")
+      sMode = "AIR IMPORT";
+    else if (REFNO == "AE")
+      sMode = "AIR EXPORT";
+    else if (REFNO == "OT")
+      sMode = "OTHERS";
+
+    if (INVID == "" || sID == "") {
+      alert("Invalid Record Selected");
+      return;
+    }
+    if (branch_code == this.gs.branch_code) {
+      this.gs.LinkPage("INVNO", sMode, REFNO, sID, HBLID, INVID);
+    }
+    else {
+      alert("Cannot Show Details from another Branch");
+    }
   }
 
 }

@@ -56,7 +56,8 @@ export class ProfitReportComponent implements OnInit {
 
   cust_id: string;
   cust_name: string;
-
+  cust_parent_id: string;
+  cust_parent_name: string;
   sales_id: string;
   sales_name: string;
 
@@ -156,7 +157,8 @@ export class ProfitReportComponent implements OnInit {
 
         this.cust_id = rec.cust_id;
         this.cust_name = rec.cust_name;
-
+        this.cust_parent_id = rec.cust_parent_id;
+        this.cust_parent_name = rec.cust_parent_name;
         this.sales_id = rec.sales_id;
         this.sales_name = rec.sales_name;
 
@@ -192,6 +194,8 @@ export class ProfitReportComponent implements OnInit {
 
         this.SearchData.CUST_ID = this.cust_id;
         this.SearchData.CUST_NAME = this.cust_name;
+        this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
+        this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
 
         this.CUSTRECORD.id = this.cust_id;
         this.CUSTRECORD.name = this.cust_name;
@@ -229,7 +233,8 @@ export class ProfitReportComponent implements OnInit {
 
         this.cust_id = "";
         this.cust_name = "";
-
+        this.cust_parent_id = "";
+        this.cust_parent_name = "";
         this.sales_id = "";
         this.sales_name = "";
         this.filename = '';
@@ -276,7 +281,10 @@ export class ProfitReportComponent implements OnInit {
     this.SearchData.page_rowcount = this.page_rowcount;
 
     if (_outputformat == "SCREEN" && _action == 'NEW') {
-
+      if (this.cust_parent_id != '') { //If Parent Exist then customer need to empty
+        this.cust_id = '';
+        this.cust_name = '';
+      }
       this.SearchData.REPORT_CATEGORY = this.report_category;
       this.SearchData.SDATE = this.sdate;
       this.SearchData.EDATE = this.edate;
@@ -301,7 +309,8 @@ export class ProfitReportComponent implements OnInit {
 
       this.SearchData.CUST_ID = this.cust_id;
       this.SearchData.CUST_NAME = this.cust_name;
-
+      this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
+      this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
       this.SearchData.SALES_ID = this.sales_id;
       this.SearchData.SALES_NAME = this.sales_name;
 
@@ -332,7 +341,7 @@ export class ProfitReportComponent implements OnInit {
             this.SearchData.filetype = response.filetype;
             this.SearchData.filename2 = response.filename2;
             this.SearchData.filedisplayname2 = response.filedisplayname2;
-            this.SearchData.filetype2= response.filetype2;
+            this.SearchData.filetype2 = response.filetype2;
           }
 
           const state: ReportState = {
@@ -353,7 +362,8 @@ export class ProfitReportComponent implements OnInit {
 
             cust_id: this.SearchData.CUST_ID,
             cust_name: this.SearchData.CUST_NAME,
-
+            cust_parent_id: this.SearchData.CUST_PARENT_ID,
+            cust_parent_name: this.SearchData.CUST_PARENT_NAME,
             sales_id: this.SearchData.SALES_ID,
             sales_name: this.SearchData.SALES_NAME,
 
@@ -421,6 +431,10 @@ export class ProfitReportComponent implements OnInit {
       this.sales_id = _Record.id;
       this.sales_name = _Record.name;
     }
+    if (_Record.controlname === 'PARENT') {
+      this.cust_parent_id = _Record.id;
+      this.cust_parent_name = _Record.name;
+    }
   }
 
   Print() {
@@ -458,7 +472,7 @@ export class ProfitReportComponent implements OnInit {
     else {
       alert("Cannot Show Details from another Branch");
     }
-    
+
   }
 
   editarap(_record: TBL_MBL_REPORT) {

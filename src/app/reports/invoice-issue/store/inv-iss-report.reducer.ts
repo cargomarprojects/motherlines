@@ -28,6 +28,7 @@ export const initialState: ReportState = {
     cust_name: '',
     cust_parent_id: '',
     cust_parent_name: '',
+    datetype: '',
     reportformat: '',
     page_rows: 0,
     page_count: 0,

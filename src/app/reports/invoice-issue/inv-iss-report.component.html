@@ -15,7 +15,13 @@
         <div class="col-md-3">
 
           <div class="form-group row">
-            <label class="col-4 col-form-label col-form-label-sm">From</label>
+            <!-- <label class="col-4 col-form-label col-form-label-sm">From</label> -->
+            <div class="col-4">
+              <select class="form-control form-control-sm" [(ngModel)]="datetype">
+                <option [value]="'Inv-Date'">Inv-Date</option>
+                <option [value]="'Ref-Date'">Ref-Date</option>
+              </select>
+            </div>
             <div class="col-8">
               <app-date [inputdate]="sdate" (ValueChanged)="sdate=$event"></app-date>
             </div>
@@ -94,6 +100,7 @@
       <thead class="page-body-thead">
         <tr>
           <th>REF#</th>
+          <th>REF-DATE</th>
           <th>INV#</th>
           <th>INV-DATE</th>
           <th>VENDOR</th>
@@ -117,24 +124,25 @@
       </thead>
       <tbody class="page-body-tbody" *ngFor="let rec of MainList">
         <tr>
-          <td>{{rec.mbl_refno}}</td>
-          <td>{{rec.inv_no}}</td>
+          <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
+          <td>{{rec.mbl_refdate | date : gs.FRONTEND_DATEFORMAT }}</td>
+          <td class='hlink' (click)="editinvoice(rec)">{{rec.inv_no}}</td>
           <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
           <td>{{rec.vendor_name}}</td>
           <td>{{rec.customer_name}}</td>
-          <td>{{order_number}}</td>
-          <td>{{loading_country}}</td>
-          <td>{{loading_postcode}}</td>
-          <td>{{loading_city}}</td>
+          <td>{{rec.order_number}}</td>
+          <td>{{rec.loading_country}}</td>
+          <td>{{rec.loading_postcode}}</td>
+          <td>{{rec.loading_city}}</td>
           <td>{{rec.load_date_from | date : gs.FRONTEND_DATEFORMAT }}</td>
-          <td>{{mbl_pol_code}}</td>
-          <td>{{mbl_pod_code}}</td>
-          <td>{{receiver_country}}</td>
-          <td>{{receiver_city}}</td>
+          <td>{{rec.mbl_pol_code}}</td>
+          <td>{{rec.mbl_pod_code}}</td>
+          <td>{{rec.receiver_country}}</td>
+          <td>{{rec.receiver_city}}</td>
           <td>{{rec.delivery_date_from | date : gs.FRONTEND_DATEFORMAT }}</td>
-          <td>{{container_type}}</td>
-          <td>{{carrier_name}}</td>
-          <td>{{currency}}</td>
+          <td>{{rec.container_type}}</td>
+          <td>{{rec.carrier_name}}</td>
+          <td>{{rec.currency}}</td>
           <td align='right'>{{rec.inv_amt | number : '1.2-2'}}</td>
           <td>{{rec.free_time}}</td>
         </tr>

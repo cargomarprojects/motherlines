@@ -19,7 +19,9 @@ export interface ReportState{
     report_loss_approved: boolean;
     cust_id : string ;
     cust_name : string ;
-
+    cust_parent_id : string ;
+    cust_parent_name : string ;
+    
     sales_id : string ;
     sales_name : string ;    
     filename: string;
