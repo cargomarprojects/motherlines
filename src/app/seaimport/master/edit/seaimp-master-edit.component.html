@@ -49,7 +49,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Ref Date</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_ref_date" (ValueChanged)="record.mbl_ref_date=$event"></app-date>
+                    <app-date [inputdate]="record.mbl_ref_date" #_mbl_ref_date (ValueChanged)="record.mbl_ref_date=$event"></app-date>
                   </div>
                 </div>
               </div>
@@ -93,7 +93,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">Master Agent</label>
                   <div class="col-9">
 
-                    <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+                    <app-autocomplete2 #_agent_lov [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
                       [displaydata]="record.mbl_agent_name" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
 
@@ -105,7 +105,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">Carrier</label>
                   <div class="col-9">
 
-                    <app-autocomplete2 [controlname]="'CARRIER'" [tabletype]="'SEA CARRIER'" [displaycolumn]="'NAME'"
+                    <app-autocomplete2 #_liner_lov [controlname]="'CARRIER'" [tabletype]="'SEA CARRIER'" [displaycolumn]="'NAME'"
                       [displaydata]="record.mbl_liner_name" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
 
@@ -116,7 +116,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">Co-Loader</label>
                   <div class="col-9">
 
-                    <app-autocomplete2 [controlname]="'COLOADER'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+                    <app-autocomplete2 #_coloader_lov [controlname]="'COLOADER'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
                       [displaydata]="record.mbl_coloader_name" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
 
@@ -127,7 +127,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">A/N.Handled.By</label>
                   <div class="col-9">
 
-                    <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                    <app-autocomplete2 #_handled_lov [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
                       [displaycolumn]="'NAME'" [displaydata]="record.mbl_handled_name"
                       (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
@@ -140,7 +140,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
                   <div class="col-9">
 
-                    <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                    <app-autocomplete2 #_salesman_lov [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
                       [displaycolumn]="'NAME'" [displaydata]="record.mbl_salesman_name"
                       (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
@@ -151,7 +151,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
                   <div class="col-9">
-                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
+                    <select #_mbl_frt_status class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
                       <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
                     </select>
                   </div>
@@ -203,7 +203,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
+                    <app-date #_mbl_pol_etd [inputdate]="record.mbl_pol_etd" (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
                   </div>
                 </div>
 
@@ -221,7 +221,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
+                    <app-date #_mbl_pod_eta [inputdate]="record.mbl_pod_eta" (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
                   </div>
                 </div>
 
@@ -270,7 +270,7 @@
 
                   <label class="col-3 col-form-label col-form-label-sm">Vessel</label>
                   <div class="col-4 pr-0">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_vessel')"
+                    <input #_mbl_vessel class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_vessel')"
                       [(ngModel)]="record.mbl_vessel" maxlength="60" />
                   </div>
                   <label class="col-2 col-form-label col-form-label-sm pr-0">Voyage</label>
@@ -339,7 +339,7 @@
                   <button class=" col-3 btn btn-success btn-sm" *ngIf="!is_locked" (click)="CopyLoc2House()">Copy to All
                     House</button>
                   <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locname')"
+                    <input #_mbl_cargo_locname class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locname')"
                       [(ngModel)]="record.mbl_cargo_locname" maxlength="60" />
                   </div>
                 </div>
@@ -385,7 +385,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm"></label>
                   <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_devan_locname')"
+                    <input #_mbl_devan_locname class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_devan_locname')"
                       [(ngModel)]="record.mbl_devan_locname" maxlength="60" />
                   </div>
                 </div>
@@ -423,7 +423,7 @@
             <div class="row">
               <div class="col-md-12  px-0 mx-0">
                 <div class="page-body table-responsive">
-                  <table class="table  table-hover table-sm">
+                  <table #_cntr_table class="table  table-hover table-sm">
                     <thead class="page-body-thead">
                       <tr>
                         <th>CNTR.NO</th>
@@ -442,10 +442,10 @@
                         <th class='text-center'>REMOVE</th>
                       </tr>
                     </thead>
-                    <tbody class="page-body-tbody">
+                    <tbody #_cnt_bodies class="page-body-tbody">
                       <tr *ngFor="let rec of records">
                         <td class="p-0">
-                          <input class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_no"
+                          <input #_cntr_no class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_no"
                             maxlength="11" (blur)="onBlur('cntr_no',rec)" />
                         </td>
                         <td class="p-0">

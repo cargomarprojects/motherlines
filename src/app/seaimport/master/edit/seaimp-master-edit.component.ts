@@ -8,6 +8,8 @@ import { User_Menu } from '../../../core/models/menum';
 import { Tbl_cargo_imp_masterm, Tbl_cargo_imp_container, Tbl_cargo_imp_housem, vm_tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DateComponent } from '../../../shared/date/date.component';
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-seaimp-master-edit',
@@ -17,6 +19,20 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
+  @ViewChild('_mbl_ref_date') mbl_ref_date_field: DateComponent;
+  @ViewChild('_agent_lov') agent_lov_field: AutoComplete2Component; 
+  @ViewChild('_liner_lov') liner_lov_field: AutoComplete2Component; 
+  @ViewChild('_coloader_lov') coloader_lov_field: AutoComplete2Component; 
+  @ViewChild('_handled_lov') handled_lov_field: AutoComplete2Component; 
+  @ViewChild('_salesman_lov') salesman_lov_field: AutoComplete2Component; 
+  @ViewChild('_mbl_frt_status') mbl_frt_status_field: ElementRef;
+  @ViewChild('_mbl_pol_etd') mbl_pol_etd_field: DateComponent;
+  @ViewChild('_mbl_pod_eta') mbl_pod_eta_field: DateComponent;
+  @ViewChild('_mbl_vessel') mbl_vessel_field: ElementRef;
+  @ViewChild('_mbl_cargo_locname') mbl_cargo_locname_field: ElementRef;
+  @ViewChild('_mbl_devan_locname') mbl_devan_locname_field: ElementRef;
+  // @ViewChild('_cntr_table') cntr_table_field: ElementRef;
+  // @ViewChild('_cnt_bodies') cnt_bodies_field: ElementRef;
 
   record: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   hrecords: Tbl_cargo_imp_housem[] = [];
@@ -190,6 +206,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.record.mbl_ombl_sent_ampm = "PM";
     else
       this.record.mbl_ombl_sent_ampm = "AM";
+     this.mbl_ref_date_field.Focus();
   }
 
   GetRecord() {
@@ -205,7 +222,7 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.hrecords = (response.hrecords == undefined || response.hrecords == null) ? <Tbl_cargo_imp_housem[]>[] : <Tbl_cargo_imp_housem[]>response.hrecords;
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
-
+        this.mbl_ref_date_field.Focus();
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });
@@ -474,6 +491,8 @@ export class SeaImpMasterEditComponent implements OnInit {
     rec.cntr_lfd = '';
     rec.cntr_discharge_date = '';
     this.records.push(rec);
+   // this.cntr_table_field.nativeElement.focus();
+    //this.cnt_bodies_field[0].rows[0].cells[1].focus();
   }
 
 
@@ -482,27 +501,33 @@ export class SeaImpMasterEditComponent implements OnInit {
     if (_Record.controlname == "AGENT") {
       this.record.mbl_agent_id = _Record.id;
       this.record.mbl_agent_name = _Record.name;
+      this.liner_lov_field.Focus();
     }
     if (_Record.controlname == "CARRIER") {
       this.record.mbl_liner_id = _Record.id;
       this.record.mbl_liner_name = _Record.name;
+      this.coloader_lov_field.Focus();
     }
     if (_Record.controlname == "HANDLEDBY") {
       this.record.mbl_handled_id = _Record.id;
       this.record.mbl_handled_name = _Record.name;
+      this.salesman_lov_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.mbl_salesman_id = _Record.id;
       this.record.mbl_salesman_name = _Record.name;
+      this.mbl_frt_status_field.nativeElement.focus();
     }
     if (_Record.controlname == "POL") {
       this.record.mbl_pol_id = _Record.id;
       this.record.mbl_pol_name = _Record.name;
+      this.mbl_pol_etd_field.Focus();
     }
 
     if (_Record.controlname == "POD") {
       this.record.mbl_pod_id = _Record.id;
       this.record.mbl_pod_name = _Record.name;
+      this.mbl_pod_eta_field.Focus();
     }
 
     if (_Record.controlname == "POFD") {
@@ -513,6 +538,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     if (_Record.controlname == "COUNTRY") {
       this.record.mbl_country_id = _Record.id;
       this.record.mbl_country_name = _Record.name;
+      this.mbl_vessel_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "CARGO-LOC") {
@@ -526,7 +552,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.record.mbl_cargo_locaddr2 = _Record.col2;
       this.record.mbl_cargo_locaddr3 = _Record.col3;
       this.record.mbl_cargo_locaddr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
-
+      this.mbl_cargo_locname_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "DEVAN-LOC") {
@@ -540,12 +566,13 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.record.mbl_devan_locaddr2 = _Record.col2;
       this.record.mbl_devan_locaddr3 = _Record.col3;
       this.record.mbl_devan_locaddr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
-
+      this.mbl_devan_locname_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "COLOADER") {
       this.record.mbl_coloader_id = _Record.id;
       this.record.mbl_coloader_name = _Record.name;
+      this.handled_lov_field.Focus();
     }
 
     // Container
