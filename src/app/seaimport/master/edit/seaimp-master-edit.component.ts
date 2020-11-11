@@ -31,8 +31,6 @@ export class SeaImpMasterEditComponent implements OnInit {
   @ViewChild('_mbl_vessel') mbl_vessel_field: ElementRef;
   @ViewChild('_mbl_cargo_locname') mbl_cargo_locname_field: ElementRef;
   @ViewChild('_mbl_devan_locname') mbl_devan_locname_field: ElementRef;
-  @ViewChild('_cntr_table') cntr_table_field: QueryList<ElementRef>;
-  @ViewChild('_cnt_bodies') cnt_bodies_field: QueryList<ElementRef>;
   @ViewChild('_cntr_no') cntr_no_field: ElementRef;
 
   record: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
@@ -492,9 +490,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     rec.cntr_lfd = '';
     rec.cntr_discharge_date = '';
     this.records.push(rec);
-    // this.cntr_table_field.nativeElement.focus();
-    //this.cnt_bodies_field[0].rows[1].cells[1].focus();
-    this.cntr_no_field.nativeElement.focus();
+   // this.cntr_no_field.nativeElement.focus();
      
   }
 
