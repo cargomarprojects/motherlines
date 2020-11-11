@@ -12,7 +12,7 @@ import { GlobalService } from './core/services/global.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'myApp';
+  title = 'myApplication';
 
   sub: any;
 
