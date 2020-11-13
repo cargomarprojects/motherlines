@@ -27,7 +27,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm">Date</label>
         <div class="col-8  input-group input-group-sm">
-          <app-date [inputdate]="record.cs_date" (ValueChanged)="record.cs_date=$event" #csdate></app-date>
+          <app-date [inputdate]="record.cs_date" (ValueChanged)="record.cs_date=$event" #_cs_date></app-date>
           <select class="form-control form-control-sm" [(ngModel)]="record.cs_ampm">
             <option [value]="'AM'">AM</option>
             <option [value]="'PM'">PM</option>

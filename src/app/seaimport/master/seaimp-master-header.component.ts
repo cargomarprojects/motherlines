@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter,SimpleChange, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,SimpleChange, ChangeDetectionStrategy,ViewChild } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
 import { SearchQuery } from '../models/tbl_cargo_imp_masterm';
+//import { DateComponent } from '../../shared/date/date.component';
 
 @Component({
   selector: 'app-seaimp-master-header',
@@ -9,6 +10,8 @@ import { SearchQuery } from '../models/tbl_cargo_imp_masterm';
 })
 export class SeaImpMasterHeaderComponent implements OnInit {
   // Call By Value using Input Parameters
+  //@ViewChild('_si_frm_date') si_frm_date_field: DateComponent;
+  
   searchQuery : SearchQuery;
   @Input() set _query( value : SearchQuery){
     this.searchQuery  = Object.assign({}, value);
@@ -20,6 +23,7 @@ export class SeaImpMasterHeaderComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    //this.si_frm_date_field.Focus();
   }
 
   ngOnChanges(changes:  SimpleChange ) {

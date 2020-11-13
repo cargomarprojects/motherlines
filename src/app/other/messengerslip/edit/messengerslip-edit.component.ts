@@ -9,7 +9,7 @@ import { User_Menu } from '../../../core/models/menum';
 import { vm_tbl_cargo_slip, Tbl_cargo_slip } from '../../../other/models/tbl_cargo_slip';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
-//import { DateComponent } from '../../../shared/Date/date.component';
+import { DateComponent } from '../../../shared/Date/date.component';
 
 @Component({
   selector: 'app-messengerslip-edit',
@@ -18,7 +18,7 @@ import { strictEqual } from 'assert';
 export class MessengerSlipEditComponent implements OnInit {
 
   @ViewChild('is_drop') is_drop_field: ElementRef;
-  // @ViewChild(' csdate') csdate_field: DateComponent;
+  @ViewChild('_cs_date') cs_date_field: DateComponent;
   @ViewChild('to_name') to_name_field: InputBoxComponent;
   @ViewChild('deliver_to_name') deliver_to_name_field: InputBoxComponent;
 
@@ -200,7 +200,7 @@ export class MessengerSlipEditComponent implements OnInit {
           this.record.cs_is_bl_bool = this.record.cs_is_bl == "Y" ? true : false;
           this.record.cs_is_oth_bool = this.record.cs_is_oth == "Y" ? true : false;
         }
-        //this.hbl_houseno_field.nativeElement.focus();
+        this.cs_date_field.Focus();
 
       }, error => {
         this.errorMessage = this.gs.getError(error);
