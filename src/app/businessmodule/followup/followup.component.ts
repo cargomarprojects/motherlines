@@ -8,6 +8,7 @@ import { User_Menu } from '../../core/models/menum';
 import { Table_Cargo_Followup, vm_Table_Cargo_Followup } from '../models/table_cargo_followup';
 import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
+import { DateComponent } from '../../shared/Date/date.component';
 
 @Component({
   selector: 'app-followup',
@@ -15,7 +16,8 @@ import { strictEqual } from 'assert';
 })
 export class FollowupComponent implements OnInit {
 
-  //@ViewChild('mbl_no') mbl_no_field: ElementRef;
+  @ViewChild('cmb_note') cmb_note_field: ElementRef;
+  @ViewChild('_cf_followup_date') cf_followup_date_field: DateComponent; 
   records: Table_Cargo_Followup[] = [];
   record: Table_Cargo_Followup = <Table_Cargo_Followup>{};
   // 15-07-2019 Created By Ajith  
@@ -157,6 +159,8 @@ export class FollowupComponent implements OnInit {
     this.record.cf_remarks = '';
     this.lblSave = "Save";
     //Txtmemo.Focus();
+    //this.cmb_note_field.nativeElement.fous();
+    this.cf_followup_date_field.Focus();
   }
 
   EditRow(_rec: Table_Cargo_Followup) {
@@ -299,6 +303,8 @@ export class FollowupComponent implements OnInit {
       .subscribe(response => {
         this.FollowupList = response.followuplist;
         this.UserList = response.userlist;
+       // this.cmb_note_field.nativeElement.focus();
+        this.cf_followup_date_field.Focus();
       },
         error => {
           this.errorMessage = this.gs.getError(error);

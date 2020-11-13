@@ -6,7 +6,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { SearchTable } from '../../shared/models/searchtable';
 import { Table_Cargo_Payrequest, vm_Table_Cargo_Payrequest } from '../../businessmodule/models/table_cargo_payrequest';
 import { PaymentReqService } from '../services/paymentreq.service';
-// import { DateComponent } from '../../shared/Date/date.component';
+import { DateComponent } from '../../shared/Date/date.component';
 
 @Component({
   selector: 'app-paymentreq',
@@ -21,7 +21,7 @@ export class PaymentReqComponent implements OnInit {
   @Input() public cp_mode: string = '';
 
   @ViewChild('paytype_needed') paytype_needed_field: ElementRef;
-  // @ViewChild('payment_date') payment_date_field: DateComponent;
+  @ViewChild('payment_date') payment_date_field: DateComponent;
 
   payrecord: Table_Cargo_Payrequest = <Table_Cargo_Payrequest>{};
   payrecords: Table_Cargo_Payrequest[] = [];
@@ -119,9 +119,9 @@ export class PaymentReqComponent implements OnInit {
     this.payrecord.cp_inv_no = '';
     this.payrecord.cp_inv_id = '';
     this.invrecords.forEach(Rec => {
-      Rec.cp_selected = false;
+      Rec.cp_selected = false;      
     })
-
+    this.paytype_needed_field.nativeElement.focus();
   }
 
 
@@ -135,7 +135,7 @@ export class PaymentReqComponent implements OnInit {
       .subscribe(response => {
         this.payrecords = <Table_Cargo_Payrequest[]>response.records;
         this.invrecords = <Table_Cargo_Payrequest[]>response.invrecords;
-
+        this.paytype_needed_field.nativeElement.focus();
       },
         error => {
           this.errorMessage = this.gs.getError(error);
@@ -148,6 +148,7 @@ export class PaymentReqComponent implements OnInit {
     if (_Record.controlname == "PAYEE") {
       this.payrecord.cp_cust_id = _Record.id;
       this.payrecord.cp_cust_name = _Record.name;
+      this.payment_date_field.Focus();
     }
 
   }
@@ -215,7 +216,7 @@ export class PaymentReqComponent implements OnInit {
       bRet = false;
       this.errorMessage = "Payment Date cannot be blank";
       alert(this.errorMessage);
-      // this.payment_date_field.Focus();
+      this.payment_date_field.Focus();
       return bRet;
     }
 

@@ -43,14 +43,14 @@
                 <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm">FollowupDate</label>
                     <div class="col-6">
-                        <app-date [inputdate]="record.cf_followup_date" (ValueChanged)="record.cf_followup_date=$event">
+                        <app-date #_cf_followup_date [inputdate]="record.cf_followup_date" (ValueChanged)="record.cf_followup_date=$event">
                         </app-date>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm"></label>
                     <div class="col-6">
-                        <select class="form-control form-control-sm" [(ngModel)]="cmbNotes"
+                        <select #cmb_note class="form-control form-control-sm" [(ngModel)]="cmbNotes"
                             (change)="OnChange('cmbNotes')">
                             <option *ngFor="let rec of FollowupList" [value]="rec.name">{{rec.name}}
                             </option>
