@@ -25,7 +25,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Type</label>
           <div class="col-8">
-            <select class="form-control form-control-sm" [(ngModel)]="record.ca_type">
+            <select #_ca_type class="form-control form-control-sm" [(ngModel)]="record.ca_type">
               <option [value]="'RELEASE WITHOUT OBL'">RELEASE WITHOUT OBL</option>
               <option [value]="'RELEASE WITHOUT PAYMENT'">RELEASE WITHOUT PAYMENT</option>
               <option [value]="'RELEASE WITHOUT OBL & PAYMENT'">RELEASE WITHOUT OBL & PAYMENT</option>

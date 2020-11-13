@@ -23,7 +23,7 @@ export class ApprovedPageEditComponent implements OnInit {
   @ViewChild('to_name') to_name_field: InputBoxComponent;
   @ViewChild('deliver_to_name') deliver_to_name_field: InputBoxComponent;
 
-  // @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
+  @ViewChild('_ca_type') ca_type_field: ElementRef;
   //@ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
 
   record: Tbl_Cargo_Approved = <Tbl_Cargo_Approved>{};
@@ -138,6 +138,7 @@ export class ApprovedPageEditComponent implements OnInit {
     })
     // this.csdate_field.Focus();
     this.Foregroundcolor_edit = "white";
+    this.ca_type_field.nativeElement.focus();
   }
 
   GetRecord() {
@@ -182,6 +183,7 @@ export class ApprovedPageEditComponent implements OnInit {
         // Dispatcher.BeginInvoke(() => { Cmb_Type.Focus(); });
 
         //this.hbl_houseno_field.nativeElement.focus();
+        this.ca_type_field.nativeElement.focus();
 
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -214,7 +216,7 @@ export class ApprovedPageEditComponent implements OnInit {
               Rec.ca_inv_selected = false;
           })
         }
-
+        this.ca_type_field.nativeElement.focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -542,7 +544,7 @@ export class ApprovedPageEditComponent implements OnInit {
 
 
   AttachRow(_rec: Tbl_Cargo_Approved) {
-  
+
   }
 
   callbackevent() {
