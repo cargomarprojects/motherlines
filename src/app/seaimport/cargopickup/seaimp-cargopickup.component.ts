@@ -19,7 +19,7 @@ import { DateComponent } from '../../shared/date/date.component';
 export class SeaImpCargoPickupComponent implements OnInit {
 
   @ViewChild('_pick_order_date') pick_order_date_field: DateComponent;
-  @ViewChild('pick_truk_name') pick_truk_name_ctrl: InputBoxComponent;
+  @ViewChild('_pick_truk_name') pick_truk_name_field: InputBoxComponent;
   record: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
   defaultrecord: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
   cntrrecords: Tbl_cargo_imp_container[] = [];
@@ -41,7 +41,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
   selectdeselect: boolean = false;
   errorMessage: string;
   IsLocked: boolean = false;
-  
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -316,7 +316,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
       return sValue;
     }
   }
-   
+
 
 
 
@@ -492,7 +492,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
       this.record.pick_truk_tel = _Record.col6.toString();
       this.record.pick_truk_fax = _Record.col7.toString();
       // Dispatcher.BeginInvoke(() => { Txt_Truker.Focus(); });
-
+      this.pick_truk_name_field.focus();
     }
 
     if (_Record.controlname == "FROM") {
