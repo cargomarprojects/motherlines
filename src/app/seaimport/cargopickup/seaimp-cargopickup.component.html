@@ -30,7 +30,7 @@
                 </div>
                 <label class="col-2 col-form-label col-form-label-sm">Date</label>
                 <div class="col-4">
-                  <app-date [inputdate]="record.pick_order_date" (ValueChanged)="record.pick_order_date=$event">
+                  <app-date #_pick_order_date [inputdate]="record.pick_order_date" (ValueChanged)="record.pick_order_date=$event">
                   </app-date>
                 </div>
               </div>

@@ -6,7 +6,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { SearchTable } from '../../shared/models/searchtable';
 import { Table_Cargo_Payrequest, vm_Table_Cargo_Payrequest } from '../../businessmodule/models/table_cargo_payrequest';
 import { PaymentReqService } from '../services/paymentreq.service';
-import { DateComponent } from '../../shared/Date/date.component';
+import { DateComponent } from '../../shared/date/date.component';
 
 @Component({
   selector: 'app-paymentreq',

@@ -10,6 +10,7 @@ import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Tbl_cargo_imp_container } from '../models/tbl_cargo_imp_housem';
 import { InputBoxComponent } from '../../shared/input/inputbox.component';
+import { DateComponent } from '../../shared/date/date.component';
 
 @Component({
   selector: 'app-seaimp-cargopickup',
@@ -17,6 +18,7 @@ import { InputBoxComponent } from '../../shared/input/inputbox.component';
 })
 export class SeaImpCargoPickupComponent implements OnInit {
 
+  @ViewChild('_pick_order_date') pick_order_date_field: DateComponent;
   @ViewChild('pick_truk_name') pick_truk_name_ctrl: InputBoxComponent;
   record: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
   defaultrecord: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
@@ -221,11 +223,13 @@ export class SeaImpCargoPickupComponent implements OnInit {
           this.SelectDeselect();
           //cmd_cntr_selectAll_Click(null, null);
         }
+        this.pick_order_date_field.Focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
   }
   private LoadDefault() {
+    this.pick_order_date_field.Focus();
     if (this.defaultrecord == null)
       return;
 

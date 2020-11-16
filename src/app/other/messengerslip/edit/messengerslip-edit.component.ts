@@ -9,7 +9,7 @@ import { User_Menu } from '../../../core/models/menum';
 import { vm_tbl_cargo_slip, Tbl_cargo_slip } from '../../../other/models/tbl_cargo_slip';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
-import { DateComponent } from '../../../shared/Date/date.component';
+import { DateComponent } from '../../../shared/date/date.component';
 
 @Component({
   selector: 'app-messengerslip-edit',

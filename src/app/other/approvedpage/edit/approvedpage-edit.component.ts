@@ -10,7 +10,7 @@ import { vm_tbl_cargo_approved, Tbl_Cargo_Approved, Tbl_Cargo_Approvedd } from '
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Table_Cargo_Payrequest } from 'src/app/businessmodule/models/table_cargo_payrequest';
-//import { DateComponent } from '../../../shared/Date/date.component';
+import { DateComponent } from '../../../shared/date/date.component';
 
 @Component({
   selector: 'app-approvedpage-edit',

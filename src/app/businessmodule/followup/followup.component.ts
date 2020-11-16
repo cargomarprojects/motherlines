@@ -8,7 +8,7 @@ import { User_Menu } from '../../core/models/menum';
 import { Table_Cargo_Followup, vm_Table_Cargo_Followup } from '../models/table_cargo_followup';
 import { SearchTable } from '../../shared/models/searchtable';
 import { strictEqual } from 'assert';
-import { DateComponent } from '../../shared/Date/date.component';
+import { DateComponent } from '../../shared/date/date.component';
 
 @Component({
   selector: 'app-followup',
