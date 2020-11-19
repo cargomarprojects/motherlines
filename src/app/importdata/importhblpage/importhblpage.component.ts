@@ -18,6 +18,8 @@ import { GlobalService } from '../../core/services/global.service';
 })
 export class ImportHblPageComponent implements OnInit {
 
+
+    radio_process: string = 'PROCESSED';
     /*
    01-07-2019 Created By Ajith  
   
