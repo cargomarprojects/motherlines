@@ -30,7 +30,7 @@ const routes: Routes = [
   
   { path: 'Silver.UserAdmin', loadChildren: './useradmin/useradmin.module#UserAdminModule' },  
   // { path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule' },
-  { path: 'importdata', loadChildren: './importdata/importdata.module#ImportDataModule' },
+  { path: 'Silver.ImportData', loadChildren: './importdata/importdata.module#ImportDataModule' },
   { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },  
   { path: 'seaexport', loadChildren: './seaexport/seaexport.module#SeaExportModule' },
   
