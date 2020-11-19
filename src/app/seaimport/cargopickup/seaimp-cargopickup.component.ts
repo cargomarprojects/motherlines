@@ -20,6 +20,10 @@ export class SeaImpCargoPickupComponent implements OnInit {
 
   @ViewChild('_pick_order_date') pick_order_date_field: DateComponent;
   @ViewChild('_pick_truk_name') pick_truk_name_field: InputBoxComponent;
+  @ViewChild('_pick_fromname') pick_fromname_field: InputBoxComponent;
+  @ViewChild('_pick_toname') pick_toname_field: InputBoxComponent;
+
+
   record: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
   defaultrecord: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
   cntrrecords: Tbl_cargo_imp_container[] = [];
@@ -507,6 +511,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
       this.record.pick_fromaddr3 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
       this.record.pick_fromaddr4 = this.gs.GetAttention(_Record.col5.toString())
       //        Dispatcher.BeginInvoke(() => { Txt_From_Name.Focus(); });
+      this.pick_fromname_field.focus();
     }
 
     if (_Record.controlname == "TO") {
@@ -521,6 +526,7 @@ export class SeaImpCargoPickupComponent implements OnInit {
       this.record.pick_toaddr3 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
       this.record.pick_toaddr4 = this.gs.GetAttention(_Record.col5.toString())
       //        Dispatcher.BeginInvoke(() => { Txt_to_Name.Focus(); });
+      this.pick_toname_field.focus();
     }
 
   }
