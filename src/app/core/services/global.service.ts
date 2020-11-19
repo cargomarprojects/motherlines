@@ -488,7 +488,9 @@ export class GlobalService {
       "~HIDE_PAYROLL": this.user_hide_payroll,
       "~USER_EMAIL": this.user_email,
       "~SEA_ARVL_FORMAT": this.SEA_ARVL_FORMAT,
-      "~MESSENGER_SLIP_DROP_AT": this.MESSENGER_SLIP_DROP_AT
+      "~MESSENGER_SLIP_DROP_AT": this.MESSENGER_SLIP_DROP_AT,
+      "~HBL_INSTR1": this.HBL_INSTR1,
+      "~HBL_INSTR2": this.HBL_INSTR2
     }
 
   }
