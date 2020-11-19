@@ -29,8 +29,8 @@ const routes: Routes = [
   { path: 'Silver.Marketing.Master', loadChildren: './marketing/marketing.module#MarketingModule' }, 
   
   { path: 'Silver.UserAdmin', loadChildren: './useradmin/useradmin.module#UserAdminModule' },  
-
-  { path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule' },
+  // { path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule' },
+  { path: 'importdata', loadChildren: './importdata/importdata.module#ImportDataModule' },
   { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },  
   { path: 'seaexport', loadChildren: './seaexport/seaexport.module#SeaExportModule' },
   
