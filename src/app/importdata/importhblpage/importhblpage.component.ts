@@ -75,11 +75,11 @@ export class ImportHblPageComponent implements OnInit {
     pageEvents(actions: any) {
         this.mainservice.Search(actions, 'PAGE');
     }
-
+*/
     Close() {
         this.location.back();
     }
-
+/*
     ngOnDestroy() {
     }
 
