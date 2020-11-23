@@ -73,15 +73,12 @@
               </tr>
             </thead>
             <tbody class="page-body-tbody">
-              <tr *ngFor="let rec of frecords">
-                <td class='hlink' (click)="editmasterfup(rec)">{{rec.cf_refno}}</td>
-                <td>{{rec.cf_assigned_code}}</td>
-                <td class='hlink' (click)="editfup(rec)">{{rec.cf_followup_date | date : gs.FRONTEND_DATEFORMAT}}</td>
-                <td>{{rec.cf_remarks}}</td>
-                <td>
-                  <div class="form-check"><input type="checkbox" class="form-check-input" [(ngModel)]="rec.cf_yn_b">
-                  </div>
-                </td>
+              <tr *ngFor="let rec of  records$ | async">
+                <td class='hlink' (click)="XmlImportData(rec)">{{rec.files_desc}}</td>
+                <td>{{rec.files_processed}}</td>
+                <td>{{rec.files_ref_no}}</td>
+                <td>{{rec.files_uploaded_date | date : gs.FRONTEND_DATEFORMAT}}</td>
+                <td>{{rec.files_created_date | date : gs.FRONTEND_DATEFORMAT}}</td>
               </tr>
             </tbody>
           </table>

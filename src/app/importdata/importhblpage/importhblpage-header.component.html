@@ -14,7 +14,7 @@
                 <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm"></label>
                     <div class="col-8">
-                        <input type="radio" [(ngModel)]="radio_process" [value]="'PROCESSED'" name="optprocess" />
+                        <input type="radio" [(ngModel)]="searchQuery.rdbprocessed" [value]="'PROCESSED'" name="optprocess" />
                         <span>&nbsp;Processed</span>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                 <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm"></label>
                     <div class="col-8">
-                        <input type="radio" [(ngModel)]="radio_process" [value]="'NOT-PROCESSED'" name="optprocess" />
+                        <input type="radio" [(ngModel)]="searchQuery.rdbprocessed" [value]="'NOT-PROCESSED'" name="optprocess" />
                         <span>&nbsp;Not Processed</span>
                     </div>
                 </div>

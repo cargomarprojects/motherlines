@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
- import { SearchQuery } from '../models/tbl_edi_master';
+ import { SearchQuery } from '../models/tbl_mast_files';
 import { SearchTable } from '../../shared/models/searchtable';
 
 @Component({
@@ -32,11 +32,4 @@ export class ImportHblPageHeaderComponent implements OnInit {
     this.searchEvents.emit({ outputformat: outputformat, searchQuery: this.searchQuery });
   }
 
-  LovSelected(_Record: SearchTable) {
-    if (_Record.controlname == "SALESMAN") {
-      this.searchQuery.handled_id = _Record.id;
-      this.searchQuery.handled_name = _Record.name;
-    }
-  }
-  
 }
