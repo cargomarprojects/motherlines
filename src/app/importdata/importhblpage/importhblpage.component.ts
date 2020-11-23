@@ -16,7 +16,7 @@ import { ImportHblPageService } from '../services/importhblpage.service';
 })
 export class ImportHblPageComponent implements OnInit {
 
-    // radio_process: string = 'PROCESSED';
+    routeparams: any;
 
     errorMessage$: Observable<string>;
     records$: Observable<Tbl_mast_files[]>;
@@ -31,6 +31,7 @@ export class ImportHblPageComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.routeparams=this.route.snapshot.queryParams;
         this.mainservice.init(this.route.snapshot.queryParams);
         this.initPage();
     }

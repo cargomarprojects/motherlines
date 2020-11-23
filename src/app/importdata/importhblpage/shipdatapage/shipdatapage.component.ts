@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { GlobalService } from '../../../core/services/global.service';
-import { Tbl_mast_files } from '../../models/tbl_mast_files';
-import { SearchQuery } from '../../models/tbl_mast_files';
+import { Tbl_edi_master } from '../../models/tbl_edi_master';
+import { SearchQuery } from '../../models/tbl_edi_master';
 import { PageQuery } from '../../../shared/models/pageQuery';
-import { ImportHblPageService } from '../../services/importhblpage.service';
+import { ShipDataPageService } from '../../services/shipdatapage.service';
 
 @Component({
     selector: 'app-shipdatapage',
@@ -16,10 +16,10 @@ import { ImportHblPageService } from '../../services/importhblpage.service';
 })
 export class ShipDataPageComponent implements OnInit {
 
-    // radio_process: string = 'PROCESSED';
+    @Input() routeparams: any = null;
 
     errorMessage$: Observable<string>;
-    records$: Observable<Tbl_mast_files[]>;
+    records$: Observable<Tbl_edi_master[]>;
     pageQuery$: Observable<PageQuery>;
     searchQuery$: Observable<SearchQuery>;
 
@@ -27,11 +27,11 @@ export class ShipDataPageComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
-        public mainservice: ImportHblPageService
+        public mainservice: ShipDataPageService
     ) { }
 
     ngOnInit() {
-        this.mainservice.init(this.route.snapshot.queryParams);
+        this.mainservice.init(this.routeparams);
         this.initPage();
     }
     
@@ -54,7 +54,7 @@ export class ShipDataPageComponent implements OnInit {
         this.location.back();
     }
 
-    XmlImportData_Click(_record: Tbl_mast_files) {
+    XmlImportData_Click(_record: Tbl_edi_master) {
         // let sID: string = (_record.cf_master_id != null) ? _record.cf_master_id.toString() : "";
         // let REFNO: string = _record.cf_refno != null ? _record.cf_refno.toString() : "";
         // let sMode: string = _record.cf_mbl_mode != null ? _record.cf_mbl_mode.toString() : "";

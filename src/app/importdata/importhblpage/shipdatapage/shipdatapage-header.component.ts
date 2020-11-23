@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../../core/services/global.service';
- import { SearchQuery } from '../../models/tbl_mast_files';
+ import { SearchQuery } from '../../models/tbl_edi_master';
 import { SearchTable } from '../../../shared/models/searchtable';
 
 @Component({

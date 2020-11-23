@@ -6,17 +6,17 @@
                 <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm">Sender</label>
                     <div class="col-8">
-                        <input class="form-control form-control-sm" type="text" [(ngModel)]="searchQuery.searchString" />
+                        <input class="form-control form-control-sm" type="text" [(ngModel)]="searchQuery.sender" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm">Status</label>
-                    <div class="col-8 input-group input-group-sm">
-                        <input type="radio" [(ngModel)]="searchQuery.rdbprocessed" [value]="'PENDING'" name="optprocess" />
-                        <span>&nbsp;Pending</span>
-                        <input type="radio" [(ngModel)]="searchQuery.rdbprocessed" [value]="'PROCESSED'" name="optprocess" />
-                        <span>&nbsp;Processed</span>
-                        <input type="radio" [(ngModel)]="searchQuery.rdbprocessed" [value]="'DELETED'" name="optprocess" />
+                    <div class="col-8">
+                        <input type="checkbox" [(ngModel)]="searchQuery.chkpending" />
+                        <span>&nbsp;Pending&nbsp;&nbsp;</span>
+                        <input type="checkbox" [(ngModel)]="searchQuery.chkcompleted" />
+                        <span>&nbsp;Processed&nbsp;&nbsp;</span>
+                        <input type="checkbox" [(ngModel)]="searchQuery.chkdeleted" />
                         <span>&nbsp;Deleted</span>
                     </div>
                 </div>
@@ -29,11 +29,11 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2 col-form-label col-form-label-sm">Link Type</label>
+                    <label class="col-2 col-form-label col-form-label-sm">Link.Type</label>
                     <div class="col-8">
-                        <select class="form-control form-control-sm" [(ngModel)]="searchQuery.searchtype">
-                            <option [value]="'REFNO'">Ref No:</option>
-                            <option [value]="'CONSIGNEE'">Consignee:</option>
+                        <select class="form-control form-control-sm" [(ngModel)]="searchQuery.linkType">
+                            <option [value]="'MBLNO'">MBL#</option>
+                            <option [value]="'TRANSFER'">TRANSFER</option>
                           </select>
                     </div>
                 </div>
