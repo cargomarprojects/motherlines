@@ -1,3 +1,5 @@
+import { PageQuery } from '../../shared/models/pageQuery';
+
 export interface Tbl_edi_link {
     link_pkid: string;
     link_messagesender: string;
@@ -20,4 +22,15 @@ export interface Tbl_edi_link {
     link_source_add3: string;
     link_source_add4: string;
     link_source_add5: string;
+}
+
+export interface SearchQuery {
+    searchString: string;
+}
+
+export interface SettingPageModel {
+    errormessage: string;
+    searchQuery: SearchQuery;
+    pageQuery: PageQuery;
+    records: Tbl_edi_link[]
 }

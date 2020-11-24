@@ -7,6 +7,8 @@ import { ImportHblPageHeaderComponent } from './importhblpage/importhblpage-head
 import { ShipDataPageComponent } from './importhblpage/shipdatapage/shipdatapage.component';
 import { ShipDataPageHeaderComponent } from './importhblpage/shipdatapage/shipdatapage-header.component';
 import { MissingDataPageComponent } from './importhblpage/shipdatapage/missingdatapage.component';
+import { SettingPageComponent } from './importhblpage/settingpage/settingpage.component';
+import { SettingPageHeaderComponent } from './importhblpage/settingpage/settingpage-header.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { MissingDataPageComponent } from './importhblpage/shipdatapage/missingda
     ImportHblPageHeaderComponent,
     ShipDataPageComponent,
     ShipDataPageHeaderComponent,
-    MissingDataPageComponent
+    MissingDataPageComponent,
+    SettingPageComponent,
+    SettingPageHeaderComponent
   ],
   imports: [
     SharedModule,

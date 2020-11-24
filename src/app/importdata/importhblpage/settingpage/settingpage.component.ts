@@ -4,22 +4,22 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { GlobalService } from '../../core/services/global.service';
-import { Tbl_mast_files } from '../models/tbl_mast_files';
-import { SearchQuery } from '../models/tbl_mast_files';
-import { PageQuery } from '../../shared/models/pageQuery';
-import { ImportHblPageService } from '../services/importhblpage.service';
+import { GlobalService } from '../../../core/services/global.service';
+import { Tbl_edi_link } from '../../models/tbl_edi_link';
+import { SearchQuery } from '../../models/tbl_edi_link';
+import { PageQuery } from '../../../shared/models/pageQuery';
+import { SettingPageService } from '../../services/settingpage.service';
 
 @Component({
-    selector: 'app-importhblpage',
-    templateUrl: './importhblpage.component.html'
+    selector: 'app-settingpage',
+    templateUrl: './settingpage.component.html'
 })
-export class ImportHblPageComponent implements OnInit {
+export class SettingPageComponent implements OnInit {
 
     routeparams: any;
 
     errorMessage$: Observable<string>;
-    records$: Observable<Tbl_mast_files[]>;
+    records$: Observable<Tbl_edi_link[]>;
     pageQuery$: Observable<PageQuery>;
     searchQuery$: Observable<SearchQuery>;
 
@@ -27,7 +27,7 @@ export class ImportHblPageComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
-        public mainservice: ImportHblPageService
+        public mainservice: SettingPageService
     ) { }
 
     ngOnInit() {
@@ -55,7 +55,7 @@ export class ImportHblPageComponent implements OnInit {
         this.location.back();
     }
 
-    XmlImportData_Click(_record: Tbl_mast_files) {
+    XmlImportData_Click(_record: Tbl_edi_link) {
         // let sID: string = (_record.cf_master_id != null) ? _record.cf_master_id.toString() : "";
         // let REFNO: string = _record.cf_refno != null ? _record.cf_refno.toString() : "";
         // let sMode: string = _record.cf_mbl_mode != null ? _record.cf_mbl_mode.toString() : "";
@@ -80,15 +80,5 @@ export class ImportHblPageComponent implements OnInit {
             origin: 'airimp-master-page',
           };
           this.gs.Naviagete('Silver.ImportData/ShipDataPage', JSON.stringify(prm)); 
-    }
-
-    SettingPage(){
-        let prm = {
-            menuid: this.gs.MENU_IMPORT_EXCEL,
-            id: '',
-            param_type: '',
-            origin: 'airimp-master-page',
-          };
-          this.gs.Naviagete('Silver.ImportData/SettingPage', JSON.stringify(prm)); 
     }
 }
