@@ -17,7 +17,7 @@ export class ShipDataPageService {
     get data$(): Observable<ShipDataPageModel> {
         return this.mdata$.asObservable();
     }
-    private record: ShipDataPageModel;
+    public record: ShipDataPageModel;
 
     public id: string;
     public menuid: string;
@@ -213,6 +213,9 @@ export class ShipDataPageService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/List', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    MissingList(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/MissingList', SearchData, this.gs.headerparam2('authorized'));
+    }
     // GetRecord(SearchData: any) {
     //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     // }
