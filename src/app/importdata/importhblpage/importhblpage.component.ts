@@ -71,4 +71,14 @@ export class ImportHblPageComponent implements OnInit {
         //     alert("Cannot Show Details from another Branch");
         // }
     }
+
+    ShipData(){
+        let prm = {
+            menuid: this.gs.MENU_IMPORT_EXCEL,
+            id: '',
+            param_type: '',
+            origin: 'airimp-master-page',
+          };
+          this.gs.Naviagete('Silver.ImportData/ShipDataPage', JSON.stringify(prm)); 
+    }
 }

@@ -33,7 +33,7 @@ export class ShipDataPageService {
 
     public initlialized: boolean;
     public initlializedBrcode: string = '';
-
+    private selectdeselect: boolean = false;
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
@@ -46,17 +46,19 @@ export class ShipDataPageService {
             this.record = null;
             this.mdata$.next(this.record);
         }
+
         if (this.initlialized)
             return;
 
         this.id = params.id;
         this.menuid = params.id;
         this.param_type = params.param_type;
+        this.selectdeselect = false;
 
         this.record = <ShipDataPageModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', sender: '', chkpending: true, chkcompleted: true, chkdeleted: true, linkType: 'MBLNO' },
+            searchQuery: <SearchQuery>{ searchString: '', sender: '', chkpending: true, chkcompleted: true, chkdeleted: true, linkType: 'MBL#' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -95,9 +97,18 @@ export class ShipDataPageService {
         SearchData.pkid = this.id;
         SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.sender;
-        SearchData.MBL_HBL = this.record.searchQuery.searchString;
-        SearchData.LINK_TYPE = this.record.searchQuery.linkType;
+        if (this.gs.isBlank(this.record.searchQuery.sender))
+            SearchData.CODE = '';
+        else
+            SearchData.CODE = this.record.searchQuery.sender;
+        if (this.gs.isBlank(this.record.searchQuery.searchString))
+            SearchData.MBL_HBL = '';
+        else
+            SearchData.MBL_HBL = this.record.searchQuery.searchString;
+        if (this.gs.isBlank(this.record.searchQuery.linkType))
+            SearchData.LINK_TYPE = 'MBL#';
+        else
+            SearchData.LINK_TYPE = this.record.searchQuery.linkType;
         SearchData.FLAG = sFlag;
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
@@ -114,6 +125,10 @@ export class ShipDataPageService {
         this.List(SearchData).subscribe(response => {
             this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
+            this.record.records.forEach(Rec => {
+                Rec.selected_b = false;
+                Rec.selected = 'N';
+            })
             this.mdata$.next(this.record);
         }, error => {
             this.record = <ShipDataPageModel>{
@@ -150,6 +165,12 @@ export class ShipDataPageService {
             REC.agent_name = _rec.agent_name;
             REC.carrier_name = _rec.carrier_name;
         }
+    }
+
+    SelectDeselect(_record: Tbl_edi_master) {
+        this.selectdeselect = !this.selectdeselect;
+        _record.selected_b = this.selectdeselect;
+        _record.selected = _record.selected_b == true ? 'Y' : 'N';
     }
 
     // DeleteRow(_rec: Tbl_cargo_exp_housem) {

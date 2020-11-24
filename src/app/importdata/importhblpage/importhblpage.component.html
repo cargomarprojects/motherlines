@@ -3,176 +3,38 @@
     <!-- {{mainservice.title}} -->
     <label class="mr-1">EDI</label>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+    <button class="btn btn-primary btn-sm mr-1" (click)="ShipData()">Shipment Data</button>
   </div>
 </div>
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="importxml-tab" data-toggle="tab" href="#importxml" role="tab"
-      aria-controls="importxml" aria-selected="true">Import Xml</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="shipmentdata-tab" data-toggle="tab" href="#shipmentdata" role="tab"
-      aria-controls="shipmentdata" aria-selected="false">Shipment Data</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="missingdata-tab" data-toggle="tab" href="#missingdata" role="tab"
-      aria-controls="missingdata" aria-selected="false">Missing Data</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
-      aria-selected="false">Settings</a>
-  </li>
-</ul>
-
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="importxml" role="tabpanel" aria-labelledby="importxml-tab">
-    <div *ngIf="errorMessage$ | async" class="alert alert-danger">
-      {{errorMessage$ | async}}
-    </div>
-    <app-importhblpage-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-    </app-importhblpage-header>
-
-    <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-
-    <!-- <div class="page-list">
-      <div class="page-search">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-1 col-form-label col-form-label-sm"></label>
-              <div class="col-3 input-group input-group-sm">
-                <button (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Process XML</button>
-              </div>
-              <div class="col-3">
-                <input type="radio" [(ngModel)]="radio_process" [value]="'PROCESSED'" name="optprocess" />
-                <span>Processed</span>
-              </div>
-              <div class="col-3">
-                <input type="radio" [(ngModel)]="radio_process" [value]="'NOT-PROCESSED'" name="optprocess" />
-                <span>Not Processed</span>
-              </div>
-              <div class="col-2 input-group input-group-sm">
-                <button (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Find</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="row">
-      <div class="col-md-12 mx-0 px-0"> -->
-        <div class="page-body table-responsive">
-          <table class="table  table-hover table-sm">
-            <thead class="page-body-thead">
-              <tr>
-                <th>FILE-NAME</th>
-                <th>PROCESSED</th>
-                <th>REFNO</th>
-                <th>UPLOADED-DT</th>
-                <th>CREATED-DT</th>
-              </tr>
-            </thead>
-            <tbody class="page-body-tbody">
-              <tr *ngFor="let rec of  records$ | async">
-                <td class='hlink' (click)="XmlImportData(rec)">{{rec.files_desc}}</td>
-                <td>{{rec.files_processed}}</td>
-                <td>{{rec.files_ref_no}}</td>
-                <td>{{rec.files_uploaded_date | date : gs.FRONTEND_DATEFORMAT}}</td>
-                <td>{{rec.files_created_date | date : gs.FRONTEND_DATEFORMAT}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      <!-- </div>
-    </div> -->
-    <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-
-  </div>
-  <div class="tab-pane fade" id="shipmentdata" role="tabpanel" aria-labelledby="shipmentdata-tab">
-    <app-shipdatapage [routeparams]="routeparams"> </app-shipdatapage>
-  </div>
-  <div class="tab-pane fade" id="missingdata" role="tabpanel" aria-labelledby="missingdata-tab">
-
-    <!-- <div *ngIf="errorMessage$ | async" class="alert alert-danger">
-      {{errorMessage$ | async}}
-    </div>
-
-    <app-importhblpage-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-    </app-importhblpage-header>
-
-    <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-
-    <div class="page-body table-responsive">
-      <table class="table  table-hover table-sm">
-        <thead class="page-body-thead">
-          <tr>
-            <th>REFNO</th>
-            <th>REF-DATE</th>
-            <th>HOUSE</th>
-            <th>SHIPMENT TYPE</th>
-            <th>ETA</th>
-            <th>REMARK</th>
-            <th>STATUS</th>
-          </tr>
-        </thead>
-        <tbody class="page-body-tbody">
-          <tr *ngFor="let rec of records$ | async">
-            <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
-            <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT}}</td>
-            <td class='hlink' (click)="edithouse(rec)">{{rec.hbl_houseno}}</td>
-            <td>{{rec.hbl_bltype}}</td>
-            <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT}}</td>
-            <td>{{rec.mbl_remarks}}</td>
-            <td class='hlink' (click)="mainservice.HideRecord(rec)">{{rec.mbl_pending_status}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-
-    <br /> -->
-  </div>
-  <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-
-    <!-- <div *ngIf="errorMessage$ | async" class="alert alert-danger">
-      {{errorMessage$ | async}}
-    </div>
-
-    <app-importhblpage-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
-    </app-importhblpage-header>
-
-    <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-
-    <div class="page-body table-responsive">
-      <table class="table  table-hover table-sm">
-        <thead class="page-body-thead">
-          <tr>
-            <th>REFNO</th>
-            <th>REF-DATE</th>
-            <th>HOUSE</th>
-            <th>SHIPMENT TYPE</th>
-            <th>ETA</th>
-            <th>REMARK</th>
-            <th>STATUS</th>
-          </tr>
-        </thead>
-        <tbody class="page-body-tbody">
-          <tr *ngFor="let rec of records$ | async">
-            <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
-            <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT}}</td>
-            <td class='hlink' (click)="edithouse(rec)">{{rec.hbl_houseno}}</td>
-            <td>{{rec.hbl_bltype}}</td>
-            <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT}}</td>
-            <td>{{rec.mbl_remarks}}</td>
-            <td class='hlink' (click)="mainservice.HideRecord(rec)">{{rec.mbl_pending_status}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-
-    <br /> -->
-  </div>
+<div *ngIf="errorMessage$ | async" class="alert alert-danger">
+  {{errorMessage$ | async}}
 </div>
+<app-importhblpage-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+</app-importhblpage-header>
+
+<App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
+
+<div class="page-body table-responsive">
+  <table class="table  table-hover table-sm">
+    <thead class="page-body-thead">
+      <tr>
+        <th>FILE-NAME</th>
+        <th>PROCESSED</th>
+        <th>REFNO</th>
+        <th>UPLOADED-DT</th>
+        <th>CREATED-DT</th>
+      </tr>
+    </thead>
+    <tbody class="page-body-tbody">
+      <tr *ngFor="let rec of  records$ | async">
+        <td class='hlink' (click)="XmlImportData(rec)">{{rec.files_desc}}</td>
+        <td>{{rec.files_processed}}</td>
+        <td>{{rec.files_ref_no}}</td>
+        <td>{{rec.files_uploaded_date | date : gs.FRONTEND_DATEFORMAT}}</td>
+        <td>{{rec.files_created_date | date : gs.FRONTEND_DATEFORMAT}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>

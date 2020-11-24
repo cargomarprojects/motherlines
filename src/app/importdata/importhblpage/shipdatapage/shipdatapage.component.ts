@@ -16,8 +16,8 @@ import { ShipDataPageService } from '../../services/shipdatapage.service';
 })
 export class ShipDataPageComponent implements OnInit {
 
-    @Input() routeparams: any = null;
-
+    // @Input() routeparams: any = null;
+    
     errorMessage$: Observable<string>;
     records$: Observable<Tbl_edi_master[]>;
     pageQuery$: Observable<PageQuery>;
@@ -31,7 +31,7 @@ export class ShipDataPageComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.mainservice.init(this.routeparams);
+        this.mainservice.init(this.route.snapshot.queryParams);
         this.initPage();
     }
     
@@ -70,4 +70,5 @@ export class ShipDataPageComponent implements OnInit {
         //     alert("Cannot Show Details from another Branch");
         // }
     }
+    
 }
