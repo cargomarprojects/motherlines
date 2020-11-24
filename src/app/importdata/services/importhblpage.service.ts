@@ -33,6 +33,7 @@ export class ImportHblPageService {
 
     public initlialized: boolean;
     public initlializedBrcode: string = '';
+    private ProcessXML: boolean = false;
 
     constructor(
         private http2: HttpClient,
@@ -56,7 +57,7 @@ export class ImportHblPageService {
         this.record = <ImportHblPageModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: '', rdbprocessed:'NOT-PROCESSED'},
+            searchQuery: <SearchQuery>{ searchString: '', rdbprocessed: 'NOT-PROCESSED' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -89,7 +90,7 @@ export class ImportHblPageService {
         SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
         SearchData.CODE = this.record.searchQuery.searchString;
-        SearchData.FLAG = this.record.searchQuery.rdbprocessed=='PROCESSED'?'Y':'N';
+        SearchData.FLAG = this.record.searchQuery.rdbprocessed == 'PROCESSED' ? 'Y' : 'N';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -106,6 +107,20 @@ export class ImportHblPageService {
             this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
             this.mdata$.next(this.record);
+
+            if (this.ProcessXML)
+            {
+                this.ProcessXML = false;
+               
+                // Xml_MainRecIndex = 0;
+                // Xml_MainRecTot = xml_MainList.Count;
+
+                // if (Xml_MainRecTot > 0)
+                // {
+                //     ImportMultipleXmlFiles();
+                // }
+            }
+
         }, error => {
             this.record = <ImportHblPageModel>{
                 records: [],
@@ -114,24 +129,48 @@ export class ImportHblPageService {
             this.mdata$.next(this.record);
         });
     }
-    RefreshList(_rec: Tbl_mast_files) {
-        if (this.record.records == null)
-            return;
-        var REC = this.record.records.find(rec => rec.files_id == _rec.files_id);
-        if (REC == null) {
-            this.record.records.push(_rec);
-        }
-        else {
-            REC.files_desc = _rec.files_desc;
-            REC.files_processed = _rec.files_processed;
-            REC.files_ref_no = _rec.files_ref_no;
-            REC.files_uploaded_date = _rec.files_uploaded_date;
-            REC.files_created_date = _rec.files_created_date;
-        }
+
+
+    ProcessFtp() {
+        this.ProcessXML = false;
+        this.record.errormessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.APP_FOLDER = this.gs.FS_APP_FOLDER;
+        SearchData.FTP_FOLDER = this.gs.GLOBAL_FTP_FOLDER;
+        this.ProcessXmlFile(SearchData)
+            .subscribe(response => {
+
+                this.ProcessXML = true;
+                this.record.searchQuery.rdbprocessed = 'NOT-PROCESSED';
+                this.Search(this.record.searchQuery, 'SEARCH');
+
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
     }
 
+
+    // RefreshList(_rec: Tbl_mast_files) {
+    //     if (this.record.records == null)
+    //         return;
+    //     var REC = this.record.records.find(rec => rec.files_id == _rec.files_id);
+    //     if (REC == null) {
+    //         this.record.records.push(_rec);
+    //     }
+    //     else {
+    //         REC.files_desc = _rec.files_desc;
+    //         REC.files_processed = _rec.files_processed;
+    //         REC.files_ref_no = _rec.files_ref_no;
+    //         REC.files_uploaded_date = _rec.files_uploaded_date;
+    //         REC.files_created_date = _rec.files_created_date;
+    //     }
+    // }
+
+
     // DeleteRow(_rec: Tbl_cargo_exp_housem) {
-        
+
     //     if (this.gs.isBlank(_rec.hbl_pkid) || this.gs.isBlank(_rec.hbl_mbl_id)) {
     //         this.record.errormessage = "Cannot Delete, Reference Not Found";
     //         alert(this.record.errormessage);
@@ -168,6 +207,10 @@ export class ImportHblPageService {
 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/importhblpage/List', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    ProcessXmlFile(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/importhblpage/ProcessXmlFile', SearchData, this.gs.headerparam2('authorized'));
     }
 
     // GetRecord(SearchData: any) {
