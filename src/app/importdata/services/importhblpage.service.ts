@@ -35,9 +35,9 @@ export class ImportHblPageService {
     public initlializedBrcode: string = '';
 
     private ProcessXML: boolean = false;
-    private Xml_MainRecIndex: number = 0;
-    private Xml_MainRecTot: number = 0;
-    private Xml_Rec: Tbl_mast_files = <Tbl_mast_files>{};
+    public Xml_MainRecIndex: number = 0;
+    public Xml_MainRecTot: number = 0;
+    public Xml_Rec: Tbl_mast_files = <Tbl_mast_files>{};
 
     constructor(
         private http2: HttpClient,
@@ -117,14 +117,14 @@ export class ImportHblPageService {
             this.record.pageQuery = <PageQuery>{ action: 'NEW', page_rows: response.page_rows, page_count: response.page_count, page_current: response.page_current, page_rowcount: response.page_rowcount };
             this.record.records = response.list;
             this.mdata$.next(this.record);
-
+            this.ProcessXML = false;
             if (this.ProcessXML) {
                 this.ProcessXML = false;
                 this.Xml_MainRecIndex = 0;
 
                 this.Xml_MainRecTot = 0;
                 if (!this.gs.isBlank(this.record.records))
-                    this.record.records.length;
+                    this.Xml_MainRecTot = this.record.records.length;
 
                 if (this.Xml_MainRecTot > 0) {
                     this.ImportMultipleXmlFiles();

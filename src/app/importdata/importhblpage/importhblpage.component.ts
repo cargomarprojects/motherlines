@@ -31,11 +31,11 @@ export class ImportHblPageComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.routeparams=this.route.snapshot.queryParams;
+        this.routeparams = this.route.snapshot.queryParams;
         this.mainservice.init(this.route.snapshot.queryParams);
         this.initPage();
     }
-    
+
     initPage() {
         this.records$ = this.mainservice.data$.pipe(map(res => res.records));
         this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
@@ -55,40 +55,42 @@ export class ImportHblPageComponent implements OnInit {
         this.location.back();
     }
 
-    XmlImportData_Click(_record: Tbl_mast_files) {
-        // let sID: string = (_record.cf_master_id != null) ? _record.cf_master_id.toString() : "";
-        // let REFNO: string = _record.cf_refno != null ? _record.cf_refno.toString() : "";
-        // let sMode: string = _record.cf_mbl_mode != null ? _record.cf_mbl_mode.toString() : "";
-        // let branch_code: string = _record.cf_branch_code != null ? _record.cf_branch_code.toString() : "";
-        // if (sID == "") {
-        //     alert('Invalid Record Selected');
-        //     return;
-        // }
-        // if (branch_code == this.gs.branch_code) {
-        //     this.gs.LinkPage("REFNO", sMode, REFNO, sID);
-        // }
-        // else {
-        //     alert("Cannot Show Details from another Branch");
-        // }
+    XmlImportData(_record: Tbl_mast_files) {
+        if (_record.files_status == "Y") {
+            alert('Record is deleted')
+            return;
+        }
+        if (_record.files_processed == "Y") {
+            alert('Record is already Processed')
+            return;
+        }
+        if (!confirm("Process Selected Record")) {
+            return;
+        }
+
+        this.mainservice.Xml_Rec = _record;
+        this.mainservice.Xml_MainRecIndex = 0;
+        this.mainservice.Xml_MainRecTot = 0;
+        this.mainservice.ImportXmlData();
     }
 
-    ShipData(){
+    ShipData() {
         let prm = {
             menuid: this.gs.MENU_IMPORT_EXCEL,
             id: '',
             param_type: '',
             origin: 'airimp-master-page',
-          };
-          this.gs.Naviagete('Silver.ImportData/ShipDataPage', JSON.stringify(prm)); 
+        };
+        this.gs.Naviagete('Silver.ImportData/ShipDataPage', JSON.stringify(prm));
     }
 
-    SettingPage(){
+    SettingPage() {
         let prm = {
             menuid: this.gs.MENU_IMPORT_EXCEL,
             id: '',
             param_type: '',
             origin: 'airimp-master-page',
-          };
-          this.gs.Naviagete('Silver.ImportData/SettingPage', JSON.stringify(prm)); 
+        };
+        this.gs.Naviagete('Silver.ImportData/SettingPage', JSON.stringify(prm));
     }
 }
