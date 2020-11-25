@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../core/services/global.service';
- import { SearchQuery } from '../models/tbl_mast_files';
+import { SearchQuery } from '../models/tbl_mast_files';
 import { SearchTable } from '../../shared/models/searchtable';
+import { ImportHblPageService } from '../services/importhblpage.service';
 
 @Component({
   selector: 'app-importhblpage-header',
@@ -18,7 +19,8 @@ export class ImportHblPageHeaderComponent implements OnInit {
 
   @Output() searchEvents = new EventEmitter<any>();
 
-  constructor(public gs: GlobalService
+  constructor(public gs: GlobalService,
+    public mainservice: ImportHblPageService
   ) { }
 
   ngOnInit() {

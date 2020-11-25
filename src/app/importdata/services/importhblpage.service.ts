@@ -33,7 +33,11 @@ export class ImportHblPageService {
 
     public initlialized: boolean;
     public initlializedBrcode: string = '';
+
     private ProcessXML: boolean = false;
+    private Xml_MainRecIndex: number = 0;
+    private Xml_MainRecTot: number = 0;
+    private Xml_Rec: Tbl_mast_files = <Tbl_mast_files>{};
 
     constructor(
         private http2: HttpClient,
@@ -89,8 +93,14 @@ export class ImportHblPageService {
         SearchData.pkid = this.id;
         SearchData.TYPE = this.param_type;
         SearchData.page_rowcount = this.gs.ROWS_TO_DISPLAY;
-        SearchData.CODE = this.record.searchQuery.searchString;
-        SearchData.FLAG = this.record.searchQuery.rdbprocessed == 'PROCESSED' ? 'Y' : 'N';
+        if (this.gs.isBlank(this.record.searchQuery.searchString))
+            SearchData.CODE = '';
+        else
+            SearchData.CODE = this.record.searchQuery.searchString;
+        if (this.gs.isBlank(this.record.searchQuery.rdbprocessed))
+            SearchData.FLAG = 'N';
+        else
+            SearchData.FLAG = this.record.searchQuery.rdbprocessed == 'PROCESSED' ? 'Y' : 'N';
         SearchData.page_count = 0;
         SearchData.page_rows = 0;
         SearchData.page_current = -1;
@@ -108,17 +118,17 @@ export class ImportHblPageService {
             this.record.records = response.list;
             this.mdata$.next(this.record);
 
-            if (this.ProcessXML)
-            {
+            if (this.ProcessXML) {
                 this.ProcessXML = false;
-               
-                // Xml_MainRecIndex = 0;
-                // Xml_MainRecTot = xml_MainList.Count;
+                this.Xml_MainRecIndex = 0;
 
-                // if (Xml_MainRecTot > 0)
-                // {
-                //     ImportMultipleXmlFiles();
-                // }
+                this.Xml_MainRecTot = 0;
+                if (!this.gs.isBlank(this.record.records))
+                    this.record.records.length;
+
+                if (this.Xml_MainRecTot > 0) {
+                    this.ImportMultipleXmlFiles();
+                }
             }
 
         }, error => {
@@ -130,6 +140,41 @@ export class ImportHblPageService {
         });
     }
 
+    ImportMultipleXmlFiles() {
+        if (this.Xml_MainRecIndex < this.Xml_MainRecTot) {
+            this.Xml_Rec = this.record.records[this.Xml_MainRecIndex++];
+            if (this.Xml_Rec.files_processed != "Y")
+                this.ImportXmlData();
+        }
+    }
+
+
+
+    ImportXmlData() {
+        this.record.errormessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.FILES_SLNO = this.Xml_Rec.files_slno.toString();
+        SearchData.FILES_ID = this.Xml_Rec.files_id;
+        SearchData.FILES_TYPE = this.Xml_Rec.files_type;
+        SearchData.FILES_DESC = this.Xml_Rec.files_desc;
+        SearchData.FILES_ROOT = this.gs.FS_APP_FOLDER;
+        SearchData.FILES_PATH = this.Xml_Rec.files_path;
+        SearchData.FILES_REF_NO = this.Xml_Rec.files_ref_no;
+        this.ImportXmlFileData(SearchData)
+            .subscribe(response => {
+                this.Xml_Rec.files_processed = response.IsFileProcessed;
+                if (this.record.records != null) {
+                    var REC = this.record.records.find(rec => rec.files_id == this.Xml_Rec.files_id);
+                    if (REC != null)
+                        REC.files_processed = this.Xml_Rec.files_processed;
+                }
+                this.ImportMultipleXmlFiles();
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
+    }
 
     ProcessFtp() {
         this.ProcessXML = false;
@@ -141,9 +186,14 @@ export class ImportHblPageService {
             .subscribe(response => {
 
                 this.ProcessXML = true;
-                this.record.searchQuery.rdbprocessed = 'NOT-PROCESSED';
-                this.Search(this.record.searchQuery, 'SEARCH');
-
+                this.record = <ImportHblPageModel>{
+                    errormessage: '',
+                    records: [],
+                    searchQuery: <SearchQuery>{ searchString: '', rdbprocessed: 'NOT-PROCESSED' },
+                    pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+                };
+                this.mdata$.next(this.record);
+                this.Search(this.record, 'SEARCH');
             }, error => {
                 this.record.errormessage = this.gs.getError(error);
                 alert(this.record.errormessage);
@@ -207,6 +257,10 @@ export class ImportHblPageService {
 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/importhblpage/List', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    ImportXmlFileData(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/importhblpage/ImportXmlFileData', SearchData, this.gs.headerparam2('authorized'));
     }
 
     ProcessXmlFile(SearchData: any) {
