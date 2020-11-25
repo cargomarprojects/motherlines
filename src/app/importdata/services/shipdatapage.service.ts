@@ -173,6 +173,27 @@ export class ShipDataPageService {
         _record.selected = _record.selected_b == true ? 'Y' : 'N';
     }
 
+
+    CheckMaster(_masterid: string) {
+        this.record.errormessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.DUP_CHK_ONLY = 'Y';
+        SearchData.MASTERID = _masterid;
+        this.CheckMasterData(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == true) {
+                    if (response.warningmsg.trim().length > 0) {
+                        alert(response.warningmsg);
+                    }
+                }
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
+    }
+
+
     // DeleteRow(_rec: Tbl_cargo_exp_housem) {
 
     //     if (this.gs.isBlank(_rec.hbl_pkid) || this.gs.isBlank(_rec.hbl_mbl_id)) {
@@ -216,6 +237,11 @@ export class ShipDataPageService {
     MissingList(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/MissingList', SearchData, this.gs.headerparam2('authorized'));
     }
+
+    CheckMasterData(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/CheckMasterData', SearchData, this.gs.headerparam2('authorized'));
+    }
+
     // GetRecord(SearchData: any) {
     //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     // }

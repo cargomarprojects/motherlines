@@ -70,5 +70,19 @@ export class ShipDataPageComponent implements OnInit {
         //     alert("Cannot Show Details from another Branch");
         // }
     }
+
+    CheckMaster(_record: Tbl_edi_master){
+
+        if (_record.rec_updated == "Y") {
+            alert('Record is already Transfered')
+            return;
+        }
+        if (_record.rec_updated == "D") {
+            alert('Deleted Record')
+            return;
+        }
+         
+        this.mainservice.CheckMaster(_record.masterid);
+    }
     
 }
