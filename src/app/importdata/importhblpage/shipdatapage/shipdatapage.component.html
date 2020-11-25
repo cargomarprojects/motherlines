@@ -64,9 +64,9 @@
                 <td>{{rec.pod_name}}</td>
                 <td>{{rec.pod_eta | date : gs.FRONTEND_DATEFORMAT}}</td>
                 <td>{{rec.place_delivery}}</td>
-                <td class='hlink' (click)="XmlImportData(rec)">{{rec.mbl_refno}}</td>
+                <td class='hlink' (click)="editmaster(rec)">{{rec.mbl_refno}}</td>
                 <td>{{rec.mbl_branch_code}}</td>
-                <td class='hlink' (click)="XmlImportData(rec)">{{rec.mblno}}</td>
+                <td class='hlink' (click)="transferdata(rec,transfermodal)">{{rec.mblno}}</td>
                 <td>{{rec.house_nos}}</td>
                 <td>{{rec.refno}}</td>
                 <td>{{rec.agent_name}}</td>
@@ -77,3 +77,20 @@
 </div>
 
 <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
+
+<ng-template #transfermodal let-c="close" let-d="dismiss">
+    <div class="modal-body">
+        <div class="page-body">
+            <div class="row">
+                <div class="col-md-12 testbox  px-0 mx-0">
+                    <app-transferpage ></app-transferpage>
+                </div>
+            </div>
+            <!-- <div class="page-footer">
+                <div class="row justify-content-center p-1">
+                    <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</ng-template>

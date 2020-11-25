@@ -194,41 +194,33 @@ export class ShipDataPageService {
     }
 
 
-    // DeleteRow(_rec: Tbl_cargo_exp_housem) {
+    DeleteRow(_rec: Tbl_edi_master) {
 
-    //     if (this.gs.isBlank(_rec.hbl_pkid) || this.gs.isBlank(_rec.hbl_mbl_id)) {
-    //         this.record.errormessage = "Cannot Delete, Reference Not Found";
-    //         alert(this.record.errormessage);
-    //         this.mdata$.next(this.record);
-    //         return;
-    //     }
+        let sRemarks: string = "Mbl No : " + _rec.mblno + ", Msg No: " + _rec.messagenumber;
+        this.record.errormessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.masterid;
+        SearchData.remarks = sRemarks;
 
-    //     if (!confirm("DELETE " + _rec.hbl_houseno)) {
-    //         return;
-    //     }
-
-    //     this.record.errormessage = '';
-    //     var SearchData = this.gs.UserInfo;
-    //     SearchData.pkid = _rec.hbl_pkid;
-    //     SearchData.mblid = _rec.hbl_mbl_id;
-    //     SearchData.remarks = _rec.hbl_houseno;
-
-    //     this.DeleteRecord(SearchData)
-    //         .subscribe(response => {
-    //             if (response.retvalue == false) {
-    //                 this.record.errormessage = response.error;
-    //                 alert(this.record.errormessage);
-    //             }
-    //             else {
-    //                 this.record.records.splice(this.record.records.findIndex(rec => rec.hbl_pkid == _rec.hbl_pkid), 1);
-    //             }
-    //             this.mdata$.next(this.record);
-    //         }, error => {
-    //             this.record.errormessage = this.gs.getError(error);
-    //             alert(this.record.errormessage);
-    //             this.mdata$.next(this.record);
-    //         });
-    // }
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    for (let rec of this.record.records.filter(rec => rec.masterid == _rec.masterid)) {
+                        rec.rec_updated = "D";
+                        rec.updated_status = "DELETED-" + this.gs.user_code + "-" + response.currentdate;
+                    }
+                }
+                this.mdata$.next(this.record);
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
+    }
 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/List', SearchData, this.gs.headerparam2('authorized'));
@@ -240,6 +232,10 @@ export class ShipDataPageService {
 
     CheckMasterData(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/CheckMasterData', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
     // GetRecord(SearchData: any) {
@@ -258,8 +254,6 @@ export class ShipDataPageService {
     //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/LoadMasterData', SearchData, this.gs.headerparam2('authorized'));
     // }
 
-    // DeleteRecord(SearchData: any) {
-    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
-    // }
+
 
 }

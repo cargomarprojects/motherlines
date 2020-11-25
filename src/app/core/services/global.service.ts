@@ -490,7 +490,8 @@ export class GlobalService {
       "~SEA_ARVL_FORMAT": this.SEA_ARVL_FORMAT,
       "~MESSENGER_SLIP_DROP_AT": this.MESSENGER_SLIP_DROP_AT,
       "~HBL_INSTR1": this.HBL_INSTR1,
-      "~HBL_INSTR2": this.HBL_INSTR2
+      "~HBL_INSTR2": this.HBL_INSTR2,
+      "~DATE_DISPLAY_FMT_WITH_TIME": this.date_display_fmt_with_time
     }
 
   }

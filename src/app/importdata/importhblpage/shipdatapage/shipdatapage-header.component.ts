@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalService } from '../../../core/services/global.service';
-import { SearchQuery } from '../../models/tbl_edi_master';
+import { SearchQuery, Tbl_edi_master } from '../../models/tbl_edi_master';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { ShipDataPageService } from '../../services/shipdatapage.service';
 
@@ -55,5 +55,42 @@ export class ShipDataPageHeaderComponent implements OnInit {
       origin: 'airimp-master-page',
     };
     this.gs.Naviagete('Silver.ImportData/MissingDataPage', JSON.stringify(prm));
+  }
+
+  DeleteRecord() {
+    let RowSelected: number = 0;
+    let _rec: Tbl_edi_master = null;
+    this.mainservice.record.records.forEach(Rec => {
+      if (Rec.selected == 'Y') {
+        RowSelected++;
+        _rec = Rec;
+      }
+    })
+
+    if (RowSelected != 1) {
+      alert("Please Select Single Row to Delete.");
+      return;
+    }
+
+    if (_rec == null) {
+      alert('No Record Selected');
+      return;
+    }
+
+    if (_rec.rec_updated == "Y") {
+      alert("Cannot Delete, Already Processed");
+      return;
+    }
+
+    if (_rec.rec_updated == "D") {
+      alert("Already Deleted");
+      return;
+    }
+
+    if (!confirm("DELETE MESSAGE NO: " + _rec.messagenumber + ", MBL NO : " + _rec.mblno)) {
+      return;
+    }
+
+    this.mainservice.DeleteRow(_rec);
   }
 }
