@@ -75,7 +75,15 @@ export class MissingDataPageComponent implements OnInit {
         });
     }
 
-
+    linkmaster(_rec: Tbl_edi_link) {
+        let prm = {
+            menuid: this.gs.MENU_IMPORT_EXCEL,
+            id: '1111',
+            param_type: '',
+            origin: 'airimp-master-page',
+        };
+        this.gs.Naviagete('Silver.ImportData/LinkPage', JSON.stringify(prm));
+    }
 
 
     Close() {

@@ -10,6 +10,8 @@ import { MissingDataPageComponent } from './importhblpage/shipdatapage/missingda
 import { SettingPageComponent } from './importhblpage/settingpage/settingpage.component';
 import { SettingPageHeaderComponent } from './importhblpage/settingpage/settingpage-header.component';
 import { TransferPageComponent } from './transferpage/transferpage.component';
+import { LinkPageComponent } from './linkpage/linkpage.component';
+import { LinkPageHeaderComponent } from './linkpage/linkpage-header.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { TransferPageComponent } from './transferpage/transferpage.component';
     MissingDataPageComponent,
     SettingPageComponent,
     SettingPageHeaderComponent,
-    TransferPageComponent
+    TransferPageComponent,
+    LinkPageComponent,
+    LinkPageHeaderComponent
   ],
   imports: [
     SharedModule,

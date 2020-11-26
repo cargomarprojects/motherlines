@@ -28,9 +28,17 @@ export interface SearchQuery {
     searchString: string;
 }
 
+export interface LinkPageModel {
+    errormessage: string;
+    searchQuery: SearchQuery;
+    pageQuery: PageQuery;
+    records: Tbl_edi_link[]
+}
+
 export interface SettingPageModel {
     errormessage: string;
     searchQuery: SearchQuery;
     pageQuery: PageQuery;
     records: Tbl_edi_link[]
 }
+

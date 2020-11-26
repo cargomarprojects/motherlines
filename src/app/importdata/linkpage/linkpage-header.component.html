@@ -1,0 +1,36 @@
+<div class="page-list">
+    <div class="page-search">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm">Sender</label>
+                    <div class="col-8">
+                        <input disabled class="form-control form-control-sm" type="text"
+                            [(ngModel)]="searchQuery.sender" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm">Consignee</label>
+                    <div class="col-8">
+                        <input disabled class="form-control form-control-sm" type="text"
+                            [(ngModel)]="searchQuery.searchString" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <label class="col-2 col-form-label col-form-label-sm"></label>
+                    <div class="col-8">
+                        <input class="form-control form-control-sm" type="text"
+                            [(ngModel)]="searchQuery.searchString" />
+                    </div>
+                    <div class="col-2">
+                        <button (click)="List('SCREEN')" class="btn btn-primary btn-sm mr-1">Find</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

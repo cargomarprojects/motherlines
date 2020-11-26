@@ -56,7 +56,7 @@
                         <tr *ngFor="let rec of records">
                             <td>{{rec.link_messagesender}}</td>
                             <td>{{rec.link_subcategory}}</td>
-                            <td>{{rec.link_source_name}}</td>
+                            <td class='hlink' (click)="linkmaster(rec)">{{rec.link_source_name}}</td>
                             <td>{{rec.link_source_add1}}</td>
                             <td>{{rec.link_source_add2}}</td>
                             <td>{{rec.link_source_add3}}</td>
