@@ -10,6 +10,7 @@ import { SearchQuery } from '../../models/tbl_edi_master';
 import { PageQuery } from '../../../shared/models/pageQuery';
 import { ShipDataPageService } from '../../services/shipdatapage.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Tbl_acc_ledger } from 'src/app/usaccounts-reports/models/Tbl_acc_ledger';
 
 @Component({
     selector: 'app-shipdatapage',
@@ -23,6 +24,7 @@ export class ShipDataPageComponent implements OnInit {
     records$: Observable<Tbl_edi_master[]>;
     pageQuery$: Observable<PageQuery>;
     searchQuery$: Observable<SearchQuery>;
+    mrecord: Tbl_edi_master;
 
     constructor(
         private modalconfig: NgbModalConfig,
@@ -31,7 +33,7 @@ export class ShipDataPageComponent implements OnInit {
         private location: Location,
         public gs: GlobalService,
         public mainservice: ShipDataPageService
-    ) { 
+    ) {
         modalconfig.backdrop = 'static'; //true/false/static
         modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
     }
@@ -107,11 +109,16 @@ export class ShipDataPageComponent implements OnInit {
             alert('Cannot Show Details from another Branch');
     }
 
-    transferdata(_record: Tbl_edi_master,transfermodal: any = null){
+    transferdata(_record: Tbl_edi_master, transfermodal: any = null) {
+
+        this.mrecord = _record;
 
         this.modal = this.modalservice.open(transfermodal, { centered: true });
     }
-    CloseModal() {
-        this.modal.close();
-      }
+
+
+    ModifiedRecords(params: any) {
+        if (params.saction == "CLOSE")
+            this.modal.close();
+    }
 }

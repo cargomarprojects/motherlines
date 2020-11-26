@@ -238,6 +238,14 @@ export class ShipDataPageService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
+    HouseList(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/HouseList', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    TransferData(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/TransferData', SearchData, this.gs.headerparam2('authorized'));
+    }
+
     // GetRecord(SearchData: any) {
     //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     // }

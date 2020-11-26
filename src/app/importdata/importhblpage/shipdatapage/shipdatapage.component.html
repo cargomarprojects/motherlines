@@ -83,7 +83,7 @@
         <div class="page-body">
             <div class="row">
                 <div class="col-md-12 testbox  px-0 mx-0">
-                    <app-transferpage ></app-transferpage>
+                    <app-transferpage [mrecord]="mrecord" (ModifiedRecords)="ModifiedRecords($event)"></app-transferpage>
                 </div>
             </div>
             <!-- <div class="page-footer">

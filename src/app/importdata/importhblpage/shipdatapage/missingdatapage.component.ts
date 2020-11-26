@@ -71,6 +71,7 @@ export class MissingDataPageComponent implements OnInit {
 
         }, error => {
             this.errorMessage = this.gs.getError(error)
+            alert(this.errorMessage);
         });
     }
 

@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { SearchTable } from '../../shared/models/searchtable';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_edi_master } from '../models/tbl_edi_master';
+import { Tbl_edi_master, Tbl_edi_house } from '../models/tbl_edi_master';
 import { ShipDataPageService } from '../services/shipdatapage.service';
+import { DateComponent } from '../../shared/date/date.component';
+import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
     selector: 'app-transferpage',
@@ -14,22 +16,25 @@ import { ShipDataPageService } from '../services/shipdatapage.service';
 })
 export class TransferPageComponent implements OnInit {
 
-    errorMessage: string;
-    mbl_pkid: string;
-    mbl_refno: string;
-    mbl_mode: string;
-    searchString: string;
+    @Input() mrecord: Tbl_edi_master;
+    @Output() ModifiedRecords = new EventEmitter<any>();
 
+    @ViewChild('_branch_code') branch_code_field: ElementRef;
+    @ViewChild('_ref_date') ref_date_field: DateComponent;
+    @ViewChild('_handled_lov') handled_lov_field: AutoComplete2Component;
+
+    errorMessage: string;
     menuid: string;
     title: string;
-    isAdmin: boolean;
-    canAdd: boolean;
-    canEdit: boolean;
-    canSave: boolean;
 
-
-    records: Tbl_edi_master[]
+    records: Tbl_edi_house[]
     is_locked: boolean = false;
+    CompList: any[];
+
+    handled_name: string = "";
+    handled_id: string = "";
+    ref_date: string = "";
+    branch_code: string = "";
 
     constructor(
         private route: ActivatedRoute,
@@ -39,45 +44,106 @@ export class TransferPageComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-
-        const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-        this.menuid = options.menuid;
-        this.mbl_pkid = options.mbl_pkid;
-        // this.mbl_refno = options.mbl_refno;
-        // this.mbl_mode = options.mbl_mode;
-        // this.is_locked = options.is_locked;
-
-        this.isAdmin = this.gs.IsAdmin(this.menuid);
-        this.title = this.gs.getTitle(this.menuid);
-        this.canAdd = this.gs.canAdd(this.menuid);
-        this.canEdit = this.gs.canEdit(this.menuid);
-        this.title = "Missing Data";
-        this.List('DEFAULT');
+        this.LoadCompany();
+        this.List('SCREEN');
+        this.ref_date = this.gs.defaultValues.today;
+        this.branch_code = this.gs.branch_code;
     }
-
 
     List(action: string = '') {
         var SearchData = this.gs.UserInfo;
-        if (this.gs.isBlank(this.searchString))
-            SearchData.SENDER = '';
-        else
-            SearchData.SENDER = this.searchString;
-        if (this.gs.isBlank(this.mbl_pkid) || action == "VALIDATE")
+        if (this.gs.isBlank(this.mrecord.masterid))
             SearchData.MASTERID = '';
         else
-            SearchData.MASTERID = this.mbl_pkid;
-        this.mainservice.MissingList(SearchData).subscribe(response => {
+            SearchData.MASTERID = this.mrecord.masterid;
+        this.mainservice.HouseList(SearchData).subscribe(response => {
             this.records = response.list;
-
+            if (!this.gs.isBlank(this.records)) {
+                if (this.records.length > 0) {
+                    if (this.records[0].handled_id.length > 0) {
+                        this.handled_id = this.records[0].handled_id;
+                        this.handled_name = this.records[0].handled_name;
+                    }
+                }
+            }
+            this.ref_date_field.Focus();
         }, error => {
             this.errorMessage = this.gs.getError(error)
+            alert(this.errorMessage);
         });
     }
 
+    LoadCompany() {
+        this.CompList = <any[]>[];
+        this.gs.CompanyList.forEach(Rec => {
+            if (Rec.comp_code != 'ALL')
+                this.CompList.push(Rec);
+        });
+    }
 
+    LovSelected(_Record: SearchTable) {
 
+        if (_Record.controlname == "HANDLEDBY") {
+            this.handled_id = _Record.id;
+            this.handled_name = _Record.name;
+            //this.salesman_lov_field.Focus();
+        }
+    }
+
+    ImportMaster() {
+        if (this.gs.isBlank(this.ref_date)) {
+            alert("Ref Date cannot be blank");
+            this.ref_date_field.Focus();
+            return;
+        }
+        if (this.gs.isBlank(this.branch_code)) {
+            alert("Branch cannot be blank");
+            this.branch_code_field.nativeElement.focus();
+            return;
+        }
+        if (this.gs.isBlank(this.handled_id)) {
+            alert("A/N Handled By cannot be blank");
+            this.handled_lov_field.Focus();
+            return;
+        }
+
+        this.TransferData(true);
+    }
+
+    TransferData(chkMblDup: boolean) {
+
+        var SearchData = this.gs.UserInfo;
+        if (this.gs.isBlank(this.mrecord.masterid))
+            SearchData.MASTERID = '';
+        else
+            SearchData.MASTERID = this.mrecord.masterid;
+        SearchData.REF_DATE = this.ref_date;
+        SearchData.HANDLED_ID = this.handled_id;
+        SearchData.REC_COMPANY_CODE = this.gs.company_code;
+        SearchData.REC_BRANCH_CODE = this.branch_code;
+        SearchData.DUP_CHK_ONLY = "N";
+        SearchData.CHK_MBL_DUP = chkMblDup == true ? "Y" : "N";
+        this.mainservice.TransferData(SearchData).subscribe(response => {
+            if (response.retvalue == true) {
+                if (response.warningmsg.trim().length > 0) {
+                    if (confirm(response.warningmsg)) {
+                        this.TransferData(false);
+                    }
+                } else {
+                    if (this.ModifiedRecords != null)
+                        this.ModifiedRecords.emit({ saction: 'CLOSE' });
+                }
+            }
+
+        }, error => {
+            this.errorMessage = this.gs.getError(error)
+            alert(this.errorMessage);
+        });
+    }
 
     Close() {
-        this.location.back();
+        if (this.ModifiedRecords != null)
+            this.ModifiedRecords.emit({ saction: 'CLOSE' });
     }
+
 }
