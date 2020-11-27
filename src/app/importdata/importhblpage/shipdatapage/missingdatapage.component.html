@@ -56,14 +56,14 @@
                         <tr *ngFor="let rec of records">
                             <td>{{rec.link_messagesender}}</td>
                             <td>{{rec.link_subcategory}}</td>
-                            <td class='hlink' (click)="linkmaster(rec)">{{rec.link_source_name}}</td>
+                            <td class='hlink' (click)="linkmaster(rec,linkmodal)">{{rec.link_source_name}}</td>
                             <td>{{rec.link_source_add1}}</td>
                             <td>{{rec.link_source_add2}}</td>
                             <td>{{rec.link_source_add3}}</td>
                             <td>{{rec.link_source_add4}}</td>
                             <td>{{rec.link_source_add5}}</td>
                             <td>{{rec.link_status}}</td>
-                            <td class="hlink" >Add To Master</td>
+                            <td class="hlink" (click)="addtomaster(rec)" >Add To Master</td>
                         </tr>
                     </tbody>
                 </table>
@@ -71,3 +71,20 @@
         </div>
     </div>
 </div>
+
+<ng-template #linkmodal let-c="close" let-d="dismiss">
+    <div class="modal-body">
+        <div class="page-body">
+            <div class="row">
+                <div class="col-md-12 testbox  px-0 mx-0">
+                    <app-linkpage [mrecord]="mrecord" (ModifiedRecords)="ModifiedRecords($event)"></app-linkpage>
+                </div>
+            </div>
+            <div class="page-footer">
+                <div class="row justify-content-center p-1">
+                    <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

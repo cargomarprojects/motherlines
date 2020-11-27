@@ -7,12 +7,16 @@ import { map } from 'rxjs/operators';
 import { GlobalService } from '../../../core/services/global.service';
 import { Tbl_edi_link } from '../../models/tbl_edi_link';
 import { ShipDataPageService } from '../../services/shipdatapage.service';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Tbl_acc_ledger } from 'src/app/usaccounts-reports/models/Tbl_acc_ledger';
 
 @Component({
     selector: 'app-missingdatapage',
     templateUrl: './missingdatapage.component.html'
 })
 export class MissingDataPageComponent implements OnInit {
+
+    modal: any;
 
     errorMessage: string;
     mbl_pkid: string;
@@ -26,17 +30,22 @@ export class MissingDataPageComponent implements OnInit {
     canAdd: boolean;
     canEdit: boolean;
     canSave: boolean;
-
+    mrecord: Tbl_edi_link;
 
     records: Tbl_edi_link[]
     is_locked: boolean = false;
 
     constructor(
+        private modalconfig: NgbModalConfig,
+        private modalservice: NgbModal,
         private route: ActivatedRoute,
         private location: Location,
         public gs: GlobalService,
         public mainservice: ShipDataPageService
-    ) { }
+    ) {
+        modalconfig.backdrop = 'static'; //true/false/static
+        modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
+    }
 
     ngOnInit() {
 
@@ -75,18 +84,57 @@ export class MissingDataPageComponent implements OnInit {
         });
     }
 
-    linkmaster(_rec: Tbl_edi_link) {
-        let prm = {
-            menuid: this.gs.MENU_IMPORT_EXCEL,
-            id: '1111',
-            param_type: '',
-            origin: 'airimp-master-page',
-        };
-        this.gs.Naviagete('Silver.ImportData/LinkPage', JSON.stringify(prm));
+    linkmaster(_rec: Tbl_edi_link, linkmodal: any = null) {
+        // let prm = {
+        //     menuid: this.gs.MENU_IMPORT_EXCEL,
+        //     id: '1111',
+        //     param_type: '',
+        //     origin: 'airimp-master-page',
+        // };
+        // this.gs.Naviagete('Silver.ImportData/LinkPage', JSON.stringify(prm));
+
+        this.mrecord = _rec;
+        this.modal = this.modalservice.open(linkmodal, { centered: true });
     }
 
 
     Close() {
         this.location.back();
+    }
+
+    CloseModal() {
+        this.modal.close();
+    }
+
+    ModifiedRecords(params: any) {
+        if (params.saction == "CLOSE")
+            this.modal.close();
+    }
+
+    addtomaster(_rec: Tbl_edi_link) {
+        let sDesc: string = _rec.link_source_name;
+        sDesc = sDesc.replace(',', '#');
+        if (_rec.link_subcategory == "SHIPPER" || _rec.link_subcategory == "CONSIGNEE" || _rec.link_subcategory == "NOTIFY" || _rec.link_subcategory == "AGENT")
+            this.AddToAddressbook(_rec.link_subcategory, _rec.link_messagesender, sDesc);
+    }
+
+    AddToAddressbook(_subcategory: string, _messagesender: string, _sDesc: string) {
+
+        let SMENU_ID = this.gs.MENU_MASTER_DATA; //'6727DF99-9385-4991-841B-1ECAA9E3B28A';
+        if (this.gs.canAdd(SMENU_ID) || this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            let parameter = {
+                menuid: SMENU_ID,
+                pkid: '',
+                type: 'PARTYS',
+                origin: 'EXTERNAL',
+                mode: 'ADD',
+                ms_type: _subcategory,
+                ms_from: _messagesender,
+                ms_name: _sDesc
+            };
+            this.gs.Naviagete('Silver.Master/PartyEditPage', JSON.stringify(parameter));
+        }
+        else
+            alert("Insufficient Rights");
     }
 }

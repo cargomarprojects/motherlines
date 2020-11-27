@@ -189,6 +189,10 @@ export class PartyService {
     GetRecord(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Master/Party/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
+    
+    LoadMissingData(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Master/Party/LoadMissingData', SearchData, this.gs.headerparam2('authorized'));
+    }
 
     Save(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Master/Party/Save', SearchData, this.gs.headerparam2('authorized'));

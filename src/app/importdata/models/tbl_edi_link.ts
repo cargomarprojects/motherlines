@@ -26,6 +26,10 @@ export interface Tbl_edi_link {
 
 export interface SearchQuery {
     searchString: string;
+    messageSender: string;
+    category:string;
+    subcategory: string;
+    sourceName:string;
 }
 
 export interface LinkPageModel {
@@ -40,5 +44,12 @@ export interface SettingPageModel {
     searchQuery: SearchQuery;
     pageQuery: PageQuery;
     records: Tbl_edi_link[]
+}
+
+export interface vm_tbl_edi_link {
+    mode: string;
+    record: Tbl_edi_link;
+    userinfo: any;
+    filter: any;
 }
 

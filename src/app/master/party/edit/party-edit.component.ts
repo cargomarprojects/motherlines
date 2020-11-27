@@ -53,7 +53,11 @@ export class PartyEditComponent implements OnInit {
   private pkid: string = "";
   private menuid: string;
   private type: string = '';
-  private hbl_mode: string = '';
+  private origin: string = '';
+
+  private ms_type = "";
+  private ms_from = "";
+  private ms_name = "";
 
   private mode: string;
 
@@ -85,6 +89,12 @@ export class PartyEditComponent implements OnInit {
     this.menuid = options.menuid;
     this.mode = options.mode;
     this.type = options.type;
+    this.origin = options.origin;
+    if (this.origin === "EXTERNAL") {
+      this.ms_type = options.ms_type;
+      this.ms_from = options.ms_from;
+      this.ms_name = options.ms_name;
+    }
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
@@ -116,6 +126,9 @@ export class PartyEditComponent implements OnInit {
       this.records = <Tbl_Mast_Contacts[]>[];
       this.pkid = this.gs.getGuid();
       this.init();
+      if (this.origin === "EXTERNAL") {
+        this.LoadMissingData();
+      }
     }
     if (this.mode == 'EDIT') {
       this.GetRecord();
@@ -228,7 +241,7 @@ export class PartyEditComponent implements OnInit {
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.type = this.type;
-    
+
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
         this.record = <Tbl_Mast_Partym>response.record;
@@ -282,11 +295,11 @@ export class PartyEditComponent implements OnInit {
 
 
   Save() {
-    let Type2:string = "";
+    let Type2: string = "";
 
     if (!this.Allvalid())
       return;
-      
+
     this.record.gen_type = this.type;
     this.record.gen_is_shipper = this.record.gen_is_shipper_b ? 'Y' : 'N';
     this.record.gen_is_consignee = this.record.gen_is_consignee_b ? 'Y' : 'N';
@@ -315,47 +328,47 @@ export class PartyEditComponent implements OnInit {
     this.record.gen_poa_customs_yn = this.record.gen_poa_customs_yn_b ? 'Y' : 'N';
     this.record.gen_poa_isf_yn = this.record.gen_poa_isf_yn_b ? 'Y' : 'N';
     this.record.gen_bond_yn = this.record.gen_bond_yn_b ? 'Y' : 'N';
-    
+
     if (this.record.gen_is_shipper_b)
-        Type2 += "S";
+      Type2 += "S";
     if (this.record.gen_is_consignee_b)
-        Type2 += "C";
+      Type2 += "C";
     if (this.record.gen_is_cha_b)
-        Type2 += "B";
+      Type2 += "B";
     if (this.record.gen_is_forwarder_b)
-        Type2 += "F";
+      Type2 += "F";
     if (this.record.gen_is_agent_b)
-        Type2 += "A";
+      Type2 += "A";
     if (this.record.gen_is_carrier_b)
-        Type2 += "L";
+      Type2 += "L";
     if (this.record.gen_is_carrier2_sea_b)
-        Type2 += "R";
+      Type2 += "R";
     if (this.record.gen_is_vendor_b)
-        Type2 += "V";
+      Type2 += "V";
     if (this.record.gen_is_trucker_b)
-        Type2 += "T";
+      Type2 += "T";
     if (this.record.gen_is_warehouse_b)
-        Type2 += "W";
+      Type2 += "W";
     if (this.record.gen_is_miscellaneous_b)
-        Type2 += "M";
+      Type2 += "M";
     if (this.record.gen_is_employees_b)
-        Type2 += "E";
+      Type2 += "E";
     if (this.record.gen_is_shipper_vendor_b)
-        Type2 += "H";
+      Type2 += "H";
     if (this.record.gen_is_contractor_b)
-        Type2 += "O";
+      Type2 += "O";
     if (this.record.gen_is_tbd_b)
-        Type2 += "D";
+      Type2 += "D";
     if (this.record.gen_is_importer)
-        Type2 += "I";
+      Type2 += "I";
     if (this.record.gen_is_exporter_b)
-        Type2 += "X";
+      Type2 += "X";
     if (this.record.gen_is_terminal_b)
-        Type2 += "N";
+      Type2 += "N";
     if (this.record.gen_is_terminal2_b)
-        Type2 += "P";
+      Type2 += "P";
     if (this.record.gen_is_bank_b)
-        Type2 += "K";
+      Type2 += "K";
 
     this.record.gen_type2 = Type2;
 
@@ -472,13 +485,13 @@ export class PartyEditComponent implements OnInit {
       this.errorMessage = "Client Category not selected";
       return bRet;
     }
-     
-//Email validation chked in contoller
+
+    //Email validation chked in contoller
 
     return bRet;
- }
+  }
 
- 
+
 
   Close() {
     this.location.back();
@@ -534,10 +547,10 @@ export class PartyEditComponent implements OnInit {
         this.record.gen_pincode = this.record.gen_pincode.toUpperCase();
         break;
       }
-        case 'gen_short_name': {
-          this.record.gen_name =  this.record.gen_short_name;
-          break;
-        }
+      case 'gen_short_name': {
+        this.record.gen_name = this.record.gen_short_name;
+        break;
+      }
       //   case 'mbl_liner_bookingno': {
       //     this.record.mbl_liner_bookingno = this.record.mbl_liner_bookingno.toUpperCase();
       //     break;
@@ -688,8 +701,8 @@ export class PartyEditComponent implements OnInit {
         let prm = {
           menuid: this.menuid,
           parentid: this.pkid,
-          party_code:this.record.gen_code,
-          party_name:this.record.gen_name,
+          party_code: this.record.gen_code,
+          party_name: this.record.gen_name,
           origin: 'party-page'
         };
         this.gs.Naviagete('Silver.Master/PartyLoginPage', JSON.stringify(prm));
@@ -699,7 +712,7 @@ export class PartyEditComponent implements OnInit {
         let prm = {
           menuid: this.menuid,
           parentid: this.pkid,
-          party_name:this.record.gen_short_name,
+          party_name: this.record.gen_short_name,
           origin: 'party-page'
         };
         this.gs.Naviagete('Silver.Master/PartyAddrPage', JSON.stringify(prm));
@@ -709,12 +722,12 @@ export class PartyEditComponent implements OnInit {
         let prm = {
           menuid: this.menuid,
           parentid: this.pkid,
-          party_code:this.record.gen_code,
-          party_name:this.record.gen_short_name,
-          party_officialname:this.record.gen_name,
-          party_addr1:this.record.gen_address1,
-          party_addr2:this.record.gen_address2,
-          party_addr3:this.record.gen_address3,
+          party_code: this.record.gen_code,
+          party_name: this.record.gen_short_name,
+          party_officialname: this.record.gen_name,
+          party_addr1: this.record.gen_address1,
+          party_addr2: this.record.gen_address2,
+          party_addr3: this.record.gen_address3,
           origin: 'party-page'
         };
         this.gs.Naviagete('Silver.Master/BankInfoPage', JSON.stringify(prm));
@@ -804,6 +817,28 @@ export class PartyEditComponent implements OnInit {
       this.record.gen_address2 = str;
     else if (this.SetAddressToLine == "Line3")
       this.record.gen_address3 = str;
+  }
+
+  LoadMissingData() {
+    this.errorMessage = '';
+    var SearchData = this.gs.UserInfo;
+    SearchData.MS_TYPE = this.ms_type;
+    SearchData.MS_FROM = this.ms_from;
+    SearchData.MS_NAME = this.ms_name;
+    this.mainService.LoadMissingData(SearchData)
+      .subscribe(response => {
+        let _rec = <Tbl_Mast_Partym>response.record;
+        if (!this.gs.isBlank(_rec)) {
+          this.record.gen_short_name = _rec.gen_name.toString();
+          this.record.gen_name = _rec.gen_name.toString();
+          this.record.gen_address1 = _rec.gen_address1.toString();
+          this.record.gen_address2 = _rec.gen_address2.toString();
+          this.record.gen_address3 = _rec.gen_address3.toString();
+          this.record.gen_address4 = _rec.gen_address4.toString();
+        }
+      }, error => {
+        this.errorMessage = this.gs.getError(error);
+      });
   }
 
 }
