@@ -116,6 +116,24 @@ export class MissingDataPageComponent implements OnInit {
         sDesc = sDesc.replace(',', '#');
         if (_rec.link_subcategory == "SHIPPER" || _rec.link_subcategory == "CONSIGNEE" || _rec.link_subcategory == "NOTIFY" || _rec.link_subcategory == "AGENT")
             this.AddToAddressbook(_rec.link_subcategory, _rec.link_messagesender, sDesc);
+        else if (_rec.link_subcategory == "SEA CARRIER")
+            this.AddToParamDet(this.gs.MENU_SEA_CARRIER, _rec.link_subcategory, sDesc);
+        else if (_rec.link_subcategory == "SEA PORT")
+            this.AddToParamDet(this.gs.MENU_SEA_PORT, _rec.link_subcategory, sDesc);
+        else if (_rec.link_subcategory == "FREIGHT STATUS")
+            this.AddToParam(this.gs.MENU_FREIGHT_STATUS, _rec.link_subcategory, sDesc);
+        else if (_rec.link_subcategory == "CARGO MOVEMENT")
+            this.AddToParam(this.gs.MENU_CARGO_MOVEMENT, _rec.link_subcategory, sDesc);
+        else if (_rec.link_subcategory == "COUNTRY")
+            this.AddToParam(this.gs.MENU_COUNTRY_MASTER, _rec.link_subcategory, sDesc);
+        else if (_rec.link_subcategory == "UNIT")
+            this.AddToParam(this.gs.MENU_UNIT_MASTER, _rec.link_subcategory, sDesc);
+        else if (_rec.link_subcategory == "NOMINATION")
+            this.AddToParam(this.gs.MENU_NOMINATION_STATUS, _rec.link_subcategory, sDesc);
+        else if (_rec.link_subcategory == "CONTAINER TYPE")
+            this.AddToParam(this.gs.MENU_CONTAINER_TYPE, _rec.link_subcategory, sDesc);
+        else
+            alert("Please Add Manually");
     }
 
     AddToAddressbook(_subcategory: string, _messagesender: string, _sDesc: string) {
@@ -133,6 +151,40 @@ export class MissingDataPageComponent implements OnInit {
                 ms_name: _sDesc
             };
             this.gs.Naviagete('Silver.Master/PartyEditPage', JSON.stringify(parameter));
+        }
+        else
+            alert("Insufficient Rights");
+    }
+
+    AddToParamDet(_smenu_id: string, _type: string, _sDesc: string) {
+
+        if (this.gs.canAdd(_smenu_id) || this.gs.canEdit(_smenu_id) || this.gs.canView(_smenu_id)) {
+            let parameter = {
+                menuid: _smenu_id,
+                pkid: '',
+                type: _type,
+                origin: 'EXTERNAL',
+                mode: 'ADD',
+                ms_name: _sDesc
+            };
+            this.gs.Naviagete('Silver.Master/ParamPageDetEdit', JSON.stringify(parameter));
+        }
+        else
+            alert("Insufficient Rights");
+    }
+
+    AddToParam(_smenu_id: string, _type: string, _sDesc: string) {
+
+        if (this.gs.canAdd(_smenu_id) || this.gs.canEdit(_smenu_id) || this.gs.canView(_smenu_id)) {
+            let parameter = {
+                menuid: _smenu_id,
+                pkid: '',
+                type: _type,
+                origin: 'EXTERNAL',
+                mode: 'ADD',
+                ms_name: _sDesc
+            };
+            this.gs.Naviagete('Silver.Master/ParamEdit', JSON.stringify(parameter));
         }
         else
             alert("Insufficient Rights");

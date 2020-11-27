@@ -27,6 +27,8 @@ export class ParamEditComponent implements OnInit {
   mode: string;
   sub: any;
   errorMessage: string;
+  origin: string = "";
+  ms_name: string = "";
 
   closeCaption: string = 'Return';
 
@@ -73,6 +75,10 @@ export class ParamEditComponent implements OnInit {
       this.menuid = options.menuid;
       this.menu_param = options.type;
       this.mode = options.mode;
+      this.origin = options.origin;
+      if (this.origin === "EXTERNAL") {
+        this.ms_name = options.ms_name;
+      }
       this.closeCaption = 'Return';
       this.initPage();
       this.showHideControls();
@@ -118,6 +124,9 @@ export class ParamEditComponent implements OnInit {
       this.record = <TBL_MAST_PARAM>{};
       this.pkid = this.gs.getGuid();
       this.init();
+      if (this.origin === "EXTERNAL") {
+        this.record.param_name1 = this.ms_name;
+      }
     }
     if (this.mode == 'EDIT') {
       this.GetRecord();
