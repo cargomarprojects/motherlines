@@ -55,23 +55,7 @@ export class SettingPageComponent implements OnInit {
         this.location.back();
     }
 
-    XmlImportData_Click(_record: Tbl_edi_link) {
-        // let sID: string = (_record.cf_master_id != null) ? _record.cf_master_id.toString() : "";
-        // let REFNO: string = _record.cf_refno != null ? _record.cf_refno.toString() : "";
-        // let sMode: string = _record.cf_mbl_mode != null ? _record.cf_mbl_mode.toString() : "";
-        // let branch_code: string = _record.cf_branch_code != null ? _record.cf_branch_code.toString() : "";
-        // if (sID == "") {
-        //     alert('Invalid Record Selected');
-        //     return;
-        // }
-        // if (branch_code == this.gs.branch_code) {
-        //     this.gs.LinkPage("REFNO", sMode, REFNO, sID);
-        // }
-        // else {
-        //     alert("Cannot Show Details from another Branch");
-        // }
-    }
-
+     
     ShipData(){
         let prm = {
             menuid: this.gs.MENU_IMPORT_EXCEL,

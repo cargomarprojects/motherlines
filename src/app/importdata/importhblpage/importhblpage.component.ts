@@ -93,4 +93,14 @@ export class ImportHblPageComponent implements OnInit {
         };
         this.gs.Naviagete('Silver.ImportData/SettingPage', JSON.stringify(prm));
     }
+
+    MissingData()
+    {
+        let prm = {
+            menuid: this.gs.MENU_IMPORT_HBL_DATA_SEA,
+            mbl_pkid: '',
+            origin: 'importhbl-page'
+          };
+          this.gs.Naviagete('Silver.ImportData/MissingDataPage', JSON.stringify(prm));
+    }
 }

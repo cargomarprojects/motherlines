@@ -23,6 +23,7 @@ export class MissingDataPageComponent implements OnInit {
     mbl_refno: string;
     mbl_mode: string;
     searchString: string;
+    origin: string;
 
     menuid: string;
     title: string;
@@ -52,6 +53,7 @@ export class MissingDataPageComponent implements OnInit {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
         this.menuid = options.menuid;
         this.mbl_pkid = options.mbl_pkid;
+        this.origin = options.origin;
         // this.mbl_refno = options.mbl_refno;
         // this.mbl_mode = options.mbl_mode;
         // this.is_locked = options.is_locked;
@@ -61,7 +63,8 @@ export class MissingDataPageComponent implements OnInit {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.title = "Missing Data";
-        this.List('DEFAULT');
+        if (this.origin === "shipdata-page")
+            this.List('DEFAULT');
     }
 
 

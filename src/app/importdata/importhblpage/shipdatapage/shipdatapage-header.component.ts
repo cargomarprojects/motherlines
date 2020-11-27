@@ -50,9 +50,9 @@ export class ShipDataPageHeaderComponent implements OnInit {
     }
 
     let prm = {
-      menuid: this.gs.MENU_IMPORT_EXCEL,
+      menuid: this.gs.MENU_IMPORT_HBL_DATA_SEA,
       mbl_pkid: IDs,
-      origin: 'airimp-master-page',
+      origin: 'shipdata-page'
     };
     this.gs.Naviagete('Silver.ImportData/MissingDataPage', JSON.stringify(prm));
   }

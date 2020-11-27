@@ -116,6 +116,31 @@ export class SettingPageService {
         });
     }
 
+    RemoveRow(_rec: Tbl_edi_link) {
+
+        if (!confirm("Remove Selected Record")) {
+            return;
+        }
+
+        this.record.errormessage = '';
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.link_pkid;
+        this.DeleteRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.record.errormessage = response.error;
+                    alert(this.record.errormessage);
+                }
+                else {
+                    this.record.records.splice(this.record.records.findIndex(rec => rec.link_pkid == _rec.link_pkid), 1);
+                }
+                this.mdata$.next(this.record);
+            }, error => {
+                this.record.errormessage = this.gs.getError(error);
+                alert(this.record.errormessage);
+                this.mdata$.next(this.record);
+            });
+    }
 
     // DeleteRow(_rec: Tbl_cargo_exp_housem) {
 
@@ -155,6 +180,10 @@ export class SettingPageService {
 
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/settingpage/List', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+    DeleteRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/settingpage/DeleteRecord', SearchData, this.gs.headerparam2('authorized'));
     }
 
     // GetRecord(SearchData: any) {
