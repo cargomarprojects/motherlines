@@ -55,10 +55,11 @@
                                 <th>FREIGHT</th>
                                 <th>SHIPMENT-TYPE</th>
                                 <th>AMS#</th>
+                                <th class='text-center'>DELETE</th>          
                             </tr>
                         </thead>
-                        <tbody class="page-body-tbody">
-                            <tr *ngFor="let rec of records">
+                        <tbody class="page-body-tbody" *ngFor="let rec of records">
+                            <tr [style.color]="(rec.deleted=='Y')?'Red':'Black'">
                                 <td>{{rec.houseno}}</td>
                                 <td>{{rec.shipper_name}}</td>
                                 <td>{{rec.consignee_name}}</td>
@@ -66,6 +67,8 @@
                                 <td>{{rec.freight_status}}</td>
                                 <td>{{rec.shipment_type}}</td>
                                 <td>{{rec.ams_fileno}}</td>
+                                <td class="p-0 text-center"><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
+                                    (click)="DeleteRow(rec)"></i></td>
                             </tr>
                         </tbody>
                     </table>

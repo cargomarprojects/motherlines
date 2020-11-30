@@ -146,4 +146,32 @@ export class TransferPageComponent implements OnInit {
             this.ModifiedRecords.emit({ saction: 'CLOSE' });
     }
 
+
+    DeleteRow(_rec: Tbl_edi_house) {
+        let sRemarks: string = "";
+        this.errorMessage = '';
+
+        if (!confirm("DELETE HOUSE NO : " + _rec.houseno)) {
+            return;
+        }
+        var SearchData = this.gs.UserInfo;
+        SearchData.pkid = _rec.houseid;
+        SearchData.remarks = sRemarks;
+        this.mainservice.DeleteHouseRecord(SearchData)
+            .subscribe(response => {
+                if (response.retvalue == false) {
+                    this.errorMessage = response.error;
+                    alert(this.errorMessage);
+                }
+                else {
+                    for (let rec of this.records.filter(rec => rec.houseid == _rec.houseid)) {
+                        rec.deleted = "Y";
+                    }
+                }
+            }, error => {
+                this.errorMessage = this.gs.getError(error);
+                alert(this.errorMessage);
+            });
+    }
+
 }

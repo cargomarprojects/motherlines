@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_edi_master, ShipDataPageModel } from '../models/tbl_edi_master';
+import { Tbl_edi_master,Tbl_edi_house, ShipDataPageModel } from '../models/tbl_edi_master';
 import { SearchQuery } from '../models/tbl_edi_master';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -221,7 +221,7 @@ export class ShipDataPageService {
                 this.mdata$.next(this.record);
             });
     }
-
+    
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/List', SearchData, this.gs.headerparam2('authorized'));
     }
@@ -241,7 +241,9 @@ export class ShipDataPageService {
     HouseList(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/HouseList', SearchData, this.gs.headerparam2('authorized'));
     }
-
+    DeleteHouseRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/DeleteHouseRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
     TransferData(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/TransferData', SearchData, this.gs.headerparam2('authorized'));
     }
