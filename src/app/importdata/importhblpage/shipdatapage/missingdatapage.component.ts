@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { Tbl_edi_link } from '../../models/tbl_edi_link';
 import { ShipDataPageService } from '../../services/shipdatapage.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Tbl_acc_ledger } from 'src/app/usaccounts-reports/models/Tbl_acc_ledger';
+import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 
 @Component({
     selector: 'app-missingdatapage',
@@ -17,7 +18,7 @@ import { Tbl_acc_ledger } from 'src/app/usaccounts-reports/models/Tbl_acc_ledger
 export class MissingDataPageComponent implements OnInit {
 
     modal: any;
-
+    @ViewChild('_searchstring') searchstring_ctrl: InputBoxComponent;
     errorMessage: string;
     mbl_pkid: string;
     mbl_refno: string;
@@ -63,6 +64,8 @@ export class MissingDataPageComponent implements OnInit {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.title = "Missing Data";
+        this.searchstring_ctrl.focus();
+        
         if (this.origin === "shipdata-page")
             this.List('DEFAULT');
     }

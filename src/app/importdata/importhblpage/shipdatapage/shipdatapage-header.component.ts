@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { GlobalService } from '../../../core/services/global.service';
 import { SearchQuery, Tbl_edi_master } from '../../models/tbl_edi_master';
 import { SearchTable } from '../../../shared/models/searchtable';
 import { ShipDataPageService } from '../../services/shipdatapage.service';
+import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 
 @Component({
   selector: 'app-shipdatapage-header',
@@ -19,12 +20,14 @@ export class ShipDataPageHeaderComponent implements OnInit {
 
   @Output() searchEvents = new EventEmitter<any>();
 
+  @ViewChild('_searchsender') searchsender_ctrl: InputBoxComponent;
+
   constructor(public gs: GlobalService,
     public mainservice: ShipDataPageService
   ) { }
 
   ngOnInit() {
-
+    this.searchsender_ctrl.focus();
   }
 
   ngOnChanges(changes: SimpleChange) {

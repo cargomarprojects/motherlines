@@ -506,14 +506,17 @@ export class PartyEditComponent implements OnInit {
     if (_Record.controlname == "COUNTRY") {
       this.record.gen_country_id = _Record.id;
       this.record.gen_country_name = _Record.name;
+      this.record.gen_country_code = _Record.code;
     }
     if (_Record.controlname == "HANDLEDBY") {
       this.record.gen_handled_id = _Record.id;
       this.record.gen_handled_name = _Record.name;
+      this.record.gen_handled_code = _Record.code;
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.gen_salesman_id = _Record.id;
       this.record.gen_salesman_name = _Record.name;
+      this.record.gen_salesman_code = _Record.code;
     }
     if (_Record.controlname == "CHB") {
       this.record.gen_cha_id = _Record.id;
