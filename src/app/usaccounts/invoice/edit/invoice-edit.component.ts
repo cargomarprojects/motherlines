@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { GlobalService } from '../../../core/services/global.service';
-
 import { SearchTable } from '../../../shared/models/searchtable';
 
 import { Tbl_cargo_invoicem, vm_tbl_cargo_invoicem } from '../../models/Tbl_cargo_Invoicem';
@@ -11,10 +10,7 @@ import { Tbl_Cargo_Invoiced } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
 import { Tbl_House } from '../../models/tbl_house';
-
 import { invoiceService } from '../../services/invoice.service';
-
-
 
 
 @Component({
@@ -25,65 +21,65 @@ export class InvoiceEditComponent implements OnInit {
 
   errorMessage: string;
 
-   mode: string;
-   mbl_pkid: string;
-   hbl_pkid: string;
-   mbl_refno: string;
-   mbl_type: string; // OE OI AE AI ...etc
-   showdeleted: boolean;
-   paid_amt: number;
-   bal_amt: number;
+  mode: string;
+  mbl_pkid: string;
+  hbl_pkid: string;
+  mbl_refno: string;
+  mbl_type: string; // OE OI AE AI ...etc
+  showdeleted: boolean;
+  paid_amt: number;
+  bal_amt: number;
 
-   inv_arap: string; // AR OR AP
-   arrival_notice: string = '';
+  inv_arap: string; // AR OR AP
+  arrival_notice: string = '';
 
-   ArAp_Where_Condition: string = '';
+  ArAp_Where_Condition: string = '';
 
-   pkid: string;
-   menuid: string;
+  pkid: string;
+  menuid: string;
 
-   title: string;
-   isAdmin: boolean;
-   canAdd: boolean;
-   canEdit: boolean;
-   canSave: boolean;
+  title: string;
+  isAdmin: boolean;
+  canAdd: boolean;
+  canEdit: boolean;
+  canSave: boolean;
 
   tab: string = 'main';
   report_title: string = '';
   report_url: string = '';
   report_searchdata: any = {};
   report_menuid: string = '';
-  
-   acc_id: string = '';
-   acc_code: string = '';
-   acc_name: string = '';
 
-   inv_mbl_id: string = "";
-   inv_hbl_id: string = "";
+  acc_id: string = '';
+  acc_code: string = '';
+  acc_name: string = '';
 
-   inv_house_id: string = "";
+  inv_mbl_id: string = "";
+  inv_hbl_id: string = "";
+
+  inv_house_id: string = "";
 
 
-   enable_customer_control: boolean = false;
-   enable_arap_control: boolean = false;
-   enable_acc_control: boolean = false;
+  enable_customer_control: boolean = false;
+  enable_arap_control: boolean = false;
+  enable_acc_control: boolean = false;
 
-   enable_currency: boolean = false;
+  enable_currency: boolean = false;
 
-   show_currency: boolean = false;
-   show_cc_control: boolean = false;
-   show_vat: boolean = false;
-   show_confirm: boolean = false;
-   show_invstage: boolean = false;
+  show_currency: boolean = false;
+  show_cc_control: boolean = false;
+  show_vat: boolean = false;
+  show_confirm: boolean = false;
+  show_invstage: boolean = false;
 
-   isVat: boolean = false;
-   isConfirmed: boolean = true;
+  isVat: boolean = false;
+  isConfirmed: boolean = true;
 
   public record: Tbl_cargo_invoicem = <Tbl_cargo_invoicem>{};
   public records: Tbl_Cargo_Invoiced[] = [];
-   history: Tbl_PayHistory[] = [];
+  history: Tbl_PayHistory[] = [];
 
-   HouseList: Tbl_House[] = [];
+  HouseList: Tbl_House[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -107,7 +103,7 @@ export class InvoiceEditComponent implements OnInit {
     this.initControls();
 
     this.SetIncomeExpenseCodesForLineItems();
-    this.enableAll();
+    // this.enableAll();
     this.actionHandler();
   }
 
@@ -294,7 +290,7 @@ export class InvoiceEditComponent implements OnInit {
 
     var rec = <Tbl_Cargo_Invoiced>{};
     rec.invd_pkid = this.gs.getGuid();
-    rec.invd_parent_id   = this.pkid ;
+    rec.invd_parent_id = this.pkid;
 
 
     rec.invd_acc_id = this.acc_id;
@@ -302,16 +298,16 @@ export class InvoiceEditComponent implements OnInit {
     rec.invd_acc_name = this.acc_code;
     rec.invd_curr_code = this.record.inv_curr_code;
     rec.invd_exrate = this.record.inv_exrate;
-    rec.invd_qty   = 1;
-    rec.invd_vat_per   = 0;
-    rec.invd_vat_amt   = 0;
-    rec.invd_fvat_amt   = 0;
-    rec.invd_frate   = 0;
-    
-    rec.invd_cc_id =this.gs.branch_pkid;
+    rec.invd_qty = 1;
+    rec.invd_vat_per = 0;
+    rec.invd_vat_amt = 0;
+    rec.invd_fvat_amt = 0;
+    rec.invd_frate = 0;
+
+    rec.invd_cc_id = this.gs.branch_pkid;
     rec.invd_cc_code = this.gs.branch_code;
 
-    rec.invd_remarks   = '';
+    rec.invd_remarks = '';
 
     this.records.push(rec);
   }
@@ -370,11 +366,11 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_acc_name = this.gs.SETTINGS_AC_PAYABLE_NAME;
     }
 
-    this.record.inv_pkid = this.pkid ;
+    this.record.inv_pkid = this.pkid;
     this.record.inv_mbl_id = this.mbl_pkid;
     this.record.inv_arap = this.inv_arap;
     this.record.inv_type = this.mbl_type;
-    
+
     //this.record.inv_date = this.gs.defaultValues.today;
 
     this.record.inv_arrnotice = 'N';
@@ -383,11 +379,11 @@ export class InvoiceEditComponent implements OnInit {
     this.record.inv_exrate = 1;
 
 
-    this.record.inv_vat =0;
-    this.record.inv_fvat =0;
-    this.record.inv_vat_per =0;
+    this.record.inv_vat = 0;
+    this.record.inv_fvat = 0;
+    this.record.inv_vat_per = 0;
 
-    this.record.inv_confirmed ='Y';
+    this.record.inv_confirmed = 'Y';
 
     this.record.inv_agent_drcr = 'N';
     this.record.inv_stage = '';
@@ -452,10 +448,10 @@ export class InvoiceEditComponent implements OnInit {
     });
   }
 
-  SaveParent(){
-    this.record.inv_confirmed =   'N';
-    if ( this.isConfirmed )
-      this.record.inv_confirmed =   'Y';
+  SaveParent() {
+    this.record.inv_confirmed = 'N';
+    if (this.isConfirmed)
+      this.record.inv_confirmed = 'Y';
   }
 
   Save() {
@@ -469,11 +465,11 @@ export class InvoiceEditComponent implements OnInit {
     this.errorMessage = '';
 
     var SearchData = this.gs.UserInfo;
+    
 
-
-    SearchData.IS_SINGLE_CURRENCY = (this.gs.IS_SINGLE_CURRENCY)  ? "Y" : "N";
+    SearchData.IS_SINGLE_CURRENCY = (this.gs.IS_SINGLE_CURRENCY) ? "Y" : "N";
     SearchData.BASE_CURRENCY_CODE = this.gs.base_cur_code;
-
+    SearchData.VERSION = "7";
     const data = <vm_tbl_cargo_invoicem>{};
     data.record = this.record;
     data.records = this.records;
@@ -481,23 +477,23 @@ export class InvoiceEditComponent implements OnInit {
     data.userinfo = SearchData;
 
     this.mainservice.Save(data).subscribe(rec => {
-        if ( rec.retvalue ) {
-          this.mode = 'EDIT';
-        }
-        else {
-          this.record.inv_cfno =  rec.cfno;
-          this.record.inv_no =  rec.docno;
-        }
-      },
+      if (rec.retvalue) {
+        this.mode = 'EDIT';
+      }
+      else {
+        this.record.inv_cfno = rec.cfno;
+        this.record.inv_no = rec.docno;
+      }
+    },
       error => {
-        this.errorMessage =  this.gs.getError(error);
+        this.errorMessage = this.gs.getError(error);
       }
     );
 
 
   }
 
-  Allvalid() : boolean {
+  Allvalid(): boolean {
     let bret = true;
 
     if (this.record.rec_deleted == 'Y') {
@@ -517,7 +513,7 @@ export class InvoiceEditComponent implements OnInit {
     }
 
 
-    if ( this.gs.isBlank(this.record.inv_date)) {
+    if (this.gs.isBlank(this.record.inv_date)) {
       this.errorMessage = "Invalid Invoice Date";
       return false;
     }
@@ -582,13 +578,13 @@ export class InvoiceEditComponent implements OnInit {
       iCtr++;
       Rec.invd_order = iCtr;
 
-      if ( this.gs.isBlank(Rec.invd_desc_id) ||  this.gs.isBlank(Rec.invd_desc_name)) {
+      if (this.gs.isBlank(Rec.invd_desc_id) || this.gs.isBlank(Rec.invd_desc_name)) {
         sErrMsg = 'Invalid Invoice Description in Invoice Detail';
       }
-      if ( this.gs.isBlank(Rec.invd_acc_id)) {
+      if (this.gs.isBlank(Rec.invd_acc_id)) {
         sErrMsg = 'Invalid A/ Code in Invoice Detail';
       }
-      if ( this.gs.isBlank(Rec.invd_curr_code)) {
+      if (this.gs.isBlank(Rec.invd_curr_code)) {
         sErrMsg = 'Invalid Currency in Invoice Detail';
       }
 
@@ -597,20 +593,18 @@ export class InvoiceEditComponent implements OnInit {
           sErrMsg = 'Invalid Currency in Invoice Detail';
         }
       }
-      if ( this.gs.isZero(Rec.invd_exrate)) {
+      if (this.gs.isZero(Rec.invd_exrate)) {
         sErrMsg = 'Invalid Ex.Rate in Invoice Detail';
-      }      
+      }
 
-      if ( this.gs.isZero(Rec.invd_ftotal) || this.gs.isZero(Rec.invd_total)) {
+      if (this.gs.isZero(Rec.invd_ftotal) || this.gs.isZero(Rec.invd_total)) {
         sErrMsg = 'Invalid Amount in Invoice Detail';
       }
 
-      if (this.record.inv_type == "GE" || this.record.inv_type == "PR" || this.record.inv_type == "CM" || this.record.inv_type == "PS" || this.record.inv_type == "FA")
-      {
-          if ( this.gs.isBlank(Rec.invd_cc_id ))
-          {
-               sErrMsg =  "Branch Has to be selected";
-          }
+      if (this.record.inv_type == "GE" || this.record.inv_type == "PR" || this.record.inv_type == "CM" || this.record.inv_type == "PS" || this.record.inv_type == "FA") {
+        if (this.gs.isBlank(Rec.invd_cc_id)) {
+          sErrMsg = "Branch Has to be selected";
+        }
       }
 
     });
@@ -786,12 +780,24 @@ export class InvoiceEditComponent implements OnInit {
         this.findRowTotal(field, rec);
         break;
       }
+      case 'invd_qty': {
+        rec.invd_qty = this.gs.roundNumber(rec.invd_qty, 3);
+        this.findRowTotal(field, rec);
+        break;
+      }
+      case 'invd_rate': {
+        rec.invd_rate = this.gs.roundNumber(rec.invd_rate, 2);
+        this.findRowTotal(field, rec);
+        break;
+      }
 
     }
   }
 
   findRowTotal(field: string, rec: Tbl_Cargo_Invoiced) {
 
+    let nQty = rec.invd_qty;
+    let nRate = rec.invd_rate;
 
     let nAmt = rec.invd_ftotal;
     let nExRate = rec.invd_exrate;
@@ -799,6 +805,30 @@ export class InvoiceEditComponent implements OnInit {
 
     let Row_FVat = 0;
     let Row_Vat = 0;
+
+    if (field == "invd_qty" || field == "invd_rate") {
+      nQty = rec.invd_qty;
+      if (nQty == 0) {
+        nQty = 1;
+      }
+      nRate = rec.invd_rate;
+      if (nQty != 0 && nRate != 0) {
+        nAmt = nQty * nRate;
+        nAmt = this.gs.roundNumber(nAmt, 2);
+        rec.invd_ftotal = nAmt;
+      }
+    }
+
+    if (field == "invd_ftotal") {
+      if (nQty == 0) {
+        rec.invd_qty = 1;
+        nQty = 1;
+      }
+      nRate = nAmt / nQty;
+      nRate = this.gs.roundNumber(nRate, 2);
+      rec.invd_rate = nRate;
+    }
+
 
     rec.invd_frate = nAmt;
 
@@ -814,7 +844,7 @@ export class InvoiceEditComponent implements OnInit {
     }
     nTotal = this.gs.roundNumber(nTotal, 2);
 
-  
+
     rec.invd_total = nTotal;
 
     if (rec.invd_vat_per > 0) {
@@ -882,19 +912,19 @@ export class InvoiceEditComponent implements OnInit {
 
   BtnNavigation(action: string) {
     switch (action) {
-        case 'HISTORY': {
-            let prm = {
-                menuid: this.menuid,
-                pkid: this.pkid,
-                source: "INVOICE",
-                title: "History [INVOICE NO : " + this.record.inv_no + "]",
-                origin: 'invoice-page'
-            };
-            this.gs.Naviagete('Silver.BusinessModule/LogBookPage', JSON.stringify(prm));
-            break;
-        }
-        case 'INVOICE-PRINT': {
-         let sPath:string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+      case 'HISTORY': {
+        let prm = {
+          menuid: this.menuid,
+          pkid: this.pkid,
+          source: "INVOICE",
+          title: "History [INVOICE NO : " + this.record.inv_no + "]",
+          origin: 'invoice-page'
+        };
+        this.gs.Naviagete('Silver.BusinessModule/LogBookPage', JSON.stringify(prm));
+        break;
+      }
+      case 'INVOICE-PRINT': {
+        let sPath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
         this.report_title = 'Invoice';
         this.report_url = '/api/USAccounts/Invoice/InvoiceReport';
         this.report_searchdata = this.gs.UserInfo;
@@ -907,13 +937,13 @@ export class InvoiceEditComponent implements OnInit {
         this.tab = 'report';
         break;
       }
-        
+
     }
-}
- 
-callbackevent(event: any) {
-  this.tab = 'main';
-}
+  }
+
+  callbackevent(event: any) {
+    this.tab = 'main';
+  }
 
   Close() {
     this.location.back();
