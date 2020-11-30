@@ -10,7 +10,7 @@ import { User_Menu } from '../../core/models/menum';
 import { TBL_MAST_PARAM, VM_TBL_MAST_PARAM } from '../models/Tbl_Mast_Param';
 
 import { SearchTable } from '../../shared/models/searchtable';
-import { type } from 'os';
+// import { type } from 'os';
 
 
 @Component({
