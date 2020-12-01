@@ -740,7 +740,7 @@ export class SeaImpMasterEditComponent implements OnInit {
           menuid: this.gs.MENU_SI_MASTER_ARAP,
           mbl_pkid: this.pkid,
           mbl_refno: this.record.mbl_refno,
-          mbl_type: 'SI',
+          mbl_type: 'OI',
           origin: 'seaimp-master-page',
         };
         this.gs.Naviagete('Silver.USAccounts.Trans/InvoicePage', JSON.stringify(prm));
@@ -763,7 +763,7 @@ export class SeaImpMasterEditComponent implements OnInit {
           parentid: this.pkid,
           pkid: this.hbl_pkid,
           refno: this.record.mbl_refno,
-          type: 'SI',
+          type: 'OI',
           origin: 'seaimp-master-page',
           mode: this.hbl_mode
         };

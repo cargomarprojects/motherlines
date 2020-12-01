@@ -58,10 +58,10 @@ export class SettingPageComponent implements OnInit {
      
     ShipData(){
         let prm = {
-            menuid: this.gs.MENU_IMPORT_EXCEL,
+            menuid: this.gs.MENU_IMPORT_HBL_DATA_SEA,
             id: '',
             param_type: '',
-            origin: 'airimp-master-page',
+            origin: 'setting-page',
           };
           this.gs.Naviagete('Silver.ImportData/ShipDataPage', JSON.stringify(prm)); 
     }

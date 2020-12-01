@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -18,6 +18,9 @@ import { invoiceService } from '../../services/invoice.service';
   templateUrl: './invoice-edit.component.html'
 })
 export class InvoiceEditComponent implements OnInit {
+
+  @ViewChild('_inv_refno') inv_refno_ctrl: ElementRef;
+
 
   errorMessage: string;
 
@@ -352,7 +355,8 @@ export class InvoiceEditComponent implements OnInit {
 
   SetInitialValues() {
 
-
+    this.record.inv_date = this.gs.defaultValues.today;
+    
     if (this.inv_arap == "AR") {
       this.record.inv_prefix = this.gs.AR_INVOICE_PREFIX;
       this.record.inv_startingno = this.gs.AR_INVOICE_STARTING_NO;
@@ -465,7 +469,7 @@ export class InvoiceEditComponent implements OnInit {
     this.errorMessage = '';
 
     var SearchData = this.gs.UserInfo;
-    
+
 
     SearchData.IS_SINGLE_CURRENCY = (this.gs.IS_SINGLE_CURRENCY) ? "Y" : "N";
     SearchData.BASE_CURRENCY_CODE = this.gs.base_cur_code;
@@ -867,6 +871,7 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_cust_id = _Record.id;
       this.record.inv_cust_code = _Record.code;
       this.record.inv_cust_name = _Record.name;
+      this.inv_refno_ctrl.nativeElement.focus();
     }
 
     if (_Record.controlname == "ARAP") {

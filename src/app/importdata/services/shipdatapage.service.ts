@@ -248,22 +248,4 @@ export class ShipDataPageService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/TransferData', SearchData, this.gs.headerparam2('authorized'));
     }
 
-    // GetRecord(SearchData: any) {
-    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/GetRecord', SearchData, this.gs.headerparam2('authorized'));
-    // }
-
-    // Isblnoduplication(SearchData: any) {
-    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/Isblnoduplication', SearchData, this.gs.headerparam2('authorized'));
-    // }
-
-    // Save(SearchData: any) {
-    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/Save', SearchData, this.gs.headerparam2('authorized'));
-    // }
-
-    // LoadMasterData(SearchData: any) {
-    //     return this.http2.post<any>(this.gs.baseUrl + '/api/AirExport/House/LoadMasterData', SearchData, this.gs.headerparam2('authorized'));
-    // }
-
-
-
 }

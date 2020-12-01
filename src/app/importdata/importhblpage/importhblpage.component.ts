@@ -76,20 +76,20 @@ export class ImportHblPageComponent implements OnInit {
 
     ShipData() {
         let prm = {
-            menuid: this.gs.MENU_IMPORT_EXCEL,
+            menuid: this.gs.MENU_IMPORT_HBL_DATA_SEA,
             id: '',
             param_type: '',
-            origin: 'airimp-master-page',
+            origin: 'shipdata-page',
         };
         this.gs.Naviagete('Silver.ImportData/ShipDataPage', JSON.stringify(prm));
     }
 
     SettingPage() {
         let prm = {
-            menuid: this.gs.MENU_IMPORT_EXCEL,
+            menuid: this.gs.MENU_IMPORT_HBL_DATA_SEA,
             id: '',
             param_type: '',
-            origin: 'airimp-master-page',
+            origin: 'shipdata-page',
         };
         this.gs.Naviagete('Silver.ImportData/SettingPage', JSON.stringify(prm));
     }
