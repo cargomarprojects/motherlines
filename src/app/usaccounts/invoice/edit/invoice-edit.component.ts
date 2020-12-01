@@ -11,7 +11,7 @@ import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 
 import { Tbl_House } from '../../models/tbl_house';
 import { invoiceService } from '../../services/invoice.service';
-
+import { DateComponent } from '../../../shared/date/date.component';
 
 @Component({
   selector: 'app-invoice-edit',
@@ -20,7 +20,7 @@ import { invoiceService } from '../../services/invoice.service';
 export class InvoiceEditComponent implements OnInit {
 
   @ViewChild('_inv_refno') inv_refno_ctrl: ElementRef;
-
+  @ViewChild('_inv_date') inv_date_ctrl: DateComponent;
 
   errorMessage: string;
 
@@ -134,6 +134,7 @@ export class InvoiceEditComponent implements OnInit {
 
     this.mainservice.GetHouseList(SearchData).subscribe(response => {
       this.HouseList = <Tbl_House[]>response.records;
+      this.inv_date_ctrl.Focus();
     }, Error => {
       this.gs.getError(Error);
     });
@@ -355,8 +356,6 @@ export class InvoiceEditComponent implements OnInit {
 
   SetInitialValues() {
 
-    this.record.inv_date = this.gs.defaultValues.today;
-    
     if (this.inv_arap == "AR") {
       this.record.inv_prefix = this.gs.AR_INVOICE_PREFIX;
       this.record.inv_startingno = this.gs.AR_INVOICE_STARTING_NO;
@@ -375,7 +374,7 @@ export class InvoiceEditComponent implements OnInit {
     this.record.inv_arap = this.inv_arap;
     this.record.inv_type = this.mbl_type;
 
-    //this.record.inv_date = this.gs.defaultValues.today;
+    this.record.inv_date = this.gs.defaultValues.today;
 
     this.record.inv_arrnotice = 'N';
 
@@ -405,6 +404,8 @@ export class InvoiceEditComponent implements OnInit {
 
     this.InitCommonValues();
 
+    if (!this.gs.isBlank(this.inv_date_ctrl))
+      this.inv_date_ctrl.Focus();
   }
 
 
@@ -446,7 +447,7 @@ export class InvoiceEditComponent implements OnInit {
 
       this.DisplayBalance();
 
-
+      this.inv_date_ctrl.Focus();
     }, error => {
       this.errorMessage = this.gs.getError(error);
     });
@@ -482,11 +483,15 @@ export class InvoiceEditComponent implements OnInit {
 
     this.mainservice.Save(data).subscribe(rec => {
       if (rec.retvalue) {
+        if (this.mode == 'ADD') {
+          this.record.inv_cfno = rec.cfno;
+          this.record.inv_no = rec.docno;
+        }
         this.mode = 'EDIT';
       }
       else {
-        this.record.inv_cfno = rec.cfno;
-        this.record.inv_no = rec.docno;
+        this.errorMessage =rec.error;
+        alert(this.errorMessage);
       }
     },
       error => {
@@ -746,6 +751,48 @@ export class InvoiceEditComponent implements OnInit {
       case 'invoice_code': {
         break;
       }
+      case 'inv_cust_name': {
+        this.record.inv_cust_name = this.record.inv_cust_name.toUpperCase();
+        break;
+      }
+      case 'inv_refno': {
+        this.record.inv_refno = this.record.inv_refno.toUpperCase();
+        break;
+      }
+
+      case 'inv_hbl_shipper_name': {
+        this.record.inv_hbl_shipper_name = this.record.inv_hbl_shipper_name.toUpperCase();
+        break;
+      }
+      case 'inv_hbl_consignee_name': {
+        this.record.inv_hbl_consignee_name = this.record.inv_hbl_consignee_name.toUpperCase();
+        break;
+      }
+      case 'inv_hbl_uom': {
+        this.record.inv_hbl_uom = this.record.inv_hbl_uom.toUpperCase();
+        break;
+      }
+      case 'inv_remarks': {
+        this.record.inv_remarks = this.record.inv_remarks.toUpperCase();
+        break;
+      }
+      case 'inv_remarks2': {
+        this.record.inv_remarks2 = this.record.inv_remarks2.toUpperCase();
+        break;
+      }
+      case 'inv_remarks3': {
+        this.record.inv_remarks3 = this.record.inv_remarks3.toUpperCase();
+        break;
+      }
+      case 'invd_remarks': {
+        rec.invd_remarks = rec.invd_remarks.toUpperCase();
+        break;
+      }
+      case 'invd_desc_name': {
+        rec.invd_desc_name = rec.invd_desc_name.toUpperCase();
+        break;
+      }
+
 
       case 'inv_hbl_packages': {
         this.record.inv_hbl_packages = this.gs.roundNumber(this.record.inv_hbl_packages, 0)
