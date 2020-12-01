@@ -138,7 +138,8 @@ export class ApprovedPageEditComponent implements OnInit {
     })
     // this.csdate_field.Focus();
     this.Foregroundcolor_edit = "white";
-    this.ca_type_field.nativeElement.focus();
+    if (!this.gs.isBlank(this.ca_type_field))
+      this.ca_type_field.nativeElement.focus();
   }
 
   GetRecord() {
@@ -183,7 +184,8 @@ export class ApprovedPageEditComponent implements OnInit {
         // Dispatcher.BeginInvoke(() => { Cmb_Type.Focus(); });
 
         //this.hbl_houseno_field.nativeElement.focus();
-        this.ca_type_field.nativeElement.focus();
+        if (!this.gs.isBlank(this.ca_type_field))
+          this.ca_type_field.nativeElement.focus();
 
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -216,7 +218,8 @@ export class ApprovedPageEditComponent implements OnInit {
               Rec.ca_inv_selected = false;
           })
         }
-        this.ca_type_field.nativeElement.focus();
+        if (!this.gs.isBlank(this.ca_type_field))
+          this.ca_type_field.nativeElement.focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });

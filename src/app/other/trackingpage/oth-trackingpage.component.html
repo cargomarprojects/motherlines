@@ -52,7 +52,7 @@
                                                     <tr *ngFor="let rec of trackrecords; let i = index"
                                                         [class.active]="i == selectedRowIndex" (click)="SetRowIndex(i)">
                                                         <td>{{rec.param_name1}} </td>
-                                                        <td class="p-0"><input class="form-control form-control-sm"
+                                                        <td class="p-0"><input #_cntr_remarks class="form-control form-control-sm"
                                                                 type="text" [(ngModel)]="rec.remarks" maxlength="500"
                                                                 (blur)="onBlur('remarks',rec)" /></td>
                                                         <td class="p-0">
@@ -105,7 +105,7 @@
                                 <div class="form-group row">
                                     <label class="col-1 col-form-label col-form-label-sm">*Memo</label>
                                     <div class="col-7">
-                                        <select class="form-control form-control-sm" [(ngModel)]="cmbNotes"
+                                        <select #_cmb_notes class="form-control form-control-sm" [(ngModel)]="cmbNotes"
                                             (change)="OnChange('cmbNotes')">
                                             <option *ngFor="let rec of MemoList" [value]="rec.name">{{rec.name}}
                                             </option>
@@ -160,7 +160,7 @@
                                                     <td class="p-0">{{rec.rec_created_by}} </td>
                                                     <td class="p-0">{{rec.date  | date : gs.date_display_fmt_with_time}}
                                                     </td>
-                                                    <td class="p-0" (blur)="onBlur('remarks',rec)"
+                                                    <td class="p-0" style="color: red;cursor:pointer;text-decoration: underline;" (blur)="onBlur('remarks',rec)"
                                                         (click)="EditRow(rec)">
                                                         {{rec.remarks}}</td>
                                                     <td class='p-0 text-center'><i

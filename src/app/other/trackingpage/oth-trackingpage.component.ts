@@ -15,7 +15,8 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class OthTrackingPageComponent implements OnInit {
 
-  //@ViewChild('mbl_no') mbl_no_field: ElementRef;
+  @ViewChild('_cmb_notes') cmb_notes_field: ElementRef;
+  @ViewChild('_cntr_remarks') cntr_remarks_field: ElementRef;
   trackrecords: Tbl_Cargo_Tracking_Status[] = [];
   trackmemorecord: Tbl_Cargo_Tracking_Status = <Tbl_Cargo_Tracking_Status>{};
   trackmemorecords: Tbl_Cargo_Tracking_Status[] = [];
@@ -53,7 +54,7 @@ export class OthTrackingPageComponent implements OnInit {
     private location: Location,
     public gs: GlobalService,
     private mainService: OthTrackingPageService
-  ) { 
+  ) {
     modalconfig.backdrop = 'static'; //true/false/static
     modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
   }
@@ -292,7 +293,7 @@ export class OthTrackingPageComponent implements OnInit {
     this.trackmemorecord.date = this.gs.defaultValues.today;
     this.trackmemorecord.remarks = ''
     this.lblSaveMemo = "Save";
-    //Txtmemo.Focus();
+    this.SetloadFocus();
   }
 
   EditRow(_rec: Tbl_Cargo_Tracking_Status) {
@@ -303,6 +304,8 @@ export class OthTrackingPageComponent implements OnInit {
     this.trackmemorecord.date = _rec.date;
     this.trackmemorecord.remarks = _rec.remarks.toString();
     this.lblSaveMemo = "Update";
+    if (!this.gs.isBlank(this.cmb_notes_field))
+      this.cmb_notes_field.nativeElement.focus();
   }
 
   SaveMemo() {
@@ -360,6 +363,7 @@ export class OthTrackingPageComponent implements OnInit {
     this.gs.SearchRecord(SearchData)
       .subscribe(response => {
         this.MemoList = response.memolist;
+        this.SetloadFocus();
       },
         error => {
           this.errorMessage = this.gs.getError(error);
@@ -368,6 +372,17 @@ export class OthTrackingPageComponent implements OnInit {
   }
   CloseModal() {
     this.modal.close();
+  }
+
+  SetloadFocus() {
+    if (this.hideTracking == 'Y') {
+      if (!this.gs.isBlank(this.cmb_notes_field))
+        this.cmb_notes_field.nativeElement.focus();
+    } else {
+
+      if (!this.gs.isBlank(this.cntr_remarks_field))
+        this.cntr_remarks_field.nativeElement.focus();
+    }
   }
 
 }
