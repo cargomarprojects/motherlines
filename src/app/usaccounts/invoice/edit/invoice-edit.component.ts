@@ -47,6 +47,7 @@ export class InvoiceEditComponent implements OnInit {
   canEdit: boolean;
   canSave: boolean;
 
+  inv_verson: string = "7";
   tab: string = 'main';
   report_title: string = '';
   report_url: string = '';
@@ -434,7 +435,7 @@ export class InvoiceEditComponent implements OnInit {
       this.history = <Tbl_PayHistory[]>response.history;
       this.paid_amt = response.paid;
 
-      this.paid_amt = 0;
+      // this.paid_amt = 0;
 
       this.mbl_type = this.record.inv_type;
       this.inv_arap = this.record.inv_arap;
@@ -444,7 +445,7 @@ export class InvoiceEditComponent implements OnInit {
       this.inv_house_id = this.record.inv_hbl_id;
       if (this.record.inv_hbl_id == null || this.record.inv_hbl_id == '')
         this.inv_house_id = this.record.inv_mbl_id;
-      
+
       this.old_amt = this.record.inv_total;
 
       this.InitCommonValues();
@@ -474,11 +475,10 @@ export class InvoiceEditComponent implements OnInit {
     this.errorMessage = '';
 
     var SearchData = this.gs.UserInfo;
-
-
     SearchData.IS_SINGLE_CURRENCY = (this.gs.IS_SINGLE_CURRENCY) ? "Y" : "N";
     SearchData.BASE_CURRENCY_CODE = this.gs.base_cur_code;
-    SearchData.VERSION = "7";
+    SearchData.VERSION = this.inv_verson;
+    
     const data = <vm_tbl_cargo_invoicem>{};
     data.record = this.record;
     data.records = this.records;
