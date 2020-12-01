@@ -246,7 +246,8 @@ export interface vm_tbl_cargo_invoicem {
     mode: string;
     record: Tbl_cargo_invoicem;
     records: Tbl_Cargo_Invoiced[];
-    userinfo: any
+    userinfo: any;
+    old_amt: number;
 }
 
 export interface InvoiceModel {

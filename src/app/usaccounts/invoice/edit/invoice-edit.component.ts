@@ -61,7 +61,7 @@ export class InvoiceEditComponent implements OnInit {
   inv_hbl_id: string = "";
 
   inv_house_id: string = "";
-
+  old_amt: number = 0;
 
   enable_customer_control: boolean = false;
   enable_arap_control: boolean = false;
@@ -112,6 +112,7 @@ export class InvoiceEditComponent implements OnInit {
 
 
   initpage() {
+    this.old_amt = 0;
     this.showdeleted = false;
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
@@ -421,6 +422,7 @@ export class InvoiceEditComponent implements OnInit {
 
   GetRecord() {
 
+    this.old_amt = 0;
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.INV_TYPE = this.mbl_type;
@@ -442,6 +444,8 @@ export class InvoiceEditComponent implements OnInit {
       this.inv_house_id = this.record.inv_hbl_id;
       if (this.record.inv_hbl_id == null || this.record.inv_hbl_id == '')
         this.inv_house_id = this.record.inv_mbl_id;
+      
+      this.old_amt = this.record.inv_total;
 
       this.InitCommonValues();
 
@@ -480,6 +484,7 @@ export class InvoiceEditComponent implements OnInit {
     data.records = this.records;
     data.mode = this.mode;
     data.userinfo = SearchData;
+    data.old_amt = this.old_amt;
 
     this.mainservice.Save(data).subscribe(rec => {
       if (rec.retvalue) {
@@ -488,9 +493,10 @@ export class InvoiceEditComponent implements OnInit {
           this.record.inv_no = rec.docno;
         }
         this.mode = 'EDIT';
+        this.old_amt = this.record.inv_total;
       }
       else {
-        this.errorMessage =rec.error;
+        this.errorMessage = rec.error;
         alert(this.errorMessage);
       }
     },
