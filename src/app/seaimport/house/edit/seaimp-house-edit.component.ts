@@ -7,9 +7,8 @@ import { SeaImpHouseService } from '../../services/seaimp-house.service';
 import { User_Menu } from '../../../core/models/menum';
 import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_container, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem, Table_Address, Tbl_desc } from '../../models/tbl_cargo_imp_housem';
 import { SearchTable } from '../../../shared/models/searchtable';
-import { strictEqual } from 'assert';
 import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
-//import { stringify } from '@angular/core/src/render3/util';
+
 
 @Component({
   selector: 'app-seaimp-house-edit',
@@ -37,6 +36,8 @@ export class SeaImpHouseEditComponent implements OnInit {
   @ViewChild('hbl_bltype') hbl_bltype_field: ElementRef;
   @ViewChild('hbl_handled_name') hbl_handled_name_field: AutoComplete2Component;
 
+  @ViewChild('_hbl_shipper_name') hbl_shipper_name_field: ElementRef;
+  @ViewChild('_hbl_consignee_name') hbl_consignee_name_field: ElementRef;
 
   mblrecord: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   record: Tbl_cargo_imp_housem = <Tbl_cargo_imp_housem>{};
@@ -847,6 +848,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
         this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
+      this.hbl_shipper_name_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "CONSIGNEE") {
@@ -1757,6 +1759,9 @@ export class SeaImpHouseEditComponent implements OnInit {
             this.record.hbl_salesman_name = charecord.sman_name;
           }
         }
+        
+        if (!this.gs.isBlank(this.hbl_consignee_name_field))
+          this.hbl_consignee_name_field.nativeElement.focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
