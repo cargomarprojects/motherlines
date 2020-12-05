@@ -1030,6 +1030,12 @@
     <div class="row align-items-center justify-content-center p-1">
       <button class="btn btn-primary btn-md mr-1" *ngIf="canSave && !is_locked" (click)="Save()">Save</button>
       <div class="form-check mr-1">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="bl_backside" /><span>BL Backside</span>
+      </div>
+      <div class="form-check mr-1">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="bl_colour" /><span>Colour</span>
+      </div>
+      <div class="form-check mr-1">
         <input type="checkbox" class="form-check-input" [(ngModel)]="cntr_seal_hrzprint" /><span>Cntr#/ Seal#</span>
       </div>
       <button *ngIf="canPrintBlank && mode =='EDIT'" class="btn btn-primary btn-md mr-1"

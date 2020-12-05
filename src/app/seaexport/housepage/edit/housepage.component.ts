@@ -40,6 +40,8 @@ export class HousePageComponent implements OnInit {
   report_searchdata: any = {};
   report_menuid: string = '';
   cntr_seal_hrzprint: boolean = true;
+  bl_backside: boolean = false;
+  bl_colour: boolean = true;
   record: Tbl_cargo_exp_housem = <Tbl_cargo_exp_housem>{};
   records: Tbl_cargo_exp_desc[] = [];
 
@@ -827,6 +829,8 @@ export class HousePageComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.format_type = 'BLANK';
+        this.report_searchdata.bl_backside = this.bl_backside == true ? 'Y' : 'N';
+        this.report_searchdata.bl_colour = this.bl_colour == true ? '2' : '0';
         this.report_searchdata.cntr_seal_hrzprint = this.cntr_seal_hrzprint == true ? 'Y' : 'N';
         this.report_menuid = this.gs.MENU_SE_HOUSE_HBL_LASER;
         this.tab = 'report';
@@ -838,6 +842,8 @@ export class HousePageComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.format_type = 'DRAFT';
+        this.report_searchdata.bl_backside = this.bl_backside == true ? 'Y' : 'N';
+        this.report_searchdata.bl_colour = this.bl_colour == true ? '2' : '0';
         this.report_searchdata.cntr_seal_hrzprint = this.cntr_seal_hrzprint == true ? 'Y' : 'N';
         this.report_menuid = this.gs.MENU_SE_HOUSE_HBL_LASER;
         this.tab = 'report';
@@ -849,6 +855,8 @@ export class HousePageComponent implements OnInit {
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
         this.report_searchdata.format_type = 'TELEX';
+        this.report_searchdata.bl_backside = this.bl_backside == true ? 'Y' : 'N';
+        this.report_searchdata.bl_colour = this.bl_colour == true ? '2' : '0';
         this.report_searchdata.cntr_seal_hrzprint = this.cntr_seal_hrzprint == true ? 'Y' : 'N';
         this.report_menuid = this.gs.MENU_SE_HOUSE_HBL_LASER;
         this.tab = 'report';
