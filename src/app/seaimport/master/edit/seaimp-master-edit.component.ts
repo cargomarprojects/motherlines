@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef,QueryList } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
@@ -20,11 +20,11 @@ export class SeaImpMasterEditComponent implements OnInit {
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
   @ViewChild('_mbl_ref_date') mbl_ref_date_field: DateComponent;
-  @ViewChild('_agent_lov') agent_lov_field: AutoComplete2Component; 
-  @ViewChild('_liner_lov') liner_lov_field: AutoComplete2Component; 
-  @ViewChild('_coloader_lov') coloader_lov_field: AutoComplete2Component; 
-  @ViewChild('_handled_lov') handled_lov_field: AutoComplete2Component; 
-  @ViewChild('_salesman_lov') salesman_lov_field: AutoComplete2Component; 
+  @ViewChild('_agent_lov') agent_lov_field: AutoComplete2Component;
+  @ViewChild('_liner_lov') liner_lov_field: AutoComplete2Component;
+  @ViewChild('_coloader_lov') coloader_lov_field: AutoComplete2Component;
+  @ViewChild('_handled_lov') handled_lov_field: AutoComplete2Component;
+  @ViewChild('_salesman_lov') salesman_lov_field: AutoComplete2Component;
   @ViewChild('_mbl_frt_status') mbl_frt_status_field: ElementRef;
   @ViewChild('_mbl_pol_etd') mbl_pol_etd_field: DateComponent;
   @ViewChild('_mbl_pod_eta') mbl_pod_eta_field: DateComponent;
@@ -95,8 +95,9 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
+  
     this.menuid = options.menuid;
+    this.pkid = options.pkid;
     this.mode = options.mode;
     this.closeCaption = 'Return';
     this.initPage();
@@ -205,7 +206,9 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.record.mbl_ombl_sent_ampm = "PM";
     else
       this.record.mbl_ombl_sent_ampm = "AM";
-     this.mbl_ref_date_field.Focus();
+
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+      this.mbl_ref_date_field.Focus();
   }
 
   GetRecord() {
@@ -221,7 +224,8 @@ export class SeaImpMasterEditComponent implements OnInit {
         this.hrecords = (response.hrecords == undefined || response.hrecords == null) ? <Tbl_cargo_imp_housem[]>[] : <Tbl_cargo_imp_housem[]>response.hrecords;
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
-        this.mbl_ref_date_field.Focus();
+        if (!this.gs.isBlank(this.mbl_ref_date_field))
+          this.mbl_ref_date_field.Focus();
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });
@@ -247,8 +251,10 @@ export class SeaImpMasterEditComponent implements OnInit {
       .subscribe(response => {
         if (response.retvalue) {
           this.errorMessage.push(response.retstring);
-          if (stype == 'MBL')
-            this.mbl_no_field.nativeElement.focus();
+          if (stype == 'MBL') {
+            if (!this.gs.isBlank(this.mbl_no_field))
+              this.mbl_no_field.nativeElement.focus();
+          }
         }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -490,8 +496,8 @@ export class SeaImpMasterEditComponent implements OnInit {
     rec.cntr_lfd = '';
     rec.cntr_discharge_date = '';
     this.records.push(rec);
-   // this.cntr_no_field.nativeElement.focus();
-     
+    // this.cntr_no_field.nativeElement.focus();
+
   }
 
 
