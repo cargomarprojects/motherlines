@@ -3,16 +3,15 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-
 import { InputBoxComponent } from '../../shared/input/inputbox.component';
-
 import { GlobalService } from '../../core/services/global.service';
 import { User_Menu } from '../../core/models/menum';
 import { SearchTable } from '../../shared/models/searchtable';
 
 import { BookingService } from '../services/booking.service';
-
 import { Tbl_cargo_exp_bookingm, vm_Tbl_cargo_exp_bookingm } from '../models/Tbl_cargo_exp_bookingm';
+import { DateComponent } from '../../shared/date/date.component';
+import { AutoComplete2Component } from 'src/app/shared/autocomplete2/autocomplete2.component';
 
 
 @Component({
@@ -40,7 +39,15 @@ export class BookingComponent implements OnInit {
   record: Tbl_cargo_exp_bookingm = <Tbl_cargo_exp_bookingm>{};
 
 
-  @ViewChild('book_shipper_name') book_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('_book_shipper_name') book_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('_book_date') book_date_ctrl: DateComponent;
+  @ViewChild('_book_pol_etd') book_pol_etd_ctrl: DateComponent;
+  @ViewChild('_book_pod_eta') book_pod_eta_ctrl: DateComponent;
+  @ViewChild('_book_trucker_name') book_trucker_name_ctrl: AutoComplete2Component;
+  @ViewChild('_book_cntr_pickupat1') book_cntr_pickupat1_ctrl: InputBoxComponent;
+  @ViewChild('_book_location_name') book_location_name_ctrl: InputBoxComponent;
+  @ViewChild('_book_cntr_returnat1') book_cntr_returnat1_ctrl: InputBoxComponent;
+  @ViewChild('_book_salesman_name') book_salesman_name_ctrl: AutoComplete2Component;
 
 
   constructor(
@@ -80,7 +87,7 @@ export class BookingComponent implements OnInit {
 
   GetRecord() {
 
-    this.errorMessage  = [];
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     this.mainService.GetRecord(SearchData)
@@ -93,6 +100,9 @@ export class BookingComponent implements OnInit {
         else
           this.mode = "EDIT";
 
+        if (!this.gs.isBlank(this.book_date_ctrl))
+          this.book_date_ctrl.Focus();
+
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });
@@ -101,43 +111,43 @@ export class BookingComponent implements OnInit {
 
   Allvalid() {
     let bRet = true;
-    this.errorMessage  = [];
+    this.errorMessage = [];
     if (this.gs.isBlank(this.record.book_date)) {
-      bRet=false;
-      this.errorMessage.push("Date cannot be Empty");   
+      bRet = false;
+      this.errorMessage.push("Date cannot be Empty");
     }
 
     if (this.gs.isBlank(this.record.book_refno)) {
-      bRet=false;
+      bRet = false;
       this.errorMessage.push("Ref# cannot be Empty");
     }
 
     if (this.gs.isBlank(this.record.book_shipper_id)) {
-      bRet=false;
+      bRet = false;
       this.errorMessage.push("Shipper Code Cannot Be Empty");
     }
 
 
     if (this.gs.isBlank(this.record.book_shipper_name)) {
-      bRet=false;
+      bRet = false;
       this.errorMessage.push("Shipper Name Cannot Be Empty");
     }
 
 
     if (this.gs.isBlank(this.record.book_shipper_add1)) {
-      bRet=false;
+      bRet = false;
       this.errorMessage.push("Shipper Address1 Cannot Be Empty");
     }
 
     if (this.gs.isBlank(this.record.book_handled_id)) {
-      bRet=false;
+      bRet = false;
       this.errorMessage.push("Handled By Cannot Be Empty");
     }
 
     if (!bRet)
-    alert('Error While Saving');
+      alert('Error While Saving');
 
-  return bRet;
+    return bRet;
   }
 
   onBlur(field: string) {
@@ -183,20 +193,29 @@ export class BookingComponent implements OnInit {
       this.record.book_shipper_add3 = rec.col3;
       this.record.book_shipper_add4 = this.gs.GetAttention(rec.col5);
       this.record.book_shipper_add5 = this.gs.GetTelFax(rec.col6, rec.col7);
+      if (!this.gs.isBlank(this.book_shipper_name_ctrl))
+        this.book_shipper_name_ctrl.focus();
     }
 
     if (rec.controlname == "FORWARDER") {
       this.record.book_forwarder_id = rec.id;
+      if (!this.gs.isBlank(this.book_trucker_name_ctrl))
+        this.book_trucker_name_ctrl.Focus();
     }
     if (rec.controlname == "TRUCKER") {
       this.record.book_trucker_id = rec.id;
     }
     if (rec.controlname == "POL") {
+
       this.record.book_pol_id = rec.id;
+      if (!this.gs.isBlank(this.book_pol_etd_ctrl))
+        this.book_pol_etd_ctrl.Focus();
     }
 
     if (rec.controlname == "POD") {
       this.record.book_pod_id = rec.id;
+      if (!this.gs.isBlank(this.book_pod_eta_ctrl))
+        this.book_pod_eta_ctrl.Focus();
     }
 
     if (rec.controlname == "PICKUPAT") {
@@ -207,9 +226,11 @@ export class BookingComponent implements OnInit {
       this.record.book_cntr_pickupat2 = rec.col1;
       this.record.book_cntr_pickupat3 = rec.col2;
       this.record.book_cntr_pickupat4 = rec.col1;
+      if (!this.gs.isBlank(this.book_cntr_pickupat1_ctrl))
+        this.book_cntr_pickupat1_ctrl.focus();
     }
 
-    if (rec.controlname == "PICKUPRET") {
+    if (rec.controlname == "RETURNAT") {
       this.record.book_cntr_returnat_id = rec.id;
       this.record.book_cntr_returnat1 = rec.name;
       if (rec.col8 != "")
@@ -217,6 +238,8 @@ export class BookingComponent implements OnInit {
       this.record.book_cntr_returnat2 = rec.col1;
       this.record.book_cntr_returnat3 = rec.col2;
       this.record.book_cntr_returnat4 = rec.col1;
+      if (!this.gs.isBlank(this.book_cntr_returnat1_ctrl))
+        this.book_cntr_returnat1_ctrl.focus();
     }
 
 
@@ -229,11 +252,16 @@ export class BookingComponent implements OnInit {
       this.record.book_location_addr2 = rec.col2;
       this.record.book_location_addr3 = rec.col3;
       this.record.book_location_addr4 = this.gs.GetTelFax(rec.col6, rec.col7);
+      if (!this.gs.isBlank(this.book_location_name_ctrl))
+        this.book_location_name_ctrl.focus();
     }
 
     if (rec.controlname == "HANDLEDBY") {
       this.record.book_handled_id = rec.id;
+      if (!this.gs.isBlank(this.book_salesman_name_ctrl))
+        this.book_salesman_name_ctrl.Focus();
     }
+
     if (rec.controlname == "SALEMSAN") {
       this.record.book_salesman_id = rec.id;
     }

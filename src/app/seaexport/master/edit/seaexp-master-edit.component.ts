@@ -15,6 +15,8 @@ import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 
 import { InputBoxNumberComponent } from '../../../shared/inputnumber/inputboxnumber.component';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DateComponent } from '../../../shared/date/date.component';
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-seaexp-master-edit',
@@ -24,6 +26,16 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: InputBoxComponent;
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: InputBoxComponent;
+  @ViewChild('_mbl_ref_date') mbl_ref_date_field: DateComponent;
+  @ViewChild('_mbl_liner_name') mbl_liner_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_salesman_name') mbl_salesman_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_handled_name') mbl_handled_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_frt_status') mbl_frt_status_field: ElementRef;
+
+  @ViewChild('_mbl_pol_etd') mbl_pol_etd_field: DateComponent;
+  @ViewChild('_mbl_pod_eta') mbl_pod_eta_field: DateComponent;
+  @ViewChild('_mbl_pofd_eta') mbl_pofd_eta_field: DateComponent;
+  @ViewChild('_mbl_vessel') mbl_vessel_field: InputBoxComponent;
 
   tab: string = 'main';
   report_title: string = '';
@@ -200,6 +212,8 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (this.gs.PARAM_COO_FORMAT_BLANK.length > 0) {
       this.record.mbl_cooformat_id = this.gs.PARAM_COO_FORMAT_BLANK[0].code;
     }
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+      this.mbl_ref_date_field.Focus();
   }
 
   GetRecord() {
@@ -220,6 +234,8 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.mode = 'EDIT';
         this.record.mbl_direct_bool = this.record.mbl_direct === 'Y' ? true : false;
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
+        if (!this.gs.isBlank(this.mbl_ref_date_field))
+          this.mbl_ref_date_field.Focus();
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });
@@ -458,37 +474,53 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (_Record.controlname == "AGENT") {
       this.record.mbl_agent_id = _Record.id;
       this.record.mbl_agent_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_liner_name_field))
+        this.mbl_liner_name_field.Focus();
     }
     if (_Record.controlname == "CARRIER") {
       this.record.mbl_liner_id = _Record.id;
       this.record.mbl_liner_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_handled_name_field))
+      this.mbl_handled_name_field.Focus();
     }
     if (_Record.controlname == "HANDLEDBY") {
       this.record.mbl_handled_id = _Record.id;
       this.record.mbl_handled_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_salesman_name_field))
+      this.mbl_salesman_name_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.mbl_salesman_id = _Record.id;
       this.record.mbl_salesman_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_frt_status_field))
+      this.mbl_frt_status_field.nativeElement.focus();
     }
     if (_Record.controlname == "POL") {
       this.record.mbl_pol_id = _Record.id;
       this.record.mbl_pol_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pol_etd_field))
+      this.mbl_pol_etd_field.Focus();
     }
 
     if (_Record.controlname == "POD") {
       this.record.mbl_pod_id = _Record.id;
       this.record.mbl_pod_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pod_eta_field))
+      this.mbl_pod_eta_field.Focus();
     }
 
     if (_Record.controlname == "POFD") {
       this.record.mbl_pofd_id = _Record.id;
       this.record.mbl_pofd_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pofd_eta_field))
+      this.mbl_pofd_eta_field.Focus();
     }
 
     if (_Record.controlname == "COUNTRY") {
       this.record.mbl_country_id = _Record.id;
       this.record.mbl_country_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_vessel_field))
+      this.mbl_vessel_field.focus();
     }
 
     // Container

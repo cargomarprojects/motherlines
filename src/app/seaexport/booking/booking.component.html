@@ -53,7 +53,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Date</label>
           <div class="col-8">
-            <app-date [inputdate]="record.book_date" (ValueChanged)="record.book_date=$event"></app-date>
+            <app-date #_book_date [inputdate]="record.book_date" (ValueChanged)="record.book_date=$event"></app-date>
           </div>
         </div>
 
@@ -69,7 +69,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Name</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.book_shipper_name" [maxlength]="60" [uppercase]="true" #book_shipper_name>
+            <InputBox [(inputModel)]="record.book_shipper_name" [maxlength]="60" [uppercase]="true" #_book_shipper_name>
             </InputBox>
           </div>
         </div>
@@ -139,7 +139,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Trucker</label>
           <div class="col-8">
-            <app-autocomplete2 [controlname]="'TRUCKER'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+            <app-autocomplete2 #_book_trucker_name [controlname]="'TRUCKER'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
               [displaydata]="record.book_trucker_name" (ValueChanged)="LovSelected($event)">
             </app-autocomplete2>
 
@@ -257,7 +257,7 @@
 
           <label class="col-4 col-form-label col-form-label-sm">Pol-Etd</label>
           <div class="col-8">
-            <app-date [inputdate]="record.book_pol_etd" (ValueChanged)="record.book_pol_etd=$event"></app-date>
+            <app-date #_book_pol_etd [inputdate]="record.book_pol_etd" (ValueChanged)="record.book_pol_etd=$event"></app-date>
           </div>
 
         </div>
@@ -283,7 +283,7 @@
 
           <label class="col-4 col-form-label col-form-label-sm">Pod-Eta</label>
           <div class="col-8">
-            <app-date [inputdate]="record.book_pol_eta" (ValueChanged)="record.book_pol_eta=$event"></app-date>
+            <app-date #_book_pod_eta [inputdate]="record.book_pod_eta" (ValueChanged)="record.book_pod_eta=$event"></app-date>
           </div>
 
         </div>
@@ -397,7 +397,7 @@
           <div class="col-8">
 
             <InputBox [(inputModel)]="record.book_cntr_pickupat1" [maxlength]="60" [uppercase]="true"
-              #book_cntr_pickupat1></InputBox>
+              #_book_cntr_pickupat1 ></InputBox>
 
 
           </div>
@@ -452,7 +452,7 @@
           <div class="col-8">
 
             <InputBox [(inputModel)]="record.book_location_name" [maxlength]="60" [uppercase]="true"
-              #book_location_name></InputBox>
+              #_book_location_name></InputBox>
 
 
 
@@ -529,8 +529,7 @@
           <div class="col-8">
 
             <InputBox [(inputModel)]="record.book_cntr_returnat1" [maxlength]="60" [uppercase]="true"
-              #book_cntr_returnat1></InputBox>
-
+              #_book_cntr_returnat1></InputBox>
 
           </div>
         </div>
@@ -626,7 +625,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Sales.Rep</label>
           <div class="col-8">
-            <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+            <app-autocomplete2 #_book_salesman_name [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
               [displaycolumn]="'NAME'" [displaydata]="record.book_salesman_name" (ValueChanged)="LovSelected($event)">
             </app-autocomplete2>
           </div>
