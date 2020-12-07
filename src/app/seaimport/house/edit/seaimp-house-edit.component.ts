@@ -38,6 +38,10 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   @ViewChild('_hbl_shipper_name') hbl_shipper_name_field: ElementRef;
   @ViewChild('_hbl_consignee_name') hbl_consignee_name_field: ElementRef;
+  @ViewChild('_hbl_location_name') hbl_location_name_field: ElementRef;
+  @ViewChild('_hbl_notify_name') hbl_notify_name_field: ElementRef;
+  @ViewChild('_hbl_salesman_name') hbl_salesman_name_field: AutoComplete2Component;
+
 
   mblrecord: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   record: Tbl_cargo_imp_housem = <Tbl_cargo_imp_housem>{};
@@ -906,6 +910,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       this.record.hbl_location_add2 = _Record.col2;
       this.record.hbl_location_add3 = _Record.col3;
       this.record.hbl_location_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+      this.hbl_location_name_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "NOTIFY-TO") {
@@ -928,14 +933,16 @@ export class SeaImpHouseEditComponent implements OnInit {
         //     Dispatcher.BeginInvoke(() => { Txt_Notify_Name.Focus(); });
         // };
         // mPage.Show();
-        this.SearchRecord("MsgAlertBox", this.record.hbl_notify_id);
+        this.SearchRecord("MsgAlertBox", this.record.hbl_notify_id, "NOTIFY-TO");
 
-      }
+      } else
+        this.hbl_notify_name_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "AGENT") {
       this.record.hbl_agent_id = _Record.id;
       this.record.hbl_agent_name = _Record.name;
+      this.hbl_cha_code_field.Focus();
     }
     if (_Record.controlname == "CARRIER") {
       this.record.hbl_liner_id = _Record.id;
@@ -945,6 +952,7 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (_Record.controlname == "HANDLEDBY") {
       this.record.hbl_handled_id = _Record.id;
       this.record.hbl_handled_name = _Record.name;
+      this.hbl_salesman_name_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.hbl_salesman_id = _Record.id;
@@ -954,6 +962,8 @@ export class SeaImpHouseEditComponent implements OnInit {
     if (_Record.controlname == "CARE-OF") {
       this.record.hbl_careof_id = _Record.id;
       this.record.hbl_careof_name = _Record.name;
+      if (!this.gs.isBlank(this.hbl_agent_name_field))
+        this.hbl_agent_name_field.Focus();
     }
 
     // Container
@@ -1715,6 +1725,10 @@ export class SeaImpHouseEditComponent implements OnInit {
 
         if (controlname == "MsgAlertBox" && _type == "CONSIGNEE")
           this.LoadCHA();
+        else if (_type == "NOTIFY-TO") {
+          if (!this.gs.isBlank(this.hbl_notify_name_field))
+            this.hbl_notify_name_field.nativeElement.focus();
+        }
       },
         error => {
           this.errorMessage.push(this.gs.getError(error));
@@ -1759,7 +1773,7 @@ export class SeaImpHouseEditComponent implements OnInit {
             this.record.hbl_salesman_name = charecord.sman_name;
           }
         }
-        
+
         if (!this.gs.isBlank(this.hbl_consignee_name_field))
           this.hbl_consignee_name_field.nativeElement.focus();
 

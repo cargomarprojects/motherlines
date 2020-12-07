@@ -186,7 +186,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm"></label>
                   <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_location_name')"
+                    <input #_hbl_location_name class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_location_name')"
                       [(ngModel)]="record.hbl_location_name" maxlength="60" />
                   </div>
                 </div>
@@ -230,7 +230,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm"></label>
                   <div class="col-9">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_notify_name')"
+                    <input #_hbl_notify_name class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_notify_name')"
                       [(ngModel)]="record.hbl_notify_name" maxlength="60" />
                   </div>
                 </div>
@@ -1005,7 +1005,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
                   <div class="col-9">
 
-                    <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                    <app-autocomplete2 #_hbl_salesman_name [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
                       [displaycolumn]="'NAME'" [displaydata]="record.hbl_salesman_name"
                       (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>

@@ -15,7 +15,8 @@ import { strictEqual } from 'assert';
 })
 export class SeaImpUsCustomsHoldComponent implements OnInit {
 
-  @ViewChild('mbl_no') mbl_no_field: ElementRef;
+  // @ViewChild('mbl_no') mbl_no_field: ElementRef;
+  @ViewChild('_cust_title') cust_title_field: ElementRef;
   record: Tbl_cargo_imp_custhold = <Tbl_cargo_imp_custhold>{};
 
   // 15-07-2019 Created By Ajith  
@@ -96,6 +97,7 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
     this.record.IS_comm_inv = false;
     this.record.IS_fumi_cert = false;
     this.record.IS_insp_chrg = false;
+    this.cust_title_field.nativeElement.focus();
   }
 
   GetRecord() {
@@ -117,6 +119,7 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
           this.record.IS_insp_chrg = (this.record.cust_insp_chrg_yn == "Y") ? true : false;
 
           this.CheckData();
+          this.cust_title_field.nativeElement.focus();
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
