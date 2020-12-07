@@ -42,7 +42,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Shipper</label>
           <div class="col-8">
-            <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+            <app-autocomplete2 #_mbld_shipper_code [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
               [displaydata]="record.mbld_shipper_code" (ValueChanged)="LovSelected($event)">
             </app-autocomplete2>
           </div>
@@ -51,7 +51,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Name</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.mbld_shipper_name" [maxlength]="60" [uppercase]="true" #shipper_name>
+            <InputBox [(inputModel)]="record.mbld_shipper_name" [maxlength]="60" [uppercase]="true" #_mbld_shipper_name>
             </InputBox>
           </div>
         </div>
@@ -105,7 +105,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Name</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.mbld_consigned_to1" [maxlength]="60" [uppercase]="true" #consigned_to1>
+            <InputBox [(inputModel)]="record.mbld_consigned_to1" [maxlength]="60" [uppercase]="true" #_mbld_consigned_to1>
             </InputBox>
           </div>
         </div>
@@ -157,7 +157,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Name</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.mbld_notify_name" [maxlength]="60" [uppercase]="true" #notify_name>
+            <InputBox [(inputModel)]="record.mbld_notify_name" [maxlength]="60" [uppercase]="true" #_mbld_notify_name>
             </InputBox>
           </div>
         </div>
@@ -242,7 +242,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Origin State</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.mbld_origin" [maxlength]="60" [uppercase]="true" #origin>
+            <InputBox  [(inputModel)]="record.mbld_origin" [maxlength]="60" [uppercase]="true" #_mbld_origin>
             </InputBox>
           </div>
         </div>
@@ -381,7 +381,7 @@
           <label class="col-4 col-form-label col-form-label-sm">Send To</label>
           <div class="col-8">
             <app-autocomplete2 [controlname]="'SENDTO'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
-              [displaydata]="record.mbld_sendto_code" (ValueChanged)="LovSelected($event)">
+              [displaydata]="record.mbld_sendto_code" (ValueChanged)="LovSelected($event)" #_mbld_sendto_code> 
             </app-autocomplete2>
           </div>
         </div>
@@ -389,7 +389,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Name</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.mbld_sendto_name" [maxlength]="60" [uppercase]="true" #sendto_name>
+            <InputBox [(inputModel)]="record.mbld_sendto_name" [maxlength]="60" [uppercase]="true" #_mbld_sendto_name>
             </InputBox>
           </div>
         </div>

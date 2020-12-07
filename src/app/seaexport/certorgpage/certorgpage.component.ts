@@ -15,7 +15,7 @@ import { CertOrgService } from '../services/certorg.service';
 import { Tbl_cargo_exp_mbldet, vm_Tbl_cargo_exp_mbldet } from '../models/Tbl_cargo_exp_mbldet';
 import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
 import { Tbl_cargo_container } from 'src/app/other/models/tbl_cargo_general';
-
+import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-certorgpage',
@@ -49,13 +49,20 @@ export class CertOrgPageComponent implements OnInit {
 
   ShipmentType: string = '';
 
-  @ViewChild('mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
+
+  @ViewChild('_mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('_mbld_shipper_code') mbld_shipper_code_ctrl: AutoComplete2Component;
+  @ViewChild('_mbld_consigned_to1') mbld_consigned_to1_ctrl: InputBoxComponent;
+  @ViewChild('_mbld_notify_name') mbld_notify_name_ctrl: InputBoxComponent;
+  @ViewChild('_mbld_place_receipt') mbld_place_receipt_ctrl: InputBoxComponent;
+  // @ViewChild('_mbld_sendto_code') mbld_sendto_code_ctrl: AutoComplete2Component;
+  // @ViewChild('_mbld_sendto_name') mbld_sendto_name_ctrl: InputBoxComponent;
 
 
   DESC_TYPE: string = "COODESC";
 
-  canSave : boolean = false;
-  canPrint : boolean = false;
+  canSave: boolean = false;
+  canPrint: boolean = false;
 
   constructor(
     private router: Router,
@@ -129,8 +136,8 @@ export class CertOrgPageComponent implements OnInit {
 
         }
 
-        this.canSave =  this.gs.canSave(this.menuid, this.mode);
-        this.canPrint =  this.gs.canPrint(this.menuid);
+        this.canSave = this.gs.canSave(this.menuid, this.mode);
+        this.canPrint = this.gs.canPrint(this.menuid);
 
         this.InitDesc();
 
@@ -145,6 +152,9 @@ export class CertOrgPageComponent implements OnInit {
         this.record._mbld_is_cntrized = (this.record.mbld_is_cntrized == "Y") ? true : false;
         this.record._mbld_print_kgs = (this.record.mbld_print_kgs == "Y") ? true : false;
         this.record._mbld_print_lbs = (this.record.mbld_print_lbs == "Y") ? true : false;
+
+        if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
+          this.mbld_shipper_code_ctrl.Focus();
 
 
       }, error => {
@@ -422,6 +432,8 @@ export class CertOrgPageComponent implements OnInit {
       this.record.mbld_shipper_add2 = rec.col2;
       this.record.mbld_shipper_add3 = rec.col3;
       this.record.mbld_shipper_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+      if (!this.gs.isBlank(this.mbld_shipper_name_ctrl))
+        this.mbld_shipper_name_ctrl.focus();
     }
 
     if (rec.controlname == 'CONSIGNEE') {
@@ -433,7 +445,8 @@ export class CertOrgPageComponent implements OnInit {
       this.record.mbld_consigned_to3 = rec.col2;
       this.record.mbld_consigned_to4 = rec.col3;
       this.record.mbld_consigned_to5 = this.gs.GetTelFax(rec.col6, rec.col7);
-
+      if (!this.gs.isBlank(this.mbld_consigned_to1_ctrl))
+        this.mbld_consigned_to1_ctrl.focus();
     }
 
     if (rec.controlname == "NOTIFY") {
@@ -446,12 +459,16 @@ export class CertOrgPageComponent implements OnInit {
       this.record.mbld_notify_add2 = rec.col2;
       this.record.mbld_notify_add3 = rec.col3;
       this.record.mbld_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+      if (!this.gs.isBlank(this.mbld_notify_name_ctrl))
+        this.mbld_notify_name_ctrl.focus();
     }
 
 
     if (rec.controlname == "AGENT") {
       this.record.mbld_agent_id = rec.id;
       this.record.mbld_agent_code = rec.code;
+      if (!this.gs.isBlank(this.mbld_place_receipt_ctrl))
+        this.mbld_place_receipt_ctrl.focus();
     }
 
     if (rec.controlname == "HANDLEDBY") {
@@ -522,15 +539,15 @@ export class CertOrgPageComponent implements OnInit {
   }
 
 
-  Print (){
-   
+  Print() {
+
     this.report_url = '/api/SeaExport/CertOrgPage/CertOrgBlankReport';
     this.report_searchdata = this.gs.UserInfo;
     this.report_searchdata.pkid = this.pkid;
     this.report_searchdata.dock_type = 'COODESC';
     this.report_menuid = this.gs.MENU_SE_MASTER_CERTIFICATE_ORIGIN;
     this.tab = 'report';
-    
+
   }
 
   callbackevent() {

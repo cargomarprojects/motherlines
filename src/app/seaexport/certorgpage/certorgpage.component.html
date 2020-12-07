@@ -39,7 +39,7 @@
                 <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Shipper</label>
                     <div class="col-8">
-                        <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+                        <app-autocomplete2 #_mbld_shipper_code [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
                             [displaydata]="record.mbld_shipper_code" (ValueChanged)="LovSelected($event)">
                         </app-autocomplete2>
                     </div>
@@ -49,7 +49,7 @@
                     <label class="col-4 col-form-label col-form-label-sm">Name</label>
                     <div class="col-8">
                         <InputBox [(inputModel)]="record.mbld_shipper_name" [maxlength]="60" [uppercase]="true"
-                            #shipper_name>
+                            #_mbld_shipper_name>
                         </InputBox>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     <label class="col-4 col-form-label col-form-label-sm">Name</label>
                     <div class="col-8">
                         <InputBox [(inputModel)]="record.mbld_consigned_to1" [maxlength]="60" [uppercase]="true"
-                            #consigned_to1>
+                            #_mbld_consigned_to1>
                         </InputBox>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                     <label class="col-4 col-form-label col-form-label-sm">Name</label>
                     <div class="col-8">
                         <InputBox [(inputModel)]="record.mbld_notify_name" [maxlength]="60" [uppercase]="true"
-                            #notify_name>
+                            #_mbld_notify_name>
                         </InputBox>
                     </div>
                 </div>
@@ -306,7 +306,7 @@
                     <label class="col-4 col-form-label col-form-label-sm">Place Receipt</label>
                     <div class="col-8">
                         <InputBox [(inputModel)]="record.mbld_place_receipt" [maxlength]="60" [uppercase]="true"
-                            #place_receipt>
+                            #_mbld_place_receipt>
                         </InputBox>
                     </div>
                 </div>

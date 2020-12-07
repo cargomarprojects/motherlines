@@ -15,7 +15,7 @@ import { DockService } from '../services/dock.service';
 import { Tbl_cargo_exp_mbldet, vm_Tbl_cargo_exp_mbldet } from '../models/Tbl_cargo_exp_mbldet';
 import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
 import { Tbl_cargo_container } from 'src/app/other/models/tbl_cargo_general';
-
+import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 
 
 @Component({
@@ -45,8 +45,13 @@ export class DockPageComponent implements OnInit {
 
   ShipmentType: string = '';
 
-  @ViewChild('mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
-
+  @ViewChild('_mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('_mbld_shipper_code') mbld_shipper_code_ctrl: AutoComplete2Component;
+  @ViewChild('_mbld_consigned_to1') mbld_consigned_to1_ctrl: InputBoxComponent;
+  @ViewChild('_mbld_notify_name') mbld_notify_name_ctrl: InputBoxComponent;
+  @ViewChild('_mbld_origin') mbld_origin_ctrl: InputBoxComponent;
+  @ViewChild('_mbld_sendto_code') mbld_sendto_code_ctrl: AutoComplete2Component;
+  @ViewChild('_mbld_sendto_name') mbld_sendto_name_ctrl: InputBoxComponent;
 
   DESC_TYPE: string = "DOCKDESC";
 
@@ -149,6 +154,9 @@ export class DockPageComponent implements OnInit {
         this.record._mbld_is_cntrized = (this.record.mbld_is_cntrized == "Y") ? true : false;
         this.record._mbld_print_kgs = (this.record.mbld_print_kgs == "Y") ? true : false;
         this.record._mbld_print_lbs = (this.record.mbld_print_lbs == "Y") ? true : false;
+
+        if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
+          this.mbld_shipper_code_ctrl.Focus();
 
 
       }, error => {
@@ -353,6 +361,8 @@ export class DockPageComponent implements OnInit {
       this.record.mbld_shipper_add2 = rec.col2;
       this.record.mbld_shipper_add3 = rec.col3;
       this.record.mbld_shipper_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+      if (!this.gs.isBlank(this.mbld_shipper_name_ctrl))
+      this.mbld_shipper_name_ctrl.focus();
     }
 
     if (rec.controlname == 'CONSIGNEE') {
@@ -363,6 +373,8 @@ export class DockPageComponent implements OnInit {
       this.record.mbld_consigned_to3 = rec.col2;
       this.record.mbld_consigned_to4 = rec.col3;
       this.record.mbld_consigned_to5 = this.gs.GetTelFax(rec.col6, rec.col7);
+      if (!this.gs.isBlank(this.mbld_consigned_to1_ctrl))
+      this.mbld_consigned_to1_ctrl.focus();
 
     }
 
@@ -376,19 +388,32 @@ export class DockPageComponent implements OnInit {
       this.record.mbld_notify_add2 = rec.col2;
       this.record.mbld_notify_add3 = rec.col3;
       this.record.mbld_notify_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
+      if (!this.gs.isBlank(this.mbld_notify_name_ctrl))
+        this.mbld_notify_name_ctrl.focus();
     }
 
 
     if (rec.controlname == "AGENT") {
       this.record.mbld_agent_id = rec.id;
+      if (!this.gs.isBlank(this.mbld_origin_ctrl))
+        this.mbld_origin_ctrl.focus();
     }
 
     if (rec.controlname == "HANDLEDBY") {
       this.record.mbld_handled_id = rec.id;
+      this.record.mbld_handled_code = rec.code;
+      if (!this.gs.isBlank(this.mbld_sendto_code_ctrl))
+        this.mbld_sendto_code_ctrl.Focus();
     }
 
     if (rec.controlname == "SALEMSAN") {
 
+    }
+    if (rec.controlname == "SENDTO") {
+      this.record.mbld_sendto_id = rec.id;
+      this.record.mbld_sendto_code = rec.code;
+      if (!this.gs.isBlank(this.mbld_sendto_name_ctrl))
+        this.mbld_sendto_name_ctrl.focus();
     }
 
   }
