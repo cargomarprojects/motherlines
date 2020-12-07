@@ -15,6 +15,7 @@ import { HouseService } from '../../services/house.service';
 import { Tbl_cargo_exp_housem, vm_Tbl_cargo_exp_housem } from '../../models/Tbl_cargo_exp_housem';
 import { Tbl_cargo_exp_desc } from '../../models/Tbl_cargo_exp_desc';
 import { Tbl_cargo_exp_container } from '../../models/tbl_cargo_exp_masterm';
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-housepage',
@@ -50,9 +51,14 @@ export class HousePageComponent implements OnInit {
   cntrs: Tbl_cargo_exp_container[] = [];
 
   ShipmentType: string = '';
-
-  @ViewChild('hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('_hbl_shipper_code') hbl_shipper_code_ctrl: AutoComplete2Component;
+  @ViewChild('_hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
   @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
+  @ViewChild('_hbl_consigned_to1') hbl_consigned_to1_ctrl: InputBoxComponent;
+  @ViewChild('_hbl_notify_name') hbl_notify_name_ctrl: InputBoxComponent;
+  @ViewChild('_hbl_origin') hbl_origin_ctrl: InputBoxComponent;
+  @ViewChild('_hbl_salesman_name') hbl_salesman_name_ctrl: AutoComplete2Component;
+  @ViewChild('_hbl_goods_nature') hbl_goods_nature_ctrl: InputBoxComponent;
 
   DESC_TYPE: string = "SE-DESC";
 
@@ -156,6 +162,10 @@ export class HousePageComponent implements OnInit {
 
       if (this.parentid != "")
         this.LoadDefaultData();
+      else {
+        if (!this.gs.isBlank(this.hbl_shipper_code_ctrl))
+          this.hbl_shipper_code_ctrl.Focus();
+      }
 
       if (this.gs.PARAM_HBL_FORMAT_BLANK.length > 0) {
         this.record.hbl_format_id = this.gs.PARAM_HBL_FORMAT_BLANK[0].code;
@@ -232,6 +242,8 @@ export class HousePageComponent implements OnInit {
         });
 
 
+        if (!this.gs.isBlank(this.hbl_shipper_code_ctrl))
+          this.hbl_shipper_code_ctrl.Focus();
       },
       error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -278,6 +290,9 @@ export class HousePageComponent implements OnInit {
         this.record._hbl_is_arranged = (this.record.hbl_is_arranged == "Y") ? true : false;
         this.record._hbl_print_kgs = (this.record.hbl_print_kgs == "Y") ? true : false;
         this.record._hbl_print_lbs = (this.record.hbl_print_lbs == "Y") ? true : false;
+
+        if (!this.gs.isBlank(this.hbl_shipper_code_ctrl))
+          this.hbl_shipper_code_ctrl.Focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -653,6 +668,8 @@ export class HousePageComponent implements OnInit {
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
+      if (!this.gs.isBlank(this.hbl_shipper_name_ctrl))
+        this.hbl_shipper_name_ctrl.focus();
     }
 
     if (rec.controlname == 'CONSIGNEE') {
@@ -674,6 +691,8 @@ export class HousePageComponent implements OnInit {
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_consignee_id);
       }
+      if (!this.gs.isBlank(this.hbl_consigned_to1_ctrl))
+        this.hbl_consigned_to1_ctrl.focus();
     }
 
     if (rec.controlname == "NOTIFY") {
@@ -689,20 +708,29 @@ export class HousePageComponent implements OnInit {
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_notify_id);
       }
+      if (!this.gs.isBlank(this.hbl_notify_name_ctrl))
+        this.hbl_notify_name_ctrl.focus();
     }
 
 
     if (rec.controlname == "AGENT") {
       this.record.hbl_agent_id = rec.id;
+      if (!this.gs.isBlank(this.hbl_origin_ctrl))
+        this.hbl_origin_ctrl.focus();
     }
 
     if (rec.controlname == "HANDLEDBY") {
       this.record.hbl_handled_id = rec.id;
       this.record.hbl_by1 = rec.name;
+      if (!this.gs.isBlank(this.hbl_salesman_name_ctrl))
+        this.hbl_salesman_name_ctrl.Focus();
     }
 
     if (rec.controlname == "SALEMSAN") {
       this.record.hbl_salesman_id = rec.id;
+
+      if (!this.gs.isBlank(this.hbl_goods_nature_ctrl))
+        this.hbl_goods_nature_ctrl.focus();
     }
 
     // Container
