@@ -10,6 +10,7 @@ import { SearchTable } from '../../../shared/models/searchtable';
 // import { isNumber } from 'util';
 // import { flatMap } from 'rxjs/operators';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DateComponent } from '../../../shared/date/date.component';
 
 @Component({
   selector: 'app-airexp-master-edit',
@@ -18,7 +19,7 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AirExpMasterEditComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
-  //@ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
+  @ViewChild('_mbl_ref_date') mbl_ref_date_field: DateComponent;
 
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
   hrecords: Tbl_cargo_exp_housem[] = [];
@@ -93,7 +94,11 @@ export class AirExpMasterEditComponent implements OnInit {
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = [];
   }
-
+  
+  ngAfterViewInit() {
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+      this.mbl_ref_date_field.Focus();
+  }
 
   NewRecord() {
     this.mode = 'ADD'
@@ -176,6 +181,8 @@ export class AirExpMasterEditComponent implements OnInit {
       // if (JobList.Count > 0)
       //     Cmb_JobType.SelectedIndex = 0;
     }
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+    this.mbl_ref_date_field.Focus();
   }
 
   GetRecord() {

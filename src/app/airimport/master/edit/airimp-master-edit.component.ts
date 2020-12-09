@@ -10,6 +10,7 @@ import { SearchTable } from '../../../shared/models/searchtable';
 // import { isNumber } from 'util';
 // import { flatMap } from 'rxjs/operators';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DateComponent } from '../../../shared/date/date.component';
 
 @Component({
   selector: 'app-airimp-master-edit',
@@ -18,7 +19,7 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AirImpMasterEditComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
-  //@ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
+  @ViewChild('_mbl_ref_date') mbl_ref_date_field: DateComponent;
 
   record: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   hrecords: Tbl_cargo_imp_housem[] = [];
@@ -96,6 +97,10 @@ export class AirImpMasterEditComponent implements OnInit {
     this.errorMessage  = [];
   }
 
+  ngAfterViewInit() {
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+      this.mbl_ref_date_field.Focus();
+  }
 
   NewRecord() {
     this.mode = 'ADD'
@@ -167,7 +172,7 @@ export class AirImpMasterEditComponent implements OnInit {
     // this.record.mbl_mawb_chwt = 0;
     // this.record.mbl_jobtype_id = '';
     // this.record.mbl_jobtype_name = '';
-    // this.record.mbl_shipment_stage = 'NIL';
+     this.record.mbl_shipment_stage = 'NIL';
     // this.record.mbl_salesman_id = '';
     // this.record.mbl_salesman_name = '';
     // this.record.mbl_3rdparty = 'N';
@@ -176,6 +181,8 @@ export class AirImpMasterEditComponent implements OnInit {
       // if (JobList.Count > 0)
       //     Cmb_JobType.SelectedIndex = 0;
     }
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+    this.mbl_ref_date_field.Focus();
   }
 
   GetRecord() {
