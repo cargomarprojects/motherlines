@@ -95,7 +95,7 @@ export class SeaImpMasterEditComponent implements OnInit {
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-  
+
     this.menuid = options.menuid;
     this.pkid = options.pkid;
     this.mode = options.mode;
@@ -128,6 +128,11 @@ export class SeaImpMasterEditComponent implements OnInit {
       , { "name": "PENDING TELEX RELEASED" }, { "name": "TELEX RELEASED" }];
   }
 
+  ngAfterViewInit() {
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+      this.mbl_ref_date_field.Focus();
+  }
+  
   NewRecord() {
     this.mode = 'ADD'
     this.actionHandler();

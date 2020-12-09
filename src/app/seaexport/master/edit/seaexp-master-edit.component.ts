@@ -110,7 +110,11 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.initPage();
     this.actionHandler();
   }
-
+  
+  ngAfterViewInit() {
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+      this.mbl_ref_date_field.Focus();
+  }
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
