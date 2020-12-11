@@ -11,6 +11,7 @@ import { SearchTable } from '../../../shared/models/searchtable';
 // import { flatMap } from 'rxjs/operators';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from '../../../shared/date/date.component';
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-airexp-master-edit',
@@ -20,6 +21,14 @@ export class AirExpMasterEditComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
   @ViewChild('_mbl_ref_date') mbl_ref_date_field: DateComponent;
+  @ViewChild('_mbl_frt_status') mbl_frt_status_field: ElementRef;
+  @ViewChild('_mbl_pol_etd') mbl_pol_etd_field: DateComponent;
+  @ViewChild('_mbl_pod_eta') mbl_pod_eta_field: DateComponent;
+  @ViewChild('_mbl_liner_name') mbl_liner_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_to_port1') mbl_to_port1_field: ElementRef;
+  @ViewChild('_mbl_salesman_name') mbl_salesman_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_mawb_weight') mbl_mawb_weight_field: ElementRef;
+
 
   record: Tbl_cargo_exp_masterm = <Tbl_cargo_exp_masterm>{};
   hrecords: Tbl_cargo_exp_housem[] = [];
@@ -77,7 +86,7 @@ export class AirExpMasterEditComponent implements OnInit {
   ) {
     modalconfig.backdrop = 'static'; //true/false/static
     modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
-   }
+  }
 
   ngOnInit() {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -94,7 +103,7 @@ export class AirExpMasterEditComponent implements OnInit {
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = [];
   }
-  
+
   ngAfterViewInit() {
     if (!this.gs.isBlank(this.mbl_ref_date_field))
       this.mbl_ref_date_field.Focus();
@@ -182,7 +191,7 @@ export class AirExpMasterEditComponent implements OnInit {
       //     Cmb_JobType.SelectedIndex = 0;
     }
     if (!this.gs.isBlank(this.mbl_ref_date_field))
-    this.mbl_ref_date_field.Focus();
+      this.mbl_ref_date_field.Focus();
   }
 
   GetRecord() {
@@ -403,32 +412,46 @@ export class AirExpMasterEditComponent implements OnInit {
     if (_Record.controlname == "AGENT") {
       this.record.mbl_agent_id = _Record.id;
       this.record.mbl_agent_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_frt_status_field))
+        this.mbl_frt_status_field.nativeElement.focus();
     }
     if (_Record.controlname == "CARRIER") {
       this.record.mbl_liner_id = _Record.id;
       this.record.mbl_liner_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_to_port1_field))
+        this.mbl_to_port1_field.nativeElement.focus();
     }
     if (_Record.controlname == "HANDLEDBY") {
       this.record.mbl_handled_id = _Record.id;
       this.record.mbl_handled_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_salesman_name_field))
+        this.mbl_salesman_name_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.mbl_salesman_id = _Record.id;
       this.record.mbl_salesman_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_mawb_weight_field))
+        this.mbl_mawb_weight_field.nativeElement.focus();
     }
     if (_Record.controlname == "POL") {
       this.record.mbl_pol_id = _Record.id;
       this.record.mbl_pol_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pol_etd_field))
+        this.mbl_pol_etd_field.Focus();
     }
 
     if (_Record.controlname == "POD") {
       this.record.mbl_pod_id = _Record.id;
       this.record.mbl_pod_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pod_eta_field))
+        this.mbl_pod_eta_field.Focus();
     }
 
     if (_Record.controlname == "COUNTRY") {
       this.record.mbl_country_id = _Record.id;
       this.record.mbl_country_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_liner_name_field))
+        this.mbl_liner_name_field.Focus();
     }
 
   }
@@ -619,7 +642,7 @@ export class AirExpMasterEditComponent implements OnInit {
           master_id: this.pkid,
           master_refno: this.record.mbl_refno,
           master_refdate: this.record.mbl_ref_date,
-          is_locked:this.is_locked,
+          is_locked: this.is_locked,
           origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.BusinessModule/FollowUpPage', JSON.stringify(prm));
@@ -632,7 +655,7 @@ export class AirExpMasterEditComponent implements OnInit {
           mbl_refno: this.record.mbl_refno,
           doc_type: 'AIR EXPORT',
           req_type: 'REQUEST',
-          is_locked:this.is_locked,
+          is_locked: this.is_locked,
           origin: 'airexp-master-page'
         };
         this.gs.Naviagete('Silver.Other.Trans/ApprovedPageList', JSON.stringify(prm));
@@ -648,7 +671,7 @@ export class AirExpMasterEditComponent implements OnInit {
           parentType: 'AIREXP-CNTR',
           paramType: 'AIREXP-CNTR-MOVE-STATUS',
           hideTracking: 'Y',
-          is_locked:this.is_locked
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
@@ -667,7 +690,7 @@ export class AirExpMasterEditComponent implements OnInit {
         let prm = {
           menuid: this.gs.MENU_AE_MASTER_PRINT_MAWB,
           pkid: this.pkid,
-          is_locked:this.is_locked,
+          is_locked: this.is_locked,
           origin: 'airexp-master-page',
         };
         this.gs.Naviagete('Silver.AirExport.Trans/MawbPage', JSON.stringify(prm));
@@ -680,7 +703,7 @@ export class AirExpMasterEditComponent implements OnInit {
           pkid: this.pkid,
           mbl_no: this.record.mbl_no,
           mbl_refno: this.record.mbl_refno,
-          is_locked:this.is_locked,
+          is_locked: this.is_locked,
           origin: 'airexp-master-page',
         };
         this.gs.Naviagete('Silver.AirExport.Trans/ManifestPage', JSON.stringify(prm));

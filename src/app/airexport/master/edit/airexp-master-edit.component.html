@@ -99,7 +99,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Frt.Status</label>
                   <div class="col-9">
-                    <select class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
+                    <select #_mbl_frt_status class="form-control form-control-sm" [(ngModel)]="record.mbl_frt_status">
                       <option *ngFor="let rec of gs.PARAM_FREIGHT_STATUS" [value]="rec.name">{{rec.name}}</option>
                     </select>
                   </div>
@@ -119,7 +119,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_pol_etd" (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
+                    <app-date #_mbl_pol_etd [inputdate]="record.mbl_pol_etd" (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
                   </div>
                 </div>
 
@@ -139,7 +139,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
                   <div class="col-9">
-                    <app-date [inputdate]="record.mbl_pod_eta" (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
+                    <app-date #_mbl_pod_eta [inputdate]="record.mbl_pod_eta" (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
                   </div>
                 </div>
 
@@ -161,7 +161,7 @@
                   <label class="col-3 col-form-label col-form-label-sm">Carrier</label>
                   <div class="col-9">
 
-                    <app-autocomplete2 [controlname]="'CARRIER'" [tabletype]="'AIR CARRIER'" [displaycolumn]="'NAME'"
+                    <app-autocomplete2 #_mbl_liner_name [controlname]="'CARRIER'" [tabletype]="'AIR CARRIER'" [displaycolumn]="'NAME'"
                       [displaydata]="record.mbl_liner_name" (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
 
@@ -174,7 +174,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">To</label>
                   <div class="col-3 pr-0">
-                    <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_to_port1')"
+                    <input #_mbl_to_port1 class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_to_port1')"
                       [(ngModel)]="record.mbl_to_port1" maxlength="3" />
                   </div>
                   <label class="col-2 col-form-label col-form-label-sm pr-0">By</label>
@@ -245,7 +245,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
                   <div class="col-9">
-                    <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+                    <app-autocomplete2 #_mbl_salesman_name [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
                       [displaycolumn]="'NAME'" [displaydata]="record.mbl_salesman_name"
                       (ValueChanged)="LovSelected($event)">
                     </app-autocomplete2>
@@ -255,7 +255,7 @@
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">Mawb GrWt</label>
                   <div class="col-3 pr-0">
-                    <input class="form-control form-control-sm" type="number" (blur)="onBlur('mbl_mawb_weight')"
+                    <input #_mbl_mawb_weight class="form-control form-control-sm" type="number" (blur)="onBlur('mbl_mawb_weight')"
                       [(ngModel)]="record.mbl_mawb_weight" maxlength="15" />
                   </div>
                   <label class="col-2 col-form-label col-form-label-sm pr-0">Mawb ChWt</label>
