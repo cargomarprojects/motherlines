@@ -31,7 +31,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Shipper</label>
           <div class="col-8">
-            <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+            <app-autocomplete2 #_mbld_shipper_code [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
               [displaydata]="record.mbld_shipper_code" (ValueChanged)="LovSelected($event)">
             </app-autocomplete2>
           </div>
@@ -40,7 +40,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Name</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.mbld_shipper_name" [maxlength]="60" [uppercase]="true" #shipper_name>
+            <InputBox [(inputModel)]="record.mbld_shipper_name" [maxlength]="60" [uppercase]="true" #_mbld_shipper_name>
             </InputBox>
           </div>
         </div>
@@ -94,7 +94,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Name</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.mbld_consigned_to1" [maxlength]="60" [uppercase]="true" #consigned_to1>
+            <InputBox [(inputModel)]="record.mbld_consigned_to1" [maxlength]="60" [uppercase]="true" #_mbld_consigned_to1>
             </InputBox>
           </div>
         </div>

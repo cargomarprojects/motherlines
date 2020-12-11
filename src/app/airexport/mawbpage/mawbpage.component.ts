@@ -15,6 +15,7 @@ import { MawbPageService } from '../services/mawbpage.service';
 import { Tbl_cargo_exp_mbldet, vm_Tbl_cargo_exp_mbldet, Tbl_desc } from '../models/tbl_cargo_exp_mbldet';
 import { Tbl_cargo_exp_desc } from '../models/Tbl_cargo_exp_desc';
 import { NgModel } from '@angular/forms';
+import { AutoComplete2Component } from '../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-mawbpage',
@@ -44,9 +45,10 @@ export class MawbPageComponent implements OnInit {
   records: Tbl_cargo_exp_desc[] = [];
   recorddet: Tbl_desc = <Tbl_desc>{};
 
-  @ViewChild('mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
-
-
+  @ViewChild('_mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('_mbld_shipper_code') mbld_shipper_code_ctrl: AutoComplete2Component;
+  @ViewChild('_mbld_consigned_to1') mbld_consigned_to1_ctrl: InputBoxComponent;
+  
   DESC_TYPE: string = "AE-MDESC";
 
   canSave: boolean = false;
@@ -134,6 +136,9 @@ export class MawbPageComponent implements OnInit {
 
 
         this.canSave = this.gs.canSave(this.menuid, this.mode);
+
+        if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
+          this.mbld_shipper_code_ctrl.Focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -622,6 +627,8 @@ export class MawbPageComponent implements OnInit {
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.mbld_shipper_id);
       }
+      if (!this.gs.isBlank(this.mbld_shipper_name_ctrl))
+          this.mbld_shipper_name_ctrl.focus();
     }
 
     if (rec.controlname == 'CONSIGNEE') {
@@ -638,6 +645,8 @@ export class MawbPageComponent implements OnInit {
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.mbld_consignee_id);
       }
+      if (!this.gs.isBlank(this.mbld_consigned_to1_ctrl))
+          this.mbld_consigned_to1_ctrl.focus();
     }
 
   }

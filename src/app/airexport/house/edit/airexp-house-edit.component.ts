@@ -14,6 +14,7 @@ import { Tbl_cargo_exp_housem, vm_tbl_cargo_exp_housem, Tbl_desc } from '../../m
 import { Tbl_cargo_exp_desc } from '../../models/Tbl_cargo_exp_desc';
 import { Tbl_cargo_exp_masterm } from '../../models/tbl_cargo_exp_masterm';
 import { NgModel } from '@angular/forms';
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-airexp-house-edit',
@@ -21,7 +22,8 @@ import { NgModel } from '@angular/forms';
 })
 export class AirExpHouseEditComponent implements OnInit {
 
-  @ViewChild('shipment_stage') shipment_stage_ctrl: ElementRef;
+
+
   private pkid: string;
   private menuid: string;
   private mode: string = "ADD";
@@ -38,7 +40,13 @@ export class AirExpHouseEditComponent implements OnInit {
   ShipmentType: string = '';
 
   /*23/03/2020 */
-  @ViewChild('hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('shipment_stage') shipment_stage_ctrl: ElementRef;
+  
+  @ViewChild('_hbl_shipper_code') hbl_shipper_code_ctrl: AutoComplete2Component;
+  @ViewChild('_hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
+  @ViewChild('_hbl_consigned_to1') hbl_consigned_to1_ctrl: InputBoxComponent;
+  @ViewChild('_hbl_salesman_name') hbl_salesman_name_ctrl: AutoComplete2Component;
+  @ViewChild('_hbl_goods_nature') hbl_goods_nature_ctrl: InputBoxComponent;
 
   tab: string = 'main';
   report_title: string = '';
@@ -83,6 +91,11 @@ export class AirExpHouseEditComponent implements OnInit {
 
     this.initPage();
     this.actionHandler();
+  }
+
+  ngAfterViewInit() {
+    if (!this.gs.isBlank(this.hbl_shipper_code_ctrl))
+    this.hbl_shipper_code_ctrl.Focus();
   }
 
   initPage() {
@@ -416,7 +429,10 @@ export class AirExpHouseEditComponent implements OnInit {
           //     LBL_LOCK.Content = "LOCKED";
           //     CmdSave.IsEnabled = false;
           // }
+
         }
+        if (!this.gs.isBlank(this.hbl_shipper_code_ctrl))
+          this.hbl_shipper_code_ctrl.Focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -461,6 +477,8 @@ export class AirExpHouseEditComponent implements OnInit {
         this.record.hbl_print_cons1_carrier_b = (this.record.hbl_print_cons1_carrier == "Y") ? true : false;
         this.record.hbl_print_cons2_carrier_b = (this.record.hbl_print_cons2_carrier == "Y") ? true : false;
         this.record.hbl_print_cons3_carrier_b = (this.record.hbl_print_cons3_carrier == "Y") ? true : false;
+        if (!this.gs.isBlank(this.shipment_stage_ctrl))
+          this.shipment_stage_ctrl.nativeElement.focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -870,6 +888,9 @@ export class AirExpHouseEditComponent implements OnInit {
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
+      if (!this.gs.isBlank(this.hbl_shipper_name_ctrl))
+          this.hbl_shipper_name_ctrl.focus();
+
     }
 
     if (rec.controlname == 'CONSIGNEE') {
@@ -891,6 +912,9 @@ export class AirExpHouseEditComponent implements OnInit {
       if (rec.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_consignee_id);
       }
+      if (!this.gs.isBlank(this.hbl_consigned_to1_ctrl))
+          this.hbl_consigned_to1_ctrl.focus();
+
     }
 
     // if (rec.controlname == "NOTIFY") {
@@ -916,10 +940,16 @@ export class AirExpHouseEditComponent implements OnInit {
     if (rec.controlname == "HANDLEDBY") {
       this.record.hbl_handled_id = rec.id;
       this.record.hbl_issued_by = rec.name;
+      if (!this.gs.isBlank(this.hbl_salesman_name_ctrl))
+          this.hbl_salesman_name_ctrl.Focus();
+
     }
 
     if (rec.controlname == "SALEMSAN") {
       this.record.hbl_salesman_id = rec.id;
+      if (!this.gs.isBlank(this.hbl_goods_nature_ctrl))
+          this.hbl_goods_nature_ctrl.focus();
+
     }
 
     // // Container
