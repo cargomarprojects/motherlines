@@ -107,7 +107,7 @@
                                     <label class="col-3 col-form-label col-form-label-sm">Pol</label>
                                     <div class="col-9">
 
-                                        <app-autocomplete2 [controlname]="'POL'" [tabletype]="'AIR PORT'"
+                                        <app-autocomplete2 #_mbl_pol_name [controlname]="'POL'" [tabletype]="'AIR PORT'"
                                             [displaycolumn]="'NAME'" [displaydata]="record.mbl_pol_name"
                                             (ValueChanged)="LovSelected($event)">
                                         </app-autocomplete2>
@@ -118,7 +118,7 @@
                                 <div class="form-group row">
                                     <label class="col-3 col-form-label col-form-label-sm">Pol.ETD</label>
                                     <div class="col-9">
-                                        <app-date [inputdate]="record.mbl_pol_etd"
+                                        <app-date #_mbl_pol_etd [inputdate]="record.mbl_pol_etd"
                                             (ValueChanged)="record.mbl_pol_etd=$event"></app-date>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@
                                 <div class="form-group row">
                                     <label class="col-3 col-form-label col-form-label-sm">Pod.ETA</label>
                                     <div class="col-9">
-                                        <app-date [inputdate]="record.mbl_pod_eta"
+                                        <app-date #_mbl_pod_eta [inputdate]="record.mbl_pod_eta"
                                             (ValueChanged)="record.mbl_pod_eta=$event"></app-date>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@
                                         <!-- <input class="form-control form-control-sm" type="text"
                                         (blur)="onBlur('mbl_vessel')" [(ngModel)]="record.mbl_vessel" maxlength="15" /> -->
                                         <InputBox [(inputModel)]="record.mbl_vessel" [maxlength]="15" [uppercase]="true"
-                                            #vessel vessel>
+                                            #_mbl_vessel>
                                         </InputBox>
 
                                     </div>
@@ -200,7 +200,7 @@
                                     <label class="col-3 col-form-label col-form-label-sm">Handled.By</label>
                                     <div class="col-9">
 
-                                        <app-autocomplete2 [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'"
+                                        <app-autocomplete2 #_mbl_handled_name [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'"
                                             [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
                                             [displaydata]="record.mbl_handled_name"
                                             (ValueChanged)="LovSelected($event)">
@@ -212,7 +212,7 @@
                                 <div class="form-group row">
                                     <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
                                     <div class="col-9">
-                                        <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'"
+                                        <app-autocomplete2 #_mbl_salesman_name [controlname]="'SALESMAN'" [tabletype]="'PARAM'"
                                             [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
                                             [displaydata]="record.mbl_salesman_name"
                                             (ValueChanged)="LovSelected($event)">
@@ -230,7 +230,7 @@
                                 <div class="form-group row">
                                     <label class="col-3 col-form-label col-form-label-sm">Cargo Location</label>
                                     <div class="col-9">
-                                        <app-autocomplete2 [controlname]="'CARGO-LOC'" [tabletype]="'MASTER'"
+                                        <app-autocomplete2 #_mbl_cargo_loccode [controlname]="'CARGO-LOC'" [tabletype]="'MASTER'"
                                             [subtype]="'LOCATION'" [displaycolumn]="'NAME'"
                                             [displaydata]="record.mbl_cargo_loccode"
                                             (ValueChanged)="LovSelected($event)">
@@ -243,7 +243,7 @@
                                         (click)="CopyLoc2House()">Cpoy to All
                                         House</button>
                                     <div class="col-9">
-                                        <input class="form-control form-control-sm" type="text"
+                                        <input #_mbl_cargo_locname class="form-control form-control-sm" type="text"
                                             (blur)="onBlur('mbl_cargo_locname')" [(ngModel)]="record.mbl_cargo_locname"
                                             maxlength="60" />
                                     </div>

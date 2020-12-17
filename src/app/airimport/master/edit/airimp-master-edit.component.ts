@@ -11,6 +11,9 @@ import { SearchTable } from '../../../shared/models/searchtable';
 // import { flatMap } from 'rxjs/operators';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from '../../../shared/date/date.component';
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
+import { InputBoxNumberComponent } from '../../../shared/inputnumber/inputboxnumber.component';
+import { InputBoxComponent } from '../../../shared/input/inputbox.component';
 
 @Component({
   selector: 'app-airimp-master-edit',
@@ -20,6 +23,14 @@ export class AirImpMasterEditComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
   @ViewChild('_mbl_ref_date') mbl_ref_date_field: DateComponent;
+  @ViewChild('_mbl_pod_eta') mbl_pod_eta_field: DateComponent;
+  @ViewChild('_mbl_pol_etd') mbl_pol_etd_field: DateComponent;
+  @ViewChild('_mbl_pol_name') mbl_pol_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_vessel') mbl_vessel_field: InputBoxComponent;
+  @ViewChild('_mbl_handled_name') mbl_handled_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_salesman_name') mbl_salesman_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_cargo_locname') mbl_cargo_locname_field: ElementRef;
+  @ViewChild('_mbl_cargo_loccode') mbl_cargo_loccode_field: AutoComplete2Component;
 
   record: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   hrecords: Tbl_cargo_imp_housem[] = [];
@@ -55,7 +66,7 @@ export class AirImpMasterEditComponent implements OnInit {
 
   private mode: string;
   modal: any;
- // private errorMessage: string;
+  // private errorMessage: string;
   private errorMessage: string[] = [];
   private closeCaption: string = 'Return';
 
@@ -65,7 +76,7 @@ export class AirImpMasterEditComponent implements OnInit {
   private cmbList = {};
 
 
-   
+
   is_locked: boolean = false;
 
   constructor(
@@ -76,7 +87,7 @@ export class AirImpMasterEditComponent implements OnInit {
     private location: Location,
     public gs: GlobalService,
     private mainService: AirImpMasterService,
-  ) { 
+  ) {
     modalconfig.backdrop = 'static'; //true/false/static
     modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
   }
@@ -94,7 +105,7 @@ export class AirImpMasterEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage  = [];
+    this.errorMessage = [];
   }
 
   ngAfterViewInit() {
@@ -108,7 +119,7 @@ export class AirImpMasterEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage  = [];
+    this.errorMessage = [];
     this.is_locked = false;
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_imp_masterm>{};
@@ -172,7 +183,7 @@ export class AirImpMasterEditComponent implements OnInit {
     // this.record.mbl_mawb_chwt = 0;
     // this.record.mbl_jobtype_id = '';
     // this.record.mbl_jobtype_name = '';
-     this.record.mbl_shipment_stage = 'NIL';
+    this.record.mbl_shipment_stage = 'NIL';
     // this.record.mbl_salesman_id = '';
     // this.record.mbl_salesman_name = '';
     // this.record.mbl_3rdparty = 'N';
@@ -182,7 +193,7 @@ export class AirImpMasterEditComponent implements OnInit {
       //     Cmb_JobType.SelectedIndex = 0;
     }
     if (!this.gs.isBlank(this.mbl_ref_date_field))
-    this.mbl_ref_date_field.Focus();
+      this.mbl_ref_date_field.Focus();
   }
 
   GetRecord() {
@@ -197,7 +208,7 @@ export class AirImpMasterEditComponent implements OnInit {
         this.hrecords = <Tbl_cargo_imp_housem[]>response.hrecords;
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed("AIR IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
-       // this.CheckData();
+        // this.CheckData();
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });
@@ -226,7 +237,7 @@ export class AirImpMasterEditComponent implements OnInit {
     if (no == '')
       return;
 
-    this.errorMessage  = [];
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.blno = no;
@@ -276,7 +287,7 @@ export class AirImpMasterEditComponent implements OnInit {
           alert(this.errorMessage[0]);
         }
       }, error => {
-        this.errorMessage.push( this.gs.getError(error));
+        this.errorMessage.push(this.gs.getError(error));
         alert(this.errorMessage[0]);
       });
   }
@@ -286,71 +297,71 @@ export class AirImpMasterEditComponent implements OnInit {
 
     var bRet = true;
 
-    this.errorMessage  = [];
+    this.errorMessage = [];
     if (this.gs.isBlank(this.record.mbl_ref_date)) {
       bRet = false;
       this.errorMessage.push("Ref Date cannot be blank");
-      
+
     }
 
     if (this.gs.JOB_TYPE_AE.length > 0 && this.gs.isBlank(this.record.mbl_jobtype_id)) {
       bRet = false;
       this.errorMessage.push("Job Type cannot be blank");
-    
+
     }
 
     if (this.gs.isBlank(this.record.mbl_shipment_stage)) {
       bRet = false;
-      this.errorMessage.push( "Shipment Stage cannot be blank");
-     
+      this.errorMessage.push("Shipment Stage cannot be blank");
+
     }
     if (this.gs.isBlank(this.record.mbl_no)) {
       bRet = false;
-      this.errorMessage.push( "Master BL# can't be blank");
-       
+      this.errorMessage.push("Master BL# can't be blank");
+
     }
 
     if (this.gs.isBlank(this.record.mbl_agent_id)) {
       bRet = false;
       this.errorMessage.push("Master Agent cannot be blank");
-       
+
     }
     if (this.gs.isBlank(this.record.mbl_liner_id)) {
       bRet = false;
-      this.errorMessage.push( "Carrier cannot be blank");
-       
+      this.errorMessage.push("Carrier cannot be blank");
+
     }
     if (this.gs.isBlank(this.record.mbl_handled_id)) {
       bRet = false;
-      this.errorMessage.push( "A/N Handled By cannot be blank");
-       
+      this.errorMessage.push("A/N Handled By cannot be blank");
+
     }
 
-    if (this.gs.isBlank(this.record.mbl_frt_status )) {
+    if (this.gs.isBlank(this.record.mbl_frt_status)) {
       bRet = false;
-      this.errorMessage .push( "Freight status cannot be blank");
-      
+      this.errorMessage.push("Freight status cannot be blank");
+
     }
 
     if (this.gs.isBlank(this.record.mbl_pol_id)) {
       bRet = false;
-      this.errorMessage.push( "Port of Loading cannot be blank");
-       
+      this.errorMessage.push("Port of Loading cannot be blank");
+
     }
     if (this.gs.isBlank(this.record.mbl_pol_etd)) {
       bRet = false;
-      this.errorMessage .push( "ETD cannot be blank");
-      
+      this.errorMessage.push("ETD cannot be blank");
+
     }
     if (this.gs.isBlank(this.record.mbl_pod_id)) {
       bRet = false;
-      this.errorMessage .push( "Port of Discharge cannot be blank");
-       
+      this.errorMessage.push("Port of Discharge cannot be blank");
+
     }
     if (this.gs.isBlank(this.record.mbl_pod_eta)) {
       bRet = false;
-      this.errorMessage .push( "ETA cannot be blank");
-     
+      this.errorMessage.push("ETA cannot be blank");
+
     }
     // if (this.record.mbl_pofd_id == "") {
     //   bRet = false;
@@ -360,8 +371,8 @@ export class AirImpMasterEditComponent implements OnInit {
 
     if (this.gs.isBlank(this.record.mbl_country_id)) {
       bRet = false;
-      this.errorMessage .push( "Country Cannot be blank");
-       
+      this.errorMessage.push("Country Cannot be blank");
+
     }
     // if (this.record.mbl_currency == "") {
     //   bRet = false;
@@ -369,25 +380,25 @@ export class AirImpMasterEditComponent implements OnInit {
     //   return bRet;
     // }
 
-    if (this.gs.isZero (this.record.mbl_mawb_weight)) {
+    if (this.gs.isZero(this.record.mbl_mawb_weight)) {
       bRet = false;
-      this.errorMessage .push( "Invalid Weight");
-       
+      this.errorMessage.push("Invalid Weight");
+
     }
 
     if (this.gs.isZero(this.record.mbl_mawb_chwt)) {
       bRet = false;
       this.errorMessage.push("Invalid Ch.Weight");
-       
+
     }
 
     if (!this.IsValidAWB(this.record.mbl_no)) {
       bRet = false;
-      this.errorMessage.push( "Invalid Master BL#");
-       
+      this.errorMessage.push("Invalid Master BL#");
+
     }
     if (!bRet)
-    alert('Error While Saving');
+      alert('Error While Saving');
 
     return bRet;
 
@@ -417,32 +428,64 @@ export class AirImpMasterEditComponent implements OnInit {
     if (_Record.controlname == "AGENT") {
       this.record.mbl_agent_id = _Record.id;
       this.record.mbl_agent_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pol_name_field))
+        this.mbl_pol_name_field.Focus();
     }
     if (_Record.controlname == "CARRIER") {
       this.record.mbl_liner_id = _Record.id;
       this.record.mbl_liner_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_vessel_field))
+        this.mbl_vessel_field.focus();
     }
     if (_Record.controlname == "HANDLEDBY") {
       this.record.mbl_handled_id = _Record.id;
       this.record.mbl_handled_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_salesman_name_field))
+        this.mbl_salesman_name_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.mbl_salesman_id = _Record.id;
       this.record.mbl_salesman_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_cargo_loccode_field))
+        this.mbl_cargo_loccode_field.Focus();
     }
+
     if (_Record.controlname == "POL") {
       this.record.mbl_pol_id = _Record.id;
       this.record.mbl_pol_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pol_etd_field))
+        this.mbl_pol_etd_field.Focus();
     }
 
     if (_Record.controlname == "POD") {
       this.record.mbl_pod_id = _Record.id;
       this.record.mbl_pod_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pod_eta_field))
+        this.mbl_pod_eta_field.Focus();
     }
 
     if (_Record.controlname == "COUNTRY") {
       this.record.mbl_country_id = _Record.id;
       this.record.mbl_country_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_handled_name_field))
+        this.mbl_handled_name_field.Focus();
+    }
+
+    if (_Record.controlname == "CARGO-LOC") {
+      this.record.mbl_cargo_loc_id = _Record.id;
+
+      this.record.mbl_cargo_locname = _Record.name;
+      if (_Record.col8 != "")
+        this.record.mbl_cargo_locname = _Record.col8;
+
+      this.record.mbl_cargo_locaddr1 = _Record.col1;
+      this.record.mbl_cargo_locaddr2 = _Record.col2;
+      this.record.mbl_cargo_locaddr3 = _Record.col3;
+      this.record.mbl_cargo_locaddr4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+
+
+      if (!this.gs.isBlank(this.mbl_cargo_locname_field))
+        this.mbl_cargo_locname_field.nativeElement.focus();
     }
 
   }
@@ -708,16 +751,16 @@ export class AirImpMasterEditComponent implements OnInit {
     this.mainService.CopyLoc2House(SearchData)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage.push( response.error);
+          this.errorMessage.push(response.error);
           alert(this.errorMessage[0]);
         }
         else {
-          this.errorMessage.push( 'Copy Complete');
+          this.errorMessage.push('Copy Complete');
           alert(this.errorMessage[0]);
         }
 
       }, error => {
-        this.errorMessage.push( this.gs.getError(error));
+        this.errorMessage.push(this.gs.getError(error));
       });
 
   }
