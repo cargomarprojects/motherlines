@@ -11,6 +11,8 @@ import { SearchTable } from '../../../shared/models/searchtable';
 // import { forEach } from '@angular/router/src/utils/collection';
 // import { TBL_MBL_REPORT } from 'src/app/reports/models/tbl_mbl_report';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DateComponent } from '../../../shared/date/date.component';
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-oth-general-edit',
@@ -20,6 +22,16 @@ export class OthGeneralEditComponent implements OnInit {
 
   @ViewChild('mbl_no') mbl_no_field: ElementRef;
   @ViewChild('mbl_liner_bookingno') mbl_liner_bookingno_field: ElementRef;
+  @ViewChild('_mbl_ref_date') mbl_ref_date_field: DateComponent;
+  @ViewChild('_mbl_liner_name') mbl_liner_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_handled_name') mbl_handled_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_salesman_name') mbl_salesman_name_field: AutoComplete2Component;
+  @ViewChild('_mbl_frt_status') mbl_frt_status_field: ElementRef;
+  @ViewChild('_mbl_pol_etd') mbl_pol_etd_field: DateComponent;
+  @ViewChild('_mbl_pod_eta') mbl_pod_eta_field: DateComponent;
+  @ViewChild('_mbl_vessel') mbl_vessel_field: ElementRef;
+  @ViewChild('_hbl_shipper_name') hbl_shipper_name_field: ElementRef;
+  @ViewChild('_hbl_consignee_name') hbl_consignee_name_field: ElementRef;
 
   record: Tbl_cargo_general = <Tbl_cargo_general>{};
   records: Tbl_cargo_container[] = [];
@@ -74,7 +86,7 @@ export class OthGeneralEditComponent implements OnInit {
     private location: Location,
     public gs: GlobalService,
     private mainService: OthGeneralService,
-  ) { 
+  ) {
     modalconfig.backdrop = 'static'; //true/false/static
     modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
   }
@@ -97,6 +109,11 @@ export class OthGeneralEditComponent implements OnInit {
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = '';
     this.LoadCombo();
+  }
+
+  ngAfterViewInit() {
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+      this.mbl_ref_date_field.Focus();
   }
 
   LoadCombo() {
@@ -225,6 +242,9 @@ export class OthGeneralEditComponent implements OnInit {
     if (this.gs.JOB_TYPE_OT.length > 0) {
       // this.record.mbl_jobtype_id = this.gs.JOB_TYPE_OT[0].
     }
+
+    if (!this.gs.isBlank(this.mbl_ref_date_field))
+      this.mbl_ref_date_field.Focus();
   }
 
   GetRecord() {
@@ -242,6 +262,8 @@ export class OthGeneralEditComponent implements OnInit {
         this.records = <Tbl_cargo_container[]>response.records;
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed(this.OPERATION_MODE, this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
+        if (!this.gs.isBlank(this.mbl_ref_date_field))
+          this.mbl_ref_date_field.Focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -497,27 +519,40 @@ export class OthGeneralEditComponent implements OnInit {
     if (_Record.controlname == "AGENT") {
       this.record.mbl_agent_id = _Record.id;
       this.record.mbl_agent_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_liner_name_field))
+        this.mbl_liner_name_field.Focus();
     }
+
     if (_Record.controlname == "CARRIER") {
       this.record.mbl_liner_id = _Record.id;
       this.record.mbl_liner_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_handled_name_field))
+        this.mbl_handled_name_field.Focus();
     }
     if (_Record.controlname == "HANDLEDBY") {
       this.record.mbl_handled_id = _Record.id;
       this.record.mbl_handled_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_salesman_name_field))
+        this.mbl_salesman_name_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.mbl_salesman_id = _Record.id;
       this.record.mbl_salesman_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_frt_status_field))
+        this.mbl_frt_status_field.nativeElement.focus();
     }
     if (_Record.controlname == "POL") {
       this.record.mbl_pol_id = _Record.id;
       this.record.mbl_pol_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pol_etd_field))
+        this.mbl_pol_etd_field.Focus();
     }
 
     if (_Record.controlname == "POD") {
       this.record.mbl_pod_id = _Record.id;
       this.record.mbl_pod_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_pod_eta_field))
+        this.mbl_pod_eta_field.Focus();
     }
 
     if (_Record.controlname == "POFD") {
@@ -528,6 +563,8 @@ export class OthGeneralEditComponent implements OnInit {
     if (_Record.controlname == "COUNTRY") {
       this.record.mbl_country_id = _Record.id;
       this.record.mbl_country_name = _Record.name;
+      if (!this.gs.isBlank(this.mbl_vessel_field))
+        this.mbl_vessel_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "SHIPPER") {
@@ -553,6 +590,8 @@ export class OthGeneralEditComponent implements OnInit {
         // };
         // mPage.Show();
       }
+      if (!this.gs.isBlank(this.hbl_shipper_name_field))
+      this.hbl_shipper_name_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "CONSIGNEE") {
@@ -576,6 +615,8 @@ export class OthGeneralEditComponent implements OnInit {
         // };
         // mPage.Show();
       }
+      if (!this.gs.isBlank(this.hbl_consignee_name_field))
+      this.hbl_consignee_name_field.nativeElement.focus();
     }
 
 
