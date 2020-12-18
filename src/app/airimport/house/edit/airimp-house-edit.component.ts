@@ -9,7 +9,8 @@ import { vm_tbl_cargo_imp_housem, Tbl_cargo_imp_desc, Tbl_cargo_imp_housem, Tabl
 import { SearchTable } from '../../../shared/models/searchtable';
 import { strictEqual } from 'assert';
 import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
-//import { stringify } from '@angular/core/src/render3/util';
+import { InputBoxComponent } from '../../../shared/input/inputbox.component';
+import { DateComponent } from '../../../shared/date/date.component';
 
 @Component({
   selector: 'app-airimp-house-edit',
@@ -17,28 +18,34 @@ import { Tbl_cargo_imp_masterm } from '../../models/tbl_cargo_imp_masterm';
 })
 export class AirImpHouseEditComponent implements OnInit {
 
-  @ViewChild('shipment_stage') shipment_stage_field: ElementRef;
-  /*
-  @ViewChild('hbl_houseno') hbl_houseno_field: ElementRef;
-  @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
-  @ViewChild('hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
-  @ViewChild('hbl_shipper_add1') hbl_shipper_add1_field: ElementRef;
-  @ViewChild('hbl_consignee_code') hbl_consignee_code_field: AutoComplete2Component;
-  @ViewChild('hbl_consignee_add1') hbl_consignee_add1_field: ElementRef;
-  @ViewChild('hbl_agent_name') hbl_agent_name_field: AutoComplete2Component;
-  @ViewChild('hbl_cha_code') hbl_cha_code_field: AutoComplete2Component;
-  @ViewChild('hbl_packages') hbl_packages_field: ElementRef;
-  @ViewChild('hbl_uom') hbl_uom_field: ElementRef;
-  @ViewChild('hbl_weight') hbl_weight_field: ElementRef;
-  @ViewChild('hbl_cbm') hbl_cbm_field: ElementRef;
-  @ViewChild('hbl_lbs') hbl_lbs_field: ElementRef;
-  @ViewChild('hbl_cft') hbl_cft_field: ElementRef;
-  @ViewChild('hbl_commodity') hbl_commodity_field: ElementRef;
-  @ViewChild('hbl_frt_status') hbl_frt_status_field: ElementRef;
-  @ViewChild('hbl_ship_term_id') hbl_ship_term_id_field: ElementRef;
-  @ViewChild('hbl_bltype') hbl_bltype_field: ElementRef;
-  @ViewChild('hbl_handled_name') hbl_handled_name_field: AutoComplete2Component;
-*/
+  @ViewChild('_hbl_shipment_stage') shipment_stage_field: ElementRef;
+
+  @ViewChild('_hbl_houseno') hbl_houseno_field: ElementRef;
+  // @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
+  @ViewChild('_hbl_shipper_code') hbl_shipper_code_field: AutoComplete2Component;
+  @ViewChild('_hbl_shipper_name') hbl_shipper_name_field: InputBoxComponent;
+  // @ViewChild('hbl_shipper_add1') hbl_shipper_add1_field: ElementRef;hbl_shipper_name
+  @ViewChild('_hbl_consignee_code') hbl_consignee_code_field: AutoComplete2Component;
+  @ViewChild('_hbl_consignee_name') hbl_consignee_name_field: InputBoxComponent;
+  @ViewChild('_hbl_location_name') hbl_location_name_field: InputBoxComponent;
+  // @ViewChild('hbl_agent_name') hbl_agent_name_field: AutoComplete2Component;
+  @ViewChild('_hbl_cha_code') hbl_cha_code_field: AutoComplete2Component;
+  @ViewChild('_hbl_cha_name') hbl_cha_name_field: InputBoxComponent;
+  @ViewChild('_hbl_place_final') hbl_place_final_field: InputBoxComponent;
+  // @ViewChild('hbl_packages') hbl_packages_field: ElementRef;
+  // @ViewChild('hbl_uom') hbl_uom_field: ElementRef;
+  // @ViewChild('hbl_weight') hbl_weight_field: ElementRef;
+  // @ViewChild('hbl_cbm') hbl_cbm_field: ElementRef;
+  // @ViewChild('hbl_lbs') hbl_lbs_field: ElementRef;
+  // @ViewChild('hbl_cft') hbl_cft_field: ElementRef;
+  // @ViewChild('hbl_commodity') hbl_commodity_field: ElementRef;
+  // @ViewChild('hbl_frt_status') hbl_frt_status_field: ElementRef;
+  // @ViewChild('hbl_ship_term_id') hbl_ship_term_id_field: ElementRef;
+  // @ViewChild('hbl_bltype') hbl_bltype_field: ElementRef;
+  // @ViewChild('hbl_handled_name') hbl_handled_name_field: AutoComplete2Component;
+  @ViewChild('_hbl_salesman_name')  hbl_salesman_name_field: AutoComplete2Component;
+
+  @ViewChild('_hbl_lfd_date') hbl_lfd_date_field: DateComponent;
 
   mblrecord: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   record: Tbl_cargo_imp_housem = <Tbl_cargo_imp_housem>{};
@@ -100,6 +107,11 @@ export class AirImpHouseEditComponent implements OnInit {
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = [];
     this.LoadCombo();
+  }
+
+  ngAfterViewInit() {
+    if (!this.gs.isBlank(this.hbl_houseno_field))
+      this.hbl_houseno_field.nativeElement.focus();
   }
 
   LoadCombo() {
@@ -298,8 +310,8 @@ export class AirImpHouseEditComponent implements OnInit {
       // }
 
 
-
-      //this.hbl_houseno_field.nativeElement.focus();
+      if (!this.gs.isBlank(this.hbl_houseno_field))
+        this.hbl_houseno_field.nativeElement.focus();
     }
   }
 
@@ -326,7 +338,8 @@ export class AirImpHouseEditComponent implements OnInit {
 
         //  this.CheckData();
 
-        // this.hbl_houseno_field.nativeElement.focus();
+        if (!this.gs.isBlank(this.hbl_houseno_field))
+          this.hbl_houseno_field.nativeElement.focus();
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });
@@ -746,6 +759,8 @@ export class AirImpHouseEditComponent implements OnInit {
 
         this.gs.ShowAccAlert(this.record.hbl_shipper_id);
       }
+      if (!this.gs.isBlank(this.hbl_shipper_name_field))
+        this.hbl_shipper_name_field.focus();
     }
 
     if (_Record.controlname == "CONSIGNEE") {
@@ -805,6 +820,8 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_location_add2 = _Record.col2;
       this.record.hbl_location_add3 = _Record.col3;
       this.record.hbl_location_add4 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
+      if (!this.gs.isBlank(this.hbl_location_name_field))
+        this.hbl_location_name_field.focus();
     }
 
 
@@ -812,6 +829,8 @@ export class AirImpHouseEditComponent implements OnInit {
     if (_Record.controlname == "AGENT") {
       this.record.hbl_agent_id = _Record.id;
       this.record.hbl_agent_name = _Record.name;
+      if (!this.gs.isBlank(this.hbl_cha_code_field))
+        this.hbl_cha_code_field.Focus();
     }
 
 
@@ -824,20 +843,28 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_cha_attn = _Record.col5;
       this.record.hbl_cha_tel = _Record.col6;
       this.record.hbl_cha_fax = _Record.col7;
+      if (!this.gs.isBlank(this.hbl_cha_name_field))
+        this.hbl_cha_name_field.focus();
     }
 
     if (_Record.controlname == "HANDLEDBY") {
       this.record.hbl_handled_id = _Record.id;
       this.record.hbl_handled_name = _Record.name;
+      if (!this.gs.isBlank(this.hbl_salesman_name_field))
+      this.hbl_salesman_name_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.hbl_salesman_id = _Record.id;
       this.record.hbl_salesman_name = _Record.name;
+      if (!this.gs.isBlank(this.hbl_lfd_date_field))
+      this.hbl_lfd_date_field.Focus();
     }
 
     if (_Record.controlname == "CARE-OF") {
       this.record.hbl_careof_id = _Record.id;
       this.record.hbl_careof_name = _Record.name;
+      if (!this.gs.isBlank(this.hbl_place_final_field))
+        this.hbl_place_final_field.focus();
     }
 
   }
@@ -1212,7 +1239,7 @@ export class AirImpHouseEditComponent implements OnInit {
           parentType: 'AIRIMP-SHIP',
           paramType: 'SHIP-MOVE-STATUS',
           hideTracking: 'Y',
-          is_locked:this.is_locked
+          is_locked: this.is_locked
         };
         this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
         break;
@@ -1367,7 +1394,8 @@ export class AirImpHouseEditComponent implements OnInit {
             this.record.hbl_salesman_name = charecord.sman_name;
           }
         }
-
+        if (!this.gs.isBlank(this.hbl_consignee_name_field))
+          this.hbl_consignee_name_field.focus();
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });

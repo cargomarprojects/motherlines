@@ -33,7 +33,7 @@
             <div class="form-group row">
               <label class="col-3 col-form-label col-form-label-sm">Hbl#</label>
               <div class="col-9">
-                <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_houseno')" #hbl_houseno
+                <input class="form-control form-control-sm" type="text" (blur)="onBlur('hbl_houseno')" #_hbl_houseno
                   (focusout)="onFocusout('hbl_houseno')" [(ngModel)]="record.hbl_houseno" maxlength="60" />
               </div>
             </div>
@@ -57,7 +57,7 @@
               <label class="col-3 col-form-label col-form-label-sm">Stage</label>
               <div class="col-9">
                 <select id="Cmb_Shpmnt_Stage" class="form-control form-control-sm"
-                  [(ngModel)]="record.hbl_shipment_stage" #shipment_stage>
+                  [(ngModel)]="record.hbl_shipment_stage" #_hbl_shipment_stage>
                   <option *ngFor="let rec of gs.SHIPMENT_STAGE_AI" [value]="rec.code">{{rec.name}}</option>
                 </select>
               </div>
@@ -73,7 +73,7 @@
             <label class="col-3 col-form-label col-form-label-sm">Shipper</label>
             <div class="col-9">
               <app-autocomplete2 [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [subtype]="'SHIPPER'"
-                [displaycolumn]="'CODE'" [displaydata]="record.hbl_shipper_code" #shipper_code
+                [displaycolumn]="'CODE'" [displaydata]="record.hbl_shipper_code" #_hbl_shipper_code
                 (ValueChanged)="LovSelected($event)">
               </app-autocomplete2>
             </div>
@@ -82,7 +82,7 @@
             <label class="col-3 col-form-label col-form-label-sm">Name</label>
             <div class="col-9">
                 <InputBox [(inputModel)]="record.hbl_shipper_name" [maxlength]="60" [uppercase]="true"  
-                #shipper_name></InputBox>
+                #_hbl_shipper_name></InputBox>
             </div>
           </div>
           <div class="form-group row">
@@ -125,7 +125,7 @@
             <div class="col-9">
               <app-autocomplete2 [controlname]="'CONSIGNEE'" [tabletype]="'MASTER'" [subtype]="'CONSIGNEE'"
                 [displaycolumn]="'CODE'" [displaydata]="record.hbl_consignee_code" (ValueChanged)="LovSelected($event)"
-                #hbl_consignee_code>
+                #_hbl_consignee_code>
               </app-autocomplete2>
             </div>
           </div>
@@ -133,7 +133,7 @@
             <label class="col-3 col-form-label col-form-label-sm">Name</label>
             <div class="col-9">
                 <InputBox [(inputModel)]="record.hbl_consignee_name" [maxlength]="60" [uppercase]="true"  
-                #consignee_name></InputBox>
+                #_hbl_consignee_name></InputBox>
             </div>
           </div>
           <div class="form-group row">
@@ -186,7 +186,7 @@
             <label class="col-3 col-form-label col-form-label-sm"></label>
             <div class="col-9">
                 <InputBox [(inputModel)]="record.hbl_location_name" [maxlength]="60" [uppercase]="true"  
-                #location_name></InputBox>
+                #_hbl_location_name></InputBox>
             </div>
           </div>
           <div class="form-group row">
@@ -232,8 +232,8 @@
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm">CHB</label>
             <div class="col-9">
-              <app-autocomplete2 [controlname]="'CHA'" [tabletype]="'CHA'" [displaycolumn]="'CODE'"
-                [displaydata]="record.hbl_cha_code" (ValueChanged)="LovSelected($event)" #cha_code>
+              <app-autocomplete2 [controlname]="'CHA'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+                [displaydata]="record.hbl_cha_code" (ValueChanged)="LovSelected($event)" #_hbl_cha_code>
               </app-autocomplete2>
 
             </div>
@@ -243,7 +243,7 @@
             <label class="col-3 col-form-label col-form-label-sm">Name</label>
             <div class="col-9">
                 <InputBox [(inputModel)]="record.hbl_cha_name" [maxlength]="60" [uppercase]="true"  
-              #cha_name></InputBox>
+              #_hbl_cha_name></InputBox>
             </div>
           </div>
           <div class="form-group row">
@@ -284,7 +284,7 @@
             <label class="col-3 col-form-label col-form-label-sm">Final.Destination</label>
             <div class="col-9">
                 <InputBox [(inputModel)]="record.hbl_place_final" [maxlength]="60" [uppercase]="true"  
-                #place_final></InputBox>
+                #_hbl_place_final></InputBox>
             </div>
           </div>
 
@@ -595,7 +595,7 @@
             <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
             <div class="col-9">
 
-              <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
+              <app-autocomplete2 #_hbl_salesman_name [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
                 [displaycolumn]="'NAME'" [displaydata]="record.hbl_salesman_name"
                 (ValueChanged)="LovSelected($event)">
               </app-autocomplete2>
@@ -605,7 +605,7 @@
           <div class="form-group row">
             <label class="col-3 col-form-label col-form-label-sm">Last Free Date</label>
             <div class="col-9">
-              <app-date [inputdate]="record.hbl_lfd_date" (ValueChanged)="record.hbl_lfd_date=$event"></app-date>
+              <app-date #_hbl_lfd_date [inputdate]="record.hbl_lfd_date" (ValueChanged)="record.hbl_lfd_date=$event"></app-date>
             </div>
           </div>
 
