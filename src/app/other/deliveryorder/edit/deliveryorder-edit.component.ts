@@ -12,7 +12,7 @@ import { SearchTable } from '../../../shared/models/searchtable';
 import { DeliveryOrderService } from '../../services/deliveryorder.service';
 import { Tbl_cargo_imp_pickup, vm_tbl_cargo_imp_pickup } from '../../models/tbl_cargo_imp_pickup';
 import { Tbl_cargo_container, Tbl_cargo_general } from '../../models/tbl_cargo_general';
-
+import { DateComponent } from '../../../shared/date/date.component';
 
 @Component({
   selector: 'app-deliveryorder-edit',
@@ -20,7 +20,8 @@ import { Tbl_cargo_container, Tbl_cargo_general } from '../../models/tbl_cargo_g
 })
 export class DeliveryOrderEditComponent implements OnInit {
 
-  // @ViewChild('shipment_stage') shipment_stage_ctrl: ElementRef;
+  @ViewChild('_pick_order_date') pick_order_date_ctrl: DateComponent;
+
   private pkid: string;
   private menuid: string;
   private mode: string = "ADD";
@@ -220,6 +221,8 @@ export class DeliveryOrderEditComponent implements OnInit {
           this.record.pick_remark_1 = "PLEASE CONTACT CONSIGNEE FOR DELIVERY APPOINTMENT!";
 
         }
+        if (!this.gs.isBlank(this.pick_order_date_ctrl))
+          this.pick_order_date_ctrl.Focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -267,6 +270,9 @@ export class DeliveryOrderEditComponent implements OnInit {
           sData = str.split(':');
           this.record.exportothers = sData[1];
         }
+
+        if (!this.gs.isBlank(this.pick_order_date_ctrl))
+        this.pick_order_date_ctrl.Focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
