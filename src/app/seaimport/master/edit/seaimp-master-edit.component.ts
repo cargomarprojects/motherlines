@@ -592,11 +592,13 @@ export class SeaImpMasterEditComponent implements OnInit {
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {
+      let idx: number = 0;
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
-           this.cntr_sealno_field.last.nativeElement.focus();
+           this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
         }
+        idx++;
       });
     }
   }

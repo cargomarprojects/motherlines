@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ANALYZE_FOR_ENTRY_COMPONENTS,ViewChildren, QueryList  } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -59,6 +59,8 @@ export class HousePageComponent implements OnInit {
   @ViewChild('_hbl_origin') hbl_origin_ctrl: InputBoxComponent;
   @ViewChild('_hbl_salesman_name') hbl_salesman_name_ctrl: AutoComplete2Component;
   @ViewChild('_hbl_goods_nature') hbl_goods_nature_ctrl: InputBoxComponent;
+  @ViewChildren('_cntr_no') cntr_no_field: QueryList<InputBoxComponent>;
+  @ViewChildren('_cntr_sealno') cntr_sealno_field: QueryList<InputBoxComponent>;
 
   DESC_TYPE: string = "SE-DESC";
 
@@ -735,10 +737,13 @@ export class HousePageComponent implements OnInit {
 
     // Container
     if (rec.controlname == "CONTAINER TYPE") {
+      let idx: number = 0;
       this.cntrs.forEach(mrec => {
         if (mrec.cntr_pkid == rec.uid) {
           mrec.cntr_type = rec.code;
+          this.cntr_sealno_field.toArray()[idx].focus();
         }
+        idx++;
       });
     }
 
@@ -834,6 +839,10 @@ export class HousePageComponent implements OnInit {
     rec.cntr_pieces = 0;
     rec.cntr_cbm = 0;
     this.cntrs.push(rec);
+    this.cntr_no_field.changes
+    .subscribe((queryChanges) => {
+      this.cntr_no_field.last.focus();
+    });
   }
 
   RemoveRow(_rec: Tbl_cargo_exp_container) {

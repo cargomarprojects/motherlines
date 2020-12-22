@@ -362,7 +362,7 @@
                 <tbody class="page-body-tbody">
                   <tr *ngFor="let rec of records">
                     <td class="p-0">
-                      <InputBox [(inputModel)]="rec.cntr_no" [field]="'cntr_no'" [maxlength]="11" [uppercase]="true"
+                      <InputBox #_cntr_no [(inputModel)]="rec.cntr_no" [field]="'cntr_no'" [maxlength]="11" [uppercase]="true"
                         (blur)="onBlur($event)"></InputBox>
                     </td>
                     <td class="p-0">
@@ -372,7 +372,7 @@
                       </app-autocomplete2>
                     </td>
                     <td class="p-0">
-                      <InputBox [(inputModel)]="rec.cntr_sealno" [field]="'cntr_sealno'" [maxlength]="25"
+                      <InputBox  #_cntr_sealno [(inputModel)]="rec.cntr_sealno" [field]="'cntr_sealno'" [maxlength]="25"
                         [uppercase]="true" (blur)="onBlur($event)"></InputBox>
                     </td>
                     <td class="p-0">

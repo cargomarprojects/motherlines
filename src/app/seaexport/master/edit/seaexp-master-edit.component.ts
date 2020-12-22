@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
@@ -36,6 +36,8 @@ export class SeaexpMasterEditComponent implements OnInit {
   @ViewChild('_mbl_pod_eta') mbl_pod_eta_field: DateComponent;
   @ViewChild('_mbl_pofd_eta') mbl_pofd_eta_field: DateComponent;
   @ViewChild('_mbl_vessel') mbl_vessel_field: InputBoxComponent;
+  @ViewChildren('_cntr_no') cntr_no_field: QueryList<InputBoxComponent>;
+  @ViewChildren('_cntr_sealno') cntr_sealno_field: QueryList<InputBoxComponent>;
 
   tab: string = 'main';
   report_title: string = '';
@@ -110,7 +112,7 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.initPage();
     this.actionHandler();
   }
-  
+
   ngAfterViewInit() {
     if (!this.gs.isBlank(this.mbl_ref_date_field))
       this.mbl_ref_date_field.Focus();
@@ -470,6 +472,10 @@ export class SeaexpMasterEditComponent implements OnInit {
     rec.cntr_cbm = 0;
     rec.cntr_order = 1;
     this.records.push(rec);
+    this.cntr_no_field.changes
+      .subscribe((queryChanges) => {
+        this.cntr_no_field.last.focus();
+      });
   }
 
 
@@ -485,54 +491,57 @@ export class SeaexpMasterEditComponent implements OnInit {
       this.record.mbl_liner_id = _Record.id;
       this.record.mbl_liner_name = _Record.name;
       if (!this.gs.isBlank(this.mbl_handled_name_field))
-      this.mbl_handled_name_field.Focus();
+        this.mbl_handled_name_field.Focus();
     }
     if (_Record.controlname == "HANDLEDBY") {
       this.record.mbl_handled_id = _Record.id;
       this.record.mbl_handled_name = _Record.name;
       if (!this.gs.isBlank(this.mbl_salesman_name_field))
-      this.mbl_salesman_name_field.Focus();
+        this.mbl_salesman_name_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.mbl_salesman_id = _Record.id;
       this.record.mbl_salesman_name = _Record.name;
       if (!this.gs.isBlank(this.mbl_frt_status_field))
-      this.mbl_frt_status_field.nativeElement.focus();
+        this.mbl_frt_status_field.nativeElement.focus();
     }
     if (_Record.controlname == "POL") {
       this.record.mbl_pol_id = _Record.id;
       this.record.mbl_pol_name = _Record.name;
       if (!this.gs.isBlank(this.mbl_pol_etd_field))
-      this.mbl_pol_etd_field.Focus();
+        this.mbl_pol_etd_field.Focus();
     }
 
     if (_Record.controlname == "POD") {
       this.record.mbl_pod_id = _Record.id;
       this.record.mbl_pod_name = _Record.name;
       if (!this.gs.isBlank(this.mbl_pod_eta_field))
-      this.mbl_pod_eta_field.Focus();
+        this.mbl_pod_eta_field.Focus();
     }
 
     if (_Record.controlname == "POFD") {
       this.record.mbl_pofd_id = _Record.id;
       this.record.mbl_pofd_name = _Record.name;
       if (!this.gs.isBlank(this.mbl_pofd_eta_field))
-      this.mbl_pofd_eta_field.Focus();
+        this.mbl_pofd_eta_field.Focus();
     }
 
     if (_Record.controlname == "COUNTRY") {
       this.record.mbl_country_id = _Record.id;
       this.record.mbl_country_name = _Record.name;
       if (!this.gs.isBlank(this.mbl_vessel_field))
-      this.mbl_vessel_field.focus();
+        this.mbl_vessel_field.focus();
     }
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {
+      let idx: number = 0;
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
+          this.cntr_sealno_field.toArray()[idx].focus();
         }
+        idx++;
       });
     }
   }
