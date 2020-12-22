@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
@@ -31,7 +31,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   @ViewChild('_mbl_vessel') mbl_vessel_field: ElementRef;
   @ViewChild('_mbl_cargo_locname') mbl_cargo_locname_field: ElementRef;
   @ViewChild('_mbl_devan_locname') mbl_devan_locname_field: ElementRef;
-  @ViewChild('_cntr_no') cntr_no_field: ElementRef;
+  @ViewChildren('_cntr_no') cntr_no_field: QueryList<ElementRef>;
 
   record: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   hrecords: Tbl_cargo_imp_housem[] = [];
@@ -79,6 +79,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   MblStatusList: any[] = [];
   BlStatusList: any[] = [];
 
+  is_cntr_addrow: boolean = false;
   is_locked: boolean = false;
   constructor(
     private modalconfig: NgbModalConfig,
@@ -132,7 +133,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     if (!this.gs.isBlank(this.mbl_ref_date_field))
       this.mbl_ref_date_field.Focus();
   }
-  
+
   NewRecord() {
     this.mode = 'ADD'
     this.actionHandler();
@@ -501,8 +502,11 @@ export class SeaImpMasterEditComponent implements OnInit {
     rec.cntr_lfd = '';
     rec.cntr_discharge_date = '';
     this.records.push(rec);
-    // this.cntr_no_field.nativeElement.focus();
 
+    this.cntr_no_field.changes
+    .subscribe((queryChanges) => {
+      this.cntr_no_field.last.nativeElement.focus();
+    });
   }
 
 
