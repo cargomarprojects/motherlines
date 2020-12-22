@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef,QueryList, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
@@ -17,7 +17,8 @@ export class CopyExpCntrPageComponent implements OnInit {
 
   cntrrecords: Tbl_cargo_exp_container[] = [];
   hblrecords: Tbl_cargo_exp_housem[] = [];
-
+  @ViewChild('_cntr_chked') cntr_chked_field: ElementRef;
+  @ViewChildren('_cntr_sealno') cntr_sealno_field: QueryList<ElementRef>;
   // 15-07-2019 Created By Ajith  
 
   pkid: string;
@@ -75,7 +76,8 @@ export class CopyExpCntrPageComponent implements OnInit {
         this.selectdeselect_hbl = false;
         this.cntrrecords = response.cntrlist;
         this.hblrecords = response.hbllist;
-
+        if (!this.gs.isBlank(this.cntr_chked_field))
+        this.cntr_chked_field.nativeElement.focus();
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -183,10 +185,13 @@ export class CopyExpCntrPageComponent implements OnInit {
     // }
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {
+      let idx: number = 0;
       this.cntrrecords.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
+          this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
         }
+        idx++;
       });
     }
   }
