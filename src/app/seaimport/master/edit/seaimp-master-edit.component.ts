@@ -32,6 +32,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   @ViewChild('_mbl_cargo_locname') mbl_cargo_locname_field: ElementRef;
   @ViewChild('_mbl_devan_locname') mbl_devan_locname_field: ElementRef;
   @ViewChildren('_cntr_no') cntr_no_field: QueryList<ElementRef>;
+  @ViewChildren('_cntr_sealno') cntr_sealno_field: QueryList<ElementRef>;
 
   record: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   hrecords: Tbl_cargo_imp_housem[] = [];
@@ -594,6 +595,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
+           this.cntr_sealno_field.last.nativeElement.focus();
         }
       });
     }
