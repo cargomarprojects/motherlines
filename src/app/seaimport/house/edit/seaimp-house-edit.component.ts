@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef,ViewChildren,QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
@@ -42,6 +42,8 @@ export class SeaImpHouseEditComponent implements OnInit {
   @ViewChild('_hbl_notify_name') hbl_notify_name_field: ElementRef;
   @ViewChild('_hbl_salesman_name') hbl_salesman_name_field: AutoComplete2Component;
 
+  @ViewChildren('_cntr_no') cntr_no_field: QueryList<ElementRef>;
+  @ViewChildren('_cntr_sealno') cntr_sealno_field: QueryList<ElementRef>;
 
   mblrecord: Tbl_cargo_imp_masterm = <Tbl_cargo_imp_masterm>{};
   record: Tbl_cargo_imp_housem = <Tbl_cargo_imp_housem>{};
@@ -821,6 +823,10 @@ export class SeaImpHouseEditComponent implements OnInit {
     rec.cntr_weight_uom = '';
     rec.cntr_order = 1;
     this.cntrrecords.push(rec);
+    this.cntr_no_field.changes
+    .subscribe((queryChanges) => {
+      this.cntr_no_field.last.nativeElement.focus();
+    });
   }
 
 
@@ -971,6 +977,7 @@ export class SeaImpHouseEditComponent implements OnInit {
       this.cntrrecords.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
+          this.cntr_sealno_field.last.nativeElement.focus();
         }
       });
     }
