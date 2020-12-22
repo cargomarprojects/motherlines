@@ -21,6 +21,9 @@ import { DateComponent } from '../../../shared/date/date.component';
 export class DeliveryOrderEditComponent implements OnInit {
 
   @ViewChild('_pick_order_date') pick_order_date_ctrl: DateComponent;
+  @ViewChild('_pick_truk_name') pick_truk_name_ctrl: InputBoxComponent;
+  @ViewChild('_pick_fromname') pick_fromname_ctrl: InputBoxComponent;
+  @ViewChild('_pick_toname') pick_toname_ctrl: InputBoxComponent;
 
   private pkid: string;
   private menuid: string;
@@ -36,7 +39,7 @@ export class DeliveryOrderEditComponent implements OnInit {
   record: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
   cntrrecords: Tbl_cargo_container[] = [];
   defaultrecord: Tbl_cargo_imp_pickup = <Tbl_cargo_imp_pickup>{};
-  //   @ViewChild('hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
+
 
   tab: string = 'main';
   report_title: string = '';
@@ -81,7 +84,10 @@ export class DeliveryOrderEditComponent implements OnInit {
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = [];
   }
-
+  ngAfterViewInit() {
+    if (!this.gs.isBlank(this.pick_order_date_ctrl))
+      this.pick_order_date_ctrl.Focus();
+  }
   actionHandler() {
 
     this.errorMessage = [];
@@ -272,7 +278,7 @@ export class DeliveryOrderEditComponent implements OnInit {
         }
 
         if (!this.gs.isBlank(this.pick_order_date_ctrl))
-        this.pick_order_date_ctrl.Focus();
+          this.pick_order_date_ctrl.Focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -731,6 +737,8 @@ export class DeliveryOrderEditComponent implements OnInit {
       this.record.pick_truk_tel = _Record.col6.toString();
       this.record.pick_truk_fax = _Record.col7.toString();
       // Dispatcher.BeginInvoke(() => { Txt_Truker.Focus(); });
+      if (!this.gs.isBlank(this.pick_truk_name_ctrl))
+        this.pick_truk_name_ctrl.focus();
 
     }
 
@@ -746,6 +754,8 @@ export class DeliveryOrderEditComponent implements OnInit {
       this.record.pick_fromaddr3 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
       this.record.pick_fromaddr4 = this.gs.GetAttention(_Record.col5.toString())
       //        Dispatcher.BeginInvoke(() => { Txt_From_Name.Focus(); });
+      if (!this.gs.isBlank(this.pick_fromname_ctrl))
+        this.pick_fromname_ctrl.focus();
     }
 
     if (_Record.controlname == "TO") {
@@ -760,6 +770,8 @@ export class DeliveryOrderEditComponent implements OnInit {
       this.record.pick_toaddr3 = this.gs.GetTelFax(_Record.col6.toString(), _Record.col7.toString());
       this.record.pick_toaddr4 = this.gs.GetAttention(_Record.col5.toString())
       //        Dispatcher.BeginInvoke(() => { Txt_to_Name.Focus(); });
+      if (!this.gs.isBlank(this.pick_toname_ctrl))
+        this.pick_toname_ctrl.focus();
     }
 
   }
