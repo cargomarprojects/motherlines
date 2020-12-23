@@ -249,7 +249,7 @@
       <div class="form-group row">
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
-          <button class="btn btn-primary btn-sm mr-1" *ngIf="!is_locked" (click)="Save()">Save</button>
+          <button class="btn btn-primary btn-sm mr-1" [disabled]="is_locked" (click)="Save()">Save</button>
           <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="MessengerRptPrint()">Print</button>
         </div>
       </div>

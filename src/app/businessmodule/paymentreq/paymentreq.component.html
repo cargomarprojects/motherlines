@@ -58,7 +58,10 @@
               </thead>
               <tbody class="page-body-tbody">
                 <tr *ngFor="let rec of invrecords">
-                  <td (click)="SelectInvoice(rec)"> <div class="form-check"> <input type="checkbox" class="form-check-input" [(ngModel)]="rec.cp_selected"><span>{{rec.cp_inv_no}}</span></div></td>
+                  <td (click)="SelectInvoice(rec)">
+                    <div class="form-check"> <input type="checkbox" class="form-check-input"
+                        [(ngModel)]="rec.cp_selected"><span>{{rec.cp_inv_no}}</span></div>
+                  </td>
                   <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                   <td>{{rec.cp_cust_name}}</td>
                 </tr>
@@ -84,11 +87,12 @@
       <div class="form-group row">
         <label class="col-2 col-form-label col-form-label-sm">PaymentDate</label>
         <div class="col-4">
-          <app-date [inputdate]="payrecord.cp_payment_date" (ValueChanged)="payrecord.cp_payment_date=$event" #payment_date>
+          <app-date [inputdate]="payrecord.cp_payment_date" (ValueChanged)="payrecord.cp_payment_date=$event"
+            #payment_date>
           </app-date>
         </div>
         <div class="col-6">
-          <button class="btn btn-primary btn-sm mr-1" *ngIf="!is_locked" (click)="Save()">Save</button>
+          <button class="btn btn-primary btn-sm mr-1"  [disabled]="is_locked" (click)="Save()">Save</button>
           <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
         </div>
       </div>
@@ -117,14 +121,12 @@
               <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
               <td>{{rec.cp_pay_status}}</td>
               <td>{{rec.cp_spl_notes}}</td>
-              <td align='center'><i class="fa fa-trash  fa-lg pointer" aria-hidden="true" (click)="RemoveRow(rec)" ></i></td>
+              <td align='center'><i class="fa fa-trash  fa-lg pointer" aria-hidden="true" (click)="RemoveRow(rec)"></i>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
-
-
-
     </div>
   </div>
 </div>

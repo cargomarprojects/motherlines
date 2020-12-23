@@ -714,7 +714,7 @@
                   </table>
                   <div class="form-group row">
                     <div class="col-12">
-                      <button class="btn btn-success btn-sm mr-1" *ngIf="!is_locked" (click)="AddRow()">Add Cntr</button>
+                      <button class="btn btn-success btn-sm mr-1" [disabled]="is_locked" (click)="AddRow()">Add Cntr</button>
                       <button class="btn btn-success btn-sm mr-1" (click)="FindTotalWeight()">Find Total</button>
                     </div>
                   </div>
@@ -1138,7 +1138,7 @@
 
   <div class="page-footer">
     <div class="row row justify-content-center p-1">
-      <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode) && !is_locked" (click)="Save()">Save</button>
+      <button class="btn btn-primary btn-md"  *ngIf="gs.canSave(menuid,mode)" [disabled]="is_locked" (click)="Save()">Save</button>
     </div>
   </div>
 

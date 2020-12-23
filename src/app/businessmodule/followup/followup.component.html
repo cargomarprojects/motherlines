@@ -43,7 +43,8 @@
                 <div class="form-group row">
                     <label class="col-2 col-form-label col-form-label-sm">FollowupDate</label>
                     <div class="col-6">
-                        <app-date #_cf_followup_date [inputdate]="record.cf_followup_date" (ValueChanged)="record.cf_followup_date=$event">
+                        <app-date #_cf_followup_date [inputdate]="record.cf_followup_date"
+                            (ValueChanged)="record.cf_followup_date=$event">
                         </app-date>
                     </div>
                 </div>
@@ -74,7 +75,7 @@
                         </select>
                     </div>
                     <div class="col-4 p-0">
-                        <button class="btn btn-primary btn-sm mr-1" *ngIf="!is_locked"
+                        <button class="btn btn-primary btn-sm mr-1"  [disabled]="is_locked"
                             (click)="Save()">{{lblSave}}</button>
                         <button class="btn btn-primary btn-sm mr-1" (click)="NewRecord()">New</button>
                     </div>
