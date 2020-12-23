@@ -76,7 +76,7 @@
 
         <div class="page-footer">
             <div class="row row justify-content-center p-1">
-                <button class="btn btn-primary btn-md" *ngIf="!is_locked" (click)="Save()">Save</button>
+                <button class="btn btn-primary btn-md" [disabled]="is_locked" (click)="Save()">Save</button>
             </div>
         </div>
         <br>
@@ -126,7 +126,7 @@
                                         Add a New Line.)</label>
                                     <div class="col-4 p-0">
                                         <div class="row row justify-content-center p-1">
-                                            <button class="btn btn-primary btn-md mr-1" *ngIf="!is_locked"
+                                            <button class="btn btn-primary btn-md mr-1" [disabled]="is_locked"
                                                 (click)="SaveMemo()">{{lblSaveMemo}}</button>
                                             <button class="btn btn-primary btn-md mr-1"
                                                 (click)="NewRecord()">New</button>

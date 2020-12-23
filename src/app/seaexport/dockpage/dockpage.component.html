@@ -843,7 +843,7 @@
 
   <div class="page-footer">
     <div class="row justify-content-center p-1">
-      <button class="btn btn-primary btn-md mr-1" *ngIf="canSave && !is_locked" (click)="Save()">Save</button>
+      <button class="btn btn-primary btn-md mr-1" [disabled]="is_locked" *ngIf="canSave" (click)="Save()">Save</button>
       <button class="btn btn-primary btn-md mr-1" *ngIf="canPrint && mode =='EDIT'"
         (click)="Print('DOCK')">Print</button>
     </div>
