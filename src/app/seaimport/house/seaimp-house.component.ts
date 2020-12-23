@@ -69,7 +69,11 @@ export class SeaImpHouseComponent implements OnInit {
   // }
   edit(_record: Tbl_cargo_imp_housem) {
 
-
+    if (!this.gs.canEdit(this.gs.MENU_SI_HOUSE)) {
+      alert('Insufficient User Rights')
+      return;
+    }
+    
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.hbl_pkid,

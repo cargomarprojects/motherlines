@@ -505,9 +505,9 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.records.push(rec);
 
     this.cntr_no_field.changes
-    .subscribe((queryChanges) => {
-      this.cntr_no_field.last.nativeElement.focus();
-    });
+      .subscribe((queryChanges) => {
+        this.cntr_no_field.last.nativeElement.focus();
+      });
   }
 
 
@@ -596,7 +596,7 @@ export class SeaImpMasterEditComponent implements OnInit {
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
-           this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
+          this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
         }
         idx++;
       });
@@ -710,6 +710,7 @@ export class SeaImpMasterEditComponent implements OnInit {
         break;
       }
       case 'cntr_packages_uom': {
+        rec.cntr_packages_uom = rec.cntr_packages_uom.toUpperCase();
         break;
       }
       case 'cntr_weight': {

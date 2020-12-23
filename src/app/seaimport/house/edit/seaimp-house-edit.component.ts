@@ -41,6 +41,7 @@ export class SeaImpHouseEditComponent implements OnInit {
   @ViewChild('_hbl_location_name') hbl_location_name_field: ElementRef;
   @ViewChild('_hbl_notify_name') hbl_notify_name_field: ElementRef;
   @ViewChild('_hbl_salesman_name') hbl_salesman_name_field: AutoComplete2Component;
+  @ViewChild('_hbl_cha_name') hbl_cha_name_field: ElementRef;
 
   @ViewChildren('_cntr_no') cntr_no_field: QueryList<ElementRef>;
   @ViewChildren('_cntr_sealno') cntr_sealno_field: QueryList<ElementRef>;
@@ -175,7 +176,7 @@ export class SeaImpHouseEditComponent implements OnInit {
   }
   InitRecord() {
     this.record.hbl_pkid = this.pkid;
-    this.record.hbl_mbl_id = '';
+    this.record.hbl_mbl_id = this.parentid;
     this.record.mbl_no = '';
     this.record.mbl_refno = '';
     this.record.hbl_houseno = '';
@@ -303,6 +304,7 @@ export class SeaImpHouseEditComponent implements OnInit {
 
   LoadData() {
     this.record.hbl_pkid = this.pkid;
+    this.record.hbl_mbl_id = this.parentid;
     if (this.gs.BRANCH_REGION == "USA")
       this.record.hbl_telex_released = "NO - REQUIRED";
     else
@@ -945,6 +947,18 @@ export class SeaImpHouseEditComponent implements OnInit {
         this.hbl_notify_name_field.nativeElement.focus();
     }
 
+    if (_Record.controlname == "CHA") {
+      this.record.hbl_cha_id = _Record.id;
+      this.record.hbl_cha_code = _Record.code;
+      this.record.hbl_cha_name = _Record.name;
+      if (_Record.col8 != "")
+        this.record.hbl_cha_name = _Record.col8;
+
+      this.record.hbl_cha_attn = _Record.col5;
+      this.record.hbl_cha_tel = _Record.col6;
+      this.record.hbl_cha_fax = _Record.col7;
+      this.hbl_cha_name_field.nativeElement.focus();
+    }
     if (_Record.controlname == "AGENT") {
       this.record.hbl_agent_id = _Record.id;
       this.record.hbl_agent_name = _Record.name;
@@ -1553,6 +1567,7 @@ export class SeaImpHouseEditComponent implements OnInit {
         break;
       }
       case 'cntr_packages_uom': {
+        rec.cntr_packages_uom = rec.cntr_packages_uom.toUpperCase();
         break;
       }
       case 'cntr_weight': {
