@@ -431,7 +431,7 @@
 
     <div class="page-footer">
         <div class="row justify-content-center p-1">
-            <button class="btn btn-primary btn-md" *ngIf="gs.canSave(menuid,mode)  && !is_locked"
+            <button class="btn btn-primary btn-md" [disabled]="is_locked" *ngIf="gs.canSave(menuid,mode)"
                 (click)="Save()">Save</button>
         </div>
     </div>
