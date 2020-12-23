@@ -52,8 +52,9 @@
                                                     <tr *ngFor="let rec of trackrecords; let i = index"
                                                         [class.active]="i == selectedRowIndex" (click)="SetRowIndex(i)">
                                                         <td>{{rec.param_name1}} </td>
-                                                        <td class="p-0"><input #_cntr_remarks class="form-control form-control-sm"
-                                                                type="text" [(ngModel)]="rec.remarks" maxlength="500"
+                                                        <td class="p-0"><input #_cntr_remarks
+                                                                class="form-control form-control-sm" type="text"
+                                                                [(ngModel)]="rec.remarks" maxlength="500"
                                                                 (blur)="onBlur('remarks',rec)" /></td>
                                                         <td class="p-0">
                                                             <app-date [inputdate]="rec.date"
@@ -129,7 +130,7 @@
                                             <button class="btn btn-primary btn-md mr-1" [disabled]="is_locked"
                                                 (click)="SaveMemo()">{{lblSaveMemo}}</button>
                                             <button class="btn btn-primary btn-md mr-1"
-                                                (click)="NewRecord()">New</button>
+                                                (click)="NewRecord('MEMO')">New</button>
                                         </div>
                                     </div>
                                 </div>
@@ -158,16 +159,18 @@
                                                 <tr *ngFor="let rec of trackmemorecords; let i = index"
                                                     [class.active]="i == selectedRowIndex" (click)="SetRowIndex(i)">
                                                     <td class="p-0">{{rec.rec_created_by}} </td>
-                                                    <td class="p-0">{{rec.date  | date : gs.date_display_fmt_with_time}}
+                                                    <td class="p-0">{{rec.date | date : gs.date_display_fmt_with_time}}
                                                     </td>
-                                                    <td class="p-0" style="color: red;cursor:pointer;text-decoration: underline;" (blur)="onBlur('remarks',rec)"
-                                                        (click)="EditRow(rec)">
+                                                    <td class="p-0"
+                                                        style="color: red;cursor:pointer;text-decoration: underline;"
+                                                        (blur)="onBlur('remarks',rec)" (click)="EditRow(rec)">
                                                         {{rec.remarks}}</td>
                                                     <td class='p-0 text-center'><i
                                                             class="fa fa-paperclip  fa-lg pointer"
                                                             style="font-size:24px"
                                                             [style.color]="rec.rec_files_attached=='Y'?'red':black"
-                                                            aria-hidden="true" (click)="AttachRow(rec,attachmodal)"></i></td>
+                                                            aria-hidden="true" (click)="AttachRow(rec,attachmodal)"></i>
+                                                    </td>
                                                     <td class='p-0 text-center'><i class="fa fa-trash  fa-lg pointer"
                                                             aria-hidden="true" (click)="RemoveRow(rec)"></i></td>
                                                 </tr>
@@ -195,10 +198,10 @@
         <div class="page-body">
             <div class="row">
                 <div class="col-md-12 testbox  px-0 mx-0">
-                    <app-fileupload [title]="'Documents'" [parentid]="attach_pkid" [subid]=""
-                        [type]="'INTERNAL MEMO'" [typelist]="attach_typelist" [tablename]="'cargo_tracking_status'"
-                        [tablepkcolumn]="'param_id'" [refno]="" [customername]="" [updatecolumn]="'rec_files_attached'"
-                        [viewonlysource]="" [viewonlyid]="" [filespath]="" [filespath2]="" [modalview]="true"
+                    <app-fileupload [title]="'Documents'" [parentid]="attach_pkid" [subid]="" [type]="'INTERNAL MEMO'"
+                        [typelist]="attach_typelist" [tablename]="'cargo_tracking_status'" [tablepkcolumn]="'param_id'"
+                        [refno]="" [customername]="" [updatecolumn]="'rec_files_attached'" [viewonlysource]=""
+                        [viewonlyid]="" [filespath]="" [filespath2]="" [modalview]="true"
                         (callbackevent)="callbackevent($event)">
                     </app-fileupload>
                 </div>

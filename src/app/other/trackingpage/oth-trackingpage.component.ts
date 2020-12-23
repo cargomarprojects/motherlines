@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef,ViewChildren,QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
@@ -16,7 +16,8 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class OthTrackingPageComponent implements OnInit {
 
   @ViewChild('_cmb_notes') cmb_notes_field: ElementRef;
-  @ViewChild('_cntr_remarks') cntr_remarks_field: ElementRef;
+  @ViewChildren('_cntr_remarks') cntr_remarks_field:QueryList<ElementRef>;
+
   trackrecords: Tbl_Cargo_Tracking_Status[] = [];
   trackmemorecord: Tbl_Cargo_Tracking_Status = <Tbl_Cargo_Tracking_Status>{};
   trackmemorecords: Tbl_Cargo_Tracking_Status[] = [];
@@ -80,6 +81,10 @@ export class OthTrackingPageComponent implements OnInit {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.errorMessage = '';
     this.LoadCombo();
+  }
+
+  ngAfterViewInit() {
+     this.SetloadFocus();
   }
 
   LoadCombo() {
@@ -284,7 +289,7 @@ export class OthTrackingPageComponent implements OnInit {
   //     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   //   }
 
-  NewRecord() {
+  NewRecord(_stype:string='') {
     this.Memo_Mode = "ADD";
     this.Memo_Id = this.gs.getGuid();
     this.trackmemorecord = <Tbl_Cargo_Tracking_Status>{};
@@ -293,7 +298,7 @@ export class OthTrackingPageComponent implements OnInit {
     this.trackmemorecord.date = this.gs.defaultValues.today;
     this.trackmemorecord.remarks = ''
     this.lblSaveMemo = "Save";
-    this.SetloadFocus();
+    this.SetloadFocus(_stype);
   }
 
   EditRow(_rec: Tbl_Cargo_Tracking_Status) {
@@ -374,14 +379,14 @@ export class OthTrackingPageComponent implements OnInit {
     this.modal.close();
   }
 
-  SetloadFocus() {
-    if (this.hideTracking == 'Y') {
+  SetloadFocus(_stype:string='') {
+    if (this.hideTracking == 'Y'||_stype=='MEMO') {
       if (!this.gs.isBlank(this.cmb_notes_field))
         this.cmb_notes_field.nativeElement.focus();
     } else {
 
-      if (!this.gs.isBlank(this.cntr_remarks_field))
-        this.cntr_remarks_field.nativeElement.focus();
+       if (!this.gs.isBlank(this.cntr_remarks_field))
+        this.cntr_remarks_field.first.nativeElement.focus();
     }
   }
 

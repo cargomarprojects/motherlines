@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
@@ -32,6 +32,8 @@ export class OthGeneralEditComponent implements OnInit {
   @ViewChild('_mbl_vessel') mbl_vessel_field: ElementRef;
   @ViewChild('_hbl_shipper_name') hbl_shipper_name_field: ElementRef;
   @ViewChild('_hbl_consignee_name') hbl_consignee_name_field: ElementRef;
+  @ViewChildren('_cntr_no') cntr_no_field: QueryList<ElementRef>;
+  @ViewChildren('_cntr_sealno') cntr_sealno_field: QueryList<ElementRef>;
 
   record: Tbl_cargo_general = <Tbl_cargo_general>{};
   records: Tbl_cargo_container[] = [];
@@ -511,6 +513,11 @@ export class OthGeneralEditComponent implements OnInit {
     rec.cntr_weight_uom = '';
     rec.cntr_order = 1;
     this.records.push(rec);
+    this.cntr_no_field.changes
+      .subscribe((queryChanges) => {
+        this.cntr_no_field.last.nativeElement.focus();
+      });
+
   }
 
 
@@ -591,7 +598,7 @@ export class OthGeneralEditComponent implements OnInit {
         // mPage.Show();
       }
       if (!this.gs.isBlank(this.hbl_shipper_name_field))
-      this.hbl_shipper_name_field.nativeElement.focus();
+        this.hbl_shipper_name_field.nativeElement.focus();
     }
 
     if (_Record.controlname == "CONSIGNEE") {
@@ -616,16 +623,19 @@ export class OthGeneralEditComponent implements OnInit {
         // mPage.Show();
       }
       if (!this.gs.isBlank(this.hbl_consignee_name_field))
-      this.hbl_consignee_name_field.nativeElement.focus();
+        this.hbl_consignee_name_field.nativeElement.focus();
     }
 
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {
+      let idx: number = 0;
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
+          this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
         }
+        idx++;
       });
     }
   }

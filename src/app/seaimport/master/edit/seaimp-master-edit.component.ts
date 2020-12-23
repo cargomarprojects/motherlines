@@ -957,7 +957,8 @@ export class SeaImpMasterEditComponent implements OnInit {
         oprgrp: 'SEA IMPORT',
         parentType: 'SEAIMP-CNTR',
         paramType: 'CNTR-MOVE-STATUS',
-        hideTracking: 'N'
+        hideTracking: 'N',
+        is_locked: this.is_locked
       };
       this.gs.Naviagete('Silver.Other.Trans/TrackingPage', JSON.stringify(prm));
     }
