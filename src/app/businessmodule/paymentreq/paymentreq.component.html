@@ -116,7 +116,7 @@
           </thead>
           <tbody class="page-body-tbody">
             <tr *ngFor="let rec of payrecords">
-              <td (click)="EditRecord(rec)">{{rec.cp_paytype_needed}}</td>
+              <td class="hlink" (click)="EditRecord(rec)">{{rec.cp_paytype_needed}}</td>
               <td>{{rec.cp_inv_no}}</td>
               <td>{{rec.cp_payment_date | date : gs.FRONTEND_DATEFORMAT }}</td>
               <td>{{rec.cp_pay_status}}</td>

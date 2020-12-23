@@ -50,7 +50,7 @@ export class MawbPageComponent implements OnInit {
   @ViewChild('_mbld_consigned_to1') mbld_consigned_to1_ctrl: InputBoxComponent;
   
   DESC_TYPE: string = "AE-MDESC";
-
+  is_locked: boolean = false;
   canSave: boolean = false;
 
   constructor(
@@ -66,6 +66,7 @@ export class MawbPageComponent implements OnInit {
     const options = JSON.parse(this.route.snapshot.queryParams.parameter);
     this.pkid = options.pkid;
     this.menuid = options.menuid;
+    this.is_locked = options.is_locked;
     this.initPage();
     this.actionHandler();
   }
