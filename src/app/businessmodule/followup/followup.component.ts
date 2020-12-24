@@ -313,4 +313,11 @@ export class FollowupComponent implements OnInit {
         });
   }
 
+  tableKeydown(event: KeyboardEvent,_rec:Table_Cargo_Followup) {
+      if (event.key === 'Enter') {
+       this.EditRow(_rec);
+      }  
+  }
 }
+
+
