@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef,ViewChildren,QueryList } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
@@ -16,7 +16,7 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class OthTrackingPageComponent implements OnInit {
 
   @ViewChild('_cmb_notes') cmb_notes_field: ElementRef;
-  @ViewChildren('_cntr_remarks') cntr_remarks_field:QueryList<ElementRef>;
+  @ViewChildren('_cntr_remarks') cntr_remarks_field: QueryList<ElementRef>;
 
   trackrecords: Tbl_Cargo_Tracking_Status[] = [];
   trackmemorecord: Tbl_Cargo_Tracking_Status = <Tbl_Cargo_Tracking_Status>{};
@@ -83,19 +83,10 @@ export class OthTrackingPageComponent implements OnInit {
     this.LoadCombo();
   }
 
-  ngAfterViewInit() {
-     this.SetloadFocus();
-  }
-
   LoadCombo() {
     this.SearchRecord('loadcombo');
   }
-
-  // NewRecord() {
-  //   this.mode = 'ADD'
-  //   this.actionHandler();
-  // }
-
+  
   actionHandler() {
     // this.errorMessage = '';
     // if (this.mode == 'ADD') {
@@ -105,12 +96,10 @@ export class OthTrackingPageComponent implements OnInit {
     // if (this.mode == 'EDIT') {
     //   this.GetRecord();
     // }
-
     this.GetRecord();
   }
 
   init() {
-
     // this.record.parentid = this.pkid;
     // this.record.cargo_description = '';
     // this.record.cargo_marks = '';
@@ -171,8 +160,8 @@ export class OthTrackingPageComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          // this.errorMessage = 'Save Complete';
+          // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -289,7 +278,7 @@ export class OthTrackingPageComponent implements OnInit {
   //     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   //   }
 
-  NewRecord(_stype:string='') {
+  NewRecord(_stype: string = '') {
     this.Memo_Mode = "ADD";
     this.Memo_Id = this.gs.getGuid();
     this.trackmemorecord = <Tbl_Cargo_Tracking_Status>{};
@@ -379,15 +368,16 @@ export class OthTrackingPageComponent implements OnInit {
     this.modal.close();
   }
 
-  SetloadFocus(_stype:string='') {
-    if (this.hideTracking == 'Y'||_stype=='MEMO') {
+  SetloadFocus(_stype: string = '') {
+    if (this.hideTracking == 'Y' || _stype == 'MEMO') {
       if (!this.gs.isBlank(this.cmb_notes_field))
         this.cmb_notes_field.nativeElement.focus();
     } else {
-
-       if (!this.gs.isBlank(this.cntr_remarks_field))
-        this.cntr_remarks_field.first.nativeElement.focus();
+      this.cntr_remarks_field.changes
+        .subscribe((queryChanges) => {
+          this.cntr_remarks_field.first.nativeElement.focus();
+        });
+      // this.cntr_remarks_field.first.nativeElement.focus();
     }
   }
-
 }
