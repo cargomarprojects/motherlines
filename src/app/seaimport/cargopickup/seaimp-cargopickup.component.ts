@@ -344,8 +344,8 @@ export class SeaImpCargoPickupComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          // this.errorMessage = 'Save Complete';
+          // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);

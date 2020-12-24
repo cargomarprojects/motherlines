@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
@@ -18,6 +18,7 @@ export class SeaImpRiderPageComponent implements OnInit {
   descrecords: Tbl_cargo_imp_desc[] = [];
 
   // 15-07-2019 Created By Ajith  
+  @ViewChildren('_cargo_marks') cargo_marks_field: QueryList<ElementRef>;
 
   pkid: string;
   source: string;
@@ -72,8 +73,12 @@ export class SeaImpRiderPageComponent implements OnInit {
     SearchData.source = this.source;
     this.mainService.GetRecord(SearchData)
       .subscribe(response => {
-
         this.descrecords = response.records;
+          this.cargo_marks_field.changes
+          .subscribe((queryChanges) => {
+            this.cargo_marks_field.first.nativeElement.focus();
+          });
+
       }, error => {
         this.errorMessage = this.gs.getError(error);
       });
@@ -114,8 +119,8 @@ export class SeaImpRiderPageComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          // this.errorMessage = 'Save Complete';
+          // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -168,6 +173,10 @@ export class SeaImpRiderPageComponent implements OnInit {
       rec.cargo_description = "",
       rec.cargo_ctr = this.findNextCtr();
     this.descrecords.push(rec);
+    this.cargo_marks_field.changes
+      .subscribe((queryChanges) => {
+        this.cargo_marks_field.last.nativeElement.focus();
+      });
   }
 
   findNextCtr() {
@@ -210,6 +219,6 @@ export class SeaImpRiderPageComponent implements OnInit {
     this.selectedRowIndex = -1;
     this.descrecords.splice(this.descrecords.findIndex(rec => rec.cargo_ctr == _rec.cargo_ctr), 1);
   }
- 
-  
+
+
 }

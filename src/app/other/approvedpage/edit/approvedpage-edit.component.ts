@@ -264,8 +264,8 @@ export class ApprovedPageEditComponent implements OnInit {
           }
 
           this.mode = 'EDIT';
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          // this.errorMessage = 'Save Complete';
+          // alert(this.errorMessage);
         }
         //  this.csdate_field.Focus();
       }, error => {
@@ -495,8 +495,8 @@ export class ApprovedPageEditComponent implements OnInit {
           if (this.detrecords == null || this.detrecords == undefined)
             this.detrecords = <Tbl_Cargo_Approvedd[]>[];
           this.detrecords.push(response.record);
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          // this.errorMessage = 'Save Complete';
+          // alert(this.errorMessage);
         }
         //  this.csdate_field.Focus();
       }, error => {
