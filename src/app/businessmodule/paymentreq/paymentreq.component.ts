@@ -96,7 +96,8 @@ export class PaymentReqComponent implements OnInit {
       else
         Rec.cp_selected = false;
     })
-  }
+this.paytype_needed_field.nativeElement.focus();
+  } 
 
   actionHandler() {
     this.errorMessage = '';
