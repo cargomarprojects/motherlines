@@ -193,6 +193,7 @@ export class FollowupComponent implements OnInit {
     this.record.cf_assigned_code = _rec.cf_assigned_code;
     this.lblSave = "Update";
     this.cmbNotes = '';
+    this.cf_followup_date_field.Focus();
   }
 
   Save() {
