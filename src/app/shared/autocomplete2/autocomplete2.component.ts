@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, OnChanges, SimpleChange, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { SearchTable } from '../models/searchtable';
@@ -31,6 +31,8 @@ import { GlobalService } from '../../core/services/global.service';
 
 export class AutoComplete2Component {
 
+  @ViewChild('_cbtn') cbtn_field: ElementRef;
+  @ViewChildren('_itms') itms_field: QueryList<ElementRef>;
 
   private _controlname: string;
   @Input() set controlname(value: string) {
@@ -92,7 +94,7 @@ export class AutoComplete2Component {
 
   @ViewChild('inputbox') private inputbox: ElementRef;
 
-
+  focuselement: number = 0;
   rows_to_display: number = 0;
   rows_total: number = 0;
   rows_starting_number: number = 0;
@@ -109,8 +111,8 @@ export class AutoComplete2Component {
   showDiv = false;
 
   bShowMore = true;
-
-
+  indx: number = 0;
+  indx2: number = 0;
 
 
   loading = false;
@@ -131,7 +133,14 @@ export class AutoComplete2Component {
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
 
   }
-
+  ngAfterViewInit() {
+    // this.itms_field.changes
+    // .subscribe((queryChanges) => {
+    //   this.itms_field.first.nativeElement.focus();
+    // });
+    if (!this.gs.isBlank(this.cbtn_field))
+      this.cbtn_field.nativeElement.focus();
+  }
   Focus() {
     if (!this.disabled)
       this.inputbox.nativeElement.focus();
@@ -180,7 +189,7 @@ export class AutoComplete2Component {
       searchstring: this._displaydata,
       where: this._where,
       comp_code: this.gs.company_code,
-      branch_code: this._branchcode 
+      branch_code: this._branchcode
     };
 
     this.loginservice.LovList(SearchData)
@@ -208,6 +217,22 @@ export class AutoComplete2Component {
         }
         else {
           this.showDiv = true;
+          // this.itms_field.changes
+          //   .subscribe((queryChanges) => {
+          //     this.itms_field.first.nativeElement.focus();
+          //   });
+          // if (!this.gs.isBlank(this.cbtn_field))
+          //   this.cbtn_field.nativeElement.focus();
+          if (_action == "NEXT") {
+            // this.indx=-1;
+            // this.indx2=-1;
+            // this.indx=0;
+            // if (!this.gs.isBlank(this.cbtn_field))
+            // this.cbtn_field.nativeElement.focus();
+            //this.itms_field.nativeElement.children[0].children[0].focus();
+            //this.itms_field.toArray()[4].nativeElement.focus();
+            this.focuselement=0;
+          }
         }
       },
         error => {
@@ -217,7 +242,6 @@ export class AutoComplete2Component {
         }
       );
   }
-
 
 
   SelectedItem(_source: string, _Record: SearchTable) {
@@ -329,11 +353,18 @@ export class AutoComplete2Component {
     return styles;
   }
 
+  ListKeydown(event: KeyboardEvent, _rec: SearchTable) {
+    if (event.key === 'Enter') {
+      this.SelectedItem('LIST', _rec)
+    }
 
+    if (event.key === 'ArrowDown'||event.key === 'Tab') {
+      this.focuselement++;
+    }
+  }
+  MoreKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.More();
+    }
+  }
 }
-
-
-
-
-
-
