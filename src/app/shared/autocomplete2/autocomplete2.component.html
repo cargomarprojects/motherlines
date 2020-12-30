@@ -12,6 +12,21 @@
     <button type="button" class="close" aria-label="Close" (click)="Cancel()">
       <span aria-hidden="true">&times;</span>
     </button>
+    <ul *ngFor="let item of RecList">
+      <li><a (click)="SelectedItem('LIST',item)">{{item.code}}</a></li>
+      <li style="border-bottom: 1px solid black;"><a (click)="SelectedItem('LIST',item)">{{item.name}}</a></li>
+    </ul>
+    <ul *ngIf="bShowMore">
+      <li><a (click)="More()">More...</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- <div [ngClass]="{'my-class': showDiv}">
+  <div *ngIf="showDiv">
+    <button type="button" class="close" aria-label="Close" (click)="Cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
     <ul tabindex="0" *ngFor="let item of RecList" (keydown)="ListKeydown($event,item)">
       <li><a (click)="SelectedItem('LIST',item)">{{item.code}}</a></li>
       <li style="border-bottom: 1px solid black;"><a (click)="SelectedItem('LIST',item)">{{item.name}}</a></li>
@@ -20,8 +35,7 @@
       <li><a (click)="More()">More...</a></li>
     </ul>
   </div>
-
-</div>
+</div> -->
 
 
 <!-- <div [ngClass]="{'my-class': showDiv}">
