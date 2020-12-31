@@ -412,6 +412,13 @@ export class DockPageComponent implements OnInit {
     if (rec.controlname == "SENDTO") {
       this.record.mbld_sendto_id = rec.id;
       this.record.mbld_sendto_code = rec.code;
+      this.record.mbld_sendto_name = rec.name;
+      if (rec.col8 != "")
+        this.record.mbld_sendto_name = rec.col8;
+      this.record.mbld_sendto_add1 = rec.col1;
+      this.record.mbld_sendto_add2 = rec.col2;
+      this.record.mbld_sendto_add3 = this.gs.GetAttention(rec.col5);
+      this.record.mbld_sendto_add4 = this.gs.GetTelFax(rec.col6, rec.col7);
       if (!this.gs.isBlank(this.mbld_sendto_name_ctrl))
         this.mbld_sendto_name_ctrl.focus();
     }
