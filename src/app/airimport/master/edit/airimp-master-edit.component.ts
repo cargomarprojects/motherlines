@@ -136,8 +136,8 @@ export class AirImpMasterEditComponent implements OnInit {
     this.record.mbl_pkid = this.pkid;
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
-    this.record.mbl_prefix = this.gs.AIR_EXPORT_REFNO_PREFIX;
-    this.record.mbl_startingno = this.gs.AIR_EXPORT_REFNO_STARTING_NO;
+    this.record.mbl_prefix = this.gs.AIR_IMPORT_REFNO_PREFIX;
+    this.record.mbl_startingno = this.gs.AIR_IMPORT_REFNO_STARTING_NO;
     // if (this.gs.BRANCH_REGION == "USA")
     //   this.record.mbl_currency = "USD";
     // else
@@ -283,8 +283,8 @@ export class AirImpMasterEditComponent implements OnInit {
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
           this.mainService.RefreshList(this.record);
-          this.errorMessage.push('Save Complete');
-          alert(this.errorMessage[0]);
+          // this.errorMessage.push('Save Complete');
+          // alert(this.errorMessage[0]);
         }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));

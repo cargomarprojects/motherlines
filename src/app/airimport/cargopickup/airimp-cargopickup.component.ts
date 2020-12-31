@@ -256,9 +256,9 @@ export class AirImpCargoPickupComponent implements OnInit {
     this.record.pick_cbm_cft1 = this.defaultrecord.pick_cbm_cft1;
     this.record.pick_uom1 = this.defaultrecord.pick_uom1;
     this.record.pick_remark_1 = "PLEASE CONTACT CONSIGNEE FOR DELIVERY APPOINTMENT!";
-    this.record.pick_vessel = this.defaultrecord.pick_vessel;
-    this.record.pick_voyage = this.defaultrecord.pick_voyage;
-    this.record.pick_terms_ship = this.defaultrecord.pick_terms_ship;
+    // this.record.pick_vessel = this.defaultrecord.pick_vessel;
+    // this.record.pick_voyage = this.defaultrecord.pick_voyage;
+    // this.record.pick_terms_ship = this.defaultrecord.pick_terms_ship;
     if (this.gs.company_code != "MNYC") {
       this.record.pick_truk_code = this.defaultrecord.pick_truk_code;
       this.record.pick_truk_name = this.defaultrecord.pick_truk_name;
@@ -334,8 +334,8 @@ export class AirImpCargoPickupComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-          this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+          // this.errorMessage = 'Save Complete';
+          // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);

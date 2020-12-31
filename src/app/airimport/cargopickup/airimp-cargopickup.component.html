@@ -611,7 +611,7 @@
   
   
   <div class="page-footer">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-4">
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm"></label>
@@ -621,6 +621,10 @@
           </div>
         </div>
       </div>
+    </div> -->
+    <div class="row row justify-content-center p-1">
+      <button class="btn btn-primary btn-md mr-1" [disabled]="is_locked" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
+      <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-md mr-1" (click)="DeliveryRptPrint()">Print</button>
     </div>
   </div>
   
