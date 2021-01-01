@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ANALYZE_FOR_ENTRY_COMPONENTS,ViewChildren, QueryList  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ANALYZE_FOR_ENTRY_COMPONENTS, ViewChildren, QueryList } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -51,6 +51,7 @@ export class HousePageComponent implements OnInit {
   cntrs: Tbl_cargo_exp_container[] = [];
 
   ShipmentType: string = '';
+  @ViewChild('_btnret') btnret_ctrl: ElementRef;
   @ViewChild('_hbl_shipper_code') hbl_shipper_code_ctrl: AutoComplete2Component;
   @ViewChild('_hbl_shipper_name') hbl_shipper_name_ctrl: InputBoxComponent;
   @ViewChild('hbl_shipment_stage') hbl_shipment_stage_field: ElementRef;
@@ -61,6 +62,7 @@ export class HousePageComponent implements OnInit {
   @ViewChild('_hbl_goods_nature') hbl_goods_nature_ctrl: InputBoxComponent;
   @ViewChildren('_cntr_no') cntr_no_field: QueryList<InputBoxComponent>;
   @ViewChildren('_cntr_sealno') cntr_sealno_field: QueryList<InputBoxComponent>;
+
 
   DESC_TYPE: string = "SE-DESC";
 
@@ -293,8 +295,11 @@ export class HousePageComponent implements OnInit {
         this.record._hbl_print_kgs = (this.record.hbl_print_kgs == "Y") ? true : false;
         this.record._hbl_print_lbs = (this.record.hbl_print_lbs == "Y") ? true : false;
 
-        if (!this.gs.isBlank(this.hbl_shipper_code_ctrl))
-          this.hbl_shipper_code_ctrl.Focus();
+        // if (!this.gs.isBlank(this.hbl_shipper_code_ctrl))
+        //   this.hbl_shipper_code_ctrl.Focus();
+        if (!this.gs.isBlank(this.btnret_ctrl))
+          this.btnret_ctrl.nativeElement.focus();
+
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -840,9 +845,9 @@ export class HousePageComponent implements OnInit {
     rec.cntr_cbm = 0;
     this.cntrs.push(rec);
     this.cntr_no_field.changes
-    .subscribe((queryChanges) => {
-      this.cntr_no_field.last.focus();
-    });
+      .subscribe((queryChanges) => {
+        this.cntr_no_field.last.focus();
+      });
   }
 
   RemoveRow(_rec: Tbl_cargo_exp_container) {
