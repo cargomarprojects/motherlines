@@ -4,6 +4,7 @@ import { Tbl_cargo_invoicem } from './Tbl_cargo_Invoicem';
 export interface SearchQuery {
     balance : string ;
     searchType: string;
+    searchCustType: string;
     searchString: string;
     customerId : string;
     customerCode : string;
