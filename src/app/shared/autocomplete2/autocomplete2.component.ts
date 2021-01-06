@@ -138,8 +138,8 @@ export class AutoComplete2Component {
     // .subscribe((queryChanges) => {
     //   this.itms_field.first.nativeElement.focus();
     // });
-    if (!this.gs.isBlank(this.cbtn_field))
-      this.cbtn_field.nativeElement.focus();
+    // if (!this.gs.isBlank(this.cbtn_field))
+    //   this.cbtn_field.nativeElement.focus();
   }
   Focus() {
     if (!this.disabled)
@@ -223,7 +223,7 @@ export class AutoComplete2Component {
           //   });
           // if (!this.gs.isBlank(this.cbtn_field))
           //   this.cbtn_field.nativeElement.focus();
-          if (_action == "NEXT") {
+          // if (_action == "NEXT") {
             // this.indx=-1;
             // this.indx2=-1;
             // this.indx=0;
@@ -231,8 +231,8 @@ export class AutoComplete2Component {
             // this.cbtn_field.nativeElement.focus();
             //this.itms_field.nativeElement.children[0].children[0].focus();
             //this.itms_field.toArray()[4].nativeElement.focus();
-            this.focuselement=0;
-          }
+            //this.focuselement=0;
+          // }
         }
       },
         error => {
