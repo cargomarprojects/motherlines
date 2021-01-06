@@ -22,6 +22,31 @@
   </div>
 </div>
 
+
+<!-- <div [ngClass]="{'my-class': showDiv}">
+  <div *ngIf="showDiv">
+    <button type="button" class="close" aria-label="Close" (click)="Cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <table style="width:100%">
+      <tr *ngFor="let item of RecList">
+        <td style="padding:0in;" (click)="SelectedItem('LIST',item)">
+          <input #_cntr_no class="form-control form-control-sm" readonly type="text"
+            style="background-color:white; border: 0in;" [(ngModel)]="item.name" maxlength="1000" />
+        </td>
+      </tr>
+      <tr *ngIf="bShowMore">
+        <td style="padding:0in;" (click)="More()">
+          <input #_cntr_no2 class="form-control form-control-sm" readonly type="text"
+            style="background-color:white; border: 0in;" [(ngModel)]="btnMore" maxlength="1000" />
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> -->
+
+
+
 <!-- <div [ngClass]="{'my-class': showDiv}">
   <div *ngIf="showDiv">
     <button type="button" class="close" aria-label="Close" (click)="Cancel()">
