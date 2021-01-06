@@ -133,14 +133,14 @@ export class AutoComplete2Component {
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
 
   }
-  ngAfterViewInit() {
-    // this.itms_field.changes
-    // .subscribe((queryChanges) => {
-    //   this.itms_field.first.nativeElement.focus();
-    // });
-    // if (!this.gs.isBlank(this.cbtn_field))
-    //   this.cbtn_field.nativeElement.focus();
-  }
+  // ngAfterViewInit() {
+  //   // this.itms_field.changes
+  //   // .subscribe((queryChanges) => {
+  //   //   this.itms_field.first.nativeElement.focus();
+  //   // });
+  //   // if (!this.gs.isBlank(this.cbtn_field))
+  //   //   this.cbtn_field.nativeElement.focus();
+  // }
   Focus() {
     if (!this.disabled)
       this.inputbox.nativeElement.focus();

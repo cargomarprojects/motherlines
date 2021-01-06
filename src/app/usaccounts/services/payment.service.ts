@@ -82,12 +82,13 @@ export class PaymentService {
         SearchData.FDATE = this.record.searchQuery.sdate;
         SearchData.EDATE = this.record.searchQuery.edate;
         SearchData.YEAR = this.gs.year_code;
-        SearchData.SEARCHTYPE = this.record.searchQuery.searchType;        
+        SearchData.SEARCHTYPE = this.record.searchQuery.searchType;  
+        SearchData.SEARCH_CUST_TYPE = this.record.searchQuery.searchCustType; 
         SearchData.CODE = this.record.searchQuery.searchString;        
         SearchData.ISADMIN = 'N';
         SearchData.BR_REGION = this.gs.BRANCH_REGION ;
         SearchData.HIDE_PAYROLL = this.gs.user_hide_payroll;
-        SearchData.CUSTOMER_ID = '';
+        SearchData.CUSTOMER_ID = this.record.searchQuery.customerId; 
 
         SearchData.page_count = 0;
         SearchData.page_rows = 0;

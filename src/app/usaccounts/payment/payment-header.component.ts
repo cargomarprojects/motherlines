@@ -47,9 +47,9 @@ export class PaymentHeaderComponent implements OnInit {
 
     LovSelected(_Record: SearchTable) {
         if (_Record.controlname === 'CUSTOMER') {
-            // this.searchQuery.customerId = _Record.id;
-            // this.searchQuery.customerCode = _Record.code;
-            // this.searchQuery.customerName = _Record.name;
+            this.searchQuery.customerId = _Record.id;
+            this.searchQuery.customerCode = _Record.code;
+            this.searchQuery.customerName = _Record.name;
         }
         // if (_Record.controlname === 'PARENT') {
         //   this.cust_parent_id = _Record.id;
@@ -59,13 +59,13 @@ export class PaymentHeaderComponent implements OnInit {
     onChange(field: string) {
 
         if (field === 'searchCustType') {
-            // this.searchQuery.customerId = '';
-            // this.searchQuery.customerCode = '';
-            // this.searchQuery.customerName = '';
-            // if (this.searchQuery.searchType === 'CUSTOMER')
-            //     this.custLovType = 'MASTER';
-            // else
-            //     this.custLovType = 'OVERSEAAGENT';
+            this.searchQuery.customerId = '';
+            this.searchQuery.customerCode = '';
+            this.searchQuery.customerName = '';
+            if (this.searchQuery.searchType === 'CUSTOMER')
+                this.custLovType = 'MASTER';
+            else
+                this.custLovType = 'OVERSEAAGENT';
         }
     }
 }
