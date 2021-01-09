@@ -883,7 +883,7 @@
               <option [value]="'CNOR'">CONSIGNOR</option>
               <option [value]="'SHPR'">SHIPPER</option>
             </select>
-            <button class="btn btn-success btn-sm mr-1" (click)="BtnNavigation('FULL-FORMAT')">Print</button>
+            <button class="btn btn-success btn-sm mr-1" *ngIf="gs.canPrint(this.menuid)" (click)="BtnNavigation('FULL-FORMAT')">Print</button>
           </div>
         </div>
 

@@ -129,6 +129,7 @@ export class AirExpHouseEditComponent implements OnInit {
   }
   InitRecord() {
     this.record.hbl_pkid = this.pkid;
+    this.record.hbl_mbl_id = this.parentid;
     this.record.hbl_houseno = "";
     this.record.hbl_date = "";
     this.record.hbl_bltype = "";
