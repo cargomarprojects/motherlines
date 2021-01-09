@@ -232,9 +232,7 @@ export class AirExpMasterEditComponent implements OnInit {
 
   IsBLDupliation(stype: string, no: string) {
 
-    if (no == null)
-      return;
-    if (no == '')
+    if (this.gs.isBlank(no))
       return;
 
     this.errorMessage = [];
@@ -249,9 +247,10 @@ export class AirExpMasterEditComponent implements OnInit {
     this.mainService.Isblnoduplication(SearchData)
       .subscribe(response => {
         if (response.retvalue) {
-          this.errorMessage = response.retstring;
-          if (stype == 'MAWB')
-            this.mbl_no_field.nativeElement.focus();
+          this.errorMessage.push(response.retstring);
+         // alert(this.errorMessage);
+          // if (stype == 'MBL')
+          //   this.mbl_no_field.nativeElement.focus();
         }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
@@ -275,7 +274,7 @@ export class AirExpMasterEditComponent implements OnInit {
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
+          this.errorMessage.push(response.error);
           alert(this.errorMessage);
         }
         else {
@@ -283,7 +282,7 @@ export class AirExpMasterEditComponent implements OnInit {
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
           this.errorMessage.push('Save Complete');
-          alert(this.errorMessage);
+          // alert(this.errorMessage);
           this.mainService.RefreshList(this.record);
         }
       }, error => {

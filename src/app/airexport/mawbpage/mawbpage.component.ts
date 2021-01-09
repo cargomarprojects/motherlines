@@ -48,7 +48,8 @@ export class MawbPageComponent implements OnInit {
   @ViewChild('_mbld_shipper_name') mbld_shipper_name_ctrl: InputBoxComponent;
   @ViewChild('_mbld_shipper_code') mbld_shipper_code_ctrl: AutoComplete2Component;
   @ViewChild('_mbld_consigned_to1') mbld_consigned_to1_ctrl: InputBoxComponent;
-  
+  @ViewChild('_btnret') btnret_ctrl: ElementRef;
+
   DESC_TYPE: string = "AE-MDESC";
   is_locked: boolean = false;
   canSave: boolean = false;
@@ -138,8 +139,11 @@ export class MawbPageComponent implements OnInit {
 
         this.canSave = this.gs.canSave(this.menuid, this.mode);
 
-        if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
-          this.mbld_shipper_code_ctrl.Focus();
+        // if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
+        //   this.mbld_shipper_code_ctrl.Focus();
+
+          if (!this.gs.isBlank(this.btnret_ctrl))
+          this.btnret_ctrl.nativeElement.focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
