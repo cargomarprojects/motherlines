@@ -50,6 +50,10 @@ export class HeaderComponent {
     Logout() {
         this.loginservice.Logout();
         this.title = 'Pls Login';
+
+        this.gs.MenuList = null;
+        this.gs.Modules =  null;
+
         localStorage.removeItem('bts_settings');        
         this.router.navigate(['home'], { replaceUrl: true });
     }

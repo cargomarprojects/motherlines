@@ -135,17 +135,14 @@ export class LoginComponent implements OnInit {
             this.errorMessage = "Login Success";
             this.GLOBALCONTANTS.user_pwd = this.password;
             this.Login1();
-            
           }
           else {
             this.errorMessage = "Login Failed";
-            alert(this.errorMessage);
           }
         }
       }, error => {
         this.loading = false;
         this.errorMessage = error.error.error_description;
-        alert(this.errorMessage);
       });
   }
 
