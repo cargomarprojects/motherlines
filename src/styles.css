@@ -2,7 +2,7 @@
 
 :root {
     --custom-bg-color:snow;
-  }
+}
 
 
 html, body {
@@ -12,7 +12,7 @@ html, body {
     min-height:100%;
     margin: 0px;
     padding-top :36px;
-    background-color:var(--custom-bg-color);
+    background-color: var(--custom-bg-color);
   }
   
   .navbar {
