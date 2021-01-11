@@ -147,6 +147,12 @@ export class LoginComponent implements OnInit {
   }
 
 
+  Cancel() {
+    this.router.navigate(['home'], { replaceUrl: true });
+}
+
+
+
   Login1() {
 
     let SearchData = {
