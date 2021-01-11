@@ -621,7 +621,7 @@
 
           <div class="form-group row">
             <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_ATTACHMENTS)"
-              [style.color]="record.rec_files_attached=='Y'?'red':black"
+              [style.color]="record.rec_files_attached=='Y'?'red':'white'"
               (click)="BtnNavigation('ATTACHMENT',attachmodal)">Attachments</button>
           </div>
 
@@ -631,7 +631,7 @@
           </div>
           <div class="form-group row">
             <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_INTERNAL_MEMO)"
-              [style.color]="record.mbl_ismemo_attached=='Y'?'red':black"
+              [style.color]="record.mbl_ismemo_attached=='Y'?'red':'white'"
               (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
           </div>
           <div class="form-group row">
