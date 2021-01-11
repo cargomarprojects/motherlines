@@ -343,7 +343,7 @@ export class OthGeneralEditComponent implements OnInit {
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
           this.errorMessage = 'Save Complete';
-          alert(this.errorMessage);
+         // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
@@ -793,6 +793,7 @@ export class OthGeneralEditComponent implements OnInit {
         break;
       }
       case 'cntr_packages_uom': {
+        rec.cntr_packages_uom = rec.cntr_packages_uom.toUpperCase();
         break;
       }
       case 'cntr_weight': {
