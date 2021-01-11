@@ -57,6 +57,7 @@ export class CertOrgPageComponent implements OnInit {
   @ViewChild('_mbld_place_receipt') mbld_place_receipt_ctrl: InputBoxComponent;
   // @ViewChild('_mbld_sendto_code') mbld_sendto_code_ctrl: AutoComplete2Component;
   // @ViewChild('_mbld_sendto_name') mbld_sendto_name_ctrl: InputBoxComponent;
+  @ViewChild('_btnretcert') btnretcert_ctrl: ElementRef;
 
 
   DESC_TYPE: string = "COODESC";
@@ -153,8 +154,8 @@ export class CertOrgPageComponent implements OnInit {
         this.record._mbld_print_kgs = (this.record.mbld_print_kgs == "Y") ? true : false;
         this.record._mbld_print_lbs = (this.record.mbld_print_lbs == "Y") ? true : false;
 
-        if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
-          this.mbld_shipper_code_ctrl.Focus();
+        if (!this.gs.isBlank(this.btnretcert_ctrl))
+          this.btnretcert_ctrl.nativeElement.focus();
 
 
       }, error => {
