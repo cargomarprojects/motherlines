@@ -49,8 +49,6 @@ export class HeaderComponent {
 
     Logout() {
         this.loginservice.Logout();
-        this.title = 'Pls Login';
-
         this.gs.MenuList = null;
         this.gs.Modules =  null;
 

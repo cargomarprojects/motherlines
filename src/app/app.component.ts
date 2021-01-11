@@ -47,10 +47,13 @@ export class AppComponent {
       console.log('Development');
 
 
+      this.gs.ReadLocalStorage();
+      if ( this.gs.IsAutoLogin){
+        this.router.navigate(['login'], { replaceUrl: true });
+      }
 
 
-      /*     if (sessionStorage.length > 0) {
-    
+      /* if (sessionStorage.length > 0) {
             this.gs.Access_Token = sessionStorage.getItem('access_token');
             this.gs.company_name = sessionStorage.getItem('company_name');
             this.gs.BRANCH_REGION = sessionStorage.getItem('BRANCH_REGION');
@@ -66,11 +69,11 @@ export class AppComponent {
             this.gs.CompanyList = JSON.parse(sessionStorage.getItem('companylist'));
             this.gs.YearList = JSON.parse(sessionStorage.getItem('yearlist'));
             this.gs.year_code = JSON.parse(sessionStorage.getItem('year_code'));
-    
             this.gs.year_start_date = JSON.parse(sessionStorage.getItem('year_start_date'));
             this.gs.year_end_date = JSON.parse(sessionStorage.getItem('year_end_date'));
     
-          } */
+          }
+      */
 
     }
 

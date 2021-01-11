@@ -14,11 +14,11 @@ import { Companym } from '../models/company';
 export class LoginComponent implements OnInit {
 
   loading: Boolean = false;
-  showloginbutton : Boolean = false;
+  showloginbutton: Boolean = false;
 
   errorMessage: string = '';
-  
-  
+
+
   software_version_string = '1.105';
   username: string = '';
   password: string = '';
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   Company_Code: string = '';
 
   userrecord: any;
- 
+
 
   constructor(
     private mainservice: LoginService,
@@ -42,32 +42,25 @@ export class LoginComponent implements OnInit {
 
     this.GLOBALCONTANTS.Modules = null;
     this.GLOBALCONTANTS.MenuList = null;
-    this.GLOBALCONTANTS.IsLoginSuccess =false;
-    this.GLOBALCONTANTS.IsAuthenticated =false;
+    this.GLOBALCONTANTS.IsLoginSuccess = false;
+    this.GLOBALCONTANTS.IsAuthenticated = false;
     this.showloginbutton = false;
 
-
-
-
-    //this.GLOBALCONTANTS.user_code = '';
-    //this.GLOBALCONTANTS.user_pwd = '';
-   
-    //this.username = this.GLOBALCONTANTS.user_code;
-    //this.password = this.GLOBALCONTANTS.user_pwd;
-
-    this.GLOBALCONTANTS.ReadLocalStorage();
-
-    if ( this.GLOBALCONTANTS.IsAutoLogin) {
+    if (this.GLOBALCONTANTS.IsAutoLogin) {
       this.username = this.GLOBALCONTANTS.user_code;
       this.password = this.GLOBALCONTANTS.user_pwd;
     }
-    
+    else {
+      this.username = 'ADMIN';
+      this.password = '123';
+    }
     this.LoadCombo();
   }
+
   ngOnInit() {
   }
 
-  
+
 
   LoadCombo() {
 
@@ -93,14 +86,14 @@ export class LoginComponent implements OnInit {
         response.list.forEach(a => {
           this.Company_Id = a.pkid;
         })
-        
+
         // Auto Login
-        if ( this.GLOBALCONTANTS.IsAutoLogin) {
+        if (this.GLOBALCONTANTS.IsAutoLogin) {
           this.Company_Id = this.GLOBALCONTANTS.company_pkid;
           this.Login();
         }
 
-        
+
         this.loading = false;
       }, error => {
         this.loading = false;
@@ -149,7 +142,7 @@ export class LoginComponent implements OnInit {
 
   Cancel() {
     this.router.navigate(['home'], { replaceUrl: true });
-}
+  }
 
 
 
@@ -248,9 +241,5 @@ export class LoginComponent implements OnInit {
 
     this.GLOBALCONTANTS.InitUserInfo();
   }
-
-
-
-
 
 }
