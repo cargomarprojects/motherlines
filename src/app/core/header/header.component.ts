@@ -11,7 +11,7 @@ import { User_Menu } from '../models/menum';
 })
 export class HeaderComponent {
     public isNavbarCollapsed = true;
-    title = 'Pls Login';
+    title = 'Motherlines INC USA';
     id = '';
     constructor(
         private router: Router,
@@ -34,11 +34,24 @@ export class HeaderComponent {
         this.router.navigate([menu_route], { queryParams: { id: this.id, menuid: rec.menu_pkid, menu_param: rec.menu_param } });
     }
 
+
+    home(){
+        if (this.gs.IsAuthenticated)
+            this.router.navigate(['/home']);
+        else 
+            this.router.navigate(['/home'], { replaceUrl: true });
+    }
+
+    login(){
+        this.router.navigate(['login'], { replaceUrl: true });
+    }
+
+
     Logout() {
         this.loginservice.Logout();
         this.title = 'Pls Login';
         localStorage.removeItem('bts_settings');        
-        this.router.navigate(['login'], { replaceUrl: true });
+        this.router.navigate(['home'], { replaceUrl: true });
     }
 
     getUrlID() {
