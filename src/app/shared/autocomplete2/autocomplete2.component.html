@@ -6,7 +6,7 @@
     (click)="List()">...</button>
 
 </div>
-
+<!-- 
 <div [ngClass]="{'my-class': showDiv}">
   <div *ngIf="showDiv">
     <button type="button" class="close" aria-label="Close" (click)="Cancel()">
@@ -20,7 +20,7 @@
       <li><a (click)="More()">More...</a></li>
     </ul>
   </div>
-</div>
+</div> -->
 
 
 <!-- <div [ngClass]="{'my-class': showDiv}">
@@ -63,20 +63,21 @@
 </div> -->
 
 
-<!-- <div [ngClass]="{'my-class': showDiv}">
+<div [ngClass]="{'my-class': showDiv}">
 
   <div *ngIf="showDiv">
-    <button type="button" class="close" aria-label="Close" (click)="Cancel()">
-      <span #_cbtn aria-hidden="true">&times;</span>
+    <button tabindex="0" type="button" class="close" aria-label="Close" (click)="Cancel()">
+      <span aria-hidden="true">&times;</span>
     </button>
-    <ul tabindex="{{indx}}" *ngFor="let item of RecList ;let i = index" (keydown)="ListKeydown($event,item)" >
-      <li #_itms  tabIndex="{{i}}" ><a (click)="SelectedItem('LIST',item)">{{item.code}}</a></li>
-      <li style="border-bottom: 1px solid black;"><a (click)="SelectedItem('LIST',item)">{{item.name}}</a></li>
+    <ul style="padding-top: 0%;padding-bottom: 0%;" *ngFor="let item of RecList ;let i = index" (keydown)="ListKeydown($event,item)" >
+      <li #_itms style="border-bottom: 1px solid black;" tabindex="0"><a (click)="SelectedItem('LIST',item)">{{item.code}}<br>{{item.name}}</a></li>
+      <!-- <li style="padding:0in;" style="border-bottom: 1px solid black;"></li> -->
+      <!-- <li style="border-bottom: 1px solid black;"><a (click)="SelectedItem('LIST',item)">{{item.name}}</a></li> -->
     </ul>
-    <ul tabindex="{{indx2}}" *ngIf="bShowMore" (keydown)="MoreKeydown($event)">
+    <ul tabindex="0" *ngIf="bShowMore" (keydown)="MoreKeydown($event)">
       <li><a (click)="More()">More...</a></li>
     </ul>
 
   </div>
 
-</div> -->
+</div>
