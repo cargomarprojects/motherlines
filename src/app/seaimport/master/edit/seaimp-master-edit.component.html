@@ -299,11 +299,11 @@
 
                 <div class="form-group row">
                   <label class="col-3 col-form-label col-form-label-sm">OMBL.Sent.Date</label>
-                  <div class="col-4 input-group input-group-sm pr-0">
+                  <div class="col-3 pr-0">
                     <app-date [inputdate]="record.mbl_ombl_sent_on" (ValueChanged)="record.mbl_ombl_sent_on=$event">
                     </app-date>
-                    <!-- </div>
-                  <div class="col-1 ml-0 pl-0 pr-0"> -->
+                    </div>
+                  <div class="col-1 ml-0 pl-0 pr-0">
                     <select class="form-control form-control-sm" [(ngModel)]="record.mbl_ombl_sent_ampm">
                       <option [value]="'AM'">AM</option>
                       <option [value]="'PM'">PM</option>
