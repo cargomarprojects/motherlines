@@ -685,14 +685,15 @@
 
   <div class="page-footer">
     <div class="row row justify-content-center p-1">
-      <button class="btn btn-primary btn-md mr-1" [disabled]="IsLocked" *ngIf="gs.canSave(menuid,mode)"  (click)="Save()">Save</button>
+      <button class="btn btn-primary btn-md mr-1" [disabled]="IsLocked" *ngIf="gs.canSave(menuid,mode)"
+        (click)="Save()">Save</button>
       <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-md mr-1" (click)="DeliveryRptPrint()">Print</button>
     </div>
   </div>
-  <!-- <div>
-  <label class="col-form-label col-form-label-sm" > CREATED BY: {{record.rec_created_by}} /
-    {{record.rec_created_date}} </label>
-</div> -->
+  <div class="page-footer">
+    <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}} /
+      {{record.rec_created_date}} </label>
+  </div>
 </div>
 <div *ngIf="tab=='report'">
   <app-report [title]="report_title" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"
