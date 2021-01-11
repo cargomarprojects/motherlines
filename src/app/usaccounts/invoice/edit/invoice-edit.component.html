@@ -269,15 +269,15 @@
                             <tr>
                                 <td class="p-0">
 
-                                    <app-autocomplete2 [controlname]="'INVOICED-CODE'" [tabletype]="'PARAM'"
+                                    <app-autocomplete2 #_invd_desc_code [controlname]="'INVOICED-CODE'" [tabletype]="'PARAM'"
                                         [uid]="rec.invd_pkid" [subtype]="'INVOICE-DESCRIPTION'" [displaycolumn]="'CODE'"
-                                        [uid]="rec.invd_pkid" [displaydata]="rec.invd_desc_code"
+                                        [displaydata]="rec.invd_desc_code"
                                         (ValueChanged)="LovSelected($event)">
                                     </app-autocomplete2>
 
                                 </td>
                                 <td class="p-0">
-                                    <input class="form-control form-control-sm" type="text"
+                                    <input #_invd_desc_name class="form-control form-control-sm" type="text"
                                         [(ngModel)]="rec.invd_desc_name" (blur)="onBlur('invd_desc_name',rec)" />
                                 </td>
 
@@ -294,7 +294,7 @@
 
                                 </td>
                                 <td class="p-0">
-                                    <input class="form-control form-control-sm" type="number" style="text-align:right;"
+                                    <input #_invd_qty class="form-control form-control-sm" type="number" style="text-align:right;"
                                         [(ngModel)]="rec.invd_qty" (blur)="onBlur('invd_qty',rec)" />
                                 </td>
                                 <td class="p-0">
