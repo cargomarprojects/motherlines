@@ -8,6 +8,7 @@ html, body {
     min-height:100%;
     margin: 0px;
     padding-top :36px;
+    background-color:snow;    
   }
   
   .navbar {
@@ -329,10 +330,12 @@ hr {
     border-style: solid;
     border-color: rgba(0,0,0,.125);
     padding: 3px;
+    background-color:snow;    
 }
 
 .page-list {
     border: 1px solid rgba(0,0,0,.125);
+    background-color:snow;
 }
   
 .page-search {
@@ -353,6 +356,7 @@ hr {
 .page-footer {
     border: 1px solid rgba(0,0,0,.125);
     padding: 1px;
+    background-color:snow;    
 }
   
 .page-pager {
@@ -360,6 +364,7 @@ hr {
     margin-bottom: 3px;
     cursor: pointer;
     border: 1px solid rgba(0,0,0,.125);    
+    background-color:snow;    
 }
 
 .pagination {
