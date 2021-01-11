@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+    --custom-bg-color:snow;
+  }
+
 
 html, body {
     font-family: 'roboto' ;
@@ -8,7 +12,7 @@ html, body {
     min-height:100%;
     margin: 0px;
     padding-top :36px;
-    background-color:snow;    
+    background-color:var(--custom-bg-color);
   }
   
   .navbar {
@@ -330,12 +334,12 @@ hr {
     border-style: solid;
     border-color: rgba(0,0,0,.125);
     padding: 3px;
-    background-color:snow;    
+    background-color:var(--custom-bg-color);
 }
 
 .page-list {
     border: 1px solid rgba(0,0,0,.125);
-    background-color:snow;
+    background-color:var(--custom-bg-color);
 }
   
 .page-search {
@@ -349,14 +353,14 @@ hr {
 .page-body {
     border: 1px solid rgba(0,0,0,.125);
     padding: 3px;
-    background-color:snow;
+    background-color:var(--custom-bg-color);
 }
 
   
 .page-footer {
     border: 1px solid rgba(0,0,0,.125);
     padding: 1px;
-    background-color:snow;    
+    background-color:var(--custom-bg-color);
 }
   
 .page-pager {
@@ -364,7 +368,7 @@ hr {
     margin-bottom: 3px;
     cursor: pointer;
     border: 1px solid rgba(0,0,0,.125);    
-    background-color:snow;    
+    background-color:var(--custom-bg-color);
 }
 
 .pagination {
