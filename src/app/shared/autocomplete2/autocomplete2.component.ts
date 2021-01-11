@@ -233,6 +233,12 @@ export class AutoComplete2Component {
             //this.itms_field.toArray()[4].nativeElement.focus();
             //this.focuselement=0;
           // }
+
+          this.itms_field.changes
+          .subscribe((queryChanges) => {
+            this.itms_field.first.nativeElement.focus();
+          });
+
         }
       },
         error => {
@@ -357,10 +363,11 @@ export class AutoComplete2Component {
     if (event.key === 'Enter') {
       this.SelectedItem('LIST', _rec)
     }
-
-    if (event.key === 'ArrowDown'||event.key === 'Tab') {
-      this.focuselement++;
+    if (event.key === 'Escape') {
+     this.Cancel();
     }
+    // if (event.key === 'ArrowDown'||event.key === 'Tab') {
+    // }
   }
   MoreKeydown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
