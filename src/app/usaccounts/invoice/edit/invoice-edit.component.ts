@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -12,6 +12,7 @@ import { Tbl_PayHistory } from '../../models/Tbl_cargo_Invoicem';
 import { Tbl_House } from '../../models/tbl_house';
 import { invoiceService } from '../../services/invoice.service';
 import { DateComponent } from '../../../shared/date/date.component';
+import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 
 @Component({
   selector: 'app-invoice-edit',
@@ -21,6 +22,9 @@ export class InvoiceEditComponent implements OnInit {
 
   @ViewChild('_inv_refno') inv_refno_ctrl: ElementRef;
   @ViewChild('_inv_date') inv_date_ctrl: DateComponent;
+  @ViewChildren('_invd_desc_code') invd_desc_code_ctrl: QueryList<AutoComplete2Component>;
+  @ViewChildren('_invd_desc_name') invd_desc_name_ctrl: QueryList<ElementRef>;
+  @ViewChildren('_invd_qty') invd_qty_ctrl: QueryList<ElementRef>;
 
   errorMessage: string;
 
@@ -316,6 +320,11 @@ export class InvoiceEditComponent implements OnInit {
     rec.invd_remarks = '';
 
     this.records.push(rec);
+
+    this.invd_desc_code_ctrl.changes
+      .subscribe((queryChanges) => {
+        this.invd_desc_code_ctrl.last.Focus();
+      });
   }
 
   removeRow(_rec: Tbl_Cargo_Invoiced) {
@@ -478,7 +487,7 @@ export class InvoiceEditComponent implements OnInit {
     SearchData.IS_SINGLE_CURRENCY = (this.gs.IS_SINGLE_CURRENCY) ? "Y" : "N";
     SearchData.BASE_CURRENCY_CODE = this.gs.base_cur_code;
     SearchData.VERSION = this.inv_verson;
-    
+
     const data = <vm_tbl_cargo_invoicem>{};
     data.record = this.record;
     data.records = this.records;
@@ -934,6 +943,7 @@ export class InvoiceEditComponent implements OnInit {
 
 
     if (_Record.controlname == "INVOICED-CODE" || _Record.controlname == "INVOICED-CURR" || _Record.controlname == "INVOICED-ACCTM" || _Record.controlname == "INVOICED-BRANCH") {
+      let idx: number = 0;
       this.records.forEach(rec => {
 
         if (rec.invd_pkid == _Record.uid) {
@@ -941,6 +951,8 @@ export class InvoiceEditComponent implements OnInit {
           if (_Record.controlname == "INVOICED-CODE") {
             rec.invd_desc_id = _Record.id;
             rec.invd_desc_name = _Record.name;
+            if (!this.gs.isBlank(this.invd_desc_name_ctrl))
+              this.invd_desc_name_ctrl.toArray()[idx].nativeElement.focus();
           }
 
           if (_Record.controlname == "INVOICED-CURR") {
@@ -955,6 +967,8 @@ export class InvoiceEditComponent implements OnInit {
             rec.invd_acc_id = _Record.id;
             rec.invd_acc_code = _Record.code;
             rec.invd_acc_name = _Record.name;
+            if (!this.gs.isBlank(this.invd_qty_ctrl))
+              this.invd_qty_ctrl.toArray()[idx].nativeElement.focus();
           }
 
           if (_Record.controlname == "INVOICED-BRANCH") {
@@ -963,6 +977,7 @@ export class InvoiceEditComponent implements OnInit {
           }
 
         }
+        idx++;
       });
     }
 
