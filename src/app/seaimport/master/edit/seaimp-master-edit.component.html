@@ -577,41 +577,40 @@
         </div> -->
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_POD)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_POD)"
               (click)="BtnNavigation('POD')">POD</button>
           </div>
 
           <div class="form-group row">
 
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION)"
-              (click)="BtnNavigation('DEVAN-INSTRUCTION')">Devanning
-              Instruction</button>
+            <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION)"
+              (click)="BtnNavigation('DEVAN-INSTRUCTION')">DEVANING INSTRUCTION</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_ARAP)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_ARAP)"
               (click)="BtnNavigation('ARAP')">AR & AP</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_PROFIT_REPORT)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_PROFIT_REPORT)"
               (click)="BtnNavigation('PROFITREPORT')">Profit Report</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SHIPMENT_LABEL)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SHIPMENT_LABEL)"
               (click)="BtnNavigation('SHIP-LABEL-PRINT')">Shipment
               Label</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MESSENGER_SLIP)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MESSENGER_SLIP)"
               (click)="BtnNavigation('MESSENGER-SLIP')">Messenger
               Slip</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_PAYMENT_REQUEST)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_PAYMENT_REQUEST)"
               (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
               Request</button>
 
@@ -621,27 +620,27 @@
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_ATTACHMENTS)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_ATTACHMENTS)"
               [style.color]="record.rec_files_attached=='Y'?'red':black"
               (click)="BtnNavigation('ATTACHMENT',attachmodal)">Attachments</button>
           </div>
 
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase"  *ngIf="gs.screenExists(gs.MENU_SI_MASTER)"
               (click)="BtnNavigation('FOLLOWUP')">Add To Follow Up</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_INTERNAL_MEMO)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_INTERNAL_MEMO)"
               [style.color]="record.mbl_ismemo_attached=='Y'?'red':black"
               (click)="BtnNavigation('INERNALMEMO')">Internal Memo</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_REQUEST_APPROVAL)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_REQUEST_APPROVAL)"
               (click)="BtnNavigation('REQUEST-APPROVAL')">Request For
               Approval</button>
           </div>
           <div class="form-group row">
-            <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_DELIVERY_ORDER)"
+            <button class=" col-12 btn btn-info btn-sm  text-uppercase" *ngIf="gs.screenExists(gs.MENU_SI_MASTER_DELIVERY_ORDER)"
               (click)="BtnNavigation('CARGOPICKUP')">Delivery Order</button>
           </div>
 
