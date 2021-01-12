@@ -46,6 +46,10 @@ export class HeaderComponent {
         this.router.navigate(['login'], { replaceUrl: true });
     }
 
+    changeBranch(){
+        this.router.navigate(['login2'], { replaceUrl: true });
+    }
+
 
     Logout() {
         this.loginservice.Logout();
