@@ -401,14 +401,14 @@
                                         <input class="form-control form-control-sm" type="number"
                                             (blur)="onBlur('hbl_weight')" [(ngModel)]="record.hbl_weight"
                                             maxlength="15" />
-                                        <button class="btn btn-success btn-sm"
+                                        <button class="btn btn-info btn-sm"
                                             (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
                                     </div>
                                     <label class="col-3 col-form-label col-form-label-sm">LBS</label>
                                     <div class="col-3 input-group input-group-sm">
                                         <input class="form-control form-control-sm" type="number"
                                             (blur)="onBlur('hbl_lbs')" [(ngModel)]="record.hbl_lbs" maxlength="15" />
-                                        <button class="btn btn-success btn-sm"
+                                        <button class="btn btn-info btn-sm"
                                             (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span> </button>
                                     </div>
                                 </div>
@@ -417,14 +417,14 @@
                                     <div class="col-3 input-group input-group-sm">
                                         <input class="form-control form-control-sm" type="number"
                                             (blur)="onBlur('hbl_cbm')" [(ngModel)]="record.hbl_cbm" maxlength="15" />
-                                        <button class="btn btn-success btn-sm"
+                                        <button class="btn btn-info btn-sm"
                                             (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                                     </div>
                                     <label class="col-3 col-form-label col-form-label-sm">CFT</label>
                                     <div class="col-3 input-group input-group-sm">
                                         <input class="form-control form-control-sm" type="number"
                                             (blur)="onBlur('hbl_cft')" [(ngModel)]="record.hbl_cft" maxlength="15" />
-                                        <button class="btn btn-success btn-sm"
+                                        <button class="btn btn-info btn-sm"
                                             (click)="FindWeight('Cft2Cbm')"><span>&lt;</span> </button>
                                     </div>
                                 </div>
@@ -433,7 +433,7 @@
                                     <div class="col-3 input-group input-group-sm">
                                         <input class="form-control form-control-sm" type="number"
                                             (blur)="onBlur('hbl_chwt')" [(ngModel)]="record.hbl_chwt" maxlength="15" />
-                                        <button class="btn btn-success btn-sm"
+                                        <button class="btn btn-info btn-sm"
                                             (click)="FindWeight('Chwt2Lbs')"><span>&gt;</span></button>
                                     </div>
                                     <label class="col-3 col-form-label col-form-label-sm">LBS</label>
@@ -441,7 +441,7 @@
                                         <input class="form-control form-control-sm" type="number"
                                             (blur)="onBlur('hbl_chwt_lbs')" [(ngModel)]="record.hbl_chwt_lbs"
                                             maxlength="15" />
-                                        <button class="btn btn-success btn-sm" (click)="FindWeight('Lbs2Chwt')"><span>
+                                        <button class="btn btn-info btn-sm" (click)="FindWeight('Lbs2Chwt')"><span>
                                                 &lt;</span> </button>
                                     </div>
                                 </div>
@@ -602,9 +602,9 @@
                                     </table>
                                     <div class="form-group row">
                                         <div class="col-12 pl-1 pb-1">
-                                            <button class="btn btn-success btn-sm mr-1" [disabled]="is_locked" (click)="AddRow()">Add
+                                            <button class="btn btn-info btn-sm mr-1" [disabled]="is_locked" (click)="AddRow()">Add
                                                 Cntr</button>
-                                            <button class="btn btn-success btn-sm mr-1"
+                                            <button class="btn btn-info btn-sm mr-1"
                                                 (click)="CopyCntrClipboard()">Copy Containers</button>
                                             <!-- *ngIf="!is_locked" -->
                                         </div>
