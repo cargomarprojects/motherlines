@@ -2,11 +2,9 @@
 
 <nav class="navbar fixed-top navbar-expand-lg shadow-sm steelblue text-white" >
 
-  <div class ="mr-2" >
-      <img src="./assets/images/logo.png" alt="Logo" width="100%" height="50" >
-    </div>
-  
-    <!-- <a class="navbar-brand text-warning mt-1" (click)="home()"> <h3>{{title}}</h3></a> -->
+    <a class="navbar-brand" >
+      <img src="./assets/images/logo.png" alt="Logo" width="100%" height="50" (click)="home()">
+    </a>
   
     <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,14 +15,14 @@
   
       <ul class="navbar-nav mr-auto">
   
-        <li class="nav-item">
-          <a class="nav-link" (click)="home()">Home</a>
-        </li>
+<!--         <li class="nav-item">
+          <a class="nav-link h6" (click)="home()">Home</a>
+        </li> -->
   
   
         <div *ngFor="let rech of gs.Modules">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+            <a class="nav-link dropdown-toggle text-white h6" href="#" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{rech.module_name}}
             </a>
@@ -39,16 +37,19 @@
           </li>
         </div>
   
+        <li class="nav-item">
+          <a class="nav-link h6 text-white" *ngIf="gs.IsAuthenticated" (click)="changeBranch()" >Change Branch</a>
+        </li>      
+
+        <li class="nav-item">
+          <label class="nav-link h6 text-warning" *ngIf="gs.IsAuthenticated" >{{gs.user_name}}/{{gs.branch_name}}</label>
+        </li>      
       </ul>
   
-  
       <form class="form-inline my-2 my-lg-0">
-        <label class="mr-3 text-white" *ngIf="gs.IsAuthenticated" >{{gs.user_name}}/{{gs.branch_name}}</label>
-        <button class="btn border border-info rounded  ml-1 text-white" (click)="login()" *ngIf="!gs.IsAuthenticated">Login</button>
-        <button class="btn border border-info rounded bg-primary text-white ml-1" *ngIf="gs.IsAuthenticated" (click)="Logout()">Logout</button>
+        <button class="btn border border-info rounded  ml-1 text-white h6" (click)="login()" *ngIf="!gs.IsAuthenticated">Login</button>
+        <button class="btn border border-info rounded bg-primary text-white ml-1 h6" *ngIf="gs.IsAuthenticated" (click)="Logout()">Logout</button>
       </form>
-
-  
   
     </div>
   </nav>
