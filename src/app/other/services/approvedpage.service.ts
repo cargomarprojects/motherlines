@@ -29,7 +29,6 @@ export class ApprovedPageService {
     public canSave: boolean;
 
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
     private menutype: string = '';
 
 
@@ -38,74 +37,37 @@ export class ApprovedPageService {
         private gs: GlobalService
     ) { }
 
-
+    public ClearInit() {
+        this.menutype = '';
+        this.gs.APPROVEDPAGE_INIT_APPROVED = null;
+        this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT = null;
+        this.gs.APPROVEDPAGE_INIT_REQUESTREPORT = null;
+        this.record = <ApprovedPageModel><unknown>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userName: '', userId: '', userLovDisabled: true, userLovCaption: 'Request./Aprvd.By' },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
     public init(params: any) {
-        // if (this.initlialized)
-        //     return;
-        /*  let usrid: string = '';
-          let usrname: string = '';
-          
-          this.id = params.id;
-          this.menuid = params.menuid;
-          this.param_type = params.menu_param;
-          if (this.param_type != 'APPROVED') {
-              usrid = this.gs.user_pkid;
-              usrname = this.gs.user_name;
-          }
-  
-          this.record = <ApprovedPageModel><unknown>{
-              errormessage: '',
-              records: [],
-              searchQuery: <SearchQuery><unknown>{ searchString: '', fromDate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), toDate: this.gs.defaultValues.today, sortParameter: 'a.rec_created_date', isHidden: false, caType: 'ALL', userName: usrname, userId: usrid, userLovDisabled: true, userLovCaption: 'Request./Aprvd.By' },
-              pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
-          };
-  
-          this.mdata$.next(this.record);
-  
-  
-  
-  
-          this.isAdmin = this.gs.IsAdmin(this.menuid);
-          this.title = this.gs.getTitle(this.menuid);
-          this.canAdd = this.gs.canAdd(this.menuid);
-          this.canEdit = this.gs.canEdit(this.menuid);
-          this.canSave = this.canAdd || this.canEdit;
-  
-          this.record.searchQuery.userLovDisabled = true;
-          if (this.isAdmin || this.param_type == 'APPROVED')
-              this.record.searchQuery.userLovDisabled = false;
-  
-          this.record.searchQuery.userLovCaption = 'Request./Aprvd.By';
-          if (this.param_type == 'REQUEST REPORT')
-              this.record.searchQuery.userLovCaption = 'Request.By';
-          else if (this.param_type == 'APPROVED REPORT')
-              this.record.searchQuery.userLovCaption = 'Approved.By';
-  
-          //this.initlialized = true;*/
 
-        /****************************************************/
 
         let usrid: string = '';
         let usrname: string = '';
-        if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.menutype = '';
-            this.gs.APPROVEDPAGE_INIT_APPROVED = null;
-            this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT = null;
-            this.gs.APPROVEDPAGE_INIT_REQUESTREPORT = null;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
+        // if (this.initlializedBrcode != this.gs.branch_code) {
+        //     this.initlializedBrcode = this.gs.branch_code;
+        //     this.menutype = '';
+        //     this.gs.APPROVEDPAGE_INIT_APPROVED = null;
+        //     this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT = null;
+        //     this.gs.APPROVEDPAGE_INIT_REQUESTREPORT = null;
+        //     this.record = null;
+        //     this.mdata$.next(this.record);
+        // }
 
         this.id = params.id;
         this.menuid = params.menuid;
         this.param_type = params.menu_param;
-        //  if(this.param_type=="APPROVED-PAYMENT-REQUEST")//this is invoke from payment request report while clicking on Approval, that time only mblid parameter passed
-        //  {
-        //     this.param_type = "APPROVED";
-        //     this.mblid = params.mblid;
-        //     // this.doctype = params.mblid;
-        //  }
 
         if (this.param_type != 'APPROVED') {
             usrid = this.gs.user_pkid;

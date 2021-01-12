@@ -31,53 +31,28 @@ export class OthGeneralExpenseService {
     public canSave: boolean;
 
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
     private menutype: string = '';
 
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
-
+    public ClearInit() {
+        this.menutype = '';
+        this.gs.GENERALEXPENSE_INIT_GE = null;
+        this.gs.GENERALEXPENSE_INIT_PR = null;
+        this.gs.GENERALEXPENSE_INIT_CM = null;
+        this.gs.GENERALEXPENSE_INIT_PS = null;
+        this.gs.GENERALEXPENSE_INIT_FA = null;
+        this.record = <OthGeneralModel>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
     public init(params: any) {
-
-        // if (this.initlialized)
-        //     return;
-
-        /* this.id = params.id;
-         this.menuid = params.menuid;
-         this.param_type = params.menu_param;
- 
-         this.record = <OthGeneralModel>{
-             errormessage: '',
-             records: [],
-             searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
-             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
-         };
- 
-         this.mdata$.next(this.record);
- 
-         this.isAdmin = this.gs.IsAdmin(this.menuid);
-         this.title = this.gs.getTitle(this.menuid);
-         this.canAdd = this.gs.canAdd(this.menuid);
-         this.canEdit = this.gs.canEdit(this.menuid);
-         this.canSave = this.canAdd || this.canEdit;*/
-
-        //  this.initlialized = true;
-
-        /*********************************************** */
-
-          if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.menutype ='';
-            this.gs.GENERALEXPENSE_INIT_GE = null;
-            this.gs.GENERALEXPENSE_INIT_PR = null;
-            this.gs.GENERALEXPENSE_INIT_CM = null;
-            this.gs.GENERALEXPENSE_INIT_PS = null;
-            this.gs.GENERALEXPENSE_INIT_FA = null;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
 
         this.id = params.id;
         this.menuid = params.menuid;
@@ -123,7 +98,7 @@ export class OthGeneralExpenseService {
         this.canAdd = this.gs.canAdd(this.menuid);
         this.canEdit = this.gs.canEdit(this.menuid);
         this.canSave = this.canAdd || this.canEdit;
- 
+
     }
 
     Search(_searchdata: any, type: string = '') {
