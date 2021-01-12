@@ -10,6 +10,9 @@ import { AirExpHouseService } from '../../airexport/services/airexp-house.servic
 import { AirExpMasterService } from '../../airexport/services/airexp-master.service';
 import { AirImpMasterService } from '../../airimport/services/airimp-master.service';
 import { AirImpHouseService } from '../../airimport/services/airimp-house.service';
+import { ImportHblPageService } from '../../importdata/services/importhblpage.service';
+import { ShipDataPageService } from '../../importdata/services/shipdatapage.service';
+import { SettingPageService } from '../../importdata/services/settingpage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +28,10 @@ export class ClearService {
         private aem: AirExpMasterService,
         private aeh: AirExpHouseService,
         private aim: AirImpMasterService,
-        private aih: AirImpHouseService
+        private aih: AirImpHouseService,
+        private impdhbl: ImportHblPageService,
+        private impdship: ShipDataPageService,
+        private impdset: SettingPageService
     ) {
     }
 
@@ -38,6 +44,10 @@ export class ClearService {
       this.aeh.ClearInit();
       this.aim.ClearInit();
       this.aih.ClearInit();
+      this.impdhbl.ClearInit();
+      this.impdship.ClearInit();
+      this.impdset.ClearInit();
+      
     }
 }
 

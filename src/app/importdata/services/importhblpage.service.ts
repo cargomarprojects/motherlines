@@ -32,7 +32,7 @@ export class ImportHblPageService {
 
 
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
+    // public initlializedBrcode: string = '';
 
     private ProcessXML: boolean = false;
     public Xml_MainRecIndex: number = 0;
@@ -44,13 +44,24 @@ export class ImportHblPageService {
         private gs: GlobalService
     ) { }
 
+    public ClearInit()
+    {
+        this.record = <ImportHblPageModel>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', rdbprocessed: 'NOT-PROCESSED' },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
+
     public init(params: any) {
-        if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.initlialized = false;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
+        // if (this.initlializedBrcode != this.gs.branch_code) {
+        //     this.initlializedBrcode = this.gs.branch_code;
+        //     this.initlialized = false;
+        //     this.record = null;
+        //     this.mdata$.next(this.record);
+        // }
         if (this.initlialized)
             return;
 

@@ -29,22 +29,27 @@ export class SettingPageService {
     public canSave: boolean;
     public canDelete: boolean;
 
-
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
+    
 
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
 
+    public ClearInit()
+    {
+        this.record = <SettingPageModel>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '' },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
+
     public init(params: any) {
-        if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.initlialized = false;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
+
         if (this.initlialized)
             return;
 

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_edi_link, LinkPageModel,vm_tbl_edi_link } from '../models/tbl_edi_link';
+import { Tbl_edi_link, LinkPageModel, vm_tbl_edi_link } from '../models/tbl_edi_link';
 import { SearchQuery } from '../models/tbl_edi_link';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -32,30 +32,24 @@ export class LinkPageService {
     public canSearch: boolean;
 
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
-
+    
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
 
     public init(params: any, _rec: Tbl_edi_link) {
-        if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.initlialized = false;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
+    
         // if (this.initlialized)
         //     return;
-
-        this.canSearch = true;
-        if (_rec.link_category == "CUSTOM")
-            this.canSearch = false;
 
         // this.id = params.id;
         // this.menuid = params.id;
         // this.param_type = params.param_type;
+
+        this.canSearch = true;
+        if (_rec.link_category == "CUSTOM")
+            this.canSearch = false;
 
         this.record = <LinkPageModel>{
             errormessage: '',

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_edi_master,Tbl_edi_house, ShipDataPageModel } from '../models/tbl_edi_master';
+import { Tbl_edi_master, Tbl_edi_house, ShipDataPageModel } from '../models/tbl_edi_master';
 import { SearchQuery } from '../models/tbl_edi_master';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -32,20 +32,23 @@ export class ShipDataPageService {
 
 
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
     private selectdeselect: boolean = false;
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
 
+    public ClearInit() {
+        this.record = <ShipDataPageModel>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', sender: '', chkpending: true, chkcompleted: true, chkdeleted: true, linkType: 'MBL#' },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
+
     public init(params: any) {
-        if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.initlialized = false;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
 
         if (this.initlialized)
             return;
@@ -221,7 +224,7 @@ export class ShipDataPageService {
                 this.mdata$.next(this.record);
             });
     }
-    
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/ImportData/shipdatapage/List', SearchData, this.gs.headerparam2('authorized'));
     }
