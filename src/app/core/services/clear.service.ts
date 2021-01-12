@@ -13,6 +13,11 @@ import { AirImpHouseService } from '../../airimport/services/airimp-house.servic
 import { ImportHblPageService } from '../../importdata/services/importhblpage.service';
 import { ShipDataPageService } from '../../importdata/services/shipdatapage.service';
 import { SettingPageService } from '../../importdata/services/settingpage.service';
+import { QtnAirService } from '../../marketing/services/qtnair.service';
+import { QtnFclService } from '../../marketing/services/qtnfcl.service';
+import { QtnLclService } from '../../marketing/services/qtnlcl.service';
+import { QtnRateService } from '../../marketing/services/qtnrate.service';
+import { SalesJournalService } from '../../marketing/services/salesjournals.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +36,13 @@ export class ClearService {
         private aih: AirImpHouseService,
         private impdhbl: ImportHblPageService,
         private impdship: ShipDataPageService,
-        private impdset: SettingPageService
+        private impdset: SettingPageService,
+        private qtnair: QtnAirService,
+        private qtnfcl: QtnFclService,
+        private qtnlcl: QtnLclService,
+        private qtnrate: QtnRateService,
+        private salesjournal: SalesJournalService
+
     ) {
     }
 
@@ -47,6 +58,11 @@ export class ClearService {
       this.impdhbl.ClearInit();
       this.impdship.ClearInit();
       this.impdset.ClearInit();
+      this.qtnair.ClearInit();
+      this.qtnfcl.ClearInit();
+      this.qtnlcl.ClearInit();
+      this.qtnrate.ClearInit();
+      this.salesjournal.ClearInit();
       
     }
 }
