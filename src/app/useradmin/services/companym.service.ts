@@ -38,6 +38,16 @@ export class CompanyService {
         private gs: GlobalService
     ) { }
 
+    public ClearInit() {
+        this.record = <User_Companym_Model>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: ''},
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
+    
     public init(params: any) {
         if (this.initlialized)
             return;

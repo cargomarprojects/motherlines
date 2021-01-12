@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { GlobalService } from '../../core/services/global.service';
-import { vm_Tbl_User_Modulem,User_Module_Model, Tbl_User_Modulem }  from '../models/Tbl_User_Modulem';
+import { vm_Tbl_User_Modulem, User_Module_Model, Tbl_User_Modulem } from '../models/Tbl_User_Modulem';
 import { SearchQuery } from '../models/Tbl_User_Modulem';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -38,6 +38,16 @@ export class ModuleService {
         private gs: GlobalService
     ) { }
 
+    public ClearInit() {
+        this.record = <User_Module_Model>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '' },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
+    
     public init(params: any) {
         if (this.initlialized)
             return;
@@ -49,7 +59,7 @@ export class ModuleService {
         this.record = <User_Module_Model>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: ''},
+            searchQuery: <SearchQuery>{ searchString: '' },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -117,10 +127,10 @@ export class ModuleService {
             REC.module_installed = _rec.module_installed;
             REC.module_order = _rec.module_order;
             REC.rec_closed = _rec.rec_closed;
-            REC.rec_created_by = _rec.rec_created_by;            
+            REC.rec_created_by = _rec.rec_created_by;
         }
     }
-    
+
     List(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Modulem/List', SearchData, this.gs.headerparam2('authorized'));
     }

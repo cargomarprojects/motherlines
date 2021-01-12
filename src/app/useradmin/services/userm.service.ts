@@ -38,6 +38,15 @@ export class UserService {
         private gs: GlobalService
     ) { }
 
+    public ClearInit() {
+        this.record = <User_Userm_Model>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '' , deleted : false },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
     public init(params: any) {
         if (this.initlialized)
             return;

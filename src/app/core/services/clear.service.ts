@@ -32,7 +32,10 @@ import { MblUsageService } from '../../other/services/mblusage.service';
 import { MessengerSlipService } from '../../other/services/messengerslip.service';
 import { OblReleaseService } from '../../other/services/oblrelease.service';
 import { PayrollDetService } from '../../other/services/payrolldet.service';
-
+import { CompanyService } from '../../useradmin/services/companym.service';
+import { MenuService } from '../../useradmin/services/menum.service';
+import { ModuleService } from '../../useradmin/services/modulem.service';
+import { UserService } from '../../useradmin/services/userm.service';
 
 @Injectable({
     providedIn: 'root'
@@ -70,7 +73,11 @@ export class ClearService {
         private mblusage: MblUsageService,
         private messengerslip: MessengerSlipService,
         private oblrelease: OblReleaseService,
-        private payrolldet: PayrollDetService
+        private payrolldet: PayrollDetService,
+        private companyservice: CompanyService,
+        private menuservice: MenuService,
+        private moduleservice: ModuleService,
+        private userservice: UserService
 
     ) {
     }
@@ -106,6 +113,10 @@ export class ClearService {
         this.messengerslip.ClearInit();
         this.oblrelease.ClearInit();
         this.payrolldet.ClearInit();
+        this.companyservice.ClearInit();
+        this.menuservice.ClearInit();
+        this.moduleservice.ClearInit();
+        this.userservice.ClearInit();
     }
 }
 
