@@ -4,7 +4,6 @@
     --custom-bg-color:snow;
 }
 
-
 html, body {
     font-family: 'roboto' ;
     font-size : 14px;
@@ -25,10 +24,6 @@ html, body {
     color: white !important; 
   }
   
-  
-
-
-
 .page-body-thead {
   font-size: 10px; 
   cursor: pointer;
