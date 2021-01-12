@@ -34,9 +34,9 @@ export class ClearService {
         private aeh: AirExpHouseService,
         private aim: AirImpMasterService,
         private aih: AirImpHouseService,
-        private impdhbl: ImportHblPageService,
-        private impdship: ShipDataPageService,
-        private impdset: SettingPageService,
+        private impdatahbl: ImportHblPageService,
+        private impdataship: ShipDataPageService,
+        private impdataset: SettingPageService,
         private qtnair: QtnAirService,
         private qtnfcl: QtnFclService,
         private qtnlcl: QtnLclService,
@@ -55,9 +55,9 @@ export class ClearService {
       this.aeh.ClearInit();
       this.aim.ClearInit();
       this.aih.ClearInit();
-      this.impdhbl.ClearInit();
-      this.impdship.ClearInit();
-      this.impdset.ClearInit();
+      this.impdatahbl.ClearInit();
+      this.impdataship.ClearInit();
+      this.impdataset.ClearInit();
       this.qtnair.ClearInit();
       this.qtnfcl.ClearInit();
       this.qtnlcl.ClearInit();
