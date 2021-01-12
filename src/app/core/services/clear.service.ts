@@ -6,6 +6,8 @@ import { SeaImpMasterService } from '../../seaimport/services/seaimp-master.serv
 import { SeaImpHouseService } from '../../seaimport/services/seaimp-house.service';
 import { HouseService } from '../../seaexport/services/house.service';
 import { seaexpMasterService } from '../../seaexport/services/seaexp-master.service';
+import { AirExpHouseService } from '../../airexport/services/airexp-house.service';
+import { AirExpMasterService } from '../../airexport/services/airexp-master.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +19,9 @@ export class ClearService {
         private sim: SeaImpMasterService,
         private sih: SeaImpHouseService,
         private sem: seaexpMasterService,
-        private seh: HouseService
+        private seh: HouseService,
+        private aem: AirExpMasterService,
+        private aeh: AirExpHouseService
     ) {
     }
 
@@ -26,6 +30,8 @@ export class ClearService {
       this.sih.ClearInit();
       this.sem.ClearInit();
       this.seh.ClearInit();
+      this.aem.ClearInit();
+      this.aeh.ClearInit();
     }
 }
 
