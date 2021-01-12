@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GlobalService } from '../../core/services/global.service';
-import { Tbl_Mast_Partym, PartyModel} from '../models/Tbl_Mast_Partym';
+import { Tbl_Mast_Partym, PartyModel } from '../models/Tbl_Mast_Partym';
 import { SearchQuery } from '../models/Tbl_Mast_Partym';
 import { PageQuery } from '../../shared/models/pageQuery';
 
@@ -26,20 +26,24 @@ export class VendorService {
     public isCompany: boolean;
 
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
+
 
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
 
+    public ClearInit() {
+        this.record = <PartyModel>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: 'ALL', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false, menuType: this.param_type },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
     public init(params: any) {
-        if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.initlialized = false;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
+
         if (this.initlialized)
             return;
 
@@ -50,7 +54,7 @@ export class VendorService {
         this.record = <PartyModel>{
             errormessage: '',
             records: [],
-            searchQuery: <SearchQuery>{ searchString: 'ALL', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false,menuType:this.param_type },
+            searchQuery: <SearchQuery>{ searchString: 'ALL', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false, menuType: this.param_type },
             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
         };
 
@@ -59,7 +63,7 @@ export class VendorService {
         this.isCompany = this.gs.IsCompany(this.menuid);
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
-       
+
         this.initlialized = true;
 
     }

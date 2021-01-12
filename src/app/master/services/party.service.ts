@@ -37,43 +37,28 @@ export class PartyService {
         private gs: GlobalService
     ) { }
 
+    public ClearInit() {
+        this.menutype = '';
+        this.gs.PARTYPAGE_INIT_PARTYS = null;
+        this.gs.PARTYPAGE_INIT_OVERSEAAGENT = null;
+        this.record = <PartyModel>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false, menuType: this.param_type },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
     public init(params: any) {
 
-        // if (this.initlialized)
-        //     return;
-
-        /* this.id = params.id;
-         this.menuid = params.id;
-         this.param_type = params.menu_param;
- 
-         this.record = <PartyModel>{
-             errormessage: '',
-             records: [],
-             searchQuery: <SearchQuery>{ searchString: '', searchSort: 'gen_short_name', searchState: '', searchCity: '', searchTel: '', searchFax: '', searchZip: '', searchBlackAc: false,menuType:this.param_type },
-             pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
-         };
- 
-         this.mdata$.next(this.record);
- 
-         this.isCompany = this.gs.IsCompany(this.menuid);
-         this.isAdmin = this.gs.IsAdmin(this.menuid);
-         this.title = this.gs.getTitle(this.menuid);
-         this.canAdd = this.gs.canAdd(this.menuid);
-         this.canEdit = this.gs.canEdit(this.menuid);
-         this.canSave = this.canAdd || this.canEdit;*/
-
-        // this.initlialized = true;
-        
-        /************************************* */
-
-        if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.menutype = '';
-            this.gs.PARTYPAGE_INIT_PARTYS = null;
-            this.gs.PARTYPAGE_INIT_OVERSEAAGENT = null;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
+        // if (this.initlializedBrcode != this.gs.branch_code) {
+        //     this.initlializedBrcode = this.gs.branch_code;
+        //     this.menutype = '';
+        //     this.gs.PARTYPAGE_INIT_PARTYS = null;
+        //     this.gs.PARTYPAGE_INIT_OVERSEAAGENT = null;
+        //     this.record = null;
+        //     this.mdata$.next(this.record);
+        // }
 
         this.id = params.id;
         this.menuid = params.id;
@@ -189,7 +174,7 @@ export class PartyService {
     GetRecord(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Master/Party/GetRecord', SearchData, this.gs.headerparam2('authorized'));
     }
-    
+
     LoadMissingData(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Master/Party/LoadMissingData', SearchData, this.gs.headerparam2('authorized'));
     }

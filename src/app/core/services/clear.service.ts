@@ -18,6 +18,9 @@ import { QtnFclService } from '../../marketing/services/qtnfcl.service';
 import { QtnLclService } from '../../marketing/services/qtnlcl.service';
 import { QtnRateService } from '../../marketing/services/qtnrate.service';
 import { SalesJournalService } from '../../marketing/services/salesjournals.service';
+import { PartyService } from '../../master/services/party.service';
+import { PayrollMasterService } from '../../master/services/payrollmaster.service';
+import { VendorService } from '../../master/services/vendor.service';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +44,10 @@ export class ClearService {
         private qtnfcl: QtnFclService,
         private qtnlcl: QtnLclService,
         private qtnrate: QtnRateService,
-        private salesjournal: SalesJournalService
+        private salesjournal: SalesJournalService,
+        private partymaster: PartyService,
+        private payrollmaster: PayrollMasterService,
+        private vendormaster: VendorService
 
     ) {
     }
@@ -63,7 +69,9 @@ export class ClearService {
       this.qtnlcl.ClearInit();
       this.qtnrate.ClearInit();
       this.salesjournal.ClearInit();
-      
+      this.partymaster.ClearInit();
+      this.payrollmaster.ClearInit();
+      this.vendormaster.ClearInit();
     }
 }
 
