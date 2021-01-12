@@ -57,6 +57,8 @@ export class MblPageComponent implements OnInit {
   @ViewChild('_mbld_origin') mbld_origin_ctrl: InputBoxComponent;
   @ViewChild('_mbld_sendto_code') mbld_sendto_code_ctrl: AutoComplete2Component;
   @ViewChild('_mbld_sendto_name') mbld_sendto_name_ctrl: InputBoxComponent;
+  @ViewChild('_btnretoemi') btnretoemi_ctrl: ElementRef;
+
 
   DESC_TYPE: string = "MBLDESC";
 
@@ -152,8 +154,10 @@ export class MblPageComponent implements OnInit {
         this.record._mbld_print_kgs = (this.record.mbld_print_kgs == "Y") ? true : false;
         this.record._mbld_print_lbs = (this.record.mbld_print_lbs == "Y") ? true : false;
 
-        if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
-          this.mbld_shipper_code_ctrl.Focus();
+        // if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
+        //   this.mbld_shipper_code_ctrl.Focus();
+        if (!this.gs.isBlank(this.btnretoemi_ctrl))
+          this.btnretoemi_ctrl.nativeElement.focus();
 
       }, error => {
         this.errorMessage.push(this.gs.getError(error));

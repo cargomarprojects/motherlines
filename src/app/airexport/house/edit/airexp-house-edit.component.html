@@ -979,7 +979,7 @@
       <button class="btn btn-primary btn-md mr-1" [disabled]="is_locked" *ngIf="canSave" (click)="Save()">Save</button>
     </div>
   </div>
-  <div>
+  <div class="page-footer">
     <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}}
       /
       {{record.rec_created_date}} </label>

@@ -625,38 +625,38 @@
     <div class="col-md-12 p-2 border">
 
       <div  class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_INVOICE)" >Invoice</button>
+        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_INVOICE)" >Invoice</button>
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_ARRIVAL_NOTICE)" (click)="BtnNavigation('ARRIVAL-NOTICE')">Arrival
+        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_ARRIVAL_NOTICE)" (click)="BtnNavigation('ARRIVAL-NOTICE')">Arrival
           Notice</button>
       </div>
 
       <div  class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_ARRIVAL_NOTICE)" (click)="BtnNavigation('FREIGHT-INVOICE')">Arrival
+        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_ARRIVAL_NOTICE)" (click)="BtnNavigation('FREIGHT-INVOICE')">Arrival
           Notice(Invoice)</button>
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_RELEASE_ORDER)" (click)="BtnNavigation('RELEASE-ORDER')">Release Order</button>
+        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_RELEASE_ORDER)" (click)="BtnNavigation('RELEASE-ORDER')">Release Order</button>
       </div>
  
       <div  class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_DELIVERY_ORDER)" (click)="BtnNavigation('CARGOPICKUP')">Delivery
+        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_DELIVERY_ORDER)" (click)="BtnNavigation('CARGOPICKUP')">Delivery
           Order</button>
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_AUTH_MAKE_ENTRY)" (click)="BtnNavigation('AUTHORITY-ENTRY')">Auth. To Make Entry</button>
+        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_AUTH_MAKE_ENTRY)" (click)="BtnNavigation('AUTHORITY-ENTRY')">Auth. To Make Entry</button>
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_NOT_RELEASE_LETTER)" (click)="BtnNavigation('NOT-RELEASE-LETTER')">Not Release Letter</button>
+        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_AI_HOUSE_NOT_RELEASE_LETTER)" (click)="BtnNavigation('NOT-RELEASE-LETTER')">Not Release Letter</button>
       </div>
 
       <div class="form-group row">
-        <button class=" col-12 btn btn-info btn-sm" *ngIf="gs.screenExists(gs.MENU_AI_SHIPMENT_MOVEMENT)" (click)="BtnNavigation('SHIPMOVEMENT')">House Internal
+        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_AI_SHIPMENT_MOVEMENT)" (click)="BtnNavigation('SHIPMOVEMENT')">House Internal
           Memo</button>
       </div>
 
@@ -674,7 +674,7 @@
   </div>
 </div>
 
-<div>
+<div class="page-footer">
   <label class="col-form-label col-form-label-sm" *ngIf="record.rec_created_by"> CREATED BY: {{record.rec_created_by}}
     /
     {{record.rec_created_date}} </label>

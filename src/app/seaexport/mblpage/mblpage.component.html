@@ -1,15 +1,10 @@
 <div *ngIf="tab == 'main'">
-
-
-
-
   <div class="page-header">
     <div class="col">
       <label class="pr-1">{{title}} ({{mode}}) </label>
-      <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+      <button #_btnretoemi class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
       <label class="text-danger" *ngIf="is_locked">LOCKED</label>
     </div>
-
   </div>
 
   <div *ngIf="errorMessage.length >0">
@@ -42,8 +37,8 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Shipper</label>
           <div class="col-8">
-            <app-autocomplete2 #_mbld_shipper_code [controlname]="'SHIPPER'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
-              [displaydata]="record.mbld_shipper_code" (ValueChanged)="LovSelected($event)">
+            <app-autocomplete2 #_mbld_shipper_code [controlname]="'SHIPPER'" [tabletype]="'MASTER'"
+              [displaycolumn]="'CODE'" [displaydata]="record.mbld_shipper_code" (ValueChanged)="LovSelected($event)">
             </app-autocomplete2>
           </div>
         </div>
@@ -105,7 +100,8 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Name</label>
           <div class="col-8">
-            <InputBox [(inputModel)]="record.mbld_consigned_to1" [maxlength]="60" [uppercase]="true" #_mbld_consigned_to1>
+            <InputBox [(inputModel)]="record.mbld_consigned_to1" [maxlength]="60" [uppercase]="true"
+              #_mbld_consigned_to1>
             </InputBox>
           </div>
         </div>
@@ -242,7 +238,7 @@
         <div class="form-group row">
           <label class="col-4 col-form-label col-form-label-sm">Origin State</label>
           <div class="col-8">
-            <InputBox  [(inputModel)]="record.mbld_origin" [maxlength]="60" [uppercase]="true" #_mbld_origin>
+            <InputBox [(inputModel)]="record.mbld_origin" [maxlength]="60" [uppercase]="true" #_mbld_origin>
             </InputBox>
           </div>
         </div>
@@ -381,7 +377,7 @@
           <label class="col-4 col-form-label col-form-label-sm">Send To</label>
           <div class="col-8">
             <app-autocomplete2 [controlname]="'SENDTO'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
-              [displaydata]="record.mbld_sendto_code" (ValueChanged)="LovSelected($event)" #_mbld_sendto_code> 
+              [displaydata]="record.mbld_sendto_code" (ValueChanged)="LovSelected($event)" #_mbld_sendto_code>
             </app-autocomplete2>
           </div>
         </div>
@@ -810,7 +806,7 @@
 
   <div class="page-footer">
     <div class="row justify-content-center p-1">
-      <button class="btn btn-primary btn-md mr-1"  [disabled]="is_locked"*ngIf="canSave" (click)="Save()">Save</button>
+      <button class="btn btn-primary btn-md mr-1" [disabled]="is_locked" *ngIf="canSave" (click)="Save()">Save</button>
       <button class="btn btn-primary btn-md mr-1" *ngIf="canPrint && mode =='EDIT'" (click)="Print('')">Print</button>
       <button class="btn btn-primary btn-md mr-1" *ngIf="canPrint && mode =='EDIT'" (click)="Print('MBLDOCK')">Dock
         Receipt</button>

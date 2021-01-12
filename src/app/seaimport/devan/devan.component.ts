@@ -20,6 +20,9 @@ export class DevanComponent implements OnInit {
     @ViewChild('request_to_code') request_to_code_ctrl: AutoComplete2Component;
     @ViewChild('request_to_name') request_to_name_ctrl: InputBoxComponent;
     @ViewChild('cargo_loc_name') cargo_loc_name_ctrl: InputBoxComponent;
+    @ViewChild('_btnretdev') btnretdev_ctrl: ElementRef;
+
+
     record: Tbl_Cargo_Imp_Devan_Instruction = <Tbl_Cargo_Imp_Devan_Instruction>{};
 
     // 15-07-2019 Created By Ajith  
@@ -40,7 +43,7 @@ export class DevanComponent implements OnInit {
     private errorMessage: string;
 
     IsLocked: boolean = false;
-    
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -124,7 +127,8 @@ export class DevanComponent implements OnInit {
                 else {
                     this.record = <Tbl_Cargo_Imp_Devan_Instruction>response.record;
                     this.CheckData();
-                    this.request_to_code_ctrl.Focus();
+                    if (!this.gs.isBlank(this.btnretdev_ctrl))
+                        this.btnretdev_ctrl.nativeElement.focus();
                 }
             }, error => {
                 this.errorMessage = this.gs.getError(error);
@@ -275,7 +279,7 @@ export class DevanComponent implements OnInit {
         this.report_url = '/api/SeaImport/DevanPage/GetDevanInstructionReport';
         this.report_searchdata = this.gs.UserInfo;
         this.report_searchdata.pkid = this.pkid;
-        this.report_menuid = this.gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION ;
+        this.report_menuid = this.gs.MENU_SI_MASTER_DEVANNING_INSTRUCTION;
         this.tab = 'report';
     }
 
