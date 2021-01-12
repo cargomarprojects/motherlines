@@ -39,6 +39,11 @@ export class SeaImpMasterService {
         private gs: GlobalService
     ) { }
 
+    public ClearInit() {
+        this.record = null;
+        this.mdata$.next(this.record);
+    }
+
     public init(params: any) {
         if (this.initlializedBrcode != this.gs.branch_code) {
             this.initlializedBrcode = this.gs.branch_code;
@@ -72,6 +77,8 @@ export class SeaImpMasterService {
         this.initlialized = true;
 
     }
+
+
 
     Search(_searchdata: any, type: string = '') {
         this.record.errormessage = '';

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { LoginService } from '../services/login.service';
 import { GlobalService } from '../services/global.service';
+import { ClearService } from '../services/clear.service';
 import { Companym } from '../models/company';
 
 @Component({
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private mainservice: LoginService,
     public GLOBALCONTANTS: GlobalService,
+    public clrservice: ClearService,
     private router: Router
   ) {
 
@@ -127,6 +129,7 @@ export class LoginComponent implements OnInit {
           if (this.GLOBALCONTANTS.IsLoginSuccess) {
             this.errorMessage = "Login Success";
             this.GLOBALCONTANTS.user_pwd = this.password;
+            this.clrservice.ClearInit();
             this.Login1();
           }
           else {
