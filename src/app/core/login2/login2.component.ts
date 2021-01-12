@@ -10,7 +10,7 @@ import { Modulem } from '../models/modulem';
 
 import { Companym } from '../models/company';
 import { Yearm } from '../models/yearm';
-
+import { ClearService } from '../services/clear.service';
 
 @Component({
     selector: 'app-login2',
@@ -45,6 +45,7 @@ export class Login2Component implements OnInit {
     constructor(
         private mainservice: LoginService,
         public GLOBALCONTANTS: GlobalService,
+        public clrservice: ClearService,
         private router: Router
     ) {
 
@@ -153,7 +154,8 @@ export class Login2Component implements OnInit {
         this.SetupYearList();
         this.LoadSettings();
         this.LoadMenu();
-
+        
+        this.clrservice.ClearInit();
         this.GLOBALCONTANTS.IsAuthenticated = true;
 
         this.GLOBALCONTANTS.Save2LocalStorage();

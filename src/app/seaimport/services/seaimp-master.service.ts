@@ -32,20 +32,30 @@ export class SeaImpMasterService {
     public canDelete: boolean;
 
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
+    // public initlializedBrcode: string = '';
 
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
 
+    public ClearInit() {
+        this.record = <SeaImpMasterModel>{
+            errormessage: '',
+            records: [],
+            searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
+            pageQuery: <PageQuery>{ action: 'NEW', page_count: 0, page_current: -1, page_rowcount: 0, page_rows: 0 }
+        };
+        this.mdata$.next(this.record);
+    }
+
     public init(params: any) {
-        if (this.initlializedBrcode != this.gs.branch_code) {
-            this.initlializedBrcode = this.gs.branch_code;
-            this.initlialized = false;
-            this.record = null;
-            this.mdata$.next(this.record);
-        }
+        // if (this.initlializedBrcode != this.gs.branch_code) {
+        //     this.initlializedBrcode = this.gs.branch_code;
+        //     this.initlialized = false;
+        //     this.record = null;
+        //     this.mdata$.next(this.record);
+        // }
         if (this.initlialized)
             return;
 
@@ -72,6 +82,8 @@ export class SeaImpMasterService {
         this.initlialized = true;
 
     }
+
+
 
     Search(_searchdata: any, type: string = '') {
         this.record.errormessage = '';
