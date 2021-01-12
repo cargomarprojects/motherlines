@@ -21,6 +21,18 @@ import { SalesJournalService } from '../../marketing/services/salesjournals.serv
 import { PartyService } from '../../master/services/party.service';
 import { PayrollMasterService } from '../../master/services/payrollmaster.service';
 import { VendorService } from '../../master/services/vendor.service';
+import { AlertLogPageService } from '../../other/services/alertlogpage.service';
+import { ApprovedPageService } from '../../other/services/approvedpage.service';
+import { DeliveryOrderService } from '../../other/services/deliveryorder.service';
+import { OthGeneralService } from '../../other/services/oth-general.service';
+import { OthGeneralExpenseService } from '../../other/services/oth-generalexpense.service';
+import { GenFileUploadService } from '../../other/services/genfileupload.service';
+import { LockUnlockService } from '../../other/services/lockunlock.service';
+import { MblUsageService } from '../../other/services/mblusage.service';
+import { MessengerSlipService } from '../../other/services/messengerslip.service';
+import { OblReleaseService } from '../../other/services/oblrelease.service';
+import { PayrollDetService } from '../../other/services/payrolldet.service';
+
 
 @Injectable({
     providedIn: 'root'
@@ -47,31 +59,53 @@ export class ClearService {
         private salesjournal: SalesJournalService,
         private partymaster: PartyService,
         private payrollmaster: PayrollMasterService,
-        private vendormaster: VendorService
+        private vendormaster: VendorService,
+        private alertpage: AlertLogPageService,
+        private approvedpage: ApprovedPageService,
+        private deliveryorder: DeliveryOrderService,
+        private othgeneral: OthGeneralService,
+        private othergenexp: OthGeneralExpenseService,
+        private fileupload: GenFileUploadService,
+        private lockunlock: LockUnlockService,
+        private mblusage: MblUsageService,
+        private messengerslip: MessengerSlipService,
+        private oblrelease: OblReleaseService,
+        private payrolldet: PayrollDetService
 
     ) {
     }
 
     ClearInit() {
-      this.sim.ClearInit();
-      this.sih.ClearInit();
-      this.sem.ClearInit();
-      this.seh.ClearInit();
-      this.aem.ClearInit();
-      this.aeh.ClearInit();
-      this.aim.ClearInit();
-      this.aih.ClearInit();
-      this.impdatahbl.ClearInit();
-      this.impdataship.ClearInit();
-      this.impdataset.ClearInit();
-      this.qtnair.ClearInit();
-      this.qtnfcl.ClearInit();
-      this.qtnlcl.ClearInit();
-      this.qtnrate.ClearInit();
-      this.salesjournal.ClearInit();
-      this.partymaster.ClearInit();
-      this.payrollmaster.ClearInit();
-      this.vendormaster.ClearInit();
+        this.sim.ClearInit();
+        this.sih.ClearInit();
+        this.sem.ClearInit();
+        this.seh.ClearInit();
+        this.aem.ClearInit();
+        this.aeh.ClearInit();
+        this.aim.ClearInit();
+        this.aih.ClearInit();
+        this.impdatahbl.ClearInit();
+        this.impdataship.ClearInit();
+        this.impdataset.ClearInit();
+        this.qtnair.ClearInit();
+        this.qtnfcl.ClearInit();
+        this.qtnlcl.ClearInit();
+        this.qtnrate.ClearInit();
+        this.salesjournal.ClearInit();
+        this.partymaster.ClearInit();
+        this.payrollmaster.ClearInit();
+        this.vendormaster.ClearInit();
+        this.alertpage.ClearInit();
+        this.approvedpage.ClearInit();
+        this.deliveryorder.ClearInit();
+        this.othgeneral.ClearInit();
+        this.othergenexp.ClearInit();
+        this.fileupload.ClearInit();
+        this.lockunlock.ClearInit();
+        this.mblusage.ClearInit();
+        this.messengerslip.ClearInit();
+        this.oblrelease.ClearInit();
+        this.payrolldet.ClearInit();
     }
 }
 
