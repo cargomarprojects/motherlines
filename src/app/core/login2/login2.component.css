@@ -1,17 +1,4 @@
 
-
-.mainbox{
-    height: 100%;
-    margin:0;
-    padding :0;
-  }
-  
-  .login-form{
-    border: 1px solid black;
-    padding :5px;
-    width:400px;
-  }
-  
   div button{
     margin-right: 8px;
   }
