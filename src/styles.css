@@ -4,7 +4,7 @@
     --custom-bg-color:snow;
 }
 
-html, body {
+html {
     font-family: 'roboto' ;
     font-size : 14px;
     height:100%;
@@ -12,9 +12,20 @@ html, body {
     margin: 0px;
     padding-top :36px;
     background-color: var(--custom-bg-color);
-  }
-  
-  .navbar {
+}
+
+body {
+    font-family: 'roboto' ;
+    font-size : 14px;    
+    height:100%;
+    min-height:100%;
+    margin: 0px;
+    padding-top :36px;
+    background-color: var(--custom-bg-color);
+}
+
+
+.navbar {
     margin-top: 1px;
     min-height: 70px;
     font-size: 16px;
