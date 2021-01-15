@@ -31,13 +31,14 @@ export class AirExpMasterService {
     public canDelete: boolean;
 
     public initlialized: boolean;
-    
+    private LSESSION = 0;
+
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
 
-    public ClearInit(){
+    public ClearInit() {
         this.record = <AirExpMasterModel>{
             errormessage: '',
             records: [],
@@ -47,7 +48,10 @@ export class AirExpMasterService {
         this.mdata$.next(this.record);
     }
     public init(params: any) {
-    
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         if (this.initlialized)
             return;
 
@@ -140,9 +144,8 @@ export class AirExpMasterService {
         }
     }
 
-    DeleteRow(_rec:Tbl_cargo_exp_masterm)
-    {
-        
+    DeleteRow(_rec: Tbl_cargo_exp_masterm) {
+
         if (!confirm("DELETE " + _rec.mbl_refno)) {
             return;
         }

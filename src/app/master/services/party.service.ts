@@ -29,7 +29,7 @@ export class PartyService {
     public isCompany: boolean;
 
     public initlialized: boolean;
-    public initlializedBrcode: string = '';
+    private LSESSION = 0;
     private menutype: string = '';
 
     constructor(
@@ -51,14 +51,13 @@ export class PartyService {
     }
     public init(params: any) {
 
-        // if (this.initlializedBrcode != this.gs.branch_code) {
-        //     this.initlializedBrcode = this.gs.branch_code;
-        //     this.menutype = '';
-        //     this.gs.PARTYPAGE_INIT_PARTYS = null;
-        //     this.gs.PARTYPAGE_INIT_OVERSEAAGENT = null;
-        //     this.record = null;
-        //     this.mdata$.next(this.record);
-        // }
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+            this.menutype = '';
+            this.gs.PARTYPAGE_INIT_PARTYS = null;
+            this.gs.PARTYPAGE_INIT_OVERSEAAGENT = null;
+        }
 
         this.id = params.id;
         this.menuid = params.id;

@@ -32,7 +32,7 @@ export class ImportHblPageService {
 
 
     public initlialized: boolean;
-    // public initlializedBrcode: string = '';
+    private LSESSION = 0;
 
     private ProcessXML: boolean = false;
     public Xml_MainRecIndex: number = 0;
@@ -56,12 +56,10 @@ export class ImportHblPageService {
     }
 
     public init(params: any) {
-        // if (this.initlializedBrcode != this.gs.branch_code) {
-        //     this.initlializedBrcode = this.gs.branch_code;
-        //     this.initlialized = false;
-        //     this.record = null;
-        //     this.mdata$.next(this.record);
-        // }
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         if (this.initlialized)
             return;
 

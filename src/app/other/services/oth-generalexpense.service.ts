@@ -32,6 +32,7 @@ export class OthGeneralExpenseService {
 
     public initlialized: boolean;
     private menutype: string = '';
+    private LSESSION = 0;
 
     constructor(
         private http2: HttpClient,
@@ -53,7 +54,17 @@ export class OthGeneralExpenseService {
         this.mdata$.next(this.record);
     }
     public init(params: any) {
-
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+            this.menutype = '';
+            this.gs.GENERALEXPENSE_INIT_GE = null;
+            this.gs.GENERALEXPENSE_INIT_PR = null;
+            this.gs.GENERALEXPENSE_INIT_CM = null;
+            this.gs.GENERALEXPENSE_INIT_PS = null;
+            this.gs.GENERALEXPENSE_INIT_FA = null;
+        }
+        
         this.id = params.id;
         this.menuid = params.menuid;
         this.param_type = params.menu_param;

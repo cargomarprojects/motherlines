@@ -8,6 +8,7 @@ import { GlobalService } from '../../core/services/global.service';
 import { Tbl_cargo_imp_masterm, SeaImpMasterModel, vm_tbl_cargo_imp_masterm } from '../models/tbl_cargo_imp_masterm';
 import { SearchQuery } from '../models/tbl_cargo_imp_masterm';
 import { PageQuery } from '../../shared/models/pageQuery';
+import { throwToolbarMixedModesError } from '@angular/material';
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +33,7 @@ export class SeaImpMasterService {
     public canDelete: boolean;
 
     public initlialized: boolean;
-     
+    private LSESSION = 0;
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
@@ -49,6 +50,12 @@ export class SeaImpMasterService {
     }
 
     public init(params: any) {
+
+        if (this.LSESSION < this.gs.GSESSION)
+        {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         
         if (this.initlialized)
             return;

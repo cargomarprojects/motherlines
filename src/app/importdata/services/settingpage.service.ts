@@ -30,7 +30,7 @@ export class SettingPageService {
     public canDelete: boolean;
 
     public initlialized: boolean;
-    
+    private LSESSION = 0;
 
     constructor(
         private http2: HttpClient,
@@ -49,7 +49,10 @@ export class SettingPageService {
     }
 
     public init(params: any) {
-
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         if (this.initlialized)
             return;
 

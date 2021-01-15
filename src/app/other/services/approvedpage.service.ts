@@ -30,7 +30,7 @@ export class ApprovedPageService {
 
     public initlialized: boolean;
     private menutype: string = '';
-
+    private LSESSION = 0;
 
     constructor(
         private http2: HttpClient,
@@ -52,18 +52,17 @@ export class ApprovedPageService {
     }
     public init(params: any) {
 
-
         let usrid: string = '';
         let usrname: string = '';
-        // if (this.initlializedBrcode != this.gs.branch_code) {
-        //     this.initlializedBrcode = this.gs.branch_code;
-        //     this.menutype = '';
-        //     this.gs.APPROVEDPAGE_INIT_APPROVED = null;
-        //     this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT = null;
-        //     this.gs.APPROVEDPAGE_INIT_REQUESTREPORT = null;
-        //     this.record = null;
-        //     this.mdata$.next(this.record);
-        // }
+
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+            this.menutype = '';
+            this.gs.APPROVEDPAGE_INIT_APPROVED = null;
+            this.gs.APPROVEDPAGE_INIT_APPROVEDREPORT = null;
+            this.gs.APPROVEDPAGE_INIT_REQUESTREPORT = null;
+        }
 
         this.id = params.id;
         this.menuid = params.menuid;

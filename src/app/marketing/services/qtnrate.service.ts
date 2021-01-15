@@ -29,14 +29,14 @@ export class QtnRateService {
     public canDelete: boolean;
 
     public initlialized: boolean;
-    
+    private LSESSION = 0;
+
     constructor(
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
 
-    public ClearInit()
-    {
+    public ClearInit() {
         this.record = <QtnRateModel>{
             errormessage: '',
             records: [],
@@ -47,7 +47,10 @@ export class QtnRateService {
     }
 
     public init(params: any) {
-    
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         if (this.initlialized)
             return;
 

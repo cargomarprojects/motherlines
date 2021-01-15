@@ -32,6 +32,7 @@ export class PayrollDetService {
     public canDelete: boolean;
 
     public initlialized: boolean;
+    private LSESSION = 0;
     
     constructor(
         private http2: HttpClient,
@@ -49,7 +50,10 @@ export class PayrollDetService {
     }
     
     public init(params: any) {
-        
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         if (this.initlialized)
             return;
         const options = JSON.parse(params);

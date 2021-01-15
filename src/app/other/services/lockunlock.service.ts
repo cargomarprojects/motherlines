@@ -30,6 +30,7 @@ export class LockUnlockService {
     public lock_all: boolean = false;
     public unlock_all: boolean = false;
     public initlialized: boolean;
+    private LSESSION = 0;
     
     constructor(
         private http2: HttpClient,
@@ -47,7 +48,10 @@ export class LockUnlockService {
     }
 
     public init(params: any) {
-        
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         if (this.initlialized) {
             this.record.errormessage = '';
             this.mdata$.next(this.record);
