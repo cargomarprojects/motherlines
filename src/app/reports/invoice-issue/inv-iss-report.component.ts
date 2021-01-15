@@ -47,6 +47,7 @@ export class InvIssReportComponent implements OnInit {
   cust_parent_id: string;
   cust_parent_name: string;
   datetype: string = 'Inv-Date';
+  araptype: string = 'A/R';
 
   reportformat = '';
 
@@ -113,6 +114,7 @@ export class InvIssReportComponent implements OnInit {
         this.cust_parent_id = rec.cust_parent_id;
         this.cust_parent_name = rec.cust_parent_name;
         this.datetype = rec.datetype;
+        this.araptype = rec.araptype;
         this.reportformat = rec.reportformat;
 
 
@@ -147,6 +149,7 @@ export class InvIssReportComponent implements OnInit {
         // this.PARENTRECORD.id = this.cust_parent_id;
         // this.PARENTRECORD.name = this.cust_parent_name;
         this.SearchData.DATE_TYPE = this.datetype;
+        this.SearchData.ARAP_TYPE = this.araptype;
 
 
 
@@ -177,6 +180,7 @@ export class InvIssReportComponent implements OnInit {
         this.cust_parent_id = '';
         this.cust_parent_name = '';
         this.datetype = 'Inv-Date';
+        this.araptype = 'A/R';
         this.reportformat = 'DETAIL';
 
 
@@ -244,6 +248,7 @@ export class InvIssReportComponent implements OnInit {
       this.SearchData.CUST_PARENT_ID = this.cust_parent_id;
       this.SearchData.CUST_PARENT_NAME = this.cust_parent_name;
       this.SearchData.DATE_TYPE = this.datetype;
+      this.SearchData.ARAP_TYPE = this.araptype;
       this.SearchData.filename = "";
       this.SearchData.filedisplayname = "";
       this.SearchData.filetype = "";
@@ -280,6 +285,7 @@ export class InvIssReportComponent implements OnInit {
             cust_parent_id: this.SearchData.CUST_PARENT_ID,
             cust_parent_name: this.SearchData.CUST_PARENT_NAME,
             datetype: this.SearchData.DATE_TYPE,
+            araptype: this.SearchData.ARAP_TYPE,
             reportformat: this.reportformat,
             page_rows: response.page_rows,
             page_count: response.page_count,
