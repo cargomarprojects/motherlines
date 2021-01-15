@@ -53,6 +53,8 @@ export class GlobalService {
   public YearList: any[];
   public AccGroupList: any[];
 
+  public GSESSION = 100;
+
   public software_start_year: number = 0;
   public branch_codes: string = '';
   public history: Array<{ id: string, url: string }> = [];
@@ -1120,7 +1122,7 @@ export class GlobalService {
 
   }
 
-  public LinkPage(INVOKETYPE: string = "", MBLMODE: string = "", REFNO: string = "", MBLID: string = "", HBLID: string = "", INVID: string = "", ) {
+  public LinkPage(INVOKETYPE: string = "", MBLMODE: string = "", REFNO: string = "", MBLID: string = "", HBLID: string = "", INVID: string = "",) {
     let sType: string = "";
     let SMENU_ID: string = "";
     try {
@@ -1767,7 +1769,7 @@ export class GlobalService {
     localStorage.setItem('bts_settings', JSON.stringify(bts_settings));
   }
 
-  ReadLocalStorage(){
+  ReadLocalStorage() {
     if (localStorage.length > 0) {
       const bts_settings = JSON.parse(localStorage.getItem('bts_settings'));
       if (bts_settings) {

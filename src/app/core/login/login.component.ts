@@ -129,7 +129,8 @@ export class LoginComponent implements OnInit {
           if (this.GLOBALCONTANTS.IsLoginSuccess) {
             this.errorMessage = "Login Success";
             this.GLOBALCONTANTS.user_pwd = this.password;
-            this.clrservice.ClearInit();
+            // this.clrservice.ClearInit();
+            this.GLOBALCONTANTS.GSESSION += 1;
             this.Login1();
           }
           else {
