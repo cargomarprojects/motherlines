@@ -17,6 +17,16 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class QtnLclEditComponent implements OnInit {
 
+    @ViewChild('_btnretlcl') btnretlcl_field: ElementRef;
+    @ViewChild('to_code') to_code_field: AutoComplete2Component;
+    @ViewChild('to_name') to_name_field: InputBoxComponent;
+    @ViewChild('quot_by') quot_by_field: InputBoxComponent;
+    @ViewChild('salesman_name') salesman_name_field: AutoComplete2Component;
+    @ViewChild('move_type') move_type_field: InputBoxComponent;
+    @ViewChild('por') por_field: InputBoxComponent;
+    @ViewChild('pol') pol_field: InputBoxComponent;
+    @ViewChild('pod') pod_field: InputBoxComponent;
+
     record: Tbl_Cargo_Qtnm = <Tbl_Cargo_Qtnm>{};
     records: Tbl_Cargo_Qtnd_Lcl[] = [];
     historyList: Tbl_Cargo_Qtnd_Lcl[] = [];
@@ -63,7 +73,7 @@ export class QtnLclEditComponent implements OnInit {
         private location: Location,
         public gs: GlobalService,
         private mainService: QtnLclService,
-    ) { 
+    ) {
         modalconfig.backdrop = 'static'; //true/false/static
         modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
     }
@@ -78,7 +88,12 @@ export class QtnLclEditComponent implements OnInit {
         this.initPage();
         this.actionHandler();
     }
-
+    ngAfterViewInit() {
+        if (this.mode == 'ADD') {
+            if (!this.gs.isBlank(this.to_code_field))
+                this.to_code_field.Focus();
+        }
+    }
     private initPage() {
         this.foreign_amt_decplace = this.gs.foreign_amt_dec;
         this.isAdmin = this.gs.IsAdmin(this.menuid);
@@ -158,6 +173,8 @@ export class QtnLclEditComponent implements OnInit {
             this.record.qtnm_curr_code = this.gs.base_cur_code;
             // this.record.qtnm_curr_id = this.gs.base_cur_pkid;
         }
+        if (!this.gs.isBlank(this.to_code_field))
+            this.to_code_field.Focus();
     }
 
     GetRecord() {
@@ -184,6 +201,9 @@ export class QtnLclEditComponent implements OnInit {
                     rec.qtnd_old_amt = rec.qtnd_amt;
                     rec.qtnd_old_pkid = rec.qtnd_pkid;
                 });
+
+                if (!this.gs.isBlank(this.btnretlcl_field))
+                    this.btnretlcl_field.nativeElement.focus();
 
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
@@ -274,12 +294,12 @@ export class QtnLclEditComponent implements OnInit {
             bRet = false;
             this.errorMessage.push("Quote Date Cannot blank");
         }
-        if (this.gs.isBlank(this.record.qtnm_salesman_id)||this.gs.isBlank(this.record.qtnm_salesman_name)) {
+        if (this.gs.isBlank(this.record.qtnm_salesman_id) || this.gs.isBlank(this.record.qtnm_salesman_name)) {
             bRet = false;
             this.errorMessage.push("Sales Rep. Cannot blank");
         }
 
-        let iCtr:number = 0;
+        let iCtr: number = 0;
         this.records.forEach(Rec => {
             iCtr++;
             // if (Rec.qtnd_amt <= 0) {
@@ -561,6 +581,6 @@ export class QtnLclEditComponent implements OnInit {
     }
     CloseModal() {
         this.modal.close();
-      }
+    }
 }
 

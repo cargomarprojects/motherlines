@@ -3,7 +3,7 @@
         <div class="row align-items-center justify-content-left p-1">
             <label class="mr-3">{{title}}({{mode}})</label>
             <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="Copy()">Copy</button>
-            <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+            <button #_btnretlcl class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         </div>
     </div>
 
@@ -153,7 +153,7 @@
                     <div class="col-9">
                         <app-autocomplete2 [controlname]="'SALESMAN'" [tabletype]="'PARAM'" [subtype]="'SALESMAN'"
                             [displaycolumn]="'NAME'" [displaydata]="record.qtnm_salesman_name"
-                            (ValueChanged)="LovSelected($event)">
+                            (ValueChanged)="LovSelected($event)" #salesman_name>
                         </app-autocomplete2>
                     </div>
                 </div>
