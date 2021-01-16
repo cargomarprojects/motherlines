@@ -203,14 +203,14 @@
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('qtnm_kgs')"
                             [(ngModel)]="record.qtnm_kgs" maxlength="15" #qtnm_kgs />
-                        <button class="btn btn-success btn-sm"
+                        <button class="btn btn-info btn-sm"
                             (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
                     </div>
                     <label class="col-3 col-form-label col-form-label-sm">LBS</label>
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('qtnm_lbs')"
                             [(ngModel)]="record.qtnm_lbs" maxlength="15" #qtnm_lbs />
-                        <button class="btn btn-success btn-sm" (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span>
+                        <button class="btn btn-info btn-sm" (click)="FindWeight('Lbs2Kgs')"><span>&lt;</span>
                         </button>
                     </div>
                 </div>
@@ -219,14 +219,14 @@
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('qtnm_cbm')"
                             [(ngModel)]="record.qtnm_cbm" maxlength="15" #qtnm_cbm />
-                        <button class="btn btn-success btn-sm"
+                        <button class="btn btn-info btn-sm"
                             (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                     </div>
                     <label class="col-3 col-form-label col-form-label-sm">CFT</label>
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('qtnm_cft')"
                             [(ngModel)]="record.qtnm_cft" maxlength="15" #qtnm_cft />
-                        <button class="btn btn-success btn-sm" (click)="FindWeight('Cft2Cbm')"><span>&lt;</span>
+                        <button class="btn btn-info btn-sm" (click)="FindWeight('Cft2Cbm')"><span>&lt;</span>
                         </button>
                     </div>
                 </div>
@@ -357,8 +357,8 @@
                     </table>
                     <div class="form-group row">
                         <div class="col-12">
-                            <button class="btn btn-success btn-sm mr-1" (click)="AddRow()">Add Row</button>
-                            <button *ngIf="mode=='EDIT'" class="btn btn-success btn-sm mr-1"
+                            <button class="btn btn-info btn-sm mr-1" (click)="AddRow()">Add Row</button>
+                            <button *ngIf="mode=='EDIT'" class="btn btn-info btn-sm mr-1"
                                 (click)="BtnNavigation('HISTORY')">History</button>
                         </div>
                     </div>
@@ -373,17 +373,17 @@
                     <div class="col-12 px-0 mx-0">
                         <div class="form-group row">
                             <div class="offset-1 col-11">
-                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG1')">Msg 1
+                                <button class="btn btn-info btn-sm mr-1" (click)="GetMessage('LCLMSG1')">Msg 1
                                     (C-Imp)</button>
-                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG2')">Msg 2
+                                <button class="btn btn-info btn-sm mr-1" (click)="GetMessage('LCLMSG2')">Msg 2
                                     (C-Exp)</button>
-                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG3')">Msg 3
+                                <button class="btn btn-info btn-sm mr-1" (click)="GetMessage('LCLMSG3')">Msg 3
                                     (C-Local)</button>
-                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG4')">Msg 4
+                                <button class="btn btn-info btn-sm mr-1" (click)="GetMessage('LCLMSG4')">Msg 4
                                     (A-Exp)</button>
-                                <button class="btn btn-success btn-sm mr-1" (click)="GetMessage('LCLMSG5')">Msg 5
+                                <button class="btn btn-info btn-sm mr-1" (click)="GetMessage('LCLMSG5')">Msg 5
                                     (A-Local)</button>
-                                <button class="btn btn-success btn-sm mr-1"
+                                <button class="btn btn-info btn-sm mr-1"
                                     (click)="GetMessage('LCLMSG6')">DDU/DDP</button>
                             </div>
                         </div>

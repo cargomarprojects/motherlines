@@ -962,10 +962,10 @@
               <option [value]="'CNOR'">CONSIGNOR</option>
               <option [value]="'SHPR'">SHIPPER</option>
             </select>
-            <button class="btn btn-success btn-sm mr-1"
+            <button class="btn btn-info btn-sm mr-1"
               *ngIf="gs.screenExists(gs.MENU_AE_HOUSE_HAWB_SHIPPER)||gs.screenExists(gs.MENU_AE_HOUSE_HAWB_CONSIGNEE)"
               (click)="BtnNavigation('FULL-FORMAT')">HAWB</button>
-            <button class="btn btn-success btn-sm mr-1"
+            <button class="btn btn-info btn-sm mr-1"
               *ngIf="gs.screenExists(gs.MENU_AE_HOUSE_HAWB_SHIPPER)||gs.screenExists(gs.MENU_AE_HOUSE_HAWB_CONSIGNEE)"
               (click)="BtnNavigation('BLANK-FORMAT')">BLANK HAWB</button>
           </div>
