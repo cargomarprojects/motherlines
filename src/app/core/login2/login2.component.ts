@@ -561,7 +561,7 @@ export class Login2Component implements OnInit {
 
                 else if (Rec.param_name1 == "SHIPMENT-LOCKED-DATE") {
                     if (Rec.param_name3 != "") {
-                        var sdata = Rec.param_name3.Split('-');
+                        var sdata = Rec.param_name3.split('-');
                         this.GLOBALCONTANTS.ACCOUNTS_LOCKED_DATE = Rec.param_name3;
                     }
                 }

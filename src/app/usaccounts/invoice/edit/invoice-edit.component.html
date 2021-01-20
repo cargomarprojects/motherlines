@@ -112,22 +112,31 @@
                     </div>
                 </div>
 
-                <div class="form-group row" *ngIf='show_vat'>
-                    <label class="col-4 col-form-label col-form-label-sm"></label>
-                    <div class="col-4">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label col-form-label-sm" *ngIf='show_vat'></label>
+                    <div class="col-4" *ngIf='show_vat'>
                         <input type="checkbox" [(ngModel)]="isVat" />
-                        <span>Vat Applicable</span>
+                        <span class="ml-1">Vat Applicable</span>
                     </div>
-                </div>
-
-                <div class="form-group row" *ngIf='show_confirm'>
-                    <label class="col-4 col-form-label col-form-label-sm"></label>
-                    <div class="col-4">
+                    <div class="col-4" *ngIf='show_confirm'>
                         <input type="checkbox" [(ngModel)]="isConfirmed" />
-                        <span>Confirmed</span>
+                        <span class="ml-1">Confirmed</span>
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <label class="col-4 col-form-label col-form-label-sm">Quote#</label>
+                    <div class="col-3">
+                        <input class="form-control form-control-sm" type="text" (blur)="onBlur('quoteno')"
+                            [(ngModel)]="qtnno" [disabled]="false" maxlength="50" />
+                        
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-info btn-sm" ><span>Fill</span></button>
+                    </div>
+
+
+                </div>
 
 
 

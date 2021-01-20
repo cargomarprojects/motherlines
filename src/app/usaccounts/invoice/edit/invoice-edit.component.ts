@@ -28,6 +28,8 @@ export class InvoiceEditComponent implements OnInit {
 
   errorMessage: string;
 
+  qtnno : string ;
+
   mode: string;
   mbl_pkid: string;
   hbl_pkid: string;
@@ -163,8 +165,9 @@ export class InvoiceEditComponent implements OnInit {
     this.show_vat = (this.gs.VAT_PER > 0) ? true : false;
     this.show_confirm = (this.gs.VAT_PER > 0) ? true : false;
     this.show_currency = (this.gs.IS_SINGLE_CURRENCY) ? false : true;
-    this.show_invstage = false;
+    this.enable_currency= (this.gs.IS_SINGLE_CURRENCY) ? false : true;
 
+    this.show_invstage = false;
     this.enable_customer_control = true;
 
   }
@@ -414,6 +417,9 @@ export class InvoiceEditComponent implements OnInit {
     this.bal_amt = 0;
 
     this.InitCommonValues();
+    
+    this.initControls();
+
 
     if (!this.gs.isBlank(this.inv_date_ctrl))
       this.inv_date_ctrl.Focus();
