@@ -31,6 +31,7 @@ export class BudgetService {
     public canSave: boolean;
 
     public initlialized: boolean;
+    private LSESSION = 0;
 
 
     constructor(
@@ -39,6 +40,11 @@ export class BudgetService {
     ) { }
 
     public init(params: any) {
+        if (this.LSESSION < this.gs.GSESSION)
+        {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         if (this.initlialized)
             return;
 

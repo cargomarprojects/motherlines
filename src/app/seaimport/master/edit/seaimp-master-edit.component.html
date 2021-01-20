@@ -336,7 +336,7 @@
                 <div class="form-group row">
                   <!-- either lablel or button will be visible, to adjust offset of button while heding -->
                   <label class="col-3 col-form-label col-form-label-sm" *ngIf="is_locked"></label>
-                  <button class=" col-3 btn btn-success btn-sm" *ngIf="!is_locked" (click)="CopyLoc2House()">Copy to All
+                  <button class=" col-3 btn btn-info btn-sm" *ngIf="!is_locked" (click)="CopyLoc2House()">Copy to All
                     House</button>
                   <div class="col-9">
                     <input #_mbl_cargo_locname class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_cargo_locname')"
@@ -504,14 +504,14 @@
                   </table>
                   <div class="form-group row">
                     <div class="col-12">
-                      <button class="btn btn-success btn-sm mr-1" [disabled]="is_locked" (click)="AddRow()">Add
+                      <button class="btn btn-info btn-sm mr-1" [disabled]="is_locked" (click)="AddRow()">Add
                         Cntr</button>
-                      <button class="btn btn-success btn-sm mr-1" [disabled]="is_locked"
+                      <button class="btn btn-info btn-sm mr-1" [disabled]="is_locked"
                         (click)="BtnNavigation('COPY-CNTR')">Copy Cntr to
                         House</button>
-                      <button class="btn btn-success btn-sm mr-1" [disabled]="is_locked" (click)="UpdatePuEr()">Update P/U &
+                      <button class="btn btn-info btn-sm mr-1" [disabled]="is_locked" (click)="UpdatePuEr()">Update P/U &
                         E/R</button>
-                      <button class="btn btn-success btn-sm mr-1"  (click)="CopyCntrClipboard()">Copy
+                      <button class="btn btn-info btn-sm mr-1"  (click)="CopyCntrClipboard()">Copy
                         Containers</button>
                     </div>
                   </div>
@@ -554,7 +554,7 @@
                   </table>
                   <div class="form-group row">
                     <div class="col-12">
-                      <button class="btn btn-success btn-sm mr-1"
+                      <button class="btn btn-info btn-sm mr-1"
                         *ngIf="gs.screenExists(gs.MENU_SI_HOUSE)" [disabled]="is_locked" (click)="AddHouse()">Add
                         House</button>
                     </div>

@@ -32,6 +32,8 @@ export class ShipDataPageService {
 
 
     public initlialized: boolean;
+    private LSESSION = 0;
+    
     private selectdeselect: boolean = false;
     constructor(
         private http2: HttpClient,
@@ -49,7 +51,10 @@ export class ShipDataPageService {
     }
 
     public init(params: any) {
-
+        if (this.LSESSION < this.gs.GSESSION) {
+            this.LSESSION = this.gs.GSESSION;
+            this.initlialized = false;
+        }
         if (this.initlialized)
             return;
 

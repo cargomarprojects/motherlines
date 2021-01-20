@@ -155,9 +155,10 @@ export class Login2Component implements OnInit {
         this.LoadSettings();
         this.LoadMenu();
         
-        this.clrservice.ClearInit();
+       // this.clrservice.ClearInit();
+       
         this.GLOBALCONTANTS.IsAuthenticated = true;
-
+        this.GLOBALCONTANTS.GSESSION += 1;
         this.GLOBALCONTANTS.Save2LocalStorage();
 
         this.router.navigate(['home'], { replaceUrl: true });
