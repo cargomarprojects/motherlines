@@ -14,6 +14,7 @@ import { invoiceService } from '../../services/invoice.service';
 import { DateComponent } from '../../../shared/date/date.component';
 import { AutoComplete2Component } from '../../../shared/autocomplete2/autocomplete2.component';
 
+
 @Component({
   selector: 'app-invoice-edit',
   templateUrl: './invoice-edit.component.html'
@@ -159,14 +160,11 @@ export class InvoiceEditComponent implements OnInit {
 
 
 
-
-
   initControls() {
     this.show_vat = (this.gs.VAT_PER > 0) ? true : false;
     this.show_confirm = (this.gs.VAT_PER > 0) ? true : false;
     this.show_currency = (this.gs.IS_SINGLE_CURRENCY) ? false : true;
     this.enable_currency= (this.gs.IS_SINGLE_CURRENCY) ? false : true;
-
     this.show_invstage = false;
     this.enable_customer_control = true;
 
@@ -390,10 +388,16 @@ export class InvoiceEditComponent implements OnInit {
 
     this.record.inv_date = this.gs.defaultValues.today;
 
+    this.record.inv_year = +this.gs.year_code;
+    this.record.inv_mbl_refno = this.mbl_refno;
+
     this.record.inv_arrnotice = 'N';
+
+    this.record.inv_paid = 0;
 
     this.record.inv_curr_code = this.gs.base_cur_code;
     this.record.inv_exrate = 1;
+
 
 
     this.record.inv_vat = 0;
@@ -420,6 +424,11 @@ export class InvoiceEditComponent implements OnInit {
     
     this.initControls();
 
+    this.isVat = false;
+    if ( this.show_vat) {
+      if ( this.gs.CompareDate( this.record.inv_date,"2018-02-01") == ">")
+        this.isVat = true;
+    }
 
     if (!this.gs.isBlank(this.inv_date_ctrl))
       this.inv_date_ctrl.Focus();
@@ -467,6 +476,16 @@ export class InvoiceEditComponent implements OnInit {
 
       this.DisplayBalance();
 
+      this.isConfirmed = false;
+      if (this.record.inv_confirmed == 'Y')
+        this.isConfirmed = true;
+
+      this.isVat = false;
+      if ( this.show_vat) {
+        if ( this.gs.CompareDate( this.record.inv_date,"2018-02-01") == ">")
+          this.isVat = true;
+      }
+
       this.inv_date_ctrl.Focus();
     }, error => {
       this.errorMessage = this.gs.getError(error);
@@ -475,8 +494,36 @@ export class InvoiceEditComponent implements OnInit {
 
   SaveParent() {
     this.record.inv_confirmed = 'N';
+    this.record.inv_stage = "N";
+
+    if ( this.isVat) {
+      this.record.inv_vat_per =  this.gs.VAT_PER;
+      this.record.vat_acc_id = this.gs.VAT_ACC_ID;
+      this.record.vat_acc_name = this.gs.VAT_ACC_NAME;
+      this.record.vat_desc_id = this.gs.VAT_INVDESC_ID;
+      this.record.vat_dsc_name = this.gs.VAT_INVDESC_NAME;
+      this.record.vat_per =   this.gs.VAT_PER;
+    }
+
     if (this.isConfirmed)
       this.record.inv_confirmed = 'Y';
+
+    let Jv_Narration = "";
+    if (this.record.inv_arap == "AR")
+        Jv_Narration = "DUE FROM ";
+    else
+        Jv_Narration = "DUE TO ";
+    Jv_Narration += this.record.inv_cust_name;
+    Jv_Narration += " AMOUNT: " + this.record.inv_total;
+    Jv_Narration += " REFNO: " + this.record.inv_mbl_refno;
+    Jv_Narration += this.record.inv_date != null ? " DATED: " +  this.record.inv_date : "";
+    Jv_Narration += this.record.inv_remarks != null ? " " + this.record.inv_remarks.trim() : "";
+    Jv_Narration += this.record.inv_remarks2 != null ? " " + this.record.inv_remarks2.trim() : "";
+    Jv_Narration += this.record.inv_remarks3 != null ? " " + this.record.inv_remarks3.trim() : "";
+      
+    if (Jv_Narration.length > 250)
+        Jv_Narration = Jv_Narration.substring(0, 250);
+    this.record.inv_narration = Jv_Narration;
   }
 
   Save() {
@@ -708,6 +755,9 @@ export class InvoiceEditComponent implements OnInit {
     nTot = this.gs.roundNumber(nTot, 2);
     nfTot = this.gs.roundNumber(nfTot, 2);
 
+    nVat = this.gs.roundNumber(nVat, 2);
+    nfVat = this.gs.roundNumber(nfVat, 2);
+
 
     this.record.inv_total1 = nTot;
     this.record.inv_ftotal1 = nfTot;
@@ -715,8 +765,14 @@ export class InvoiceEditComponent implements OnInit {
     this.record.inv_vat = nVat;
     this.record.inv_fvat = nfVat;
 
+
+
     nTot += nVat;
     nfTot += nfVat;
+
+    nTot = this.gs.roundNumber(nTot, 2);
+    nfTot = this.gs.roundNumber(nfTot, 2);
+
     this.record.inv_total = nTot;
     this.record.inv_ftotal = nfTot;
 
@@ -724,6 +780,8 @@ export class InvoiceEditComponent implements OnInit {
     nBal = nTot - nPaid;
 
     this.record.inv_balance = nBal;
+
+    this.DisplayBalance();
 
     /*
     Txt_Total1.Text = nTot.ToString();
@@ -742,6 +800,9 @@ export class InvoiceEditComponent implements OnInit {
     nBal = nTot - nPaid;
     Txt_Balance.Text = nBal.ToString();
     */
+ 
+
+    
 
   }
 
@@ -947,6 +1008,14 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_acc_name = _Record.name;
     }
 
+    if (_Record.controlname == "CURR") {
+      this.record.inv_curr_code =  _Record.code;
+      this.record.inv_exrate = +_Record.col1;
+      if (this.gs.IS_SINGLE_CURRENCY)
+        this.record.inv_exrate = 1;
+    }
+
+
 
     if (_Record.controlname == "INVOICED-CODE" || _Record.controlname == "INVOICED-CURR" || _Record.controlname == "INVOICED-ACCTM" || _Record.controlname == "INVOICED-BRANCH") {
       let idx: number = 0;
@@ -957,6 +1026,10 @@ export class InvoiceEditComponent implements OnInit {
           if (_Record.controlname == "INVOICED-CODE") {
             rec.invd_desc_id = _Record.id;
             rec.invd_desc_name = _Record.name;
+
+            if (this.show_vat)
+              rec.invd_vat_per = +_Record.col2;
+
             if (!this.gs.isBlank(this.invd_desc_name_ctrl))
               this.invd_desc_name_ctrl.toArray()[idx].nativeElement.focus();
           }
