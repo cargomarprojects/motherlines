@@ -138,6 +138,7 @@
         <th>REMARKS</th>
         <th>CREATED-BY</th>
         <th>CREATED-DATE</th>
+        <th>Remove</th>
       </tr>
     </thead>
     <tbody class="page-body-tbody">
@@ -157,6 +158,11 @@
         <td>{{rec.inv_remarks}}</td>
         <td>{{rec.rec_created_by}}</td>
         <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
+        <td class="p-0">
+          <a class="btn btn-sm" (click)="removeRow(rec)">
+              <i class="fa fa-trash-o"></i>
+          </a>
+      </td>        
       </tr>
     </tbody>
   </table>

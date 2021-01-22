@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { GlobalService } from '../../core/services/global.service';
 import { Tbl_cargo_invoicem } from '../models/Tbl_cargo_Invoicem';
 import { invoiceService } from '../services/invoice.service';
+import { Tbl_Cargo_Invoice_Profit } from '../models/Tbl_Cargo_Invoice_Profit';
 
 @Component({
   selector: 'app-invoice',
@@ -208,9 +209,40 @@ export class InvoiceComponent implements OnInit {
     this.gs.Naviagete('Silver.USAccounts.Trans/InvoiceEditPage', JSON.stringify(parameter));
   }
 
+
+
+  removeRow(rec : Tbl_cargo_invoicem ){
+    
+    alert('hhhh');
+
+    var remarks = "Delete Invoice " +  rec.inv_no;
+    if ( rec.rec_deleted  == "Y" && this.isAdmin)
+      remarks += " Permanently."
+
+      
+
+    var SearchData = this.gs.UserInfo;
+    SearchData.pkid = rec.inv_pkid;
+    SearchData.ISADMIN = (this.isAdmin) ? 'Y' : 'N';
+    SearchData.DELETE_STATUS = rec.rec_deleted == "Y" ? "Y" : "N";
+    SearchData.REMARKS = remarks;
+
+    this.mainservice.DeletRecord(SearchData).subscribe(response => {
+
+    }, error => {
+      this.errorMessage = this.gs.getError(error);
+      alert( this.errorMessage);
+    });
+  
+  }
+
+
+
   Close() {
     this.location.back();
   }
+
+
 
 
 

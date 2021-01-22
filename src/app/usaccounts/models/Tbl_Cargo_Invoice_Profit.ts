@@ -11,5 +11,6 @@ export class Tbl_Cargo_Invoice_Profit
     inv_inc_total  : number;
     inv_exp_total  : number;
     inv_revenue  : number;
+    rec_deleted : string ;
 }
 

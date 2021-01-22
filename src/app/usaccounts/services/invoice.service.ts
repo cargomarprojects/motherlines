@@ -43,4 +43,9 @@ export class invoiceService {
     }
 
 
+    DeletRecord(SearchData: any) {
+        return this.http2.post<any>(this.gs.baseUrl + '/api/USAccounts/Invoice/GetRecord', SearchData, this.gs.headerparam2('authorized'));
+    }
+
+
 }

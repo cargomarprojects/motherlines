@@ -338,8 +338,7 @@ export class InvoiceEditComponent implements OnInit {
         this.records.splice(index, 1);
       }
     });
-
-
+    this.FindGrandTotal();
 
   }
 
@@ -1013,6 +1012,7 @@ export class InvoiceEditComponent implements OnInit {
       this.record.inv_exrate = +_Record.col1;
       if (this.gs.IS_SINGLE_CURRENCY)
         this.record.inv_exrate = 1;
+
     }
 
 
@@ -1040,6 +1040,8 @@ export class InvoiceEditComponent implements OnInit {
             rec.invd_exrate = +_Record.col1;
             if (this.gs.IS_SINGLE_CURRENCY)
               rec.invd_exrate = 1;
+
+            this.findRowTotal('invd_exrate', rec);
           }
 
           if (_Record.controlname == "INVOICED-ACCTM") {
