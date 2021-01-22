@@ -140,7 +140,7 @@
                 <label class="col-4 col-form-label col-form-label-sm">{{LBL_AMT}}</label>
                 <div class="col-8">
                     <input class="form-control form-control-sm" type="number" (blur)="onBlur('Txt_Amt')"
-                        [(ngModel)]="TXT_AMT" maxlength="100" />
+                        [(ngModel)]="TXT_AMT" maxlength="100"  disabled/>
                 </div>
             </div>
 
@@ -149,7 +149,7 @@
                 <label class="col-4 col-form-label col-form-label-sm">{{LBL_BASE_CURR_AMT}}</label>
                 <div class="col-8">
                     <input class="form-control form-control-sm" type="number" (blur)="onBlur('Txt_Amt_Base')"
-                        [(ngModel)]="Txt_Amt_Base" maxlength="100" />
+                        [(ngModel)]="Txt_Amt_Base" maxlength="100" disabled />
                 </div>
             </div>
 
@@ -165,7 +165,7 @@
                 <label class="col-4 col-form-label col-form-label-sm">Currency</label>
                 <div class="col-8">
                     <input class="form-control form-control-sm" type="text" (blur)="onBlur('Txt_Currency')"
-                        [(ngModel)]="Txt_Currency" maxlength="100" />
+                        [(ngModel)]="Txt_Currency" maxlength="100" disabled />
                 </div>
             </div>
 
@@ -173,7 +173,7 @@
                 <label class="col-4 col-form-label col-form-label-sm">Ex.Rate</label>
                 <div class="col-8">
                     <input class="form-control form-control-sm" type="number" (blur)="onBlur('Txt_ExRate')"
-                        [(ngModel)]="Txt_ExRate" maxlength="100" />
+                        [(ngModel)]="Txt_ExRate" maxlength="100" disabled />
                 </div>
             </div>
 

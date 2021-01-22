@@ -139,12 +139,14 @@ export class PayFinalComponent implements OnInit {
 
     memo_enabled = true;
 
+    
     amt_enabled = true;
     amt_base_enabled = true;
     currency_enabled = true;
     exrate_enabled = true;
     bank_paid_enabled = true;
     bank_charges_enabled = true;
+
 
     posting_enabled = true;
 
