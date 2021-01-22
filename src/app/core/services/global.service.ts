@@ -55,6 +55,9 @@ export class GlobalService {
 
   public GSESSION = 100;
 
+
+  public SOFTWARE_NAME = "ANGULAR";
+
   public software_start_year: number = 0;
   public branch_codes: string = '';
   public history: Array<{ id: string, url: string }> = [];
@@ -496,7 +499,8 @@ export class GlobalService {
       "~MESSENGER_SLIP_DROP_AT": this.MESSENGER_SLIP_DROP_AT,
       "~HBL_INSTR1": this.HBL_INSTR1,
       "~HBL_INSTR2": this.HBL_INSTR2,
-      "~DATE_DISPLAY_FMT_WITH_TIME": this.date_display_fmt_with_time
+      "~DATE_DISPLAY_FMT_WITH_TIME": this.date_display_fmt_with_time,
+      "~SOFTWARE_NAME": this.SOFTWARE_NAME
     }
 
   }

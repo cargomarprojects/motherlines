@@ -44,6 +44,7 @@ export class InvoiceEditComponent implements OnInit {
   arrival_notice: string = '';
 
   ArAp_Where_Condition: string = '';
+  acc_code_Where_Condition: string = '';
 
   pkid: string;
   menuid: string;
@@ -441,6 +442,8 @@ export class InvoiceEditComponent implements OnInit {
     if (this.record.inv_arap == 'AP')
       this.ArAp_Where_Condition = "ACC_IS_ARAP_CODE='P' ";
 
+    this.acc_code_Where_Condition = "(ACC_PARENT_CODE IN('1A','1B','2A','2B') or ACC_TYPE in('ASSET', 'FIXED ASSET', 'CAPITAL','RETAINED-PROFIT') ) ";
+
   }
 
 
@@ -487,7 +490,7 @@ export class InvoiceEditComponent implements OnInit {
 
       this.inv_date_ctrl.Focus();
     }, error => {
-      this.errorMessage = this.gs.getError(error);
+      alert(this.gs.getError(error));
     });
   }
 
@@ -527,6 +530,7 @@ export class InvoiceEditComponent implements OnInit {
 
   Save() {
 
+    this.FindGrandTotal();
 
     this.SaveParent();
 
@@ -557,12 +561,11 @@ export class InvoiceEditComponent implements OnInit {
         this.old_amt = this.record.inv_total;
       }
       else {
-        this.errorMessage = rec.error;
         alert(this.errorMessage);
       }
     },
       error => {
-        this.errorMessage = this.gs.getError(error);
+        alert(this.gs.getError(error));
       }
     );
 
@@ -1032,6 +1035,9 @@ export class InvoiceEditComponent implements OnInit {
 
             if (!this.gs.isBlank(this.invd_desc_name_ctrl))
               this.invd_desc_name_ctrl.toArray()[idx].nativeElement.focus();
+
+            this.findRowTotal('invd_code', rec);
+
           }
 
           if (_Record.controlname == "INVOICED-CURR") {

@@ -86,8 +86,13 @@
                         <input class="form-control form-control-sm" type="text" (blur)="onBlur('mbl_refno')"
                             [(ngModel)]="mbl_refno" [disabled]="true" maxlength="15" />
                     </div>
-                    <label class="col-4 col-form-label col-form-label-sm">Arrival Notice :
-                        {{record.inv_arrnotice}}</label>
+                    <label class="col-2 col-form-label col-form-label-sm">Arrival Notice</label>
+                    <div class="col-2">
+                        <select class="form-control form-control-sm" [(ngModel)]="record.inv_arrnotice">
+                        <option [value]="'N'">No</option>
+                        <option [value]="'Y'">Yes</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Cust.Ref#</label>
@@ -296,7 +301,8 @@
                                 </td>
                                 <td class="p-0">
                                     <app-autocomplete2 [controlname]="'INVOICED-ACCTM'" [tabletype]="'ACC_ACCTM'"
-                                        [subtype]="" [displaycolumn]="'CODE'" [displaydata]="rec.invd_acc_name"
+                                        [subtype]="" [displaycolumn]="'CODE'" [displaydata]="rec.invd_acc_code"
+                                        [where]="acc_code_Where_Condition"                                        
                                         [uid]="rec.invd_pkid" [disabled]="!enable_acc_control"
                                         (ValueChanged)="LovSelected($event)">
                                     </app-autocomplete2>
@@ -318,7 +324,7 @@
                                 <td class="p-0" *ngIf="show_currency">
                                     <app-autocomplete2 [controlname]="'INVOICED-CURR'" [tabletype]="'PARAM'"
                                         [subtype]="'CURRENCY'" [displaycolumn]="'CODE'" [uid]="rec.invd_pkid"
-                                        [disabled]="!enable_currency" [displaydata]="rec.invd_curr_code"
+                                         [displaydata]="rec.invd_curr_code"
                                         (ValueChanged)="LovSelected($event)">
                                     </app-autocomplete2>
                                 </td>
@@ -395,7 +401,7 @@
                             </tr>
                         </thead>
                         <tbody class="page-body-tbody">
-                            <tr *ngFor="let rec of history">
+                            <tr *ngFor="let rec of history" [ngStyle]="{'color':rec.deleted === 'Y' ? 'red' : 'black' }">
                                 <td>{{rec.docno}}</td>
                                 <td>{{rec.doc_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                                 <td>{{rec.amt | number : '1.2-2'}}</td>
