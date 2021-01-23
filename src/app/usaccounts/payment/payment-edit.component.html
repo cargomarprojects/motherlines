@@ -137,7 +137,7 @@
                     <td class='hlink' (click)="editinvoice(rec)">{{rec.inv_no}}</td>
                     <td>{{rec.inv_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                     <td class='hlink' (click)="editmaster(rec)">{{rec.inv_mbl_refno}} </td>
-                    <td class='hlink' (click)="ArApList(rec,arapmodal)">LIST</td>
+                    <td class='hlink' (click)="ArApList(rec,arapModalContent)">LIST</td>
                     <td>{{rec.inv_refno}} </td>
                     <td>{{rec.inv_total | number : '1.2-2'}} </td>
                     <td>{{rec.inv_ar_total | number : '1.2-2'}} </td>
@@ -145,7 +145,8 @@
                     <td>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" (click)="swapSelection(rec)" #chkbox
-                                [(ngModel)]="rec.inv_flag2"></div>
+                                [(ngModel)]="rec.inv_flag2">
+                        </div>
                     </td>
                     <td>{{rec.inv_pay_amt | number : '1.2-2'}} </td>
                 </tr>
@@ -162,7 +163,7 @@
                         <button class="btn btn-primary btn-sm" (click)="RefreshList()">Refresh</button>
                     </div>
                     <div class="col-4">
-                        <button class="btn btn-primary btn-sm" (click)="Save()">OK</button>
+                        <button class="btn btn-primary btn-sm" (click)="Save(paymentModalContent)">OK</button>
                     </div>
                 </div>
             </div>
@@ -171,31 +172,59 @@
 
 </div>
 
-<div *ngIf="tab == 'payment'">
+<!-- <div *ngIf="tab == 'payment'">
     <app-pay-final [mpayrecrod]="mPayRecord" (callbackevent)="callbackevent($event)"></app-pay-final>
 </div>
-
+ -->
 
 <div *ngIf="tab === 'chq'">
-    <app-report [title]="'Cheque Print'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+    <app-report [title]="'Cheque Print'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"
+        (callbackevent)="callbackevent($event)"></app-report>
 </div>
 
 <div *ngIf="tab === 'cash'">
-    <app-report [title]="'Cash/Bank Print'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid" (callbackevent)="callbackevent($event)"></app-report>
+    <app-report [title]="'Cash/Bank Print'" [url]="report_url" [searchdata]="report_searchdata" [menuid]="report_menuid"
+        (callbackevent)="callbackevent($event)"></app-report>
 </div>
-<ng-template #arapmodal let-c="close" let-d="dismiss">
+
+<ng-template #arapModalContent let-c="close" let-d="dismiss">
     <div class="modal-body">
-      <div class="page-body">
-        <div class="row">
-          <div class="col-md-12 testbox  px-0 mx-0">
-            <app-genlist [title]="'A/R & A/P List'" [type]="'INVOICE-LIST'" [InvoiceList]="InvoiceList"></app-genlist>
-          </div>
+        <div class="page-body">
+            <div class="row">
+                <div class="col-md-12 testbox  px-0 mx-0">
+                    <app-genlist [title]="'A/R & A/P List'" [type]="'INVOICE-LIST'" [InvoiceList]="InvoiceList">
+                    </app-genlist>
+                </div>
+            </div>
+            <div class="page-footer">
+                <div class="row justify-content-center p-1">
+                    <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
+                </div>
+            </div>
         </div>
-        <div class="page-footer">
-          <div class="row justify-content-center p-1">
-            <button class="btn btn-primary btn-md" (click)="CloseModal()">Close</button>
-          </div>
-        </div>
-      </div>
     </div>
-  </ng-template>
+</ng-template>
+
+
+
+<ng-template #paymentModalContent let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+        <h4 class="modal-title">Payment</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="page-body">
+            <div class="row">
+                <div class="col-md-12 testbox  px-0 mx-0">
+
+                    <app-pay-final ngbAutofocus [mpayrecrod]="mPayRecord" (callbackevent)="callbackevent($event)">
+                    </app-pay-final>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

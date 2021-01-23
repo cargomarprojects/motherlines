@@ -1,4 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../core/services/global.service';
@@ -18,6 +22,12 @@ import { Tbl_cargo_invoicem } from '../models/Tbl_cargo_Invoicem';
     templateUrl: './payfinal.component.html'
 })
 export class PayFinalComponent implements OnInit {
+
+    bSave = true;
+
+
+    // @ViewChild('content') contentRef: ElementRef;
+
 
     private payrecord: any;
     @Input() set mpayrecrod(value: any) {
@@ -160,6 +170,7 @@ export class PayFinalComponent implements OnInit {
         private location: Location,
         public gs: GlobalService,
         public mainService: PaymentService,
+        private modalService: NgbModal        
     ) {
         this.decplace = this.gs.foreign_amt_dec;
         this.sdate = this.gs.defaultValues.today;
@@ -683,6 +694,12 @@ export class PayFinalComponent implements OnInit {
     }
 
     onBlur(field: string) {
+        //FindTotal("EXRATE");
+        //FindTotal("BANKUSD");
+        if ( field == 'TxT_Bank_Paid')
+            this.FindTotal('BANK');
+        if ( field == 'Txt_Bank_Charges')
+            this.FindTotal("CHARGES");
     }
 
     onBlur2(cb: any) {
@@ -833,6 +850,9 @@ export class PayFinalComponent implements OnInit {
 
         }
 
+        this.nExDiff_Dr = this.gs.roundNumber(this.nExDiff_Dr, 5);
+        this.nExDiff_Cr = this.gs.roundNumber(this.nExDiff_Cr, 5);
+
     }
 
 
@@ -944,6 +964,7 @@ export class PayFinalComponent implements OnInit {
         }
 
     }
+      
 
 
 }

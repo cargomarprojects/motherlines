@@ -293,13 +293,11 @@ export class PaymentEditComponent implements OnInit {
     }
 
 
-
-
-    Save() {
+    Save(paymentModalContent) {
         this.FindTotal();
         this.Allvalid();
+        this.modal = this.modalservice.open(paymentModalContent, { centered: true });
     }
-
 
     Allvalid() {
         let bRet = true;
@@ -488,18 +486,28 @@ export class PaymentEditComponent implements OnInit {
 
         //Process();
         //Show();
-        this.tab = 'payment';
+        
+        
+        //this.tab = 'payment';
+
+
+        
+
         return bRet;
     }
 
 
     callbackevent(data: any) {
-        if (data.action == 'CLOSE')
+        if (data.action == 'CLOSE') {
             this.tab = 'main';
+            this.CloseModal();
+        }
         if (data.action == 'PRINTCHECK') {
 
             this.ResetGrid();
             this.FindPartyBalance();
+
+            this.CloseModal();
 
             if (this.gs.BRANCH_REGION == "USA") {
                 if (data.printchq == 'Y') {
@@ -752,7 +760,7 @@ export class PaymentEditComponent implements OnInit {
     }
 
 
-    ArApList(_record: Tbl_cargo_invoicem, arapmodal: any) {
+    ArApList(_record: Tbl_cargo_invoicem, arapModalContent: any) {
 
         this.InvoiceList = <Tbl_cargo_invoicem[]>[];
         let MBLID: string = (_record.inv_mbl_id != null) ? _record.inv_mbl_id.toString() : "";
@@ -774,7 +782,7 @@ export class PaymentEditComponent implements OnInit {
                     if (this.InvoiceList.length <= 0)
                         alert("Invoice Not Found");
                     else
-                        this.modal = this.modalservice.open(arapmodal, { centered: true });
+                        this.modal = this.modalservice.open(arapModalContent, { centered: true });
                 } else
                     alert("Invoice Not Found");
             }, error => {

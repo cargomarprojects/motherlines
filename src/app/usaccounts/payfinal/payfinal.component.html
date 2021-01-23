@@ -1,10 +1,10 @@
-<div class="page-header">
+
+<!-- <div class="page-header">
     <div class="row align-items-center justify-content-left p-1">
         <label class="mr-3">Payment</label>
-        <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
     </div>
 </div>
-
+ -->
 <div *ngIf="errorMessage">
     <div class="alert alert-primary">
         {{errorMessage}}
@@ -242,10 +242,10 @@
 
 <div class="page-footer">
     <div class="row" *ngIf="canSave">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="form-group row">
-                <label class="col-4 col-form-label col-form-label-sm"></label>
-                <div class="col-8">
+                <label class="col-6 col-form-label col-form-label-sm"></label>
+                <div class="col-6">
                     <button class="btn btn-primary btn-sm" (click)="AllValid()">Save</button>
                 </div>
             </div>
