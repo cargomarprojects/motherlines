@@ -39,8 +39,7 @@ export class GlobalService {
 
   /* public baseUrl: string = "http://localhost:5000"; */
   //public baseUrl: string = "http://localhost:5000";
-  public baseUrl: string = "http://202.88.246.57:9090";
-  //public baseUrl: string = "";
+  public baseUrl: string = "";
 
 
 
