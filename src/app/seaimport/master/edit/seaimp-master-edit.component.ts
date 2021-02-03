@@ -184,7 +184,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.record.mbl_it_date = '';
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
-    this.record.mbl_cntr_type = 'FCL';
+    this.record.mbl_cntr_type = '';//FCL
     this.record.mbl_container_tot = 0;
     this.record.mbl_lock = '';
     this.record.mbl_unlock_date = '';
@@ -199,9 +199,9 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.record.mbl_shipment_stage = 'NIL';
     this.record.mbl_salesman_id = '';
     this.record.mbl_salesman_name = '';
-    this.record.mbl_status = '';
+    this.record.mbl_status = 'NIL';
     this.record.rec_files_attached = '';
-    this.record.mbl_is_sea_waybill = '';
+    this.record.mbl_is_sea_waybill = 'NIL';
     this.record.mbl_ismemo_attached = 'N';
     this.record.mbl_prefix = this.gs.SEA_IMPORT_REFNO_PREFIX;
     this.record.mbl_startingno = this.gs.SEA_IMPORT_REFNO_STARTING_NO;
