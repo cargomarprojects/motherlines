@@ -213,8 +213,6 @@ export class OthGeneralEditComponent implements OnInit {
     this.record.hbl_chwt = 0;
     this.record.hbl_chwt_lbs = 0;
     this.record.mbl_lock = '';
-    this.record.mbl_jobtype_id = '';
-    this.record.mbl_jobtype_name = '';
     this.record.hbl_isf_no = '';
     this.record.mbl_salesman_id = '';
     this.record.mbl_salesman_name = '';
@@ -242,7 +240,11 @@ export class OthGeneralEditComponent implements OnInit {
     // CmdInternalMemo.Foreground = new SolidColorBrush(Colors.Black);
 
     if (this.gs.JOB_TYPE_OT.length > 0) {
-      // this.record.mbl_jobtype_id = this.gs.JOB_TYPE_OT[0].
+      this.record.mbl_jobtype_id = this.gs.JOB_TYPE_OT[0].code;
+      this.record.mbl_jobtype_name = this.gs.JOB_TYPE_OT[0].name;
+    } else {
+      this.record.mbl_jobtype_id = '';
+      this.record.mbl_jobtype_name = '';
     }
 
     if (!this.gs.isBlank(this.mbl_ref_date_field))

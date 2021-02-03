@@ -177,8 +177,13 @@ export class AirExpMasterEditComponent implements OnInit {
     this.record.mbl_handled_name = '';
     this.record.mbl_mawb_weight = 0;
     this.record.mbl_mawb_chwt = 0;
-    this.record.mbl_jobtype_id = '';
-    this.record.mbl_jobtype_name = '';
+    if (this.gs.JOB_TYPE_AE.length > 0) {
+      this.record.mbl_jobtype_id = this.gs.JOB_TYPE_AE[0].code;
+      this.record.mbl_jobtype_name = this.gs.JOB_TYPE_AE[0].name;
+    } else {
+      this.record.mbl_jobtype_id = '';
+      this.record.mbl_jobtype_name = '';
+    }
     this.record.mbl_shipment_stage = 'NIL';
     this.record.mbl_salesman_id = '';
     this.record.mbl_salesman_name = '';

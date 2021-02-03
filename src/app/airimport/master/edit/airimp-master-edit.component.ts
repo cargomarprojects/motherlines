@@ -188,9 +188,13 @@ export class AirImpMasterEditComponent implements OnInit {
     // this.record.mbl_salesman_name = '';
     // this.record.mbl_3rdparty = 'N';
     // this.record.mbl_3rdparty_bool = false;
+    
     if (this.gs.JOB_TYPE_AI.length > 0) {
-      // if (JobList.Count > 0)
-      //     Cmb_JobType.SelectedIndex = 0;
+      this.record.mbl_jobtype_id = this.gs.JOB_TYPE_AI[0].code;
+      this.record.mbl_jobtype_name = this.gs.JOB_TYPE_AI[0].name;
+    } else {
+      this.record.mbl_jobtype_id = '';
+      this.record.mbl_jobtype_name = '';
     }
     if (!this.gs.isBlank(this.mbl_ref_date_field))
       this.mbl_ref_date_field.Focus();

@@ -208,8 +208,13 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.record.mbl_it_no = '';
     this.record.mbl_it_port = '';
     this.record.mbl_it_date = '';
-    this.record.mbl_jobtype_id = '';
-    this.record.mbl_jobtype_name = '';
+    if (this.gs.JOB_TYPE_OE.length > 0) {
+      this.record.mbl_jobtype_id = this.gs.JOB_TYPE_OE[0].code;
+      this.record.mbl_jobtype_name = this.gs.JOB_TYPE_OE[0].name;
+    } else {
+      this.record.mbl_jobtype_id = '';
+      this.record.mbl_jobtype_name = '';
+    }
     this.record.mbl_salesman_id = '';
     this.record.mbl_salesman_name = '';
     this.record.mbl_rotation_no = '';
