@@ -188,8 +188,13 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.record.mbl_container_tot = 0;
     this.record.mbl_lock = '';
     this.record.mbl_unlock_date = '';
-    this.record.mbl_jobtype_id = '';
-    this.record.mbl_jobtype_name = '';
+    if (this.gs.JOB_TYPE_OI.length > 0) {
+      this.record.mbl_jobtype_id = this.gs.JOB_TYPE_OI[0].code;
+      this.record.mbl_jobtype_name = this.gs.JOB_TYPE_OI[0].name;
+    } else {
+      this.record.mbl_jobtype_id = '';
+      this.record.mbl_jobtype_name = '';
+    }
     this.record.mbl_boeno = '';
     this.record.mbl_shipment_stage = 'NIL';
     this.record.mbl_salesman_id = '';
