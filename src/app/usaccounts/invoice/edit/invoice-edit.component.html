@@ -89,8 +89,8 @@
                     <label class="col-2 col-form-label col-form-label-sm">Arrival Notice</label>
                     <div class="col-2">
                         <select class="form-control form-control-sm" [(ngModel)]="record.inv_arrnotice">
-                        <option [value]="'N'">No</option>
-                        <option [value]="'Y'">Yes</option>
+                            <option [value]="'N'">No</option>
+                            <option [value]="'Y'">Yes</option>
                         </select>
                     </div>
                 </div>
@@ -134,10 +134,10 @@
                     <div class="col-3">
                         <input class="form-control form-control-sm" type="text" (blur)="onBlur('quoteno')"
                             [(ngModel)]="qtnno" [disabled]="false" maxlength="50" />
-                        
+
                     </div>
                     <div class="col-1">
-                        <button class="btn btn-info btn-sm" ><span>Fill</span></button>
+                        <button class="btn btn-info btn-sm"><span>Fill</span></button>
                     </div>
 
 
@@ -214,15 +214,13 @@
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('inv_hbl_lbs')"
                             [(ngModel)]="record.inv_hbl_lbs" [disabled]="false" maxlength="60" />
-                        <button class="btn btn-info btn-sm"
-                            (click)="FindWeight('Lbs2Kgs')"><span>&gt;</span></button>
+                        <button class="btn btn-info btn-sm" (click)="FindWeight('Lbs2Kgs')"><span>&gt;</span></button>
                     </div>
                     <label class="col-2 col-form-label col-form-label-sm">Kgs</label>
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('inv_hbl_weight')"
                             [(ngModel)]="record.inv_hbl_weight" [disabled]="false" maxlength="4" />
-                        <button class="btn btn-info btn-sm"
-                            (click)="FindWeight('Kgs2Lbs')"><span>&lt;</span></button>
+                        <button class="btn btn-info btn-sm" (click)="FindWeight('Kgs2Lbs')"><span>&lt;</span></button>
                     </div>
 
 
@@ -234,15 +232,13 @@
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('inv_hbl_cbm')"
                             [(ngModel)]="record.inv_hbl_cbm" [disabled]="false" maxlength="60" />
-                        <button class="btn btn-info btn-sm"
-                            (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
+                        <button class="btn btn-info btn-sm" (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                     </div>
                     <label class="col-2 col-form-label col-form-label-sm">Cft</label>
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('inv_hbl_cft')"
                             [(ngModel)]="record.inv_hbl_cft" [disabled]="false" maxlength="4" />
-                        <button class="btn btn-info btn-sm"
-                            (click)="FindWeight('Cft2Cbm')"><span>&lt;</span></button>
+                        <button class="btn btn-info btn-sm" (click)="FindWeight('Cft2Cbm')"><span>&lt;</span></button>
                     </div>
 
 
@@ -279,14 +275,14 @@
                                 <th width='2%'></th>
                             </tr>
                         </thead>
-                        <tbody class="page-body-tbody" *ngFor="let rec of records">
+                        <tbody class="page-body-tbody" *ngFor="let rec of records; let i = index">
                             <tr>
                                 <td class="p-0">
 
-                                    <app-autocomplete2 #_invd_desc_code [controlname]="'INVOICED-CODE'" [tabletype]="'PARAM'"
-                                        [uid]="rec.invd_pkid" [subtype]="'INVOICE-DESCRIPTION'" [displaycolumn]="'CODE'"
-                                        [displaydata]="rec.invd_desc_code"
-                                        (ValueChanged)="LovSelected($event)">
+                                    <app-autocomplete2 #_invd_desc_code [controlname]="'INVOICED-CODE'"
+                                        [tabletype]="'PARAM'" [uid]="rec.invd_pkid" [subtype]="'INVOICE-DESCRIPTION'"
+                                        [displaycolumn]="'CODE'" [displaydata]="rec.invd_desc_code"
+                                        (ValueChanged)="LovSelected($event,i)">
                                     </app-autocomplete2>
 
                                 </td>
@@ -302,34 +298,34 @@
                                 <td class="p-0">
                                     <app-autocomplete2 [controlname]="'INVOICED-ACCTM'" [tabletype]="'ACC_ACCTM'"
                                         [subtype]="" [displaycolumn]="'CODE'" [displaydata]="rec.invd_acc_code"
-                                        [where]="acc_code_Where_Condition"                                        
-                                        [uid]="rec.invd_pkid" [disabled]="!enable_acc_control"
-                                        (ValueChanged)="LovSelected($event)">
+                                        [where]="acc_code_Where_Condition" [uid]="rec.invd_pkid"
+                                        [disabled]="!enable_acc_control" (ValueChanged)="LovSelected($event,i)">
                                     </app-autocomplete2>
 
                                 </td>
                                 <td class="p-0">
-                                    <input #_invd_qty class="form-control form-control-sm" type="number" style="text-align:right;"
-                                        [(ngModel)]="rec.invd_qty" (blur)="onBlur('invd_qty',rec)" />
+                                    <input #_invd_qty class="form-control form-control-sm" type="number"
+                                        style="text-align:right;" [(ngModel)]="rec.invd_qty"
+                                        (blur)="onBlur('invd_qty',rec)" />
                                 </td>
                                 <td class="p-0">
                                     <input class="form-control form-control-sm" type="number" style="text-align:right;"
                                         [(ngModel)]="rec.invd_rate" (blur)="onBlur('invd_rate',rec)" />
                                 </td>
                                 <td class="p-0">
-                                    <input disabled class="form-control form-control-sm" type="number" style="text-align:right;"
-                                        [(ngModel)]="rec.invd_ftotal" (blur)="onBlur('invd_ftotal',rec)" />
+                                    <input disabled class="form-control form-control-sm" type="number"
+                                        style="text-align:right;" [(ngModel)]="rec.invd_ftotal"
+                                        (blur)="onBlur('invd_ftotal',rec)" />
                                 </td>
-                                
+
                                 <td class="p-0" *ngIf="show_currency">
                                     <app-autocomplete2 [controlname]="'INVOICED-CURR'" [tabletype]="'PARAM'"
                                         [subtype]="'CURRENCY'" [displaycolumn]="'CODE'" [uid]="rec.invd_pkid"
-                                         [displaydata]="rec.invd_curr_code"
-                                        (ValueChanged)="LovSelected($event)">
+                                        [displaydata]="rec.invd_curr_code" (ValueChanged)="LovSelected($event,i)">
                                     </app-autocomplete2>
                                 </td>
                                 <td class="p-0" *ngIf="show_currency">
-                                    <input class="form-control form-control-sm" type="number" style="text-align:right;"
+                                    <input  #_invd_exrate class="form-control form-control-sm" type="number" style="text-align:right;"
                                         [(ngModel)]="rec.invd_exrate" (blur)="onBlur('invd_exrate',rec)" />
                                 </td>
                                 <td class="p-0" *ngIf="show_currency">
@@ -353,7 +349,7 @@
                                 <td class="p-0" *ngIf="show_cc_control">
                                     <app-autocomplete2 [controlname]="'INVOICED-BRANCH'" [tabletype]="'BRANCH'"
                                         [displaycolumn]="'CODE'" [uid]="rec.invd_pkid" [displaydata]="rec.invd_cc_code"
-                                        (ValueChanged)="LovSelected($event)">
+                                        (ValueChanged)="LovSelected($event,i)">
                                     </app-autocomplete2>
                                 </td>
 
@@ -401,7 +397,8 @@
                             </tr>
                         </thead>
                         <tbody class="page-body-tbody">
-                            <tr *ngFor="let rec of history" [ngStyle]="{'color':rec.deleted === 'Y' ? 'red' : 'black' }">
+                            <tr *ngFor="let rec of history"
+                                [ngStyle]="{'color':rec.deleted === 'Y' ? 'red' : 'black' }">
                                 <td>{{rec.docno}}</td>
                                 <td>{{rec.doc_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                                 <td>{{rec.amt | number : '1.2-2'}}</td>
@@ -481,7 +478,8 @@
                     <div class="col-8">
                         <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)"
                             (click)="Save()">Save</button>
-                        <button class="btn btn-primary btn-sm mr-1" (click)="BtnNavigation('INVOICE-PRINT')">Print</button>
+                        <button class="btn btn-primary btn-sm mr-1"
+                            (click)="BtnNavigation('INVOICE-PRINT')">Print</button>
                         <button class="btn btn-primary btn-sm mr-1" (click)="BtnNavigation('HISTORY')">History</button>
 
                     </div>

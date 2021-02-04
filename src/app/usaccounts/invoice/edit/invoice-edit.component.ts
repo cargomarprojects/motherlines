@@ -26,10 +26,10 @@ export class InvoiceEditComponent implements OnInit {
   @ViewChildren('_invd_desc_code') invd_desc_code_ctrl: QueryList<AutoComplete2Component>;
   @ViewChildren('_invd_desc_name') invd_desc_name_ctrl: QueryList<ElementRef>;
   @ViewChildren('_invd_qty') invd_qty_ctrl: QueryList<ElementRef>;
-
+  @ViewChildren('_invd_exrate') invd_exrate_ctrl: QueryList<ElementRef>;
   errorMessage: string;
 
-  qtnno : string ;
+  qtnno: string;
 
   mode: string;
   mbl_pkid: string;
@@ -165,7 +165,7 @@ export class InvoiceEditComponent implements OnInit {
     this.show_vat = (this.gs.VAT_PER > 0) ? true : false;
     this.show_confirm = (this.gs.VAT_PER > 0) ? true : false;
     this.show_currency = (this.gs.IS_SINGLE_CURRENCY) ? false : true;
-    this.enable_currency= (this.gs.IS_SINGLE_CURRENCY) ? false : true;
+    this.enable_currency = (this.gs.IS_SINGLE_CURRENCY) ? false : true;
     this.show_invstage = false;
     this.enable_customer_control = true;
 
@@ -421,12 +421,12 @@ export class InvoiceEditComponent implements OnInit {
     this.bal_amt = 0;
 
     this.InitCommonValues();
-    
+
     this.initControls();
 
     this.isVat = false;
-    if ( this.show_vat) {
-      if ( this.gs.CompareDate( this.record.inv_date,"2018-02-01") == ">")
+    if (this.show_vat) {
+      if (this.gs.CompareDate(this.record.inv_date, "2018-02-01") == ">")
         this.isVat = true;
     }
 
@@ -483,8 +483,8 @@ export class InvoiceEditComponent implements OnInit {
         this.isConfirmed = true;
 
       this.isVat = false;
-      if ( this.show_vat) {
-        if ( this.gs.CompareDate( this.record.inv_date,"2018-02-01") == ">")
+      if (this.show_vat) {
+        if (this.gs.CompareDate(this.record.inv_date, "2018-02-01") == ">")
           this.isVat = true;
       }
 
@@ -498,13 +498,13 @@ export class InvoiceEditComponent implements OnInit {
     this.record.inv_confirmed = 'N';
     this.record.inv_stage = "N";
 
-    if ( this.isVat) {
-      this.record.inv_vat_per =  this.gs.VAT_PER;
+    if (this.isVat) {
+      this.record.inv_vat_per = this.gs.VAT_PER;
       this.record.vat_acc_id = this.gs.VAT_ACC_ID;
       this.record.vat_acc_name = this.gs.VAT_ACC_NAME;
       this.record.vat_desc_id = this.gs.VAT_INVDESC_ID;
       this.record.vat_dsc_name = this.gs.VAT_INVDESC_NAME;
-      this.record.vat_per =   this.gs.VAT_PER;
+      this.record.vat_per = this.gs.VAT_PER;
     }
 
     if (this.isConfirmed)
@@ -512,19 +512,19 @@ export class InvoiceEditComponent implements OnInit {
 
     let Jv_Narration = "";
     if (this.record.inv_arap == "AR")
-        Jv_Narration = "DUE FROM ";
+      Jv_Narration = "DUE FROM ";
     else
-        Jv_Narration = "DUE TO ";
+      Jv_Narration = "DUE TO ";
     Jv_Narration += this.record.inv_cust_name;
     Jv_Narration += " AMOUNT: " + this.record.inv_total;
     Jv_Narration += " REFNO: " + this.record.inv_mbl_refno;
-    Jv_Narration += this.record.inv_date != null ? " DATED: " +  this.record.inv_date : "";
+    Jv_Narration += this.record.inv_date != null ? " DATED: " + this.record.inv_date : "";
     Jv_Narration += this.record.inv_remarks != null ? " " + this.record.inv_remarks.trim() : "";
     Jv_Narration += this.record.inv_remarks2 != null ? " " + this.record.inv_remarks2.trim() : "";
     Jv_Narration += this.record.inv_remarks3 != null ? " " + this.record.inv_remarks3.trim() : "";
-      
+
     if (Jv_Narration.length > 250)
-        Jv_Narration = Jv_Narration.substring(0, 250);
+      Jv_Narration = Jv_Narration.substring(0, 250);
     this.record.inv_narration = Jv_Narration;
   }
 
@@ -802,9 +802,9 @@ export class InvoiceEditComponent implements OnInit {
     nBal = nTot - nPaid;
     Txt_Balance.Text = nBal.ToString();
     */
- 
 
-    
+
+
 
   }
 
@@ -996,7 +996,7 @@ export class InvoiceEditComponent implements OnInit {
     this.FindGrandTotal();
   }
 
-  LovSelected(_Record: SearchTable) {
+  LovSelected(_Record: SearchTable, idx: number = 0) {
 
     if (_Record.controlname == "CUSTOMER") {
       this.record.inv_cust_id = _Record.id;
@@ -1011,7 +1011,7 @@ export class InvoiceEditComponent implements OnInit {
     }
 
     if (_Record.controlname == "CURR") {
-      this.record.inv_curr_code =  _Record.code;
+      this.record.inv_curr_code = _Record.code;
       this.record.inv_exrate = +_Record.col1;
       if (this.gs.IS_SINGLE_CURRENCY)
         this.record.inv_exrate = 1;
@@ -1021,7 +1021,6 @@ export class InvoiceEditComponent implements OnInit {
 
 
     if (_Record.controlname == "INVOICED-CODE" || _Record.controlname == "INVOICED-CURR" || _Record.controlname == "INVOICED-ACCTM" || _Record.controlname == "INVOICED-BRANCH") {
-      let idx: number = 0;
       this.records.forEach(rec => {
 
         if (rec.invd_pkid == _Record.uid) {
@@ -1034,7 +1033,8 @@ export class InvoiceEditComponent implements OnInit {
               rec.invd_vat_per = +_Record.col2;
 
             if (!this.gs.isBlank(this.invd_desc_name_ctrl))
-              this.invd_desc_name_ctrl.toArray()[idx].nativeElement.focus();
+              if (idx < this.invd_desc_name_ctrl.toArray().length)
+                this.invd_desc_name_ctrl.toArray()[idx].nativeElement.focus();
 
             this.findRowTotal('invd_code', rec);
 
@@ -1048,6 +1048,10 @@ export class InvoiceEditComponent implements OnInit {
               rec.invd_exrate = 1;
 
             this.findRowTotal('invd_exrate', rec);
+
+            if (!this.gs.isBlank(this.invd_exrate_ctrl))
+              if (idx < this.invd_exrate_ctrl.toArray().length)
+                this.invd_exrate_ctrl.toArray()[idx].nativeElement.focus();
           }
 
           if (_Record.controlname == "INVOICED-ACCTM") {
@@ -1055,7 +1059,8 @@ export class InvoiceEditComponent implements OnInit {
             rec.invd_acc_code = _Record.code;
             rec.invd_acc_name = _Record.name;
             if (!this.gs.isBlank(this.invd_qty_ctrl))
-              this.invd_qty_ctrl.toArray()[idx].nativeElement.focus();
+              if (idx < this.invd_qty_ctrl.toArray().length)
+                this.invd_qty_ctrl.toArray()[idx].nativeElement.focus();
           }
 
           if (_Record.controlname == "INVOICED-BRANCH") {
@@ -1064,7 +1069,6 @@ export class InvoiceEditComponent implements OnInit {
           }
 
         }
-        idx++;
       });
     }
 
