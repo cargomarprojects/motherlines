@@ -187,7 +187,7 @@ export class QtnFclService {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/GetMessage', SearchData, this.gs.headerparam2('authorized'));
     }
     GetContactMemo(SearchData: any) {
-        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/GetContactMemo', SearchData, this.gs.headerparam2('authorized'));
+        return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnLcl/GetContactMemo', SearchData, this.gs.headerparam2('authorized'));
     }
     LoadLabelHeader(SearchData: any) {
         return this.http2.post<any>(this.gs.baseUrl + '/api/Marketing/QtnFcl/LoadLabelHeader', SearchData, this.gs.headerparam2('authorized'));

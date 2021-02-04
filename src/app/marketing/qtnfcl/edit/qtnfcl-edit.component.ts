@@ -17,6 +17,20 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class QtnFclEditComponent implements OnInit {
 
+    @ViewChild('_btnretlcl') btnretlcl_field: ElementRef;
+    @ViewChild('_qtnm_to_code') qtnm_to_code_field: AutoComplete2Component;
+    @ViewChild('_qtnm_to_name') qtnm_to_name_field: InputBoxComponent;
+    @ViewChild('_qtnm_move_type') qtnm_move_type_field: InputBoxComponent;
+    @ViewChild('_pol_code') pol_code_field: AutoComplete2Component;
+    @ViewChild('_pol_name') pol_name_field: InputBoxComponent;
+    @ViewChild('_pod_code') pod_code_field: AutoComplete2Component;
+    @ViewChild('_pod_name') pod_name_field: InputBoxComponent;
+    @ViewChild('_carr_name') carr_name_field: InputBoxComponent;
+    @ViewChild('_qtnm_subjects') qtnm_subjects_field: ElementRef;
+
+    // @ViewChildren('_qtnd_desc_code') qtnd_desc_code_field: QueryList<AutoComplete2Component>;_pol_name
+    // @ViewChildren('_qtnd_desc_name') qtnd_desc_name_field: QueryList<InputBoxComponent>;
+
     record: Tbl_Cargo_Qtnm = <Tbl_Cargo_Qtnm>{};
     records: Tbl_Cargo_Qtnd_Fcl[] = [];
 
@@ -88,7 +102,7 @@ export class QtnFclEditComponent implements OnInit {
     ) {
         modalconfig.backdrop = 'static'; //true/false/static
         modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
-     }
+    }
 
     ngOnInit() {
         const options = JSON.parse(this.route.snapshot.queryParams.parameter);
@@ -101,6 +115,12 @@ export class QtnFclEditComponent implements OnInit {
         this.actionHandler();
     }
 
+    ngAfterViewInit() {
+        if (this.mode == 'ADD') {
+            if (!this.gs.isBlank(this.qtnm_to_code_field))
+                this.qtnm_to_code_field.Focus();
+        }
+    }
     private initPage() {
         this.foreign_amt_decplace = this.gs.foreign_amt_dec;
         this.isAdmin = this.gs.IsAdmin(this.menuid);
@@ -387,6 +407,8 @@ export class QtnFclEditComponent implements OnInit {
         this.qtnd_pkid = this.gs.getGuid();
         this.InitDetail();
         // Txt_Pol_code.Focus();
+        if (!this.gs.isBlank(this.pol_code_field))
+            this.pol_code_field.Focus();
     }
     InitDetail() {
         this.polId = "";
@@ -437,6 +459,8 @@ export class QtnFclEditComponent implements OnInit {
         this.totAmt = _rec.qtnd_tot_amt;
         this.lblSave = "Update Row";
         //Dispatcher.BeginInvoke(() => { Txt_Pol_code.Focus(); });
+        if (!this.gs.isBlank(this.pol_code_field))
+            this.pol_code_field.Focus();
     }
 
     LovSelected(_Record: SearchTable) {
@@ -458,23 +482,36 @@ export class QtnFclEditComponent implements OnInit {
         if (_Record.controlname == "SALESMAN") {
             this.record.qtnm_salesman_id = _Record.id;
             this.record.qtnm_salesman_name = _Record.name;
+            if (!this.gs.isBlank(this.qtnm_move_type_field))
+                this.qtnm_move_type_field.focus();
         }
         if (_Record.controlname == "POL") {
             this.polId = _Record.id;
             this.polCode = _Record.code;
             // this.polName = _Record.name;
             this.polName = this.gs.GetAirportCode(_Record.col3.toString(), _Record.name.toString(), _Record.col4.toString());
+            if (!this.gs.isBlank(this.pol_name_field))
+                this.pol_name_field.focus();
         }
         if (_Record.controlname == "POD") {
             this.podId = _Record.id;
             this.podCode = _Record.code;
             // this.podName = _Record.name;
             this.podName = this.gs.GetAirportCode(_Record.col3.toString(), _Record.name.toString(), _Record.col4.toString());
+            if (!this.gs.isBlank(this.pod_name_field))
+                this.pod_name_field.focus();
         }
         if (_Record.controlname == "CARR") {
             this.carrId = _Record.id;
             this.carrCode = _Record.code;
             this.carrName = _Record.name;
+            if (!this.gs.isBlank(this.carr_name_field))
+                this.carr_name_field.focus();
+        }
+        if (_Record.controlname == "CURR") {
+            this.record.qtnm_curr_code = _Record.code;
+            if (!this.gs.isBlank(this.pol_code_field))
+                this.pol_code_field.Focus();
         }
     }
 
@@ -548,6 +585,8 @@ export class QtnFclEditComponent implements OnInit {
             .subscribe(response => {
                 this.record.qtnm_subjects = response.message;
                 // Txt_Subject.Focus();
+                if (!this.gs.isBlank(this.qtnm_subjects_field))
+                    this.qtnm_subjects_field.nativeElement.focus();
 
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
@@ -565,6 +604,8 @@ export class QtnFclEditComponent implements OnInit {
             .subscribe(response => {
                 this.record.qtnm_subjects = response.message;
                 // Txt_Subject.Focus();
+                if (!this.gs.isBlank(this.qtnm_to_name_field))
+                    this.qtnm_to_name_field.focus();
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
             });
@@ -618,6 +659,6 @@ export class QtnFclEditComponent implements OnInit {
 
     CloseModal() {
         this.modal.close();
-      }
+    }
 
 }
