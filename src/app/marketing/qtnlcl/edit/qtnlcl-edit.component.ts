@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
@@ -26,6 +26,12 @@ export class QtnLclEditComponent implements OnInit {
     @ViewChild('por') por_field: InputBoxComponent;
     @ViewChild('pol') pol_field: InputBoxComponent;
     @ViewChild('pod') pod_field: InputBoxComponent;
+    @ViewChild('_qtnm_subjects') qtnm_subjects_field: ElementRef;
+    @ViewChild('_qtnm_commodity') qtnm_commodity_field: InputBoxComponent;
+    @ViewChild('_qtnm_remarks') qtnm_remarks_field: ElementRef;
+    @ViewChildren('_qtnd_desc_code') qtnd_desc_code_field: QueryList<AutoComplete2Component>;
+    @ViewChildren('_qtnd_desc_name') qtnd_desc_name_field: QueryList<InputBoxComponent>;
+
 
     record: Tbl_Cargo_Qtnm = <Tbl_Cargo_Qtnm>{};
     records: Tbl_Cargo_Qtnd_Lcl[] = [];
@@ -337,9 +343,13 @@ export class QtnLclEditComponent implements OnInit {
         rec.qtnd_old_pkid = '';
         rec.qtnd_old_amt = 0;
         this.records.push(rec);
+        this.qtnd_desc_code_field.changes
+            .subscribe((queryChanges) => {
+                this.qtnd_desc_code_field.last.Focus();
+            });
     }
 
-    LovSelected(_Record: SearchTable) {
+    LovSelected(_Record: SearchTable, idx: number = 0) {
 
         if (_Record.controlname == "QUOTE-TO") {
 
@@ -358,21 +368,34 @@ export class QtnLclEditComponent implements OnInit {
         if (_Record.controlname == "SALESMAN") {
             this.record.qtnm_salesman_id = _Record.id;
             this.record.qtnm_salesman_name = _Record.name;
+            if (!this.gs.isBlank(this.move_type_field))
+                this.move_type_field.focus();
         }
         if (_Record.controlname == "POR") {
             this.record.qtnm_por_id = _Record.id;
             this.record.qtnm_por_code = _Record.code;
             this.record.qtnm_por_name = _Record.name;
+            if (!this.gs.isBlank(this.por_field))
+                this.por_field.focus();
         }
         if (_Record.controlname == "POL") {
             this.record.qtnm_pol_id = _Record.id;
             this.record.qtnm_pol_code = _Record.code;
             this.record.qtnm_pol_name = _Record.name;
+            if (!this.gs.isBlank(this.pol_field))
+                this.pol_field.focus();
         }
         if (_Record.controlname == "POD") {
             this.record.qtnm_pod_id = _Record.id;
             this.record.qtnm_pod_code = _Record.code;
             this.record.qtnm_pod_name = _Record.name;
+            if (!this.gs.isBlank(this.pod_field))
+                this.pod_field.focus();
+        }
+        if (_Record.controlname == "CURR") {
+            this.record.qtnm_curr_code = _Record.code;
+            if (!this.gs.isBlank(this.qtnm_commodity_field))
+                this.qtnm_commodity_field.focus();
         }
 
         if (_Record.controlname == "INVOICE-CODE") {
@@ -380,11 +403,12 @@ export class QtnLclEditComponent implements OnInit {
                 if (rec.qtnd_desc_id == _Record.uid) {
                     rec.qtnd_desc_code = _Record.code;
                     rec.qtnd_desc_name = _Record.name;
+                    if (idx < this.qtnd_desc_name_field.toArray().length)
+                        this.qtnd_desc_name_field.toArray()[idx].focus();
                 }
             });
         }
-
-    }
+     }
 
     OnChange(field: string) {
     }
@@ -495,10 +519,14 @@ export class QtnLclEditComponent implements OnInit {
                 if (_msgType == "LCLMSG6") {
                     this.record.qtnm_remarks = response.message;
                     //Txt_Remarks.Focus();
+                    if (!this.gs.isBlank(this.qtnm_remarks_field))
+                        this.qtnm_remarks_field.nativeElement.focus();
                 }
                 else {
                     this.record.qtnm_subjects = response.message;
                     // Txt_Subject.Focus();
+                    if (!this.gs.isBlank(this.qtnm_subjects_field))
+                        this.qtnm_subjects_field.nativeElement.focus();
                 }
 
             }, error => {
@@ -516,6 +544,9 @@ export class QtnLclEditComponent implements OnInit {
         this.mainService.GetContactMemo(SearchData)
             .subscribe(response => {
                 this.record.qtnm_subjects = response.message;
+
+                if (!this.gs.isBlank(this.to_name_field))
+                    this.to_name_field.focus();
                 // Txt_Subject.Focus();
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
