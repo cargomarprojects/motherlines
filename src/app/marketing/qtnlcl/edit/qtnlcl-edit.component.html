@@ -331,7 +331,7 @@
                                 <td class="p-0">
                                     <app-autocomplete2 #_qtnd_desc_code [controlname]="'INVOICE-CODE'"
                                         [displaycolumn]="'CODE'" [tabletype]="'PARAM'" [subtype]="'INVOICE-DESCRIPTION'"
-                                        [uid]="rec.qtnd_desc_id" [displaydata]="rec.qtnd_desc_code"
+                                        [uid]="rec.qtnd_pkid" [displaydata]="rec.qtnd_desc_code"
                                         (ValueChanged)="LovSelected($event,i)">
                                     </app-autocomplete2>
                                 </td>

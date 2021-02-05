@@ -223,6 +223,11 @@ export class QtnLclEditComponent implements OnInit {
             return;
         this.FindGrandTotal();
         this.SaveParent();
+
+        let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+        let filter : any = {};
+        filter.PATH = filepath;
+
         const saveRecord = <vm_Tbl_Cargo_Qtnd_Lcl>{};
         saveRecord.record = this.record;
         saveRecord.records = this.records;
@@ -230,7 +235,7 @@ export class QtnLclEditComponent implements OnInit {
         saveRecord.mode = this.mode;
         saveRecord.userinfo = this.gs.UserInfo;
         saveRecord.historys = this.historyList;
-
+        saveRecord.filter = filter;
 
         this.mainService.Save(saveRecord)
             .subscribe(response => {
@@ -244,7 +249,7 @@ export class QtnLclEditComponent implements OnInit {
                     this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
                     this.errorMessage.push('Save Complete');
-                    alert(this.errorMessage);
+                    //alert(this.errorMessage);
                 }
 
                 this.historyList = new Array<Tbl_Cargo_Qtnd_Lcl>();
@@ -400,7 +405,8 @@ export class QtnLclEditComponent implements OnInit {
 
         if (_Record.controlname == "INVOICE-CODE") {
             this.records.forEach(rec => {
-                if (rec.qtnd_desc_id == _Record.uid) {
+                if (rec.qtnd_pkid == _Record.uid) {
+                    rec.qtnd_desc_id= _Record.id;
                     rec.qtnd_desc_code = _Record.code;
                     rec.qtnd_desc_name = _Record.name;
                     if (idx < this.qtnd_desc_name_field.toArray().length)

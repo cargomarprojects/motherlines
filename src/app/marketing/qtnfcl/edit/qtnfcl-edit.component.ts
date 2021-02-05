@@ -304,7 +304,7 @@ export class QtnFclEditComponent implements OnInit {
                     this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
                     this.errorMessage.push('Save Complete');
-                    alert(this.errorMessage);
+                    // alert(this.errorMessage);
                 }
 
             }, error => {
