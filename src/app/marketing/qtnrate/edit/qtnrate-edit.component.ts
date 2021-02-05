@@ -18,6 +18,12 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class QtnRateEditComponent implements OnInit {
 
+    @ViewChild('_btnretrate') btnretrate_field: ElementRef;
+    @ViewChild('_qtnr_agent_name') qtnr_agent_name_field: AutoComplete2Component;
+    @ViewChild('_qtnr_pol_cntry_name') qtnr_pol_cntry_name_field: AutoComplete2Component;
+    @ViewChild('_qtnr_pod_cntry_name') qtnr_pod_cntry_name_field: AutoComplete2Component;
+    @ViewChild('_qtnr_mode') qtnr_mode_field: ElementRef;
+
     record: Tbl_Cargo_Qtn_Rates = <Tbl_Cargo_Qtn_Rates>{};
 
     tab: string = 'main';
@@ -57,7 +63,7 @@ export class QtnRateEditComponent implements OnInit {
         private location: Location,
         public gs: GlobalService,
         private mainService: QtnRateService,
-    ) { 
+    ) {
         modalconfig.backdrop = 'static'; //true/false/static
         modalconfig.keyboard = true; //true Closes the modal when escape key is pressed
     }
@@ -72,7 +78,12 @@ export class QtnRateEditComponent implements OnInit {
         this.initPage();
         this.actionHandler();
     }
-
+    ngAfterViewInit() {
+        if (this.mode == 'ADD') {
+            if (!this.gs.isBlank(this.qtnr_agent_name_field))
+                this.qtnr_agent_name_field.Focus();
+        }
+    }
     private initPage() {
         this.isAdmin = this.gs.IsAdmin(this.menuid);
         this.title = this.gs.getTitle(this.menuid);
@@ -133,6 +144,8 @@ export class QtnRateEditComponent implements OnInit {
                     this.Foregroundcolor = "red";
                 else
                     this.Foregroundcolor = "white";
+                if (!this.gs.isBlank(this.btnretrate_field))
+                    this.btnretrate_field.nativeElement.focus();
 
             }, error => {
                 this.errorMessage = this.gs.getError(error);
@@ -163,7 +176,7 @@ export class QtnRateEditComponent implements OnInit {
                     this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
-                   // alert(this.errorMessage);
+                    // alert(this.errorMessage);
                 }
 
             }, error => {
@@ -215,20 +228,27 @@ export class QtnRateEditComponent implements OnInit {
             this.record.qtnr_agent_id = _Record.id;
             this.record.qtnr_agent_code = _Record.code;
             this.record.qtnr_agent_name = _Record.name;
+            if (!this.gs.isBlank(this.qtnr_pol_cntry_name_field))
+                this.qtnr_pol_cntry_name_field.Focus();
         }
 
         if (_Record.controlname == "POL-COUNTRY") {
             this.record.qtnr_pol_cntry_id = _Record.id;
             this.record.qtnr_pol_cntry_name = _Record.name;
+            if (!this.gs.isBlank(this.qtnr_pod_cntry_name_field))
+                this.qtnr_pod_cntry_name_field.Focus();
         }
         if (_Record.controlname == "POD-COUNTRY") {
             this.record.qtnr_pod_cntry_id = _Record.id;
             this.record.qtnr_pod_cntry_name = _Record.name;
+            if (!this.gs.isBlank(this.qtnr_mode_field))
+                this.qtnr_mode_field.nativeElement.focus();
         }
     }
 
     OnChange(field: string) {
     }
+    
     onFocusout(field: string) {
     }
 
@@ -264,5 +284,5 @@ export class QtnRateEditComponent implements OnInit {
 
     CloseModal() {
         this.modal.close();
-      }
+    }
 }
