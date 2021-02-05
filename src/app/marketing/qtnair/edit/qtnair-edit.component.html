@@ -3,7 +3,7 @@
         <div class="row align-items-center justify-content-left p-1">
             <label class="mr-3">{{title}}({{mode}})</label>
             <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="Copy()">Copy</button>
-            <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+            <button  #_btnretair class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         </div>
     </div>
 
@@ -39,14 +39,14 @@
                     <label class="col-3 col-form-label col-form-label-sm">Quote To</label>
                     <div class="col-9">
                         <app-autocomplete2 [controlname]="'QUOTE-TO'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
-                            [displaydata]="record.qtnm_to_code" (ValueChanged)="LovSelected($event)" #to_code>
+                            [displaydata]="record.qtnm_to_code" (ValueChanged)="LovSelected($event)" #_qtnm_to_code>
                         </app-autocomplete2>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-3 col-form-label col-form-label-sm">Name</label>
                     <div class="col-9">
-                        <InputBox [(inputModel)]="record.qtnm_to_name" [maxlength]="60" [uppercase]="true" #to_name>
+                        <InputBox [(inputModel)]="record.qtnm_to_name" [maxlength]="60" [uppercase]="true" #_qtnm_to_name>
                         </InputBox>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                 <div class="form-group row">
                     <label class="col-3 col-form-label col-form-label-sm">Move Type</label>
                     <div class="col-9">
-                        <InputBox [(inputModel)]="record.qtnm_move_type" [maxlength]="25" [uppercase]="true" #move_type>
+                        <InputBox [(inputModel)]="record.qtnm_move_type" [maxlength]="25" [uppercase]="true" #_qtnm_move_type>
                         </InputBox>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm">POL</label>
                             <div class="col-9">
-                                <app-autocomplete2 [controlname]="'POL'" [displaycolumn]="'CODE'"
+                                <app-autocomplete2 #_pol_code [controlname]="'POL'" [displaycolumn]="'CODE'"
                                     [tabletype]="'PARAMDET'" [subtype]="'AIR PORT'" [displaydata]="polCode"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
@@ -157,7 +157,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="polName" [maxlength]="60" [uppercase]="true" #pol_name>
+                                <InputBox [(inputModel)]="polName" [maxlength]="60" [uppercase]="true" #_pol_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm">POD</label>
                             <div class="col-9">
-                                <app-autocomplete2 [controlname]="'POD'" [displaycolumn]="'CODE'"
+                                <app-autocomplete2 #_pod_code [controlname]="'POD'" [displaycolumn]="'CODE'"
                                     [tabletype]="'PARAMDET'" [subtype]="'AIR PORT'" [displaydata]="podCode"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
@@ -175,7 +175,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="podName" [maxlength]="60" [uppercase]="true" #pod_name>
+                                <InputBox [(inputModel)]="podName" [maxlength]="60" [uppercase]="true" #_pod_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -186,7 +186,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm">CARRIER</label>
                             <div class="col-9">
-                                <app-autocomplete2 [controlname]="'CARR'" [displaycolumn]="'CODE'"
+                                <app-autocomplete2 #_carr_code [controlname]="'CARR'" [displaycolumn]="'CODE'"
                                     [tabletype]="'AIR CARRIER'" [subtype]="'AIR CARRIER'" [displaydata]="carrCode"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
@@ -195,7 +195,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="carrName" [maxlength]="60" [uppercase]="true" #carr_name>
+                                <InputBox [(inputModel)]="carrName" [maxlength]="60" [uppercase]="true" #_carr_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -412,7 +412,7 @@
                         <div class="form-group row">
                             <label class="col-1 col-form-label col-form-label-sm">Subject</label>
                             <div class="col-11">
-                                <textarea rows="6" class="form-control form-control-sm"
+                                <textarea #_qtnm_subjects rows="6" class="form-control form-control-sm"
                                     [(ngModel)]="record.qtnm_subjects"></textarea>
                             </div>
                         </div>

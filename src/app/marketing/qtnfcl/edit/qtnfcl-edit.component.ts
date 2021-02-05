@@ -17,7 +17,7 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class QtnFclEditComponent implements OnInit {
 
-    @ViewChild('_btnretlcl') btnretlcl_field: ElementRef;
+    @ViewChild('_btnretfcl') btnretfcl_field: ElementRef;
     @ViewChild('_qtnm_to_code') qtnm_to_code_field: AutoComplete2Component;
     @ViewChild('_qtnm_to_name') qtnm_to_name_field: InputBoxComponent;
     @ViewChild('_qtnm_move_type') qtnm_move_type_field: InputBoxComponent;
@@ -28,8 +28,6 @@ export class QtnFclEditComponent implements OnInit {
     @ViewChild('_carr_name') carr_name_field: InputBoxComponent;
     @ViewChild('_qtnm_subjects') qtnm_subjects_field: ElementRef;
 
-    // @ViewChildren('_qtnd_desc_code') qtnd_desc_code_field: QueryList<AutoComplete2Component>;_pol_name
-    // @ViewChildren('_qtnd_desc_name') qtnd_desc_name_field: QueryList<InputBoxComponent>;
 
     record: Tbl_Cargo_Qtnm = <Tbl_Cargo_Qtnm>{};
     records: Tbl_Cargo_Qtnd_Fcl[] = [];
@@ -271,6 +269,9 @@ export class QtnFclEditComponent implements OnInit {
                     this.Foregroundcolor = "red";
                 else
                     this.Foregroundcolor = "white";
+
+                if (!this.gs.isBlank(this.btnretfcl_field))
+                    this.btnretfcl_field.nativeElement.focus();
 
             }, error => {
                 this.errorMessage.push(this.gs.getError(error));
