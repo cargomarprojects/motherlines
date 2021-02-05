@@ -238,12 +238,18 @@ export class QtnAirEditComponent implements OnInit {
 
         this.FindGrandTotal();
         this.SaveParent();
+
+        let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+        let filter: any = {};
+        filter.PATH = filepath;
+
         const saveRecord = <vm_Tbl_Cargo_Qtnd_Air>{};
         saveRecord.record = this.record;
         saveRecord.records = this.records;
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
         saveRecord.userinfo = this.gs.UserInfo;
+        saveRecord.filter = filter;
 
         this.mainService.Save(saveRecord)
             .subscribe(response => {
@@ -257,7 +263,7 @@ export class QtnAirEditComponent implements OnInit {
                     this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
                     this.errorMessage.push('Save Complete');
-                  //  alert(this.errorMessage);
+                    //  alert(this.errorMessage);
                 }
 
             }, error => {
@@ -443,7 +449,7 @@ export class QtnAirEditComponent implements OnInit {
             this.polId = _Record.id;
             this.polCode = _Record.code;
             // this.polName = _Record.name;
-            this.polName = this.gs.GetAirportCode(_Record.col3.toString(), _Record.name.toString(), _Record.col4.toString());
+            this.polName = this.gs.GetAirportCode(_Record.code.toString(), _Record.name.toString(), _Record.col4.toString());
             if (!this.gs.isBlank(this.pol_name_field))
                 this.pol_name_field.focus();
         }
@@ -451,7 +457,7 @@ export class QtnAirEditComponent implements OnInit {
             this.podId = _Record.id;
             this.podCode = _Record.code;
             //this.podName = _Record.name;
-            this.podName = this.gs.GetAirportCode(_Record.col3.toString(), _Record.name.toString(), _Record.col4.toString());
+            this.podName = this.gs.GetAirportCode(_Record.code.toString(), _Record.name.toString(), _Record.col4.toString());
             if (!this.gs.isBlank(this.pod_name_field))
                 this.pod_name_field.focus();
         }

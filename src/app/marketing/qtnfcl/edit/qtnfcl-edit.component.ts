@@ -285,12 +285,18 @@ export class QtnFclEditComponent implements OnInit {
             return;
         this.FindGrandTotal();
         this.SaveParent();
+
+        let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
+        let filter: any = {};
+        filter.PATH = filepath;
+
         const saveRecord = <vm_Tbl_Cargo_Qtnd_Fcl>{};
         saveRecord.record = this.record;
         saveRecord.records = this.records;
         saveRecord.pkid = this.pkid;
         saveRecord.mode = this.mode;
         saveRecord.userinfo = this.gs.UserInfo;
+        saveRecord.filter = filter;
 
         this.mainService.Save(saveRecord)
             .subscribe(response => {
