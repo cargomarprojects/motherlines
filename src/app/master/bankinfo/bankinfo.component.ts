@@ -209,7 +209,7 @@ export class BankInfoComponent implements OnInit {
             }
           }
           this.NewRecord();
-          // this.errorMessage = 'Save Complete';
+          this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
       }, error => {

@@ -394,7 +394,7 @@ export class AirImpHouseEditComponent implements OnInit {
           this.mode = 'EDIT';
           if (this.origin === "airimp-house-page")
             this.mainService.RefreshList(this.record);
-          // this.errorMessage.push('Save Complete');
+           this.errorMessage.push('Save Complete');
           // alert(this.errorMessage[0]);
         }
       }, error => {

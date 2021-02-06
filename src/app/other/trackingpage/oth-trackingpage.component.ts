@@ -160,7 +160,7 @@ export class OthTrackingPageComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-          // this.errorMessage = 'Save Complete';
+           this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
       }, error => {
@@ -333,7 +333,7 @@ export class OthTrackingPageComponent implements OnInit {
           }
 
           this.NewRecord();
-          // this.errorMessage = 'Save Complete';
+          this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
       }, error => {

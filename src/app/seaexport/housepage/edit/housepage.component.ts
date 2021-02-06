@@ -648,6 +648,8 @@ export class HousePageComponent implements OnInit {
         if (this.mode == "ADD" && response.refno != '')
           this.record.hbl_houseno = response.refno;
         this.mode = 'EDIT';
+        this.errorMessage.push('Save Complete');
+        // alert(this.errorMessage);
       }
 
     }, error => {

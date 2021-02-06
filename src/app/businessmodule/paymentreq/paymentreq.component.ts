@@ -176,7 +176,7 @@ this.paytype_needed_field.nativeElement.focus();
         }
         else {
           this.RefreshList();
-          // this.errorMessage = 'Save Complete';
+          this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
           this.NewRecord();
         }

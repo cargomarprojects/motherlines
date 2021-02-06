@@ -168,8 +168,14 @@ export class BookingComponent implements OnInit {
 
     this.mainService.Save(saverec).subscribe(response => {
 
-      if (response.retvalue)
+      if (response.retvalue) {
         this.mode = 'EDIT';
+        this.errorMessage.push('Save Complete');
+       // alert(this.errorMessage);
+      } else {
+        this.errorMessage.push(response.error);
+        alert(this.errorMessage);
+      }
 
     }, error => {
       this.errorMessage.push(this.gs.getError(error));

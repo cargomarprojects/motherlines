@@ -253,7 +253,7 @@ export class MessengerSlipEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.cs_refno = response.code;
           this.mode = 'EDIT';
-          // this.errorMessage = 'Save Complete';
+           this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
         //  this.csdate_field.Focus();

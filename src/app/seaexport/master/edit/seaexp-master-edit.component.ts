@@ -326,7 +326,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          // this.errorMessage.push('Save Complete');
+          this.errorMessage.push('Save Complete');
           // alert(this.errorMessage[0]);
         }
       }, error => {

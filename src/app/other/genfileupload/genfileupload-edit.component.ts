@@ -186,7 +186,7 @@ export class GenFileUploadEditComponent implements OnInit {
                     this.mode = 'EDIT';
                     this.mainService.RefreshList(this.record);
                     this.errorMessage = 'Save Complete';
-                    alert(this.errorMessage);
+                   // alert(this.errorMessage);
                 }
 
             }, error => {

@@ -119,7 +119,7 @@ export class SeaImpRiderPageComponent implements OnInit {
           alert(this.errorMessage);
         }
         else {
-          // this.errorMessage = 'Save Complete';
+           this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
       }, error => {
