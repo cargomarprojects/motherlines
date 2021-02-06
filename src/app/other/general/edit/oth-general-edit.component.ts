@@ -66,7 +66,8 @@ export class OthGeneralEditComponent implements OnInit {
 
   private mode: string;
   modal: any;
-  private errorMessage: string;
+  // private errorMessage: string;
+  private errorMessage: string[] = [];
 
   private closeCaption: string = 'Return';
 
@@ -109,7 +110,7 @@ export class OthGeneralEditComponent implements OnInit {
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
-    this.errorMessage = '';
+    this.errorMessage = [];
     this.LoadCombo();
   }
 
@@ -141,7 +142,7 @@ export class OthGeneralEditComponent implements OnInit {
   }
 
   actionHandler() {
-    this.errorMessage = '';
+    this.errorMessage = [];
     if (this.mode == 'ADD') {
       this.record = <Tbl_cargo_general>{};
       this.records = <Tbl_cargo_container[]>[];
@@ -253,7 +254,7 @@ export class OthGeneralEditComponent implements OnInit {
 
   GetRecord() {
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
 
@@ -269,7 +270,8 @@ export class OthGeneralEditComponent implements OnInit {
         if (!this.gs.isBlank(this.mbl_ref_date_field))
           this.mbl_ref_date_field.Focus();
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
+        alert(this.errorMessage);
       });
   }
 
@@ -296,7 +298,7 @@ export class OthGeneralEditComponent implements OnInit {
     if (no == '')
       return;
 
-    this.errorMessage = '';
+    this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
     SearchData.pkid = this.pkid;
     SearchData.blno = no;
@@ -308,12 +310,16 @@ export class OthGeneralEditComponent implements OnInit {
     this.mainService.Isblnoduplication(SearchData)
       .subscribe(response => {
         if (response.retvalue) {
-          this.errorMessage = response.retstring;
-          if (stype == 'MBL')
-            this.mbl_no_field.nativeElement.focus();
+          this.errorMessage.push(response.retstring);
+          alert(this.errorMessage);
+          if (stype == 'MBL') {
+            if (!this.gs.isBlank(this.mbl_no_field))
+              this.mbl_no_field.nativeElement.focus();
+          }
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
+        alert(this.errorMessage);
       });
 
   }
@@ -337,18 +343,18 @@ export class OthGeneralEditComponent implements OnInit {
     this.mainService.Save(saveRecord)
       .subscribe(response => {
         if (response.retvalue == false) {
-          this.errorMessage = response.error;
+          this.errorMessage.push(response.error);
           alert(this.errorMessage);
         }
         else {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          this.errorMessage = 'Save Complete';
-         // alert(this.errorMessage);
+          this.errorMessage.push('Save Complete');
+          // alert(this.errorMessage);
         }
       }, error => {
-        this.errorMessage = this.gs.getError(error);
+        this.errorMessage.push(this.gs.getError(error));
         alert(this.errorMessage);
       });
   }
@@ -438,27 +444,23 @@ export class OthGeneralEditComponent implements OnInit {
   private Allvalid(): boolean {
 
     var bRet = true;
-    this.errorMessage = "";
-    if (this.record.mbl_ref_date == "") {
+    this.errorMessage = [];
+    if (this.gs.isBlank(this.record.mbl_ref_date)) {
       bRet = false;
-      this.errorMessage = "Ref Date cannot be blank";
-      return bRet;
+      this.errorMessage.push("Ref Date cannot be blank");
     }
-    if (this.gs.JOB_TYPE_OT.length > 0 && this.record.mbl_jobtype_id == "") {
+    if (this.gs.JOB_TYPE_OT.length > 0 && this.gs.isBlank(this.record.mbl_jobtype_id)) {
       bRet = false;
-      this.errorMessage = "Job Type cannot be blank";
-      return bRet;
+      this.errorMessage.push("Job Type cannot be blank");
     }
-    if (this.record.mbl_shipment_stage == "") {
+    if (this.gs.isBlank(this.record.mbl_shipment_stage)) {
       bRet = false;
-      this.errorMessage = "Shipment Stage cannot be blank";
-      return bRet;
+      this.errorMessage.push("Shipment Stage cannot be blank");
     }
 
-    if (this.record.mbl_handled_id == "") {
+    if (this.gs.isBlank(this.record.mbl_handled_id)) {
       bRet = false;
-      this.errorMessage = "A/N Handled By cannot be blank"
-      return bRet;
+      this.errorMessage.push("A/N Handled By cannot be blank");
     }
 
     let cntrList: string = "";
@@ -468,22 +470,23 @@ export class OthGeneralEditComponent implements OnInit {
           cntrList += Rec.cntr_no.trim() + ",";
         else {
           bRet = false;
-          this.errorMessage = "Container( " + Rec.cntr_no + " ) Duplication in Container List"
-          return bRet;
+          this.errorMessage.push("Container( " + Rec.cntr_no + " ) Duplication in Container List");
         }
 
         if (Rec.cntr_no.length != 11) {
           bRet = false;
-          this.errorMessage = "Container( " + Rec.cntr_no + " ) Invalid"
-          return bRet;
+          this.errorMessage.push("Container( " + Rec.cntr_no + " ) Invalid");
         }
         if (Rec.cntr_type.length <= 0) {
           bRet = false;
-          this.errorMessage = "Container( " + Rec.cntr_no + " ) type has to be selected"
-          return bRet;
+          this.errorMessage.push("Container( " + Rec.cntr_no + " ) type has to be selected");
         }
       })
     }
+
+    if (!bRet)
+    alert('Error While Saving');
+
     return bRet;
   }
 

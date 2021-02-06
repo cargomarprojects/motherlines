@@ -8,9 +8,19 @@
         </div>
     </div>
 
-    <div *ngIf="errorMessage">
+    <!-- <div *ngIf="errorMessage">
         <div class="alert alert-primary">
             {{errorMessage}}
+        </div>
+    </div> -->
+    <div *ngIf="errorMessage.length >0">
+        <div class="alert alert-success">
+            <a (click)="errorMessage=[]" class="close" aria-label="close">&times;</a>
+            <ul>
+                <li *ngFor="let str of errorMessage">
+                    <p class="h4"> {{str}}</p>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -38,7 +48,8 @@
                                 <div class="form-group row">
                                     <label class="col-3 col-form-label col-form-label-sm">Ref Date</label>
                                     <div class="col-9">
-                                        <app-date #_mbl_ref_date [inputdate]="record.mbl_ref_date" (ValueChanged)="sdate=$event">
+                                        <app-date #_mbl_ref_date [inputdate]="record.mbl_ref_date"
+                                            (ValueChanged)="sdate=$event">
                                         </app-date>
                                     </div>
                                 </div>
@@ -102,9 +113,9 @@
                                     <label class="col-3 col-form-label col-form-label-sm">Carrier</label>
                                     <div class="col-9">
 
-                                        <app-autocomplete2 #_mbl_liner_name [controlname]="'CARRIER'" [tabletype]="'CARRIER'"
-                                            [displaycolumn]="'NAME'" [displaydata]="record.mbl_liner_name"
-                                            (ValueChanged)="LovSelected($event)">
+                                        <app-autocomplete2 #_mbl_liner_name [controlname]="'CARRIER'"
+                                            [tabletype]="'CARRIER'" [displaycolumn]="'NAME'"
+                                            [displaydata]="record.mbl_liner_name" (ValueChanged)="LovSelected($event)">
                                         </app-autocomplete2>
 
                                     </div>
@@ -114,8 +125,8 @@
                                     <label class="col-3 col-form-label col-form-label-sm">A/N.Handled.By</label>
                                     <div class="col-9">
 
-                                        <app-autocomplete2 #_mbl_handled_name [controlname]="'HANDLEDBY'" [tabletype]="'PARAM'"
-                                            [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
+                                        <app-autocomplete2 #_mbl_handled_name [controlname]="'HANDLEDBY'"
+                                            [tabletype]="'PARAM'" [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
                                             [displaydata]="record.mbl_handled_name"
                                             (ValueChanged)="LovSelected($event)">
                                         </app-autocomplete2>
@@ -128,8 +139,8 @@
                                     <label class="col-3 col-form-label col-form-label-sm">Sales.Rep</label>
                                     <div class="col-9">
 
-                                        <app-autocomplete2 #_mbl_salesman_name [controlname]="'SALESMAN'" [tabletype]="'PARAM'"
-                                            [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
+                                        <app-autocomplete2 #_mbl_salesman_name [controlname]="'SALESMAN'"
+                                            [tabletype]="'PARAM'" [subtype]="'SALESMAN'" [displaycolumn]="'NAME'"
                                             [displaydata]="record.mbl_salesman_name"
                                             (ValueChanged)="LovSelected($event)">
                                         </app-autocomplete2>
@@ -571,8 +582,8 @@
                                                     </app-autocomplete2>
                                                 </td>
                                                 <td class="p-0">
-                                                    <input #_cntr_sealno class="form-control form-control-sm" type="text"
-                                                        [(ngModel)]="rec.cntr_sealno" maxlength="25"
+                                                    <input #_cntr_sealno class="form-control form-control-sm"
+                                                        type="text" [(ngModel)]="rec.cntr_sealno" maxlength="25"
                                                         (blur)="onBlur('cntr_sealno',rec)" />
                                                 </td>
                                                 <td class="p-0">
@@ -602,10 +613,11 @@
                                     </table>
                                     <div class="form-group row">
                                         <div class="col-12 pl-1 pb-1">
-                                            <button class="btn btn-info btn-sm mr-1" [disabled]="is_locked" (click)="AddRow()">Add
+                                            <button class="btn btn-info btn-sm mr-1" [disabled]="is_locked"
+                                                (click)="AddRow()">Add
                                                 Cntr</button>
-                                            <button class="btn btn-info btn-sm mr-1"
-                                                (click)="CopyCntrClipboard()">Copy Containers</button>
+                                            <button class="btn btn-info btn-sm mr-1" (click)="CopyCntrClipboard()">Copy
+                                                Containers</button>
                                             <!-- *ngIf="!is_locked" -->
                                         </div>
                                     </div>
@@ -632,8 +644,9 @@
 
 
                     <div class="form-group row">
-                        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_OT_OPERATION_ARAP)"
-                            (click)="BtnNavigation('ARAP')">AR & AP</button>
+                        <button class=" col-12 btn btn-info btn-sm text-uppercase"
+                            *ngIf="gs.screenExists(gs.MENU_OT_OPERATION_ARAP)" (click)="BtnNavigation('ARAP')">AR &
+                            AP</button>
                     </div>
 
                     <div class="form-group row">
@@ -643,31 +656,36 @@
                     </div>
 
                     <div class="form-group row">
-                        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_SHIPMENT_LABEL)"
+                        <button class=" col-12 btn btn-info btn-sm text-uppercase"
+                            *ngIf="gs.screenExists(gs.MENU_SHIPMENT_LABEL)"
                             (click)="BtnNavigation('SHIP-LABEL-PRINT')">Shipment Label</button>
                     </div>
 
                     <div class="form-group row">
-                        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_OT_MESSENGER_SLIP)"
+                        <button class=" col-12 btn btn-info btn-sm text-uppercase"
+                            *ngIf="gs.screenExists(gs.MENU_OT_MESSENGER_SLIP)"
                             (click)="BtnNavigation('MESSENGER-SLIP')">Messenger
                             Slip</button>
                     </div>
 
                     <div class="form-group row">
-                        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_OT_PAYMENT_REQUEST)"
+                        <button class=" col-12 btn btn-info btn-sm text-uppercase"
+                            *ngIf="gs.screenExists(gs.MENU_OT_PAYMENT_REQUEST)"
                             (click)="BtnNavigation('PAYMENT-REQUEST')">Payment
                             Request</button>
                     </div>
 
                     <div class="form-group row">
-                        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_OT_ATTACHMENTS)"
+                        <button class=" col-12 btn btn-info btn-sm text-uppercase"
+                            *ngIf="gs.screenExists(gs.MENU_OT_ATTACHMENTS)"
                             [style.color]="record.rec_files_attached=='Y'?'red':black"
                             (click)="BtnNavigation('ATTACHMENT',attachmodal)">Attachments</button>
                     </div>
 
                     <div class="form-group row">
-                        <button class=" col-12 btn btn-info btn-sm text-uppercase" *ngIf="gs.screenExists(gs.MENU_OT_OPERATION)"
-                            (click)="BtnNavigation('FOLLOWUP')">Add To Follow
+                        <button class=" col-12 btn btn-info btn-sm text-uppercase"
+                            *ngIf="gs.screenExists(gs.MENU_OT_OPERATION)" (click)="BtnNavigation('FOLLOWUP')">Add To
+                            Follow
                             Up</button>
                     </div>
                     <div class="form-group row">
@@ -694,7 +712,7 @@
 
     <div class="page-footer">
         <div class="row justify-content-center p-1">
-            <button class="btn btn-primary btn-md"  [disabled]="is_locked" *ngIf="gs.canSave(menuid,mode)"
+            <button class="btn btn-primary btn-md" [disabled]="is_locked" *ngIf="gs.canSave(menuid,mode)"
                 (click)="Save()">Save</button>
         </div>
     </div>
