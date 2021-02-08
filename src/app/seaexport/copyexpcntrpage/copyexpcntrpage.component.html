@@ -21,18 +21,18 @@
                     <thead class="page-body-thead">
                         <tr>
                             <th>
-                                <div class="form-check"> <input #_cntr_chked type="checkbox" (click)="SelectDeselect('CNTR')"
-                                        class="form-check-input" [(ngModel)]="chkallselected_cntr"><span>CNTR.NO</span>
+                                <div class="form-check"> <input #_cntr_chked type="checkbox"
+                                        (click)="SelectDeselect('CNTR')" class="form-check-input"
+                                        [(ngModel)]="chkallselected_cntr"><span>CNTR.NO</span>
                                 </div>
                             </th>
                             <th>TYPE</th>
                             <th>SEAL NO</th>
                             <th>PCS</th>
                             <th>UNIT</th>
-                            <th>KGS</th>
+                            <th>WEIGHT</th>
                             <th>CBM</th>
-                              <!-- <th *ngIf="this.gs.BRANCH_REGION != 'USA'">TARE-WT</th> -->
-                              <th >TARE-WT</th>
+                            <th *ngIf="this.gs.BRANCH_REGION != 'USA'">TARE-WT</th>
                             <!-- <th>PICKUP</th>
                             <th>EMPTY.RETURN</th> -->
                         </tr>
@@ -54,8 +54,8 @@
                                 </app-autocomplete2>
                             </td>
                             <td class="p-0">
-                                <input #_cntr_sealno class="form-control form-control-sm" type="text" [(ngModel)]="rec.cntr_sealno"
-                                    maxlength="25" (blur)="onBlur('cntr_sealno',rec)" />
+                                <input #_cntr_sealno class="form-control form-control-sm" type="text"
+                                    [(ngModel)]="rec.cntr_sealno" maxlength="25" (blur)="onBlur('cntr_sealno',rec)" />
                             </td>
                             <td class="p-0">
                                 <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_pieces"
@@ -74,11 +74,7 @@
                                 <input class="form-control form-control-sm" type="number" [(ngModel)]="rec.cntr_cbm"
                                     (blur)="onBlur('cntr_cbm',rec)" />
                             </td>
-                            <!-- <td class="p-0" *ngIf="this.gs.BRANCH_REGION != 'USA'">
-                                <input class="form-control form-control-sm" type="number"
-                                    [(ngModel)]="rec.cntr_tare_weight" (blur)="onBlur('cntr_tare_weight',rec)" />
-                            </td> -->
-                            <td class="p-0" >
+                            <td class="p-0" *ngIf="this.gs.BRANCH_REGION != 'USA'">
                                 <input class="form-control form-control-sm" type="number"
                                     [(ngModel)]="rec.cntr_tare_weight" (blur)="onBlur('cntr_tare_weight',rec)" />
                             </td>
@@ -134,7 +130,8 @@
 
 <div class="page-footer">
     <div class="row row justify-content-center p-1">
-       <button class="btn btn-primary btn-md" [disabled]="is_locked" *ngIf="gs.canSave(menuid,'ADD')" (click)="Save()">Save</button>
+        <button class="btn btn-primary btn-md" [disabled]="is_locked" *ngIf="gs.canSave(menuid,'ADD')"
+            (click)="Save()">Save</button>
     </div>
 </div>
 

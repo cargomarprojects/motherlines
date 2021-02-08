@@ -146,7 +146,7 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   init() {
     this.record.mbl_pkid = this.pkid;
-    this.record.mbl_cntr_type = 'FCL';
+    this.record.mbl_cntr_type = '';//FCL
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
     this.record.mbl_ref_date = this.gs.defaultValues.today;
