@@ -278,8 +278,8 @@ export class SeaImpMasterEditComponent implements OnInit {
   Save() {
     if (!this.Allvalid())
       return;
-    this.SaveContainer();
-    this.FindTotTeus();
+      this.SaveContainer();
+      this.FindTotTeus();
     const saveRecord = <vm_tbl_cargo_imp_masterm>{};
     saveRecord.record = this.record;
     saveRecord.cntrs = this.records;

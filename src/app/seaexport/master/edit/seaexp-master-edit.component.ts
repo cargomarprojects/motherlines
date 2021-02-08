@@ -305,8 +305,9 @@ export class SeaexpMasterEditComponent implements OnInit {
 
     if (!this.Allvalid())
       return;
-
+    
     this.SaveContainer();
+    this.FindTotTeus();
     this.record.mbl_direct = this.record.mbl_direct_bool ? 'Y' : 'N';
 
     const saveRecord = <vm_tbl_cargo_exp_masterm>{};
@@ -333,6 +334,60 @@ export class SeaexpMasterEditComponent implements OnInit {
         this.errorMessage.push(this.gs.getError(error));
         alert(this.errorMessage[0]);
       });
+  }
+  private FindTotTeus() {
+    var Tot_Teu = 0, Teu = 0, Tot_Cbm = 0;
+    var Tot_20 = 0, Tot_40 = 0, Tot_40HQ = 0, Tot_45 = 0;
+    var Cntr_Tot = 0;
+    let sCntrType: string = "";
+    this.records.forEach(Rec => {
+      Cntr_Tot++;
+      Teu = 0;
+      if (Rec.cntr_type.indexOf("20") >= 0)
+        Teu = 1;
+      else if (Rec.cntr_type.indexOf("40") >= 0) {
+        if (Rec.cntr_type.indexOf("HC") >= 0)
+          Teu = 2.25;
+        else
+          Teu = 2;
+      }
+      else if (Rec.cntr_type.indexOf("45") >= 0)
+        Teu = 2.50;
+
+      if (this.record.mbl_cntr_type.toString() == "LCL")
+        Teu = 0;
+      Tot_Teu += Teu;
+      Tot_Cbm += Rec.cntr_cbm;
+      Rec.cntr_teu = Teu;
+      if (Teu > 0) {
+        if (Rec.cntr_type.indexOf("20") >= 0)
+          Tot_20 += 1;
+        else if (Rec.cntr_type.indexOf("40HC") >= 0 || Rec.cntr_type.indexOf("40HQ") >= 0)
+          Tot_40HQ += 1;
+        else if (Rec.cntr_type.indexOf("40") >= 0)
+          Tot_40 += 1;
+        else if (Rec.cntr_type.indexOf("45") >= 0)
+          Tot_45 += 1;
+      }
+
+      if (sCntrType.indexOf(Rec.cntr_type) < 0) {
+        if (sCntrType != "")
+          sCntrType += ",";
+        sCntrType += Rec.cntr_type;
+      }
+
+    })
+    this.record.mbl_teu = Tot_Teu;
+    this.record.mbl_20 = Tot_20;
+    this.record.mbl_40 = Tot_40;
+    this.record.mbl_40HQ = Tot_40HQ;
+    this.record.mbl_45 = Tot_45;
+    this.record.mbl_cntr_cbm = Tot_Cbm;
+    this.record.mbl_container_tot = Cntr_Tot;
+    if (sCntrType.length > 100)
+      sCntrType = sCntrType.substring(0, 100);
+
+    this.record.mbl_cntr_desc = sCntrType;
   }
 
   private SaveContainer() {
