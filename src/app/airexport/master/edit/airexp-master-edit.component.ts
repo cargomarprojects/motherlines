@@ -164,7 +164,7 @@ export class AirExpMasterEditComponent implements OnInit {
     this.record.mbl_pod_eta = '';
     this.record.mbl_vessel = '';
     this.record.mbl_voyage = '';
-    this.record.mbl_currency = '';
+    // this.record.mbl_currency = '';
     this.record.mbl_to_port1 = '';
     this.record.mbl_to_port2 = '';
     this.record.mbl_to_port3 = '';

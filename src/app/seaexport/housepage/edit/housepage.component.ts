@@ -141,10 +141,10 @@ export class HousePageComponent implements OnInit {
     this.record._hbl_is_cntrized = false;
 
     this.record.hbl_is_arranged = "Y";
-    this.record._hbl_is_arranged = false;
+    this.record._hbl_is_arranged = true;
 
     this.record.hbl_print_kgs = "Y";
-    this.record._hbl_print_kgs = false;
+    this.record._hbl_print_kgs = true;
 
     this.record.hbl_print_lbs = "N";
     this.record._hbl_print_lbs = false;
@@ -163,7 +163,10 @@ export class HousePageComponent implements OnInit {
       this.record.rec_created_date = this.gs.defaultValues.today;
       this.record.hbl_notify_name = "SAME AS CONSIGNEE";
       this.record.hbl_shipment_stage = "NIL";
-
+      this.record.hbl_is_arranged = 'Y';
+      this.record._hbl_is_arranged = true;
+      this.record.hbl_print_kgs = 'Y';
+      this.record._hbl_print_kgs = true;
       if (this.parentid != "")
         this.LoadDefaultData();
       else {
@@ -217,6 +220,8 @@ export class HousePageComponent implements OnInit {
         this.record.hbl_handled_name = rec.mbl_handled_name;
         this.record.hbl_by1 = rec.mbl_handled_name;
 
+        
+
         this.record.hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? "Y" : "N";
         this.record._hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? true : false;
 
@@ -236,6 +241,8 @@ export class HousePageComponent implements OnInit {
         else if (rec.mbl_cntr_type == "LCL" || rec.mbl_cntr_type == "CONSOLE") {
           this.record.desc1 = "SAID TO CONTAIN";
         }
+
+
         this.ShipmentType = rec.mbl_cntr_type;
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", rec.mbl_ref_date, rec.mbl_lock, rec.mbl_unlock_date);
 
