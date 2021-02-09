@@ -360,7 +360,7 @@
                   </tr>
                 </thead>
                 <tbody class="page-body-tbody">
-                  <tr *ngFor="let rec of records">
+                  <tr *ngFor="let rec of records; let i = index">
                     <td class="p-0">
                       <InputBox #_cntr_no [(inputModel)]="rec.cntr_no" [field]="'cntr_no'" [maxlength]="11" [uppercase]="true"
                         (blur)="onBlur($event)"></InputBox>
@@ -368,7 +368,7 @@
                     <td class="p-0">
                       <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
                         [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid" [displaydata]="rec.cntr_type"
-                        (ValueChanged)="LovSelected($event)">
+                        (ValueChanged)="LovSelected($event,i)">
                       </app-autocomplete2>
                     </td>
                     <td class="p-0">

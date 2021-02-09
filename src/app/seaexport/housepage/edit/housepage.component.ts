@@ -671,7 +671,7 @@ export class HousePageComponent implements OnInit {
   }
 
 
-  LovSelected(rec: SearchTable) {
+  LovSelected(rec: SearchTable, idx: number = 0) {
 
     if (rec.controlname == "SHIPPER") {
       this.record.hbl_shipper_id = rec.id;
@@ -753,13 +753,12 @@ export class HousePageComponent implements OnInit {
 
     // Container
     if (rec.controlname == "CONTAINER TYPE") {
-      let idx: number = 0;
       this.cntrs.forEach(mrec => {
         if (mrec.cntr_pkid == rec.uid) {
           mrec.cntr_type = rec.code;
-          this.cntr_sealno_field.toArray()[idx].focus();
+          if (idx < this.cntr_sealno_field.toArray().length)
+            this.cntr_sealno_field.toArray()[idx].focus();
         }
-        idx++;
       });
     }
 
