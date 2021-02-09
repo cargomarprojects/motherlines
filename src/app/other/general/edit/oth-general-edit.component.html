@@ -567,7 +567,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="page-body-tbody">
-                                            <tr *ngFor="let rec of records">
+                                            <tr *ngFor="let rec of records; let i = index">
                                                 <td class="p-0">
                                                     <input #_cntr_no class="form-control form-control-sm" type="text"
                                                         [(ngModel)]="rec.cntr_no" maxlength="11"
@@ -578,7 +578,7 @@
                                                         [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
                                                         [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid"
                                                         [displaydata]="rec.cntr_type"
-                                                        (ValueChanged)="LovSelected($event)">
+                                                        (ValueChanged)="LovSelected($event,i)">
                                                     </app-autocomplete2>
                                                 </td>
                                                 <td class="p-0">

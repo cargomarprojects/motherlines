@@ -485,7 +485,7 @@ export class OthGeneralEditComponent implements OnInit {
     }
 
     if (!bRet)
-    alert('Error While Saving');
+      alert('Error While Saving');
 
     return bRet;
   }
@@ -526,7 +526,7 @@ export class OthGeneralEditComponent implements OnInit {
   }
 
 
-  LovSelected(_Record: SearchTable) {
+  LovSelected(_Record: SearchTable, idx: number = 0) {
 
     if (_Record.controlname == "AGENT") {
       this.record.mbl_agent_id = _Record.id;
@@ -634,13 +634,12 @@ export class OthGeneralEditComponent implements OnInit {
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {
-      let idx: number = 0;
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
-          this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
+          if (idx < this.cntr_sealno_field.toArray().length)
+            this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
         }
-        idx++;
       });
     }
   }
