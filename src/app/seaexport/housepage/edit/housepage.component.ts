@@ -124,10 +124,11 @@ export class HousePageComponent implements OnInit {
     this.is_locked = false;
 
     if (this.mode == 'ADD') {
-      this.pkid = this.gs.getGuid();
       this.record = <Tbl_cargo_exp_housem>{};
       this.cntrs = <Tbl_cargo_exp_container[]>[];
       this.records = <Tbl_cargo_exp_desc[]>[];
+      this.pkid = this.gs.getGuid();
+      this.record.hbl_pkid = this.pkid;
       this.InitDesc();
       this.LoadData();
     }
@@ -220,7 +221,7 @@ export class HousePageComponent implements OnInit {
         this.record.hbl_handled_name = rec.mbl_handled_name;
         this.record.hbl_by1 = rec.mbl_handled_name;
 
-        
+
 
         this.record.hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? "Y" : "N";
         this.record._hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? true : false;
@@ -244,6 +245,7 @@ export class HousePageComponent implements OnInit {
 
 
         this.ShipmentType = rec.mbl_cntr_type;
+        this.record.mbl_cntr_type = this.ShipmentType;
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", rec.mbl_ref_date, rec.mbl_lock, rec.mbl_unlock_date);
 
         this.cntrs = <Tbl_cargo_exp_container[]>response.cntrs;
