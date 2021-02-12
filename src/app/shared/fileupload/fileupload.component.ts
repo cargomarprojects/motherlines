@@ -261,7 +261,9 @@ export class FileUploadComponent implements OnInit {
     frmData.append("files_size", this.fileSize.toString());
     frmData.append("files_desc", this.fileDesc);
     frmData.append("root_folder", this.gs.FS_APP_FOLDER);
-
+    frmData.append("files_created_by", this.gs.user_code);
+    frmData.append("user_name", this.gs.user_name);
+    frmData.append("instance_id", this.gs.INSTANCE_ID);
 
     for (var i = 0; i < this.myFiles.length; i++) {
       frmData.append("fileUpload", this.myFiles[i]);
