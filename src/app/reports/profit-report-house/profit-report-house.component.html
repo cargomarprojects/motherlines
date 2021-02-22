@@ -18,7 +18,7 @@
             <div class="form-group row">
               <label class="col-2 col-form-label col-form-label-sm">Format</label>
               <div class="col-10">
-                <select class="form-control form-control-sm" [(ngModel)]="report_category">
+                <select class="form-control form-control-sm" [(ngModel)]="report_category" (change)="onChange('report_category')">
                   <option [value]="'AGENT'">AGENT</option>
                   <option [value]="'SHIPPER'">SHIPPER</option>
                   <option [value]="'CONSIGNEE'">CONSIGNEE</option>
@@ -78,8 +78,13 @@
 
           <div class="col-md-3">
 
-            <div *ngIf="report_category=='AGENT'" class="form-group row">
-              <label class="col-2 col-form-label col-form-label-sm">Agent</label>
+            <div class="form-group row">
+              <label class="col-2 col-form-label col-form-label-sm">
+              <span *ngIf="report_category=='AGENT'">Agent</span>
+              <span *ngIf="report_category=='SHIPPER'">Shipper</span>
+              <span *ngIf="report_category=='CONSIGNEE'">Consignee</span>
+              <span *ngIf="report_category=='HANDLED BY'">Handled.By</span>
+              </label>
               <div class="col-10">
                 <app-autocomplete [inputdata]="CUSTRECORD" (ValueChanged)="LovSelected($event)"></app-autocomplete>
               </div>
@@ -158,7 +163,7 @@
             <td align='right'>{{rec.mbl_40HQ  | number : '1.2-2'}}</td>
             <td align='right'>{{rec.mbl_45  | number : '1.2-2'}}</td>
             <td align='right'>{{rec.mbl_teu  | number : '1.2-2'}}</td>
-            <td align='right'>{{rec.mbl_cntr_cbm  | number : '1.3-3'}}</td>
+            <td align='right'>{{rec.mbl_cbm  | number : '1.3-3'}}</td>
             <td align='right'>{{rec.mbl_weight  | number : '1.3-3'}}</td>
           </tr>
         </tbody>
@@ -198,7 +203,7 @@
             <td align='right'>{{rec.hbl_profit  | number : '1.2-2'}}</td>
 
             <td align='right'>{{rec.mbl_teu  | number : '1.2-2'}}</td>
-            <td align='right'>{{rec.mbl_cntr_cbm  | number : '1.3-3'}}</td>
+            <td align='right'>{{rec.mbl_cbm  | number : '1.3-3'}}</td>
             <td align='right'>{{rec.mbl_weight  | number : '1.3-3'}}</td>
           </tr>
         </tbody>
