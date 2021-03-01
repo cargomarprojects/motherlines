@@ -184,7 +184,8 @@
                 <div class="form-group row">
                     <label class="col-3 col-form-label col-form-label-sm">Commodity</label>
                     <div class="col-9">
-                        <InputBox [(inputModel)]="record.qtnm_commodity" [maxlength]="60" [uppercase]="true" #Commodity>
+                        <InputBox [(inputModel)]="record.qtnm_commodity" [maxlength]="60" [uppercase]="true"
+                            #_qtnm_commodity>
                         </InputBox>
                     </div>
                 </div>
@@ -203,8 +204,7 @@
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('qtnm_kgs')"
                             [(ngModel)]="record.qtnm_kgs" maxlength="15" #qtnm_kgs />
-                        <button class="btn btn-info btn-sm"
-                            (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
+                        <button class="btn btn-info btn-sm" (click)="FindWeight('Kgs2Lbs')"><span>&gt;</span></button>
                     </div>
                     <label class="col-3 col-form-label col-form-label-sm">LBS</label>
                     <div class="col-3 input-group input-group-sm">
@@ -219,8 +219,7 @@
                     <div class="col-3 input-group input-group-sm">
                         <input class="form-control form-control-sm" type="number" (blur)="onBlur('qtnm_cbm')"
                             [(ngModel)]="record.qtnm_cbm" maxlength="15" #qtnm_cbm />
-                        <button class="btn btn-info btn-sm"
-                            (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
+                        <button class="btn btn-info btn-sm" (click)="FindWeight('Cbm2Cft')"><span>&gt;</span></button>
                     </div>
                     <label class="col-3 col-form-label col-form-label-sm">CFT</label>
                     <div class="col-3 input-group input-group-sm">
@@ -328,16 +327,17 @@
                             </tr>
                         </thead>
                         <tbody class="page-body-tbody">
-                            <tr *ngFor="let rec of records">
+                            <tr *ngFor="let rec of records; let i = index">
                                 <td class="p-0">
-                                    <app-autocomplete2 [controlname]="'INVOICE-CODE'" [displaycolumn]="'CODE'"
-                                        [tabletype]="'PARAM'" [subtype]="'INVOICE-DESCRIPTION'" [uid]="rec.qtnd_desc_id"
-                                        [displaydata]="rec.qtnd_desc_code" (ValueChanged)="LovSelected($event)">
+                                    <app-autocomplete2 #_qtnd_desc_code [controlname]="'INVOICE-CODE'"
+                                        [displaycolumn]="'CODE'" [tabletype]="'PARAM'" [subtype]="'INVOICE-DESCRIPTION'"
+                                        [uid]="rec.qtnd_pkid" [displaydata]="rec.qtnd_desc_code"
+                                        (ValueChanged)="LovSelected($event,i)">
                                     </app-autocomplete2>
                                 </td>
                                 <td class="p-0">
                                     <InputBox [(inputModel)]="rec.qtnd_desc_name" [maxlength]="60" [uppercase]="true"
-                                        #quot_desc>
+                                        #_qtnd_desc_name>
                                     </InputBox>
                                 </td>
                                 <td class="p-0">
@@ -394,7 +394,7 @@
                         <div class="form-group row">
                             <label class="col-1 col-form-label col-form-label-sm">Subject</label>
                             <div class="col-11">
-                                <textarea rows="6" class="form-control form-control-sm"
+                                <textarea #_qtnm_subjects rows="6" class="form-control form-control-sm"
                                     [(ngModel)]="record.qtnm_subjects"></textarea>
                             </div>
                         </div>
@@ -403,7 +403,7 @@
                         <div class="form-group row">
                             <label class="col-1 col-form-label col-form-label-sm">Remarks</label>
                             <div class="col-11">
-                                <textarea rows="6" class="form-control form-control-sm"
+                                <textarea #_qtnm_remarks rows="6" class="form-control form-control-sm"
                                     [(ngModel)]="record.qtnm_remarks"></textarea>
                             </div>
                         </div>

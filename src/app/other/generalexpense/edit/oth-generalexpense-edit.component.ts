@@ -326,7 +326,7 @@ export class OthGeneralExpenseEditComponent implements OnInit {
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
           this.errorMessage.push('Save Complete');
-          alert(this.errorMessage);
+          //alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));

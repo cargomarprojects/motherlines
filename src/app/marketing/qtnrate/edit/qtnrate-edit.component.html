@@ -2,7 +2,7 @@
     <div class="page-header">
         <div class="row align-items-center justify-content-left p-1">
             <label class="mr-3">Quotation Rate ({{mode}})</label>
-            <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+            <button #_btnretrate class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         </div>
     </div>
 
@@ -27,8 +27,8 @@
                 <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Agent</label>
                     <div class="col-8">
-                        <app-autocomplete2 [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
-                            [displaydata]="record.qtnr_agent_name" (ValueChanged)="LovSelected($event)" #agent>
+                        <app-autocomplete2  [controlname]="'AGENT'" [tabletype]="'MASTER'" [displaycolumn]="'NAME'"
+                            [displaydata]="record.qtnr_agent_name" (ValueChanged)="LovSelected($event)" #_qtnr_agent_name>
                         </app-autocomplete2>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <div class="col-8">
                         <app-autocomplete2 [controlname]="'POL-COUNTRY'" [tabletype]="'PARAM'" [subtype]="'COUNTRY'"
                             [displaycolumn]="'NAME'" [displaydata]="record.qtnr_pol_cntry_name"
-                            (ValueChanged)="LovSelected($event)">
+                            (ValueChanged)="LovSelected($event)" #_qtnr_pol_cntry_name>
                         </app-autocomplete2>
                     </div>
                 </div>
@@ -48,14 +48,14 @@
                     <div class="col-8">
                         <app-autocomplete2 [controlname]="'POD-COUNTRY'" [tabletype]="'PARAM'" [subtype]="'COUNTRY'"
                             [displaycolumn]="'NAME'" [displaydata]="record.qtnr_pod_cntry_name"
-                            (ValueChanged)="LovSelected($event)">
+                            (ValueChanged)="LovSelected($event)" #_qtnr_pod_cntry_name>
                         </app-autocomplete2>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-4 col-form-label col-form-label-sm">Mode</label>
                     <div class="col-8">
-                        <select class="form-control form-control-sm" [(ngModel)]="record.qtnr_mode">
+                        <select #_qtnr_mode class="form-control form-control-sm" [(ngModel)]="record.qtnr_mode">
                             <option [value]="'AIR'">AIR</option>
                             <option [value]="'FCL'">FCL</option>
                             <option [value]="'LCL'">LCL</option>

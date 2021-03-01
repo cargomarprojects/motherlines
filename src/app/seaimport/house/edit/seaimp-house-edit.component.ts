@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef,ViewChildren,QueryList } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GlobalService } from '../../../core/services/global.service';
@@ -514,6 +514,7 @@ export class SeaImpHouseEditComponent implements OnInit {
           this.record.hbl_ship_term = "";
           this.record.hbl_place_delivery = this.mblrecord.mbl_place_delivery;
           this.ShipmentType = this.mblrecord.mbl_cntr_type;
+          this.record.mbl_cntr_type = this.ShipmentType;
           this.record.hbl_shipment_stage = this.mblrecord.mbl_shipment_stage;
 
           this.is_locked = this.gs.IsShipmentClosed("SEA IMPORT", this.mblrecord.mbl_ref_date, this.mblrecord.mbl_lock, this.mblrecord.mbl_unlock_date);
@@ -581,7 +582,7 @@ export class SeaImpHouseEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          // this.errorMessage.push('Save Complete');
+          this.errorMessage.push('Save Complete');
           // alert(this.errorMessage);
         }
       }, error => {
@@ -826,13 +827,13 @@ export class SeaImpHouseEditComponent implements OnInit {
     rec.cntr_order = 1;
     this.cntrrecords.push(rec);
     this.cntr_no_field.changes
-    .subscribe((queryChanges) => {
-      this.cntr_no_field.last.nativeElement.focus();
-    });
+      .subscribe((queryChanges) => {
+        this.cntr_no_field.last.nativeElement.focus();
+      });
   }
 
 
-  LovSelected(_Record: SearchTable) {
+  LovSelected(_Record: SearchTable, idx: number = 0) {
 
     if (_Record.controlname == "SHIPPER") {
       this.record.hbl_shipper_id = _Record.id;
@@ -988,13 +989,12 @@ export class SeaImpHouseEditComponent implements OnInit {
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {
-      let idx: number = 0;
       this.cntrrecords.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
-          this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
+          if (idx < this.cntr_sealno_field.toArray().length)
+            this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
         }
-        idx++;
       });
     }
   }

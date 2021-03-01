@@ -119,7 +119,7 @@ export class XmlRemarksComponent implements OnInit {
           this.errorMessage = response.error;
           alert(this.errorMessage);
         }else{
-          // this.errorMessage = 'Save Complete';
+           this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
 

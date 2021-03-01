@@ -201,7 +201,7 @@ export class ProfitReportHouseComponent implements OnInit {
         this.report_category = "AGENT";
         this.sdate = this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF);
         this.edate = this.gs.defaultValues.today;
-        this.mode = 'AIR IMPORT';
+        this.mode = 'ALL';
         this.comp_type = this.gs.branch_code;
         this.report_type = "DETAIL";
 
@@ -220,7 +220,7 @@ export class ProfitReportHouseComponent implements OnInit {
 
 
         this._report_category = 'AGENT';
-        this._report_type = 'DETAIL';
+        this._report_type = 'SUMMARY';
 
         this.SearchData = this.gs.UserInfo;
 
@@ -241,6 +241,15 @@ export class ProfitReportHouseComponent implements OnInit {
     this.List(actions.outputformat, actions.action);
   }
 
+  onChange(field: string) {
+    if (field == "report_category") {
+      if (this.report_category == "HANDLED BY")
+        this.initLov('HANDLED BY');
+      else
+        this.initLov('CUSTOMER');
+    }
+
+  }
   List(_outputformat: string, _action: string = 'NEW') {
 
 
@@ -353,28 +362,40 @@ export class ProfitReportHouseComponent implements OnInit {
 
   initLov(caption: string = '') {
 
-    this.CUSTRECORD = new SearchTable();
-    this.CUSTRECORD.controlname = "AGENT";
-    this.CUSTRECORD.displaycolumn = "NAME";
-    this.CUSTRECORD.type = "MASTER";
-    this.CUSTRECORD.subtype = "";
-    this.CUSTRECORD.id = "";
-    this.CUSTRECORD.code = "";
-
-    this.SMANRECORD = new SearchTable();
-    this.SMANRECORD.controlname = "SALESMAN";
-    this.SMANRECORD.displaycolumn = "NAME";
-    this.SMANRECORD.type = "PARAM";
-    this.SMANRECORD.subtype = "SALESMAN";
-    this.SMANRECORD.id = "";
-    this.SMANRECORD.code = "";
-    if (!this.isAdmin)
-      this.SMANRECORD.where = " param_lookup_id = '" + this.gs.user_pkid + "'";
+    if (caption == '' || caption == 'CUSTOMER') {
+      this.CUSTRECORD = new SearchTable();
+      this.CUSTRECORD.controlname = "CUSTOMER";
+      this.CUSTRECORD.displaycolumn = "NAME";
+      this.CUSTRECORD.type = "MASTER";
+      this.CUSTRECORD.subtype = "";
+      this.CUSTRECORD.id = "";
+      this.CUSTRECORD.code = "";
+    }
+    if (caption == '' || caption == 'SALESMAN') {
+      this.SMANRECORD = new SearchTable();
+      this.SMANRECORD.controlname = "SALESMAN";
+      this.SMANRECORD.displaycolumn = "NAME";
+      this.SMANRECORD.type = "PARAM";
+      this.SMANRECORD.subtype = "SALESMAN";
+      this.SMANRECORD.id = "";
+      this.SMANRECORD.code = "";
+      if (!this.isAdmin)
+        this.SMANRECORD.where = " param_lookup_id = '" + this.gs.user_pkid + "'";
+    }
+    if (caption == 'HANDLED BY') {
+      this.CUSTRECORD = new SearchTable();
+      this.CUSTRECORD.controlname = "CUSTOMER";
+      this.CUSTRECORD.displaycolumn = "NAME";
+      this.CUSTRECORD.type = "PARAM";
+      this.CUSTRECORD.subtype = "SALESMAN";
+      this.CUSTRECORD.id = "";
+      this.CUSTRECORD.code = "";
+    }
 
   }
 
   LovSelected(_Record: SearchTable) {
-    if (_Record.controlname == "AGENT") {
+    if (_Record.controlname == "CUSTOMER") {
       this.cust_id = _Record.id;
       this.cust_name = _Record.name;
     }

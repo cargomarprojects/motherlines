@@ -648,12 +648,11 @@ export class DeliveryOrderEditComponent implements OnInit {
         this.mode = 'EDIT';
         if (response.retvalue == false) {
           this.errorMessage.push(response.error);
-
         }
-        // else {
-        //   this.errorMessage.push('Save Complete');
-        //   alert(this.errorMessage);
-        // }
+        else {
+          this.errorMessage.push('Save Complete');
+         // alert(this.errorMessage);
+        }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
         alert(this.errorMessage);

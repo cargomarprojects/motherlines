@@ -38,7 +38,7 @@
 
           <!-- First row -->
           <div class="col-md-12 px-0 mx-0">
-            <div class="row">
+            <div class="row border">
               <div class="col-md-6 testbox  px-0 mx-0">
 
                 <div class="form-group row">
@@ -191,7 +191,7 @@
                   <label class="col-3 col-form-label col-form-label-sm"></label>
                   <div class="col-9">
                     <input type="checkbox" [(ngModel)]="record.mbl_direct_bool" />
-                    <span>Direct Shipment</span>
+                    <span>&nbsp;Direct Shipment</span>
                   </div>
                 </div>
 
@@ -314,8 +314,8 @@
 
 
                   </div>
-                  <label class="col-2 col-form-label col-form-label-sm">Rotation#</label>
-                  <div class="col-3 pl-0">
+                  <label *ngIf="gs.BRANCH_REGION!='USA'" class="col-2 col-form-label col-form-label-sm">Rotation#</label>
+                  <div *ngIf="gs.BRANCH_REGION!='USA'" class="col-3 pl-0">
                     <InputBoxNumber [(inputModel)]="record.mbl_rotation_no" [field]="'mbl_rotation_no'" [dec]="0"
                       [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
 
@@ -355,12 +355,12 @@
                     <th>UNIT</th>
                     <th>WEIGHT</th>
                     <th>CBM</th>
-                    <th>TARE-WT</th>
+                    <th *ngIf="gs.BRANCH_REGION!='USA'">TARE-WT</th>
                     <th class='text-center'>REMOVE</th>
                   </tr>
                 </thead>
                 <tbody class="page-body-tbody">
-                  <tr *ngFor="let rec of records">
+                  <tr *ngFor="let rec of records; let i = index">
                     <td class="p-0">
                       <InputBox #_cntr_no [(inputModel)]="rec.cntr_no" [field]="'cntr_no'" [maxlength]="11" [uppercase]="true"
                         (blur)="onBlur($event)"></InputBox>
@@ -368,7 +368,7 @@
                     <td class="p-0">
                       <app-autocomplete2 [controlname]="'CONTAINER TYPE'" [displaycolumn]="'CODE'" [tabletype]="'PARAM'"
                         [subtype]="'CONTAINER TYPE'" [uid]="rec.cntr_pkid" [displaydata]="rec.cntr_type"
-                        (ValueChanged)="LovSelected($event)">
+                        (ValueChanged)="LovSelected($event,i)">
                       </app-autocomplete2>
                     </td>
                     <td class="p-0">
@@ -391,7 +391,7 @@
                       <InputBoxNumber [(inputModel)]="rec.cntr_cbm" [field]="'cntr_cbm'" [dec]="3" [maxlength]="15"
                         (blur)="onBlur($event)"></InputBoxNumber>
                     </td>
-                    <td class="p-0">
+                    <td *ngIf="gs.BRANCH_REGION!='USA'" class="p-0">
                       <InputBoxNumber [(inputModel)]="rec.cntr_tare_weight" [field]="'cntr_tare_weight'" [dec]="3"
                         [maxlength]="15" (blur)="onBlur($event)"></InputBoxNumber>
                     </td>

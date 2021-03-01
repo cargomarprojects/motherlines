@@ -124,10 +124,11 @@ export class HousePageComponent implements OnInit {
     this.is_locked = false;
 
     if (this.mode == 'ADD') {
-      this.pkid = this.gs.getGuid();
       this.record = <Tbl_cargo_exp_housem>{};
       this.cntrs = <Tbl_cargo_exp_container[]>[];
       this.records = <Tbl_cargo_exp_desc[]>[];
+      this.pkid = this.gs.getGuid();
+      this.record.hbl_pkid = this.pkid;
       this.InitDesc();
       this.LoadData();
     }
@@ -141,10 +142,10 @@ export class HousePageComponent implements OnInit {
     this.record._hbl_is_cntrized = false;
 
     this.record.hbl_is_arranged = "Y";
-    this.record._hbl_is_arranged = false;
+    this.record._hbl_is_arranged = true;
 
     this.record.hbl_print_kgs = "Y";
-    this.record._hbl_print_kgs = false;
+    this.record._hbl_print_kgs = true;
 
     this.record.hbl_print_lbs = "N";
     this.record._hbl_print_lbs = false;
@@ -163,7 +164,10 @@ export class HousePageComponent implements OnInit {
       this.record.rec_created_date = this.gs.defaultValues.today;
       this.record.hbl_notify_name = "SAME AS CONSIGNEE";
       this.record.hbl_shipment_stage = "NIL";
-
+      this.record.hbl_is_arranged = 'Y';
+      this.record._hbl_is_arranged = true;
+      this.record.hbl_print_kgs = 'Y';
+      this.record._hbl_print_kgs = true;
       if (this.parentid != "")
         this.LoadDefaultData();
       else {
@@ -217,6 +221,8 @@ export class HousePageComponent implements OnInit {
         this.record.hbl_handled_name = rec.mbl_handled_name;
         this.record.hbl_by1 = rec.mbl_handled_name;
 
+
+
         this.record.hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? "Y" : "N";
         this.record._hbl_is_cntrized = (rec.mbl_cntr_type != "OTHERS") ? true : false;
 
@@ -236,7 +242,10 @@ export class HousePageComponent implements OnInit {
         else if (rec.mbl_cntr_type == "LCL" || rec.mbl_cntr_type == "CONSOLE") {
           this.record.desc1 = "SAID TO CONTAIN";
         }
+
+
         this.ShipmentType = rec.mbl_cntr_type;
+        this.record.mbl_cntr_type = this.ShipmentType;
         this.is_locked = this.gs.IsShipmentClosed("SEA EXPORT", rec.mbl_ref_date, rec.mbl_lock, rec.mbl_unlock_date);
 
         this.cntrs = <Tbl_cargo_exp_container[]>response.cntrs;
@@ -648,6 +657,8 @@ export class HousePageComponent implements OnInit {
         if (this.mode == "ADD" && response.refno != '')
           this.record.hbl_houseno = response.refno;
         this.mode = 'EDIT';
+        this.errorMessage.push('Save Complete');
+        // alert(this.errorMessage);
       }
 
     }, error => {
@@ -660,7 +671,7 @@ export class HousePageComponent implements OnInit {
   }
 
 
-  LovSelected(rec: SearchTable) {
+  LovSelected(rec: SearchTable, idx: number = 0) {
 
     if (rec.controlname == "SHIPPER") {
       this.record.hbl_shipper_id = rec.id;
@@ -742,13 +753,12 @@ export class HousePageComponent implements OnInit {
 
     // Container
     if (rec.controlname == "CONTAINER TYPE") {
-      let idx: number = 0;
       this.cntrs.forEach(mrec => {
         if (mrec.cntr_pkid == rec.uid) {
           mrec.cntr_type = rec.code;
-          this.cntr_sealno_field.toArray()[idx].focus();
+          if (idx < this.cntr_sealno_field.toArray().length)
+            this.cntr_sealno_field.toArray()[idx].focus();
         }
-        idx++;
       });
     }
 

@@ -166,7 +166,7 @@ export class SeaImpUsCustomsHoldComponent implements OnInit {
         }
         else {
           this.mode = 'EDIT';
-          // this.errorMessage = 'Save Complete';
+          this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
       }, error => {

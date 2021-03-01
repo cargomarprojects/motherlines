@@ -3,7 +3,7 @@
         <div class="row align-items-center justify-content-left p-1">
             <label class="mr-3">{{title}}({{mode}})</label>
             <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-sm mr-1" (click)="Copy()">Copy</button>
-            <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
+            <button #_btnretfcl class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         </div>
     </div>
 
@@ -18,7 +18,6 @@
         </div>
     </div>
 
-
     <div class="page-body">
         <div class="row border">
             <div class="col-md-4 testbox  px-0 mx-0">
@@ -26,7 +25,7 @@
                     <label class="col-3 col-form-label col-form-label-sm">Quote#</label>
                     <div class="col-9">
                         <input class="form-control form-control-sm text-danger" type="text" [(ngModel)]="record.qtnm_no"
-                            [disabled]="true" maxlength="25" #refno />
+                            [disabled]="true" maxlength="25" />
                     </div>
                 </div>
             </div>
@@ -38,15 +37,15 @@
                 <div class="form-group row">
                     <label class="col-3 col-form-label col-form-label-sm">Quote To</label>
                     <div class="col-9">
-                        <app-autocomplete2 [controlname]="'QUOTE-TO'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
-                            [displaydata]="record.qtnm_to_code" (ValueChanged)="LovSelected($event)" #to_code>
+                        <app-autocomplete2 #_qtnm_to_code [controlname]="'QUOTE-TO'" [tabletype]="'MASTER'" [displaycolumn]="'CODE'"
+                            [displaydata]="record.qtnm_to_code" (ValueChanged)="LovSelected($event)" >
                         </app-autocomplete2>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-3 col-form-label col-form-label-sm">Name</label>
                     <div class="col-9">
-                        <InputBox [(inputModel)]="record.qtnm_to_name" [maxlength]="60" [uppercase]="true" #to_name>
+                        <InputBox [(inputModel)]="record.qtnm_to_name" [maxlength]="60" [uppercase]="true" #_qtnm_to_name>
                         </InputBox>
                     </div>
                 </div>
@@ -115,7 +114,7 @@
                 <div class="form-group row">
                     <label class="col-3 col-form-label col-form-label-sm">Move Type</label>
                     <div class="col-9">
-                        <InputBox [(inputModel)]="record.qtnm_move_type" [maxlength]="25" [uppercase]="true" #move_type>
+                        <InputBox [(inputModel)]="record.qtnm_move_type" [maxlength]="25" [uppercase]="true" #_qtnm_move_type>
                         </InputBox>
                     </div>
                 </div>
@@ -148,7 +147,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm">POL</label>
                             <div class="col-9">
-                                <app-autocomplete2 [controlname]="'POL'" [displaycolumn]="'CODE'"
+                                <app-autocomplete2 #_pol_code [controlname]="'POL'" [displaycolumn]="'CODE'"
                                     [tabletype]="'PARAMDET'" [subtype]="'SEA PORT'" [displaydata]="polCode"
                                     (ValueChanged)="LovSelected($event)">
                                 </app-autocomplete2>
@@ -157,7 +156,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="polName" [maxlength]="60" [uppercase]="true" #pol_name>
+                                <InputBox [(inputModel)]="polName" [maxlength]="60" [uppercase]="true" #_pol_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -175,7 +174,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="podName" [maxlength]="60" [uppercase]="true" #pod_name>
+                                <InputBox [(inputModel)]="podName" [maxlength]="60" [uppercase]="true" #_pod_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -193,7 +192,7 @@
                         <div class="form-group row">
                             <label class="col-3 col-form-label col-form-label-sm"></label>
                             <div class="col-9">
-                                <InputBox [(inputModel)]="carrName" [maxlength]="60" [uppercase]="true" #carr_name>
+                                <InputBox [(inputModel)]="carrName" [maxlength]="60" [uppercase]="true" #_carr_name>
                                 </InputBox>
                             </div>
                         </div>
@@ -382,7 +381,7 @@
                         <div class="form-group row">
                             <label class="col-1 col-form-label col-form-label-sm">Subject</label>
                             <div class="col-11">
-                                <textarea rows="6" class="form-control form-control-sm"
+                                <textarea #_qtnm_subjects rows="6" class="form-control form-control-sm"
                                     [(ngModel)]="record.qtnm_subjects"></textarea>
                             </div>
                         </div>

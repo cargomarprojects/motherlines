@@ -264,7 +264,7 @@ export class ApprovedPageEditComponent implements OnInit {
           }
 
           this.mode = 'EDIT';
-          // this.errorMessage = 'Save Complete';
+          this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
         //  this.csdate_field.Focus();

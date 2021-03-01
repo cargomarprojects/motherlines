@@ -146,7 +146,7 @@ export class SeaexpMasterEditComponent implements OnInit {
 
   init() {
     this.record.mbl_pkid = this.pkid;
-    this.record.mbl_cntr_type = 'FCL';
+    this.record.mbl_cntr_type = '';//FCL
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
     this.record.mbl_ref_date = this.gs.defaultValues.today;
@@ -208,8 +208,13 @@ export class SeaexpMasterEditComponent implements OnInit {
     this.record.mbl_it_no = '';
     this.record.mbl_it_port = '';
     this.record.mbl_it_date = '';
-    this.record.mbl_jobtype_id = '';
-    this.record.mbl_jobtype_name = '';
+    if (this.gs.JOB_TYPE_OE.length > 0) {
+      this.record.mbl_jobtype_id = this.gs.JOB_TYPE_OE[0].code;
+      this.record.mbl_jobtype_name = this.gs.JOB_TYPE_OE[0].name;
+    } else {
+      this.record.mbl_jobtype_id = '';
+      this.record.mbl_jobtype_name = '';
+    }
     this.record.mbl_salesman_id = '';
     this.record.mbl_salesman_name = '';
     this.record.mbl_rotation_no = '';
@@ -302,6 +307,7 @@ export class SeaexpMasterEditComponent implements OnInit {
       return;
 
     this.SaveContainer();
+    this.FindTotTeus();
     this.record.mbl_direct = this.record.mbl_direct_bool ? 'Y' : 'N';
 
     const saveRecord = <vm_tbl_cargo_exp_masterm>{};
@@ -321,13 +327,67 @@ export class SeaexpMasterEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          // this.errorMessage.push('Save Complete');
+          this.errorMessage.push('Save Complete');
           // alert(this.errorMessage[0]);
         }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
         alert(this.errorMessage[0]);
       });
+  }
+  private FindTotTeus() {
+    var Tot_Teu = 0, Teu = 0, Tot_Cbm = 0;
+    var Tot_20 = 0, Tot_40 = 0, Tot_40HQ = 0, Tot_45 = 0;
+    var Cntr_Tot = 0;
+    let sCntrType: string = "";
+    this.records.forEach(Rec => {
+      Cntr_Tot++;
+      Teu = 0;
+      if (Rec.cntr_type.indexOf("20") >= 0)
+        Teu = 1;
+      else if (Rec.cntr_type.indexOf("40") >= 0) {
+        if (Rec.cntr_type.indexOf("HC") >= 0)
+          Teu = 2.25;
+        else
+          Teu = 2;
+      }
+      else if (Rec.cntr_type.indexOf("45") >= 0)
+        Teu = 2.50;
+
+      if (this.record.mbl_cntr_type.toString() == "LCL")
+        Teu = 0;
+      Tot_Teu += Teu;
+      Tot_Cbm += Rec.cntr_cbm;
+      Rec.cntr_teu = Teu;
+      if (Teu > 0) {
+        if (Rec.cntr_type.indexOf("20") >= 0)
+          Tot_20 += 1;
+        else if (Rec.cntr_type.indexOf("40HC") >= 0 || Rec.cntr_type.indexOf("40HQ") >= 0)
+          Tot_40HQ += 1;
+        else if (Rec.cntr_type.indexOf("40") >= 0)
+          Tot_40 += 1;
+        else if (Rec.cntr_type.indexOf("45") >= 0)
+          Tot_45 += 1;
+      }
+
+      if (sCntrType.indexOf(Rec.cntr_type) < 0) {
+        if (sCntrType != "")
+          sCntrType += ",";
+        sCntrType += Rec.cntr_type;
+      }
+
+    })
+    this.record.mbl_teu = Tot_Teu;
+    this.record.mbl_20 = Tot_20;
+    this.record.mbl_40 = Tot_40;
+    this.record.mbl_40HQ = Tot_40HQ;
+    this.record.mbl_45 = Tot_45;
+    this.record.mbl_cntr_cbm = Tot_Cbm;
+    this.record.mbl_container_tot = Cntr_Tot;
+    if (sCntrType.length > 100)
+      sCntrType = sCntrType.substring(0, 100);
+
+    this.record.mbl_cntr_desc = sCntrType;
   }
 
   private SaveContainer() {
@@ -479,7 +539,7 @@ export class SeaexpMasterEditComponent implements OnInit {
   }
 
 
-  LovSelected(_Record: SearchTable) {
+  LovSelected(_Record: SearchTable, idx: number = 0) {
 
     if (_Record.controlname == "AGENT") {
       this.record.mbl_agent_id = _Record.id;
@@ -535,13 +595,13 @@ export class SeaexpMasterEditComponent implements OnInit {
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {
-      let idx: number = 0;
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
-          this.cntr_sealno_field.toArray()[idx].focus();
+          if (idx < this.cntr_sealno_field.toArray().length)
+            this.cntr_sealno_field.toArray()[idx].focus();
         }
-        idx++;
+         
       });
     }
   }

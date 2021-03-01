@@ -142,7 +142,7 @@ export class MawbPageComponent implements OnInit {
         // if (!this.gs.isBlank(this.mbld_shipper_code_ctrl))
         //   this.mbld_shipper_code_ctrl.Focus();
 
-          if (!this.gs.isBlank(this.btnret_ctrl))
+        if (!this.gs.isBlank(this.btnret_ctrl))
           this.btnret_ctrl.nativeElement.focus();
 
       }, error => {
@@ -530,7 +530,7 @@ export class MawbPageComponent implements OnInit {
 
       if (response.retvalue)
         this.mode = 'EDIT';
-
+      this.errorMessage.push('Save Complete');
     }, error => {
       this.errorMessage.push(this.gs.getError(error));
       alert(this.errorMessage[0]);
@@ -633,7 +633,7 @@ export class MawbPageComponent implements OnInit {
         this.gs.ShowAccAlert(this.record.mbld_shipper_id);
       }
       if (!this.gs.isBlank(this.mbld_shipper_name_ctrl))
-          this.mbld_shipper_name_ctrl.focus();
+        this.mbld_shipper_name_ctrl.focus();
     }
 
     if (rec.controlname == 'CONSIGNEE') {
@@ -651,7 +651,7 @@ export class MawbPageComponent implements OnInit {
         this.gs.ShowAccAlert(this.record.mbld_consignee_id);
       }
       if (!this.gs.isBlank(this.mbld_consigned_to1_ctrl))
-          this.mbld_consigned_to1_ctrl.focus();
+        this.mbld_consigned_to1_ctrl.focus();
     }
 
   }

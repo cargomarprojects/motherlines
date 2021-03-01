@@ -184,19 +184,24 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.record.mbl_it_date = '';
     this.record.rec_created_by = this.gs.user_code;
     this.record.rec_created_date = this.gs.defaultValues.today;
-    this.record.mbl_cntr_type = 'FCL';
+    this.record.mbl_cntr_type = '';//FCL
     this.record.mbl_container_tot = 0;
     this.record.mbl_lock = '';
     this.record.mbl_unlock_date = '';
-    this.record.mbl_jobtype_id = '';
-    this.record.mbl_jobtype_name = '';
+    if (this.gs.JOB_TYPE_OI.length > 0) {
+      this.record.mbl_jobtype_id = this.gs.JOB_TYPE_OI[0].code;
+      this.record.mbl_jobtype_name = this.gs.JOB_TYPE_OI[0].name;
+    } else {
+      this.record.mbl_jobtype_id = '';
+      this.record.mbl_jobtype_name = '';
+    }
     this.record.mbl_boeno = '';
     this.record.mbl_shipment_stage = 'NIL';
     this.record.mbl_salesman_id = '';
     this.record.mbl_salesman_name = '';
-    this.record.mbl_status = '';
+    this.record.mbl_status = 'NIL';
     this.record.rec_files_attached = '';
-    this.record.mbl_is_sea_waybill = '';
+    this.record.mbl_is_sea_waybill = 'NIL';
     this.record.mbl_ismemo_attached = 'N';
     this.record.mbl_prefix = this.gs.SEA_IMPORT_REFNO_PREFIX;
     this.record.mbl_startingno = this.gs.SEA_IMPORT_REFNO_STARTING_NO;
@@ -291,7 +296,7 @@ export class SeaImpMasterEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.mbl_refno = response.code;
           this.mode = 'EDIT';
-          // this.errorMessage.push('Save Complete');
+          this.errorMessage.push('Save Complete');
           // alert(this.errorMessage);
         }
       }, error => {
@@ -511,7 +516,7 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
 
-  LovSelected(_Record: SearchTable) {
+  LovSelected(_Record: SearchTable, idx: number = 0) {
 
     if (_Record.controlname == "AGENT") {
       this.record.mbl_agent_id = _Record.id;
@@ -592,13 +597,12 @@ export class SeaImpMasterEditComponent implements OnInit {
 
     // Container
     if (_Record.controlname == "CONTAINER TYPE") {
-      let idx: number = 0;
       this.records.forEach(rec => {
         if (rec.cntr_pkid == _Record.uid) {
           rec.cntr_type = _Record.code;
-          this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
+          if (idx < this.cntr_sealno_field.toArray().length)
+            this.cntr_sealno_field.toArray()[idx].nativeElement.focus();
         }
-        idx++;
       });
     }
   }
