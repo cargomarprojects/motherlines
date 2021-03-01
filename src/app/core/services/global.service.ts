@@ -866,6 +866,7 @@ export class GlobalService {
     this.defaultValues.lastmonthdate = this.getNewdate(30);//get today -30 days
     this.defaultValues.print_cheque_only_after_ho_approved = 'N';
 
+    /*
     this.globalData.cost_sea_fromdate = this.defaultValues.monthbegindate;
     this.globalData.cost_sea_todate = this.defaultValues.today;
     this.globalData.cost_air_fromdate = this.defaultValues.monthbegindate;
@@ -886,7 +887,7 @@ export class GlobalService {
     this.globalData.ledger_fromdate = this.defaultValues.lastmonthdate;
     this.globalData.ledger_todate = this.defaultValues.today;
 
-
+*/
 
 
 

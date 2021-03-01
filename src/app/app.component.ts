@@ -22,6 +22,9 @@ export class AppComponent {
     private router: Router,
   ) {
 
+
+    
+
     this.sub = this.router.events.subscribe((event) => {
 
       if (this.gs.IsAuthenticated) {

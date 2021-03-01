@@ -49,6 +49,8 @@ export class LoginComponent implements OnInit {
     this.GLOBALCONTANTS.IsAuthenticated = false;
     this.showloginbutton = false;
 
+    this.GLOBALCONTANTS.InitdefaultValues();
+
     this.username = 'ADMIN';
     this.password = '123';
 
