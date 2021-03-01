@@ -37,10 +37,9 @@ export class GlobalService {
   public globalVariables: GlobalVariables;
   public defaultValues: DefaultValues;
 
-  /* public baseUrl: string = "http://localhost:5000"; */
-  //public baseUrl: string = "http://localhost:5000";
-  public baseUrl: string = "";
-
+  
+  public baseUrl: string = "http://localhost:5000";
+  //public baseUrl: string = "";
 
 
 
