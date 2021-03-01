@@ -22,8 +22,7 @@ export class AppComponent {
     private router: Router,
   ) {
 
-
-    
+    this.gs.InitdefaultValues();
 
     this.sub = this.router.events.subscribe((event) => {
 
