@@ -27,17 +27,14 @@ export class GlobalService {
   public Token: string;
   public Company_Name: string;
   public IsLoginSuccess: boolean = false;
-
-  public IsAutoLogin: boolean = false;
-  public Auto_Branch_id: string = '';
-
+  
   public IsAuthenticated: boolean = false;
   public Access_Token: string;
   public globalData: GlobalData;
   public globalVariables: GlobalVariables;
   public defaultValues: DefaultValues;
 
-  
+
   public baseUrl: string = "http://localhost:5000";
   //public baseUrl: string = "";
 
@@ -567,18 +564,18 @@ export class GlobalService {
       return false;
   }
 
-  public CompareDate(d1 : string ,d2 : string){
-    if ( this.isBlank(d1) || this.isBlank(d2))
+  public CompareDate(d1: string, d2: string) {
+    if (this.isBlank(d1) || this.isBlank(d2))
       return "";
     var p1 = d1.split('-');
     var p2 = d2.split('-');
-    var date1 = new Date( parseInt(p1[0]), parseInt(p1[1]) - 1, parseInt(p1[2])); 
-    var date2 = new Date( parseInt(p2[0]), parseInt(p2[1]) - 1, parseInt(p2[2])); 
-    if (date1 < date2 )
+    var date1 = new Date(parseInt(p1[0]), parseInt(p1[1]) - 1, parseInt(p1[2]));
+    var date2 = new Date(parseInt(p2[0]), parseInt(p2[1]) - 1, parseInt(p2[2]));
+    if (date1 < date2)
       return "<";
-    else if (date1 > date2 )
+    else if (date1 > date2)
       return ">";
-    else 
+    else
       return "=";
   }
 
@@ -1776,7 +1773,7 @@ export class GlobalService {
   public MENU_SE_MASTER_CERTIFICATE_ORIGIN: string = "A8F97344-12C3-44EE-A4E1-B738380ECDA5";
 
 
-  Save2LocalStorage() {
+  Save2LocalStorage_OLD() {
     const bts_settings = {
       'access_token': this.Access_Token,
       'company_pkid': this.company_pkid,
@@ -1790,80 +1787,187 @@ export class GlobalService {
 
   ReadLocalStorage() {
     if (localStorage.length > 0) {
-      const bts_settings = JSON.parse(localStorage.getItem('bts_settings'));
-      if (bts_settings) {
-        if (bts_settings.access_token && bts_settings.company_pkid && bts_settings.branch_pkid && bts_settings.user_code && bts_settings.user_name && bts_settings.user_pwd) {
-          this.IsAutoLogin = true;
-          this.Access_Token = bts_settings.access_token;
-          this.company_pkid = bts_settings.company_pkid;
-          this.Auto_Branch_id = bts_settings.branch_pkid;
-          this.user_code = bts_settings.user_code;
-          this.user_name = bts_settings.user_name;
-          this.user_pwd = bts_settings.user_pwd;
-          //this.router.navigate(['login']);
-        }
-      }
+      this.Access_Token = JSON.parse(localStorage.getItem('access_token'));
+      this.company_pkid = JSON.parse(localStorage.getItem('company_pkid'));
+      this.company_name = JSON.parse(localStorage.getItem('company_name'));
+      this.BRANCH_REGION = JSON.parse(localStorage.getItem('BRANCH_REGION'));
+      this.company_code = JSON.parse(localStorage.getItem('company_code'));      
+      
+      this.user_code = JSON.parse(localStorage.getItem('user_code'));
+      this.user_name = JSON.parse(localStorage.getItem('user_name'));
+      this.user_pwd = JSON.parse(localStorage.getItem('user_pwd'));
+
+      this.branch_pkid = JSON.parse(localStorage.getItem('branch_pkid'));
+      this.branch_code = JSON.parse(localStorage.getItem('branch_code'));
+      this.branch_name = JSON.parse(localStorage.getItem('branch_name'));
+      this.branch_add1 = JSON.parse(localStorage.getItem('branch_add1'));
+      this.branch_add2 = JSON.parse(localStorage.getItem('branch_add2'));
+      this.branch_add3 = JSON.parse(localStorage.getItem('branch_add3'));
+      this.branch_add4 = JSON.parse(localStorage.getItem('branch_add4'));
+
+
+      this.IsLoginSuccess = JSON.parse(localStorage.getItem('isloginsuccess'));
+      this.IsAuthenticated = JSON.parse(localStorage.getItem('isauthenticated'));
+      this.globalData = JSON.parse(localStorage.getItem('globaldata'));
+      this.globalVariables = JSON.parse(localStorage.getItem('globalvariables'));
+      this.defaultValues = JSON.parse(localStorage.getItem('defaultvalues'));
+      this.UserInfo = JSON.parse(localStorage.getItem('userinfo'));
+      this.Modules = JSON.parse(localStorage.getItem('modules'));
+      this.MenuList = JSON.parse(localStorage.getItem('menulist'));
+      this.CompanyList = JSON.parse(localStorage.getItem('companylist'));
+      this.YearList = JSON.parse(localStorage.getItem('yearlist'));
+      this.year_code = JSON.parse(localStorage.getItem('year_code'));
+      this.year_start_date = JSON.parse(localStorage.getItem('year_start_date'));
+      this.year_end_date = JSON.parse(localStorage.getItem('year_end_date'));
+    }
+    else {
+      this.router.navigate(['login'], { replaceUrl: true });
     }
 
+  }
+
+
+  Save2LocalStorage() {
+
+    localStorage.setItem('access_token',JSON.stringify( this.Access_Token));
+    localStorage.setItem('company_name',JSON.stringify( this.company_name));
+    localStorage.setItem('company_pkid',JSON.stringify( this.company_pkid));
+    localStorage.setItem('company_code', JSON.stringify(this.company_code));
+    localStorage.setItem('BRANCH_REGION', JSON.stringify(this.BRANCH_REGION));
+    
+    localStorage.setItem('user_code', JSON.stringify(this.user_code));
+    localStorage.setItem('user_name',JSON.stringify( this.user_name));
+    localStorage.setItem('user_pwd', JSON.stringify(this.user_pwd));
+
+    localStorage.setItem('branch_pkid',JSON.stringify( this.branch_pkid));
+    localStorage.setItem('branch_code',JSON.stringify( this.branch_code));
+    localStorage.setItem('branch_name',JSON.stringify( this.branch_name));
+    localStorage.setItem('branch_add1',JSON.stringify( this.branch_add1));
+    localStorage.setItem('branch_add2',JSON.stringify( this.branch_add2));
+    localStorage.setItem('branch_add3',JSON.stringify( this.branch_add3));
+    localStorage.setItem('branch_add4',JSON.stringify( this.branch_add4));
+
+    localStorage.setItem('isloginsuccess', JSON.stringify(this.IsLoginSuccess));
+    localStorage.setItem('isauthenticated', JSON.stringify(this.IsAuthenticated));
+    localStorage.setItem('globaldata', JSON.stringify(this.globalData));
+    localStorage.setItem('globalvariables', JSON.stringify(this.globalVariables));
+    localStorage.setItem('defaultvalues', JSON.stringify(this.defaultValues));
+    localStorage.setItem('userinfo', JSON.stringify(this.UserInfo));
+    localStorage.setItem('modules', JSON.stringify(this.Modules));
+    localStorage.setItem('menulist', JSON.stringify(this.MenuList));
+    localStorage.setItem('companylist', JSON.stringify(this.CompanyList));
+    localStorage.setItem('yearlist', JSON.stringify(this.YearList));
+
+    localStorage.setItem('ADDRESS_LINE1', JSON.stringify(this.ADDRESS_LINE1));
+    localStorage.setItem('ADDRESS_LINE2', JSON.stringify(this.ADDRESS_LINE2));
+    localStorage.setItem('ADDRESS_LINE3', JSON.stringify(this.ADDRESS_LINE3));
+    localStorage.setItem('ADDRESS_LINE4', JSON.stringify(this.ADDRESS_LINE4));
+    localStorage.setItem('ADDRESS_LINE5', JSON.stringify(this.ADDRESS_LINE5));
+    localStorage.setItem('user_name', JSON.stringify(this.user_name));
+    localStorage.setItem('DOC_FOOTER1', JSON.stringify(this.DOC_FOOTER1));
+    localStorage.setItem('DOC_FOOTER2', JSON.stringify(this.DOC_FOOTER2));
+    localStorage.setItem('date_display_fmt', JSON.stringify(this.date_display_fmt));
+    localStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify(this.BOE_IMPORT_REQUIRED));
+    localStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify(this.FRONTEND_DATEFORMAT));
+    localStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
+
+    localStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
+    localStorage.setItem('user_name', JSON.stringify(this.user_name));
+    localStorage.setItem('DOC_FOOTER1', JSON.stringify(this.DOC_FOOTER1));
+    localStorage.setItem('DOC_FOOTER2', JSON.stringify(this.DOC_FOOTER2));
+    localStorage.setItem('date_display_fmt', JSON.stringify(this.date_display_fmt));
+    localStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify(this.BOE_IMPORT_REQUIRED));
+    localStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify(this.FRONTEND_DATEFORMAT));
+    localStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
+    localStorage.setItem('WWW_ROOT', JSON.stringify(this.WWW_ROOT));
+    localStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
+    localStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify(this.AIRPORTDISPLAYCOLUMN));
+    localStorage.setItem('FILES_FOLDER', JSON.stringify(this.FILES_FOLDER));
+    localStorage.setItem('FS_APP_FOLDER', JSON.stringify(this.FS_APP_FOLDER));
+    localStorage.setItem('SEARCH_DATE_DIFF', JSON.stringify(this.SEARCH_DATE_DIFF));
+
+    localStorage.setItem('year_code', JSON.stringify(this.year_code));
+    localStorage.setItem('year_start_date', JSON.stringify(this.year_start_date));
+    localStorage.setItem('year_end_date', JSON.stringify(this.year_end_date));
+    localStorage.setItem('SHOW_CTPAT_LOGO', JSON.stringify(this.SHOW_CTPAT_LOGO));
+    localStorage.setItem('branch_prefix', JSON.stringify(this.branch_prefix));
+    localStorage.setItem('USER_EMAIL', JSON.stringify(this.user_email));
+    localStorage.setItem('SEA_ARVL_FORMAT', JSON.stringify(this.SEA_ARVL_FORMAT));
+    localStorage.setItem('MESSENGER_SLIP_DROP_AT', JSON.stringify(this.MESSENGER_SLIP_DROP_AT));
 
   }
 
-  Old_Save2LocalStorage() {
+  
+  RemoveLocalStorage() {
 
-    sessionStorage.setItem('access_token', this.Access_Token);
-    sessionStorage.setItem('company_name', this.company_name);
-    sessionStorage.setItem('company_pkid', this.company_pkid);
-    sessionStorage.setItem('company_code', this.company_code);
-    sessionStorage.setItem('BRANCH_REGION', this.BRANCH_REGION);
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('company_name');
+    localStorage.removeItem('company_pkid');
+    localStorage.removeItem('company_code');
+    localStorage.removeItem('BRANCH_REGION');
+    
+    localStorage.removeItem('user_code');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('user_pwd');
 
-    sessionStorage.setItem('isloginsuccess', JSON.stringify(this.IsLoginSuccess));
-    sessionStorage.setItem('isauthenticated', JSON.stringify(this.IsAuthenticated));
-    sessionStorage.setItem('globaldata', JSON.stringify(this.globalData));
-    sessionStorage.setItem('globalvariables', JSON.stringify(this.globalVariables));
-    sessionStorage.setItem('defaultvalues', JSON.stringify(this.defaultValues));
-    sessionStorage.setItem('userinfo', JSON.stringify(this.UserInfo));
-    sessionStorage.setItem('modules', JSON.stringify(this.Modules));
-    sessionStorage.setItem('menulist', JSON.stringify(this.MenuList));
-    sessionStorage.setItem('companylist', JSON.stringify(this.CompanyList));
-    sessionStorage.setItem('yearlist', JSON.stringify(this.YearList));
+    localStorage.removeItem('branch_pkid');
+    localStorage.removeItem('branch_code');
+    localStorage.removeItem('branch_name');
+    localStorage.removeItem('branch_add1');
+    localStorage.removeItem('branch_add2');
+    localStorage.removeItem('branch_add3');
+    localStorage.removeItem('branch_add4');
 
-    sessionStorage.setItem('ADDRESS_LINE1', JSON.stringify(this.ADDRESS_LINE1));
-    sessionStorage.setItem('ADDRESS_LINE2', JSON.stringify(this.ADDRESS_LINE2));
-    sessionStorage.setItem('ADDRESS_LINE3', JSON.stringify(this.ADDRESS_LINE3));
-    sessionStorage.setItem('ADDRESS_LINE4', JSON.stringify(this.ADDRESS_LINE4));
-    sessionStorage.setItem('ADDRESS_LINE5', JSON.stringify(this.ADDRESS_LINE5));
-    sessionStorage.setItem('user_name', JSON.stringify(this.user_name));
-    sessionStorage.setItem('DOC_FOOTER1', JSON.stringify(this.DOC_FOOTER1));
-    sessionStorage.setItem('DOC_FOOTER2', JSON.stringify(this.DOC_FOOTER2));
-    sessionStorage.setItem('date_display_fmt', JSON.stringify(this.date_display_fmt));
-    sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify(this.BOE_IMPORT_REQUIRED));
-    sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify(this.FRONTEND_DATEFORMAT));
-    sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
+    localStorage.removeItem('isloginsuccess');
+    localStorage.removeItem('isauthenticated');
+    localStorage.removeItem('globaldata');
+    localStorage.removeItem('globalvariables');
+    localStorage.removeItem('defaultvalues');
+    localStorage.removeItem('userinfo');
+    localStorage.removeItem('modules');
+    localStorage.removeItem('menulist');
+    localStorage.removeItem('companylist');
+    localStorage.removeItem('yearlist');
 
-    sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
-    sessionStorage.setItem('user_name', JSON.stringify(this.user_name));
-    sessionStorage.setItem('DOC_FOOTER1', JSON.stringify(this.DOC_FOOTER1));
-    sessionStorage.setItem('DOC_FOOTER2', JSON.stringify(this.DOC_FOOTER2));
-    sessionStorage.setItem('date_display_fmt', JSON.stringify(this.date_display_fmt));
-    sessionStorage.setItem('BOE_IMPORT_REQUIRED', JSON.stringify(this.BOE_IMPORT_REQUIRED));
-    sessionStorage.setItem('FRONTEND_DATEFORMAT', JSON.stringify(this.FRONTEND_DATEFORMAT));
-    sessionStorage.setItem('PRINT_FIRMCODE', JSON.stringify(this.PRINT_FIRMCODE));
-    sessionStorage.setItem('WWW_ROOT', JSON.stringify(this.WWW_ROOT));
-    sessionStorage.setItem('GLOBAL_REPORT_FOLDER', JSON.stringify(this.GLOBAL_REPORT_FOLDER));
-    sessionStorage.setItem('AIRPORTDISPLAYCOLUMN', JSON.stringify(this.AIRPORTDISPLAYCOLUMN));
-    sessionStorage.setItem('FILES_FOLDER', JSON.stringify(this.FILES_FOLDER));
-    sessionStorage.setItem('FS_APP_FOLDER', JSON.stringify(this.FS_APP_FOLDER));
-    sessionStorage.setItem('SEARCH_DATE_DIFF', JSON.stringify(this.SEARCH_DATE_DIFF));
+    localStorage.removeItem('ADDRESS_LINE1');
+    localStorage.removeItem('ADDRESS_LINE2');
+    localStorage.removeItem('ADDRESS_LINE3');
+    localStorage.removeItem('ADDRESS_LINE4');
+    localStorage.removeItem('ADDRESS_LINE5');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('DOC_FOOTER1');
+    localStorage.removeItem('DOC_FOOTER2');
+    localStorage.removeItem('date_display_fmt');
+    localStorage.removeItem('BOE_IMPORT_REQUIRED');
+    localStorage.removeItem('FRONTEND_DATEFORMAT');
+    localStorage.removeItem('PRINT_FIRMCODE');
 
-    sessionStorage.setItem('year_code', JSON.stringify(this.year_code));
-    sessionStorage.setItem('year_start_date', JSON.stringify(this.year_start_date));
-    sessionStorage.setItem('year_end_date', JSON.stringify(this.year_end_date));
-    sessionStorage.setItem('SHOW_CTPAT_LOGO', JSON.stringify(this.SHOW_CTPAT_LOGO));
-    sessionStorage.setItem('branch_prefix', JSON.stringify(this.branch_prefix));
-    sessionStorage.setItem('USER_EMAIL', JSON.stringify(this.user_email));
-    sessionStorage.setItem('SEA_ARVL_FORMAT', JSON.stringify(this.SEA_ARVL_FORMAT));
-    sessionStorage.setItem('MESSENGER_SLIP_DROP_AT', JSON.stringify(this.MESSENGER_SLIP_DROP_AT));
+    localStorage.removeItem('GLOBAL_REPORT_FOLDER');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('DOC_FOOTER1');
+    localStorage.removeItem('DOC_FOOTER2');
+    localStorage.removeItem('date_display_fmt');
+    localStorage.removeItem('BOE_IMPORT_REQUIRED');
+    localStorage.removeItem('FRONTEND_DATEFORMAT');
+    localStorage.removeItem('PRINT_FIRMCODE');
+    localStorage.removeItem('WWW_ROOT');
+    localStorage.removeItem('GLOBAL_REPORT_FOLDER');
+    localStorage.removeItem('AIRPORTDISPLAYCOLUMN');
+    localStorage.removeItem('FILES_FOLDER');
+    localStorage.removeItem('FS_APP_FOLDER');
+    localStorage.removeItem('SEARCH_DATE_DIFF');
+
+    localStorage.removeItem('year_code');
+    localStorage.removeItem('year_start_date');
+    localStorage.removeItem('year_end_date');
+    localStorage.removeItem('SHOW_CTPAT_LOGO');
+    localStorage.removeItem('branch_prefix');
+    localStorage.removeItem('USER_EMAIL');
+    localStorage.removeItem('SEA_ARVL_FORMAT');
+    localStorage.removeItem('MESSENGER_SLIP_DROP_AT');
 
   }
+
+
 
 }

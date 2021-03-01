@@ -49,14 +49,9 @@ export class LoginComponent implements OnInit {
     this.GLOBALCONTANTS.IsAuthenticated = false;
     this.showloginbutton = false;
 
-    if (this.GLOBALCONTANTS.IsAutoLogin) {
-      this.username = this.GLOBALCONTANTS.user_code;
-      this.password = this.GLOBALCONTANTS.user_pwd;
-    }
-    else {
-      this.username = 'ADMIN';
-      this.password = '123';
-    }
+    this.username = 'ADMIN';
+    this.password = '123';
+
     this.LoadCombo();
   }
 
@@ -89,14 +84,7 @@ export class LoginComponent implements OnInit {
         response.list.forEach(a => {
           this.Company_Id = a.pkid;
         })
-
-        // Auto Login
-        if (this.GLOBALCONTANTS.IsAutoLogin) {
-          this.Company_Id = this.GLOBALCONTANTS.company_pkid;
-          this.Login();
-        }
-
-
+        
         this.loading = false;
       }, error => {
         this.loading = false;

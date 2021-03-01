@@ -35,6 +35,20 @@ export class HeaderComponent {
     }
 
 
+    getMenu(rec){
+        if (rec.menu_xap_class == 'ShipmentLogPage' || rec.menu_xap_class == 'ShipmentClosingPage' || rec.menu_xap_class == 'PaymentRequest'  || rec.menu_xap_class == 'PaymentDuePage')
+            rec.menu_xap_dll = 'Silver.Reports.General';
+        const menu_route = rec.menu_xap_dll + '/' + rec.menu_xap_class;
+        rec.menu_route2 = '';
+        return menu_route;
+    }
+
+    getQParam(rec){
+        this.id = rec.menu_pkid;
+        return { id: this.id, menuid: rec.menu_pkid, menu_param: rec.menu_param };
+    }
+
+
     home(){
         if (this.gs.IsAuthenticated)
             this.router.navigate(['/home']);
@@ -55,8 +69,7 @@ export class HeaderComponent {
         this.loginservice.Logout();
         this.gs.MenuList = null;
         this.gs.Modules =  null;
-
-        localStorage.removeItem('bts_settings');        
+        this.gs.RemoveLocalStorage();
         this.router.navigate(['home'], { replaceUrl: true });
     }
 

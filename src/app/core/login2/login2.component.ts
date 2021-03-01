@@ -97,14 +97,6 @@ export class Login2Component implements OnInit {
                 response.yearlist.forEach(a => {
                     this.Year_Id = a.fy_pkid;
                 });
-
-                // Auto Login
-                if ( this.GLOBALCONTANTS.IsAutoLogin){
-                    this.Company_Id = this.GLOBALCONTANTS.Auto_Branch_id;
-                    this.Login();
-                }
-                this.GLOBALCONTANTS.IsAutoLogin =false;
-
                 this.loading = false;
             }, error => {
                 this.loading = false;

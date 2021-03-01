@@ -30,12 +30,14 @@ export class SeaexpMasterComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     public gs: GlobalService,
     public mainservice: seaexpMasterService
   ) { }
 
   ngOnInit() {
+    console.log(this.route.snapshot.queryParams);
     this.mainservice.init(this.route.snapshot.queryParams);
     this.initPage();
   }
@@ -70,15 +72,13 @@ export class SeaexpMasterComponent implements OnInit {
       origin: 'seaexp-master-page',
       mode: 'ADD'
     };
-    this.gs.Naviagete('Silver.SeaExport.Trans/SeaExpMasterEditPage', JSON.stringify(parameter));
-
+    this.router.navigate(['Silver.SeaExport.Trans/SeaExpMasterEditPage'], {queryParams:{menuid: this.mainservice.menuid,pkid: '',type: this.mainservice.param_type,origin: 'seaexp-master-page',mode: 'ADD'}});
   }
   edit(_record: Tbl_cargo_exp_masterm) {
     if (!this.mainservice.canEdit) {
       alert('Insufficient User Rights')
       return;
     }
-
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: _record.mbl_pkid,
