@@ -34,6 +34,8 @@ export class GlobalService {
   public globalData: GlobalData;
   public globalVariables: GlobalVariables;
   public defaultValues: DefaultValues;
+
+  public MainList: any[];
   
   public baseUrl: string = "http://localhost:5000";
   //public baseUrl: string = "";
@@ -783,6 +785,569 @@ export class GlobalService {
     }
 
   }
+
+  public InitData() {
+    this.MainList.forEach(Rec => {
+        if (Rec.param_type == "BRANCH SETTINGS") {
+            if (Rec.param_name1 == "A/C RECEIVABLE") {
+                this.SETTINGS_AC_RECEIVABLE = Rec.param_name2;
+                this.SETTINGS_AC_RECEIVABLE_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "A/C PAYABLE") {
+                this.SETTINGS_AC_PAYABLE = Rec.param_name2;
+                this.SETTINGS_AC_PAYABLE_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "PETTY CASH")
+                this.SETTINGS_AC_PETTYCASH = Rec.param_name2;
+            else if (Rec.param_name1 == "INTERNAL-PAYMENT-SETTLEMENT-AR") {
+                this.INTERNAL_PAYMENT_SETTLMENT_AR_ID = Rec.param_name2;
+                this.INTERNAL_PAYMENT_SETTLMENT_AR_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "INTERNAL-PAYMENT-SETTLEMENT-AP") {
+                this.INTERNAL_PAYMENT_SETTLMENT_AP_ID = Rec.param_name2;
+                this.INTERNAL_PAYMENT_SETTLMENT_AP_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "INCOME-AE") {
+                this.INCOME_AE_ID = Rec.param_name2;
+                this.INCOME_AE_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "INCOME-AI") {
+                this.INCOME_AI_ID = Rec.param_name2;
+                this.INCOME_AI_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "INCOME-SE") {
+                this.INCOME_SE_ID = Rec.param_name2;
+                this.INCOME_SE_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "INCOME-SI") {
+                this.INCOME_SI_ID = Rec.param_name2;
+                this.INCOME_SI_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "INCOME-OT") {
+                this.INCOME_OT_ID = Rec.param_name2;
+                this.INCOME_OT_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "INCOME-EX") {
+                this.INCOME_EX_ID = Rec.param_name2;
+                this.INCOME_EX_NAME = Rec.param_name3;
+            }
+
+            else if (Rec.param_name1 == "EXPENSE-AE") {
+                this.EXPENSE_AE_ID = Rec.param_name2;
+                this.EXPENSE_AE_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "EXPENSE-AI") {
+                this.EXPENSE_AI_ID = Rec.param_name2;
+                this.EXPENSE_AI_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "EXPENSE-SE") {
+                this.EXPENSE_SE_ID = Rec.param_name2;
+                this.EXPENSE_SE_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "EXPENSE-SI") {
+                this.EXPENSE_SI_ID = Rec.param_name2;
+                this.EXPENSE_SI_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "EXPENSE-OT") {
+                this.EXPENSE_OT_ID = Rec.param_name2;
+                this.EXPENSE_OT_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "EXPENSE-EX") {
+                this.EXPENSE_EX_ID = Rec.param_name2;
+                this.EXPENSE_EX_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "RETAINED-PROFIT") {
+                this.RETAINED_PROFIT_ID = Rec.param_name2;
+                this.RETAINED_PROFIT_CODE = "";
+                this.RETAINED_PROFIT_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "VAT-ACCOUNT") {
+                this.VAT_ACC_ID = Rec.param_name2;
+                this.VAT_ACC_CODE = "";
+                this.VAT_ACC_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "VAT-INVOICE-DESCRIPTION") {
+                this.VAT_INVDESC_ID = Rec.param_name2;
+                this.VAT_INVDESC_CODE = "";
+                this.VAT_INVDESC_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "VAT-PERCENTAGE") {
+                this.VAT_PER = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "DIRECT-BILL-AGENT") {
+                this.DIRECT_AGENT_ID = Rec.param_name2;
+                this.DIRECT_AGENT_NAME = Rec.param_name3;
+            }
+
+            else if (Rec.param_name1 == "BANK CHARGES") {
+                this.SETTINGS_AC_BANK_CHARGES_ID = Rec.param_name2;
+                this.SETTINGS_AC_BANK_CHARGES_NAME = Rec.param_name3;
+            }
+
+            else if (Rec.param_name1 == "EXCHANGE DIFFERENCE") {
+                this.SETTINGS_AC_EX_DIFF_ID = Rec.param_name2;
+                this.SETTINGS_AC_EX_DIFF_NAME = Rec.param_name3;
+            }
+
+            else if (Rec.param_name1 == "ISSUE-AGENT") {
+                this.ISSUE_AGENT_ID = "";
+                this.ISSUE_AGENT_NAME = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "ISSUE-AGENT-CITY") {
+                this.ISSUE_AGENT_CITY = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "ISSUE-AGENT-ADDRESS") {
+                this.ISSUE_AGENT_ADDRESS = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "IATA-CODE") {
+                this.HBL_IATA = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SHOW-LOGO-HOME-PAGE") {
+                this.HOME_PAGE_LOGO_DISPLAY = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SHOW-NAME-HOME-PAGE") {
+                this.HOME_PAGE_NAME_DISPLAY = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SHOW-CTPAT") {
+                this.SHOW_CTPAT_LOGO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SHOW-EXTRA-OPTION") {
+                this.SHOW_EXTRA_OPERATION = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SEA-EXPORT-HOUSE-PREFIX") {
+                this.SEA_EXPORT_HOUSE_PREFIX = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SEA-EXPORT-HOUSE-PREFIX-POL") {
+                this.SEA_EXPORT_HOUSE_PREFIX_POL = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SEA-EXPORT-HOUSE-PREFIX-POD") {
+                this.SEA_EXPORT_HOUSE_PREFIX_POD = Rec.param_name3;
+            }
+
+            else if (Rec.param_name1 == "SEA-EXPORT-HOUSE-STARTING-NO") {
+                this.SEA_EXPORT_HOUSE_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SEA-EXPORT-HOUSE-INCREMENT-BY") {
+                this.SEA_EXPORT_HOUSE_INCR_BY = Rec.param_name3;
+            }
+
+            else if (Rec.param_name1 == "AIR-EXPORT-HOUSE-PREFIX") {
+                this.AIR_EXPORT_HOUSE_PREFIX = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AIR-EXPORT-HOUSE-PREFIX-POL") {
+                this.AIR_EXPORT_HOUSE_PREFIX_POL = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AIR-EXPORT-HOUSE-PREFIX-POD") {
+                this.AIR_EXPORT_HOUSE_PREFIX_POD = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AIR-EXPORT-HOUSE-STARTING-NO") {
+                this.AIR_EXPORT_HOUSE_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AIR-EXPORT-HOUSE-INCREMENT-BY") {
+                this.AIR_EXPORT_HOUSE_INCR_BY = Rec.param_name3;
+            }
+
+            else if (Rec.param_name1 == "SEA-EXPORT-REFNO-PREFIX") {
+                this.SEA_EXPORT_REFNO_PREFIX = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SEA-EXPORT-REFNO-STARTING-NO") {
+                this.SEA_EXPORT_REFNO_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "SEA-IMPORT-REFNO-PREFIX") {
+                this.SEA_IMPORT_REFNO_PREFIX = Rec.param_name3;
+
+            }
+            else if (Rec.param_name1 == "SEA-IMPORT-REFNO-STARTING-NO") {
+                this.SEA_IMPORT_REFNO_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AIR-EXPORT-REFNO-PREFIX") {
+                this.AIR_EXPORT_REFNO_PREFIX = Rec.param_name3;
+
+            }
+            else if (Rec.param_name1 == "AIR-EXPORT-REFNO-STARTING-NO") {
+                this.AIR_EXPORT_REFNO_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AIR-IMPORT-REFNO-PREFIX") {
+                this.AIR_IMPORT_REFNO_PREFIX = Rec.param_name3;
+
+            }
+            else if (Rec.param_name1 == "AIR-IMPORT-REFNO-STARTING-NO") {
+                this.AIR_IMPORT_REFNO_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "OTHER-OPERATION-REFNO-PREFIX") {
+                this.OTHER_OPERATION_REFNO_PREFIX = Rec.param_name3;
+
+            }
+            else if (Rec.param_name1 == "OTHER-OPERATION-REFNO-STARTING-NO") {
+                this.OTHER_OPERATION_REFNO_STARTING_NO = Rec.param_name3;
+            }
+
+            else if (Rec.param_name1 == "EXTRA-OPERATION-REFNO-PREFIX") {
+                this.EXTRA_OPERATION_REFNO_PREFIX = Rec.param_name3;
+
+            }
+            else if (Rec.param_name1 == "EXTRA-OPERATION-REFNO-STARTING-NO") {
+                this.EXTRA_OPERATION_REFNO_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AR-INVOICE-PREFIX") {
+                this.AR_INVOICE_PREFIX = Rec.param_name3;
+
+            }
+            else if (Rec.param_name1 == "AR-INVOICE-STARTING-NO") {
+                this.AR_INVOICE_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AP-INVOICE-PREFIX") {
+                this.AP_INVOICE_PREFIX = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "AP-INVOICE-STARTING-NO") {
+                this.AP_INVOICE_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "DEBIT-NOTE-PREFIX") {
+                this.DEBIT_NOTE_PREFIX = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "DEBITE-NOTE-STARTING-NO") {
+                this.DEBIT_NOTE_STARTING_NO = Rec.param_name3;
+            }
+            else if (Rec.param_name1 == "RESOURCE URL")
+                this.WWW_ROOT = Rec.param_name3;
+            else if (Rec.param_name1 == "FILES URL")
+                this.WWW_ROOT_FILE_FOLDER = Rec.param_name3;
+            else if (Rec.param_name1 == "FILES FOLDER")
+                this.FILES_FOLDER = Rec.param_name3;
+            else if (Rec.param_name1 == "BACK END DATE FORMAT")
+                this.BACKEND_DATEFORMAT = Rec.param_name3;
+            else if (Rec.param_name1 == "FRONT END DATE FORMAT") {
+                this.FRONTEND_DATEFORMAT = Rec.param_name3;
+                this.date_display_fmt = Rec.param_name3;
+                this.date_display_fmt_with_time = Rec.param_name3 + " HH:mm:ss";
+                //SetDateFormat();
+            }
+            else if (Rec.param_name1 == "BASE CURRENCY CODE")
+                this.base_cur_code = Rec.param_name3;
+            else if (Rec.param_name1 == "FOREIGN CURRENCY CODE")
+                this.foreign_cur_code = Rec.param_name3;
+            else if (Rec.param_name1 == "NO OF ROWS")
+                this.ROWS_TO_DISPLAY = Rec.param_name3;
+            else if (Rec.param_name1 == "HBL INSTRUCTION-1")
+                this.HBL_INSTR1 = Rec.param_name3;
+            else if (Rec.param_name1 == "HBL INSTRUCTION-2")
+                this.HBL_INSTR2 = Rec.param_name3;
+            else if (Rec.param_name1 == "PARENT-ADDRESS")
+                this.PARENT_ADDRESS_REQUIRED = Rec.param_name3;
+            else if (Rec.param_name1 == "AUTO-CLOSE-CHECK-PRINT")
+                this.AUTO_CLOSE_CHECK_PRINT = Rec.param_name3;
+            else if (Rec.param_name1 == "RE-PRINT-CHECK")
+                this.RE_PRINT_CHECK = Rec.param_name3;
+            else if (Rec.param_name1 == "LOCK-DAYS-SEA")
+                this.LOCK_DAYS_SEA = Rec.param_name3;
+            else if (Rec.param_name1 == "LOCK-DAYS-AIR")
+                this.LOCK_DAYS_AIR = Rec.param_name3;
+            else if (Rec.param_name1 == "LOCK-DAYS-OTHERS")
+                this.LOCK_DAYS_OTHERS = Rec.param_name3;
+            else if (Rec.param_name1 == "LOCK-DAYS-ADMIN")
+                this.LOCK_DAYS_ADMIN = Rec.param_name3;
+            else if (Rec.param_name1 == "SHOW-BOE")
+                this.BOE_IMPORT_REQUIRED = Rec.param_name3;
+            else if (Rec.param_name1 == "REGION")
+                this.BRANCH_REGION = Rec.param_name3;
+            else if (Rec.param_name1 == "ARAP-CODE-SELECTION")
+                this.ALLOW_ARAP_CODE_SELECTION = Rec.param_name3;
+            else if (Rec.param_name1 == "SEA_ARVL_FORMAT")
+                this.SEA_ARVL_FORMAT = Rec.param_name3;
+            else if (Rec.param_name1 == "SHOW-CHECK-DATE")
+                this.SHOW_CHECK_DATE = Rec.param_name3;
+            else if (Rec.param_name1 == "REMOVE-ZERO-FORMAT")
+                this.REMOVE_ZERO_FORMAT = Rec.param_name3;
+            else if (Rec.param_name1 == "PACKAGE-TOTAL-BUTTON")
+                this.PACKAGE_TOTAL_BUTTON = Rec.param_name3;
+            else if (Rec.param_name1 == "OPTIONAL-DESCRIPTION")
+                this.OPTIONAL_DESCRIPTION = Rec.param_name3;
+            else if (Rec.param_name1 == "PAYROLL-INVOICE-CODE")
+                this.PAYROLL_INVOICE_CODE = Rec.param_name3;
+            else if (Rec.param_name1 == "PAYROLL-ACC-CODE")
+                this.PAYROLL_ACC_CODE = Rec.param_name3;
+            else if (Rec.param_name1 == "PAYROLL-ENABLED")
+                this.PAYROLL_ENABLED = Rec.param_name3;
+            else if (Rec.param_name1 == "HIDE-DOCTYPE-INVOICE")
+                this.HIDE_DOCTYPE_INVOICE = Rec.param_name3;
+            else if (Rec.param_name1 == "DOC-FOOTER1")
+                this.DOC_FOOTER1 = Rec.param_name3;
+            else if (Rec.param_name1 == "DOC-FOOTER2")
+                this.DOC_FOOTER2 = Rec.param_name3;
+            else if (Rec.param_name1 == "FY-START-MONTH")
+                this.FY_START_MONTH = Rec.param_name3;
+
+            else if (Rec.param_name1 == "DEFAULT-HBL-FORMAT")
+                this.DEFAULT_HBL_FORMAT = Rec.param_name2;
+            else if (Rec.param_name1 == "DEFAULT-HBL-DRAFT-FORMAT")
+                this.DEFAULT_HBL_DRAFTFORMAT = Rec.param_name2;
+            else if (Rec.param_name1 == "AC-REPORT-BASED-ON")
+                this.AC_REPORT_BASED_ON = Rec.param_name3;
+            else if (Rec.param_name1 == "FS-APP-FOLDER")
+                this.FS_APP_FOLDER = Rec.param_name3;
+            else if (Rec.param_name1 == "GLOBAL-FTP-FOLDER") {
+                this.GLOBAL_FTP_FOLDER = Rec.param_name3;
+                this.GLOBAL_REPORT_FOLDER = Rec.param_name3 + "\\reports";
+            }
+            else if (Rec.param_name1 == "SEA-IMP-OVERRIDE-POD-ETA")
+                this.SEA_IMP_OVERRIDE_POD_ETA = Rec.param_name3;
+            else if (Rec.param_name1 == "AIR-IMP-OVERRIDE-POD-ETA")
+                this.AIR_IMP_OVERRIDE_POD_ETA = Rec.param_name3;
+
+            else if (Rec.param_name1 == "SHIPMENT-LOG-FORMAT")
+                this.SHIPMENTLOG_FORMAT = Rec.param_name3;
+
+
+            else if (Rec.param_name1 == "SHIPMENT-LOCKED-DATE") {
+                if (Rec.param_name3 != "") {
+                    var sdata = Rec.param_name3.split('-');
+                    this.ACCOUNTS_LOCKED_DATE = Rec.param_name3;
+                }
+            }
+        }
+        else if (Rec.param_type == "GLOBAL SETTINGS") {
+            if (Rec.param_name1 == "SOFTWARE VERSION")
+                this.SOFTWARE_VERSION = Rec.param_name3;
+            if (Rec.param_name1 == "COMPANY_STRING_ID")
+                    this.COMPANY_STRING_ID = Rec.param_name3;                    
+            if (Rec.param_name1 == "GENERAL_BRANCH_CODE")
+                this.GENERAL_BRANCH_CODE = Rec.param_name3;
+
+        }
+    });
+
+
+    if (this.base_cur_code == this.foreign_cur_code)
+        this.IS_SINGLE_CURRENCY = true;
+    if (this.base_cur_code != this.foreign_cur_code)
+        this.IS_SINGLE_CURRENCY = false;
+    if (this.ROWS_TO_DISPLAY == 0)
+        this.ROWS_TO_DISPLAY = 40;
+    this.WWW_FILES_URL = this.WWW_ROOT_FILE_FOLDER + "/" + this.FILES_FOLDER + "/Files";
+
+
+
+    this.SHIPMENT_STAGE_OI = [{ "code": "NIL", "name": "NIL" }];
+    this.SHIPMENT_STAGE_OE = [{ "code": "NIL", "name": "NIL" }];
+    this.SHIPMENT_STAGE_AI = [{ "code": "NIL", "name": "NIL" }];
+    this.SHIPMENT_STAGE_AE = [{ "code": "NIL", "name": "NIL" }];
+    this.SHIPMENT_STAGE_OT = [{ "code": "NIL", "name": "NIL" }];
+
+
+
+    this.MainList.filter(a => a.param_code == 'OI').sort(function (a, b) {
+        return b.param_name4 < a.param_name4 ? 1 : -1;
+    }).forEach(a => {
+        this.SHIPMENT_STAGE_OI.push({ "code": a.param_name4, "name": a.param_name3 })
+    });
+
+
+    this.MainList.filter(a => a.param_code == 'OE').sort(function (a, b) {
+        return b.param_name4 < a.param_name4 ? 1 : -1;
+    }).forEach(a => {
+        this.SHIPMENT_STAGE_OE.push({ "code": a.param_name4, "name": a.param_name3 })
+    });
+
+    this.MainList.filter(a => a.param_code == 'AI').sort(function (a, b) {
+        return b.param_name4 < a.param_name4 ? 1 : -1;
+    }).forEach(a => {
+        this.SHIPMENT_STAGE_AI.push({ "code": a.param_name4, "name": a.param_name3 })
+    });
+
+    this.MainList.filter(a => a.param_code == 'AE').sort(function (a, b) {
+        return b.param_name4 < a.param_name4 ? 1 : -1;
+    }).forEach(a => {
+        this.SHIPMENT_STAGE_AE.push({ "code": a.param_name4, "name": a.param_name3 })
+    });
+
+
+    this.MainList.filter(a => a.param_code == 'OT').sort(function (a, b) {
+        return b.param_name4 < a.param_name4 ? 1 : -1;
+    }).forEach(a => {
+        this.SHIPMENT_STAGE_OT.push({ "code": a.param_name4, "name": a.param_name3 })
+    });
+
+
+    this.MainList.filter(a => a.param_type == 'GLOBAL SETTINGS' && a.param_name1 == 'INVOICE_STAGE').sort(function (a, b) {
+        return b.param_name4 < a.param_name4 ? 1 : -1;
+    }).forEach(a => {
+        this.INVOICE_STAGE.push({ "code": a.param_code, "name": a.param_name2 + "," + a.param_name3 })
+    });
+
+
+    this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'SEA IMPORT').sort(function (a, b) {
+        return b.param_name3 < a.param_name3 ? 1 : -1;
+    }).forEach(a => {
+        this.JOB_TYPE_OI.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+
+    this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'SEA EXPORT').sort(function (a, b) {
+        return b.param_name3 < a.param_name3 ? 1 : -1;
+    }).forEach(a => {
+        this.JOB_TYPE_OE.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+
+    this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'AIR EXPORT').sort(function (a, b) {
+        return b.param_name3 < a.param_name3 ? 1 : -1;
+    }).forEach(a => {
+        this.JOB_TYPE_AE.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'AIR IMPORT').sort(function (a, b) {
+        return b.param_name3 < a.param_name3 ? 1 : -1;
+    }).forEach(a => {
+        this.JOB_TYPE_AI.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'JOB-TYPE' && a.param_name2 == 'OTHERS').sort(function (a, b) {
+        return b.param_name3 < a.param_name3 ? 1 : -1;
+    }).forEach(a => {
+        this.JOB_TYPE_OT.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+
+    this.MainList.filter(a => a.param_type == 'FREIGHT STATUS').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_FREIGHT_STATUS.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'CARGO MOVEMENT').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_CARGO_MOVEMENT.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'CONTAINER TYPE').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_CONTAINER_TYPE.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'NOMINATION').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_NOMINATION.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'COUNTRY').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_COUNTRY.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'CURRENCY').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_CURRENCY.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'UNIT').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_UNIT.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'HBL-FORMAT').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_HBL_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'HBL-FORMAT' && a.param_name6 == 'BLANK').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_HBL_FORMAT_BLANK.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'HBL-FORMAT' && a.param_name6 == 'DRAFT').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_HBL_FORMAT_DRAFT.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'HAWB-FORMAT').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_HAWB_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+
+    this.MainList.filter(a => a.param_type == 'BUDGET-TYPE').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.BUDGET_TYPE.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+    this.BUDGET_TYPE.push({ "code": '', "name": 'NIL' })
+
+
+    this.MainList.filter(a => a.param_type == 'CHQ-FORMAT').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.CHQ_FORMAT.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+    this.CHQ_FORMAT.push({ "code": 'NIL', "name": 'NIL' })
+
+
+    this.MainList.filter(a => a.param_type == 'CUSTOMER GROUP').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_CUSTOMER_GROUP.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+    this.MainList.filter(a => a.param_type == 'COO-FORMAT').sort(function (a, b) {
+        return b.param_name1 < a.param_name1 ? 1 : -1;
+    }).forEach(a => {
+        this.PARAM_COO_FORMAT_BLANK.push({ "code": a.param_pkid, "name": a.param_name1 })
+    });
+
+
+
+    this.MainList.filter(a => a.param_type == 'SALESMAN' && a.param_lookup_id == this.user_pkid).forEach(b => {
+        this.user_handled_id = b.param_pkid;
+        this.user_handled_code = b.param_code;
+        this.user_handled_name = b.param_name1;
+    });
+
+     
+    this.FY_MONTHS = <any[]>[];
+    if (this.FY_START_MONTH == "") {
+        var rec = <any>{};
+        rec.code = "1";
+        rec.name = this.GetMonth_Name(1);
+        this.FY_MONTHS.push(rec);
+    }
+    else {
+        
+        var Mon = this.FY_START_MONTH.toString().split(',');
+        for (let str of Object.values(Mon)) {
+            var rec = <any>{};
+            rec.code = str;
+            rec.name = this.GetMonth_Name(+str);
+            this.FY_MONTHS.push(rec);
+        }
+    }
+
+    /*      public PARAM_FREIGHT_STATUS : any = [];
+            public PARAM_CARGO_MOVEMENT : any = [];
+            public PARAM_CONTAINER_TYPE : any = [];
+            public PARAM_NOMINATION : any = [];
+            public PARAM_COUNTRY : any = [];
+            public PARAM_CURRENCY : any = [];
+            public PARAM_HBL_FORMAT : any = [];
+            public PARAM_HBL_FORMAT_DRAFT : any = [];
+            public PARAM_HAWB_FORMAT : any = [];
+            public PARAM_UNIT : any = [];
+            public PARAM_CUSTOMER_GROUP : any = [];
+            public PARAM_FORM_CATEGORIES : any = [];
+     */
+
+
+  }
+
+
 
 
 
