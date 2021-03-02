@@ -1368,6 +1368,7 @@ export class GlobalService {
   Save2LocalStorage() {
     
     const bts_settings = new gsdata();
+    bts_settings.GsSession = this.GSESSION;
     bts_settings.IsLoginSuccess = this.IsLoginSuccess;
     bts_settings.IsAuthenticated = this.IsAuthenticated;
     bts_settings.access_token = this.Access_Token;
@@ -1421,7 +1422,7 @@ export class GlobalService {
         this.UserRecord = bts_settings.userrecord;
         
         this.InitLogin();
-
+        this.GSESSION = bts_settings.GsSession;
         this.Access_Token = bts_settings.access_token;
         this.IsLoginSuccess = bts_settings.IsLoginSuccess;
         this.IsAuthenticated = bts_settings.IsAuthenticated;
