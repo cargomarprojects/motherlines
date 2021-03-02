@@ -14,6 +14,7 @@ import { ReportState } from './store/proft-report.models'
 
 import { Observable } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
+import { Tbl_shipment_stage } from '../models/tbl_shipment_stage';
 
 
 @Component({
@@ -69,6 +70,8 @@ export class ProfitReportComponent implements OnInit {
   page_rows: number = 0;
   page_rowcount: number = 0;
 
+  stagefullrecords: Tbl_shipment_stage[] = [];
+  stagerecords: Tbl_shipment_stage[] = [];
 
   // Local Variables;
 
@@ -106,6 +109,7 @@ export class ProfitReportComponent implements OnInit {
       this.urlid = params.id;
       this.menuid = params.menuid;
       this.InitPage();
+      this.LoadStage();
     });
 
   }
@@ -171,6 +175,7 @@ export class ProfitReportComponent implements OnInit {
         this.filename2 = rec.filename2;
         this.filetype2 = rec.filetype2;
         this.filedisplayname2 = rec.filedisplayname2;
+        
 
         this.page_rows = rec.page_rows;
         this.page_count = rec.page_count;
@@ -205,7 +210,8 @@ export class ProfitReportComponent implements OnInit {
 
         this.SMANRECORD.id = this.sales_id;
         this.SMANRECORD.name = this.sales_name;
-
+        
+        this.SearchData.STAGES = rec.stage;
 
       }
       else {
@@ -245,7 +251,6 @@ export class ProfitReportComponent implements OnInit {
         this.filedisplayname2 = '';
         this._report_category = 'GENERAL';
         this._report_type = 'MASTER';
-
         this.SearchData = this.gs.UserInfo;
 
       }
@@ -253,6 +258,55 @@ export class ProfitReportComponent implements OnInit {
 
   }
 
+  LoadStage() {
+    var SearchData = this.gs.UserInfo;
+    this.mainservice.StageList(SearchData).subscribe(response => {
+      this.stagefullrecords = response.list;
+      this.FillChkListBox();
+    }, error => {
+      this.errorMessage = this.gs.getError(error)
+    });
+  }
+
+  FillChkListBox() {
+    let sCode: string
+    if (this.mode == "OCEAN EXPORT")
+      sCode = "OE";
+    else if (this.mode == "AIR EXPORT") {
+      sCode = "AE";
+    }
+    else if (this.mode == "AIR IMPORT") {
+      sCode = "AI";
+    }
+    else if (this.mode == "OTHERS") {
+      sCode = "OT";
+    }
+    else if (this.mode == "OCEAN IMPORT") {
+      sCode = "OI";
+    }
+    else
+      sCode = "ALL";
+
+    this.stagerecords = <Tbl_shipment_stage[]>[];
+    // this.allstagechecked=false;
+    // this.selectdeselect = false;
+    if (sCode.trim() != "ALL") {
+      this.stagefullrecords.filter(rec => rec.ss_mode == sCode).forEach(Rec => {
+        Rec.ss_checked = false;
+        this.stagerecords.push(Rec);
+      })
+    }
+
+  }
+  SelectStage(_rec: Tbl_shipment_stage) {
+    _rec.ss_checked = true;
+  }
+
+  onChange(feild: string) {
+    if (feild == 'mode') {
+      this.FillChkListBox();
+    }
+  }
   ngOnInit() {
   }
 
@@ -271,6 +325,14 @@ export class ProfitReportComponent implements OnInit {
     if (this._report_category == "PARTY")
       this.report_type = "MASTER";
 
+    let _STAGES: string = "";
+    this.stagerecords.forEach(Rec => {
+      if (Rec.ss_checked) {
+        if (_STAGES.trim() != "")
+          _STAGES += ",";
+        _STAGES += "'" + Rec.ss_stage.trim() + "'";
+      }
+    })
 
     this.SearchData.outputformat = _outputformat;
     this.SearchData.pkid = this.urlid;
@@ -305,7 +367,7 @@ export class ProfitReportComponent implements OnInit {
 
       this.SearchData.ISADMIN = (this.isAdmin) ? 'Y' : 'N';
       this.SearchData.SHOWSTAGES = (this.showStages) ? 'Y' : 'N';
-
+      this.SearchData.STAGES = _STAGES;
 
       this.SearchData.CUST_ID = this.cust_id;
       this.SearchData.CUST_NAME = this.cust_name;
@@ -369,6 +431,7 @@ export class ProfitReportComponent implements OnInit {
 
             _report_category: this.SearchData.REPORT_CATEGORY,
             _report_type: this.SearchData.REPORT_TYPE,
+            stage: this.SearchData.STAGES,
 
             page_rows: response.page_rows,
             page_count: response.page_count,

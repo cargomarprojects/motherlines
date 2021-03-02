@@ -40,6 +40,7 @@ export const initialState: ReportState = {
     filedisplayname2: '',
     _report_category : '',
     _report_type :'',
+    stage:'',
     page_rows :0,
     page_count :0,
     page_current : 0,

@@ -39,7 +39,7 @@
                             </thead> -->
                                 <tbody class="page-body-tbody">
                                     <tr *ngFor="let rec of bankrecords">
-                                        <td (click)="SelectBank(rec)">
+                                        <td style="padding:0%;" (click)="SelectBank(rec)">
                                             <div class="form-check"> <input type="checkbox" class="form-check-input"
                                                     [(ngModel)]="rec.bnk_checked"><span>{{rec.bnk_display_name}}</span>
                                             </div>
