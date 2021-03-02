@@ -1,6 +1,7 @@
 
 export class gsdata {
     IsLoginSuccess : boolean;
+    IsAuthenticated : boolean;
     access_token :string;
     user_code: string;
     user_name: string;

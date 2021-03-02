@@ -108,8 +108,6 @@ export class GlobalService {
   public user_email_sign_size = "16";
   public user_email_sign_bold = "N";
 
-
-
   public PARENT_ADDRESS_REQUIRED = "Y";
 
   public user_islocked = "";
@@ -1371,6 +1369,7 @@ export class GlobalService {
     
     const bts_settings = new gsdata();
     bts_settings.IsLoginSuccess = this.IsLoginSuccess;
+    bts_settings.IsAuthenticated = this.IsAuthenticated;
     bts_settings.access_token = this.Access_Token;
     bts_settings.user_code = this.user_code;
     bts_settings.user_name = this.user_name;
@@ -1416,6 +1415,7 @@ export class GlobalService {
   ReadLocalStorage() {
     if (localStorage.length > 0) {
       if (localStorage.getItem('bts_settings')) {
+
         const bts_settings: gsdata = JSON.parse(localStorage.getItem('bts_settings'));
         
         this.UserRecord = bts_settings.userrecord;
@@ -1424,10 +1424,8 @@ export class GlobalService {
 
         this.Access_Token = bts_settings.access_token;
         this.IsLoginSuccess = bts_settings.IsLoginSuccess;
+        this.IsAuthenticated = bts_settings.IsAuthenticated;
 
-        this.user_code = bts_settings.user_code;
-        this.user_name = bts_settings.user_name;
-        this.user_pwd = bts_settings.user_pwd;
         this.user_ua_pkid = bts_settings.user_ua_pkid;
         this.branch_pkid = bts_settings.branch_pkid;
         this.branch_code = bts_settings.branch_code;
@@ -1465,6 +1463,7 @@ export class GlobalService {
         this.YearList = bts_settings.yearlist;
         
         this.InitData();
+        
         this.InitUserInfo();
 
 
