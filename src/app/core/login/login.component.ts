@@ -6,6 +6,7 @@ import { GlobalService } from '../services/global.service';
 import { ClearService } from '../services/clear.service';
 import { Companym } from '../models/company';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
 
 
   software_version_string = '1.106';
-  
+
   username: string = '';
   password: string = '';
 
@@ -33,23 +34,22 @@ export class LoginComponent implements OnInit {
   Company_Id: string = '';
   Company_Code: string = '';
 
-  userrecord: any;
-
 
   constructor(
     private mainservice: LoginService,
-    public GLOBALCONTANTS: GlobalService,
+    public gs: GlobalService,
     public clrservice: ClearService,
     private router: Router
   ) {
 
-    this.GLOBALCONTANTS.Modules = null;
-    this.GLOBALCONTANTS.MenuList = null;
-    this.GLOBALCONTANTS.IsLoginSuccess = false;
-    this.GLOBALCONTANTS.IsAuthenticated = false;
+    this.gs.UserRecord = null;
+    this.gs.Modules = null;
+    this.gs.MenuList = null;
+    this.gs.IsLoginSuccess = false;
+    this.gs.IsAuthenticated = false;
     this.showloginbutton = false;
 
-    
+
 
     this.username = 'ADMIN';
     this.password = '123';
@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
         response.list.forEach(a => {
           this.Company_Id = a.pkid;
         })
-        
+
         this.loading = false;
       }, error => {
         this.loading = false;
@@ -115,13 +115,13 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         let user = response;
         if (user && user.access_token) {
-          this.GLOBALCONTANTS.IsLoginSuccess = true;
-          this.GLOBALCONTANTS.Access_Token = user.access_token;
-          if (this.GLOBALCONTANTS.IsLoginSuccess) {
+          this.gs.IsLoginSuccess = true;
+          this.gs.Access_Token = user.access_token;
+          if (this.gs.IsLoginSuccess) {
             this.errorMessage = "Login Success";
-            this.GLOBALCONTANTS.user_pwd = this.password;
+            this.gs.user_pwd = this.password;
             // this.clrservice.ClearInit();
-            this.GLOBALCONTANTS.GSESSION += 1;
+            this.gs.GSESSION += 1;
             this.Login1();
           }
           else {
@@ -152,9 +152,9 @@ export class LoginComponent implements OnInit {
 
     this.mainservice.Login1(SearchData)
       .subscribe(response => {
-
-        this.userrecord = response.record;
-        this.LoadData();
+        
+        this.gs.UserRecord = response.record;
+        this.gs.InitLogin();
 
         this.router.navigate(['login2'], { replaceUrl: true });
 
@@ -165,76 +165,7 @@ export class LoginComponent implements OnInit {
       });
 
 
-
   }
 
-
-  public LoadData() {
-    this.GLOBALCONTANTS.BACKEND_DATEFORMAT = "YYYY/MM/DD";
-    this.GLOBALCONTANTS.FRONTEND_DATEFORMAT = "YYYY/MM/DD";
-
-    //string Str =  System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
-    this.GLOBALCONTANTS.date_display_fmt = '';//System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToString(); 
-
-    this.GLOBALCONTANTS.user_pkid = this.userrecord.usr_pkid;
-    this.GLOBALCONTANTS.user_code = this.userrecord.usr_code;
-    this.GLOBALCONTANTS.user_name = this.userrecord.usr_name;
-    this.GLOBALCONTANTS.user_islocked = "N";
-    this.GLOBALCONTANTS.user_isadmin = "N";
-
-
-    this.GLOBALCONTANTS.ALLOW_LOGIN_FROM_MULTIPLE_SYSTEM = this.userrecord.ALLOW_LOGIN_FROM_MULTIPLE_SYSTEM;
-
-
-    this.GLOBALCONTANTS.user_hide_payroll = this.userrecord.usr_hide_payroll;
-    this.GLOBALCONTANTS.USER_DISABLE_EDIT_SI_MBLSTATUS = this.userrecord.usr_disable_edit_si_mblstatus;
-
-    this.GLOBALCONTANTS.user_email_cc = this.userrecord.usr_email_cc;
-    this.GLOBALCONTANTS.user_email = this.userrecord.usr_email;
-
-    this.GLOBALCONTANTS.user_email_display_name = this.userrecord.usr_email_display_name;
-    this.GLOBALCONTANTS.user_email_signature = this.userrecord.usr_email_signature;
-
-    if (this.userrecord.usr_email_sign_font != "")
-      this.GLOBALCONTANTS.user_email_sign_font = this.userrecord.usr_email_sign_font;
-    if (this.userrecord.usr_email_sign_color != "")
-      this.GLOBALCONTANTS.user_email_sign_color = this.userrecord.usr_email_sign_color;
-    if (this.userrecord.usr_email_sign_size != "")
-      this.GLOBALCONTANTS.user_email_sign_size = this.userrecord.usr_email_sign_size;
-    if (this.userrecord.usr_email_sign_bold != "")
-      this.GLOBALCONTANTS.user_email_sign_bold = this.userrecord.usr_email_sign_bold;
-
-    if (this.userrecord.usr_code == "ADMIN")
-      this.GLOBALCONTANTS.user_isadmin = "Y";
-
-    if (this.userrecord.usr_confirm_onexit == "Y")
-      this.GLOBALCONTANTS.Confirm_On_Exit = true;
-    else
-      this.GLOBALCONTANTS.Confirm_On_Exit = false;
-
-    this.GLOBALCONTANTS.audit_id = this.userrecord.AUDIT_ID;
-    this.GLOBALCONTANTS.company_pkid = this.userrecord.comp_pkid;
-
-    this.GLOBALCONTANTS.company_code = this.userrecord.comp_code;
-    this.GLOBALCONTANTS.company_name = this.userrecord.comp_name;
-    this.GLOBALCONTANTS.company_add1 = this.userrecord.comp_add1;
-    this.GLOBALCONTANTS.company_add2 = this.userrecord.comp_add2;
-    this.GLOBALCONTANTS.company_add3 = this.userrecord.comp_add3;
-    this.GLOBALCONTANTS.company_add4 = this.userrecord.comp_add4;
-
-    //this.GLOBALCONTANTS.USER_LOCATION_ID = Lib.Convert2Integer(this.userrecord.comp_code);
-
-    this.GLOBALCONTANTS.REC_COMPANY_CODE = this.userrecord.REC_COMPANY_CODE;
-
-    this.GLOBALCONTANTS.ADDRESS_LINE1 = this.userrecord.comp_line1;
-    this.GLOBALCONTANTS.ADDRESS_LINE2 = this.userrecord.comp_line2;
-    this.GLOBALCONTANTS.ADDRESS_LINE3 = this.userrecord.comp_line3;
-    this.GLOBALCONTANTS.ADDRESS_LINE4 = this.userrecord.comp_line4;
-
-    this.GLOBALCONTANTS.company_sow = this.userrecord.comp_sow;
-    this.GLOBALCONTANTS.branch_pkid = "";
-
-    this.GLOBALCONTANTS.InitUserInfo();
-  }
 
 }

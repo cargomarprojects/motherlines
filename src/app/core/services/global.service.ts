@@ -41,6 +41,7 @@ export class GlobalService {
 
   public isolderror: boolean = false;
   
+  public UserRecord : any;
   public UserInfo: any;
   public Modules: Modulem[] = [];
   public MenuList: User_Menu[] = [];
@@ -654,7 +655,73 @@ export class GlobalService {
   public PARAM_COO_FORMAT_BLANK: any = [];
 
 
-  
+  public InitLogin(){
+    this.BACKEND_DATEFORMAT = "YYYY/MM/DD";
+    this.FRONTEND_DATEFORMAT = "YYYY/MM/DD";
+    
+    this.date_display_fmt = '';//System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToString(); 
+
+    this.user_pkid = this.UserRecord.usr_pkid;
+    this.user_code = this.UserRecord.usr_code;
+    this.user_name = this.UserRecord.usr_name;
+    this.user_islocked = "N";
+    this.user_isadmin = "N";
+
+
+    this.ALLOW_LOGIN_FROM_MULTIPLE_SYSTEM = this.UserRecord.ALLOW_LOGIN_FROM_MULTIPLE_SYSTEM;
+
+
+    this.user_hide_payroll = this.UserRecord.usr_hide_payroll;
+    this.USER_DISABLE_EDIT_SI_MBLSTATUS = this.UserRecord.usr_disable_edit_si_mblstatus;
+
+    this.user_email_cc = this.UserRecord.usr_email_cc;
+    this.user_email = this.UserRecord.usr_email;
+
+    this.user_email_display_name = this.UserRecord.usr_email_display_name;
+    this.user_email_signature = this.UserRecord.usr_email_signature;
+
+    if (this.UserRecord.usr_email_sign_font != "")
+      this.user_email_sign_font = this.UserRecord.usr_email_sign_font;
+    if (this.UserRecord.usr_email_sign_color != "")
+      this.user_email_sign_color = this.UserRecord.usr_email_sign_color;
+    if (this.UserRecord.usr_email_sign_size != "")
+      this.user_email_sign_size = this.UserRecord.usr_email_sign_size;
+    if (this.UserRecord.usr_email_sign_bold != "")
+      this.user_email_sign_bold = this.UserRecord.usr_email_sign_bold;
+
+    if (this.UserRecord.usr_code == "ADMIN")
+      this.user_isadmin = "Y";
+
+    if (this.UserRecord.usr_confirm_onexit == "Y")
+      this.Confirm_On_Exit = true;
+    else
+      this.Confirm_On_Exit = false;
+
+    this.audit_id = this.UserRecord.AUDIT_ID;
+    //gs.user_ua_pkid = gs.UserRecord.ua_pkid;
+    this.company_pkid = this.UserRecord.comp_pkid;
+    //gs.company_parent_id = gs.UserRecord.comp_parent_id;
+    this.company_code = this.UserRecord.comp_code;
+    this.company_name = this.UserRecord.comp_name;
+    this.company_add1 = this.UserRecord.comp_add1;
+    this.company_add2 = this.UserRecord.comp_add2;
+    this.company_add3 = this.UserRecord.comp_add3;
+    this.company_add4 = this.UserRecord.comp_add4;
+
+    //gs.USER_LOCATION_ID = Lib.Convert2Integer(gs.UserRecord.comp_code);
+    this.USER_LOCATION_ID = +this.UserRecord.comp_code;
+
+    this.REC_COMPANY_CODE = this.UserRecord.REC_COMPANY_CODE;
+    //gs.REC_BRANCH_CODE = gs.UserRecord.REC_BRANCH_CODE;
+    this.ADDRESS_LINE1 = this.UserRecord.comp_line1;
+    this.ADDRESS_LINE2 = this.UserRecord.comp_line2;
+    this.ADDRESS_LINE3 = this.UserRecord.comp_line3;
+    this.ADDRESS_LINE4 = this.UserRecord.comp_line4;
+
+    this.company_sow = this.UserRecord.comp_sow;
+    this.branch_pkid = "";
+    this.InitUserInfo();
+  }
 
   public InitUserInfo() {
 
