@@ -26,7 +26,8 @@ export interface ReportState{
     filename2: string;
     filetype2: string;
     filedisplayname2: string;
-
+    stage:string;
+    
     _report_category: string;
     _report_type: string;
     
