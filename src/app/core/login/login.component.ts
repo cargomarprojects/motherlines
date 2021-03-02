@@ -154,6 +154,7 @@ export class LoginComponent implements OnInit {
       .subscribe(response => {
         
         this.gs.UserRecord = response.record;
+        
         this.gs.InitLogin();
 
         this.router.navigate(['login2'], { replaceUrl: true });
