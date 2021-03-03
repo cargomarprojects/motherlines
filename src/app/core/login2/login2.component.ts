@@ -101,10 +101,11 @@ export class Login2Component implements OnInit {
 
     Login() {
 
-        this.GLOBALCONTANTS.appid =  this.GLOBALCONTANTS.getRandomInt();
-        if  ( this.GLOBALCONTANTS.appid <=0)
+        const rid=   this.GLOBALCONTANTS.getRandomInt();
+        this.GLOBALCONTANTS.appid = rid.toString();
+        if  ( rid <= 0)
         {
-            alert('Cannot Generate Appliation ID');
+            alert('Cannot Generate Appliation ID ');
             return;
         }
 

@@ -1,6 +1,6 @@
 
 export class gsdata {
-    appid : number;
+    appid : string;
     GSession : number;
     IsLoginSuccess : boolean;
     IsAuthenticated : boolean;

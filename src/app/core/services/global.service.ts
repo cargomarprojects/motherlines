@@ -36,7 +36,7 @@ export class GlobalService {
   public globalVariables: GlobalVariables;
   public defaultValues: DefaultValues;
 
-  public appid = 0;
+  public appid = '';
 
   public baseUrl: string = "http://localhost:5000";
   //public baseUrl: string = "";
@@ -1411,12 +1411,12 @@ export class GlobalService {
     bts_settings.menulist = this.MenuList;
     bts_settings.companylist = this.CompanyList
     bts_settings.yearlist = this.YearList;
-    localStorage.setItem('bts_settings', JSON.stringify(bts_settings));
+    localStorage.setItem(this.appid, JSON.stringify(bts_settings));
   }
 
   ReadLocalStorage() {
     if (localStorage.length > 0) {
-      if (localStorage.getItem('bts_settings')) {
+      if (localStorage.getItem(this.appid)) {
 
         const bts_settings: gsdata = JSON.parse(localStorage.getItem('bts_settings'));
         
@@ -1477,7 +1477,7 @@ export class GlobalService {
 
   ReadLocalStorage2() {
     if (localStorage.length > 0) {
-      if (localStorage.getItem('bts_settings')) {
+      if (localStorage.getItem(this.appid)) {
         const bts_settings = JSON.parse(localStorage.getItem('bts_settings'));
 
       }
