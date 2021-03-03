@@ -32,6 +32,7 @@ export interface ReportState{
     filedisplayname2: string;
     _report_category: string;
     _report_type: string;
+    stage:string;
     
     page_rows :number;
     page_count :number;

@@ -30,7 +30,10 @@ export class ReportService {
     ProfitReport(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Report/ProfitReport", SearchData, this.gs.headerparam2('authorized'));
     }
-
+    
+    StageList(SearchData: any) {
+      return this.http2.post<any>(this.gs.baseUrl + "/api/Report/StageList", SearchData, this.gs.headerparam2('authorized'));
+    }
     ProfitReportHouse(SearchData: any) {
       return this.http2.post<any>(this.gs.baseUrl + "/api/Report/ProfitReportHouse", SearchData, this.gs.headerparam2('authorized'));
     }
