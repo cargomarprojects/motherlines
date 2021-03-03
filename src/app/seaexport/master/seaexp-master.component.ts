@@ -58,6 +58,7 @@ export class SeaexpMasterComponent implements OnInit {
   pageEvents(actions: any) {
     this.mainservice.Search(actions,'PAGE');
   }
+ 
 
   NewRecord() {
     if (!this.mainservice.canAdd) {

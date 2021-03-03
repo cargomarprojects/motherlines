@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
 
-import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ActivatedRoute } from '@angular/router';
 
 import { LoadingScreenService } from './core/services/loadingscreen.service';
 import { GlobalService } from './core/services/global.service';
+
+
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,7 @@ export class AppComponent {
     public gs: GlobalService,
     public loadingservice: LoadingScreenService,
     private router: Router,
+    private route : ActivatedRoute
   ) {
 
     this.gs.InitdefaultValues();
@@ -42,8 +45,26 @@ export class AppComponent {
   ngOnInit() {
     console.log('Application Started');
     console.log(environment.production);
-    this.gs.ReadLocalStorage();
+
+
+    let itot  =  +this.gs.getLocalStorageSize() 
+    if ( itot > 8)
+      localStorage.clear();
+
+
+    console.log( 'Local Storage Size ' ,this.gs.getLocalStorageSize());
+    
+    const appid =   this.gs.getURLParam('appid');
+    if ( appid == null || appid == '' || appid == undefined )
+      this.router.navigate(['login'], { replaceUrl: true }); 
+    else {
+      if (localStorage.getItem(appid)) 
+        this.gs.ReadLocalStorage(appid);
+      else 
+        this.router.navigate(['login'], { replaceUrl: true }); 
+    }
   }
+
 
   ngOnDestroy() {
     this.sub.unsusbscribe();

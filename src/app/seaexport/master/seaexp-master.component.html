@@ -2,7 +2,7 @@
   <div class="col">
       <label class="mr-1">{{mainservice.title}}</label>
  
-      <a class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" [routerLink]="['/Silver.SeaExport.Trans/SeaExpMasterEditPage']" [queryParams]="{appid: mainservice.appid, menuid: this.mainservice.menuid,pkid: '',type: this.mainservice.param_type,origin: 'seaexp-master-page',mode: 'ADD'}">New</a>
+      <a class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" [routerLink]="['/Silver.SeaExport.Trans/SeaExpMasterEditPage']" [queryParams]="{appid : gs.appid, menuid: this.mainservice.menuid,pkid: '',type: this.mainservice.param_type,origin: 'seaexp-master-page',mode: 'ADD'}">New</a>
  
       <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
       
@@ -44,7 +44,7 @@
               
             <!-- <td class='hlink'  (click)="edit(rec)" >{{rec.mbl_refno}}</td> -->
             <td >
-              <a [routerLink]="['/Silver.SeaExport.Trans/SeaExpMasterEditPage']" [queryParams]="{appid : mainservice.appid ,menuid: mainservice.menuid,pkid: rec.mbl_pkid,type: '',origin: 'seaexp-master-page',mode: 'EDIT'}">{{rec.mbl_refno}}</a>
+              <a [routerLink]="['/Silver.SeaExport.Trans/SeaExpMasterEditPage']" [queryParams]="{appid : this.gs.appid ,menuid: this.mainservice.menuid,pkid: rec.mbl_pkid,type: '',origin: 'seaexp-master-page',mode: 'EDIT'}">{{rec.mbl_refno}}</a>
             </td>
             
 
