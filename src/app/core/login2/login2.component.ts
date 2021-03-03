@@ -150,10 +150,9 @@ export class Login2Component implements OnInit {
         this.GLOBALCONTANTS.InitUserInfo();
 
         this.SetupYearList();
-        this.LoadSettings();
-        this.LoadMenu();
-        
-       // this.clrservice.ClearInit();
+
+        this.GLOBALCONTANTS.LoadSettings();
+        this.GLOBALCONTANTS.LoadMenu();
        
         this.GLOBALCONTANTS.IsAuthenticated = true;
         this.GLOBALCONTANTS.GSESSION += 1;
@@ -189,6 +188,10 @@ export class Login2Component implements OnInit {
         */    
     }
 
+
+
+
+    // moved to global service
     LoadSettings() {
 
         var SearchData: any = {};
@@ -218,6 +221,7 @@ export class Login2Component implements OnInit {
             });
     }
 
+    // Moved To Global Service
     LoadMenu() {
 
         var module_name = '';

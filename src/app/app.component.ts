@@ -47,19 +47,18 @@ export class AppComponent {
     console.log(environment.production);
 
 
-    let itot  =  +this.gs.getLocalStorageSize() 
+    let itot  =  +this.gs.getLocalStorageSize() ;
+    console.log('LocalStorage Size ', itot);
     if ( itot > 8)
       localStorage.clear();
-
-
-    console.log( 'Local Storage Size ' ,this.gs.getLocalStorageSize());
     
     const appid =   this.gs.getURLParam('appid');
     if ( appid == null || appid == '' || appid == undefined )
       this.router.navigate(['login'], { replaceUrl: true }); 
     else {
-      if (localStorage.getItem(appid)) 
+      if (localStorage.getItem(appid)) {
         this.gs.ReadLocalStorage(appid);
+      }
       else 
         this.router.navigate(['login'], { replaceUrl: true }); 
     }

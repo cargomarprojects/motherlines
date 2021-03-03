@@ -36,6 +36,8 @@ export class GlobalService {
   public globalVariables: GlobalVariables;
   public defaultValues: DefaultValues;
 
+  mRec: Modulem = null;
+
   public appid = '';
 
   public baseUrl: string = "http://localhost:5000";
@@ -787,6 +789,77 @@ export class GlobalService {
 
   }
 
+
+  LoadSettingsApi(SearchData: any) {
+    return this.http2.post<any>(this.baseUrl + "/api/Auth/LoadSettings", SearchData, this.headerparam2('anonymous'));
+  }
+  LoadMenuApi(SearchData : any) {
+    return this.http2.post<any>(this.baseUrl + "/api/Auth/LoadMenu", SearchData, this.headerparam2('authorized'));
+  }
+
+
+  public async LoadSettings() {
+    let bRet =false;
+    var SearchData: any = {};
+    SearchData = this.UserInfo;
+    SearchData.PARAM_TYPE = "ALL SETTINGS";
+    SearchData.SCREEN = "LOGIN2";
+    SearchData["SET-LOGIN"] = "Y";
+    const promise  = await this.LoadSettingsApi(SearchData).toPromise()
+    .then((response)=>{
+        this.MainList = response.list;
+        this.InitData();
+        this.InitUserInfo();
+        //this.GLOBALCONTANTS.InitMonths();
+       this.Save2LocalStorage();
+       bRet =true;
+    }).catch((error)=>{
+        const err =  JSON.stringify(error);
+        bRet =false;
+        alert(err);
+    });
+    return bRet;
+}
+
+public async LoadMenu() {
+
+  let bRet =false ;
+  var module_name = '';
+
+  var SearchData: any = {};
+  SearchData = this.UserInfo;
+
+  if (this.user_isadmin == "Y")
+      SearchData.UA_ID = "";
+  else
+      SearchData.UA_ID = this.user_ua_pkid;
+
+
+  this.LoadMenuApi(SearchData).toPromise()
+  .then(response => {
+          this.MenuList = response.list;
+          this.Modules = [];
+          response.list.forEach(element => {
+              if (module_name != element.module_name) {
+                  this.mRec = new Modulem();
+                  this.mRec.module_name = element.module_name;
+                  this.Modules.push(this.mRec);
+                  module_name = element.module_name;
+              }
+          });
+          this.Save2LocalStorage();
+          bRet = true;
+  }, error => {
+      bRet = false;
+      const err =  JSON.stringify(error);
+      alert(err);
+
+  });
+  return bRet;
+}
+
+
+
   public InitData() {
     this.MainList.forEach(Rec => {
       if (Rec.param_type == "BRANCH SETTINGS") {
@@ -1404,14 +1477,16 @@ export class GlobalService {
     bts_settings.year_end_date = this.year_end_date;
     bts_settings.year_islocked = this.year_islocked;
     bts_settings.software_start_year = this.software_start_year;
-    bts_settings.mainlist = this.MainList;
+  
+    //bts_settings.mainlist = this.MainList;
     bts_settings.userrecord = this.UserRecord;
     bts_settings.userinfo = this.UserInfo;
     bts_settings.modules = this.Modules;
-    bts_settings.menulist = this.MenuList;
+    //bts_settings.menulist = this.MenuList;
     bts_settings.companylist = this.CompanyList
     bts_settings.yearlist = this.YearList;
     localStorage.setItem(this.appid, JSON.stringify(bts_settings));
+
   }
 
   ReadLocalStorage(_appid : string ) {
@@ -1421,6 +1496,7 @@ export class GlobalService {
         this.UserRecord = bts_settings.userrecord;
         
         this.InitLogin();
+
         this.appid = bts_settings.appid;
         this.GSESSION = bts_settings.GSession;
         this.Access_Token = bts_settings.access_token;
@@ -1455,18 +1531,22 @@ export class GlobalService {
         this.year_end_date = bts_settings.year_end_date;
         this.year_islocked = bts_settings.year_islocked;
         this.software_start_year = bts_settings.software_start_year;
-        this.MainList = bts_settings.mainlist;
+        
+        //this.MainList = bts_settings.mainlist;
         
         this.UserInfo = bts_settings.userinfo;
         this.Modules = bts_settings.modules;
-        this.MenuList = bts_settings.menulist;
+        //this.MenuList = bts_settings.menulist;
         this.CompanyList = bts_settings.companylist
         this.YearList = bts_settings.yearlist;
-        
-        this.InitData();
-        
+
         this.InitUserInfo();
 
+        this.LoadSettings();
+        this.LoadMenu();
+
+
+  
   }
 
   RemoveLocalStorage() {
@@ -2562,6 +2642,8 @@ export class GlobalService {
   getURLParam(param : string ){
     return new URLSearchParams(window.location.search).get(param);
   }
+
+
 
 
 
