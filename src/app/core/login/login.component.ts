@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
     this.showloginbutton = false;
 
 
+    this.gs.GSESSION = 100;
 
     this.username = 'ADMIN';
     this.password = '123';
@@ -90,7 +91,7 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       }, error => {
         this.loading = false;
-        this.errorMessage = error.error.error_description;
+        this.errorMessage = error.message;
         alert(this.errorMessage);
       });
   }
@@ -122,6 +123,7 @@ export class LoginComponent implements OnInit {
             this.gs.user_pwd = this.password;
             // this.clrservice.ClearInit();
             this.gs.GSESSION += 1;
+            console.log( 'Login gsesssion ', this.gs.GSESSION);
             this.Login1();
           }
           else {

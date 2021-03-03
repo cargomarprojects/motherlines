@@ -36,7 +36,7 @@ export class GlobalService {
   public globalVariables: GlobalVariables;
   public defaultValues: DefaultValues;
 
-
+  public appid = 0;
 
   public baseUrl: string = "http://localhost:5000";
   //public baseUrl: string = "";
@@ -1368,7 +1368,8 @@ export class GlobalService {
   Save2LocalStorage() {
     
     const bts_settings = new gsdata();
-    bts_settings.GsSession = this.GSESSION;
+    bts_settings.appid = this.appid;
+    bts_settings.GSession = this.GSESSION;
     bts_settings.IsLoginSuccess = this.IsLoginSuccess;
     bts_settings.IsAuthenticated = this.IsAuthenticated;
     bts_settings.access_token = this.Access_Token;
@@ -1422,7 +1423,8 @@ export class GlobalService {
         this.UserRecord = bts_settings.userrecord;
         
         this.InitLogin();
-        this.GSESSION = bts_settings.GsSession;
+        this.appid = bts_settings.appid;
+        this.GSESSION = bts_settings.GSession;
         this.Access_Token = bts_settings.access_token;
         this.IsLoginSuccess = bts_settings.IsLoginSuccess;
         this.IsAuthenticated = bts_settings.IsAuthenticated;
@@ -1433,11 +1435,11 @@ export class GlobalService {
         this.branch_name = bts_settings.branch_name;
         this.branch_add1 = bts_settings.branch_add1;
         this.branch_add2 = bts_settings.branch_add2
-        this.branch_add3 = this.branch_add3;
-        this.branch_add4 = this.branch_add4
+        this.branch_add3 = bts_settings.branch_add3;
+        this.branch_add4 = bts_settings.branch_add4
         this.branch_prefix = bts_settings.branch_prefix;
         this.USER_LOCATION_ID = bts_settings.USER_LOCATION_ID;
-        this.REC_BRANCH_CODE = this.REC_BRANCH_CODE;
+        this.REC_BRANCH_CODE = bts_settings.REC_BRANCH_CODE;
         this.ADDRESS_LINE1 = bts_settings.ADDRESS_LINE1;
         this.ADDRESS_LINE2 = bts_settings.ADDRESS_LINE2;
         this.ADDRESS_LINE3 = bts_settings.ADDRESS_LINE3
@@ -1453,7 +1455,7 @@ export class GlobalService {
         this.year_name = bts_settings.year_name;
         this.year_start_date = bts_settings.year_start_date;
         this.year_end_date = bts_settings.year_end_date;
-        this.year_islocked = this.year_islocked;
+        this.year_islocked = bts_settings.year_islocked;
         this.software_start_year = bts_settings.software_start_year;
         this.MainList = bts_settings.mainlist;
         
@@ -2747,6 +2749,11 @@ export class GlobalService {
     catch (Exception) {
     }
   }
+
+  public getRandomInt() {
+    return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
+  }
+  
 
 
 

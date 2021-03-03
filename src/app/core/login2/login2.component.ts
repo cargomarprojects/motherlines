@@ -101,6 +101,14 @@ export class Login2Component implements OnInit {
 
     Login() {
 
+        this.GLOBALCONTANTS.appid =  this.GLOBALCONTANTS.getRandomInt();
+        if  ( this.GLOBALCONTANTS.appid <=0)
+        {
+            alert('Cannot Generate Appliation ID');
+            return;
+        }
+
+
         this.Comp_Row = this.CompanyList.find(a => a.comp_pkid == this.Company_Id);
         this.Year_Row = this.YearList.find(a => a.fy_pkid == this.Year_Id);
 
@@ -148,6 +156,7 @@ export class Login2Component implements OnInit {
        
         this.GLOBALCONTANTS.IsAuthenticated = true;
         this.GLOBALCONTANTS.GSESSION += 1;
+        console.log( 'Login2', this.GLOBALCONTANTS.GSESSION);
         this.GLOBALCONTANTS.Save2LocalStorage();
 
         this.router.navigate(['home'], { replaceUrl: true });

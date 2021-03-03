@@ -31,7 +31,7 @@ export class seaexpMasterService {
     public canSave: boolean;
     public canDelete: boolean;
 
-    public initlialized: boolean;
+    public initlialized = false;
     private LSESSION = 0;
 
     constructor(

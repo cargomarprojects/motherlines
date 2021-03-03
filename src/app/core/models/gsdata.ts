@@ -1,6 +1,7 @@
 
 export class gsdata {
-    GsSession : number;
+    appid : number;
+    GSession : number;
     IsLoginSuccess : boolean;
     IsAuthenticated : boolean;
     access_token :string;
