@@ -3,22 +3,25 @@
         <label class="mr-3">{{mainservice.title}}</label>
 
         <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button> -->
-        <a class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" [routerLink]="['/Silver.SeaImport/SeaImpMasterEditPage']" [queryParams]="{appid : gs.appid, menuid: this.mainservice.menuid,pkid: '',type: this.mainservice.param_type,origin: 'seaimp-master-page',mode: 'ADD'}">New</a>
- 
+        <a class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd"
+            [routerLink]="['/Silver.SeaImport/SeaImpMasterEditPage']"
+            [queryParams]="{appid : gs.appid, menuid: this.mainservice.menuid,pkid: '',type: this.mainservice.param_type,origin: 'seaimp-master-page',mode: 'ADD'}">New</a>
+
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
-        
+
     </div>
-  </div>
-  
-  <div *ngIf="errorMessage$ | async" class="alert alert-danger">
+</div>
+
+<div *ngIf="errorMessage$ | async" class="alert alert-danger">
     {{errorMessage$ | async}}
-  </div>
-  
-  <app-seaimp-master-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)" ></app-seaimp-master-header>
-  
-  <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-  
-  <div class="page-body table-responsive">
+</div>
+
+<app-seaimp-master-header [_query]="searchQuery$ | async" (searchEvents)="searchEvents($event)">
+</app-seaimp-master-header>
+
+<App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
+
+<div class="page-body table-responsive">
     <table class="table  table-hover table-sm">
         <thead class="page-body-thead">
             <tr>
@@ -27,46 +30,49 @@
                 <th>MBL#</th>
                 <th>AGENT</th>
                 <th>CARRIER</th>
-                <th>POL</th>              
+                <th>POL</th>
                 <th>ETD</th>
                 <th>POD</th>
                 <th>ETA</th>
                 <th>TYPE</th>
-                <th>TEU</th>              
-                <th>CBM</th>    
-                <th>HANDLED-BY</th>          
+                <th>TEU</th>
+                <th>CBM</th>
+                <th>HANDLED-BY</th>
                 <th>CREATED-BY</th>
-                <th>DATE</th>  
-                <th *ngIf="mainservice.canDelete" class='text-center'>DELETE</th>             
+                <th>DATE</th>
+                <th *ngIf="mainservice.canDelete" class='text-center'>DELETE</th>
             </tr>
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records$ | async">
-                <td class="hlink" (click)="edit(rec)" >{{rec.mbl_refno}}</td>
+                <!-- <td class="hlink" (click)="edit(rec)" >{{rec.mbl_refno}}</td> -->
+                <td *ngIf="!this.mainservice.canEdit">{{rec.mbl_refno}}</td>
+                <td *ngIf="this.mainservice.canEdit">
+                    <a class='hlink' [routerLink]="['/Silver.SeaImport/SeaImpMasterEditPage']"
+                        [queryParams]="{appid : this.gs.appid ,menuid: this.mainservice.menuid,pkid: rec.mbl_pkid,type: '',origin: 'seaimp-master-page',mode: 'EDIT'}">{{rec.mbl_refno}}</a>
+                </td>
                 <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                 <td>{{rec.mbl_no}}</td>
                 <td>{{rec.mbl_agent_name}}</td>
                 <td>{{rec.mbl_liner_name}}</td>
-                <td>{{rec.mbl_pol_name}}</td>              
+                <td>{{rec.mbl_pol_name}}</td>
                 <td>{{rec.mbl_pol_etd | date : gs.FRONTEND_DATEFORMAT }}</td>
                 <td>{{rec.mbl_pod_name}}</td>
                 <td>{{rec.mbl_pod_eta | date : gs.FRONTEND_DATEFORMAT }}</td>
                 <td>{{rec.mbl_cntr_type}}</td>
-                <td>{{rec.mbl_teu}}</td>              
+                <td>{{rec.mbl_teu}}</td>
                 <td>{{rec.mbl_cntr_cbm}}</td>
                 <td>{{rec.mbl_handled_name}}</td>
                 <td>{{rec.rec_created_by}}</td>
                 <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT }}</td>
-                <td *ngIf="mainservice.canDelete" class="p-0 text-center"><i class="fa fa-trash  fa-lg pointer" aria-hidden="true"
-                    (click)="mainservice.DeleteRow(rec)"></i></td>
+                <td *ngIf="mainservice.canDelete" class="p-0 text-center"><i class="fa fa-trash  fa-lg pointer"
+                        aria-hidden="true" (click)="mainservice.DeleteRow(rec)"></i></td>
             </tr>
         </tbody>
     </table>
-  </div>
-  
-  
-  <App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
-  
-  <br />
-  
-  
+</div>
+
+
+<App-Page2 [_pageQuery]="pageQuery$ | async" (pageEvents)="pageEvents($event)"></App-Page2>
+
+<br />

@@ -96,11 +96,10 @@ export class SeaImpMasterEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-
-    this.menuid = options.menuid;
-    this.pkid = options.pkid;
-    this.mode = options.mode;
+    // const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+    this.pkid =this.route.snapshot.queryParams.pkid;
+    this.menuid = this.route.snapshot.queryParams.menuid;
+    this.mode = this.route.snapshot.queryParams.mode;
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
