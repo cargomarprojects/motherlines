@@ -101,7 +101,7 @@ export class Login2Component implements OnInit {
 
     Login() {
 
-        const rid=   this.GLOBALCONTANTS.getRandomInt();
+        const rid = this.GLOBALCONTANTS.getRandomInt();
         this.GLOBALCONTANTS.appid = rid.toString();
         if  ( rid <= 0)
         {
@@ -157,6 +157,7 @@ export class Login2Component implements OnInit {
         this.GLOBALCONTANTS.IsAuthenticated = true;
         this.GLOBALCONTANTS.GSESSION += 1;
         console.log( 'Login2', this.GLOBALCONTANTS.GSESSION);
+        
         this.GLOBALCONTANTS.Save2LocalStorage();
 
         this.router.navigate(['home'], { replaceUrl: true });
@@ -212,7 +213,7 @@ export class Login2Component implements OnInit {
                 
                 //this.GLOBALCONTANTS.InitMonths();
 
-                this.GLOBALCONTANTS.Save2LocalStorage();
+                //this.GLOBALCONTANTS.Save2LocalStorage();
 
             }, error => {
                 this.loading = false;
@@ -249,7 +250,7 @@ export class Login2Component implements OnInit {
                     }
                 });
 
-                this.GLOBALCONTANTS.Save2LocalStorage();
+                //this.GLOBALCONTANTS.Save2LocalStorage();
 
                 this.loading = false;
             }, error => {

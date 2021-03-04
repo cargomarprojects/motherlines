@@ -811,7 +811,6 @@ export class GlobalService {
         this.InitData();
         this.InitUserInfo();
         //this.GLOBALCONTANTS.InitMonths();
-       this.Save2LocalStorage();
        bRet =true;
     }).catch((error)=>{
         const err =  JSON.stringify(error);
@@ -847,7 +846,6 @@ public async LoadMenu() {
                   module_name = element.module_name;
               }
           });
-          this.Save2LocalStorage();
           bRet = true;
   }, error => {
       bRet = false;
@@ -1481,7 +1479,7 @@ public async LoadMenu() {
     //bts_settings.mainlist = this.MainList;
     bts_settings.userrecord = this.UserRecord;
     bts_settings.userinfo = this.UserInfo;
-    bts_settings.modules = this.Modules;
+    //bts_settings.modules = this.Modules;
     //bts_settings.menulist = this.MenuList;
     bts_settings.companylist = this.CompanyList
     bts_settings.yearlist = this.YearList;
@@ -1535,7 +1533,7 @@ public async LoadMenu() {
         //this.MainList = bts_settings.mainlist;
         
         this.UserInfo = bts_settings.userinfo;
-        this.Modules = bts_settings.modules;
+        //this.Modules = bts_settings.modules;
         //this.MenuList = bts_settings.menulist;
         this.CompanyList = bts_settings.companylist
         this.YearList = bts_settings.yearlist;
