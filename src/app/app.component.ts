@@ -42,10 +42,9 @@ export class AppComponent {
   }
 
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('Application Started');
-    console.log(environment.production);
-
+    console.log('Production ' ,environment.production);
 
     let itot  =  +this.gs.getLocalStorageSize() ;
     console.log('LocalStorage Size ', itot);
@@ -53,17 +52,20 @@ export class AppComponent {
       localStorage.clear();
     
     const appid = this.gs.getURLParam('appid');
+    console.log('appid ', appid);
     if ( appid == null || appid == '' || appid == undefined )
       this.router.navigate(['login'], { replaceUrl: true }); 
     else {
       if (localStorage.getItem(appid)) {
         this.gs.ReadLocalStorage(appid);
+        await this.gs.LoadSettings();
+        await this.gs.LoadMenu();    
       }
       else 
         this.router.navigate(['login'], { replaceUrl: true }); 
     }
+    console.log('ngOnInit App completed');
   }
-
 
   ngOnDestroy() {
     this.sub.unsusbscribe();

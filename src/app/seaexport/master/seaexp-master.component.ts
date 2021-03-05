@@ -37,7 +37,7 @@ export class SeaexpMasterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.route.snapshot.queryParams);
+    console.log( 'ngOnInit Sea Export Master', this.route.snapshot.queryParams);
     this.mainservice.init(this.route.snapshot.queryParams);
     this.initPage();
   }

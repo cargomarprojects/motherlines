@@ -99,7 +99,7 @@ export class Login2Component implements OnInit {
             });
     }
 
-    Login() {
+    async Login() {
 
         const rid = this.GLOBALCONTANTS.getRandomInt();
         this.GLOBALCONTANTS.appid = rid.toString();
@@ -151,12 +151,11 @@ export class Login2Component implements OnInit {
 
         this.SetupYearList();
 
-        this.GLOBALCONTANTS.LoadSettings();
-        this.GLOBALCONTANTS.LoadMenu();
+        await this.GLOBALCONTANTS.LoadSettings();
+        await this.GLOBALCONTANTS.LoadMenu();
        
         this.GLOBALCONTANTS.IsAuthenticated = true;
         this.GLOBALCONTANTS.GSESSION += 1;
-        console.log( 'Login2', this.GLOBALCONTANTS.GSESSION);
         
         this.GLOBALCONTANTS.Save2LocalStorage();
 

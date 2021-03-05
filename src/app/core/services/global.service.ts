@@ -793,68 +793,78 @@ export class GlobalService {
   LoadSettingsApi(SearchData: any) {
     return this.http2.post<any>(this.baseUrl + "/api/Auth/LoadSettings", SearchData, this.headerparam2('anonymous'));
   }
-  LoadMenuApi(SearchData : any) {
+  LoadMenuApi(SearchData: any) {
     return this.http2.post<any>(this.baseUrl + "/api/Auth/LoadMenu", SearchData, this.headerparam2('authorized'));
   }
 
 
   public async LoadSettings() {
-    let bRet =false;
-    var SearchData: any = {};
-    SearchData = this.UserInfo;
-    SearchData.PARAM_TYPE = "ALL SETTINGS";
-    SearchData.SCREEN = "LOGIN2";
-    SearchData["SET-LOGIN"] = "Y";
-    const promise  = await this.LoadSettingsApi(SearchData).toPromise()
-    .then((response)=>{
-        this.MainList = response.list;
-        this.InitData();
-        this.InitUserInfo();
-        //this.GLOBALCONTANTS.InitMonths();
-       bRet =true;
-    }).catch((error)=>{
-        const err =  JSON.stringify(error);
-        bRet =false;
-        alert(err);
-    });
-    return bRet;
-}
+    let bRet = false;
 
-public async LoadMenu() {
+    try {
+      var SearchData: any = {};
+      SearchData = this.UserInfo;
+      SearchData.PARAM_TYPE = "ALL SETTINGS";
+      SearchData.SCREEN = "LOGIN2";
+      SearchData["SET-LOGIN"] = "Y";
+      console.log('MainList Begin 1');
+      //const promise  = await this.LoadSettingsApi(SearchData).toPromise();
+      
+      const response = await this.http2.post<any>(this.baseUrl + "/api/Auth/LoadSettings", SearchData, this.headerparam2('anonymous')).toPromise();
+      console.log('MainList Loaded 2');
+      this.MainList = response.list;
+      this.InitData();
+      this.InitUserInfo();
+      //this.GLOBALCONTANTS.InitMonths();
+      bRet = true;
 
-  let bRet =false ;
-  var module_name = '';
-
-  var SearchData: any = {};
-  SearchData = this.UserInfo;
-
-  if (this.user_isadmin == "Y")
-      SearchData.UA_ID = "";
-  else
-      SearchData.UA_ID = this.user_ua_pkid;
-
-
-  this.LoadMenuApi(SearchData).toPromise()
-  .then(response => {
-          this.MenuList = response.list;
-          this.Modules = [];
-          response.list.forEach(element => {
-              if (module_name != element.module_name) {
-                  this.mRec = new Modulem();
-                  this.mRec.module_name = element.module_name;
-                  this.Modules.push(this.mRec);
-                  module_name = element.module_name;
-              }
-          });
-          bRet = true;
-  }, error => {
-      bRet = false;
-      const err =  JSON.stringify(error);
+    } catch (error) {
+      bRet =false;
+      console.log('MainList Loading Error');
+      const err = JSON.stringify(error);
       alert(err);
+    }
+    console.log('MainList End 3');
+    return bRet;
+  }
 
-  });
-  return bRet;
-}
+  public async LoadMenu() {
+
+    let bRet = false;
+
+    try {
+
+      var module_name = '';
+      var SearchData: any = {};
+      SearchData = this.UserInfo;
+      if (this.user_isadmin == "Y")
+        SearchData.UA_ID = "";
+      else
+        SearchData.UA_ID = this.user_ua_pkid;
+      console.log('Menu Loading Begin 1');
+      //const promise  = this.LoadMenuApi(SearchData).toPromise();
+      const response = await this.http2.post<any>(this.baseUrl + "/api/Auth/LoadMenu", SearchData, this.headerparam2('authorized')).toPromise();
+      console.log('Menu Loaded 2');
+      this.MenuList = response.list;
+      this.Modules = [];
+      response.list.forEach(element => {
+        if (module_name != element.module_name) {
+          this.mRec = new Modulem();
+          this.mRec.module_name = element.module_name;
+          this.Modules.push(this.mRec);
+          module_name = element.module_name;
+        }
+      });
+      bRet = true;
+    } catch (error) {
+      bRet=false;
+      console.log('Menu Loading Error');
+      const err = JSON.stringify(error);
+      alert(err);
+    }
+    console.log('Menu Loading End 3');
+    return bRet;
+  }
 
 
 
@@ -1437,7 +1447,7 @@ public async LoadMenu() {
 
 
   Save2LocalStorage() {
-    
+
     const bts_settings = new gsdata();
     bts_settings.appid = this.appid;
     bts_settings.GSession = this.GSESSION;
@@ -1475,7 +1485,7 @@ public async LoadMenu() {
     bts_settings.year_end_date = this.year_end_date;
     bts_settings.year_islocked = this.year_islocked;
     bts_settings.software_start_year = this.software_start_year;
-  
+
     //bts_settings.mainlist = this.MainList;
     bts_settings.userrecord = this.UserRecord;
     bts_settings.userinfo = this.UserInfo;
@@ -1487,68 +1497,64 @@ public async LoadMenu() {
 
   }
 
-  ReadLocalStorage(_appid : string ) {
-  
-        const bts_settings: gsdata = JSON.parse(localStorage.getItem(_appid));
-        
-        this.UserRecord = bts_settings.userrecord;
-        
-        this.InitLogin();
+  ReadLocalStorage(_appid: string) {
 
-        this.appid = bts_settings.appid;
-        this.GSESSION = bts_settings.GSession;
-        this.Access_Token = bts_settings.access_token;
-        this.IsLoginSuccess = bts_settings.IsLoginSuccess;
-        this.IsAuthenticated = bts_settings.IsAuthenticated;
+    const bts_settings: gsdata = JSON.parse(localStorage.getItem(_appid));
 
-        this.user_ua_pkid = bts_settings.user_ua_pkid;
-        this.branch_pkid = bts_settings.branch_pkid;
-        this.branch_code = bts_settings.branch_code;
-        this.branch_name = bts_settings.branch_name;
-        this.branch_add1 = bts_settings.branch_add1;
-        this.branch_add2 = bts_settings.branch_add2
-        this.branch_add3 = bts_settings.branch_add3;
-        this.branch_add4 = bts_settings.branch_add4
-        this.branch_prefix = bts_settings.branch_prefix;
-        this.USER_LOCATION_ID = bts_settings.USER_LOCATION_ID;
-        this.REC_BRANCH_CODE = bts_settings.REC_BRANCH_CODE;
-        this.ADDRESS_LINE1 = bts_settings.ADDRESS_LINE1;
-        this.ADDRESS_LINE2 = bts_settings.ADDRESS_LINE2;
-        this.ADDRESS_LINE3 = bts_settings.ADDRESS_LINE3
-        this.ADDRESS_LINE4 = bts_settings.ADDRESS_LINE4;
-        this.ADDRESS_LINE5 = bts_settings.ADDRESS_LINE5
-        this.ADDRESS_DUMMY_LINE1 = bts_settings.ADDRESS_DUMMY_LINE1;
-        this.ADDRESS_DUMMY_LINE2 = bts_settings.ADDRESS_DUMMY_LINE2;
-        this.ADDRESS_DUMMY_LINE3 = bts_settings.ADDRESS_DUMMY_LINE3;
-        this.ADDRESS_DUMMY_LINE4 = bts_settings.ADDRESS_DUMMY_LINE4;
-        this.ADDRESS_DUMMY_LINE5 = bts_settings.ADDRESS_DUMMY_LINE5;
-        this.year_pkid = bts_settings.year_pkid;
-        this.year_code = bts_settings.year_code;
-        this.year_name = bts_settings.year_name;
-        this.year_start_date = bts_settings.year_start_date;
-        this.year_end_date = bts_settings.year_end_date;
-        this.year_islocked = bts_settings.year_islocked;
-        this.software_start_year = bts_settings.software_start_year;
-        
-        //this.MainList = bts_settings.mainlist;
-        
-        this.UserInfo = bts_settings.userinfo;
-        //this.Modules = bts_settings.modules;
-        //this.MenuList = bts_settings.menulist;
-        this.CompanyList = bts_settings.companylist
-        this.YearList = bts_settings.yearlist;
+    this.UserRecord = bts_settings.userrecord;
 
-        this.InitUserInfo();
+    this.InitLogin();
 
-        this.LoadSettings();
-        this.LoadMenu();
+    this.appid = bts_settings.appid;
+    this.GSESSION = bts_settings.GSession;
+    this.Access_Token = bts_settings.access_token;
+    this.IsLoginSuccess = bts_settings.IsLoginSuccess;
+    this.IsAuthenticated = bts_settings.IsAuthenticated;
 
+    this.user_ua_pkid = bts_settings.user_ua_pkid;
+    this.branch_pkid = bts_settings.branch_pkid;
+    this.branch_code = bts_settings.branch_code;
+    this.branch_name = bts_settings.branch_name;
+    this.branch_add1 = bts_settings.branch_add1;
+    this.branch_add2 = bts_settings.branch_add2
+    this.branch_add3 = bts_settings.branch_add3;
+    this.branch_add4 = bts_settings.branch_add4
+    this.branch_prefix = bts_settings.branch_prefix;
+    this.USER_LOCATION_ID = bts_settings.USER_LOCATION_ID;
+    this.REC_BRANCH_CODE = bts_settings.REC_BRANCH_CODE;
+    this.ADDRESS_LINE1 = bts_settings.ADDRESS_LINE1;
+    this.ADDRESS_LINE2 = bts_settings.ADDRESS_LINE2;
+    this.ADDRESS_LINE3 = bts_settings.ADDRESS_LINE3
+    this.ADDRESS_LINE4 = bts_settings.ADDRESS_LINE4;
+    this.ADDRESS_LINE5 = bts_settings.ADDRESS_LINE5
+    this.ADDRESS_DUMMY_LINE1 = bts_settings.ADDRESS_DUMMY_LINE1;
+    this.ADDRESS_DUMMY_LINE2 = bts_settings.ADDRESS_DUMMY_LINE2;
+    this.ADDRESS_DUMMY_LINE3 = bts_settings.ADDRESS_DUMMY_LINE3;
+    this.ADDRESS_DUMMY_LINE4 = bts_settings.ADDRESS_DUMMY_LINE4;
+    this.ADDRESS_DUMMY_LINE5 = bts_settings.ADDRESS_DUMMY_LINE5;
+    this.year_pkid = bts_settings.year_pkid;
+    this.year_code = bts_settings.year_code;
+    this.year_name = bts_settings.year_name;
+    this.year_start_date = bts_settings.year_start_date;
+    this.year_end_date = bts_settings.year_end_date;
+    this.year_islocked = bts_settings.year_islocked;
+    this.software_start_year = bts_settings.software_start_year;
 
-  
+    //this.MainList = bts_settings.mainlist;
+
+    this.UserInfo = bts_settings.userinfo;
+    //this.Modules = bts_settings.modules;
+    //this.MenuList = bts_settings.menulist;
+    this.CompanyList = bts_settings.companylist
+    this.YearList = bts_settings.yearlist;
+
+    this.InitUserInfo();
+
   }
 
+
   RemoveLocalStorage() {
-    if (localStorage.getItem(this.appid)) 
+    if (localStorage.getItem(this.appid))
       localStorage.removeItem(this.appid);
   }
 
@@ -1666,10 +1672,15 @@ public async LoadMenu() {
     return bret;
   }
   public canEdit(menuid: string): boolean {
+    
     var bret: boolean = false;
+
+    bret = this.user_isadmin == 'Y';
+
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_edit == "Y");
     if (itm)
       bret = true;
+      
     return bret;
   }
   public canView(menuid: string): boolean {
@@ -2636,8 +2647,8 @@ public async LoadMenu() {
   public getRandomInt() {
     return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
   }
-  
-  getURLParam(param : string ){
+
+  getURLParam(param: string) {
     return new URLSearchParams(window.location.search).get(param);
   }
 
