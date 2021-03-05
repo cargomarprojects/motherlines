@@ -90,14 +90,22 @@ export class HousePageComponent implements OnInit {
 
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
-    this.menuid = options.menuid;
-    this.parentid = options.parentid;
-    this.mbl_refno = options.refno;
-    this.type = options.type;
-    this.mode = options.mode;
-
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.parentid = this.route.snapshot.queryParams.parentid;
+      this.mbl_refno = this.route.snapshot.queryParams.refno;
+      this.type = this.route.snapshot.queryParams.type;
+      this.mode = this.route.snapshot.queryParams.mode;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.parentid = options.parentid;
+      this.mbl_refno = options.refno;
+      this.type = options.type;
+      this.mode = options.mode;
+    }
     this.initPage();
     this.actionHandler();
   }

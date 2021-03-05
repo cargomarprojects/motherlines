@@ -104,10 +104,16 @@ export class SeaexpMasterEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    //const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid =this.route.snapshot.queryParams.pkid;
-    this.menuid = this.route.snapshot.queryParams.menuid;
-    this.mode = this.route.snapshot.queryParams.mode;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.mode = this.route.snapshot.queryParams.mode;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.mode = options.mode;
+    }
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
@@ -601,7 +607,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           if (idx < this.cntr_sealno_field.toArray().length)
             this.cntr_sealno_field.toArray()[idx].focus();
         }
-         
+
       });
     }
   }
@@ -739,7 +745,7 @@ export class SeaexpMasterEditComponent implements OnInit {
           parentid: this.pkid,
           pkid: this.hblid,
           refno: this.record.mbl_refno,
-          type: 'SE',
+          type: 'OE',
           origin: 'seaexp-master-page',
           mode: this.hblmode
         };
