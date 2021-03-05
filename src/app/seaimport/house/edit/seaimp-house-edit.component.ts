@@ -101,11 +101,18 @@ export class SeaImpHouseEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
-    this.menuid = options.menuid;
-    this.mode = options.mode;
-    this.parentid = options.parentid;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.parentid = this.route.snapshot.queryParams.parentid;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.mode = options.mode;
+      this.parentid = options.parentid;
+    }
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();

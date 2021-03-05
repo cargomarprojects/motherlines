@@ -1,7 +1,10 @@
 <div class="page-header">
   <div class="col">
     <label class="mr-3">{{mainservice.title}}</label>
-    <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
+    <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button> -->
+    <a class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd"
+    [routerLink]="['/Silver.AirExport.Trans/AirExpMasterEditPage']"
+    [queryParams]="{appid : gs.appid, menuid: this.mainservice.menuid,pkid: '',type: this.mainservice.param_type,origin: 'airexp-master-page',mode: 'ADD'}">New</a>
     <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
   </div>
 </div>
@@ -36,7 +39,12 @@
     </thead>
     <tbody class="page-body-tbody">
       <tr *ngFor="let rec of records$ | async">
-        <td class='hlink'  (click)="edit(rec)">{{rec.mbl_refno}}</td>
+        <!-- <td class='hlink'  (click)="edit(rec)">{{rec.mbl_refno}}</td> -->
+        <td *ngIf="!this.mainservice.canEdit">{{rec.mbl_refno}}</td>
+        <td *ngIf="this.mainservice.canEdit">
+          <a class='hlink' [routerLink]="['/Silver.AirExport.Trans/AirExpMasterEditPage']"
+                  [queryParams]="{appid : this.gs.appid ,menuid: this.mainservice.menuid,pkid: rec.mbl_pkid,type: '',origin: 'airexp-master-page',mode: 'EDIT'}">{{rec.mbl_refno}}</a>
+        </td>
         <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT }}</td>
         <td>{{rec.mbl_no}}</td>
         <td>{{rec.mbl_agent_name}}</td>

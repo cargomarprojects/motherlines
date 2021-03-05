@@ -86,7 +86,8 @@ export class SeaImpHouseComponent implements OnInit {
   }
 
   editmaster(_record: Tbl_cargo_imp_housem) {
-   
+    
+    
     this.gs.LinkPage("REFNO", "SEA IMPORT", _record.mbl_refno, _record.hbl_mbl_id, _record.hbl_pkid, "");
   }
 

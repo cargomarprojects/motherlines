@@ -81,15 +81,24 @@ export class AirExpHouseEditComponent implements OnInit {
 
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.menuid = options.menuid;
-    this.parentid = options.parentid;
-    this.pkid = options.pkid;
-    this.mbl_refno = options.refno;
-    this.type = options.type;
-    this.mode = options.mode;
-    this.origin = options.origin;
-
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.parentid = this.route.snapshot.queryParams.parentid;
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.mbl_refno = this.route.snapshot.queryParams.refno;
+      this.type = this.route.snapshot.queryParams.type;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.origin = this.route.snapshot.queryParams.origin;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.menuid = options.menuid;
+      this.parentid = options.parentid;
+      this.pkid = options.pkid;
+      this.mbl_refno = options.refno;
+      this.type = options.type;
+      this.mode = options.mode;
+      this.origin = options.origin;
+    }
     this.initPage();
     this.actionHandler();
   }

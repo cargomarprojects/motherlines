@@ -303,7 +303,12 @@
                 </thead>
                 <tbody class="page-body-tbody">
                   <tr *ngFor="let rec of hrecords">
-                    <td class='hlink' (click)="EditHouse(rec)">{{rec.hbl_houseno}}</td>
+                    <!-- <td class='hlink' (click)="EditHouse(rec)">{{rec.hbl_houseno}}</td> -->
+                    <td *ngIf="!gs.canEdit(this.gs.MENU_AE_HOUSE)">{{rec.hbl_houseno}}</td>
+                    <td *ngIf="gs.canEdit(this.gs.MENU_AE_HOUSE)">
+                      <a class='hlink' [routerLink]="['/Silver.AirExport.Trans/AirExpHouseEditPage']"
+                      [queryParams]="{appid : this.gs.appid ,menuid: this.gs.MENU_AE_HOUSE,parentid:this.pkid,pkid: rec.hbl_pkid,refno: this.record.mbl_refno ,type: 'AIR EXPORT',origin: 'airexp-master-page',mode: 'EDIT'}">{{rec.hbl_houseno}}</a>
+                    </td>
                     <td>{{rec.hbl_shipper_name}}</td>
                     <td>{{rec.hbl_consignee_name}}</td>
                     <td>{{rec.hbl_packages}}</td>
@@ -317,8 +322,12 @@
               </table>
               <div class="form-group row">
                 <div class="col-12">
-                  <button class="btn btn-info btn-sm mr-1" *ngIf="!is_locked && gs.screenExists(gs.MENU_AE_HOUSE)"
-                    (click)="AddHouse()">Add House</button>
+                  <!-- <button class="btn btn-info btn-sm mr-1" *ngIf="!is_locked && gs.screenExists(gs.MENU_AE_HOUSE)"
+                    (click)="AddHouse()">Add House</button> -->
+                    <a class="btn btn-info btn-sm mr-1" *ngIf="gs.screenExists(gs.MENU_AE_HOUSE)" disabled="is_locked"
+                    [routerLink]="['/Silver.AirExport.Trans/AirExpHouseEditPage']"
+                    [queryParams]="{appid : gs.appid, menuid: this.gs.MENU_AE_HOUSE, parentid:this.pkid, pkid: '',refno: this.record.mbl_refno ,type: 'AIR EXPORT',origin: 'airexp-master-page',mode: 'ADD'}">Add
+                    House</a>
                 </div>
               </div>
             </div>

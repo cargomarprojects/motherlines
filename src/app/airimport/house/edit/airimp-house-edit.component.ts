@@ -43,7 +43,7 @@ export class AirImpHouseEditComponent implements OnInit {
   // @ViewChild('hbl_ship_term_id') hbl_ship_term_id_field: ElementRef;
   // @ViewChild('hbl_bltype') hbl_bltype_field: ElementRef;
   // @ViewChild('hbl_handled_name') hbl_handled_name_field: AutoComplete2Component;
-  @ViewChild('_hbl_salesman_name')  hbl_salesman_name_field: AutoComplete2Component;
+  @ViewChild('_hbl_salesman_name') hbl_salesman_name_field: AutoComplete2Component;
 
   @ViewChild('_hbl_lfd_date') hbl_lfd_date_field: DateComponent;
 
@@ -91,12 +91,20 @@ export class AirImpHouseEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
-    this.menuid = options.menuid;
-    this.mode = options.mode;
-    this.parentid = options.parentid;
-    this.origin = options.origin;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.parentid = this.route.snapshot.queryParams.parentid;
+      this.origin = this.route.snapshot.queryParams.origin;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.mode = options.mode;
+      this.parentid = options.parentid;
+      this.origin = options.origin;
+    }
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
@@ -295,7 +303,7 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_shipment_stage = this.mblrecord.mbl_shipment_stage;
       this.record.hbl_salesman_id = this.mblrecord.mbl_salesman_id;
       this.record.hbl_salesman_name = this.mblrecord.mbl_salesman_name;
- 
+
       if (!this.gs.isBlank(this.hbl_houseno_field))
         this.hbl_houseno_field.nativeElement.focus();
     }
@@ -313,18 +321,18 @@ export class AirImpHouseEditComponent implements OnInit {
         this.descrecords = <Tbl_cargo_imp_desc[]>response.descrecords;
         this.mode = 'EDIT';
         this.is_locked = this.gs.IsShipmentClosed("AIR IMPORT", this.record.mbl_ref_date, this.record.mbl_lock, this.record.mbl_unlock_date);
-      
+
         this.initDesc();
-       if (!this.gs.isBlank(this.hbl_houseno_field))
+        if (!this.gs.isBlank(this.hbl_houseno_field))
           this.hbl_houseno_field.nativeElement.focus();
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
       });
   }
   private initDesc() {
-     
+
   }
-  
+
   LoadMasterData() {
     this.errorMessage = [];
     var SearchData = this.gs.UserInfo;
@@ -394,7 +402,7 @@ export class AirImpHouseEditComponent implements OnInit {
           this.mode = 'EDIT';
           if (this.origin === "airimp-house-page")
             this.mainService.RefreshList(this.record);
-           this.errorMessage.push('Save Complete');
+          this.errorMessage.push('Save Complete');
           // alert(this.errorMessage[0]);
         }
       }, error => {
@@ -585,7 +593,7 @@ export class AirImpHouseEditComponent implements OnInit {
           else
             this.record.hbl_bltype = "FREEHAND";
         }
-       
+
       if (_Record.col9 == "Y") {
         this.gs.ShowAccAlert(this.record.hbl_consignee_id);
       }
@@ -635,13 +643,13 @@ export class AirImpHouseEditComponent implements OnInit {
       this.record.hbl_handled_id = _Record.id;
       this.record.hbl_handled_name = _Record.name;
       if (!this.gs.isBlank(this.hbl_salesman_name_field))
-      this.hbl_salesman_name_field.Focus();
+        this.hbl_salesman_name_field.Focus();
     }
     if (_Record.controlname == "SALESMAN") {
       this.record.hbl_salesman_id = _Record.id;
       this.record.hbl_salesman_name = _Record.name;
       if (!this.gs.isBlank(this.hbl_lfd_date_field))
-      this.hbl_lfd_date_field.Focus();
+        this.hbl_lfd_date_field.Focus();
     }
 
     if (_Record.controlname == "CARE-OF") {
@@ -655,10 +663,10 @@ export class AirImpHouseEditComponent implements OnInit {
 
   OnChange(field: string) {
     if (field == 'hbl_frt_status') {
-       
+
     }
     if (field == 'hbl_telex_released') {
-       
+
     }
   }
 
@@ -678,7 +686,7 @@ export class AirImpHouseEditComponent implements OnInit {
 
   onBlur(field: string) {
     switch (field) {
-      
+
       case 'hbl_houseno': {
         this.record.hbl_houseno = this.record.hbl_houseno.toUpperCase();
         break;
@@ -707,7 +715,7 @@ export class AirImpHouseEditComponent implements OnInit {
         this.record.hbl_cft = this.gs.roundNumber(this.record.hbl_cft, 3);
         break;
       }
-     
+
     }
   }
 

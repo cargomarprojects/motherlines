@@ -1,7 +1,8 @@
 <div class="page-header">
     <div class="row  align-items-center justify-content-left p-1">
         <label class="mr-3">{{mainservice.title}}</label>
-        <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
+        <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button> -->
+        <a class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" [routerLink]="['/Silver.Other.Trans/OthGeneralExpenseEditPage']" [queryParams]="{appid : gs.appid, menuid: this.mainservice.menuid, pkid: '', exptype: this.mainservice.param_type,origin: 'oth-generalexp-page',mode: 'ADD'}">New</a>
         <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
 
     </div>
@@ -32,7 +33,11 @@
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records$ | async">
-                <td class='hlink'  (click)="edit(rec)" >{{rec.mbl_refno}}</td>
+                <!-- <td class='hlink'  (click)="edit(rec)" >{{rec.mbl_refno}}</td> -->
+                <td  *ngIf="!this.mainservice.canEdit" >{{rec.mbl_refno}}</td>
+                <td  *ngIf="this.mainservice.canEdit" >
+                    <a class='hlink' [routerLink]="['/Silver.Other.Trans/OthGeneralExpenseEditPage']" [queryParams]="{appid : this.gs.appid ,menuid: this.mainservice.menuid,pkid: rec.mbl_pkid,exptype: this.mainservice.param_type,origin: 'oth-generalexp-page',mode: 'EDIT'}">{{rec.mbl_refno}}</a>
+                </td>
                 <td>{{rec.mbl_ref_date | date : gs.FRONTEND_DATEFORMAT }}</td>
                 <td *ngIf="mainservice.param_type=='FA'">{{rec.mbl_cargo_loc_name}}</td>
                 <td *ngIf="mainservice.param_type=='FA'">{{rec.mbl_devan_loc_name}}</td>
