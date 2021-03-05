@@ -109,7 +109,7 @@ export class SeaImpMasterEditComponent implements OnInit {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
     this.title = this.gs.getTitle(this.menuid);
     this.errorMessage = [];
-    this.LoadCombo();
+    this.LoadCombo(); 
   }
 
   LoadCombo() {
