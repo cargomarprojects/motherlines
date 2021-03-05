@@ -58,11 +58,18 @@ export class OthGeneralExpenseEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
-    this.menuid = options.menuid;
-    this.mode = options.mode;
-    this.EXPTYPE = options.exptype;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.EXPTYPE = this.route.snapshot.queryParams.exptype;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.mode = options.mode;
+      this.EXPTYPE = options.exptype;
+    }
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();

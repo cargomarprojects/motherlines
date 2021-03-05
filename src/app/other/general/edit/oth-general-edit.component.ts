@@ -95,11 +95,18 @@ export class OthGeneralEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
-    this.menuid = options.menuid;
-    this.mode = options.mode;
-    this.OPERATION_MODE = options.type;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.OPERATION_MODE = this.route.snapshot.queryParams.type;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.mode = options.mode;
+      this.OPERATION_MODE = options.type;
+    }
     if (this.gs.isBlank(this.OPERATION_MODE))
       this.OPERATION_MODE = "OTHERS";
     this.closeCaption = 'Return';
