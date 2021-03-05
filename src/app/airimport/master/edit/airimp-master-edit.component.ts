@@ -93,10 +93,16 @@ export class AirImpMasterEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
-    this.menuid = options.menuid;
-    this.mode = options.mode;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.mode = this.route.snapshot.queryParams.mode;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.mode = options.mode;
+    }
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
@@ -188,7 +194,7 @@ export class AirImpMasterEditComponent implements OnInit {
     // this.record.mbl_salesman_name = '';
     // this.record.mbl_3rdparty = 'N';
     // this.record.mbl_3rdparty_bool = false;
-    
+
     if (this.gs.JOB_TYPE_AI.length > 0) {
       this.record.mbl_jobtype_id = this.gs.JOB_TYPE_AI[0].code;
       this.record.mbl_jobtype_name = this.gs.JOB_TYPE_AI[0].name;
