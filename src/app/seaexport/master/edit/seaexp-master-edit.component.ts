@@ -979,4 +979,19 @@ export class SeaexpMasterEditComponent implements OnInit {
   CloseModal() {
     this.modal.close();
   }
+
+  getLink(_mode: string) {
+    return "/Silver.SeaExport.Trans/SeaExpMasterEditPage";
+  }
+  getParam(_record: Tbl_cargo_exp_masterm = null) {
+    return {
+      appid: this.gs.appid,
+      menuid: this.menuid,
+      pkid: '',
+      type: '',
+      origin: 'seaexp-master-page',
+      mode: 'ADD'
+    };
+  }
+
 }

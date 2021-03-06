@@ -66,34 +66,30 @@ export class SeaexpMasterComponent implements OnInit {
     else
       return null;
   }
+
   getParam(_record: Tbl_cargo_exp_masterm = null) {
     if (_record == null) {
-      if (!this.mainservice.canAdd) {
+      if (!this.mainservice.canAdd)
         return null;
-      } else {
-        return {
-          appid: this.gs.appid,
-          menuid: this.mainservice.menuid,
-          pkid: '',
-          type: this.mainservice.param_type,
-          origin: 'seaexp-master-page',
-          mode: 'ADD'
-        };
-      }
-    } else {
-      if (!this.mainservice.canEdit) {
-        return null;
-      } else {
-        return {
-          appid: this.gs.appid,
-          menuid: this.mainservice.menuid,
-          pkid: _record.mbl_pkid,
-          type: '',
-          origin: 'seaexp-master-page',
-          mode: 'EDIT'
-        };
-      }
+      return {
+        appid: this.gs.appid,
+        menuid: this.mainservice.menuid,
+        pkid: '',
+        type: this.mainservice.param_type,
+        origin: 'seaexp-master-page',
+        mode: 'ADD'
+      };
     }
+    if (!this.mainservice.canEdit)
+      return null;
+    return {
+      appid: this.gs.appid,
+      menuid: this.mainservice.menuid,
+      pkid: _record.mbl_pkid,
+      type: '',
+      origin: 'seaexp-master-page',
+      mode: 'EDIT'
+    };
   }
 
   NewRecord() {
@@ -101,7 +97,6 @@ export class SeaexpMasterComponent implements OnInit {
       alert('Insufficient User Rights')
       return;
     }
-
     let parameter = {
       menuid: this.mainservice.menuid,
       pkid: '',
