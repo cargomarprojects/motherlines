@@ -22,17 +22,18 @@ export class ReloadComponent {
   }
 
   async ngOnInit() {
-    if ( this.gs.reload_url == '')
+    let url = this.gs.reload_url;
+    this.gs.reload_url = '';
+    if ( url == '')
       this.router.navigate(['home'], { replaceUrl: true }); 
     await this.gs.LoadSettings();
     await this.gs.LoadMenu();    
-    let url = this.gs.reload_url;
-    this.gs.reload_url = '';
-    
+
     this.router.navigateByUrl(url,{ replaceUrl: true });
 
     this.gs.IsLoginSuccess = true;
     this.gs.IsAuthenticated = true;    
+    
   }
  
   ngOnDestroy() {

@@ -51,26 +51,24 @@ export class AppComponent {
 
 
   async ngOnInit() {
+
     console.log('Application Started');
     console.log('Production ' ,environment.production);
 
-    this.gs.reload_url =  window.location.pathname + window.location.search;
-
-    console.log(this.gs.reload_url);
-
     const appid = this.gs.getURLParam('appid');
     console.log('appid ', appid);
-    if ( appid == null || appid == '' || appid == undefined )
+    if (this.gs.isBlank(appid)) {
       this.router.navigate(['login'], { replaceUrl: true }); 
-    else {
-      if (localStorage.getItem(appid)) {
-        this.gs.ReadLocalStorage(appid);
-        this.router.navigate(['/reload']);
-        //await this.gs.LoadSettings();
-        //await this.gs.LoadMenu();    
-      }
-      else 
-        this.router.navigate(['login'], { replaceUrl: true }); 
+      return;
+    }
+    
+    if (localStorage.getItem(appid)) {
+      this.gs.ReadLocalStorage(appid);
+      this.gs.reload_url =  window.location.pathname + window.location.search;
+      this.router.navigate(['/reload']);
+    } else {
+      this.router.navigate(['login'], { replaceUrl: true }); 
+      return;
     }
     console.log('ngOnInit App completed');
   }

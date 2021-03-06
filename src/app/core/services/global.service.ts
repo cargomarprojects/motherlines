@@ -1500,9 +1500,7 @@ export class GlobalService {
     this.appid = bts_settings.appid;
     this.GSESSION = bts_settings.GSession;
     this.Access_Token = bts_settings.access_token;
-    
-
-
+ 
     this.user_ua_pkid = bts_settings.user_ua_pkid;
     this.branch_pkid = bts_settings.branch_pkid;
     this.branch_code = bts_settings.branch_code;
