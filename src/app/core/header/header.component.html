@@ -11,17 +11,18 @@
       <span class="navbar-toggler-icon"></span>
     </button>
   
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
   
       <ul class="navbar-nav mr-auto">
   
-<!--         <li class="nav-item">
+        <!--
+        <li class="nav-item">
           <a class="nav-link h6" (click)="home()">Home</a>
-        </li> -->
-  
-  
-        <div *ngFor="let rech of gs.Modules">
-          <li class="nav-item dropdown">
+        </li> 
+        -->
+        
+        <div *ngFor="let rech of gs.Modules" >
+          <li class="nav-item dropdown" *ngIf="gs.IsAuthenticated">
             <a class="nav-link dropdown-toggle text-white h6" href="#" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{rech.module_name}}
@@ -37,6 +38,8 @@
             </div>
           </li>
         </div>
+      
+
   
         <li class="nav-item">
           <a class="nav-link h6 text-white" *ngIf="gs.IsAuthenticated" (click)="changeBranch()" >Change Branch</a>

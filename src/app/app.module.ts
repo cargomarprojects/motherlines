@@ -29,6 +29,7 @@ import { HeaderComponent } from './core/header/header.component';
 
 import { InterceptorServiceProvider } from './core/services/interceptor.service.provider';
 import { LoadingScreenComponent } from './core/loading-screen/loading-screen.component';
+import { ReloadComponent } from './reload.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LoadingScreenComponent } from './core/loading-screen/loading-screen.com
     LoginComponent,
     Login2Component,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    ReloadComponent
   ],
   imports: [
     BrowserModule,

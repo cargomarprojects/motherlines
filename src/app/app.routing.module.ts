@@ -5,12 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './core/login/login.component';
 import { Login2Component } from './core/login2/login2.component';
 import { HomeComponent } from './core/home/home.component';
+import { ReloadComponent } from './reload.component';
 
 const routes: Routes = [
   { path: '', redirectTo : 'home', pathMatch : 'full'  },
   { path: 'login', component: LoginComponent },
   { path: 'login2', component: Login2Component },
   { path: 'home', component: HomeComponent },
+  { path: 'reload', component: ReloadComponent },
   { path: 'Silver.Reports.General', loadChildren: './reports/reports.module#ReportsModule' },
   { path: 'Silver.Master', loadChildren: './master/master.module#MasterModule' },  
   { path: 'Silver.SeaExport.Trans', loadChildren: './seaexport/seaexport.module#SeaExportModule' },  

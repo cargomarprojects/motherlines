@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
     private location : Location,
     public gs: GlobalService
   ) {
-
   }
 
   ngOnInit() {

@@ -20,8 +20,6 @@ import { seaexpMasterService } from '../services/seaexp-master.service';
 export class SeaexpMasterComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
- 
-  
 
   errorMessage$ : Observable<string> ;
   records$ :  Observable<Tbl_cargo_exp_masterm[]>;
@@ -34,21 +32,23 @@ export class SeaexpMasterComponent implements OnInit {
     private location: Location,
     public gs: GlobalService,
     public mainservice: seaexpMasterService
-  ) { }
+  ) { 
+
+  }
 
   ngOnInit() {
-    console.log( 'ngOnInit Sea Export Master', this.route.snapshot.queryParams);
+    console.log( 'ngOnInit SEXPM', this.route.snapshot.queryParams);
+    console.log( 'ngOnInit SEXPM SETTINGS', this.gs.MainList.length);
+    console.log( 'ngOnInit SEXPM MENULIST', this.gs.MenuList.length);
     this.mainservice.init(this.route.snapshot.queryParams);
     this.initPage();
   }
 
   initPage() {
-    
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
     this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
-
   }
 
   searchEvents(actions: any) {

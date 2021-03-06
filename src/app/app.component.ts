@@ -5,6 +5,7 @@ import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationErr
 
 import { LoadingScreenService } from './core/services/loadingscreen.service';
 import { GlobalService } from './core/services/global.service';
+import { ConditionalExpr } from '@angular/compiler';
 
 
 
@@ -25,8 +26,14 @@ export class AppComponent {
     private route : ActivatedRoute
   ) {
 
+    console.log('app constructor');
     this.gs.InitdefaultValues();
 
+    let itot  =  +this.gs.getLocalStorageSize() ;
+    console.log('LocalStorage Size ', itot);
+    if ( itot > 8)
+      localStorage.clear();
+    
     this.sub = this.router.events.subscribe((event) => {
 
       if (this.gs.IsAuthenticated) {
@@ -38,6 +45,7 @@ export class AppComponent {
         }
       }
     });
+    
 
   }
 
@@ -46,11 +54,10 @@ export class AppComponent {
     console.log('Application Started');
     console.log('Production ' ,environment.production);
 
-    let itot  =  +this.gs.getLocalStorageSize() ;
-    console.log('LocalStorage Size ', itot);
-    if ( itot > 8)
-      localStorage.clear();
-    
+    this.gs.reload_url =  window.location.pathname + window.location.search;
+
+    console.log(this.gs.reload_url);
+
     const appid = this.gs.getURLParam('appid');
     console.log('appid ', appid);
     if ( appid == null || appid == '' || appid == undefined )
@@ -58,14 +65,16 @@ export class AppComponent {
     else {
       if (localStorage.getItem(appid)) {
         this.gs.ReadLocalStorage(appid);
-        await this.gs.LoadSettings();
-        await this.gs.LoadMenu();    
+        this.router.navigate(['/reload']);
+        //await this.gs.LoadSettings();
+        //await this.gs.LoadMenu();    
       }
       else 
         this.router.navigate(['login'], { replaceUrl: true }); 
     }
     console.log('ngOnInit App completed');
   }
+ 
 
   ngOnDestroy() {
     this.sub.unsusbscribe();

@@ -24,7 +24,7 @@ export class HeaderComponent {
         this.getUrlID();
         this.id = rec.menu_pkid;
 
-        if (rec.menu_xap_class == 'ShipmentLogPage' || rec.menu_xap_class == 'ShipmentClosingPage' || rec.menu_xap_class == 'PaymentRequest'  || rec.menu_xap_class == 'PaymentDuePage')
+        if (rec.menu_xap_class == 'ShipmentLogPage' || rec.menu_xap_class == 'ShipmentClosingPage' || rec.menu_xap_class == 'PaymentRequest' || rec.menu_xap_class == 'PaymentDuePage')
             rec.menu_xap_dll = 'Silver.Reports.General';
 
 
@@ -35,32 +35,32 @@ export class HeaderComponent {
     }
 
 
-    getMenu(rec){
-        if (rec.menu_xap_class == 'ShipmentLogPage' || rec.menu_xap_class == 'ShipmentClosingPage' || rec.menu_xap_class == 'PaymentRequest'  || rec.menu_xap_class == 'PaymentDuePage')
+    getMenu(rec) {
+        if (rec.menu_xap_class == 'ShipmentLogPage' || rec.menu_xap_class == 'ShipmentClosingPage' || rec.menu_xap_class == 'PaymentRequest' || rec.menu_xap_class == 'PaymentDuePage')
             rec.menu_xap_dll = 'Silver.Reports.General';
         const menu_route = rec.menu_xap_dll + '/' + rec.menu_xap_class;
         rec.menu_route2 = '';
         return menu_route;
     }
 
-    getQParam(rec){
+    getQParam(rec) {
         this.id = rec.menu_pkid;
         return { id: this.id, menuid: rec.menu_pkid, menu_param: rec.menu_param };
     }
 
 
-    home(){
+    home() {
         if (this.gs.IsAuthenticated)
             this.router.navigate(['/home']);
-        else 
+        else
             this.router.navigate(['/home'], { replaceUrl: true });
     }
 
-    login(){
+    login() {
         this.router.navigate(['login'], { replaceUrl: true });
     }
 
-    changeBranch(){
+    changeBranch() {
         this.router.navigate(['login2'], { replaceUrl: true });
     }
 
@@ -68,7 +68,7 @@ export class HeaderComponent {
     Logout() {
         this.loginservice.Logout();
         this.gs.MenuList = null;
-        this.gs.Modules =  null;
+        this.gs.Modules = null;
         this.gs.RemoveLocalStorage();
         this.router.navigate(['home'], { replaceUrl: true });
     }

@@ -36,6 +36,8 @@ export class GlobalService {
   public globalVariables: GlobalVariables;
   public defaultValues: DefaultValues;
 
+  public reload_url  ='';
+
   mRec: Modulem = null;
 
   public appid = '';
@@ -798,52 +800,42 @@ export class GlobalService {
   }
 
 
-  public async LoadSettings() {
-    let bRet = false;
-
-    try {
-      var SearchData: any = {};
-      SearchData = this.UserInfo;
-      SearchData.PARAM_TYPE = "ALL SETTINGS";
-      SearchData.SCREEN = "LOGIN2";
-      SearchData["SET-LOGIN"] = "Y";
-      console.log('MainList Begin 1');
-      //const promise  = await this.LoadSettingsApi(SearchData).toPromise();
-      
-      const response = await this.http2.post<any>(this.baseUrl + "/api/Auth/LoadSettings", SearchData, this.headerparam2('anonymous')).toPromise();
+  public async LoadSettings() : Promise<number> {
+    let bRet = -1;
+    var SearchData: any = {};
+    SearchData = this.UserInfo;
+    SearchData.PARAM_TYPE = "ALL SETTINGS";
+    SearchData.SCREEN = "LOGIN2";
+    SearchData["SET-LOGIN"] = "Y";
+    console.log('MainList Begin 1');
+    await this.http2.post<any>(this.baseUrl + "/api/Auth/LoadSettings", SearchData, this.headerparam2('anonymous')).toPromise().then((response) => {
       console.log('MainList Loaded 2');
       this.MainList = response.list;
       this.InitData();
       this.InitUserInfo();
       //this.GLOBALCONTANTS.InitMonths();
-      bRet = true;
-
-    } catch (error) {
-      bRet =false;
+      bRet = 0;
+    }, (error) => {
+      bRet = -1;
       console.log('MainList Loading Error');
       const err = JSON.stringify(error);
       alert(err);
-    }
+    });
     console.log('MainList End 3');
     return bRet;
   }
 
-  public async LoadMenu() {
-
-    let bRet = false;
-
-    try {
-
-      var module_name = '';
-      var SearchData: any = {};
-      SearchData = this.UserInfo;
-      if (this.user_isadmin == "Y")
-        SearchData.UA_ID = "";
-      else
-        SearchData.UA_ID = this.user_ua_pkid;
-      console.log('Menu Loading Begin 1');
-      //const promise  = this.LoadMenuApi(SearchData).toPromise();
-      const response = await this.http2.post<any>(this.baseUrl + "/api/Auth/LoadMenu", SearchData, this.headerparam2('authorized')).toPromise();
+  public async LoadMenu(): Promise<number> {
+    let bRet = -1;
+    var module_name = '';
+    var SearchData: any = {};
+    SearchData = this.UserInfo;
+    if (this.user_isadmin == "Y")
+      SearchData.UA_ID = "";
+    else
+      SearchData.UA_ID = this.user_ua_pkid;
+    console.log('Menu Loading Begin 1');
+    await this.http2.post<any>(this.baseUrl + "/api/Auth/LoadMenu", SearchData, this.headerparam2('authorized')).toPromise().then((response) => {
       console.log('Menu Loaded 2');
       this.MenuList = response.list;
       this.Modules = [];
@@ -855,13 +847,13 @@ export class GlobalService {
           module_name = element.module_name;
         }
       });
-      bRet = true;
-    } catch (error) {
-      bRet=false;
+      bRet = 0;
+    }, (error) => {
+      bRet = -1;
       console.log('Menu Loading Error');
       const err = JSON.stringify(error);
       alert(err);
-    }
+    });
     console.log('Menu Loading End 3');
     return bRet;
   }
@@ -1508,8 +1500,8 @@ export class GlobalService {
     this.appid = bts_settings.appid;
     this.GSESSION = bts_settings.GSession;
     this.Access_Token = bts_settings.access_token;
-    this.IsLoginSuccess = bts_settings.IsLoginSuccess;
-    this.IsAuthenticated = bts_settings.IsAuthenticated;
+    
+
 
     this.user_ua_pkid = bts_settings.user_ua_pkid;
     this.branch_pkid = bts_settings.branch_pkid;
@@ -1672,7 +1664,7 @@ export class GlobalService {
     return bret;
   }
   public canEdit(menuid: string): boolean {
-    
+
     var bret: boolean = false;
 
     bret = this.user_isadmin == 'Y';
@@ -1680,7 +1672,7 @@ export class GlobalService {
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_edit == "Y");
     if (itm)
       bret = true;
-      
+
     return bret;
   }
   public canView(menuid: string): boolean {
