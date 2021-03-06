@@ -68,13 +68,20 @@ export class DeliveryOrderEditComponent implements OnInit {
 
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.menuid = options.menuid;
-    this.parentid = options.parentid;
-    this.pickCategory = options.pickCategory;
-    this.pkid = options.pkid;
-    this.mode = options.mode;
-
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.parentid = this.route.snapshot.queryParams.parentid;
+      this.pickCategory = this.route.snapshot.queryParams.pickCategory;
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.mode = this.route.snapshot.queryParams.mode;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.menuid = options.menuid;
+      this.parentid = options.parentid;
+      this.pickCategory = options.pickCategory;
+      this.pkid = options.pkid;
+      this.mode = options.mode;
+    }
     this.initPage();
     this.actionHandler();
   }
@@ -651,7 +658,7 @@ export class DeliveryOrderEditComponent implements OnInit {
         }
         else {
           this.errorMessage.push('Save Complete');
-         // alert(this.errorMessage);
+          // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage.push(this.gs.getError(error));
