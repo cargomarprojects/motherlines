@@ -30,6 +30,8 @@ import { HeaderComponent } from './core/header/header.component';
 import { InterceptorServiceProvider } from './core/services/interceptor.service.provider';
 import { LoadingScreenComponent } from './core/loading-screen/loading-screen.component';
 import { ReloadComponent } from './reload.component';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomRouteReuseStrategy } from './customReuseRouteStrategy';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,11 @@ import { ReloadComponent } from './reload.component';
 
   ],
   providers: [
-    InterceptorServiceProvider
+    InterceptorServiceProvider,
+    {
+        provide: RouteReuseStrategy ,
+        useClass: CustomRouteReuseStrategy
+    }
   ],
   bootstrap: [AppComponent]
 })
