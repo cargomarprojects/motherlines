@@ -12,13 +12,15 @@ import { GlobalService } from './core/services/global.service';
 })
 export class ReloadComponent {
 
-
+  loading = false;
   constructor(
     public gs: GlobalService,
     public loadingservice: LoadingScreenService,
     private router: Router,
     private route : ActivatedRoute
   ) {
+
+
   }
 
   async ngOnInit() {
@@ -26,6 +28,7 @@ export class ReloadComponent {
     this.gs.reload_url = '';
     if ( url == '')
       this.router.navigate(['home'], { replaceUrl: true }); 
+      
     await this.gs.LoadSettings();
     await this.gs.LoadMenu();    
 

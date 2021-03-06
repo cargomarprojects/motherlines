@@ -21,10 +21,10 @@ export class SeaexpMasterComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
 
-  errorMessage$ : Observable<string> ;
-  records$ :  Observable<Tbl_cargo_exp_masterm[]>;
-  pageQuery$ : Observable<PageQuery>;
-  searchQuery$ : Observable<SearchQuery>;
+  errorMessage$: Observable<string>;
+  records$: Observable<Tbl_cargo_exp_masterm[]>;
+  pageQuery$: Observable<PageQuery>;
+  searchQuery$: Observable<SearchQuery>;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,14 +32,14 @@ export class SeaexpMasterComponent implements OnInit {
     private location: Location,
     public gs: GlobalService,
     public mainservice: seaexpMasterService
-  ) { 
+  ) {
 
   }
 
   ngOnInit() {
-    console.log( 'ngOnInit SEXPM', this.route.snapshot.queryParams);
-    console.log( 'ngOnInit SEXPM SETTINGS', this.gs.MainList.length);
-    console.log( 'ngOnInit SEXPM MENULIST', this.gs.MenuList.length);
+    console.log('ngOnInit SEXPM', this.route.snapshot.queryParams);
+    console.log('ngOnInit SEXPM SETTINGS', this.gs.MainList.length);
+    console.log('ngOnInit SEXPM MENULIST', this.gs.MenuList.length);
     this.mainservice.init(this.route.snapshot.queryParams);
     this.initPage();
   }
@@ -47,18 +47,54 @@ export class SeaexpMasterComponent implements OnInit {
   initPage() {
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
-    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));    
+    this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
     this.errorMessage$ = this.mainservice.data$.pipe(map(res => res.errormessage));
   }
 
   searchEvents(actions: any) {
-    this.mainservice.Search(actions,  'SEARCH');
+    this.mainservice.Search(actions, 'SEARCH');
   }
 
   pageEvents(actions: any) {
-    this.mainservice.Search(actions,'PAGE');
+    this.mainservice.Search(actions, 'PAGE');
   }
- 
+
+
+  getLink(_mode: string) {
+    if ((_mode == "ADD" && this.mainservice.canAdd) || (_mode == "EDIT" && this.mainservice.canEdit))
+      return "/Silver.SeaExport.Trans/SeaExpMasterEditPage";
+    else
+      return null;
+  }
+  getParam(_record: Tbl_cargo_exp_masterm = null) {
+    if (_record == null) {
+      if (!this.mainservice.canAdd) {
+        return null;
+      } else {
+        return {
+          appid: this.gs.appid,
+          menuid: this.mainservice.menuid,
+          pkid: '',
+          type: this.mainservice.param_type,
+          origin: 'seaexp-master-page',
+          mode: 'ADD'
+        };
+      }
+    } else {
+      if (!this.mainservice.canEdit) {
+        return null;
+      } else {
+        return {
+          appid: this.gs.appid,
+          menuid: this.mainservice.menuid,
+          pkid: _record.mbl_pkid,
+          type: '',
+          origin: 'seaexp-master-page',
+          mode: 'EDIT'
+        };
+      }
+    }
+  }
 
   NewRecord() {
     if (!this.mainservice.canAdd) {
@@ -73,7 +109,7 @@ export class SeaexpMasterComponent implements OnInit {
       origin: 'seaexp-master-page',
       mode: 'ADD'
     };
-    this.router.navigate(['Silver.SeaExport.Trans/SeaExpMasterEditPage'], {queryParams:{menuid: this.mainservice.menuid,pkid: '',type: this.mainservice.param_type,origin: 'seaexp-master-page',mode: 'ADD'}});
+    this.router.navigate(['Silver.SeaExport.Trans/SeaExpMasterEditPage'], { queryParams: { menuid: this.mainservice.menuid, pkid: '', type: this.mainservice.param_type, origin: 'seaexp-master-page', mode: 'ADD' } });
   }
   edit(_record: Tbl_cargo_exp_masterm) {
     if (!this.mainservice.canEdit) {

@@ -35,12 +35,16 @@ export class HeaderComponent {
     }
 
 
-    getMenu(rec) {
+    getLink(rec) {
         if (rec.menu_xap_class == 'ShipmentLogPage' || rec.menu_xap_class == 'ShipmentClosingPage' || rec.menu_xap_class == 'PaymentRequest' || rec.menu_xap_class == 'PaymentDuePage')
             rec.menu_xap_dll = 'Silver.Reports.General';
-        const menu_route = rec.menu_xap_dll + '/' + rec.menu_xap_class;
+        const menu_route = "/" + rec.menu_xap_dll + '/' + rec.menu_xap_class;
         rec.menu_route2 = '';
         return menu_route;
+    }
+
+    getParam(rec) {
+        return { appid : this.gs.appid, id: rec.menu_pkid, menuid: rec.menu_pkid, menu_param: rec.menu_param};
     }
 
     getQParam(rec) {

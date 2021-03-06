@@ -35,7 +35,6 @@ export class AppComponent {
       localStorage.clear();
     
     this.sub = this.router.events.subscribe((event) => {
-
       if (this.gs.IsAuthenticated) {
         if (event instanceof NavigationStart) {
           this.loadingservice.startLoading();
