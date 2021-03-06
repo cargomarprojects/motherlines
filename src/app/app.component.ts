@@ -31,7 +31,7 @@ export class AppComponent {
 
     let itot  =  +this.gs.getLocalStorageSize() ;
     console.log('LocalStorage Size ', itot);
-    if ( itot > 8)
+    if ( itot > 9)
       localStorage.clear();
     
     this.sub = this.router.events.subscribe((event) => {
