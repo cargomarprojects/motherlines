@@ -71,17 +71,26 @@ export class ApprovedPageEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-
-    this.menuid = options.menuid;
-    this.pkid = options.pkid;
-    this.mbl_pkid = options.mbl_pkid;
-    this.mbl_refno = options.mbl_refno;
-    this.doc_type = options.doc_type;
-    this.req_type = options.req_type;
-    this.mode = options.mode;
-    this.is_locked = options.is_locked;
-
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.mbl_pkid = this.route.snapshot.queryParams.mbl_pkid;
+      this.mbl_refno = this.route.snapshot.queryParams.mbl_refno;
+      this.doc_type = this.route.snapshot.queryParams.doc_type;
+      this.req_type = this.route.snapshot.queryParams.req_type;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.is_locked = this.route.snapshot.queryParams.is_locked;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.menuid = options.menuid;
+      this.pkid = options.pkid;
+      this.mbl_pkid = options.mbl_pkid;
+      this.mbl_refno = options.mbl_refno;
+      this.doc_type = options.doc_type;
+      this.req_type = options.req_type;
+      this.mode = options.mode;
+      this.is_locked = options.is_locked;
+    }
     this.initPage();
     this.actionHandler();
   }
