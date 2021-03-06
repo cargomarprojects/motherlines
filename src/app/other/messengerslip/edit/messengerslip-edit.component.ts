@@ -56,16 +56,24 @@ export class MessengerSlipEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-
-    this.menuid = options.menuid;
-    this.pkid = options.pkid;
-    this.mbl_pkid = options.mbl_pkid;
-    this.oprgrp = options.mbl_mode;
-    this.refno = options.mbl_refno;
-    this.mode = options.mode;
-    this.is_locked = options.is_locked;
-
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.mbl_pkid = this.route.snapshot.queryParams.mbl_pkid;
+      this.oprgrp = this.route.snapshot.queryParams.mbl_mode;
+      this.refno = this.route.snapshot.queryParams.mbl_refno;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.is_locked = this.route.snapshot.queryParams.is_locked;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.menuid = options.menuid;
+      this.pkid = options.pkid;
+      this.mbl_pkid = options.mbl_pkid;
+      this.oprgrp = options.mbl_mode;
+      this.refno = options.mbl_refno;
+      this.mode = options.mode;
+      this.is_locked = options.is_locked;
+    }
     this.initPage();
     this.actionHandler();
   }
@@ -253,7 +261,7 @@ export class MessengerSlipEditComponent implements OnInit {
           if (this.mode == "ADD" && response.code != '')
             this.record.cs_refno = response.code;
           this.mode = 'EDIT';
-           this.errorMessage = 'Save Complete';
+          this.errorMessage = 'Save Complete';
           // alert(this.errorMessage);
         }
         //  this.csdate_field.Focus();

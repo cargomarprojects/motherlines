@@ -20,12 +20,12 @@ import { MessengerSlipService } from '../services/messengerslip.service';
 export class MessengerSlipComponent implements OnInit {
 
   // 02-07-2019 Created By Ajith  
- 
+  
   errorMessage$ : Observable<string> ;
   records$ :  Observable<Tbl_cargo_slip[]>;
   pageQuery$ : Observable<PageQuery>;
   searchQuery$ : Observable<SearchQuery>;
-
+  
   constructor(
     private route: ActivatedRoute,
     private location: Location,
