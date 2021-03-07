@@ -78,11 +78,18 @@ export class PartyParentEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
-    this.menuid = options.menuid;
-    this.mode = options.mode;
-    this.type = options.type;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.type = this.route.snapshot.queryParams.type;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.mode = options.mode;
+      this.type = options.type;
+    }
     this.closeCaption = 'Return';
     this.initPage();
     this.actionHandler();
@@ -288,7 +295,7 @@ export class PartyParentEditComponent implements OnInit {
     if (this.gs.PARENT_ADDRESS_REQUIRED != 'Y') // if official name is hidden
       this.record.gen_name = this.record.gen_short_name;
 
-      
+
 
     if (!this.Allvalid())
       return;

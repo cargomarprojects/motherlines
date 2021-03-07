@@ -1,7 +1,10 @@
 <div class="page-header">
     <div class="col">
         <label class="mr-1">{{mainservice.title}}</label>
-        <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
+        <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button> -->
+        <a class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd"
+            [routerLink]="[mainservice.param_type=='PARTYS'?'/Silver.Master/PartyEditPage':'/Silver.Master/PartyParentEditPage']"
+            [queryParams]="{appid : gs.appid, menuid: this.mainservice.menuid,pkid: '',type: this.mainservice.param_type,origin: 'partymaster-page',mode: 'ADD'}">New</a>
           <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
 
     </div>
@@ -35,7 +38,12 @@
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records$ | async">
-                <td class='hlink' (click)="edit(rec)" >{{rec.gen_code}}</td>
+                <!-- <td class='hlink' (click)="edit(rec)" >{{rec.gen_code}}</td> -->
+                <td *ngIf="!this.mainservice.canEdit" >{{rec.gen_code}}</td>
+                <td *ngIf="this.mainservice.canEdit" >
+                    <a class='hlink' [routerLink]="['/Silver.Master/PartyEditPage']"
+                    [queryParams]="{appid : this.gs.appid ,menuid: this.mainservice.menuid,pkid: rec.gen_pkid,type: this.mainservice.param_type,origin: 'partymaster-page',mode: 'EDIT'}">{{rec.gen_code}}</a>
+                </td>
                 <td>{{rec.gen_short_name}}</td>
                 <td>{{rec.gen_firm_code}}</td>
                 <td>{{rec.gen_type2}}</td>
@@ -61,7 +69,12 @@
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records$ | async">
-                <td (click)="edit(rec)" >{{rec.gen_code}}</td>
+                <!-- <td (click)="edit(rec)" >{{rec.gen_code}}</td> -->
+                <td *ngIf="!this.mainservice.canEdit" >{{rec.gen_code}}</td>
+                <td *ngIf="this.mainservice.canEdit" >
+                    <a class='hlink' [routerLink]="['/Silver.Master/PartyParentEditPage']"
+                    [queryParams]="{appid : this.gs.appid ,menuid: this.mainservice.menuid,pkid: rec.gen_pkid,type: this.mainservice.param_type,origin: 'partymaster-page',mode: 'EDIT'}">{{rec.gen_code}}</a>
+                </td>
                 <td>{{rec.gen_short_name}}</td>
             </tr>
         </tbody>
