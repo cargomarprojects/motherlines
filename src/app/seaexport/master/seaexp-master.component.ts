@@ -11,6 +11,7 @@ import { SearchQuery } from '../models/tbl_cargo_exp_masterm';
 import { PageQuery } from '../../shared/models/pageQuery';
 
 import { seaexpMasterService } from '../services/seaexp-master.service';
+import { ConditionalExpr } from '@angular/compiler';
 
 
 @Component({
@@ -34,6 +35,10 @@ export class SeaexpMasterComponent implements OnInit {
     public mainservice: seaexpMasterService
   ) {
 
+  }
+
+  rowclick($event){
+    console.log($event);
   }
 
   ngOnInit() {
