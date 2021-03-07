@@ -440,7 +440,7 @@
         </div>
         <div class="page-footer">
             <div class="row justify-content-center p-1">
-                <button class="btn btn-primary btn-md mr-1" *ngIf="mainService.canSave" (click)="Save()">Save</button>
+                <button class="btn btn-primary btn-md mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()">Save</button>
                 <button *ngIf="mode=='EDIT'" class="btn btn-primary btn-md mr-1"
                     (click)="BtnNavigation('PRINT')">Print</button>
                 <button [style.color]="Foregroundcolor" *ngIf="mode=='EDIT'" class="btn btn-primary btn-md mr-1"
