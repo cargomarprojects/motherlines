@@ -58,13 +58,18 @@ export class SalesJournalsEditComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-
-        this.menuid = options.menuid;
-        this.pkid = options.pkid;
-        this.customer_id = options.custid;
-        this.mode = options.mode;
-
+        if (this.route.snapshot.queryParams.parameter == null) {
+            this.menuid = this.route.snapshot.queryParams.menuid;
+            this.pkid = this.route.snapshot.queryParams.pkid;
+            this.customer_id = this.route.snapshot.queryParams.custid;
+            this.mode = this.route.snapshot.queryParams.mode;
+        } else {
+            const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+            this.menuid = options.menuid;
+            this.pkid = options.pkid;
+            this.customer_id = options.custid;
+            this.mode = options.mode;
+        }
         this.initPage();
         this.actionHandler();
     }

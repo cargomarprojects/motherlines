@@ -85,12 +85,16 @@ export class QtnLclEditComponent implements OnInit {
     }
 
     ngOnInit() {
-        const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-
-        this.menuid = options.menuid;
-        this.pkid = options.pkid;
-        this.mode = options.mode;
-
+        if (this.route.snapshot.queryParams.parameter == null) {
+            this.menuid = this.route.snapshot.queryParams.menuid;
+            this.pkid = this.route.snapshot.queryParams.pkid;
+            this.mode = this.route.snapshot.queryParams.mode;
+        } else {
+            const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+            this.menuid = options.menuid;
+            this.pkid = options.pkid;
+            this.mode = options.mode;
+        }
         this.initPage();
         this.actionHandler();
     }
@@ -225,7 +229,7 @@ export class QtnLclEditComponent implements OnInit {
         this.SaveParent();
 
         let filepath: string = "..\\Files_Folder\\" + this.gs.FILES_FOLDER + "\\quotation\\";
-        let filter : any = {};
+        let filter: any = {};
         filter.PATH = filepath;
 
         const saveRecord = <vm_Tbl_Cargo_Qtnd_Lcl>{};
@@ -406,7 +410,7 @@ export class QtnLclEditComponent implements OnInit {
         if (_Record.controlname == "INVOICE-CODE") {
             this.records.forEach(rec => {
                 if (rec.qtnd_pkid == _Record.uid) {
-                    rec.qtnd_desc_id= _Record.id;
+                    rec.qtnd_desc_id = _Record.id;
                     rec.qtnd_desc_code = _Record.code;
                     rec.qtnd_desc_name = _Record.name;
                     if (idx < this.qtnd_desc_name_field.toArray().length)
@@ -414,7 +418,7 @@ export class QtnLclEditComponent implements OnInit {
                 }
             });
         }
-     }
+    }
 
     OnChange(field: string) {
     }
