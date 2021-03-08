@@ -101,15 +101,26 @@ export class InvoiceEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.menuid = options.menuid;
-    this.pkid = options.pkid;
-    this.mbl_pkid = options.mbl_pkid;
-    this.mbl_type = options.mbl_type;
-    this.inv_arap = options.inv_arap;
-    this.mode = options.mode;
-    this.mbl_refno = options.mbl_refno;
-    this.arrival_notice = options.arrival_notice;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.mbl_pkid = this.route.snapshot.queryParams.mbl_pkid;
+      this.mbl_type = this.route.snapshot.queryParams.mbl_type;
+      this.inv_arap = this.route.snapshot.queryParams.inv_arap;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.mbl_refno = this.route.snapshot.queryParams.mbl_refno;
+      this.arrival_notice = this.route.snapshot.queryParams.arrival_notice;
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.menuid = options.menuid;
+      this.pkid = options.pkid;
+      this.mbl_pkid = options.mbl_pkid;
+      this.mbl_type = options.mbl_type;
+      this.inv_arap = options.inv_arap;
+      this.mode = options.mode;
+      this.mbl_refno = options.mbl_refno;
+      this.arrival_notice = options.arrival_notice;
+    }
     this.initpage();
     this.GetHouseList();
     this.initControls();
