@@ -187,6 +187,8 @@ export interface vm_tbl_cargo_imp_housem {
 
 
 export interface AirImpHouseModel {
+    sortcol : string ;
+    sortorder : boolean;
     errormessage: string;
     searchQuery: SearchQuery;
     pageQuery: PageQuery;

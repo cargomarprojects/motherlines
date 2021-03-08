@@ -101,6 +101,8 @@ export interface SearchQuery {
 }
 
 export interface AirImpMasterModel {
+    sortcol : string ;
+    sortorder : boolean;
     errormessage: string;
     searchQuery: SearchQuery;
     pageQuery: PageQuery;

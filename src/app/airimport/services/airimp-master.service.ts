@@ -37,10 +37,39 @@ export class AirImpMasterService {
         private http2: HttpClient,
         private gs: GlobalService
     ) { }
+    public getSortCol(){
+        return this.record.sortcol;
+    }
+    public getSortOrder(){
+        return this.record.sortorder;
+    }
 
+    public getIcon(col : string){
+        if ( col == this.record.sortcol){
+          if ( this.record.sortorder )
+            return 'fa fa-arrow-down';
+          else 
+            return 'fa fa-arrow-up';
+        }
+        else 
+          return null;
+    }
+    
+    public  sort(col : string){
+        if ( col == this.record.sortcol){
+          this.record.sortorder = !this.record.sortorder;
+        }
+        else 
+        {
+          this.record.sortcol = col;
+          this.record.sortorder = true;
+        }
+    }
     public ClearInit()
     {
         this.record = <AirImpMasterModel>{
+            sortcol : 'mbl_refno',
+            sortorder : true,
             errormessage: '',
             records: [],
             searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
@@ -62,6 +91,8 @@ export class AirImpMasterService {
         this.param_type = params.param_type;
 
         this.record = <AirImpMasterModel>{
+            sortcol : 'mbl_refno',
+            sortorder : true,
             errormessage: '',
             records: [],
             searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
