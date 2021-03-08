@@ -184,6 +184,12 @@ tr:nth-child(even) {
       background-color: #007ee9;
 }
   
+.menu-group-name {
+    background-color:#e48613 !important;
+    font-size:x-small !important;
+    font-weight: bold !important;
+}
+
   
 /* Right Side Bar */
 .rightsidebar {
