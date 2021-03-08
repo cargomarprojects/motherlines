@@ -69,8 +69,6 @@ export class seaexpMasterService {
         }
     }
     
-
-
     public ClearInit() {
         this.record = <seaExpMasterModel>{
             sortcol : 'mbl_refno',

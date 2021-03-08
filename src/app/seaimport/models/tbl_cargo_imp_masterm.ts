@@ -162,6 +162,8 @@ export interface SearchQuery {
 }
 
 export interface SeaImpMasterModel {
+    sortcol : string ;
+    sortorder : boolean;
     errormessage: string;
     searchQuery: SearchQuery;
     pageQuery: PageQuery;
