@@ -42,7 +42,13 @@
         </thead>
         <tbody class="page-body-tbody">
             <tr *ngFor="let rec of records$ | async">
-                <td [class]="mainservice.param_type=='APPROVED'?'hlink':'text-left'" (click)="edit(rec)">{{rec.ca_reqno}}</td>
+
+                <!-- <td [class]="mainservice.param_type=='APPROVED'?'hlink':'text-left'" (click)="edit(rec)">{{rec.ca_reqno}}</td> -->
+                
+                <td *ngIf="!(this.mainservice.canEdit && mainservice.param_type=='APPROVED')">{{rec.ca_reqno}}</td>
+                <td *ngIf="(this.mainservice.canEdit && mainservice.param_type=='APPROVED')">
+                    <a class='hlink' [routerLink]="['/Silver.Other.Trans/ApprovedPageEdit']" [queryParams]="{appid : this.gs.appid ,menuid: this.mainservice.menuid,pkid: rec.ca_pkid,mbl_pkid: rec.ca_ref_id, mbl_refno: rec.ca_ref_no, doc_type: rec.ca_doc_type, req_type: this.mainservice.param_type ,mode: 'EDIT'}">{{rec.ca_reqno}}</a>
+                </td>
                 <td>{{rec.ca_user_name}}</td>
                 <td>{{rec.rec_created_date | date : gs.FRONTEND_DATEFORMAT}}</td>
                 <td>{{rec.ca_type}}</td>

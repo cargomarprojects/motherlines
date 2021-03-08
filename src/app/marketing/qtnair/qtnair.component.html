@@ -2,7 +2,10 @@
     <div class="page-header">
         <div class="col">
             <label class="mr-3">{{mainservice.title}}</label>
-            <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button>
+            <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd" (click)="NewRecord()">New</button> -->
+            <a class="btn btn-primary btn-sm mr-1" *ngIf="mainservice.canAdd"
+            [routerLink]="['/Silver.Marketing.Quotation/QuotationAirEditPage']"
+            [queryParams]="{appid : gs.appid, menuid: this.mainservice.menuid,pkid: '',origin: 'qtnm-air-page',mode: 'ADD'}">New</a>
             <button class="btn btn-primary btn-sm mr-1" (click)="Close()">Return</button>
         </div>
     </div>
@@ -34,7 +37,12 @@
             </thead>
             <tbody class="page-body-tbody">
                 <tr *ngFor="let rec of records$ | async">
-                    <td class='hlink' (click)="edit(rec)">{{rec.qtnm_no}}</td>
+                    <!-- <td class='hlink' (click)="edit(rec)">{{rec.qtnm_no}}</td> -->
+                    <td *ngIf="!this.mainservice.canEdit">{{rec.qtnm_no}}</td>
+                    <td *ngIf="this.mainservice.canEdit">
+                        <a class='hlink' [routerLink]="['/Silver.Marketing.Quotation/QuotationAirEditPage']"
+                        [queryParams]="{appid : this.gs.appid ,menuid: this.mainservice.menuid,pkid: rec.qtnm_pkid,origin: 'qtnm-air-page',mode: 'EDIT'}">{{rec.qtnm_no}}</a>
+                    </td>
                     <td>{{rec.qtnm_date | date : gs.FRONTEND_DATEFORMAT}}</td>
                     <td>{{rec.qtnm_to_name}}</td>
                     <td>{{rec.qtnm_quot_by}}</td>

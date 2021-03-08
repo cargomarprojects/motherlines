@@ -84,16 +84,29 @@ export class PartyEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const options = JSON.parse(this.route.snapshot.queryParams.parameter);
-    this.pkid = options.pkid;
-    this.menuid = options.menuid;
-    this.mode = options.mode;
-    this.type = options.type;
-    this.origin = options.origin;
-    if (this.origin === "EXTERNAL") {
-      this.ms_type = options.ms_type;
-      this.ms_from = options.ms_from;
-      this.ms_name = options.ms_name;
+    if (this.route.snapshot.queryParams.parameter == null) {
+      this.pkid = this.route.snapshot.queryParams.pkid;
+      this.menuid = this.route.snapshot.queryParams.menuid;
+      this.mode = this.route.snapshot.queryParams.mode;
+      this.type = this.route.snapshot.queryParams.type;
+      this.origin = this.route.snapshot.queryParams.origin;
+      if (this.origin === "EXTERNAL") {
+        this.ms_type = this.route.snapshot.queryParams.ms_type;
+        this.ms_from = this.route.snapshot.queryParams.ms_from;
+        this.ms_name = this.route.snapshot.queryParams.ms_name;
+      }
+    } else {
+      const options = JSON.parse(this.route.snapshot.queryParams.parameter);
+      this.pkid = options.pkid;
+      this.menuid = options.menuid;
+      this.mode = options.mode;
+      this.type = options.type;
+      this.origin = options.origin;
+      if (this.origin === "EXTERNAL") {
+        this.ms_type = options.ms_type;
+        this.ms_from = options.ms_from;
+        this.ms_name = options.ms_name;
+      }
     }
     this.closeCaption = 'Return';
     this.initPage();
@@ -390,7 +403,7 @@ export class PartyEditComponent implements OnInit {
           this.mode = 'EDIT';
           this.mainService.RefreshList(this.record);
           this.errorMessage = 'Save Complete';
-         // alert(this.errorMessage);
+          // alert(this.errorMessage);
         }
       }, error => {
         this.errorMessage = this.gs.getError(error);
