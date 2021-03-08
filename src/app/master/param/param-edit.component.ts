@@ -68,22 +68,36 @@ export class ParamEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.sub = this.route.queryParams.subscribe(params => {
 
-      const options = JSON.parse(params["parameter"]);
-      this.pkid = options.pkid;
-      this.menuid = options.menuid;
-      this.menu_param = options.type;
-      this.mode = options.mode;
-      this.origin = options.origin;
-      if (this.origin === "EXTERNAL") {
-        this.ms_name = options.ms_name;
+    this.sub = this.route.queryParams.subscribe(params => {
+      if (this.route.snapshot.queryParams.parameter == null) {
+        this.pkid = this.route.snapshot.queryParams.pkid;
+        this.menuid = this.route.snapshot.queryParams.menuid;
+        this.menu_param = this.route.snapshot.queryParams.type;
+        this.mode = this.route.snapshot.queryParams.mode;
+        this.origin = this.route.snapshot.queryParams.origin;
+        if (this.origin === "EXTERNAL") {
+          this.ms_name = this.route.snapshot.queryParams.ms_name;
+        }
       }
+      else {
+        const options = JSON.parse(params["parameter"]);
+        this.pkid = options.pkid;
+        this.menuid = options.menuid;
+        this.menu_param = options.type;
+        this.mode = options.mode;
+        this.origin = options.origin;
+        if (this.origin === "EXTERNAL") {
+          this.ms_name = options.ms_name;
+        }
+      }
+
       this.closeCaption = 'Return';
       this.initPage();
       this.showHideControls();
       this.actionHandler();
     });
+
   }
 
   private initPage() {

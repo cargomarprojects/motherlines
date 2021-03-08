@@ -71,7 +71,9 @@
         <label class="col-4 col-form-label col-form-label-sm"></label>
         <div class="col-8">
           <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canSave(menuid,mode)" (click)="Save()" >Save</button>
-          <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>          
+          <!-- <button class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" (click)="NewRecord()">New</button>           -->
+          <a class="btn btn-primary btn-sm mr-1" *ngIf="gs.canAdd(menuid)" [routerLink]="['/Silver.Master/ParamPageDetEdit']"
+            [queryParams]="{appid : gs.appid, menuid: this.menuid,pkid: '',type: this.menu_param,origin: 'param-page',mode: 'ADD'}">New</a>
           <button class="btn btn-primary btn-sm mr-1" (click)="Close()">{{closeCaption}}</button>
         </div>
       </div>

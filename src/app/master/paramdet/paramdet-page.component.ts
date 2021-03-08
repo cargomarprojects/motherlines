@@ -130,6 +130,40 @@ export class ParamDetPageComponent implements OnInit, OnDestroy {
     this.gs.Naviagete('Silver.Master/ParamPageDetEdit', JSON.stringify(parameter));
   }
 
+  getRouteDet(_type: string, _mode: string, _record: TBL_MAST_PARAM = null) {
+
+    if (_type == "L") {
+      if ((_mode == "ADD" && this.gs.canAdd(this.menuid)) || (_mode == "EDIT" && this.gs.canEdit(this.menuid)))
+        return "/Silver.Master/ParamPageDetEdit";
+      else
+        return null;
+    } else if (_type == "P") {
+
+      if (_record == null) {
+        if (!this.gs.canAdd(this.menuid))
+          return null;
+        return {
+          appid: this.gs.appid,
+          menuid: this.menuid,
+          pkid: '',
+          type: this.menu_param,
+          origin: 'param-page',
+          mode: 'ADD'
+        };
+      }
+      if (!this.gs.canEdit(this.menuid))
+        return null;
+      return {
+        appid: this.gs.appid,
+        menuid: this.menuid,
+        pkid: _record.param_pkid,
+        type: _record.param_type,
+        origin: 'param-page',
+        mode: 'EDIT'
+      };
+    } else
+      return null;
+  }
 
   Close() {
     this.location.back();
