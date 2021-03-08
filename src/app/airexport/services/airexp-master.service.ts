@@ -38,8 +38,38 @@ export class AirExpMasterService {
         private gs: GlobalService
     ) { }
 
+    public getSortCol(){
+        return this.record.sortcol;
+    }
+    public getSortOrder(){
+        return this.record.sortorder;
+    }
+
+    public getIcon(col : string){
+        if ( col == this.record.sortcol){
+          if ( this.record.sortorder )
+            return 'fa fa-arrow-down';
+          else 
+            return 'fa fa-arrow-up';
+        }
+        else 
+          return null;
+    }
+    
+    public  sort(col : string){
+        if ( col == this.record.sortcol){
+          this.record.sortorder = !this.record.sortorder;
+        }
+        else 
+        {
+          this.record.sortcol = col;
+          this.record.sortorder = true;
+        }
+    }
     public ClearInit() {
         this.record = <AirExpMasterModel>{
+            sortcol : 'mbl_refno',
+            sortorder : true,
             errormessage: '',
             records: [],
             searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today, searchtype: 'REFNO' },
@@ -60,6 +90,8 @@ export class AirExpMasterService {
         this.param_type = params.param_type;
 
         this.record = <AirExpMasterModel>{
+            sortcol : 'mbl_refno',
+            sortorder : true,
             errormessage: '',
             records: [],
             searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today, searchtype: 'REFNO' },
