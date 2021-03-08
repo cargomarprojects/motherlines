@@ -181,7 +181,7 @@ tr:nth-child(even) {
 }
   
 .menu ul li > ul li a:hover {
-      background-color: #007ee9;
+    background-color: #007ee9;
 }
   
 .menu-group-name {
