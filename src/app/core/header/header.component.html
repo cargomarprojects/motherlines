@@ -27,9 +27,12 @@
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{rech.module_name}}
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu py-0 border-1 rounded-3 shadow-lg" aria-labelledby="navbarDropdown">
               <div *ngFor="let rec of gs.MenuList" class="menulist">
-                <div *ngIf="rech.module_name == rec.module_name && rec.menu_hiden==='N'">
+                <div class="" *ngIf="rech.module_name == rec.module_name && rec.menu_hiden==='N' && rec.menu_group_name">
+                  <a class="dropdown-item border-bottom menu-group-name">{{rec.menu_group_name}}</a>
+                </div>
+                <div  *ngIf="rech.module_name == rec.module_name && rec.menu_hiden==='N'">
                   <!-- <a class="dropdown-item border-bottom" (click)="LoadPage(rec)">{{rec.menu_name}}</a> -->
                   <!-- <a class="dropdown-item border-bottom"  routerLink="{{getMenu(rec)}}" [queryParams]="{ appid : gs.appid, id: rec.menu_pkid, menuid: rec.menu_pkid, menu_param: rec.menu_param}">{{rec.menu_name}}</a> -->
                   <a class="dropdown-item border-bottom"  [routerLink]="getLink(rec)" [queryParams]="getParam(rec)">{{rec.menu_name}}</a>

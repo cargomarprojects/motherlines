@@ -828,6 +828,7 @@ export class GlobalService {
   public async LoadMenu(): Promise<number> {
     let bRet = -1;
     var module_name = '';
+    var grpname = '';
     var SearchData: any = {};
     SearchData = this.UserInfo;
     if (this.user_isadmin == "Y")
@@ -839,12 +840,19 @@ export class GlobalService {
       console.log('Menu Loaded 2');
       this.MenuList = response.list;
       this.Modules = [];
-      response.list.forEach(element => {
+      
+      this.MenuList.forEach(element => {
         if (module_name != element.module_name) {
           this.mRec = new Modulem();
           this.mRec.module_name = element.module_name;
           this.Modules.push(this.mRec);
           module_name = element.module_name;
+        }
+        if ( element.menu_hiden==='N') {
+        if ( grpname != element.menu_group_name) 
+            grpname =  element.menu_group_name;
+        else 
+          element.menu_group_name = null;
         }
       });
       bRet = 0;
