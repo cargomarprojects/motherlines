@@ -22,10 +22,12 @@ export class SeaexpMasterComponent implements OnInit {
 
   // 24-05-2019 Created By Joy  
 
+
   errorMessage$: Observable<string>;
   records$: Observable<Tbl_cargo_exp_masterm[]>;
   pageQuery$: Observable<PageQuery>;
   searchQuery$: Observable<SearchQuery>;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -50,6 +52,7 @@ export class SeaexpMasterComponent implements OnInit {
   }
 
   initPage() {
+    
     this.records$ = this.mainservice.data$.pipe(map(res => res.records));
     this.searchQuery$ = this.mainservice.data$.pipe(map(res => res.searchQuery));
     this.pageQuery$ = this.mainservice.data$.pipe(map(res => res.pageQuery));
@@ -131,3 +134,4 @@ export class SeaexpMasterComponent implements OnInit {
   }
 
 }
+

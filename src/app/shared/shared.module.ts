@@ -55,6 +55,7 @@ import { InputBoxComponent } from './input/inputbox.component';
 import { InputBoxNumberComponent } from './inputnumber/inputboxnumber.component';
 import { ReportComponent } from './report/report.component';
 import { GenListComponent } from './genlist/genlist.component';
+import { SortByPipe } from './pipe/orderby';
 
 @NgModule({
   imports: [
@@ -93,6 +94,7 @@ import { GenListComponent } from './genlist/genlist.component';
     ReportComponent,
     FileUploadEditComponent,
     GenListComponent,
+    SortByPipe
   ],
   exports: [
     CommonModule,
@@ -127,6 +129,7 @@ import { GenListComponent } from './genlist/genlist.component';
     ReportComponent,
     FileUploadEditComponent,
     GenListComponent,
+    SortByPipe
   ],
   providers: [
     LovService,

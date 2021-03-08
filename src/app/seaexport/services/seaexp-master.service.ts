@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -8,7 +7,8 @@ import { GlobalService } from '../../core/services/global.service';
 import { Tbl_cargo_exp_masterm, seaExpMasterModel, vm_tbl_cargo_exp_masterm } from '../models/tbl_cargo_exp_masterm';
 import { SearchQuery } from '../models/tbl_cargo_exp_masterm';
 import { PageQuery } from '../../shared/models/pageQuery';
-import { Tbl_cargo_exp_housem } from 'src/app/airexport/models/tbl_cargo_exp_masterm';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 
 @Injectable({
     providedIn: 'root'
@@ -39,8 +39,42 @@ export class seaexpMasterService {
         private gs: GlobalService
     ) { }
 
+
+    public getSortCol(){
+        return this.record.sortcol;
+    }
+    public getSortOrder(){
+        return this.record.sortorder;
+    }
+
+    public getIcon(col : string){
+        if ( col == this.record.sortcol){
+          if ( this.record.sortorder )
+            return 'fa fa-arrow-down';
+          else 
+            return 'fa fa-arrow-up';
+        }
+        else 
+          return null;
+    }
+    
+    public  sort(col : string){
+        if ( col == this.record.sortcol){
+          this.record.sortorder = !this.record.sortorder;
+        }
+        else 
+        {
+          this.record.sortcol = col;
+          this.record.sortorder = true;
+        }
+    }
+    
+
+
     public ClearInit() {
         this.record = <seaExpMasterModel>{
+            sortcol : 'mbl_refno',
+            sortorder : true,
             errormessage: '',
             records: [],
             searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
@@ -65,6 +99,8 @@ export class seaexpMasterService {
         this.param_type = params.param_type;
 
         this.record = <seaExpMasterModel>{
+            sortcol : 'mbl_refno',
+            sortorder : true,            
             errormessage: '',
             records: [],
             searchQuery: <SearchQuery>{ searchString: '', fromdate: this.gs.getPreviousDate(this.gs.SEARCH_DATE_DIFF), todate: this.gs.defaultValues.today },
