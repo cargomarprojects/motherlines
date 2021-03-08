@@ -111,10 +111,9 @@ export class ApprovedPageComponent implements OnInit {
     let sID: string = (_record.ca_ref_id != null) ? _record.ca_ref_id.toString() : "";
     let REFNO: string = _record.ca_ref_no != null ? _record.ca_ref_no.toString() : "";
     let sMode: string = _record.ca_mode != null ? _record.ca_mode.toString() : "";
-    if (sID == "")
-    {
+    if (sID == "") {
       alert('Invalid Record Selected');
-        return;
+      return;
     }
     this.gs.LinkPage("REFNO", sMode, REFNO, sID);
   }
@@ -142,7 +141,7 @@ export class ApprovedPageComponent implements OnInit {
       return;
     }
 
-    this.gs.LinkPage("INVNO", sMode, REFNO, sID, "",INVID);
+    this.gs.LinkPage("INVNO", sMode, REFNO, sID, "", INVID);
   }
 
 
@@ -166,5 +165,489 @@ export class ApprovedPageComponent implements OnInit {
     this.tab = 'main';
   }
 
-   
+  Link2Page(INVOKETYPE: string = "", MBLMODE: string = "", REFNO: string = "", MBLID: string = "", HBLID: string = "", INVID: string = "", FORMATTYPE: string = "") {
+    let sType: string = "";
+    let SMENU_ID: string = "";
+    try {
+
+      MBLMODE = MBLMODE.replace("OCEAN", "SEA");
+
+      if (MBLMODE == "SEA EXPORT" || MBLMODE == "SEA IMPORT" || MBLMODE == "AIR EXPORT" || MBLMODE == "AIR IMPORT" || MBLMODE == "OTHERS" || MBLMODE == "EXTRA") {
+        if (REFNO.length >= 2 && MBLID.trim().length > 0)
+          sType = REFNO.substring(0, 2);
+        else
+          sType = "";
+      }
+      else if (MBLMODE == "CM" || MBLMODE == "PR" || MBLMODE == "FA" || MBLMODE == "GE" || MBLMODE == "PS")
+        sType = MBLMODE.trim();
+      else
+        sType = "";
+
+      if (sType.trim() == "" || INVOKETYPE.trim() == "") {
+        return null;
+      }
+
+      if (INVOKETYPE == "INVNO") {
+        if (INVID.trim() == "")
+          return null;
+        else if (sType == "OI")
+          SMENU_ID = this.gs.MENU_SI_MASTER_ARAP;
+        else if (sType == "OE")
+          SMENU_ID = this.gs.MENU_SE_MASTER_ARAP;
+        else if (sType == "AI")
+          SMENU_ID = this.gs.MENU_AI_MASTER_ARAP;
+        else if (sType == "AE")
+          SMENU_ID = this.gs.MENU_AE_MASTER_ARAP;
+        else if (sType == "OT")
+          SMENU_ID = this.gs.MENU_OT_OPERATION_ARAP;
+        else if (sType == "EX")
+          SMENU_ID = this.gs.MENU_EX_OPERATION_ARAP;
+        else if (sType == "CM")
+          SMENU_ID = this.gs.MENU_1099_EXPENSE_ARAP;
+        else if (sType == "PR")
+          SMENU_ID = this.gs.MENU_PAYROLL_EXPENSE_ARAP;
+        else if (sType == "FA")
+          SMENU_ID = this.gs.MENU_FILE_ADJUSTMENT_ARAP;
+        else if (sType == "GE")
+          SMENU_ID = this.gs.MENU_GENERAL_EXPENSE_ARAP;
+        else if (sType == "PS")
+          SMENU_ID = this.gs.MENU_INTERNAL_PAYMENT_SETTLEMENT_ARAP;
+        else {
+          return null;
+        }
+
+        if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+          if (FORMATTYPE == "P") {
+            return {
+              appid: this.gs.appid,
+              menuid: SMENU_ID,
+              pkid: INVID,
+              mode: 'EDIT',
+              mbl_pkid: MBLID,
+              mbl_refno: REFNO,
+              mbl_type: sType,
+              inv_arap: '',
+              arrival_notice: '',
+              origin: INVOKETYPE
+            };
+          } else if (FORMATTYPE == "L") {
+            return "/Silver.USAccounts.Trans/InvoiceEditPage";
+          } else
+            return null;
+        }
+        else
+          return null;
+      }
+      else if (INVOKETYPE == "REFNO") {
+        if (sType == "AE") {
+          SMENU_ID = this.gs.MENU_AE_MASTER;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                type: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.AirExport.Trans/AirExpMasterEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "AI") {
+          SMENU_ID = this.gs.MENU_AI_MASTER;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                type: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.AirImport.Trans/AirImpMasterEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "OE") {
+          SMENU_ID = this.gs.MENU_SE_MASTER;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                type: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.SeaExport.Trans/SeaExpMasterEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "OI") {
+          SMENU_ID = this.gs.MENU_SI_MASTER;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                type: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.SeaImport/SeaImpMasterEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "OT") {
+          SMENU_ID = this.gs.MENU_OT_OPERATION;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                type: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "EX") {
+          SMENU_ID = this.gs.MENU_EX_OPERATION;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                type: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "GE") {
+          SMENU_ID = this.gs.MENU_GENERAL_EXPENSE;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                exptype: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralExpenseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "CM") {
+          SMENU_ID = this.gs.MENU_1099_EXPENSE;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                exptype: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralExpenseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "PR") {
+          SMENU_ID = this.gs.MENU_PAYROLL_EXPENSE;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                exptype: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralExpenseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "FA") {
+          SMENU_ID = this.gs.MENU_FILE_ADJUSTMENT;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                exptype: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralExpenseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "PS") {
+          SMENU_ID = this.gs.MENU_INTERNAL_PAYMENT_SETTLEMENT;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                exptype: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralExpenseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else {
+          return null;
+        }
+      }
+      else if (INVOKETYPE == "HOUSE") {
+        if (HBLID.trim() == "")
+          return null;
+        else if (sType == "AE") {
+          SMENU_ID = this.gs.MENU_AE_HOUSE;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: HBLID,
+                parentid: MBLID,
+                type: sType,
+                refno: '',
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.AirExport.Trans/AirExpHouseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "AI") {
+          SMENU_ID = this.gs.MENU_AI_HOUSE;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: HBLID,
+                parentid: MBLID,
+                type: sType,
+                refno: REFNO,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.AirImport.Trans/AirImpHouseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "OE") {
+          SMENU_ID = this.gs.MENU_SE_HOUSE;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: HBLID,
+                parentid: MBLID,
+                type: sType,
+                refno: REFNO,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.SeaExport.Trans/SeaExpHouseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "OI") {
+          SMENU_ID = this.gs.MENU_SI_HOUSE;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: HBLID,
+                parentid: MBLID,
+                type: sType,
+                refno: REFNO,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.SeaImport/SeaImpHouseEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "OT") {
+          SMENU_ID = this.gs.MENU_OT_OPERATION;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                type: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else if (sType == "EX") {
+          SMENU_ID = this.gs.MENU_EX_OPERATION;
+          if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+            if (FORMATTYPE == "P") {
+              return {
+                appid: this.gs.appid,
+                menuid: SMENU_ID,
+                mode: 'EDIT',
+                pkid: MBLID,
+                type: sType,
+                origin: INVOKETYPE
+              };
+            } else if (FORMATTYPE == "L") {
+              return "/Silver.Other.Trans/OthGeneralEditPage";
+            } else
+              return null;
+          }
+          else
+            return null;
+        }
+        else {
+          return null;
+        }
+      } else if (INVOKETYPE == "ARAP") {
+
+        if (MBLID.trim() == "")
+          return null;
+        else if (sType == "OI")
+          SMENU_ID = this.gs.MENU_SI_MASTER_ARAP;
+        else if (sType == "OE")
+          SMENU_ID = this.gs.MENU_SE_MASTER_ARAP;
+        else if (sType == "AI")
+          SMENU_ID = this.gs.MENU_AI_MASTER_ARAP;
+        else if (sType == "AE")
+          SMENU_ID = this.gs.MENU_AE_MASTER_ARAP;
+        else if (sType == "OT")
+          SMENU_ID = this.gs.MENU_OT_OPERATION_ARAP;
+        else if (sType == "EX")
+          SMENU_ID = this.gs.MENU_EX_OPERATION_ARAP;
+        else if (sType == "CM")
+          SMENU_ID = this.gs.MENU_1099_EXPENSE_ARAP;
+        else if (sType == "PR")
+          SMENU_ID = this.gs.MENU_PAYROLL_EXPENSE_ARAP;
+        else if (sType == "FA")
+          SMENU_ID = this.gs.MENU_FILE_ADJUSTMENT_ARAP;
+        else if (sType == "GE")
+          SMENU_ID = this.gs.MENU_GENERAL_EXPENSE_ARAP;
+        else if (sType == "PS")
+          SMENU_ID = this.gs.MENU_INTERNAL_PAYMENT_SETTLEMENT_ARAP;
+        else {
+          return null;
+        }
+
+        if (this.gs.canEdit(SMENU_ID) || this.gs.canView(SMENU_ID)) {
+          if (FORMATTYPE == "P") {
+            return {
+              appid: this.gs.appid,
+              menuid: SMENU_ID,
+              mbl_pkid: MBLID,
+              mbl_refno: REFNO,
+              mbl_type: sType,
+              origin: INVOKETYPE
+            };
+          } else if (FORMATTYPE == "L") {
+            return "/Silver.USAccounts.Trans/InvoicePage";
+          } else
+            return null;
+        }
+        else
+          return null;
+      }
+    }
+    catch (Exception) {
+    }
+  }
+
 }
