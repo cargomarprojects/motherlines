@@ -161,5 +161,5 @@ export interface seaExpMasterModel {
     errormessage : string;
     searchQuery: SearchQuery;
     pageQuery: PageQuery;
-    records: Tbl_cargo_exp_masterm[]
+    records: Tbl_cargo_exp_masterm[];
 }

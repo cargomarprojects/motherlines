@@ -271,8 +271,10 @@ export interface SearchQuery {
 }
 
 export interface SeaExpHouseModel {
+    sortcol : string ;
+    sortorder : boolean;
     errormessage: string;
     searchQuery: SearchQuery;
     pageQuery: PageQuery;
-    records: Tbl_cargo_exp_housem[]
+    records: Tbl_cargo_exp_housem[];
 }
