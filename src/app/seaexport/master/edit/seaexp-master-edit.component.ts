@@ -120,8 +120,10 @@ export class SeaexpMasterEditComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    
     if (!this.gs.isBlank(this.mbl_ref_date_field))
       this.mbl_ref_date_field.Focus();
+    
   }
   private initPage() {
     this.isAdmin = this.gs.IsAdmin(this.menuid);
@@ -229,8 +231,10 @@ export class SeaexpMasterEditComponent implements OnInit {
     if (this.gs.PARAM_COO_FORMAT_BLANK.length > 0) {
       this.record.mbl_cooformat_id = this.gs.PARAM_COO_FORMAT_BLANK[0].code;
     }
+    
     if (!this.gs.isBlank(this.mbl_ref_date_field))
       this.mbl_ref_date_field.Focus();
+    
   }
 
   GetRecord() {
