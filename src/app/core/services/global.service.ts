@@ -1652,6 +1652,7 @@ export class GlobalService {
 
   public canSave(menuid: string, mode: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid);
     if (itm) {
       if (mode == "ADD" && itm.rights_add == "Y")
@@ -1664,6 +1665,7 @@ export class GlobalService {
 
   public canAdd(menuid: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_add == "Y");
     if (itm)
       bret = true;
@@ -1683,6 +1685,7 @@ export class GlobalService {
   }
   public canView(menuid: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_edit == "Y" || f.rights_view == "Y"));
     if (itm)
       bret = true;
@@ -1691,6 +1694,7 @@ export class GlobalService {
 
   public canDelete(menuid: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_delete == "Y");
     if (itm)
       bret = true;
@@ -1699,6 +1703,7 @@ export class GlobalService {
 
   public canPrint(menuid: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_print == "Y");
     if (itm)
       bret = true;
@@ -1707,6 +1712,7 @@ export class GlobalService {
 
   public screenExists(menuid: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && (f.rights_add == "Y" || f.rights_edit == "Y" || f.rights_view == "Y" || f.rights_print == "Y" || f.rights_delete == "Y"));
     if (itm)
       bret = true;
@@ -1715,6 +1721,7 @@ export class GlobalService {
 
   public canDownload(menuid: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_print == "Y");
     if (itm)
       bret = true;
@@ -1724,6 +1731,7 @@ export class GlobalService {
 
   public canEmail(menuid: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_email == "Y");
     if (itm)
       bret = true;
@@ -1732,6 +1740,7 @@ export class GlobalService {
 
   public canExel(menuid: string): boolean {
     var bret: boolean = false;
+    bret = this.user_isadmin == 'Y';
     var itm = this.MenuList.find(f => f.menu_pkid == menuid && f.rights_print == "Y");
     if (itm)
       bret = true;
